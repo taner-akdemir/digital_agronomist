@@ -24,7 +24,7 @@ class HomeScreen extends ConsumerWidget {
     var size = MediaQuery.of(context).size;
 
     /*24 is for notification bar on Android*/
-    final double itemHeight = (size.height - kToolbarHeight - 380) / 2;
+    final double itemHeight = (size.height - kToolbarHeight - 350) / 2;
     final double itemWidth = (size.width - 10) / 2;
 
     List<Hall> hls = halls;
@@ -57,7 +57,7 @@ class HomeScreen extends ConsumerWidget {
             for (Animal a in animals){
               LiveInfoCard l = LiveInfoCard(
                 lightColor: AppColors.lightGreenColor,
-                title: "Vakum #${v.id}, Spout #${a.currentInfo.spout.id}",
+                title: "Vakum #${v.id}, Musluk #${a.currentInfo.spout.id}",
                 name: "İnek #${a.id}",
                 sessionYield: a.currentInfo.currentAmount,
                 targetAmount: a.targetAmount,

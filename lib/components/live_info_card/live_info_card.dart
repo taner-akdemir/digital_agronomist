@@ -67,7 +67,7 @@ class _LiveInfoCardState extends State<LiveInfoCard> {
                   widget.title,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 13,
+                    fontSize: 14,
                     color: AppColors.lightGreyColor,
                   ),
                 ),
@@ -97,7 +97,7 @@ class _LiveInfoCardState extends State<LiveInfoCard> {
                     "Akış oranı",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 12,
+                      fontSize: 13,
                       color: AppColors.iconGreyColor,
                     ),
                   ),
@@ -110,7 +110,7 @@ class _LiveInfoCardState extends State<LiveInfoCard> {
                         "${widget.currentFlow}",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 18,
                           color: AppColors.darkBlueColor,
                         ),
                       ),
@@ -239,8 +239,8 @@ class _LiveInfoCardState extends State<LiveInfoCard> {
             SizedBox(height: 20),
             widget.lowFlowRate > widget.currentFlow
                 ? Text(
-                    "Düşük basınç. Lütfen kontrol ediniz",
-                    style: TextStyle(color: AppColors.redColor, fontSize: 10, fontWeight: FontWeight.bold),
+                    "Düşük Basınç",
+                    style: TextStyle(color: AppColors.redColor, fontSize: 14, fontWeight: FontWeight.bold),
                   )
                 : SizedBox(),
             SizedBox(height: 10,),
@@ -252,7 +252,7 @@ class _LiveInfoCardState extends State<LiveInfoCard> {
                     "Şu an",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 13,
+                      fontSize: 14,
                       color: AppColors.iconGreyColor,
                     ),
                   ),
@@ -265,7 +265,7 @@ class _LiveInfoCardState extends State<LiveInfoCard> {
                         "${widget.sessionYield} ${widget.sessionYieldIndicator}",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 13,
+                          fontSize: 14,
                           color: AppColors.darkGreenColor,
                         ),
                       ),
@@ -283,7 +283,7 @@ class _LiveInfoCardState extends State<LiveInfoCard> {
                     "Hedef",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 13,
+                      fontSize: 14,
                       color: AppColors.iconGreyColor,
                     ),
                   ),
@@ -296,7 +296,7 @@ class _LiveInfoCardState extends State<LiveInfoCard> {
                         "${widget.targetAmount} ${widget.targetAmountIndicator}",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 13,
+                          fontSize: 14,
                           color: AppColors.darkGreenColor,
                         ),
                       ),
