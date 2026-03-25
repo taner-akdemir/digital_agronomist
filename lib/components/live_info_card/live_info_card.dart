@@ -5,7 +5,7 @@ import 'package:linear_progress_bar/linear_progress_bar.dart';
 class LiveInfoCard extends StatefulWidget {
   final Color lightColor;
   final double? lightIconSize;
-  final double sessionYield, targetAmount, currentFlow;
+  final double sessionYield, targetAmount, currentFlow, lowFlowRate;
   final String title,
       name,
       sessionYieldIndicator,
@@ -24,6 +24,7 @@ class LiveInfoCard extends StatefulWidget {
     required this.targetAmountIndicator,
     required this.currentFlow,
     required this.currentFlowIndicator,
+    required this.lowFlowRate,
   });
 
   @override
@@ -35,7 +36,9 @@ class _LiveInfoCardState extends State<LiveInfoCard> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: widget.lowFlowRate > widget.currentFlow
+            ? AppColors.lightRedColor
+            : Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Padding(
@@ -48,7 +51,9 @@ class _LiveInfoCardState extends State<LiveInfoCard> {
               children: [
                 Icon(
                   Icons.brightness_1_rounded,
-                  color: widget.lightColor,
+                  color: widget.lowFlowRate > widget.currentFlow
+                      ? AppColors.redColor
+                      : widget.lightColor,
                   size: widget.lightIconSize ?? 13,
                 ),
               ],
@@ -109,7 +114,7 @@ class _LiveInfoCardState extends State<LiveInfoCard> {
                           color: AppColors.darkBlueColor,
                         ),
                       ),
-                      SizedBox(width: 5,),
+                      SizedBox(width: 5),
                       Text(
                         "${widget.currentFlowIndicator}",
                         style: TextStyle(
@@ -175,10 +180,14 @@ class _LiveInfoCardState extends State<LiveInfoCard> {
             TitledProgressBar(
               maxSteps: widget.targetAmount.toInt(),
               currentStep: widget.sessionYield.toInt(),
-              progressColor: Colors.green,
+              progressColor: widget.lowFlowRate > widget.currentFlow
+                  ? AppColors.redColor
+                  : Colors.green,
               backgroundColor: Colors.grey.shade300,
               labelType: LabelType.percentage,
-              labelColor: Colors.white,
+              labelColor: widget.lowFlowRate > widget.currentFlow
+                  ? AppColors.darkRedColor
+                  : Colors.white,
               labelFontWeight: FontWeight.bold,
               minHeight: 18,
               borderRadius: BorderRadius.circular(12),
@@ -228,6 +237,13 @@ class _LiveInfoCardState extends State<LiveInfoCard> {
               animationCurve: Curves.easeInOut,
             ),*/
             SizedBox(height: 20),
+            widget.lowFlowRate > widget.currentFlow
+                ? Text(
+                    "Düşük basınç. Lütfen kontrol ediniz",
+                    style: TextStyle(color: AppColors.redColor, fontSize: 10, fontWeight: FontWeight.bold),
+                  )
+                : SizedBox(),
+            SizedBox(height: 10,),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

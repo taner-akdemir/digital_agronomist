@@ -1,5 +1,6 @@
 import 'package:milktrace/models/current_info.dart';
 import 'package:milktrace/models/hall.dart';
+import 'package:milktrace/models/spout.dart';
 import 'package:milktrace/models/vacuum_info.dart';
 
 import 'animal.dart';
@@ -18,7 +19,7 @@ Animal animal1 = Animal(
   name: 'İnek',
   type: 'cow',
   targetAmount: 20,
-  currentInfo: CurrentInfo(flowRate: 1.5, currentAmount: 12, lowFlowRate: 1),
+  currentInfo: CurrentInfo(flowRate: 1.5, currentAmount: 12, lowFlowRate: 1, spout: Spout(id: 1)),
 );
 
 Animal animal2 = Animal(
@@ -26,7 +27,7 @@ Animal animal2 = Animal(
   name: 'İnek',
   type: 'cow',
   targetAmount: 20,
-  currentInfo: CurrentInfo(flowRate: 1.6, currentAmount: 10, lowFlowRate: 1),
+  currentInfo: CurrentInfo(flowRate: 1.6, currentAmount: 10, lowFlowRate: 1, spout: Spout(id: 2)),
 );
 
 Animal animal3 = Animal(
@@ -34,7 +35,7 @@ Animal animal3 = Animal(
   name: 'İnek',
   type: 'cow',
   targetAmount: 20,
-  currentInfo: CurrentInfo(flowRate: 0.9, currentAmount: 8, lowFlowRate: 1),
+  currentInfo: CurrentInfo(flowRate: 0.9, currentAmount: 8, lowFlowRate: 1, spout: Spout(id: 3)),
 );
 
 Animal animal4 = Animal(
@@ -42,13 +43,15 @@ Animal animal4 = Animal(
   name: 'İnek',
   type: 'cow',
   targetAmount: 20,
-  currentInfo: CurrentInfo(flowRate: 1.7, currentAmount: 14, lowFlowRate: 1),
+  currentInfo: CurrentInfo(flowRate: 1.7, currentAmount: 14, lowFlowRate: 1, spout: Spout(id: 4)),
 );
 
-List<Animal> animals = [animal1];
+List<Animal> animals = [animal1, animal2, animal3, animal4];
 
 VacuumInfo vi1 = VacuumInfo(id: 1, totalVacuum: 10, animals: animals);
 
 List<VacuumInfo> vacuums = [vi1];
 
 Hall h1 = Hall(id: 1, hallName: "A", vacuums: vacuums);
+
+List<Hall> halls = [h1];
