@@ -233,7 +233,7 @@ class _LiveInfoCardState extends State<LiveInfoCard> {
               children: [
                 Expanded(
                   child: Text(
-                    "Mevcut Miktar",
+                    "Şu an",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 13,
@@ -264,7 +264,7 @@ class _LiveInfoCardState extends State<LiveInfoCard> {
               children: [
                 Expanded(
                   child: Text(
-                    "Hedef Miktar",
+                    "Hedef",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 13,

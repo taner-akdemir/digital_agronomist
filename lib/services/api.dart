@@ -1,0 +1,5 @@
+class Api {
+  static fetchAnimals(){
+
+  }
+}
