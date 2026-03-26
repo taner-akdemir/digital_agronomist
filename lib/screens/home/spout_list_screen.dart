@@ -55,25 +55,43 @@ class _SpoutListScreenState extends State<SpoutListScreen> {
                     .where((v) => v.hallID == h.id)
                     .toList();
                 VacuumInfo currentVI = hlsVacuums[currentVacuumIndex];
-                debugPrint(currentVI.totalSpout.toString());
+
                 return FutureBuilder<List<Spout>>(
                   future: spouts,
                   builder: (context, snapShot) {
                     if (snapShot.hasData) {
                       List<Spout> spouts = snapShot.data!;
+                      debugPrint("spouts.length");
+                      debugPrint(spouts.length.toString());
                       List<Spout> viSpouts = spouts
                           .where((s) => s.vacuumID == currentVI.id)
                           .toList();
-                      viSpouts.map((vs) => debugPrint(vs.id.toString()));
+                     for(Spout s in viSpouts){
+                       debugPrint("spout id");
+                       debugPrint(s.id.toString());
+                     }
                       return FutureBuilder(
                         future: animals,
                         builder: (context, snapShot) {
                           if (snapShot.hasData) {
                             List<Animal> animals = snapShot.data!;
+                            debugPrint("animals.length");
+                            debugPrint(animals.length.toString());
                             List<Animal> currentAnimals = animals
-                                .where((a) => viSpouts.contains(a.currentInfo.spout))
+                                .where((a){
+                                  bool isExist = false;
+                                  for(Spout s in viSpouts){
+                                    if(s.id == a.currentInfo.spoutId){
+                                      isExist = true;
+                                      break;
+                                    }
+                                  }
+                                  return isExist;
+                            })
                                 .toList();
 
+                            debugPrint("currentAnimals.length");
+                            debugPrint(currentAnimals.length.toString());
                             return ListView.builder(
                               itemCount: currentAnimals.length,
                               itemBuilder: (BuildContext context, int index) {

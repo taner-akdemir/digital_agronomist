@@ -17,7 +17,6 @@ class Animal {
   });
 
   factory Animal.fromJson(Map<String, dynamic> json) {
-    debugPrint(json.toString());
     return Animal(
       id: json["id"],
       name: json["name"],

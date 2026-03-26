@@ -57,6 +57,8 @@ class Api {
       String animalStr = await rootBundle.loadString('assets/data/animal.json');
       var animalsDecode = jsonDecode(animalStr);
       List<Animal> animals = (animalsDecode as List).map((animalMap) => Animal.fromJson(animalMap)).toList();
+      debugPrint("animals");
+      debugPrint(animals.length.toString());
       return animals;
 
     }catch(e){
