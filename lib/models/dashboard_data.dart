@@ -14,12 +14,12 @@ class DashboardData {
 
 
 
-Animal animal1 = Animal(
+/*Animal animal1 = Animal(
   id: 1,
   name: 'İnek',
   type: 'cow',
   targetAmount: 20,
-  currentInfo: CurrentInfo(flowRate: 1.5, currentAmount: 12, lowFlowRate: 1, spout: Spout(id: 1)),
+  currentInfo: CurrentInfo(flowRate: 1.5, currentAmount: 12, lowFlowRate: 1, spout: Spout(id: 1, vacuumID: 1)),
 );
 
 Animal animal2 = Animal(
@@ -27,7 +27,7 @@ Animal animal2 = Animal(
   name: 'İnek',
   type: 'cow',
   targetAmount: 20,
-  currentInfo: CurrentInfo(flowRate: 1.6, currentAmount: 10, lowFlowRate: 1, spout: Spout(id: 2)),
+  currentInfo: CurrentInfo(flowRate: 1.6, currentAmount: 10, lowFlowRate: 1, spout: Spout(id: 2, vacuumID: 1)),
 );
 
 Animal animal3 = Animal(
@@ -35,7 +35,7 @@ Animal animal3 = Animal(
   name: 'İnek',
   type: 'cow',
   targetAmount: 20,
-  currentInfo: CurrentInfo(flowRate: 0.9, currentAmount: 8, lowFlowRate: 1, spout: Spout(id: 3)),
+  currentInfo: CurrentInfo(flowRate: 0.9, currentAmount: 8, lowFlowRate: 1, spout: Spout(id: 3, vacuumID: 1)),
 );
 
 Animal animal4 = Animal(
@@ -43,15 +43,15 @@ Animal animal4 = Animal(
   name: 'İnek',
   type: 'cow',
   targetAmount: 20,
-  currentInfo: CurrentInfo(flowRate: 1.7, currentAmount: 14, lowFlowRate: 1, spout: Spout(id: 4)),
+  currentInfo: CurrentInfo(flowRate: 1.7, currentAmount: 14, lowFlowRate: 1, spout: Spout(id: 4, vacuumID: 1)),
 );
 
 List<Animal> animals = [animal1, animal2, animal3, animal4];
 
-VacuumInfo vi1 = VacuumInfo(id: 1, totalVacuum: 10, animals: animals);
+VacuumInfo vi1 = VacuumInfo(id: 1, totalSpout: 10, hallID: 1);
 
 List<VacuumInfo> vacuums = [vi1];
 
-Hall h1 = Hall(id: 1, hallName: "A", vacuums: vacuums);
+Hall h1 = Hall(id: 1, name: "A");
 
-List<Hall> halls = [h1];
+List<Hall> halls = [h1];*/

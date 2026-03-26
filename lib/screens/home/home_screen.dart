@@ -15,7 +15,7 @@ class HomeScreen extends ConsumerWidget {
     //final cartProducts = ref.watch(cartProvider);
     String currentPage = ref.watch(dashboardProvider);
     //String currentPage = "hall";
-    Widget page = HallListScreen();
+    Widget page = SpoutListScreen();
     if (currentPage == "hall") {
       page = HallListScreen();
     } else if (currentPage == "vacuum") {

@@ -1,0 +1,288 @@
+[
+  {
+    "id": 1,
+    "name": "İnek",
+    "type": "cow",
+    "targetAmount": 20.0,
+    "targetAmountUnit": "L",
+    "currentInfo": {
+      "flowRate": 1.5,
+      "flowRateUnit": "L/dk",
+      "lowFlowRate": 1.0,
+      "lowFlowRateUnit": "L/dk",
+      "currentAmount": 12.0,
+      "spoutId": 1,
+      "spout": {
+        "id": 1,
+        "vacuumID": 1
+      }
+    }
+  },
+  {
+    "id": 2,
+    "name": "İnek",
+    "type": "cow",
+    "targetAmount": 20.0,
+    "targetAmountUnit": "L",
+    "currentInfo": {
+      "flowRate": 1.7,
+      "flowRateUnit": "L/dk",
+      "lowFlowRate": 1.0,
+      "lowFlowRateUnit": "L/dk",
+      "currentAmount": 11.0,
+      "spoutId": 2,
+      "spout": {
+        "id": 2,
+        "vacuumID": 1
+      }
+    }
+  },
+  {
+    "id": 3,
+    "name": "İnek",
+    "type": "cow",
+    "targetAmount": 20.0,
+    "targetAmountUnit": "L",
+    "currentInfo": {
+      "flowRate": 1.1,
+      "flowRateUnit": "L/dk",
+      "lowFlowRate": 1.0,
+      "lowFlowRateUnit": "L/dk",
+      "currentAmount": 10.0,
+      "spoutId": 3,
+      "spout": {
+        "id": 3,
+        "vacuumID": 1
+      }
+    }
+  },
+  {
+    "id": 4,
+    "name": "İnek",
+    "type": "cow",
+    "targetAmount": 20.0,
+    "targetAmountUnit": "L",
+    "currentInfo": {
+      "flowRate": 1.0,
+      "flowRateUnit": "L/dk",
+      "lowFlowRate": 1.0,
+      "lowFlowRateUnit": "L/dk",
+      "currentAmount": 9.0,
+      "spoutId": 4,
+      "spout": {
+        "id": 4,
+        "vacuumID": 1
+      }
+    }
+  },
+  {
+    "id": 5,
+    "name": "İnek",
+    "type": "cow",
+    "targetAmount": 20.0,
+    "targetAmountUnit": "L",
+    "currentInfo": {
+      "flowRate": 1.4,
+      "flowRateUnit": "L/dk",
+      "lowFlowRate": 1.0,
+      "lowFlowRateUnit": "L/dk",
+      "currentAmount": 9.0,
+      "spoutId": 5,
+      "spout": {
+        "id": 5,
+        "vacuumID": 1
+      }
+    }
+  },
+  {
+    "id": 6,
+    "name": "İnek",
+    "type": "cow",
+    "targetAmount": 20.0,
+    "targetAmountUnit": "L",
+    "currentInfo": {
+      "flowRate": 0.4,
+      "flowRateUnit": "L/dk",
+      "lowFlowRate": 1.0,
+      "lowFlowRateUnit": "L/dk",
+      "currentAmount": 4.0,
+      "spoutId": 6,
+      "spout": {
+        "id": 6,
+        "vacuumID": 1
+      }
+    }
+  },
+  {
+    "id": 7,
+    "name": "İnek",
+    "type": "cow",
+    "targetAmount": 20.0,
+    "targetAmountUnit": "L",
+    "currentInfo": {
+      "flowRate": 0.8,
+      "flowRateUnit": "L/dk",
+      "lowFlowRate": 1.0,
+      "lowFlowRateUnit": "L/dk",
+      "currentAmount": 7.0,
+      "spoutId": 7,
+      "spout": {
+        "id": 7,
+        "vacuumID": 1
+      }
+    }
+  },
+  {
+    "id": 8,
+    "name": "İnek",
+    "type": "cow",
+    "targetAmount": 20.0,
+    "targetAmountUnit": "L",
+    "currentInfo": {
+      "flowRate": 0.2,
+      "flowRateUnit": "L/dk",
+      "lowFlowRate": 1.0,
+      "lowFlowRateUnit": "L/dk",
+      "currentAmount": 1.0,
+      "spoutId": 8,
+      "spout": {
+        "id": 8,
+        "vacuumID": 1
+      }
+    }
+  },
+  {
+    "id": 9,
+    "name": "Koyun",
+    "type": "sheep",
+    "targetAmount": 12.0,
+    "targetAmountUnit": "L",
+    "currentInfo": {
+      "flowRate": 0.6,
+      "flowRateUnit": "L/dk",
+      "lowFlowRate": 0.5,
+      "lowFlowRateUnit": "L/dk",
+      "currentAmount": 3.0,
+      "spoutId": 11,
+      "spout": {
+        "id": 11,
+        "vacuumID": 2
+      }
+    }
+  }
+,
+  {
+    "id": 10,
+    "name": "Koyun",
+    "type": "sheep",
+    "targetAmount": 12.0,
+    "targetAmountUnit": "L",
+    "currentInfo": {
+      "flowRate": 0.5,
+      "flowRateUnit": "L/dk",
+      "lowFlowRate": 0.5,
+      "lowFlowRateUnit": "L/dk",
+      "currentAmount": 2.0,
+      "spoutId": 12,
+      "spout": {
+        "id": 12,
+        "vacuumID": 2
+      }
+    }
+  },
+  {
+    "id": 11,
+    "name": "Koyun",
+    "type": "sheep",
+    "targetAmount": 12.0,
+    "targetAmountUnit": "L",
+    "currentInfo": {
+      "flowRate": 0.7,
+      "flowRateUnit": "L/dk",
+      "lowFlowRate": 0.5,
+      "lowFlowRateUnit": "L/dk",
+      "currentAmount": 7.0,
+      "spoutId": 13,
+      "spout": {
+        "id": 13,
+        "vacuumID": 2
+      }
+    }
+  },
+  {
+    "id": 12,
+    "name": "Koyun",
+    "type": "sheep",
+    "targetAmount": 12.0,
+    "targetAmountUnit": "L",
+    "currentInfo": {
+      "flowRate": 1.0,
+      "flowRateUnit": "L/dk",
+      "lowFlowRate": 0.5,
+      "lowFlowRateUnit": "L/dk",
+      "currentAmount": 5.0,
+      "spoutId": 14,
+      "spout": {
+        "id": 14,
+        "vacuumID": 2
+      }
+    }
+  },
+  {
+    "id": 13,
+    "name": "Koyun",
+    "type": "sheep",
+    "targetAmount": 12.0,
+    "targetAmountUnit": "L",
+    "currentInfo": {
+      "flowRate": 0.8,
+      "flowRateUnit": "L/dk",
+      "lowFlowRate": 0.5,
+      "lowFlowRateUnit": "L/dk",
+      "currentAmount": 7.0,
+      "spoutId": 15,
+      "spout": {
+        "id": 15,
+        "vacuumID": 2
+      }
+    }
+  },
+  {
+    "id": 14,
+    "name": "Keçi",
+    "type": "goat",
+    "targetAmount": 12.0,
+    "targetAmountUnit": "L",
+    "currentInfo": {
+      "flowRate": 0.6,
+      "flowRateUnit": "L/dk",
+      "lowFlowRate": 0.5,
+      "lowFlowRateUnit": "L/dk",
+      "currentAmount": 3.0,
+      "spoutId": 16,
+      "spout": {
+        "id": 16,
+        "vacuumID": 2
+      }
+    }
+  },
+  {
+    "id": 15,
+    "name": "Keçi",
+    "type": "goat",
+    "targetAmount": 12.0,
+    "targetAmountUnit": "L",
+    "currentInfo": {
+      "flowRate": 0.7,
+      "flowRateUnit": "L/dk",
+      "lowFlowRate": 0.5,
+      "lowFlowRateUnit": "L/dk",
+      "currentAmount": 7.0,
+      "spoutId": 17,
+      "spout": {
+        "id": 17,
+        "vacuumID": 2
+      }
+    }
+  }
+]

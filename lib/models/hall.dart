@@ -2,8 +2,17 @@ import 'package:milktrace/models/vacuum_info.dart';
 
 class Hall {
   final int id;
-  final String hallName;
-  final List<VacuumInfo> vacuums;
+  final String name;
 
-  Hall({required this.id, required this.hallName, required this.vacuums});
+  Hall({required this.id, required this.name});
+
+  factory Hall.fromJson(Map<String, dynamic> json) => Hall(
+    id: json["id"],
+    name: json["name"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+  };
 }

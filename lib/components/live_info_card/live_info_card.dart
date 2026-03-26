@@ -8,9 +8,9 @@ class LiveInfoCard extends StatefulWidget {
   final double sessionYield, targetAmount, currentFlow, lowFlowRate;
   final String title,
       name,
-      sessionYieldIndicator,
-      targetAmountIndicator,
-      currentFlowIndicator;
+      sessionYieldUnit,
+      targetAmountUnit,
+      currentFlowUnit;
 
   const LiveInfoCard({
     super.key,
@@ -20,10 +20,10 @@ class LiveInfoCard extends StatefulWidget {
     required this.name,
     required this.sessionYield,
     required this.targetAmount,
-    required this.sessionYieldIndicator,
-    required this.targetAmountIndicator,
+    required this.sessionYieldUnit,
+    required this.targetAmountUnit,
     required this.currentFlow,
-    required this.currentFlowIndicator,
+    required this.currentFlowUnit,
     required this.lowFlowRate,
   });
 
@@ -116,7 +116,7 @@ class _LiveInfoCardState extends State<LiveInfoCard> {
                       ),
                       SizedBox(width: 5),
                       Text(
-                        "${widget.currentFlowIndicator}",
+                        "${widget.currentFlowUnit}",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 11,
@@ -262,7 +262,7 @@ class _LiveInfoCardState extends State<LiveInfoCard> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        "${widget.sessionYield} ${widget.sessionYieldIndicator}",
+                        "${widget.sessionYield} ${widget.sessionYieldUnit}",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
@@ -293,7 +293,7 @@ class _LiveInfoCardState extends State<LiveInfoCard> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        "${widget.targetAmount} ${widget.targetAmountIndicator}",
+                        "${widget.targetAmount} ${widget.targetAmountUnit}",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14,

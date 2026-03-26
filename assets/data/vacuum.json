@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "totalSpout": 10,
+    "hallID": 1
+  },
+  {
+    "id": 2,
+    "totalSpout": 10,
+    "hallID": 1
+  },
+  {
+    "id": 3,
+    "totalSpout": 10,
+    "hallID": 1
+  }
+]
