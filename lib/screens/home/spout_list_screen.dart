@@ -22,23 +22,176 @@ class _SpoutListScreenState extends State<SpoutListScreen> {
   late final Future<List<Spout>> spouts;
   late final Future<List<Animal>> animals;
 
+  late int totalSpout = 0;
+  late int totalActiveSpout = 0;
+  late int totalPassiveSpout = 0;
+
   @override
   void initState() {
     super.initState();
-    hls = Api.fetchHalls();
-    vacuums = Api.fetchVacuums();
-    spouts = Api.fetchSpouts();
-    animals = Api.fetchAnimals();
+    fetchData();
   }
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    final double itemHeight = (size.height - kToolbarHeight - 350) / 2;
+    final double itemHeight = (size.height - kToolbarHeight - 300) / 2;
     final double itemWidth = (size.width - 10) / 2;
     int currentHallIndex = 0;
     int currentVacuumIndex = 0;
 
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10, 15, 10, 10),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Canlı Veriler", style: TextStyle(fontSize: 12)),
+                    Row(
+                      children: [
+                        FutureBuilder(
+                          future: hls,
+                          builder: (context, snapShot) {
+                            return Container();
+                          },
+                        ),
+                        Text(
+                          "Süt Sağma Alanı",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.veryLightGreyColor,
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                  ),
+                  padding: EdgeInsets.all(8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      LightInfo(
+                        lightColor: AppColors.lightGreenColor,
+                        title: '$totalActiveSpout Aktif',
+                      ),
+                      SizedBox(width: 10),
+                      LightInfo(
+                        lightColor: AppColors.redColor,
+                        title: '$totalPassiveSpout Pasif',
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 10),
+          FutureBuilder(
+            future: animals,
+            builder: (context, snapShot) {
+              if (snapShot.hasData) {
+                List<Animal> animals = snapShot.data!;
+                List<LiveInfoCard> cards = [];
+                for (Animal a in animals) {
+                  LiveInfoCard l = LiveInfoCard(
+                    lightColor: AppColors.lightGreenColor,
+                    title:
+                        "Vakum #${a.currentInfo.spout.vacuumInfo.id}, Musluk #${a.currentInfo.spout.id}",
+                    name: "İnek #${a.id}",
+                    sessionYield: a.currentInfo.currentAmount,
+                    targetAmount: a.targetAmount,
+                    currentFlow: a.currentInfo.flowRate,
+                    lowFlowRate: a.currentInfo.lowFlowRate,
+                    sessionYieldUnit: 'L',
+                    targetAmountUnit: 'L',
+                    currentFlowUnit: a.currentInfo.flowRateUnit,
+                  );
+
+                  cards.add(l);
+                }
+
+                return Expanded(
+                  child: ListView(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.secondaryColor,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // top side
+                            SizedBox(height: 15),
+                            SizedBox(
+                              child: /*ListView.separated(
+                            itemCount: vFirst.animals.length,
+                            shrinkWrap: true,
+                            physics: ClampingScrollPhysics(),
+                            itemBuilder: (context, index){
+                              Animal a = vFirst.animals[index];
+                              return LiveInfoCard(
+                                lightColor: AppColors.lightGreenColor,
+                                title: "Vakum #${vFirst.id}, Spout #${a.currentInfo.spout.id}",
+                                name: "İnek #${a.id}",
+                                sessionYield: a.currentInfo.currentAmount,
+                                targetAmount: a.targetAmount,
+                                currentFlow: a.currentInfo.flowRate,
+                                sessionYieldUnit: 'L',
+                                targetAmountUnit: 'L',
+                                currentFlowUnit: 'L/min',
+                              );
+                            },
+                            separatorBuilder: (BuildContext context, int index) => const Divider(),
+
+                          )*/ GridView.count(
+                                padding: const EdgeInsets.all(5),
+                                crossAxisCount: 2,
+                                mainAxisSpacing: 12,
+                                crossAxisSpacing: 7,
+                                shrinkWrap: true,
+                                controller: ScrollController(
+                                  keepScrollOffset: false,
+                                ),
+                                scrollDirection: Axis.vertical,
+                                childAspectRatio: (itemWidth / itemHeight),
+                                children: cards,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              } else if (snapShot.hasError) {
+                return Center(child: Text(snapShot.error.toString()));
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
+        ],
+      ),
+    );
+
+    /*
+
+    */
     return FutureBuilder<List<Hall>>(
       future: hls,
       builder: (context, snapShot) {
@@ -66,10 +219,10 @@ class _SpoutListScreenState extends State<SpoutListScreen> {
                       List<Spout> viSpouts = spouts
                           .where((s) => s.vacuumID == currentVI.id)
                           .toList();
-                     for(Spout s in viSpouts){
-                       debugPrint("spout id");
-                       debugPrint(s.id.toString());
-                     }
+                      for (Spout s in viSpouts) {
+                        debugPrint("spout id");
+                        debugPrint(s.id.toString());
+                      }
                       return FutureBuilder(
                         future: animals,
                         builder: (context, snapShot) {
@@ -77,18 +230,16 @@ class _SpoutListScreenState extends State<SpoutListScreen> {
                             List<Animal> animals = snapShot.data!;
                             debugPrint("animals.length");
                             debugPrint(animals.length.toString());
-                            List<Animal> currentAnimals = animals
-                                .where((a){
-                                  bool isExist = false;
-                                  for(Spout s in viSpouts){
-                                    if(s.id == a.currentInfo.spoutId){
-                                      isExist = true;
-                                      break;
-                                    }
-                                  }
-                                  return isExist;
-                            })
-                                .toList();
+                            List<Animal> currentAnimals = animals.where((a) {
+                              bool isExist = false;
+                              for (Spout s in viSpouts) {
+                                if (s.id == a.currentInfo.spoutId) {
+                                  isExist = true;
+                                  break;
+                                }
+                              }
+                              return isExist;
+                            }).toList();
 
                             debugPrint("currentAnimals.length");
                             debugPrint(currentAnimals.length.toString());
@@ -104,14 +255,16 @@ class _SpoutListScreenState extends State<SpoutListScreen> {
                                   totalActiveSpout += currentAnimals.length;
                                 }
 
-                                totalPassiveSpout = totalSpout - totalActiveSpout;
+                                totalPassiveSpout =
+                                    totalSpout - totalActiveSpout;
 
                                 List<LiveInfoCard> cards = [];
 
                                 for (Animal a in currentAnimals) {
                                   LiveInfoCard l = LiveInfoCard(
                                     lightColor: AppColors.lightGreenColor,
-                                    title: "Vakum #${currentVI.id}, Musluk #${a.currentInfo.spout.id}",
+                                    title:
+                                        "Vakum #${currentVI.id}, Musluk #${a.currentInfo.spout.id}",
                                     name: "İnek #${a.id}",
                                     sessionYield: a.currentInfo.currentAmount,
                                     targetAmount: a.targetAmount,
@@ -126,29 +279,48 @@ class _SpoutListScreenState extends State<SpoutListScreen> {
                                 }
 
                                 return Container(
-                                  decoration: BoxDecoration(color: AppColors.secondaryColor),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.secondaryColor,
+                                  ),
                                   child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(10, 12, 10, 0),
+                                    padding: const EdgeInsets.fromLTRB(
+                                      10,
+                                      12,
+                                      10,
+                                      0,
+                                    ),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         // top side
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Expanded(
                                               child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
-                                                  Text("Canlı Veriler", style: TextStyle(fontSize: 12)),
+                                                  Text(
+                                                    "Canlı Veriler",
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                    ),
+                                                  ),
                                                   Text(
                                                     "${h.name} Süt Sağma Alanı",
                                                     style: TextStyle(
                                                       fontSize: 15,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                     ),
                                                   ),
                                                 ],
@@ -157,21 +329,31 @@ class _SpoutListScreenState extends State<SpoutListScreen> {
                                             Expanded(
                                               child: Container(
                                                 decoration: BoxDecoration(
-                                                  color: AppColors.veryLightGreyColor,
-                                                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                                                  color: AppColors
+                                                      .veryLightGreyColor,
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                        Radius.circular(5),
+                                                      ),
                                                 ),
                                                 padding: EdgeInsets.all(8),
                                                 child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
                                                     LightInfo(
-                                                      lightColor: AppColors.lightGreenColor,
-                                                      title: '$totalActiveSpout Aktif',
+                                                      lightColor: AppColors
+                                                          .lightGreenColor,
+                                                      title:
+                                                          '$totalActiveSpout Aktif',
                                                     ),
                                                     SizedBox(width: 10),
                                                     LightInfo(
-                                                      lightColor: AppColors.redColor,
-                                                      title: '$totalPassiveSpout Pasif',
+                                                      lightColor:
+                                                          AppColors.redColor,
+                                                      title:
+                                                          '$totalPassiveSpout Pasif',
                                                     ),
                                                   ],
                                                 ),
@@ -207,9 +389,12 @@ class _SpoutListScreenState extends State<SpoutListScreen> {
                                             mainAxisSpacing: 12,
                                             crossAxisSpacing: 7,
                                             shrinkWrap: true,
-                                            controller: ScrollController(keepScrollOffset: false),
+                                            controller: ScrollController(
+                                              keepScrollOffset: false,
+                                            ),
                                             scrollDirection: Axis.vertical,
-                                            childAspectRatio: (itemWidth / itemHeight),
+                                            childAspectRatio:
+                                                (itemWidth / itemHeight),
                                             children: cards,
                                           ),
                                         ),
@@ -219,8 +404,6 @@ class _SpoutListScreenState extends State<SpoutListScreen> {
                                 );
                               },
                             );
-                            
-                            
                           } else if (snapShot.hasError) {
                             return Center(
                               child: Text(snapShot.error.toString()),
@@ -251,5 +434,37 @@ class _SpoutListScreenState extends State<SpoutListScreen> {
         }
       },
     );
+  }
+
+  Future<void> fetchData() async {
+    hls = Api.fetchHalls();
+    vacuums = Api.fetchVacuums();
+    //spouts = Api.fetchSpouts();
+    animals = Api.fetchAnimals();
+    var ts = 0;
+
+    vacuums.then((v){
+      for(VacuumInfo vv in v){
+        ts += vv.totalSpout;
+      }
+    }).whenComplete(() {
+      setState(() {
+        totalSpout = ts;
+      });
+    });
+
+    var tAs = 0;
+    animals
+        .then((a) {
+         for(Animal aa in a){
+           tAs += 1;
+         }
+        })
+        .whenComplete(() {
+          setState(() {
+            totalActiveSpout = tAs;
+            totalPassiveSpout = ts - tAs;
+          });
+        });
   }
 }

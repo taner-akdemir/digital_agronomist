@@ -14,7 +14,16 @@
       "spoutId": 1,
       "spout": {
         "id": 1,
-        "vacuumID": 1
+        "vacuumID": 1,
+        "vacuumInfo": {
+          "id": 1,
+          "totalSpout": 10,
+          "hallID": 1,
+          "hall": {
+            "id": 1,
+            "name": "A"
+          }
+        }
       }
     }
   },
@@ -33,7 +42,16 @@
       "spoutId": 2,
       "spout": {
         "id": 2,
-        "vacuumID": 1
+        "vacuumID": 1,
+        "vacuumInfo": {
+          "id": 1,
+          "totalSpout": 10,
+          "hallID": 1,
+          "hall": {
+            "id": 1,
+            "name": "A"
+          }
+        }
       }
     }
   },
@@ -52,7 +70,16 @@
       "spoutId": 3,
       "spout": {
         "id": 3,
-        "vacuumID": 1
+        "vacuumID": 1,
+        "vacuumInfo": {
+          "id": 1,
+          "totalSpout": 10,
+          "hallID": 1,
+          "hall": {
+            "id": 1,
+            "name": "A"
+          }
+        }
       }
     }
   },
@@ -71,7 +98,16 @@
       "spoutId": 4,
       "spout": {
         "id": 4,
-        "vacuumID": 1
+        "vacuumID": 1,
+        "vacuumInfo": {
+          "id": 1,
+          "totalSpout": 10,
+          "hallID": 1,
+          "hall": {
+            "id": 1,
+            "name": "A"
+          }
+        }
       }
     }
   },
@@ -90,7 +126,16 @@
       "spoutId": 5,
       "spout": {
         "id": 5,
-        "vacuumID": 1
+        "vacuumID": 1,
+        "vacuumInfo": {
+          "id": 1,
+          "totalSpout": 10,
+          "hallID": 1,
+          "hall": {
+            "id": 1,
+            "name": "A"
+          }
+        }
       }
     }
   },
@@ -109,7 +154,16 @@
       "spoutId": 6,
       "spout": {
         "id": 6,
-        "vacuumID": 1
+        "vacuumID": 1,
+        "vacuumInfo": {
+          "id": 1,
+          "totalSpout": 10,
+          "hallID": 1,
+          "hall": {
+            "id": 1,
+            "name": "A"
+          }
+        }
       }
     }
   },
@@ -128,7 +182,16 @@
       "spoutId": 7,
       "spout": {
         "id": 7,
-        "vacuumID": 1
+        "vacuumID": 1,
+        "vacuumInfo": {
+          "id": 1,
+          "totalSpout": 10,
+          "hallID": 1,
+          "hall": {
+            "id": 1,
+            "name": "A"
+          }
+        }
       }
     }
   },
@@ -147,7 +210,16 @@
       "spoutId": 8,
       "spout": {
         "id": 8,
-        "vacuumID": 1
+        "vacuumID": 1,
+        "vacuumInfo": {
+          "id": 1,
+          "totalSpout": 10,
+          "hallID": 1,
+          "hall": {
+            "id": 1,
+            "name": "A"
+          }
+        }
       }
     }
   },
@@ -166,7 +238,16 @@
       "spoutId": 11,
       "spout": {
         "id": 11,
-        "vacuumID": 2
+        "vacuumID": 2,
+        "vacuumInfo": {
+          "id": 2,
+          "totalSpout": 10,
+          "hallID": 1,
+          "hall": {
+            "id": 2,
+            "name": "B"
+          }
+        }
       }
     }
   }
@@ -186,7 +267,16 @@
       "spoutId": 12,
       "spout": {
         "id": 12,
-        "vacuumID": 2
+        "vacuumID": 2,
+        "vacuumInfo": {
+          "id": 2,
+          "totalSpout": 10,
+          "hallID": 1,
+          "hall": {
+            "id": 2,
+            "name": "B"
+          }
+        }
       }
     }
   },
@@ -205,7 +295,16 @@
       "spoutId": 13,
       "spout": {
         "id": 13,
-        "vacuumID": 2
+        "vacuumID": 2,
+        "vacuumInfo": {
+          "id": 2,
+          "totalSpout": 10,
+          "hallID": 1,
+          "hall": {
+            "id": 2,
+            "name": "B"
+          }
+        }
       }
     }
   },
@@ -224,7 +323,16 @@
       "spoutId": 14,
       "spout": {
         "id": 14,
-        "vacuumID": 2
+        "vacuumID": 2,
+        "vacuumInfo": {
+          "id": 2,
+          "totalSpout": 10,
+          "hallID": 1,
+          "hall": {
+            "id": 2,
+            "name": "B"
+          }
+        }
       }
     }
   },
@@ -243,7 +351,16 @@
       "spoutId": 15,
       "spout": {
         "id": 15,
-        "vacuumID": 2
+        "vacuumID": 2,
+        "vacuumInfo": {
+          "id": 2,
+          "totalSpout": 10,
+          "hallID": 1,
+          "hall": {
+            "id": 2,
+            "name": "B"
+          }
+        }
       }
     }
   },
@@ -262,7 +379,16 @@
       "spoutId": 16,
       "spout": {
         "id": 16,
-        "vacuumID": 2
+        "vacuumID": 2,
+        "vacuumInfo": {
+          "id": 2,
+          "totalSpout": 10,
+          "hallID": 1,
+          "hall": {
+            "id": 2,
+            "name": "B"
+          }
+        }
       }
     }
   },
@@ -281,7 +407,16 @@
       "spoutId": 17,
       "spout": {
         "id": 17,
-        "vacuumID": 2
+        "vacuumID": 2,
+        "vacuumInfo": {
+          "id": 2,
+          "totalSpout": 10,
+          "hallID": 1,
+          "hall": {
+            "id": 2,
+            "name": "B"
+          }
+        }
       }
     }
   }
