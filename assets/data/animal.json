@@ -271,7 +271,7 @@
         "vacuumInfo": {
           "id": 2,
           "totalSpout": 10,
-          "hallID": 1,
+          "hallID": 2,
           "hall": {
             "id": 2,
             "name": "B"
@@ -299,7 +299,7 @@
         "vacuumInfo": {
           "id": 2,
           "totalSpout": 10,
-          "hallID": 1,
+          "hallID": 2,
           "hall": {
             "id": 2,
             "name": "B"
@@ -327,7 +327,7 @@
         "vacuumInfo": {
           "id": 2,
           "totalSpout": 10,
-          "hallID": 1,
+          "hallID": 2,
           "hall": {
             "id": 2,
             "name": "B"
@@ -355,7 +355,7 @@
         "vacuumInfo": {
           "id": 2,
           "totalSpout": 10,
-          "hallID": 1,
+          "hallID": 2,
           "hall": {
             "id": 2,
             "name": "B"
@@ -383,7 +383,7 @@
         "vacuumInfo": {
           "id": 2,
           "totalSpout": 10,
-          "hallID": 1,
+          "hallID": 2,
           "hall": {
             "id": 2,
             "name": "B"
@@ -411,7 +411,7 @@
         "vacuumInfo": {
           "id": 2,
           "totalSpout": 10,
-          "hallID": 1,
+          "hallID": 2,
           "hall": {
             "id": 2,
             "name": "B"

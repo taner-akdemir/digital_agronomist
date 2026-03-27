@@ -17,19 +17,20 @@ class SpoutListScreen extends StatefulWidget {
 }
 
 class _SpoutListScreenState extends State<SpoutListScreen> {
-  late final Future<List<Hall>> hls;
-  late final Future<List<VacuumInfo>> vacuums;
-  late final Future<List<Spout>> spouts;
-  late final Future<List<Animal>> animals;
+  late  Future<List<Hall>> hls;
+  late  Future<List<VacuumInfo>> vacuums;
+  late  Future<List<Spout>> spouts;
+  late  Future<List<Animal>> animals;
 
   late int totalSpout = 0;
   late int totalActiveSpout = 0;
   late int totalPassiveSpout = 0;
+  late String hallId = "1";
 
   @override
   void initState() {
     super.initState();
-    fetchData();
+    fetchData(hallId);
   }
 
   @override
@@ -37,8 +38,6 @@ class _SpoutListScreenState extends State<SpoutListScreen> {
     var size = MediaQuery.of(context).size;
     final double itemHeight = (size.height - kToolbarHeight - 300) / 2;
     final double itemWidth = (size.width - 10) / 2;
-    int currentHallIndex = 0;
-    int currentVacuumIndex = 0;
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 15, 10, 10),
@@ -59,9 +58,30 @@ class _SpoutListScreenState extends State<SpoutListScreen> {
                         FutureBuilder(
                           future: hls,
                           builder: (context, snapShot) {
-                            return Container();
+                            if(snapShot.hasData){
+                              List<Hall> halls = snapShot.data!;
+                              return DropdownButton<String>(
+                                value: hallId,
+                                icon: const Icon(Icons.arrow_downward),
+                                elevation: 16,
+                                style: const TextStyle(color: Colors.deepPurple),
+                                underline: Container(height: 2, color: Colors.deepPurpleAccent),
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    hallId = value!;
+                                    fetchData(hallId);
+                                  });
+                                },
+                                items: halls.map<DropdownMenuItem<String>>((Hall h) {
+                                  return DropdownMenuItem<String>(value: h.id.toString(), child: Text(h.name));
+                                }).toList(),
+                              );
+                            }
+
+                            return SizedBox();
                           },
                         ),
+                        SizedBox(width: 10,),
                         Text(
                           "Süt Sağma Alanı",
                           style: TextStyle(
@@ -111,7 +131,7 @@ class _SpoutListScreenState extends State<SpoutListScreen> {
                     lightColor: AppColors.lightGreenColor,
                     title:
                         "Vakum #${a.currentInfo.spout.vacuumInfo.id}, Musluk #${a.currentInfo.spout.id}",
-                    name: "İnek #${a.id}",
+                    name: "${a.name} #${a.id}",
                     sessionYield: a.currentInfo.currentAmount,
                     targetAmount: a.targetAmount,
                     currentFlow: a.currentInfo.flowRate,
@@ -181,6 +201,7 @@ class _SpoutListScreenState extends State<SpoutListScreen> {
               } else if (snapShot.hasError) {
                 return Center(child: Text(snapShot.error.toString()));
               } else {
+                debugPrint("waiting");
                 return Center(child: CircularProgressIndicator());
               }
             },
@@ -188,259 +209,14 @@ class _SpoutListScreenState extends State<SpoutListScreen> {
         ],
       ),
     );
-
-    /*
-
-    */
-    return FutureBuilder<List<Hall>>(
-      future: hls,
-      builder: (context, snapShot) {
-        if (snapShot.hasData) {
-          List<Hall> halls = snapShot.data!;
-          Hall h = halls[currentHallIndex];
-          debugPrint(h.name);
-          return FutureBuilder<List<VacuumInfo>>(
-            future: vacuums,
-            builder: (context, snapShot) {
-              if (snapShot.hasData) {
-                List<VacuumInfo> vacuums = snapShot.data!;
-                List<VacuumInfo> hlsVacuums = vacuums
-                    .where((v) => v.hallID == h.id)
-                    .toList();
-                VacuumInfo currentVI = hlsVacuums[currentVacuumIndex];
-
-                return FutureBuilder<List<Spout>>(
-                  future: spouts,
-                  builder: (context, snapShot) {
-                    if (snapShot.hasData) {
-                      List<Spout> spouts = snapShot.data!;
-                      debugPrint("spouts.length");
-                      debugPrint(spouts.length.toString());
-                      List<Spout> viSpouts = spouts
-                          .where((s) => s.vacuumID == currentVI.id)
-                          .toList();
-                      for (Spout s in viSpouts) {
-                        debugPrint("spout id");
-                        debugPrint(s.id.toString());
-                      }
-                      return FutureBuilder(
-                        future: animals,
-                        builder: (context, snapShot) {
-                          if (snapShot.hasData) {
-                            List<Animal> animals = snapShot.data!;
-                            debugPrint("animals.length");
-                            debugPrint(animals.length.toString());
-                            List<Animal> currentAnimals = animals.where((a) {
-                              bool isExist = false;
-                              for (Spout s in viSpouts) {
-                                if (s.id == a.currentInfo.spoutId) {
-                                  isExist = true;
-                                  break;
-                                }
-                              }
-                              return isExist;
-                            }).toList();
-
-                            debugPrint("currentAnimals.length");
-                            debugPrint(currentAnimals.length.toString());
-                            return ListView.builder(
-                              itemCount: currentAnimals.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                int totalSpout = 0;
-                                int totalActiveSpout = 0;
-                                int totalPassiveSpout = 0;
-
-                                for (VacuumInfo v in vacuums) {
-                                  totalSpout += v.totalSpout;
-                                  totalActiveSpout += currentAnimals.length;
-                                }
-
-                                totalPassiveSpout =
-                                    totalSpout - totalActiveSpout;
-
-                                List<LiveInfoCard> cards = [];
-
-                                for (Animal a in currentAnimals) {
-                                  LiveInfoCard l = LiveInfoCard(
-                                    lightColor: AppColors.lightGreenColor,
-                                    title:
-                                        "Vakum #${currentVI.id}, Musluk #${a.currentInfo.spout.id}",
-                                    name: "İnek #${a.id}",
-                                    sessionYield: a.currentInfo.currentAmount,
-                                    targetAmount: a.targetAmount,
-                                    currentFlow: a.currentInfo.flowRate,
-                                    lowFlowRate: a.currentInfo.lowFlowRate,
-                                    sessionYieldUnit: 'L',
-                                    targetAmountUnit: 'L',
-                                    currentFlowUnit: a.currentInfo.flowRateUnit,
-                                  );
-
-                                  cards.add(l);
-                                }
-
-                                return Container(
-                                  decoration: BoxDecoration(
-                                    color: AppColors.secondaryColor,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                      10,
-                                      12,
-                                      10,
-                                      0,
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        // top side
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Expanded(
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    "Canlı Veriler",
-                                                    style: TextStyle(
-                                                      fontSize: 12,
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    "${h.name} Süt Sağma Alanı",
-                                                    style: TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: AppColors
-                                                      .veryLightGreyColor,
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                        Radius.circular(5),
-                                                      ),
-                                                ),
-                                                padding: EdgeInsets.all(8),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    LightInfo(
-                                                      lightColor: AppColors
-                                                          .lightGreenColor,
-                                                      title:
-                                                          '$totalActiveSpout Aktif',
-                                                    ),
-                                                    SizedBox(width: 10),
-                                                    LightInfo(
-                                                      lightColor:
-                                                          AppColors.redColor,
-                                                      title:
-                                                          '$totalPassiveSpout Pasif',
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(height: 15),
-                                        SizedBox(
-                                          child: /*ListView.separated(
-                      itemCount: vFirst.animals.length,
-                      shrinkWrap: true,
-                      physics: ClampingScrollPhysics(),
-                      itemBuilder: (context, index){
-                        Animal a = vFirst.animals[index];
-                        return LiveInfoCard(
-                          lightColor: AppColors.lightGreenColor,
-                          title: "Vakum #${vFirst.id}, Spout #${a.currentInfo.spout.id}",
-                          name: "İnek #${a.id}",
-                          sessionYield: a.currentInfo.currentAmount,
-                          targetAmount: a.targetAmount,
-                          currentFlow: a.currentInfo.flowRate,
-                          sessionYieldUnit: 'L',
-                          targetAmountUnit: 'L',
-                          currentFlowUnit: 'L/min',
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) => const Divider(),
-
-                    )*/ GridView.count(
-                                            padding: const EdgeInsets.all(5),
-                                            crossAxisCount: 2,
-                                            mainAxisSpacing: 12,
-                                            crossAxisSpacing: 7,
-                                            shrinkWrap: true,
-                                            controller: ScrollController(
-                                              keepScrollOffset: false,
-                                            ),
-                                            scrollDirection: Axis.vertical,
-                                            childAspectRatio:
-                                                (itemWidth / itemHeight),
-                                            children: cards,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          } else if (snapShot.hasError) {
-                            return Center(
-                              child: Text(snapShot.error.toString()),
-                            );
-                          } else {
-                            return Center(child: CircularProgressIndicator());
-                          }
-                        },
-                      );
-                    } else if (snapShot.hasError) {
-                      return Center(child: Text(snapShot.error.toString()));
-                    } else {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                  },
-                );
-              } else if (snapShot.hasError) {
-                return Center(child: Text(snapShot.error.toString()));
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            },
-          );
-        } else if (snapShot.hasError) {
-          return Center(child: Text(snapShot.error.toString()));
-        } else {
-          return Center(child: CircularProgressIndicator());
-        }
-      },
-    );
   }
 
-  Future<void> fetchData() async {
+  Future<void> fetchData(String hallId) async {
+    debugPrint("geldi $hallId");
     hls = Api.fetchHalls();
-    vacuums = Api.fetchVacuums();
+    vacuums = Api.fetchVacuums(hallId);
     //spouts = Api.fetchSpouts();
-    animals = Api.fetchAnimals();
+    animals = Api.fetchAnimals(hallId);
     var ts = 0;
 
     vacuums.then((v){

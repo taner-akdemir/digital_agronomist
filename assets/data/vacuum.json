@@ -11,10 +11,10 @@
   {
     "id": 2,
     "totalSpout": 10,
-    "hallID": 1,
+    "hallID": 2,
     "hall": {
-      "id": 1,
-      "name": "A"
+      "id": 2,
+      "name": "B"
     }
   },
   {
@@ -22,8 +22,8 @@
     "totalSpout": 10,
     "hallID": 1,
     "hall": {
-      "id": 1,
-      "name": "A"
+      "id": 2,
+      "name": "B"
     }
   }
 ]
