@@ -1,47 +1,40 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:milktrace/app/theme.dart';
 
-class SplashScreen extends StatefulWidget {
+/// Açılış ekranı.
+///
+/// Eskiden 2 saniyelik bir Timer'la kendi kendine /live'a giderdi. Artık
+/// yönlendirmeyi YAPMAZ: oturumun geri yüklenip yüklenmediğini router'ın
+/// redirect'i bilir ve hazır olduğunda buradan çıkarır. İki yönlendirme
+/// kaynağı olsaydı, token okuması 2 saniyeden uzun sürdüğünde uygulama
+/// giriş yapmamış hâlde /live'a düşerdi.
+class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
-
-  @override
-  State<SplashScreen> createState() => _SplashScreen();
-}
-
-class _SplashScreen extends State<SplashScreen> {
-  late Timer _timer;
-
-  @override
-  void initState() {
-    _timer = Timer(const Duration(seconds: 2), () {
-      if (!mounted) return;
-      context.go('/live');
-    });
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text(
-          'Milk Trace',
-          style: TextStyle(
-            fontSize: 44,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1.5,
-            color: AppColors.darkGreenColor,
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Milk Trace',
+              style: TextStyle(
+                fontSize: 44,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.5,
+                color: AppColors.darkGreenColor,
+              ),
+            ),
+            SizedBox(height: AppSpacing.xl),
+            SizedBox(
+              height: 24,
+              width: 24,
+              child: CircularProgressIndicator(
+                  strokeWidth: 2, color: AppColors.darkGreenColor),
+            ),
+          ],
         ),
       ),
     );
