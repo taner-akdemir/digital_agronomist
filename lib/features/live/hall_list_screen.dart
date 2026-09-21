@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:milktrace/models/hall.dart';
+import 'package:milktrace/data/models/hall.dart';
 
-import '../../providers/common_providers.dart';
-import '../../services/api.dart';
-import '../../theme.dart';
+import 'package:milktrace/features/shell/shell_providers.dart';
+import 'package:milktrace/data/api.dart';
+import 'package:milktrace/app/theme.dart';
 
 class HallListScreen extends ConsumerStatefulWidget {
   const HallListScreen({super.key});

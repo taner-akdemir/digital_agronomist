@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:milktrace/theme.dart';
-import 'package:milktrace/utils/utils.dart';
+import 'package:milktrace/app/theme.dart';
+import 'package:milktrace/core/utils.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;

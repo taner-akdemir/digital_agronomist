@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:milktrace/providers/common_providers.dart';
-import 'package:milktrace/screens/home/hall_list_screen.dart';
-import 'package:milktrace/screens/home/spout_list_screen.dart';
-import 'package:milktrace/screens/home/vacuum_list_screen.dart';
+import 'package:milktrace/features/shell/shell_providers.dart';
+import 'package:milktrace/features/live/hall_list_screen.dart';
+import 'package:milktrace/features/live/spout_list_screen.dart';
+import 'package:milktrace/features/live/vacuum_list_screen.dart';
 
-import '../../components/custom_app_bar/custom_app_bar.dart';
+import 'package:milktrace/widgets/custom_app_bar.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});

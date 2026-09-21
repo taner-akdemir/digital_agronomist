@@ -1,4 +1,4 @@
-import 'package:milktrace/models/spout.dart';
+import 'package:milktrace/data/models/spout.dart';
 
 class CurrentInfo {
   final double flowRate;

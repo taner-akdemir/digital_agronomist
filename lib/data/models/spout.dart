@@ -1,4 +1,4 @@
-import 'package:milktrace/models/vacuum_info.dart';
+import 'package:milktrace/data/models/vacuum_info.dart';
 
 class Spout {
   final int id;

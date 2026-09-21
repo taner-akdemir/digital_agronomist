@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../theme.dart';
+import 'package:milktrace/app/theme.dart';
 
 class LightInfo extends StatelessWidget {
   final Color lightColor;

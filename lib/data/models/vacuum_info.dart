@@ -1,4 +1,4 @@
-import 'package:milktrace/models/hall.dart';
+import 'package:milktrace/data/models/hall.dart';
 
 
 class VacuumInfo {

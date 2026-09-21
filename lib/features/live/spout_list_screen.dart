@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:milktrace/models/spout.dart';
+import 'package:milktrace/data/models/spout.dart';
 
-import '../../components/light_info/light_info.dart';
-import '../../components/live_info_card/live_info_card.dart';
-import '../../models/animal.dart';
-import '../../models/hall.dart';
-import '../../models/vacuum_info.dart';
-import '../../services/api.dart';
-import '../../theme.dart';
+import 'package:milktrace/widgets/light_info.dart';
+import 'package:milktrace/features/live/widgets/live_info_card.dart';
+import 'package:milktrace/data/models/animal.dart';
+import 'package:milktrace/data/models/hall.dart';
+import 'package:milktrace/data/models/vacuum_info.dart';
+import 'package:milktrace/data/api.dart';
+import 'package:milktrace/app/theme.dart';
 
 class SpoutListScreen extends StatefulWidget {
   const SpoutListScreen({super.key});

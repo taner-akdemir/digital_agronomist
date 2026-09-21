@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:milktrace/theme.dart';
+import 'package:milktrace/app/theme.dart';
 import 'package:linear_progress_bar/linear_progress_bar.dart';
 
 class LiveInfoCard extends StatefulWidget {

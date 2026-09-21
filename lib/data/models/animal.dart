@@ -1,5 +1,5 @@
 
-import 'current_info.dart';
+import 'package:milktrace/data/models/current_info.dart';
 
 class Animal {
   final int id;

@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:milktrace/utils/route_builder.dart';
-import 'package:milktrace/screens/home/home_screen.dart';
-import 'package:milktrace/screens/splash/splash_screen.dart';
+import 'package:milktrace/core/route_builder.dart';
+import 'package:milktrace/features/shell/home_screen.dart';
+import 'package:milktrace/features/splash/splash_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
-import '../theme.dart';
+import 'package:milktrace/app/theme.dart';
 
 class BottomNavigatorBar extends StatefulWidget {
   const BottomNavigatorBar({super.key});

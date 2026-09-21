@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:milktrace/models/animal.dart';
-import 'package:milktrace/models/hall.dart';
-import 'package:milktrace/models/spout.dart';
+import 'package:milktrace/data/models/animal.dart';
+import 'package:milktrace/data/models/hall.dart';
+import 'package:milktrace/data/models/spout.dart';
 import 'dart:convert';
 
-import 'package:milktrace/models/vacuum_info.dart';
+import 'package:milktrace/data/models/vacuum_info.dart';
 
 class Api {
 
