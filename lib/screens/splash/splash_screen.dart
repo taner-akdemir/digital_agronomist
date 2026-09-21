@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:milktrace/theme.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,8 +15,9 @@ class _SplashScreen extends State<SplashScreen> {
 
   @override
   void initState() {
-    _timer = Timer(Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, "/login");
+    _timer = Timer(const Duration(seconds: 2), () {
+      if (!mounted) return;
+      Navigator.pushReplacementNamed(context, "/");
     });
 
     super.initState();
@@ -23,7 +25,6 @@ class _SplashScreen extends State<SplashScreen> {
 
   @override
   void dispose() {
-    debugPrint("Splash dispose");
     _timer.cancel();
     super.dispose();
   }
@@ -33,11 +34,12 @@ class _SplashScreen extends State<SplashScreen> {
     return Scaffold(
       body: Center(
         child: Text(
-          "Algebran",
+          "Milk Trace",
           style: TextStyle(
-            fontFamily: "Pacifico",
-            fontSize: 50,
+            fontSize: 44,
             fontWeight: FontWeight.bold,
+            letterSpacing: 1.5,
+            color: AppColors.darkGreenColor,
           ),
         ),
       ),

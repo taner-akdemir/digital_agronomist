@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppColors {
   static const Color primaryColor = Color.fromRGBO(246, 249, 252, 1);
@@ -13,4 +14,27 @@ class AppColors {
   static const Color lightGreyColor = Color.fromRGBO(165, 181, 173, 1);
   static const Color veryLightGreyColor = Color.fromRGBO(238, 241, 245, 1);
   static const Color iconGreyColor = Color.fromRGBO(57, 64, 59, 1);
+}
+
+/// Uygulamanın tema verisi.
+///
+/// Daha önce MyApp.build içinde satır içiydi ve metin temasını
+/// `Theme.of(context)` üzerinden kuruyordu — ama o context MaterialApp'in
+/// ÜSTÜNDEydi, yani okunan tema uygulamanın kendi teması değil Flutter'ın
+/// varsayılanıydı. Poppins doğrudan uygulanır.
+ThemeData buildAppTheme() {
+  final colorScheme = ColorScheme.fromSeed(seedColor: AppColors.darkBlueColor);
+
+  return ThemeData(
+    useMaterial3: true,
+    colorScheme: colorScheme,
+    primaryColor: AppColors.primaryColor,
+    scaffoldBackgroundColor: AppColors.primaryColor,
+    textTheme: GoogleFonts.poppinsTextTheme(),
+    appBarTheme: const AppBarTheme(
+      backgroundColor: AppColors.primaryColor,
+      centerTitle: true,
+    ),
+    iconTheme: const IconThemeData(color: AppColors.darkGreenColor),
+  );
 }

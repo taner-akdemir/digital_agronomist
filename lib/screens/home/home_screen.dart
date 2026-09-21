@@ -25,7 +25,7 @@ class HomeScreen extends ConsumerWidget {
     }
 
     return Scaffold(
-      appBar: CustomAppBar(title: "Dijital Ziraat Mühendisi"),
+      appBar: CustomAppBar(title: "Milk Trace"),
       body: page,
     );
   }

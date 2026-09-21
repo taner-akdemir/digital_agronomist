@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:milktrace/utils/route_builder.dart';
 import 'package:milktrace/screens/home/home_screen.dart';
 import 'package:milktrace/screens/splash/splash_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
@@ -130,11 +130,4 @@ class _BottomNavigatorBarState extends State<BottomNavigatorBar> {
       //navBarStyle: _navBarStyle, // Choose the nav bar style with this property
     );
   }
-}
-
-PageRoute<dynamic> routeBuilder(RouteSettings settings, Widget page) {
-  if (defaultTargetPlatform == TargetPlatform.iOS) {
-    return CupertinoPageRoute(builder: (context) => page, settings: settings);
-  }
-  return MaterialPageRoute(builder: (context) => page, settings: settings);
 }
