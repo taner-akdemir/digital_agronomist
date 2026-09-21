@@ -158,27 +158,7 @@ class _SpoutListScreenState extends State<SpoutListScreen> {
                             // top side
                             SizedBox(height: 15),
                             SizedBox(
-                              child: /*ListView.separated(
-                            itemCount: vFirst.animals.length,
-                            shrinkWrap: true,
-                            physics: ClampingScrollPhysics(),
-                            itemBuilder: (context, index){
-                              Animal a = vFirst.animals[index];
-                              return LiveInfoCard(
-                                lightColor: AppColors.lightGreenColor,
-                                title: "Vakum #${vFirst.id}, Spout #${a.currentInfo.spout.id}",
-                                name: "İnek #${a.id}",
-                                sessionYield: a.currentInfo.currentAmount,
-                                targetAmount: a.targetAmount,
-                                currentFlow: a.currentInfo.flowRate,
-                                sessionYieldUnit: 'L',
-                                targetAmountUnit: 'L',
-                                currentFlowUnit: 'L/min',
-                              );
-                            },
-                            separatorBuilder: (BuildContext context, int index) => const Divider(),
-
-                          )*/ GridView.count(
+                              child: GridView.count(
                                 padding: const EdgeInsets.all(5),
                                 crossAxisCount: 2,
                                 mainAxisSpacing: 12,
@@ -232,9 +212,7 @@ class _SpoutListScreenState extends State<SpoutListScreen> {
     var tAs = 0;
     animals
         .then((a) {
-         for(Animal aa in a){
-           tAs += 1;
-         }
+          tAs = a.length;
         })
         .whenComplete(() {
           setState(() {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:milktrace/models/dashboard_data.dart';
 import 'package:milktrace/models/hall.dart';
 
 import '../../providers/common_providers.dart';
@@ -67,17 +66,3 @@ class _HallListScreenState extends ConsumerState<HallListScreen> {
     );
   }
 }
-
-/*
-
-ListView.builder(
-              itemCount: halls.length,
-              itemBuilder: (context, index) {
-                var h = halls[index];
-                return ListTile(
-                  title: Text(h.name),
-                  subtitle: Text(h.id.toString()),
-                );
-              },
-            );
- */

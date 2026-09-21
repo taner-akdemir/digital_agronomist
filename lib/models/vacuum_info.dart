@@ -1,6 +1,5 @@
 import 'package:milktrace/models/hall.dart';
 
-import 'animal.dart';
 
 class VacuumInfo {
   final int id;

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AppColors {
   static const Color primaryColor = Color.fromRGBO(246, 249, 252, 1);
@@ -15,14 +14,3 @@ class AppColors {
   static const Color veryLightGreyColor = Color.fromRGBO(238, 241, 245, 1);
   static const Color iconGreyColor = Color.fromRGBO(57, 64, 59, 1);
 }
-
-/*
-ThemeData primaryTheme = ThemeData(
-  primaryColor: AppColors.primaryColor,
-  scaffoldBackgroundColor: AppColors.primaryColor,
-  colorScheme: ColorScheme.fromSeed(seedColor: AppColors.fontDarkBlueColor),
-  appBarTheme: AppBarTheme(
-    backgroundColor: AppColors.primaryColor,
-    centerTitle: true,
-  ),
-);*/

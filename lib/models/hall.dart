@@ -1,4 +1,3 @@
-import 'package:milktrace/models/vacuum_info.dart';
 
 class Hall {
   final int id;

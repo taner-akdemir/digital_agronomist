@@ -107,7 +107,7 @@ class _LiveInfoCardState extends State<LiveInfoCard> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        "${widget.currentFlow}",
+                        widget.currentFlow.toString(),
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
@@ -116,7 +116,7 @@ class _LiveInfoCardState extends State<LiveInfoCard> {
                       ),
                       SizedBox(width: 5),
                       Text(
-                        "${widget.currentFlowUnit}",
+                        widget.currentFlowUnit,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 11,
@@ -129,54 +129,6 @@ class _LiveInfoCardState extends State<LiveInfoCard> {
               ],
             ),
             SizedBox(height: 10),
-            //CircularProgressIndicator(),
-            /*LinearProgressIndicator(
-              value: 10,
-              backgroundColor: Colors.grey,
-              minHeight: 2,
-            ),*/
-            /*            LinearProgressBar(
-              maxSteps: 6,
-              progressType: ProgressType.linear,
-              currentStep: 3,
-              progressColor: Colors.blue,
-              backgroundColor: Colors.grey,
-              borderRadius: BorderRadius.circular(10),
-              minHeight: 12,
-            ),*/
-            /*            CircularPercentIndicator(
-              percent: 0.75,
-              radius: 60,
-              lineWidth: 10,
-              progressColor: Colors.blue,
-              backgroundColor: Colors.grey.shade300,
-              circularStrokeCap: CircularStrokeCap.round,
-              center: Text(
-                '75%',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),*/
-            /*            GaugeIndicator(
-              value: 0.65,
-              size: 200,
-              strokeWidth: 20,
-              valueColor: Colors.blue,
-              backgroundColor: Colors.grey.shade300,
-              showValue: true,
-              gaugeStyle: GaugeStyle.modern,
-            ),*/
-            /*            LinearProgressBar(
-              maxSteps: 5,
-              progressType: ProgressType.dots,
-              currentStep: 2,
-              progressColor: Colors.blue,
-              backgroundColor: Colors.grey,
-              dotsActiveSize: 12,
-              dotsInactiveSize: 8,
-            ),*/
             TitledProgressBar(
               maxSteps: widget.targetAmount.toInt(),
               currentStep: widget.sessionYield.toInt(),
@@ -193,49 +145,6 @@ class _LiveInfoCardState extends State<LiveInfoCard> {
               borderRadius: BorderRadius.circular(12),
               labelSize: 11,
             ),
-            /*            GaugeIndicator(
-              value: 0.65,
-              size: 200,
-              strokeWidth: 20,
-              backgroundColor: Colors.grey.shade200,
-              ranges: [
-                GaugeRange(start: 0.0, end: 0.33, color: Colors.green),
-                GaugeRange(start: 0.33, end: 0.66, color: Colors.orange),
-                GaugeRange(start: 0.66, end: 1.0, color: Colors.red),
-              ],
-              showNeedle: true,
-              needleColor: Colors.black87,
-              showMinMax: true,
-              minLabel: 'Low',
-              maxLabel: 'High',
-              showValue: true,
-              valueFormatter: (v) {
-                if (v < 0.33) return 'Good';
-                if (v < 0.66) return 'Normal';
-                return 'Alert';
-              },
-            ),*/
-            /*            LinearProgressBar(
-              maxSteps: 100,
-              progressType: ProgressType.linear,
-              currentStep: 65,
-              progressGradient: LinearGradient(
-                colors: [Colors.blue, Colors.purple, Colors.pink],
-              ),
-              backgroundColor: Colors.grey.shade300,
-              borderRadius: BorderRadius.circular(10),
-              minHeight: 16,
-            ),*/
-            /*            LinearProgressBar(
-              maxSteps: 100,
-              progressType: ProgressType.linear,
-              currentStep: 10,
-              progressColor: Colors.blue,
-              backgroundColor: Colors.grey.shade300,
-              animateProgress: true,
-              animationDuration: Duration(milliseconds: 500),
-              animationCurve: Curves.easeInOut,
-            ),*/
             SizedBox(height: 20),
             widget.lowFlowRate > widget.currentFlow
                 ? Text(
