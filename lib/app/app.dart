@@ -1,40 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:milktrace/app/router.dart';
 import 'package:milktrace/app/theme.dart';
-import 'package:milktrace/core/route_builder.dart';
-import 'package:milktrace/features/shell/bottom_navigator_bar.dart';
-import 'package:milktrace/features/splash/splash_screen.dart';
 
-class MilkTraceApp extends StatelessWidget {
+class MilkTraceApp extends StatefulWidget {
   const MilkTraceApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Milk Trace',
-      theme: buildAppTheme(),
-      initialRoute: '/splash',
-      onGenerateRoute: (settings) {
-        switch (settings.name) {
-          case '/splash':
-            return routeBuilder(settings, const SplashScreen());
-          case '/':
-            return routeBuilder(settings, BottomNavigatorBar());
-          default:
-            return routeBuilder(settings, const _NotFoundScreen());
-        }
-      },
-    );
-  }
+  State<MilkTraceApp> createState() => _MilkTraceAppState();
 }
 
-class _NotFoundScreen extends StatelessWidget {
-  const _NotFoundScreen();
+class _MilkTraceAppState extends State<MilkTraceApp> {
+  // Router initState'te kurulur, build içinde DEĞİL: build içinde kurulsaydı
+  // her yeniden çizimde yeni bir router doğar ve gezinme geçmişi sıfırlanırdı.
+  // Eski kabuktaki PersistentTabController'ın hatası tam olarak buydu.
+  late final _router = buildRouter();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Sayfa bulunamadı')),
-      body: const Center(child: Text('Aradığınız sayfa bulunamadı.')),
+    return MaterialApp.router(
+      title: 'Milk Trace',
+      theme: buildAppTheme(),
+      routerConfig: _router,
     );
   }
 }

@@ -68,6 +68,30 @@ void main() {
     expect(updates[1].volumeMl, greaterThan(updates.first.volumeMl));
   });
 
+  test('ısınma fazındaki nokta akışta da kırmızıya düşmez', () async {
+    // §6.2: sağımın ilk rampUpSec saniyesinde düşük debi KIRMIZI DEĞİLDİR;
+    // sağım başında akış zaten doğal olarak düşüktür.
+    //
+    // Bu test bir regresyonu kilitliyor: mock akışı başta geçen süreyi
+    // takip etmiyordu ve sabit bir değer veriyordu, bu yüzden ısınmadaki
+    // nokta ilk güncellemeden sonra kırmızıya dönüyordu.
+    final halls = await repo.halls();
+    final live = await repo.liveSession(hallId: halls.first.id);
+
+    final rampUp = live.updates.firstWhere(
+      (u) => u.flowColor == MilkColor.yellow && u.flowRate < 0.5,
+      orElse: () => throw StateError('fixture ısınma senaryosu içermiyor'),
+    );
+
+    var seen = 0;
+    await for (final u in repo.watchSession(live.session.id)) {
+      if (u.spoutId != rampUp.spoutId) continue;
+      expect(u.flowColor, isNot(MilkColor.red),
+          reason: 'ısınma süresi dolmadan kırmızı üretilmemeli');
+      if (++seen >= 3) break;
+    }
+  });
+
   test('sonuçlar önbelleğe alınır, her çağrıda yeniden parse edilmez', () async {
     final a = await repo.halls();
     final b = await repo.halls();

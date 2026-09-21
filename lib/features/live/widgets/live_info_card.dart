@@ -1,222 +1,223 @@
 import 'package:flutter/material.dart';
 import 'package:milktrace/app/theme.dart';
-import 'package:linear_progress_bar/linear_progress_bar.dart';
+import 'package:milktrace/data/models/spout_update.dart';
+import 'package:milktrace/domain/flow_color.dart';
 
-class LiveInfoCard extends StatefulWidget {
-  final Color lightColor;
-  final double? lightIconSize;
-  final double sessionYield, targetAmount, currentFlow, lowFlowRate;
-  final String title,
-      name,
-      sessionYieldUnit,
-      targetAmountUnit,
-      currentFlowUnit;
-
+/// Bir sağım noktasının canlı kartı (§6.2, §6.3).
+///
+/// Eski kart StatefulWidget'tı ama hiç değişken durumu yoktu (§15.3/17) ve
+/// `lowFlowRate > currentFlow` koşulunu tek bir build içinde BEŞ KEZ
+/// tekrarlıyordu. Artık renk bir kez çözülür ve kartın her parçası aynı
+/// karardan beslenir.
+class LiveInfoCard extends StatelessWidget {
   const LiveInfoCard({
     super.key,
-    required this.lightColor,
-    this.lightIconSize,
+    required this.update,
     required this.title,
-    required this.name,
-    required this.sessionYield,
-    required this.targetAmount,
-    required this.sessionYieldUnit,
-    required this.targetAmountUnit,
-    required this.currentFlow,
-    required this.currentFlowUnit,
-    required this.lowFlowRate,
   });
 
-  @override
-  State<LiveInfoCard> createState() => _LiveInfoCardState();
-}
+  final SpoutUpdate update;
 
-class _LiveInfoCardState extends State<LiveInfoCard> {
+  /// "Ünite A-1 · Nokta 3" gibi.
+  final String title;
+
   @override
   Widget build(BuildContext context) {
+    final palette = _Palette.of(update.flowColor);
+    final animal = update.animal;
+
     return Container(
+      padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: widget.lowFlowRate > widget.currentFlow
-            ? AppColors.lightRedColor
-            : Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+        color: palette.surface,
+        borderRadius: AppRadius.mdAll,
+        border: Border.all(color: palette.border, width: 1),
       ),
-      child: Padding(
-        padding: EdgeInsetsGeometry.all(12),
-        child: Column(
-          children: [
-            // Top row
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Icon(
-                  Icons.brightness_1_rounded,
-                  color: widget.lowFlowRate > widget.currentFlow
-                      ? AppColors.redColor
-                      : widget.lightColor,
-                  size: widget.lightIconSize ?? 13,
-                ),
-              ],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _header(palette),
+          const SizedBox(height: AppSpacing.sm),
+          Text(
+            animal?.name ?? animal?.earTag ?? 'Hayvan eşleştirilmedi',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.bold,
+              color: animal == null ? AppColors.lightGreyColor : AppColors.onSurface,
             ),
-            SizedBox(height: 5),
+          ),
+          if (animal?.name != null)
+            Text(
+              animal!.earTag,
+              style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceMuted),
+            ),
+          const SizedBox(height: AppSpacing.md),
+          _flowRow(palette),
+          const SizedBox(height: AppSpacing.sm),
+          _progress(palette),
+          const SizedBox(height: AppSpacing.sm),
+          _amountRow('Şu an', '${_litres(update.volumeMl)} L'),
+          _amountRow('Hedef', '${_litres(update.expectedMl)} L'),
+          if (update.flowColor == MilkColor.red) ...[
+            const SizedBox(height: AppSpacing.sm),
+            // Ölçülen şey BASINÇ DEĞİL DEBİ. Eski metin "Düşük Basınç"
+            // yazıyordu ve yanlıştı (§15.3/15).
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                const Icon(Icons.warning_amber_rounded,
+                    size: 16, color: AppColors.flowRed),
+                const SizedBox(width: AppSpacing.xs),
                 Text(
-                  widget.title,
+                  'Düşük Debi',
                   style: TextStyle(
+                    color: palette.foreground,
+                    fontSize: 13,
                     fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    color: AppColors.lightGreyColor,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  widget.name,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: AppColors.iconGreyColor,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Text(
-                    "Akış oranı",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 13,
-                      color: AppColors.iconGreyColor,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        widget.currentFlow.toString(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: AppColors.darkBlueColor,
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        widget.currentFlowUnit,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 11,
-                          color: AppColors.darkGreenColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            TitledProgressBar(
-              maxSteps: widget.targetAmount.toInt(),
-              currentStep: widget.sessionYield.toInt(),
-              progressColor: widget.lowFlowRate > widget.currentFlow
-                  ? AppColors.redColor
-                  : Colors.green,
-              backgroundColor: Colors.grey.shade300,
-              labelType: LabelType.percentage,
-              labelColor: widget.lowFlowRate > widget.currentFlow
-                  ? AppColors.darkRedColor
-                  : Colors.white,
-              labelFontWeight: FontWeight.bold,
-              minHeight: 18,
-              borderRadius: BorderRadius.circular(12),
-              labelSize: 11,
-            ),
-            SizedBox(height: 20),
-            widget.lowFlowRate > widget.currentFlow
-                ? Text(
-                    "Düşük Basınç",
-                    style: TextStyle(color: AppColors.redColor, fontSize: 14, fontWeight: FontWeight.bold),
-                  )
-                : SizedBox(),
-            SizedBox(height: 10,),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Text(
-                    "Şu an",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      color: AppColors.iconGreyColor,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        "${widget.sessionYield} ${widget.sessionYieldUnit}",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                          color: AppColors.darkGreenColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Text(
-                    "Hedef",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      color: AppColors.iconGreyColor,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        "${widget.targetAmount} ${widget.targetAmountUnit}",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                          color: AppColors.darkGreenColor,
-                        ),
-                      ),
-                    ],
                   ),
                 ),
               ],
             ),
           ],
-        ),
+        ],
       ),
     );
   }
+
+  Widget _header(_Palette palette) {
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(fontSize: 12, color: AppColors.lightGreyColor),
+          ),
+        ),
+        Container(
+          width: 10,
+          height: 10,
+          decoration: BoxDecoration(
+            color: palette.foreground,
+            shape: BoxShape.circle,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _flowRow(_Palette palette) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        const Expanded(
+          child: Text(
+            'Akış oranı',
+            style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
+          ),
+        ),
+        Text(
+          update.flowRate.toStringAsFixed(2),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: palette.foreground,
+          ),
+        ),
+        const SizedBox(width: AppSpacing.xs),
+        const Padding(
+          padding: EdgeInsets.only(bottom: 2),
+          child: Text('L/dk',
+              style: TextStyle(fontSize: 11, color: AppColors.onSurfaceMuted)),
+        ),
+      ],
+    );
+  }
+
+  Widget _progress(_Palette palette) {
+    // Eski kart TitledProgressBar(maxSteps: targetAmount.toInt(),
+    // currentStep: sessionYield.toInt()) kullanıyordu. Üç ayrı hatası vardı
+    // (§15.3/16): hedef 0 ise bölme hatası, hedef aşılınca taşma, ve .toInt()
+    // ondalıkları kırpıyordu. Oran burada hesaplanıp 0..1'e kısıtlanıyor;
+    // yüzde metni KIRPILMIYOR ki %100 üstü verim görünebilsin.
+    final ratio = update.expectedMl == 0
+        ? 0.0
+        : (update.volumeMl / update.expectedMl).clamp(0.0, 1.0);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ClipRRect(
+          borderRadius: AppRadius.smAll,
+          child: LinearProgressIndicator(
+            value: ratio,
+            minHeight: 16,
+            backgroundColor: AppColors.veryLightGreyColor,
+            valueColor: AlwaysStoppedAnimation<Color>(palette.foreground),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.xs),
+        Text(
+          update.expectedMl == 0
+              ? 'Hedef tanımsız'
+              : '%${update.yieldPct.toStringAsFixed(0)}',
+          style: const TextStyle(
+            fontSize: 11,
+            fontWeight: FontWeight.w600,
+            color: AppColors.onSurfaceMuted,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _amountRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 1),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(label,
+                style: const TextStyle(
+                    fontSize: 13, color: AppColors.onSurfaceMuted)),
+          ),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+              color: AppColors.darkGreenColor,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// mL -> L. Hacimler her yerde tamsayı mL taşınır (§8.4); çevirme yalnızca
+  /// gösterim anında yapılır.
+  static String _litres(int ml) => (ml / 1000).toStringAsFixed(1);
+}
+
+/// Bir rengin kart üzerindeki üç tonu.
+class _Palette {
+  const _Palette(this.foreground, this.surface, this.border);
+
+  final Color foreground;
+  final Color surface;
+  final Color border;
+
+  static _Palette of(MilkColor color) => switch (color) {
+        MilkColor.green => const _Palette(
+            AppColors.flowGreen, AppColors.surface, AppColors.lightGreenColor),
+        MilkColor.yellow => const _Palette(
+            AppColors.flowYellow, AppColors.surface, AppColors.lightAmberColor),
+        MilkColor.red => const _Palette(
+            AppColors.flowRed, AppColors.flowRedSurface, AppColors.lightRedColor),
+        MilkColor.grey => const _Palette(
+            AppColors.flowGrey, AppColors.surfaceAlt, AppColors.border),
+      };
 }

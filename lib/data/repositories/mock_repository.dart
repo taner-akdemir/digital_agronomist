@@ -102,24 +102,47 @@ class MockRepository implements MilkTraceRepository {
     final live = await _load('live_session.json',
         (json) => LiveSession.fromJson(json as Map<String, dynamic>));
 
-    var updates = List<SpoutUpdate>.from(live.updates);
+    final updates = List<SpoutUpdate>.from(live.updates);
+
+    // Sağımın başından beri geçen süre. TAKİP EDİLMEK ZORUNDA: §6.2'nin
+    // ısınma kuralı bu değere bakıyor ve sabit bir sayı verilirse sağımın
+    // ilk saniyelerindeki düşük debi yanlışlıkla KIRMIZI görünür.
+    final elapsed = <String, int>{
+      for (final u in updates) u.spoutId: _initialElapsed(u),
+    };
 
     // Gerçek cihaz 1-2 sn aralıkla telemetri gönderir (§9.2).
+    const tick = Duration(seconds: 2);
     while (true) {
-      await Future<void>.delayed(const Duration(seconds: 2));
+      await Future<void>.delayed(tick);
       for (var i = 0; i < updates.length; i++) {
-        final next = _advance(updates[i]);
+        final u = updates[i];
+        if (u.state == SpoutState.milking) {
+          elapsed[u.spoutId] = (elapsed[u.spoutId] ?? 0) + tick.inSeconds;
+        }
+        final next = _advance(u, elapsed[u.spoutId] ?? 0);
         updates[i] = next;
         yield next;
       }
     }
   }
 
+  /// Fixture'daki bir kaydın sağımın neresinde olduğunu hacimden tahmin eder.
+  ///
+  /// Gerçek payload elapsed taşımaz (§8.5); backend bunu oturum başlangıcından
+  /// hesaplar. Mock'ta yaklaşık bir değer yeterli — önemli olan ısınma
+  /// fazındaki bir noktanın ısınmada KALMASI.
+  int _initialElapsed(SpoutUpdate u) {
+    if (u.flowRate <= 0) return 0;
+    final minutes = u.volumeMl / (u.flowRate * 1000);
+    return (minutes * 60).round();
+  }
+
   /// Bir noktayı bir adım ilerletir: hacim birikir, debi biraz dalgalanır.
   ///
   /// Renkler YENİDEN HESAPLANIR — mock'ta backend yok, o yüzden aynanın
   /// (ThresholdsEngine) çalıştığı tek yer burasıdır.
-  SpoutUpdate _advance(SpoutUpdate u) {
+  SpoutUpdate _advance(SpoutUpdate u, int elapsedSec) {
     if (u.state != SpoutState.milking) return u;
 
     final jitter = (_random.nextDouble() - 0.5) * 0.2;
@@ -130,10 +153,9 @@ class MockRepository implements MilkTraceRepository {
       flowRate: double.parse(flow.toStringAsFixed(2)),
       volumeMl: volume,
       yieldPct: ThresholdsEngine.yieldPct(volume, u.expectedMl),
-      // elapsedSec mock'ta bilinmiyor; ısınma fazı geçmiş varsayılır.
       flowColor: ThresholdsEngine.flowColor(
         flowLpm: flow,
-        elapsedSec: 999,
+        elapsedSec: elapsedSec,
         volumeMl: volume,
         expectedMl: u.expectedMl,
         attached: true,
