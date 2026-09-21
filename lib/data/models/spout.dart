@@ -1,21 +1,19 @@
-import 'package:milktrace/data/models/vacuum_info.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class Spout {
-  final int id;
-  final int vacuumID;
-  final VacuumInfo vacuumInfo;
+part 'spout.freezed.dart';
+part 'spout.g.dart';
 
-  Spout({required this.id, required this.vacuumID, required this.vacuumInfo});
+/// Sağım Noktası (Musluk) — tek bir hayvana bağlanan başlık grubu (§4).
+/// Ölçüm cihazı buraya takılır.
+@freezed
+abstract class Spout with _$Spout {
+  const factory Spout({
+    required String id,
+    required String vacuumId,
 
-  factory Spout.fromJson(Map<String, dynamic> json) => Spout(
-    id: json["id"],
-    vacuumID: json["vacuumID"],
-    vacuumInfo: VacuumInfo.fromJson(json["vacuumInfo"])
-  );
+    /// Ünite üzerindeki sıra numarası (§8.4 spouts.position_no).
+    required int positionNo,
+  }) = _Spout;
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "vacuumID": vacuumID,
-    "vacuumInfo": vacuumInfo,
-  };
+  factory Spout.fromJson(Map<String, dynamic> json) => _$SpoutFromJson(json);
 }

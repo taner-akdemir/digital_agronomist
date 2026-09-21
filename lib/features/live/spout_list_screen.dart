@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:milktrace/data/models/spout.dart';
+import 'package:milktrace/data/legacy/spout.dart';
 
 import 'package:milktrace/widgets/light_info.dart';
 import 'package:milktrace/features/live/widgets/live_info_card.dart';
-import 'package:milktrace/data/models/animal.dart';
-import 'package:milktrace/data/models/hall.dart';
-import 'package:milktrace/data/models/vacuum_info.dart';
+import 'package:milktrace/data/legacy/animal.dart';
+import 'package:milktrace/data/legacy/hall.dart';
+import 'package:milktrace/data/legacy/vacuum_info.dart';
 import 'package:milktrace/data/api.dart';
 import 'package:milktrace/app/theme.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:milktrace/data/models/hall.dart';
+import 'package:milktrace/data/legacy/hall.dart';
 
 import 'package:milktrace/features/shell/shell_providers.dart';
 import 'package:milktrace/data/api.dart';

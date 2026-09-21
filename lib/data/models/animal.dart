@@ -1,35 +1,39 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:milktrace/data/models/current_info.dart';
+part 'animal.freezed.dart';
+part 'animal.g.dart';
 
-class Animal {
-  final int id;
-  final String name, type;
-  final double targetAmount;
-  final CurrentInfo currentInfo;
+/// Hayvan — küpe numarasıyla tanımlı birey (§4).
+///
+/// ESKİ MODELDEN FARKI: eski `Animal.name` "İnek" yazıyordu, yani türdü; ad
+/// değildi ve küpe numarası hiç yoktu (§15.3/8). Ayrıca canlı ölçüm verisi
+/// (`currentInfo`) hayvanın bir özelliği gibi gömülüydü — oysa canlı durum
+/// NOKTAYA aittir, hayvana değil, ve artık SpoutUpdate'te durur.
+@freezed
+abstract class Animal with _$Animal {
+  const factory Animal({
+    required String id,
+    required String speciesId,
 
-  Animal({
-    required this.id,
-    required this.name,
-    required this.type,
-    required this.targetAmount,
-    required this.currentInfo,
-  });
+    /// Küpe numarası — hayvanı tanımlayan alan (TÜRKVET formatı).
+    required String earTag,
 
-  factory Animal.fromJson(Map<String, dynamic> json) {
-    return Animal(
-      id: json["id"],
-      name: json["name"],
-      type: json["type"],
-      targetAmount: json["targetAmount"] as double,
-      currentInfo: CurrentInfo.fromJson(json["currentInfo"]),
-    );
-  }
+    /// RFID küpe; cihaz okuyabiliyorsa otomatik eşleştirme bununla yapılır.
+    String? rfid,
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "type": type,
-    "targetAmount": targetAmount,
-    "currentInfo": currentInfo,
-  };
+    /// Çiftçinin verdiği ad ("Sarıkız"). Zorunlu değil.
+    String? name,
+    String? breed,
+    DateTime? birthDate,
+    DateTime? lastCalvingDate,
+    @Default(0) int lactationNo,
+
+    /// active | dry | sold | slaughtered | dead
+    @Default('active') String status,
+
+    /// §6.4 sınıflandırması: high | normal | declining | dry_off_candidate | no_milk
+    @Default('normal') String yieldClass,
+  }) = _Animal;
+
+  factory Animal.fromJson(Map<String, dynamic> json) => _$AnimalFromJson(json);
 }
