@@ -1,0 +1,197 @@
+{
+  "session": {
+    "id": "0192a1f0-0080-7000-8000-000000000001",
+    "hallId": "0192a1f0-0030-7000-8000-000000000001",
+    "type": "morning",
+    "startedAt": "2026-09-21T06:05:00Z",
+    "endedAt": null,
+    "status": "active"
+  },
+  "updates": [
+    {
+      "type": "spout.update",
+      "sessionId": "0192a1f0-0080-7000-8000-000000000001",
+      "spoutId": "0192a1f0-0050-7000-8000-000000000001",
+      "animal": {
+        "id": "0192a1f0-0070-7000-8000-000000000001",
+        "earTag": "TR340000001",
+        "species": "cow",
+        "name": "Sarıkız"
+      },
+      "flowRate": 2.8,
+      "volumeMl": 10400,
+      "expectedMl": 11000,
+      "yieldPct": 94.5,
+      "flowColor": "green",
+      "yieldColor": "green",
+      "state": "milking",
+      "ts": "2026-09-21T06:12:04Z"
+    },
+    {
+      "type": "spout.update",
+      "sessionId": "0192a1f0-0080-7000-8000-000000000001",
+      "spoutId": "0192a1f0-0050-7000-8000-000000000002",
+      "animal": {
+        "id": "0192a1f0-0070-7000-8000-000000000002",
+        "earTag": "TR340000002",
+        "species": "cow",
+        "name": "Karabaş"
+      },
+      "flowRate": 1.62,
+      "volumeMl": 8400,
+      "expectedMl": 11000,
+      "yieldPct": 76.4,
+      "flowColor": "yellow",
+      "yieldColor": "yellow",
+      "state": "milking",
+      "ts": "2026-09-21T06:12:04Z"
+    },
+    {
+      "type": "spout.update",
+      "sessionId": "0192a1f0-0080-7000-8000-000000000001",
+      "spoutId": "0192a1f0-0050-7000-8000-000000000003",
+      "animal": {
+        "id": "0192a1f0-0070-7000-8000-000000000003",
+        "earTag": "TR340000003",
+        "species": "cow",
+        "name": "Benekli"
+      },
+      "flowRate": 0.65,
+      "volumeMl": 4200,
+      "expectedMl": 11500,
+      "yieldPct": 36.5,
+      "flowColor": "red",
+      "yieldColor": "red",
+      "state": "milking",
+      "ts": "2026-09-21T06:12:04Z"
+    },
+    {
+      "type": "spout.update",
+      "sessionId": "0192a1f0-0080-7000-8000-000000000001",
+      "spoutId": "0192a1f0-0050-7000-8000-000000000004",
+      "animal": {
+        "id": "0192a1f0-0070-7000-8000-000000000004",
+        "earTag": "TR340000004",
+        "species": "cow",
+        "name": "Pamuk"
+      },
+      "flowRate": 0.4,
+      "volumeMl": 180,
+      "expectedMl": 10800,
+      "yieldPct": 1.7,
+      "flowColor": "yellow",
+      "yieldColor": "red",
+      "state": "milking",
+      "ts": "2026-09-21T06:12:04Z"
+    },
+    {
+      "type": "spout.update",
+      "sessionId": "0192a1f0-0080-7000-8000-000000000001",
+      "spoutId": "0192a1f0-0050-7000-8000-000000000005",
+      "animal": {
+        "id": "0192a1f0-0070-7000-8000-000000000005",
+        "earTag": "TR340000005",
+        "species": "cow",
+        "name": "Menekşe"
+      },
+      "flowRate": 0.3,
+      "volumeMl": 10200,
+      "expectedMl": 11200,
+      "yieldPct": 91.1,
+      "flowColor": "yellow",
+      "yieldColor": "green",
+      "state": "milking",
+      "ts": "2026-09-21T06:12:04Z"
+    },
+    {
+      "type": "spout.update",
+      "sessionId": "0192a1f0-0080-7000-8000-000000000001",
+      "spoutId": "0192a1f0-0050-7000-8000-000000000006",
+      "animal": {
+        "id": "0192a1f0-0070-7000-8000-000000000006",
+        "earTag": "TR340000006",
+        "species": "cow",
+        "name": "Zeytin"
+      },
+      "flowRate": 2.6,
+      "volumeMl": 7600,
+      "expectedMl": 10500,
+      "yieldPct": 72.4,
+      "flowColor": "green",
+      "yieldColor": "yellow",
+      "state": "milking",
+      "ts": "2026-09-21T06:12:04Z"
+    },
+    {
+      "type": "spout.update",
+      "sessionId": "0192a1f0-0080-7000-8000-000000000001",
+      "spoutId": "0192a1f0-0050-7000-8000-000000000007",
+      "animal": {
+        "id": "0192a1f0-0070-7000-8000-000000000007",
+        "earTag": "TR340000007",
+        "species": "cow",
+        "name": "Fındık"
+      },
+      "flowRate": 1.2,
+      "volumeMl": 9900,
+      "expectedMl": 10400,
+      "yieldPct": 95.2,
+      "flowColor": "yellow",
+      "yieldColor": "green",
+      "state": "milking",
+      "ts": "2026-09-21T06:12:04Z"
+    },
+    {
+      "type": "spout.update",
+      "sessionId": "0192a1f0-0080-7000-8000-000000000001",
+      "spoutId": "0192a1f0-0050-7000-8000-000000000008",
+      "animal": null,
+      "flowRate": 0.0,
+      "volumeMl": 0,
+      "expectedMl": 11000,
+      "yieldPct": 0.0,
+      "flowColor": "grey",
+      "yieldColor": "grey",
+      "state": "idle",
+      "ts": "2026-09-21T06:12:04Z"
+    },
+    {
+      "type": "spout.update",
+      "sessionId": "0192a1f0-0080-7000-8000-000000000001",
+      "spoutId": "0192a1f0-0050-7000-8000-000000000009",
+      "animal": {
+        "id": "0192a1f0-0070-7000-8000-000000000009",
+        "earTag": "TR340000009",
+        "species": "cow",
+        "name": "Yıldız"
+      },
+      "flowRate": 1.85,
+      "volumeMl": 6100,
+      "expectedMl": 11000,
+      "yieldPct": 55.5,
+      "flowColor": "yellow",
+      "yieldColor": "red",
+      "state": "milking",
+      "ts": "2026-09-21T06:12:04Z"
+    },
+    {
+      "type": "spout.update",
+      "sessionId": "0192a1f0-0080-7000-8000-000000000001",
+      "spoutId": "0192a1f0-0050-7000-8000-000000000010",
+      "animal": {
+        "id": "0192a1f0-0070-7000-8000-000000000010",
+        "earTag": "TR340000010",
+        "species": "cow",
+        "name": "Alaca"
+      },
+      "flowRate": 0.0,
+      "volumeMl": 11300,
+      "expectedMl": 11000,
+      "yieldPct": 102.7,
+      "flowColor": "grey",
+      "yieldColor": "green",
+      "state": "done",
+      "ts": "2026-09-21T06:12:04Z"
+    }
+  ]
+}

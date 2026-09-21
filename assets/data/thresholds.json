@@ -1,0 +1,41 @@
+[
+  {
+    "speciesId": "0192a1f0-0020-7000-8000-000000000001",
+    "flowLow": 1.0,
+    "flowHigh": 2.5,
+    "yieldGreenPct": 90,
+    "yieldRedPct": 60,
+    "rampUpSec": 60,
+    "alertHoldSec": 30,
+    "endFlowThreshold": 0.2,
+    "endGraceSec": 10,
+    "dryOffDailyMl": 8000,
+    "highYieldDailyMl": 30000
+  },
+  {
+    "speciesId": "0192a1f0-0020-7000-8000-000000000002",
+    "flowLow": 0.3,
+    "flowHigh": 0.8,
+    "yieldGreenPct": 90,
+    "yieldRedPct": 60,
+    "rampUpSec": 30,
+    "alertHoldSec": 30,
+    "endFlowThreshold": 0.05,
+    "endGraceSec": 8,
+    "dryOffDailyMl": 500,
+    "highYieldDailyMl": 3500
+  },
+  {
+    "speciesId": "0192a1f0-0020-7000-8000-000000000003",
+    "flowLow": 0.2,
+    "flowHigh": 0.5,
+    "yieldGreenPct": 90,
+    "yieldRedPct": 60,
+    "rampUpSec": 20,
+    "alertHoldSec": 30,
+    "endFlowThreshold": 0.03,
+    "endGraceSec": 6,
+    "dryOffDailyMl": 300,
+    "highYieldDailyMl": 1800
+  }
+]
