@@ -3,24 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/utils.dart';
 
+/// Uygulamanın üst çubuğu.
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const CustomAppBar({super.key, required this.title, this.actions});
+
   final String title;
   final List<Widget>? actions;
-
-  const CustomAppBar({super.key, required this.title, this.actions});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       title: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(Icons.sensors, size: 28, color: AppColors.darkGreenColor),
-          SizedBox(width: 10),
+          const Icon(Icons.sensors, size: 26, color: AppColors.darkGreenColor),
+          const SizedBox(width: AppSpacing.sm),
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
               color: AppColors.darkGreenColor,
@@ -31,33 +30,31 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 1,
       shadowColor: AppColors.primaryColor,
       backgroundColor: AppColors.primaryColor,
-      actions: actions != null && actions!.isNotEmpty
-          ? actions
-          : [
-              IconButton(
-                onPressed: () {
-                  Utils.showSnackBar(context, Text("Notification screen",
-                    style: TextStyle(color: AppColors.iconGreyColor),
-                  ));
-                },
-                icon: Icon(Icons.notifications_none_outlined),
-              ),
-              IconButton(
-                onPressed: () {
-                  Utils.showSnackBar(
-                    context,
-                    Text(
-                      "account screen",
-                      style: TextStyle(color: AppColors.iconGreyColor),
-                    ),
-                  );
-                },
-                icon: Icon(CupertinoIcons.person_circle),
-              ),
-            ],
+      actions: actions ?? _defaultActions(context),
     );
   }
 
+  List<Widget> _defaultActions(BuildContext context) => [
+        IconButton(
+          tooltip: 'Bildirimler',
+          onPressed: () => Utils.showSnackBar(
+            context,
+            const Text('Bildirim merkezi Faz 4 ile gelecek'),
+          ),
+          icon: const Icon(Icons.notifications_none_outlined),
+        ),
+        IconButton(
+          tooltip: 'Profil',
+          onPressed: () => Utils.showSnackBar(
+            context,
+            const Text('Profil ekranı Faz 2 ile gelecek'),
+          ),
+          icon: const Icon(CupertinoIcons.person_circle),
+        ),
+      ];
+
+  // kToolbarHeight kullanılır: sabit 50 px, Material'ın varsayılan 56 px'inden
+  // küçüktü ve ikonlar dikeyde sıkışıyordu.
   @override
-  Size get preferredSize => const Size(double.maxFinite, 50);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
