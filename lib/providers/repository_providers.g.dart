@@ -11,7 +11,11 @@ part of 'repository_providers.dart';
 /// Uygulamanın veri kaynağı.
 ///
 /// Mock mu gerçek API mi olduğu YALNIZCA burada bilinir; ekranlar arayüzü
-/// görür. Geçiş `--dart-define=MT_API=http` ile yapılır (§15.2).
+/// görür. Geçiş `--dart-define=MT_API=mock` ile yapılır (§15.2).
+///
+/// Dio'yu BURADA kurmuyoruz: kimlik doğrulamalı istemci AuthSession'a ait.
+/// İki ayrı Dio olsaydı token yenileme yalnızca birinde çalışır, diğeri
+/// sessizce 401 almaya devam ederdi.
 
 @ProviderFor(repository)
 final repositoryProvider = RepositoryProvider._();
@@ -19,7 +23,11 @@ final repositoryProvider = RepositoryProvider._();
 /// Uygulamanın veri kaynağı.
 ///
 /// Mock mu gerçek API mi olduğu YALNIZCA burada bilinir; ekranlar arayüzü
-/// görür. Geçiş `--dart-define=MT_API=http` ile yapılır (§15.2).
+/// görür. Geçiş `--dart-define=MT_API=mock` ile yapılır (§15.2).
+///
+/// Dio'yu BURADA kurmuyoruz: kimlik doğrulamalı istemci AuthSession'a ait.
+/// İki ayrı Dio olsaydı token yenileme yalnızca birinde çalışır, diğeri
+/// sessizce 401 almaya devam ederdi.
 
 final class RepositoryProvider
     extends
@@ -32,7 +40,11 @@ final class RepositoryProvider
   /// Uygulamanın veri kaynağı.
   ///
   /// Mock mu gerçek API mi olduğu YALNIZCA burada bilinir; ekranlar arayüzü
-  /// görür. Geçiş `--dart-define=MT_API=http` ile yapılır (§15.2).
+  /// görür. Geçiş `--dart-define=MT_API=mock` ile yapılır (§15.2).
+  ///
+  /// Dio'yu BURADA kurmuyoruz: kimlik doğrulamalı istemci AuthSession'a ait.
+  /// İki ayrı Dio olsaydı token yenileme yalnızca birinde çalışır, diğeri
+  /// sessizce 401 almaya devam ederdi.
   RepositoryProvider._()
     : super(
         from: null,
@@ -67,4 +79,4 @@ final class RepositoryProvider
   }
 }
 
-String _$repositoryHash() => r'9362a8d80a75601ea911147edd70b58e2eb4a60d';
+String _$repositoryHash() => r'851c3f698d62211bee88c301c820f9a42776a21b';

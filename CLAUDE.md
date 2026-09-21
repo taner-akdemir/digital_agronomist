@@ -133,8 +133,18 @@ flutter run
 
 ## 6. Kapsam çiti
 
-Şu anki faz: **Faz 1 — mevcut kodun düzeltilmesi ve mimarinin taşınması** (§17).
+Şu anki faz: **Faz 2 — gerçek API bağlantısı** (§17).
 
-Bu fazda **Canlı** sekmesi mock veriyle çalışır. Dashboard, Geçmiş ve Cihazlar sekmeleri
-**iskelet**tir. Push bildirimleri (FCM), gerçek API bağlantısı ve trend grafikleri Faz 2–4'e
-aittir; şimdi yazılmaz.
+Uygulama artık **varsayılan olarak gerçek API'ye** bağlanır (`MT_API=http`). Giriş, oturum
+yenileme, oturumu geri yükleme ve çıkış çalışır; bölge/ünite/nokta/cihaz/hayvan verisi
+gateway'den gelir.
+
+**Canlı sağım akışı hâlâ mock'tur** ve bu geçicidir: `milking` servisinin HTTP katmanı
+(`/sessions`, `/ws`) Faz 3'te yazılacak. Köprü `ApiWithMockLiveRepository`'de ve tek
+commit'te silinecek şekilde izole; hangi metodun nereye gittiği orada tek tek yazılı.
+
+Dashboard, Geçmiş ve Cihazlar sekmeleri **iskelet**tir. Push bildirimleri (FCM) ve trend
+grafikleri Faz 3–4'e aittir; şimdi yazılmaz.
+
+Mock moda dönmek: `flutter run --dart-define=MT_API=mock`. O modda kimlik sunucusu
+olmadığı için giriş ekranı atlanır ve demo kullanıcısıyla çalışılır.
