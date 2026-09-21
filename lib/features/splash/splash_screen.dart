@@ -32,10 +32,10 @@ class _SplashScreen extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: Text(
-          "Milk Trace",
+          'Milk Trace',
           style: TextStyle(
             fontSize: 44,
             fontWeight: FontWeight.bold,

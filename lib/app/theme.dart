@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 /// Uygulamanın renk paleti.
 ///
@@ -84,7 +83,10 @@ abstract final class AppRadius {
 /// Daha önce MyApp.build içinde satır içiydi ve metin temasını
 /// `Theme.of(context)` üzerinden kuruyordu — ama o context MaterialApp'in
 /// ÜSTÜNDEydi, yani okunan tema uygulamanın kendi teması değil Flutter'ın
-/// varsayılanıydı. Poppins doğrudan uygulanır.
+/// varsayılanıydı.
+///
+/// Poppins pubspec'ten bundle edilir; google_fonts ÇALIŞMA ZAMANINDA indirir
+/// ve ahırda internet zayıfsa yazı tipi ilk açılışta sonradan oturur.
 ThemeData buildAppTheme() {
   final colorScheme = ColorScheme.fromSeed(seedColor: AppColors.darkBlueColor);
 
@@ -93,7 +95,7 @@ ThemeData buildAppTheme() {
     colorScheme: colorScheme,
     primaryColor: AppColors.primaryColor,
     scaffoldBackgroundColor: AppColors.background,
-    textTheme: GoogleFonts.poppinsTextTheme(),
+    fontFamily: 'Poppins',
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.primaryColor,
       centerTitle: true,

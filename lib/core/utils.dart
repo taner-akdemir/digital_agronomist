@@ -8,10 +8,10 @@ class Utils {
     Color? color = AppColors.lightGreenColor,
     int duration = 1,
   ]) {
-    SnackBar s = SnackBar(
+    final SnackBar s = SnackBar(
       content: widget,
       backgroundColor: color,
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       duration: Duration(seconds: duration),
     );
     ScaffoldMessenger.of(context).showSnackBar(s);
