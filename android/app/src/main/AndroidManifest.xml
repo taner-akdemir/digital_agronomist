@@ -1,4 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Uygulama API ile konuşur; izin YALNIZCA debug manifest'inde
+         olsaydı release derlemesi ağa hiç çıkamazdı. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:label="milktrace"
         android:name="${applicationName}"
