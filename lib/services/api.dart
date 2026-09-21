@@ -55,7 +55,7 @@ class Api {
 
   static Future<List<Animal>> fetchAnimals(String hallId) async {
     try {
-      await Future.delayed(Duration(seconds: 5));
+      await Future.delayed(Duration(seconds: 2));
 
       String animalStr = await rootBundle.loadString('assets/data/animal.json');
       var animalsDecode = jsonDecode(animalStr);
