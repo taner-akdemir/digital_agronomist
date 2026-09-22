@@ -161,9 +161,16 @@ Grafik, §6.2 durum renklerini (yeşil/sarı/kırmızı) seri rengi olarak KULLA
 "düşük debi", "izlenmeli" gibi sabit anlamlar taşır. Ana seri koyu yeşil, bağlam serisi
 nötr gridir (`AppColors.chartPrimary` / `chartContext`).
 
-**Faz 4'ten kalan:** bildirim merkezi + `GET /alerts` · `POST /alerts/{id}/ack` ve FCM push
-(`firebase_messaging`; Firebase projesi ve `google-services.json` gerekiyor — bu repoda yok).
-Üst çubuktaki zil hâlâ "Faz 4 ile gelecek" diyor. Dashboard ve Cihazlar sekmeleri **iskelet**.
+**Bildirim merkezi tamamdır:** üst çubuktaki zil açık uyarı sayısını rozetler ve sekme
+kabuğunun dışında `/alerts` ekranını açar; `GET /alerts` ve `POST /alerts/{id}/ack`. Açık
+uyarılar üstte, okunmuşlar soluk ama SİLİNMEZ. Uyarı metni backend'den geldiği gibi
+gösterilir (§16) — uygulama kendi metnini uydurmaz. `type` ve `severity` **string'dir**,
+enum değil: §8.4 bu sütunların alacağı değerleri saymıyor ve kapalı bir enum, backend yeni
+bir tür eklediğinde listeyi komple düşürürdü.
+
+**Faz 4'ten kalan:** FCM push (`firebase_messaging` + `flutter_local_notifications`) — bir
+Firebase projesi ve `google-services.json` gerekiyor, bu repoda yok. Dashboard ve Cihazlar
+sekmeleri **iskelet**; Dashboard'un `GET /dashboard` özeti de Faz 4'e ait.
 
 Mock moda dönmek: `flutter run --dart-define=MT_API=mock`. O modda kimlik sunucusu
 olmadığı için giriş ekranı atlanır ve demo kullanıcısıyla çalışılır.

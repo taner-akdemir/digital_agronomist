@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:milktrace/data/models/auth_state.dart';
+import 'package:milktrace/features/alerts/alerts_screen.dart';
 import 'package:milktrace/features/auth/login_screen.dart';
 import 'package:milktrace/features/dashboard/dashboard_screen.dart';
 import 'package:milktrace/features/devices/devices_screen.dart';
@@ -56,6 +57,12 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/login',
         builder: (_, _) => const LoginScreen(),
+      ),
+      // Kabuğun DIŞINDA: uyarı listesi bir sekmeye ait değil, her sekmeden
+      // açılır ve tam ekran gelir.
+      GoRoute(
+        path: '/alerts',
+        builder: (_, _) => const AlertsScreen(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (_, _, shell) => ScaffoldWithNavBar(navigationShell: shell),

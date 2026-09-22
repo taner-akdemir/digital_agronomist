@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
@@ -276,4 +277,26 @@ class MockRepository implements MilkTraceRepository {
     );
     return (animal, t);
   }
+
+  /// Okundu işaretlenen uyarılar.
+  ///
+  /// Asset dosyası salt okunurdur; onaylar BELLEKTE tutulur ki mock modda
+  /// "okundu" düğmesi gerçekten bir şey yapsın. Uygulama kapanınca sıfırlanır.
+  final Map<String, DateTime> _acks = {};
+
+  @override
+  Future<List<Alert>> alerts() => _delayed(() async {
+        final all = await _list('alerts.json', Alert.fromJson);
+        return [
+          for (final a in all)
+            if (_acks[a.id] case final at?)
+              a.copyWith(acknowledgedAt: at, acknowledgedBy: 'demo')
+            else
+              a,
+        ];
+      });
+
+  @override
+  Future<void> ackAlert(String alertId) =>
+      _delayed(() async => _acks[alertId] = _clock);
 }

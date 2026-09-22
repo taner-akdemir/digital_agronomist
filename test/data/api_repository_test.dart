@@ -266,4 +266,45 @@ void main() {
     expect(r.adapter.requests.single.queryParameters,
         {'from': '2026-09-01T00:00:00.000Z', 'hallId': _hallId});
   });
+
+  test('uyarılar parse edilir', () async {
+    final r = rig((o) async => okEnvelope2([
+          {
+            'id': 'al1',
+            'animalId': 'a1',
+            'type': 'low_flow',
+            'severity': 'critical',
+            'message': 'Benekli düşük debiyle sağılıyor.',
+            'createdAt': '2026-09-22T06:14:00Z',
+          }
+        ]));
+
+    final alerts = await r.repo.alerts();
+
+    expect(r.adapter.requests.single.path, '/alerts');
+    expect(alerts.single.severity, 'critical');
+    expect(alerts.single.isAcknowledged, isFalse);
+  });
+
+  // BİLİNMEYEN tür ve şiddetin parse'ı düşürmediğini doğrular.
+  //
+  // §8.4 bu sütunların alacağı değerleri saymıyor; kapalı bir enum yazmak,
+  // backend yeni bir uyarı türü eklediğinde listenin komple kaybolması
+  // demekti.
+  test('bilinmeyen uyarı türü listeyi düşürmez', () async {
+    final r = rig((o) async => okEnvelope2([
+          {'id': 'al1', 'type': 'udder_temp', 'severity': 'fatal', 'message': 'x'}
+        ]));
+
+    expect((await r.repo.alerts()).single.type, 'udder_temp');
+  });
+
+  test('okundu işareti POST edilir', () async {
+    final r = rig((o) async => okEnvelope({}));
+
+    await r.repo.ackAlert('al1');
+
+    expect(r.adapter.requests.single.path, '/alerts/al1/ack');
+    expect(r.adapter.requests.single.method, 'POST');
+  });
 }

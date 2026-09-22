@@ -1,0 +1,68 @@
+[
+  {
+    "id": "0192a1f0-0090-7000-8000-000000000001",
+    "animalId": "0192a1f0-0070-7000-8000-000000000003",
+    "sessionId": "0192a1f0-0080-7000-8000-000000000001",
+    "type": "low_flow",
+    "severity": "critical",
+    "message": "Benekli (TR340000003) düşük debiyle sağılıyor: 0.65 L/dk. Başlık ve meme kontrolü gerekir.",
+    "createdAt": "2026-09-22T06:14:00Z",
+    "acknowledgedBy": null,
+    "acknowledgedAt": null
+  },
+  {
+    "id": "0192a1f0-0090-7000-8000-000000000002",
+    "animalId": "0192a1f0-0070-7000-8000-000000000004",
+    "sessionId": "0192a1f0-0080-7000-8000-000000000001",
+    "type": "low_yield",
+    "severity": "warning",
+    "message": "Pamuk (TR340000004) beklenen veriminin %20'sinin altında kaldı.",
+    "createdAt": "2026-09-22T06:12:00Z",
+    "acknowledgedBy": null,
+    "acknowledgedAt": null
+  },
+  {
+    "id": "0192a1f0-0090-7000-8000-000000000003",
+    "animalId": "0192a1f0-0070-7000-8000-000000000010",
+    "sessionId": null,
+    "type": "no_milk",
+    "severity": "critical",
+    "message": "Alaca (TR340000010) son 4 sağımda süt vermedi. Değerlendirme gerekli.",
+    "createdAt": "2026-09-21T19:30:00Z",
+    "acknowledgedBy": null,
+    "acknowledgedAt": null
+  },
+  {
+    "id": "0192a1f0-0090-7000-8000-000000000004",
+    "animalId": "0192a1f0-0070-7000-8000-000000000008",
+    "sessionId": null,
+    "type": "dry_off",
+    "severity": "warning",
+    "message": "Gelin (TR340000008) 7 günlük ortalaması tür alt eşiğinin altında; kuruya çıkarma değerlendirilmeli.",
+    "createdAt": "2026-09-21T19:30:00Z",
+    "acknowledgedBy": null,
+    "acknowledgedAt": null
+  },
+  {
+    "id": "0192a1f0-0090-7000-8000-000000000005",
+    "animalId": null,
+    "sessionId": null,
+    "type": "device_offline",
+    "severity": "warning",
+    "message": "A Bölgesi, Ünite A-2, Nokta 7 sayacı 12 dakikadır veri göndermiyor.",
+    "createdAt": "2026-09-21T18:22:00Z",
+    "acknowledgedBy": null,
+    "acknowledgedAt": null
+  },
+  {
+    "id": "0192a1f0-0090-7000-8000-000000000006",
+    "animalId": "0192a1f0-0070-7000-8000-000000000005",
+    "sessionId": null,
+    "type": "declining",
+    "severity": "info",
+    "message": "Menekşe (TR340000005) son 30 günde %31 verim kaybetti; takip listesine alındı.",
+    "createdAt": "2026-09-20T19:30:00Z",
+    "acknowledgedBy": "demo@milktrace.local",
+    "acknowledgedAt": "2026-09-20T20:05:00Z"
+  }
+]

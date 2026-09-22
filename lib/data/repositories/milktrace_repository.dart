@@ -1,3 +1,4 @@
+import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
@@ -54,4 +55,13 @@ abstract interface class MilkTraceRepository {
 
   /// Bir hayvanın 7/30 gün trendi ve sınıfı (§8.5 GET /animals/{id}/trend).
   Future<AnimalTrend> animalTrend(String animalId);
+
+  /// Uyarılar (§8.5 GET /alerts). Yeniden eskiye sıralı.
+  Future<List<Alert>> alerts();
+
+  /// Uyarıyı okundu işaretler (§8.5 POST /alerts/{id}/ack).
+  ///
+  /// Dönüş yok: güncel kaydı sunucudan tekrar okumak, iki kullanıcının aynı
+  /// uyarıyı kapattığı durumda da doğru sonucu verir.
+  Future<void> ackAlert(String alertId);
 }
