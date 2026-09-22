@@ -108,11 +108,55 @@ void main() {
   testWidgets('sayaca dokununca ayrıntı sayfası açılır', (tester) async {
     await pumpDevices(tester);
 
-    await tester.tap(find.text('MT-B1-000011'));
+    // Satırda artık protokol de yazıyor; tam eşleşme aranmıyor.
+    await tester.tap(find.textContaining('MT-B1-000011'));
     await tester.pumpAndSettle();
 
     expect(find.text('Yazılım sürümü'), findsOneWidget);
     expect(find.text('Kalibrasyon katsayısı'), findsOneWidget);
     expect(find.text('Simülatör cihazı'), findsOneWidget);
+  });
+
+  // §17 Faz 5 demosu: native MQTT + üretici MQTT + Modbus sayaçları AYNI
+  // ekranda. Protokol dağılımının sayıldığını doğrular.
+  test('kaynaklar PROFİLE göre gruplanır, protokole göre değil', () async {
+    final tree = await _container.read(deviceTreeProvider.future);
+
+    // Native MQTT ile üretici MQTT aynı protokolü konuşuyor; protokole göre
+    // sayılsaydı üç kaynak iki satıra düşer ve demonun asıl noktası olan
+    // üretici ayrımı kaybolurdu.
+    expect(tree.protocols, {'mqtt': 20, 'modbus-tcp': 9});
+    expect(tree.sources, hasLength(3));
+    expect(tree.sources.map((s) => s.profile.vendor),
+        containsAll(['MILKTRACE', 'ORNEK-URETICI', 'AKIS-METRE']));
+    expect(tree.sources.first.count, 10);
+    expect(hasMixedSources(tree), isTrue);
+    expect(tree.unprofiled, 0,
+        reason: 'takılı sayaçların hepsinin profili olmalı');
+  });
+
+  testWidgets('karışık kaynaklı tesiste satırda protokol yazar',
+      (tester) async {
+    await pumpDevices(tester);
+
+    expect(find.text('Kaynaklar:'), findsOneWidget);
+    expect(find.text('ORNEK-URETICI · MQTT · 10'), findsOneWidget);
+    expect(find.text('AKIS-METRE · Modbus TCP · 9'), findsOneWidget);
+    // B-1 üretici MQTT, C-1 Modbus: ikisi de açık geliyor.
+    expect(find.textContaining('MT-C1-000022 · Modbus TCP'), findsOneWidget);
+  });
+
+  // Profil bilgisinin AYRINTIDA da durduğunu doğrular.
+  //
+  // §16/1: üretici adı bir VERİdir, uygulama ona göre davranmaz ama
+  // gösterir — sahadaki teknisyen hangi sözleşmeyi konuştuğunu bilmeli.
+  testWidgets('sayaç ayrıntısı profili ve protokolü gösterir', (tester) async {
+    await pumpDevices(tester);
+
+    await tester.tap(find.textContaining('MT-B1-000011'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('ORNEK-URETICI MM-200 · v1'), findsOneWidget);
+    expect(find.text('MQTT'), findsOneWidget);
   });
 }

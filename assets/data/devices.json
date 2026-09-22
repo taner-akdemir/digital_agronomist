@@ -7,7 +7,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000001",
+      "vendor": "MILKTRACE",
+      "model": "MT-100",
+      "protocol": "mqtt",
+      "version": 1,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000002",
@@ -17,7 +25,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000001",
+      "vendor": "MILKTRACE",
+      "model": "MT-100",
+      "protocol": "mqtt",
+      "version": 1,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000003",
@@ -27,7 +43,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000001",
+      "vendor": "MILKTRACE",
+      "model": "MT-100",
+      "protocol": "mqtt",
+      "version": 1,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000004",
@@ -37,7 +61,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000001",
+      "vendor": "MILKTRACE",
+      "model": "MT-100",
+      "protocol": "mqtt",
+      "version": 1,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000005",
@@ -47,7 +79,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000001",
+      "vendor": "MILKTRACE",
+      "model": "MT-100",
+      "protocol": "mqtt",
+      "version": 1,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000006",
@@ -57,7 +97,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000001",
+      "vendor": "MILKTRACE",
+      "model": "MT-100",
+      "protocol": "mqtt",
+      "version": 1,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000007",
@@ -67,7 +115,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000001",
+      "vendor": "MILKTRACE",
+      "model": "MT-100",
+      "protocol": "mqtt",
+      "version": 1,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000008",
@@ -77,7 +133,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000001",
+      "vendor": "MILKTRACE",
+      "model": "MT-100",
+      "protocol": "mqtt",
+      "version": 1,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000009",
@@ -87,7 +151,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000001",
+      "vendor": "MILKTRACE",
+      "model": "MT-100",
+      "protocol": "mqtt",
+      "version": 1,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000010",
@@ -97,7 +169,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000001",
+      "vendor": "MILKTRACE",
+      "model": "MT-100",
+      "protocol": "mqtt",
+      "version": 1,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000011",
@@ -107,7 +187,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000002",
+      "vendor": "ORNEK-URETICI",
+      "model": "MM-200",
+      "protocol": "mqtt",
+      "version": 1,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000012",
@@ -117,7 +205,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000002",
+      "vendor": "ORNEK-URETICI",
+      "model": "MM-200",
+      "protocol": "mqtt",
+      "version": 1,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000013",
@@ -127,7 +223,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000002",
+      "vendor": "ORNEK-URETICI",
+      "model": "MM-200",
+      "protocol": "mqtt",
+      "version": 1,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000014",
@@ -137,7 +241,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000002",
+      "vendor": "ORNEK-URETICI",
+      "model": "MM-200",
+      "protocol": "mqtt",
+      "version": 1,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000015",
@@ -147,7 +259,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000002",
+      "vendor": "ORNEK-URETICI",
+      "model": "MM-200",
+      "protocol": "mqtt",
+      "version": 1,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000016",
@@ -157,7 +277,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000002",
+      "vendor": "ORNEK-URETICI",
+      "model": "MM-200",
+      "protocol": "mqtt",
+      "version": 1,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000017",
@@ -167,7 +295,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000002",
+      "vendor": "ORNEK-URETICI",
+      "model": "MM-200",
+      "protocol": "mqtt",
+      "version": 1,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000018",
@@ -177,7 +313,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000002",
+      "vendor": "ORNEK-URETICI",
+      "model": "MM-200",
+      "protocol": "mqtt",
+      "version": 1,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000019",
@@ -187,7 +331,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000002",
+      "vendor": "ORNEK-URETICI",
+      "model": "MM-200",
+      "protocol": "mqtt",
+      "version": 1,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000020",
@@ -197,7 +349,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000002",
+      "vendor": "ORNEK-URETICI",
+      "model": "MM-200",
+      "protocol": "mqtt",
+      "version": 1,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000021",
@@ -207,7 +367,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000003",
+      "vendor": "AKIS-METRE",
+      "model": "AM-50",
+      "protocol": "modbus-tcp",
+      "version": 2,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000022",
@@ -217,7 +385,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000003",
+      "vendor": "AKIS-METRE",
+      "model": "AM-50",
+      "protocol": "modbus-tcp",
+      "version": 2,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000023",
@@ -227,7 +403,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000003",
+      "vendor": "AKIS-METRE",
+      "model": "AM-50",
+      "protocol": "modbus-tcp",
+      "version": 2,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000024",
@@ -237,7 +421,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000003",
+      "vendor": "AKIS-METRE",
+      "model": "AM-50",
+      "protocol": "modbus-tcp",
+      "version": 2,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000025",
@@ -247,7 +439,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000003",
+      "vendor": "AKIS-METRE",
+      "model": "AM-50",
+      "protocol": "modbus-tcp",
+      "version": 2,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000026",
@@ -257,7 +457,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000003",
+      "vendor": "AKIS-METRE",
+      "model": "AM-50",
+      "protocol": "modbus-tcp",
+      "version": 2,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000027",
@@ -267,7 +475,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000003",
+      "vendor": "AKIS-METRE",
+      "model": "AM-50",
+      "protocol": "modbus-tcp",
+      "version": 2,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000028",
@@ -277,7 +493,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000003",
+      "vendor": "AKIS-METRE",
+      "model": "AM-50",
+      "protocol": "modbus-tcp",
+      "version": 2,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000029",
@@ -287,7 +511,15 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": {
+      "id": "0192a1f0-00b0-7000-8000-000000000003",
+      "vendor": "AKIS-METRE",
+      "model": "AM-50",
+      "protocol": "modbus-tcp",
+      "version": 2,
+      "status": "approved"
+    }
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000030",
@@ -297,7 +529,8 @@
     "firmware": "1.0.3",
     "calibrationFactor": 1.0,
     "lastSeenAt": null,
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": null
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000031",
@@ -307,7 +540,8 @@
     "firmware": "1.0.2",
     "calibrationFactor": 1.0,
     "lastSeenAt": null,
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": null
   },
   {
     "id": "0192a1f0-0060-7000-8000-000000000032",
@@ -317,6 +551,7 @@
     "firmware": "1.0.2",
     "calibrationFactor": 1.0,
     "lastSeenAt": null,
-    "isSimulated": true
+    "isSimulated": true,
+    "profile": null
   }
 ]

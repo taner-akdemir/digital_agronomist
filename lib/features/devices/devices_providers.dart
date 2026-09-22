@@ -1,4 +1,5 @@
 import 'package:milktrace/data/models/device.dart';
+import 'package:milktrace/data/models/device_profile.dart';
 import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/vacuum.dart';
@@ -24,7 +25,33 @@ typedef DeviceTree = ({
   int online,
   int offline,
   int emptySpouts,
+
+  /// Tesisteki veri KAYNAKLARI: profil + o profili konuşan takılı sayaç
+  /// adedi, çoktan aza sıralı (§9.0).
+  ///
+  /// PROTOKOLE GÖRE DEĞİL PROFİLE göre gruplanır. Faz 5'in demosu "native
+  /// MQTT + üretici MQTT + Modbus" (§17) ve ilk ikisi aynı protokolü
+  /// konuşuyor; protokole göre sayılsaydı üç kaynak iki satıra düşer ve
+  /// demonun asıl noktası olan üretici ayrımı kaybolurdu.
+  List<DeviceSource> sources,
+
+  /// Protokol kodu → adet. Satırdaki protokol etiketi bundan besleniyor.
+  Map<String, int> protocols,
+
+  /// Profili atanmamış takılı sayaç: karantinada bekliyor demektir (§8.4)
+  /// ve verisi işlenmiyor. Sessizce gizlenmesi, eksik verinin sebebini
+  /// aramayı imkânsız kılardı.
+  int unprofiled,
 });
+
+/// Bir profil ve onu konuşan sayaç adedi.
+typedef DeviceSource = ({DeviceProfile profile, int count});
+
+/// Tesiste birden fazla kaynak var mı.
+///
+/// Tek kaynaklı tesiste profil/protokol etiketi her satırda tekrarlanır ve
+/// hiçbir şey ayırt etmezdi; yalnızca KARIŞIK tesiste gösteriliyor.
+bool hasMixedSources(DeviceTree tree) => tree.sources.length > 1;
 
 /// Ağacı tek seferde kurar.
 ///
@@ -72,6 +99,27 @@ Future<DeviceTree> deviceTree(Ref ref) async {
       ),
   ];
 
+  final protocols = <String, int>{};
+  final byProfile = <String, DeviceSource>{};
+  var unprofiled = 0;
+
+  for (final d in deviceBySpout.values) {
+    final profile = d.profile;
+    if (profile == null) {
+      unprofiled++;
+      continue;
+    }
+    if (profile.protocol.isNotEmpty) {
+      protocols.update(profile.protocol, (v) => v + 1, ifAbsent: () => 1);
+    }
+    final seen = byProfile[profile.id];
+    byProfile[profile.id] =
+        (profile: profile, count: (seen?.count ?? 0) + 1);
+  }
+
+  final sources = byProfile.values.toList()
+    ..sort((a, b) => b.count.compareTo(a.count));
+
   return (
     halls: tree,
     unassigned: [
@@ -82,5 +130,8 @@ Future<DeviceTree> deviceTree(Ref ref) async {
     offline: devices.where((d) => d.status == 'offline').length,
     emptySpouts:
         spouts.where((s) => !deviceBySpout.containsKey(s.id)).length,
+    sources: List<DeviceSource>.unmodifiable(sources),
+    protocols: Map<String, int>.unmodifiable(protocols),
+    unprofiled: unprofiled,
   );
 }

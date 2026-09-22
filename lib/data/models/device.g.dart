@@ -10,6 +10,9 @@ _Device _$DeviceFromJson(Map<String, dynamic> json) => _Device(
   id: json['id'] as String,
   serialNo: json['serialNo'] as String,
   spoutId: json['spoutId'] as String?,
+  profile: json['profile'] == null
+      ? null
+      : DeviceProfile.fromJson(json['profile'] as Map<String, dynamic>),
   status: json['status'] as String? ?? 'unknown',
   firmware: json['firmware'] as String?,
   calibrationFactor: (json['calibrationFactor'] as num?)?.toDouble() ?? 1.0,
@@ -23,6 +26,7 @@ Map<String, dynamic> _$DeviceToJson(_Device instance) => <String, dynamic>{
   'id': instance.id,
   'serialNo': instance.serialNo,
   'spoutId': instance.spoutId,
+  'profile': instance.profile,
   'status': instance.status,
   'firmware': instance.firmware,
   'calibrationFactor': instance.calibrationFactor,

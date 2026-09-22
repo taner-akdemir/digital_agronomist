@@ -196,6 +196,28 @@ Proje bağlandığında **hiçbir Dart dosyası değişmez**; adımlar §7'de.
 
 Böylece dört sekmenin dördü de gerçek: **iskelet ekran kalmadı**, `StubScreen` silindi.
 
+### Faz 5'in mobil payı (§17)
+
+Faz 5'in kalemleri neredeyse tamamen başka repolarda: `collector-modbus`, edge gateway,
+RLS, Helm, Grafana → `~/GolandProjects/milktrace`; React admin (karantina + profil
+editörü) → `~/WebstormProjects/milktrace-web` (ADR 0014). Bu repoya düşen tek şey
+**demo çıktısı**: "aynı canlı ekranda native MQTT + üretici MQTT + Modbus sayaçları".
+
+Bunun için `Device.profile` eklendi (§8.4 `devices.profile_id`): üretici, model, protokol,
+sürüm. Cihazlar ekranı karışık kaynaklı tesiste "Kaynaklar" satırını gösteriyor ve her
+satıra protokolü yazıyor; profil ayrıntısı sayaç sayfasında.
+
+**§16/1 korunur:** marka/model adı koda GÖMÜLMEZ. `vendor` ve `model` birer veridir;
+uygulamada `if (vendor == '...')` yazan tek satır yok. Eşleme yalnızca PROTOKOL kodu
+üzerinedir (`protocolLabel`) ve tanınmayan kod olduğu gibi gösterilir.
+
+Kaynaklar **profile göre** gruplanır, protokole göre değil: native MQTT ile üretici MQTT
+aynı protokolü konuşuyor ve protokole göre sayılsaydı demonun asıl noktası olan üretici
+ayrımı kaybolurdu.
+
+Canlı ekran protokolden habersizdir ve öyle kalmalı: veri `collector-*` katmanında
+kanonik hâle geliyor (§9.0), ekran L/dk ve mL görüyor.
+
 Mock moda dönmek: `flutter run --dart-define=MT_API=mock`. O modda kimlik sunucusu
 olmadığı için giriş ekranı atlanır ve demo kullanıcısıyla çalışılır.
 

@@ -115,6 +115,16 @@ void main() {
     expect(devices.where((d) => d.spoutId == null), isNotEmpty);
     expect(spoutIds.difference(assigned.toSet()), isNotEmpty,
         reason: 'sayaç takılmamış en az bir nokta olmalı');
+
+    // §17 Faz 5 demosu birden fazla protokol istiyor; tek protokol olsaydı
+    // karışım hiç denenmemiş olurdu.
+    final protocols = devices
+        .map((d) => d.profile?.protocol)
+        .whereType<String>()
+        .toSet();
+    expect(protocols.length, greaterThan(1), reason: 'protokol karışımı yok');
+    expect(devices.where((d) => d.profile == null), isNotEmpty,
+        reason: 'profili atanmamış (karantinadaki) bir cihaz da olmalı');
   });
 
   test('hayvanlar çözülür; küpe numarası var, tür id ile bağlı', () {

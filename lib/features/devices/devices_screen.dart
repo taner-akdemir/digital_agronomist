@@ -35,9 +35,10 @@ class DevicesScreen extends ConsumerWidget {
               AppSpacing.lg, AppSpacing.md, AppSpacing.lg, AppSpacing.lg),
           children: [
             _Summary(tree: t),
+            if (hasMixedSources(t)) _Sources(tree: t),
             const SizedBox(height: AppSpacing.md),
             for (final hall in t.halls) ...[
-              _HallSection(node: hall),
+              _HallSection(node: hall, showProtocol: hasMixedSources(t)),
               const SizedBox(height: AppSpacing.md),
             ],
             if (t.unassigned.isNotEmpty) _UnassignedCard(devices: t.unassigned),
@@ -68,15 +69,59 @@ class _Summary extends StatelessWidget {
           LightInfo(
               color: AppColors.flowGrey,
               label: '${tree.emptySpouts} Sayaçsız nokta'),
+        // Profili olmayan sayaç KARANTİNADA bekliyor (§8.4) ve verisi
+        // işlenmiyor; sessizce gizlense eksik verinin sebebi aranamazdı.
+        if (tree.unprofiled > 0)
+          LightInfo(
+              color: AppColors.flowYellow,
+              label: '${tree.unprofiled} Profilsiz sayaç'),
       ],
     );
   }
 }
 
+/// Tesisteki veri kaynakları (§9.0).
+///
+/// YALNIZCA KARIŞIK tesiste görünür: tek kaynaklı bir tesiste "MILKTRACE 30"
+/// yazmak hiçbir şey ayırt etmez. Faz 5'in demosu tam olarak bu satır —
+/// native MQTT, üretici MQTT ve Modbus sayaçları aynı ekranda (§17).
+///
+/// Üretici adı VERİdir (§16/1); uygulama onu gösterir, ona göre davranmaz.
+class _Sources extends StatelessWidget {
+  const _Sources({required this.tree});
+
+  final DeviceTree tree;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: AppSpacing.sm, left: AppSpacing.xs),
+      child: Wrap(
+        spacing: AppSpacing.md,
+        runSpacing: AppSpacing.xs,
+        children: [
+          const Text('Kaynaklar:',
+              style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.onSurfaceMuted)),
+          for (final s in tree.sources)
+            Text(
+              '${s.profile.vendor} · ${s.profile.protocolLabel} · ${s.count}',
+              style: const TextStyle(
+                  fontSize: 12, color: AppColors.onSurfaceMuted),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
 class _HallSection extends StatelessWidget {
-  const _HallSection({required this.node});
+  const _HallSection({required this.node, required this.showProtocol});
 
   final HallNode node;
+  final bool showProtocol;
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +148,7 @@ class _HallSection extends StatelessWidget {
           )
         else
           for (final v in node.vacuums) ...[
-            _VacuumCard(node: v),
+            _VacuumCard(node: v, showProtocol: showProtocol),
             const SizedBox(height: AppSpacing.sm),
           ],
       ],
@@ -112,9 +157,10 @@ class _HallSection extends StatelessWidget {
 }
 
 class _VacuumCard extends StatelessWidget {
-  const _VacuumCard({required this.node});
+  const _VacuumCard({required this.node, required this.showProtocol});
 
   final VacuumNode node;
+  final bool showProtocol;
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +198,8 @@ class _VacuumCard extends StatelessWidget {
           ),
         ),
         children: [
-          for (final s in node.spouts) _SpoutRow(node: s),
+          for (final s in node.spouts)
+            _SpoutRow(node: s, showProtocol: showProtocol),
         ],
       ),
     );
@@ -160,9 +207,12 @@ class _VacuumCard extends StatelessWidget {
 }
 
 class _SpoutRow extends StatelessWidget {
-  const _SpoutRow({required this.node});
+  const _SpoutRow({required this.node, required this.showProtocol});
 
   final SpoutNode node;
+
+  /// Karışık protokollü tesiste satırda protokol de yazılır.
+  final bool showProtocol;
 
   @override
   Widget build(BuildContext context) {
@@ -191,7 +241,7 @@ class _SpoutRow extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                device?.serialNo ?? '—',
+                _serialLine(device),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -214,6 +264,14 @@ class _SpoutRow extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _serialLine(Device? device) {
+    if (device == null) return '—';
+    if (!showProtocol) return device.serialNo;
+
+    final protocol = device.profile?.protocolLabel ?? 'Profilsiz';
+    return '${device.serialNo} · $protocol';
   }
 }
 
@@ -314,6 +372,12 @@ void _showDeviceSheet(BuildContext context, Device device) {
               ],
             ),
             const SizedBox(height: AppSpacing.lg),
+            // Profil §16/1 gereği VERİdir: uygulama üretici adını gösterir,
+            // hiçbir yerde ona göre davranmaz.
+            _DetailRow('Profil',
+                device.profile?.title ?? 'Atanmamış (karantinada)'),
+            _DetailRow(
+                'Protokol', device.profile?.protocolLabel ?? 'Bilinmiyor'),
             _DetailRow('Yazılım sürümü', device.firmware ?? 'Bilinmiyor'),
             _DetailRow('Kalibrasyon katsayısı',
                 device.calibrationFactor.toStringAsFixed(3)),
