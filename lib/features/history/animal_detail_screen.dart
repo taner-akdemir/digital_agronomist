@@ -214,6 +214,13 @@ class _TrendCard extends StatelessWidget {
     // "günde -142 mL" sahada hiçbir şey ifade etmiyor.
     final monthly = trend.trendSlope * 30 / 1000;
 
+    // Küçük dalgalanma RENKLENDİRİLMEZ. Her negatif eğime kırmızı vermek,
+    // laktasyonun doğal inişindeki sağlıklı bir hayvanı da kırmızı
+    // gösteriyordu — §6.2'nin ısınma/bitiş bastırmalarıyla aynı gerekçe:
+    // yanlış alarm, rengi anlamsızlaştırır.
+    final base = trend.ma30Ml / 1000;
+    final notable = base > 0 && (monthly.abs() / base) >= 0.10;
+
     return _Card(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -228,7 +235,11 @@ class _TrendCard extends StatelessWidget {
               _Stat(
                 '30 günlük eğilim',
                 '${monthly >= 0 ? '+' : ''}${monthly.toStringAsFixed(1)} L',
-                color: monthly < 0 ? AppColors.flowRed : AppColors.flowGreen,
+                color: !notable
+                    ? null
+                    : monthly < 0
+                        ? AppColors.flowRed
+                        : AppColors.flowGreen,
               ),
             ],
           ),
