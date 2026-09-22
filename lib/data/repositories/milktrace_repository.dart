@@ -46,6 +46,29 @@ abstract interface class MilkTraceRepository {
   /// Bölgedeki aktif oturumun ilk yüklemesi (§8.5 GET /sessions/{id}/live).
   Future<LiveSession> liveSession({required String hallId});
 
+  /// Sağım başlatır (§8.5 POST /sessions).
+  ///
+  /// Tip TAHMİN EDİLMEZ, çağıran verir: backend de saate bakarak tahmin
+  /// etmiyor çünkü beklenen verim oturum tipine göre ayrışıyor (§6.3) ve
+  /// yanlış tahmin tüm renkleri sessizce kaydırırdı.
+  Future<MilkingSession> startSession({
+    required String hallId,
+    required String type,
+  });
+
+  /// Noktaya hayvan eşleştirir (§8.5 PUT .../spouts/{spoutId}/animal).
+  ///
+  /// EŞLEŞTİRME OLMADAN RENK YOKTUR: hayvanı olmayan nokta §6.2 kural 1
+  /// gereği gri kalır ve beklenen verim hesaplanamaz. Sağımın ilk işi bu.
+  Future<void> assignAnimal({
+    required String sessionId,
+    required String spoutId,
+    required String animalId,
+  });
+
+  /// Sağımı bitirir (§8.5 POST /sessions/{id}/end).
+  Future<MilkingSession> endSession(String sessionId);
+
   /// Canlı güncellemeler (§8.5 WS /ws?sessionId=).
   ///
   /// İlk yükleme liveSession() ile yapılır; bu akış onun üzerine gelen

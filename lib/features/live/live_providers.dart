@@ -1,6 +1,6 @@
 import 'package:milktrace/data/models/hall.dart';
+import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/data/models/spout.dart';
-import 'package:milktrace/data/models/spout_update.dart';
 import 'package:milktrace/data/models/vacuum.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
@@ -61,18 +61,85 @@ Future<List<Spout>> spoutsByHall(Ref ref, String hallId) async {
 @riverpod
 class LiveBoard extends _$LiveBoard {
   @override
-  Future<List<SpoutUpdate>> build(String hallId) async {
+  Future<LiveSession> build(String hallId) async {
     final repo = ref.watch(repositoryProvider);
     final live = await repo.liveSession(hallId: hallId);
 
+    // OTURUM DA DÖNER, yalnızca noktalar değil: ekranın "Sağımı Başlat" mı
+    // "Sağımı Bitir" mi göstereceğini ve eşleştirmenin hangi oturuma
+    // yazılacağını bilmesi gerekiyor.
+    if (live.session.id.isEmpty) return live;
+
     final bySpout = {for (final u in live.updates) u.spoutId: u};
 
-    final sub = repo.watchSession(live.session.id).listen((u) {
-      bySpout[u.spoutId] = u;
-      state = AsyncData(bySpout.values.toList(growable: false));
-    });
+    final sub = repo.watchSession(live.session.id).listen(
+      (u) {
+        bySpout[u.spoutId] = u;
+        state = AsyncData(live.copyWith(
+          updates: bySpout.values.toList(growable: false),
+        ));
+      },
+      // Akış BİTTİYSE oturum kapanmıştır (session.ended). Tahtayı yeniden
+      // kurmak "oturum yok" durumuna geçirir; aksi hâlde ekran kapanmış bir
+      // sağımın son karesini sonsuza dek gösterirdi.
+      //
+      // Kimliği boş oturumda akış zaten anında biter; o yüzden yukarıda
+      // erken dönülüyor, yoksa burası sonsuz döngü kurardı.
+      onDone: ref.invalidateSelf,
+    );
     ref.onDispose(sub.cancel);
 
-    return live.updates;
+    return live;
+  }
+}
+
+/// Sağım kontrolü: başlat, eşleştir, bitir (§15.1).
+///
+/// Komutlar CANLI TAHTAYI DEĞİL provider'ı tazeler: tahta WebSocket'ten
+/// besleniyor ve komuttan sonra gelen ilk kare zaten doğru durumu taşıyor.
+/// Yine de oturumun KENDİSİ değiştiği için (yeni kimlik, kapanma) akışın
+/// baştan kurulması gerekiyor.
+@riverpod
+class MilkingControl extends _$MilkingControl {
+  @override
+  bool build() => false; // true = bir komut sürüyor
+
+  /// Bölgede sağım başlatır.
+  Future<void> start({required String hallId, required String type}) =>
+      _run(() => ref.read(repositoryProvider).startSession(
+            hallId: hallId,
+            type: type,
+          ));
+
+  /// Noktaya hayvan eşleştirir.
+  Future<void> assign({
+    required String sessionId,
+    required String spoutId,
+    required String animalId,
+  }) =>
+      _run(() => ref.read(repositoryProvider).assignAnimal(
+            sessionId: sessionId,
+            spoutId: spoutId,
+            animalId: animalId,
+          ));
+
+  /// Sağımı bitirir.
+  Future<void> end({required String sessionId}) =>
+      _run(() => ref.read(repositoryProvider).endSession(sessionId));
+
+  /// Komutu çalıştırır, sonra canlı tahtayı yeniden kurar.
+  ///
+  /// HATA YUKARI ATILIR: ekran backend'in Türkçe mesajını gösteriyor
+  /// (§16), kendi metnini uydurmuyor. Bayrak finally'de düşüyor ki
+  /// başarısız bir komuttan sonra düğmeler kilitli kalmasın.
+  Future<void> _run(Future<void> Function() action) async {
+    if (state) return; // çift dokunuş
+    state = true;
+    try {
+      await action();
+      ref.invalidate(liveBoardProvider);
+    } finally {
+      state = false;
+    }
   }
 }

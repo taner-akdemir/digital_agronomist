@@ -298,7 +298,31 @@ class ApiRepository implements MilkTraceRepository {
       Thresholds.fromJson(_dataOf(await _dio.put<dynamic>(
           '/species/thresholds',
           data: thresholds.toJson())));
+
+  @override
+  Future<MilkingSession> startSession({
+    required String hallId,
+    required String type,
+  }) async =>
+      MilkingSession.fromJson(_dataOf(await _dio.post<dynamic>('/sessions',
+          data: {'hallId': hallId, 'type': type})));
+
+  @override
+  Future<void> assignAnimal({
+    required String sessionId,
+    required String spoutId,
+    required String animalId,
+  }) =>
+      _dio.put<dynamic>('/sessions/$sessionId/spouts/$spoutId/animal',
+          data: {'animalId': animalId});
+
+  @override
+  Future<MilkingSession> endSession(String sessionId) async =>
+      MilkingSession.fromJson(
+          _dataOf(await _dio.post<dynamic>('/sessions/$sessionId/end')));
 }
+
+
 
 /// Oturumun kapandığını bildiren iç işaret.
 class _SessionEnded {

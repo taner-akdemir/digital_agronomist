@@ -530,4 +530,54 @@ void main() {
     // ekran kendi yazdığını doğru sanmamalı.
     expect(saved.dryOffDailyMl, 9000);
   });
+
+  // ------------------------------------------------- sağım kontrolü --
+
+  test('sağım başlatılır', () async {
+    final r = rig((o) async => okEnvelope(session('yeni', 'active')));
+
+    final v = await r.repo.startSession(hallId: _hallId, type: 'morning');
+
+    final req = r.adapter.requests.single;
+    expect(req.path, '/sessions');
+    expect(req.method, 'POST');
+    expect(req.data, {'hallId': _hallId, 'type': 'morning'});
+    expect(v.status, 'active');
+  });
+
+  test('hayvan noktaya eşleştirilir', () async {
+    final r = rig((o) async => okEnvelope({}));
+
+    await r.repo.assignAnimal(
+        sessionId: 's1', spoutId: _spout1, animalId: 'a1');
+
+    final req = r.adapter.requests.single;
+    expect(req.path, '/sessions/s1/spouts/$_spout1/animal');
+    expect(req.method, 'PUT');
+    expect(req.data, {'animalId': 'a1'});
+  });
+
+  test('sağım bitirilir', () async {
+    final r = rig((o) async => okEnvelope(session('s1', 'ended')));
+
+    final v = await r.repo.endSession('s1');
+
+    expect(r.adapter.requests.single.path, '/sessions/s1/end');
+    expect(r.adapter.requests.single.method, 'POST');
+    expect(v.status, 'ended');
+  });
+
+  // Backend'in TÜRKÇE hatasının yukarı taşındığını doğrular (§16).
+  //
+  // "bu bölgede zaten açık bir sağım oturumu var" cevabını kendi metnimizle
+  // değiştirmek, kullanıcının gerçek sebebi görmesini engellerdi.
+  test('çakışan sağım hatası olduğu gibi yukarı taşınır', () async {
+    final r = rig((o) async => errEnvelope(
+        409, 'CONFLICT', 'bu bölgede zaten açık bir sağım oturumu var'));
+
+    await expectLater(
+      r.repo.startSession(hallId: _hallId, type: 'morning'),
+      throwsA(isA<DioException>()),
+    );
+  });
 }

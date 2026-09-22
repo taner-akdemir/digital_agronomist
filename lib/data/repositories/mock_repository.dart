@@ -163,11 +163,50 @@ class MockRepository implements MilkTraceRepository {
         final live = await _load('live_session.json',
             (json) => LiveSession.fromJson(json as Map<String, dynamic>));
 
+        if (_sessionEnded) {
+          // Oturum yok: ekran "Sağımı Başlat" diyebilsin. Boş liste
+          // "oturum var ama nokta yok" ile karışırdı.
+          return LiveSession(
+            session: MilkingSession(id: '', hallId: hallId, status: 'none'),
+          );
+        }
+
+        final updates = [
+          for (final u in live.updates) await _withAssignment(u),
+        ];
+
         // Mock'ta tek bir oturum var; istenen bölgeye uyarlanır ki bölge
         // değiştirildiğinde ekran boş kalmasın.
-        if (live.session.hallId == hallId) return live;
-        return live.copyWith(session: live.session.copyWith(hallId: hallId));
+        return live.copyWith(
+          session: live.session.copyWith(hallId: hallId),
+          updates: updates,
+        );
       });
+
+  /// Elle eşleştirilmiş noktaya hayvanı yazar.
+  ///
+  /// Hayvan bulunamazsa nokta OLDUĞU GİBİ kalır: mock verisiyle tutarsız
+  /// bir kimlik yüzünden canlı ekranı düşürmek orantısız olurdu.
+  Future<SpoutUpdate> _withAssignment(SpoutUpdate u) async {
+    final animalId = _assignments[u.spoutId];
+    if (animalId == null) return u;
+
+    final animals = await _list('animals.json', Animal.fromJson);
+    final animal = animals.where((a) => a.id == animalId).firstOrNull;
+    if (animal == null) return u;
+
+    final species = await _list('species.json', Species.fromJson);
+    final code = species.where((sp) => sp.id == animal.speciesId).firstOrNull?.code;
+
+    return u.copyWith(
+      animal: SpoutAnimal(
+        id: animal.id,
+        earTag: animal.earTag,
+        species: code,
+        name: animal.name,
+      ),
+    );
+  }
 
   @override
   Stream<SpoutUpdate> watchSession(String sessionId) async* {
@@ -194,7 +233,7 @@ class MockRepository implements MilkTraceRepository {
         }
         final next = _advance(u, elapsed[u.spoutId] ?? 0);
         updates[i] = next;
-        yield next;
+        yield await _withAssignment(next);
       }
     }
   }
@@ -429,4 +468,53 @@ class MockRepository implements MilkTraceRepository {
   @override
   Future<void> unregisterPushToken(String token) =>
       _delayed(() async => pushTokens.remove(token));
+
+  // ------------------------------------------------- sağım kontrolü --
+
+  /// Oturum kapatıldı mı.
+  ///
+  /// Varsayılan AÇIK: mock modun amacı demo ve o demonun canlı ekranı dolu
+  /// açılmalı. "Sağımı Bitir"e basılınca kapanıyor ki düğme gerçekten bir
+  /// şey yapsın; "Sağımı Başlat" tekrar açıyor.
+  bool _sessionEnded = false;
+
+  /// Noktalara elle yapılan eşleştirmeler (spoutId -> animalId).
+  ///
+  /// Canlı görüntüye UYGULANIR: eşleştirme yapıldığında kartın gri kalması,
+  /// düğmenin çalışmadığı izlenimi verirdi.
+  final Map<String, String> _assignments = {};
+
+  @override
+  Future<MilkingSession> startSession({
+    required String hallId,
+    required String type,
+  }) =>
+      _delayed(() async {
+        final live = await _load('live_session.json',
+            (json) => LiveSession.fromJson(json as Map<String, dynamic>));
+
+        // Fixture'daki oturum YENİDEN KULLANILIR: canlı ekran, geçmiş ve
+        // dashboard hep o kimliğe bakıyor. Yeni bir kimlik üretmek mock'u
+        // kendi içinde tutarsız yapardı.
+        _sessionEnded = false;
+        return live.session.copyWith(hallId: hallId, type: type, status: 'active');
+      });
+
+  @override
+  Future<void> assignAnimal({
+    required String sessionId,
+    required String spoutId,
+    required String animalId,
+  }) =>
+      _delayed(() async => _assignments[spoutId] = animalId);
+
+  @override
+  Future<MilkingSession> endSession(String sessionId) => _delayed(() async {
+        final live = await _load('live_session.json',
+            (json) => LiveSession.fromJson(json as Map<String, dynamic>));
+
+        _sessionEnded = true;
+        _assignments.clear();
+        return live.session.copyWith(status: 'ended', endedAt: _clock);
+      });
 }

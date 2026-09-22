@@ -317,7 +317,7 @@ final liveBoardProvider = LiveBoardFamily._();
 /// İlk yükleme `GET /sessions/{id}/live`, sonrası WebSocket akışı (§8.5).
 /// Gelen her güncelleme nokta kimliğine göre yerine yazılır.
 final class LiveBoardProvider
-    extends $AsyncNotifierProvider<LiveBoard, List<SpoutUpdate>> {
+    extends $AsyncNotifierProvider<LiveBoard, LiveSession> {
   /// Bölgenin canlı sağım durumu.
   ///
   /// İlk yükleme `GET /sessions/{id}/live`, sonrası WebSocket akışı (§8.5).
@@ -358,7 +358,7 @@ final class LiveBoardProvider
   }
 }
 
-String _$liveBoardHash() => r'70bbed448c1180eb62ec511a8f08cedf62da28de';
+String _$liveBoardHash() => r'c1c8711064dcf7fbb9f562be84eac12b0d01f158';
 
 /// Bölgenin canlı sağım durumu.
 ///
@@ -369,9 +369,9 @@ final class LiveBoardFamily extends $Family
     with
         $ClassFamilyOverride<
           LiveBoard,
-          AsyncValue<List<SpoutUpdate>>,
-          List<SpoutUpdate>,
-          FutureOr<List<SpoutUpdate>>,
+          AsyncValue<LiveSession>,
+          LiveSession,
+          FutureOr<LiveSession>,
           String
         > {
   LiveBoardFamily._()
@@ -400,24 +400,101 @@ final class LiveBoardFamily extends $Family
 /// İlk yükleme `GET /sessions/{id}/live`, sonrası WebSocket akışı (§8.5).
 /// Gelen her güncelleme nokta kimliğine göre yerine yazılır.
 
-abstract class _$LiveBoard extends $AsyncNotifier<List<SpoutUpdate>> {
+abstract class _$LiveBoard extends $AsyncNotifier<LiveSession> {
   late final _$args = ref.$arg as String;
   String get hallId => _$args;
 
-  FutureOr<List<SpoutUpdate>> build(String hallId);
+  FutureOr<LiveSession> build(String hallId);
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref =
-        this.ref as $Ref<AsyncValue<List<SpoutUpdate>>, List<SpoutUpdate>>;
+    final ref = this.ref as $Ref<AsyncValue<LiveSession>, LiveSession>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<List<SpoutUpdate>>, List<SpoutUpdate>>,
-              AsyncValue<List<SpoutUpdate>>,
+              AnyNotifier<AsyncValue<LiveSession>, LiveSession>,
+              AsyncValue<LiveSession>,
               Object?,
               Object?
             >;
     element.handleCreate(ref, () => build(_$args));
+  }
+}
+
+/// Sağım kontrolü: başlat, eşleştir, bitir (§15.1).
+///
+/// Komutlar CANLI TAHTAYI DEĞİL provider'ı tazeler: tahta WebSocket'ten
+/// besleniyor ve komuttan sonra gelen ilk kare zaten doğru durumu taşıyor.
+/// Yine de oturumun KENDİSİ değiştiği için (yeni kimlik, kapanma) akışın
+/// baştan kurulması gerekiyor.
+
+@ProviderFor(MilkingControl)
+final milkingControlProvider = MilkingControlProvider._();
+
+/// Sağım kontrolü: başlat, eşleştir, bitir (§15.1).
+///
+/// Komutlar CANLI TAHTAYI DEĞİL provider'ı tazeler: tahta WebSocket'ten
+/// besleniyor ve komuttan sonra gelen ilk kare zaten doğru durumu taşıyor.
+/// Yine de oturumun KENDİSİ değiştiği için (yeni kimlik, kapanma) akışın
+/// baştan kurulması gerekiyor.
+final class MilkingControlProvider
+    extends $NotifierProvider<MilkingControl, bool> {
+  /// Sağım kontrolü: başlat, eşleştir, bitir (§15.1).
+  ///
+  /// Komutlar CANLI TAHTAYI DEĞİL provider'ı tazeler: tahta WebSocket'ten
+  /// besleniyor ve komuttan sonra gelen ilk kare zaten doğru durumu taşıyor.
+  /// Yine de oturumun KENDİSİ değiştiği için (yeni kimlik, kapanma) akışın
+  /// baştan kurulması gerekiyor.
+  MilkingControlProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'milkingControlProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$milkingControlHash();
+
+  @$internal
+  @override
+  MilkingControl create() => MilkingControl();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(bool value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<bool>(value),
+    );
+  }
+}
+
+String _$milkingControlHash() => r'3691c2ebde1c93a35dc9b5bd5126d0143fb6ccc9';
+
+/// Sağım kontrolü: başlat, eşleştir, bitir (§15.1).
+///
+/// Komutlar CANLI TAHTAYI DEĞİL provider'ı tazeler: tahta WebSocket'ten
+/// besleniyor ve komuttan sonra gelen ilk kare zaten doğru durumu taşıyor.
+/// Yine de oturumun KENDİSİ değiştiği için (yeni kimlik, kapanma) akışın
+/// baştan kurulması gerekiyor.
+
+abstract class _$MilkingControl extends $Notifier<bool> {
+  bool build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<bool, bool>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<bool, bool>,
+              bool,
+              Object?,
+              Object?
+            >;
+    element.handleCreate(ref, build);
   }
 }

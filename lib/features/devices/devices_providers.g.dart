@@ -64,4 +64,4 @@ final class DeviceTreeProvider
   }
 }
 
-String _$deviceTreeHash() => r'612c6a0ccedf90cf02a74460bf3ae13d6637506a';
+String _$deviceTreeHash() => r'eb12b951da672548bb37d90a533435aac836a28b';
