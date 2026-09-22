@@ -1,9 +1,15 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:milktrace/data/models/thresholds.dart';
 import 'package:milktrace/data/repositories/api_repository.dart';
 import 'package:milktrace/domain/flow_color.dart';
 import 'package:milktrace/domain/yield_class.dart';
+
+import 'package:stream_channel/stream_channel.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../auth/fake_backend.dart';
 
@@ -34,24 +40,98 @@ Map<String, dynamic> update(String spoutId, String ts, {double flow = 2.5}) => {
       'ts': ts,
     };
 
-/// rig, sahte backend'e bağlı bir ApiRepository kurar.
+/// FakeSocket, testin elinde tuttuğu WebSocket kanalı.
 ///
-/// Yoklama aralığı kısaltılıyor: varsayılan 5 sn ile akış testleri onlarca
-/// saniye sürerdi ve kimse test paketini çalıştırmazdı.
-({ApiRepository repo, FakeAdapter adapter}) rig(
-    Future<ResponseBody> Function(RequestOptions) handler) {
+/// Gerçek bir sunucuya bağlanmak yerine çerçeveler elle besleniyor:
+/// yeniden bağlanma, oturum sonu ve bozuk çerçeve gibi durumlar ancak
+/// böyle deterministik kurulabilir.
+class FakeSocket {
+  FakeSocket() : _in = StreamController<String>();
+
+  final StreamController<String> _in;
+  bool sinkClosed = false;
+
+  WebSocketChannel get channel => _FakeChannel(this);
+
+  void send(Object payload) => _in.add(jsonEncode(payload));
+
+  /// Bağlantının kopmasını taklit eder.
+  void drop() => _in.close();
+}
+
+class _FakeChannel extends StreamChannelMixin<dynamic> implements WebSocketChannel {
+  _FakeChannel(this._socket);
+
+  final FakeSocket _socket;
+
+  @override
+  Stream<dynamic> get stream => _socket._in.stream;
+
+  @override
+  WebSocketSink get sink => _FakeSink(_socket);
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) =>
+      throw UnimplementedError('testte kullanılmıyor: ${invocation.memberName}');
+}
+
+class _FakeSink implements WebSocketSink {
+  _FakeSink(this._socket);
+
+  final FakeSocket _socket;
+
+  @override
+  Future<void> close([int? closeCode, String? closeReason]) async {
+    _socket.sinkClosed = true;
+  }
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) =>
+      throw UnimplementedError('testte kullanılmıyor: ${invocation.memberName}');
+}
+
+/// rig, sahte backend ve sahte WebSocket'e bağlı bir ApiRepository kurar.
+({ApiRepository repo, FakeAdapter adapter, List<FakeSocket> sockets, List<Uri> dialed, List<Map<String, dynamic>> headers}) rig(
+  Future<ResponseBody> Function(RequestOptions) handler, {
+  List<FakeSocket>? sockets,
+  String? token,
+}) {
   final adapter = FakeAdapter(handler);
   final dio = Dio(BaseOptions(baseUrl: 'http://test/api/v1'))
     ..httpClientAdapter = adapter;
+
+  final queue = sockets ?? [FakeSocket()];
+  final made = <FakeSocket>[];
+  final dialed = <Uri>[];
+  final headers = <Map<String, dynamic>>[];
+
   return (
     repo: ApiRepository(
       dio: dio,
-      // Gerçek 5 sn beklemek akış testlerini yarım dakikaya çıkarırdı.
-      pollInterval: const Duration(milliseconds: 5),
+      wsBaseUrl: 'ws://test/api/v1',
+      accessToken: () => token,
+      connect: (uri, hdr) {
+        dialed.add(uri);
+        headers.add(hdr);
+        final s = queue.isEmpty ? FakeSocket() : queue.removeAt(0);
+        made.add(s);
+        return s.channel;
+      },
+      // Gerçek 3 sn beklemek yeniden bağlanma testini yavaşlatırdı.
+      reconnectDelay: const Duration(milliseconds: 5),
     ),
     adapter: adapter,
+    sockets: made,
+    dialed: dialed,
+    headers: headers,
   );
 }
+
+/// activeLive, açık oturumun anlık görüntüsü.
+ResponseBody activeLive(List<Map<String, dynamic>> updates) => okEnvelope({
+      'session': session('s1', 'active'),
+      'updates': updates,
+    });
 
 void main() {
   // AÇIK oturumun listeden DOĞRU seçildiğini doğrular.
@@ -101,81 +181,133 @@ void main() {
     expect((await r.repo.liveSession(hallId: _hallId)).session.status, 'none');
   });
 
-  // Yoklamanın YALNIZCA DEĞİŞEN noktaları yayınladığını doğrular.
+  // İLK BAĞLANTIDA anlık görüntünün yayınlandığını doğrular.
   //
-  // Değişmeyeni tekrar yayınlamak ekranı her yoklamada baştan çizdirirdi.
-  test('yoklama değişmeyen noktayı tekrar yayınlamaz', () async {
-    var call = 0;
-    final r = rig((o) async {
-      call++;
-      return okEnvelope({
-        'session': session('s1', 'active'),
-        'updates': [
-          // 1. nokta her turda değişiyor, 2. nokta sabit.
-          update(_spout1, '2026-09-22T06:10:0$call' 'Z'),
+  // Yalnızca WebSocket dinlenseydi, sağımın ortasında açılan bir ekran ilk
+  // güncelleme gelene kadar (nokta başına ~2 sn) boş kalırdı.
+  test('bağlanınca önce anlık görüntü yayınlanır', () async {
+    final r = rig((o) async => activeLive([
+          update(_spout1, '2026-09-22T06:10:00Z'),
           update(_spout2, '2026-09-22T06:10:00Z'),
-        ],
-      });
-    });
+        ]));
 
-    final got = await r.repo
-        .watchSession('s1')
-        .take(3)
-        .map((u) => u.spoutId)
-        .toList();
+    final got = await r.repo.watchSession('s1').take(2).map((u) => u.spoutId).toList();
 
-    expect(got, [_spout1, _spout2, _spout1],
-        reason: '2. nokta yalnızca ilk turda yayınlanmalı');
+    expect(got, [_spout1, _spout2]);
+    expect(r.adapter.requests.single.path, '/sessions/s1/live');
   });
 
-  // Oturum KAPANINCA akışın bittiğini doğrular.
-  test('oturum kapanınca akış biter', () async {
-    var call = 0;
-    final r = rig((o) async {
-      call++;
-      return okEnvelope({
-        'session': session('s1', call >= 2 ? 'ended' : 'active'),
-        'updates': [update(_spout1, '2026-09-22T06:10:0$call' 'Z')],
-      });
-    });
+  test('WebSocket güncellemeleri akışa düşer', () async {
+    final socket = FakeSocket();
+    final r = rig((o) async => activeLive([]), sockets: [socket]);
 
-    final got = await r.repo.watchSession('s1').toList();
+    final got = r.repo.watchSession('s1').take(2).map((u) => u.spoutId).toList();
 
-    expect(got, hasLength(1), reason: 'kapanıştan sonra yayın olmamalı');
+    await Future<void>.delayed(const Duration(milliseconds: 20));
+    socket.send({'type': 'spout.update', ...update(_spout1, '2026-09-22T06:10:01Z')});
+    socket.send({'type': 'spout.update', ...update(_spout2, '2026-09-22T06:10:02Z')});
+
+    expect(await got, [_spout1, _spout2]);
   });
 
-  // AĞ HATASININ akışı ÖLDÜRMEDİĞİNİ doğrular.
+  // Token'ın BAŞLIKTA gittiğini doğrular.
   //
-  // Ahırda kapsama sık kopuyor; akışı kapatmak, bağlantı geri geldiğinde
-  // ekranın ölü kalması demekti.
-  test('ağ hatası akışı bitirmez, bağlantı dönünce sürer', () async {
-    var call = 0;
-    final r = rig((o) async {
-      call++;
-      if (call <= 2) {
-        throw DioException.connectionError(
-            requestOptions: o, reason: 'kapsama yok');
-      }
-      return okEnvelope({
-        'session': session('s1', 'active'),
-        'updates': [update(_spout1, '2026-09-22T06:10:0$call' 'Z')],
-      });
-    });
+  // Sorgu dizesinde gitseydi sunucu loglarına ve proxy geçmişine düşerdi.
+  test('token Authorization başlığıyla gönderilir', () async {
+    final socket = FakeSocket();
+    final r = rig((o) async => activeLive([]), sockets: [socket], token: 'tok-1');
 
-    final got = await r.repo.watchSession('s1').take(1).toList();
+    final done = r.repo.watchSession('s1').take(1).toList();
+    await Future<void>.delayed(const Duration(milliseconds: 20));
+    socket.send({'type': 'spout.update', ...update(_spout1, '2026-09-22T06:10:01Z')});
+    await done;
 
-    expect(got, hasLength(1));
-    expect(call, greaterThan(2), reason: 'hatalardan sonra yeniden denenmeli');
+    expect(r.dialed.single, Uri.parse('ws://test/api/v1/ws?sessionId=s1'));
+    expect(r.headers.single, {'Authorization': 'Bearer tok-1'});
   });
 
-  // Oturum kimliği BOŞKEN hiç istek atılmadığını doğrular.
+  // Oturum KAPANDIĞINDA akışın bittiğini doğrular.
   //
-  // Atılsaydı "oturum yok" durumunda her 5 saniyede bir 404 alınırdı.
-  test('boş oturum kimliğinde yoklama yapılmaz', () async {
+  // Duyuru olmadan telefon sessiz ama açık bir bağlantıda kalır ve canlı
+  // ekran son kareyi sonsuza dek gösterirdi.
+  test('session.ended akışı bitirir', () async {
+    final socket = FakeSocket();
+    final r = rig((o) async => activeLive([]), sockets: [socket]);
+
+    final got = r.repo.watchSession('s1').toList();
+
+    await Future<void>.delayed(const Duration(milliseconds: 20));
+    socket.send({'type': 'spout.update', ...update(_spout1, '2026-09-22T06:10:01Z')});
+    socket.send({'type': 'session.ended', 'sessionId': 's1'});
+
+    expect(await got, hasLength(1), reason: 'kapanıştan sonra yayın olmamalı');
+    expect(socket.sinkClosed, isTrue, reason: 'bağlantı kapatılmalı');
+  });
+
+  // Zaten KAPANMIŞ bir oturuma bağlanılmadığını doğrular.
+  test('oturum kapalıysa hiç bağlanılmaz', () async {
+    final r = rig((o) async => okEnvelope({
+          'session': session('s1', 'ended'),
+          'updates': [update(_spout1, '2026-09-22T06:10:00Z')],
+        }));
+
+    expect(await r.repo.watchSession('s1').toList(), isEmpty);
+    expect(r.dialed, isEmpty);
+  });
+
+  // KOPAN bağlantıda yeniden bağlanıldığını ve anlık görüntünün tekrar
+  // çekildiğini doğrular.
+  //
+  // Kopukluk boyunca kaçırılan kareleri kurtarmaya çalışmak yerine tam
+  // durumu okumak doğrusu — canlı veride en son değer geçerli olandır.
+  test('kopan bağlantı yeniden kurulur ve görüntü tazelenir', () async {
+    final first = FakeSocket();
+    final second = FakeSocket();
+    var snapshots = 0;
+    final r = rig((o) async {
+      snapshots++;
+      return activeLive([update(_spout1, '2026-09-22T06:10:0$snapshots' 'Z')]);
+    }, sockets: [first, second]);
+
+    // Üçüncü olay YENİ bağlantıdan gelir; ikiyle yetinseydik akışın
+    // yeniden bağlandığı değil yalnızca görüntüyü tazelediği doğrulanırdı.
+    final got = r.repo.watchSession('s1').take(3).map((u) => u.spoutId).toList();
+
+    await Future<void>.delayed(const Duration(milliseconds: 20));
+    first.drop();
+    await Future<void>.delayed(const Duration(milliseconds: 40));
+    second.send({'type': 'spout.update', ...update(_spout2, '2026-09-22T06:11:00Z')});
+
+    expect(await got, [_spout1, _spout1, _spout2]);
+    expect(snapshots, 2, reason: 'her bağlanışta görüntü tazelenmeli');
+    expect(r.dialed, hasLength(2));
+  });
+
+  // TANINMAYAN mesajın akışı düşürmediğini doğrular.
+  //
+  // Backend ileride uyarı gibi başka tipler yayınlayabilir; eski bir
+  // uygulama sürümü onlar yüzünden canlı ekranı kaybetmemeli.
+  test('tanınmayan mesaj yok sayılır', () async {
+    final socket = FakeSocket();
+    final r = rig((o) async => activeLive([]), sockets: [socket]);
+
+    final got = r.repo.watchSession('s1').take(1).map((u) => u.spoutId).toList();
+
+    await Future<void>.delayed(const Duration(milliseconds: 20));
+    socket.send({'type': 'alert.raised', 'alertId': 'al1'});
+    socket._in.add('bozuk-json');
+    socket.send({'type': 'spout.update', ...update(_spout1, '2026-09-22T06:10:01Z')});
+
+    expect(await got, [_spout1]);
+  });
+
+  // Oturum kimliği BOŞKEN hiçbir şey yapılmadığını doğrular.
+  test('boş oturum kimliğinde ne istek ne bağlantı olur', () async {
     final r = rig((o) async => okEnvelope({}));
 
     expect(await r.repo.watchSession('').toList(), isEmpty);
     expect(r.adapter.requests, isEmpty);
+    expect(r.dialed, isEmpty);
   });
 
   // Geçmiş sorgusunun tarih aralığını UTC olarak GÖNDERDİĞİNİ doğrular.

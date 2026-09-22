@@ -61,6 +61,14 @@ class AuthInterceptor extends Interceptor {
   /// Bellekteki token'ları ayarlar. Giriş/çıkışta AuthNotifier çağırır.
   void setTokens(AuthTokens? t) => _tokens = t;
 
+  /// Geçerli erişim token'ı; yoksa null.
+  ///
+  /// WEBSOCKET İÇİN VAR: dio'nun interceptor'ı yalnızca HTTP isteklerine
+  /// başlık ekliyor, el sıkışmayı web_socket_channel yapıyor ve başlığı
+  /// kendisi koymak zorunda. Token'ı ikinci bir yerde saklamak yerine tek
+  /// kaynaktan okutuyoruz — iki kopya kaçınılmaz olarak ayrışırdı.
+  String? get accessToken => _tokens?.accessToken;
+
   @override
   Future<void> onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {

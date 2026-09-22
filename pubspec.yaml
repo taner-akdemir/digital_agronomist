@@ -23,6 +23,10 @@ dependencies:
   flutter_secure_storage: ^10.0.0
   shared_preferences: ^2.5.4
 
+  # Canlı sağım akışı (§15.2). Yoklama kaldırıldı: backend'in realtime
+  # servisi WebSocket sunuyor.
+  web_socket_channel: ^3.0.3
+
   # Push bildirimleri (§15.2).
   #
   # google-services.json HENÜZ YOK: Firebase projesi sonra bağlanacak.
@@ -45,6 +49,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  # Sahte WebSocket kanalı için; yalnızca testlerde kullanılır.
+  stream_channel: ^2.1.4
   flutter_lints: ^6.0.0
   build_runner: ^2.11.1
   riverpod_generator: ^4.0.3

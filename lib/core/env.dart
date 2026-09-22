@@ -19,4 +19,13 @@ abstract final class Env {
   /// localhost verilir.
   static const String apiBaseUrl =
       String.fromEnvironment('MT_API_BASE', defaultValue: 'http://10.0.2.2:8190/api/v1');
+
+  /// Canlı akışın WebSocket tabanı (§8.5 WS /ws).
+  ///
+  /// API tabanından TÜRETİLİR, ayrı bir ayar değildir: ikisi aynı gateway'e
+  /// gidiyor ve ayrı tanımlansaydı biri değişip diğeri unutulduğunda canlı
+  /// ekran sessizce bağlanamazdı. https -> wss eşlemesi de böyle kendiliğinden
+  /// doğru kalıyor.
+  static String get wsBaseUrl =>
+      apiBaseUrl.replaceFirst(RegExp(r'^http'), 'ws');
 }

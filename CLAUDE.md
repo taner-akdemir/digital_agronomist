@@ -141,12 +141,29 @@ gateway'den gelir. Canlı sağım da artık gerçek uçlardan okunur: açık otu
 `GET /sessions` listesinden seçilir, ilk yükleme `GET /sessions/{id}/live`'dan gelir.
 `ApiWithMockLiveRepository` köprüsü **silindi**; mock yalnızca `MT_API=mock` modunda çalışır.
 
-**Canlı akış GEÇİCİ OLARAK yoklamadır (polling), WebSocket değil:** §8.5'teki `/ws` ucunu
-sunan `realtime` servisi henüz yazılmadı, bağlanmayı denemek canlı ekranı ilk karede
-dondururdu. `ApiRepository.watchSession` 5 saniyede bir `/sessions/{id}/live` okur ve
-yalnızca `ts`'si değişen noktaları yayınlar; ağ hatası akışı bitirmez, oturum kapanınca
-akış biter. `realtime` gelince **yalnızca bu metot** değişir — ekran ve provider Stream
-gördüğü için aynı kalır. Bu yüzden `web_socket_channel` bağımlılığı şimdilik kaldırıldı.
+**Canlı akış artık WebSocket'tir** (§8.5 `WS /ws?sessionId=`). Backend'in `realtime`
+servisi yazıldı; yoklama (polling) kaldırıldı. Yoklama en iyi ihtimalle 5 saniyelik
+gecikme demekti ve sağımın ilk saniyeleri (§6.2 ısınma fazı) o pencerede kaçıyordu.
+
+`ApiRepository.watchSession` kendi kendini onarır:
+
+- Her bağlanışta **önce anlık görüntü** (`GET /sessions/{id}/live`) yayınlanır. Yalnızca
+  soketi dinleseydik, sağımın ortasında açılan ekran ilk güncelleme gelene kadar boş
+  kalırdı; yeniden bağlanmada da kopukluk boyunca değişenler kapanır. Kaçırılan kareleri
+  kurtarmaya çalışmıyoruz — canlı veride en son değer geçerli olandır ve backend de
+  düşürdüğü istemciden tam olarak bunu bekliyor.
+- Bağlantı koparsa 3 sn sonra yeniden bağlanır; ağ hatası akışı bitirmez.
+- `session.ended` mesajı akışı bitirir. Bu duyuru olmadan telefon sessiz ama açık bir
+  bağlantıda kalır ve son kareyi sonsuza dek gösterirdi — yoklama döneminde bu her turda
+  `status` alanına bakılarak anlaşılıyordu.
+- Tanınmayan mesaj tipi **yok sayılır**, akışı düşürmez: backend ileride başka tipler
+  yayınlayabilir ve eski bir uygulama sürümü onlar yüzünden canlı ekranı kaybetmemeli.
+- Token `Authorization` **başlığında** gider, sorgu dizesinde değil: sorgu dizesi sunucu
+  loglarına ve proxy geçmişine düşer. El sıkışma sıradan bir HTTP GET olduğu için gateway
+  JWT'yi diğer uçlarla birebir aynı doğrular.
+
+`Env.wsBaseUrl`, `apiBaseUrl`'den **türetilir** (`http` → `ws`): ayrı tanımlansaydı biri
+değişip diğeri unutulduğunda canlı ekran sessizce bağlanamazdı.
 
 **Geçmiş sekmesi tamamdır** (§15.1): oturum listesi, tür/sınıf filtreli hayvan listesi ve
 hayvan detayı — sınıf rozeti (§6.4), 7/30 gün ortalaması, 30 günlük eğilim, 90 günlük verim

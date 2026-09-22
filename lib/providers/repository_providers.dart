@@ -23,8 +23,12 @@ MilkTraceRepository repository(Ref ref) {
 
   final session = ref.watch(authSessionProvider);
 
-  // wsBaseUrl YOK: §8.5'teki WebSocket ucunu sunan `realtime` servisi henüz
-  // yazılmadı ve canlı akış geçici olarak yoklamayla çalışıyor. Kullanılmayan
-  // bir alan taşımak, WebSocket varmış izlenimi bırakırdı.
-  return ApiRepository(dio: session.authed);
+  // Canlı akış WebSocket'ten gelir (§8.5). Token'ı interceptor'dan
+  // FONKSİYONLA okuyoruz: yenilendiğinde değişiyor ve her yeniden
+  // bağlanmada güncel olanı gerekiyor.
+  return ApiRepository(
+    dio: session.authed,
+    wsBaseUrl: Env.wsBaseUrl,
+    accessToken: () => session.interceptor.accessToken,
+  );
 }

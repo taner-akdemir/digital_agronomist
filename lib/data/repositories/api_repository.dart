@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/animal.dart';
@@ -14,6 +17,8 @@ import 'package:milktrace/data/models/spout_update.dart';
 import 'package:milktrace/data/models/thresholds.dart';
 import 'package:milktrace/data/models/vacuum.dart';
 import 'package:milktrace/data/repositories/milktrace_repository.dart';
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 /// Gerçek backend'e bağlanan kaynak (§8.5).
 ///
@@ -22,19 +27,39 @@ import 'package:milktrace/data/repositories/milktrace_repository.dart';
 class ApiRepository implements MilkTraceRepository {
   ApiRepository({
     required Dio dio,
-    Duration pollInterval = const Duration(seconds: 5),
+    required String wsBaseUrl,
+    String? Function()? accessToken,
+    WebSocketChannel Function(Uri uri, Map<String, dynamic> headers)? connect,
+    Duration reconnectDelay = const Duration(seconds: 3),
   })  : _dio = dio,
-        _pollInterval = pollInterval;
+        _wsBaseUrl = wsBaseUrl,
+        _accessToken = accessToken ?? _noToken,
+        _connect = connect ?? _defaultConnect,
+        _reconnectDelay = reconnectDelay;
 
   final Dio _dio;
 
-  /// Canlı akış yoklama aralığı.
+  /// WebSocket tabanı: `ws://host/api/v1` (§8.5).
+  final String _wsBaseUrl;
+
+  /// Erişim token'ı sağlayıcısı.
   ///
-  /// Varsayılan backend'in Postgres'e toplu yazım aralığıyla (5 sn) aynı:
-  /// daha sık yoklamak aynı veriyi tekrar okumak olurdu. Testler kısa bir
-  /// değer veriyor — aksi halde akış testleri gerçek saniyeleri bekler ve
-  /// test paketi kimsenin çalıştırmak istemeyeceği kadar yavaşlar.
-  final Duration _pollInterval;
+  /// FONKSİYON, DEĞER DEĞİL: token yenilenince değişiyor ve her yeniden
+  /// bağlanmada GÜNCELİ okunmalı. Kurulum anındaki değeri saklasaydık,
+  /// uzun bir sağımda token'ın ömrü dolduğunda yeniden bağlanma sessizce
+  /// 401 alır ve canlı ekran bir daha hiç açılmazdı.
+  final String? Function() _accessToken;
+
+  /// Bağlantı kurucu; testler sahte kanal veriyor.
+  final WebSocketChannel Function(Uri uri, Map<String, dynamic> headers) _connect;
+
+  /// Kopan bağlantıdan sonra beklenen süre.
+  final Duration _reconnectDelay;
+
+  static String? _noToken() => null;
+
+  static WebSocketChannel _defaultConnect(Uri uri, Map<String, dynamic> headers) =>
+      IOWebSocketChannel.connect(uri, headers: headers);
 
   /// §16'daki zarf: {"success":..,"data":..,"error":{"code","message"}}
   List<T> _listOf<T>(Response<dynamic> r, T Function(Map<String, dynamic>) from) {
@@ -110,49 +135,108 @@ class ApiRepository implements MilkTraceRepository {
     return null;
   }
 
-  /// Canlı güncellemeler.
+  /// Canlı güncellemeler (§8.5 WS /ws?sessionId=).
   ///
-  /// GEÇİCİ OLARAK YOKLAMA (polling). §8.5 bunun WebSocket olmasını
-  /// söylüyor ama `realtime` servisi henüz yazılmadı (§17 Faz 3'ün kalanı).
-  /// WebSocket'e bağlanmayı denemek, bağlantı hatasıyla akışı düşürür ve
-  /// canlı ekran ilk karede donardı.
+  /// YOKLAMA KALDIRILDI: backend'in `realtime` servisi güncellemeleri Redis
+  /// Pub/Sub'dan WebSocket'e akıtıyor. Yoklama en iyi ihtimalle 5 saniyelik
+  /// gecikme demekti ve sağımın ilk saniyeleri (§6.2 ısınma fazı) o
+  /// pencerede tamamen kaçıyordu.
   ///
-  /// `GET /sessions/{id}/live` zaten noktaların tamamını dönüyor.
-  ///
-  /// realtime geldiğinde YALNIZCA bu metot değişir; ekran ve provider aynı
-  /// kalır çünkü ikisi de Stream görüyor.
+  /// Akış KENDİ KENDİNİ ONARIR: bağlantı koptuğunda yeniden bağlanır ve her
+  /// bağlanışta önce ANLIK GÖRÜNTÜYÜ çeker. Kopukluk boyunca kaçırılan
+  /// kareleri kurtarmaya çalışmak yerine tam durumu okumak doğrusu — canlı
+  /// veride en son değer geçerli olandır ve backend de düşürdüğü istemciden
+  /// tam olarak bunu bekliyor.
   @override
   Stream<SpoutUpdate> watchSession(String sessionId) async* {
     if (sessionId.isEmpty) return;
 
-    // Son gönderilen kareyi nokta bazında tutuyoruz: değişmeyen noktayı
-    // tekrar yayınlamak ekranı her yoklamada baştan çizdirirdi.
-    final lastTs = <String, DateTime?>{};
-
     while (true) {
-      await Future<void>.delayed(_pollInterval);
+      // Anlık görüntü: ilk bağlantıda ekranı doldurur, yeniden bağlanmada
+      // kopukluk boyunca değişenleri kapatır.
+      final live = await _liveOrNull(sessionId);
+      if (live != null) {
+        if (live.session.status != 'active') return;
+        for (final u in live.updates) {
+          yield u;
+        }
+      }
 
-      final LiveSession live;
+      final channel = _open(sessionId);
+      var ended = false;
       try {
-        final r = await _dio.get<dynamic>('/sessions/$sessionId/live');
-        live = LiveSession.fromJson(_dataOf(r));
-      } on DioException {
-        // Ağ hatası akışı BİTİRMEZ: ahırda kapsama sık kopuyor ve akışı
-        // kapatmak, bağlantı geri geldiğinde ekranın ölü kalması demekti.
-        continue;
+        await for (final raw in channel.stream) {
+          final message = _decodeMessage(raw);
+          switch (message) {
+            case final SpoutUpdate u:
+              yield u;
+            case _SessionEnded():
+              // Oturum kapandı: akış biter, ekran son durumu gösterir.
+              // Bu duyuru olmadan telefon sessiz ama açık bir bağlantıda
+              // kalır ve son kareyi sonsuza dek gösterirdi.
+              ended = true;
+            case null:
+              // Tanınmayan mesaj akışı DÜŞÜRMEZ: backend ileride uyarı
+              // gibi başka tipler yayınlayabilir ve eski bir uygulama
+              // sürümü onlar yüzünden canlı ekranı kaybetmemeli.
+              break;
+          }
+          if (ended) break;
+        }
+      } on Object {
+        // Bağlantı hatası akışı BİTİRMEZ; aşağıda yeniden bağlanılır.
+      } finally {
+        await channel.sink.close();
       }
 
-      if (live.session.status != 'active') {
-        // Oturum kapandı: akış biter ve ekran son durumu gösterir.
-        return;
-      }
+      if (ended) return;
 
-      for (final u in live.updates) {
-        if (lastTs[u.spoutId] == u.ts) continue;
-        lastTs[u.spoutId] = u.ts;
-        yield u;
-      }
+      // Ahırda kapsama sık kopuyor; hemen yeniden denemek broker'ı
+      // gereksiz yere döver.
+      await Future<void>.delayed(_reconnectDelay);
     }
+  }
+
+  /// Oturumun anlık görüntüsü; ağ hatasında null.
+  Future<LiveSession?> _liveOrNull(String sessionId) async {
+    try {
+      final r = await _dio.get<dynamic>('/sessions/$sessionId/live');
+      return LiveSession.fromJson(_dataOf(r));
+    } on DioException {
+      return null;
+    }
+  }
+
+  /// WebSocket bağlantısını açar.
+  ///
+  /// Token BAŞLIKTA gider, sorgu dizesinde değil: sorgu dizesi sunucu
+  /// loglarına ve proxy geçmişine düşer. El sıkışma sıradan bir HTTP GET
+  /// olduğu için gateway JWT'yi diğer uçlarla birebir aynı doğrular.
+  WebSocketChannel _open(String sessionId) {
+    final uri = Uri.parse('$_wsBaseUrl/ws?sessionId=$sessionId');
+    final token = _accessToken();
+
+    return _connect(uri, {
+      if (token != null) 'Authorization': 'Bearer $token',
+    });
+  }
+
+  /// Gelen çerçeveyi çözer: güncelleme, oturum sonu ya da tanınmayan (null).
+  Object? _decodeMessage(Object? raw) {
+    if (raw is! String) return null;
+
+    final Map<String, dynamic> json;
+    try {
+      json = jsonDecode(raw) as Map<String, dynamic>;
+    } on Object {
+      return null;
+    }
+
+    return switch (json['type']) {
+      'spout.update' => SpoutUpdate.fromJson(json),
+      'session.ended' => const _SessionEnded(),
+      _ => null,
+    };
   }
 
   @override
@@ -214,4 +298,9 @@ class ApiRepository implements MilkTraceRepository {
       Thresholds.fromJson(_dataOf(await _dio.put<dynamic>(
           '/species/thresholds',
           data: thresholds.toJson())));
+}
+
+/// Oturumun kapandığını bildiren iç işaret.
+class _SessionEnded {
+  const _SessionEnded();
 }
