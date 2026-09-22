@@ -12,214 +12,486 @@
     "Eşikler §6.5'teki TAHMİNİ başlangıç değerleridir; ırk ve laktasyon",
     "dönemine göre değişir ve saha verisiyle kalibre edilmelidir."
   ],
-
   "thresholds": {
     "cow": {
-      "flowLow": 1.0, "flowHigh": 2.5,
-      "yieldGreenPct": 90, "yieldRedPct": 60,
-      "rampUpSec": 60, "alertHoldSec": 30,
-      "endFlowThreshold": 0.2, "endGraceSec": 10,
-      "dryOffDailyMl": 8000, "highYieldDailyMl": 30000
+      "flowLow": 1.0,
+      "flowHigh": 2.5,
+      "yieldGreenPct": 90,
+      "yieldRedPct": 60,
+      "rampUpSec": 60,
+      "alertHoldSec": 30,
+      "endFlowThreshold": 0.2,
+      "endGraceSec": 10,
+      "dryOffDailyMl": 8000,
+      "highYieldDailyMl": 30000
     },
     "goat": {
-      "flowLow": 0.3, "flowHigh": 0.8,
-      "yieldGreenPct": 90, "yieldRedPct": 60,
-      "rampUpSec": 30, "alertHoldSec": 30,
-      "endFlowThreshold": 0.05, "endGraceSec": 8,
-      "dryOffDailyMl": 500, "highYieldDailyMl": 3500
+      "flowLow": 0.3,
+      "flowHigh": 0.8,
+      "yieldGreenPct": 90,
+      "yieldRedPct": 60,
+      "rampUpSec": 30,
+      "alertHoldSec": 30,
+      "endFlowThreshold": 0.05,
+      "endGraceSec": 8,
+      "dryOffDailyMl": 500,
+      "highYieldDailyMl": 3500
     },
     "sheep": {
-      "flowLow": 0.2, "flowHigh": 0.5,
-      "yieldGreenPct": 90, "yieldRedPct": 60,
-      "rampUpSec": 20, "alertHoldSec": 30,
-      "endFlowThreshold": 0.03, "endGraceSec": 6,
-      "dryOffDailyMl": 300, "highYieldDailyMl": 1800
+      "flowLow": 0.2,
+      "flowHigh": 0.5,
+      "yieldGreenPct": 90,
+      "yieldRedPct": 60,
+      "rampUpSec": 20,
+      "alertHoldSec": 30,
+      "endFlowThreshold": 0.03,
+      "endGraceSec": 6,
+      "dryOffDailyMl": 300,
+      "highYieldDailyMl": 1800
     }
   },
-
   "flowCases": [
     {
       "name": "başlık takılı değil",
       "species": "cow",
-      "input": {"flowLpm": 0, "elapsedSec": 0, "volumeMl": 0, "expectedMl": 11000, "attached": false, "animalAssigned": true},
+      "input": {
+        "flowLpm": 0,
+        "elapsedSec": 0,
+        "volumeMl": 0,
+        "expectedMl": 11000,
+        "attached": false,
+        "animalAssigned": true
+      },
       "want": "grey"
     },
     {
       "name": "hayvan eşleştirilmemiş",
       "species": "cow",
-      "input": {"flowLpm": 1.5, "elapsedSec": 120, "volumeMl": 0, "expectedMl": 0, "attached": true, "animalAssigned": false},
+      "input": {
+        "flowLpm": 1.5,
+        "elapsedSec": 120,
+        "volumeMl": 0,
+        "expectedMl": 0,
+        "attached": true,
+        "animalAssigned": false
+      },
       "want": "grey"
     },
     {
       "name": "akış sıfır",
       "species": "cow",
-      "input": {"flowLpm": 0, "elapsedSec": 120, "volumeMl": 3000, "expectedMl": 11000, "attached": true, "animalAssigned": true},
+      "input": {
+        "flowLpm": 0,
+        "elapsedSec": 120,
+        "volumeMl": 3000,
+        "expectedMl": 11000,
+        "attached": true,
+        "animalAssigned": true
+      },
       "want": "grey"
     },
     {
       "name": "yüksek debi yeşil",
       "species": "cow",
-      "input": {"flowLpm": 3.0, "elapsedSec": 120, "volumeMl": 4000, "expectedMl": 11000, "attached": true, "animalAssigned": true},
+      "input": {
+        "flowLpm": 3.0,
+        "elapsedSec": 120,
+        "volumeMl": 4000,
+        "expectedMl": 11000,
+        "attached": true,
+        "animalAssigned": true
+      },
       "want": "green"
     },
     {
       "name": "sınır: tam flowHigh yeşil",
       "species": "cow",
-      "input": {"flowLpm": 2.5, "elapsedSec": 120, "volumeMl": 4000, "expectedMl": 11000, "attached": true, "animalAssigned": true},
+      "input": {
+        "flowLpm": 2.5,
+        "elapsedSec": 120,
+        "volumeMl": 4000,
+        "expectedMl": 11000,
+        "attached": true,
+        "animalAssigned": true
+      },
       "want": "green"
     },
     {
       "name": "sınır: flowHigh'ın hemen altı sarı",
       "species": "cow",
-      "input": {"flowLpm": 2.499, "elapsedSec": 120, "volumeMl": 4000, "expectedMl": 11000, "attached": true, "animalAssigned": true},
+      "input": {
+        "flowLpm": 2.499,
+        "elapsedSec": 120,
+        "volumeMl": 4000,
+        "expectedMl": 11000,
+        "attached": true,
+        "animalAssigned": true
+      },
       "want": "yellow"
     },
     {
       "name": "sınır: tam flowLow sarı",
       "species": "cow",
-      "input": {"flowLpm": 1.0, "elapsedSec": 120, "volumeMl": 4000, "expectedMl": 11000, "attached": true, "animalAssigned": true},
+      "input": {
+        "flowLpm": 1.0,
+        "elapsedSec": 120,
+        "volumeMl": 4000,
+        "expectedMl": 11000,
+        "attached": true,
+        "animalAssigned": true
+      },
       "want": "yellow"
     },
     {
       "name": "sınır: flowLow'un hemen altı kırmızı",
       "species": "cow",
-      "input": {"flowLpm": 0.999, "elapsedSec": 120, "volumeMl": 4000, "expectedMl": 11000, "attached": true, "animalAssigned": true},
+      "input": {
+        "flowLpm": 0.999,
+        "elapsedSec": 120,
+        "volumeMl": 4000,
+        "expectedMl": 11000,
+        "attached": true,
+        "animalAssigned": true
+      },
       "want": "red"
     },
     {
       "name": "ısınma süresinde düşük debi kırmızı DEĞİL",
       "species": "cow",
-      "input": {"flowLpm": 0.4, "elapsedSec": 30, "volumeMl": 200, "expectedMl": 11000, "attached": true, "animalAssigned": true},
+      "input": {
+        "flowLpm": 0.4,
+        "elapsedSec": 30,
+        "volumeMl": 200,
+        "expectedMl": 11000,
+        "attached": true,
+        "animalAssigned": true
+      },
       "want": "yellow"
     },
     {
       "name": "sınır: ısınma biter bitmez düşük debi kırmızı",
       "species": "cow",
-      "input": {"flowLpm": 0.4, "elapsedSec": 60, "volumeMl": 900, "expectedMl": 11000, "attached": true, "animalAssigned": true},
+      "input": {
+        "flowLpm": 0.4,
+        "elapsedSec": 60,
+        "volumeMl": 900,
+        "expectedMl": 11000,
+        "attached": true,
+        "animalAssigned": true
+      },
       "want": "red"
     },
     {
       "name": "bitiş fazında düşen debi kırmızı DEĞİL",
       "species": "cow",
-      "input": {"flowLpm": 0.3, "elapsedSec": 400, "volumeMl": 10000, "expectedMl": 11000, "attached": true, "animalAssigned": true},
+      "input": {
+        "flowLpm": 0.3,
+        "elapsedSec": 400,
+        "volumeMl": 10000,
+        "expectedMl": 11000,
+        "attached": true,
+        "animalAssigned": true
+      },
       "want": "yellow"
     },
     {
       "name": "sınır: tam %85 bitiş fazı sayılır",
       "species": "cow",
-      "input": {"flowLpm": 0.3, "elapsedSec": 400, "volumeMl": 9350, "expectedMl": 11000, "attached": true, "animalAssigned": true},
+      "input": {
+        "flowLpm": 0.3,
+        "elapsedSec": 400,
+        "volumeMl": 9350,
+        "expectedMl": 11000,
+        "attached": true,
+        "animalAssigned": true
+      },
       "want": "yellow"
     },
     {
       "name": "sınır: %85'in hemen altı kırmızı",
       "species": "cow",
-      "input": {"flowLpm": 0.3, "elapsedSec": 400, "volumeMl": 9349, "expectedMl": 11000, "attached": true, "animalAssigned": true},
+      "input": {
+        "flowLpm": 0.3,
+        "elapsedSec": 400,
+        "volumeMl": 9349,
+        "expectedMl": 11000,
+        "attached": true,
+        "animalAssigned": true
+      },
       "want": "red"
     },
     {
       "name": "beklenen hacim yoksa bitiş fazı kuralı uygulanmaz",
       "species": "cow",
-      "input": {"flowLpm": 0.3, "elapsedSec": 400, "volumeMl": 10000, "expectedMl": 0, "attached": true, "animalAssigned": true},
+      "input": {
+        "flowLpm": 0.3,
+        "elapsedSec": 400,
+        "volumeMl": 10000,
+        "expectedMl": 0,
+        "attached": true,
+        "animalAssigned": true
+      },
       "want": "red"
     },
     {
       "name": "keçi yüksek debi yeşil",
       "species": "goat",
-      "input": {"flowLpm": 0.9, "elapsedSec": 60, "volumeMl": 600, "expectedMl": 1200, "attached": true, "animalAssigned": true},
+      "input": {
+        "flowLpm": 0.9,
+        "elapsedSec": 60,
+        "volumeMl": 600,
+        "expectedMl": 1200,
+        "attached": true,
+        "animalAssigned": true
+      },
       "want": "green"
     },
     {
       "name": "keçi düşük debi kırmızı",
       "species": "goat",
-      "input": {"flowLpm": 0.2, "elapsedSec": 60, "volumeMl": 300, "expectedMl": 1200, "attached": true, "animalAssigned": true},
+      "input": {
+        "flowLpm": 0.2,
+        "elapsedSec": 60,
+        "volumeMl": 300,
+        "expectedMl": 1200,
+        "attached": true,
+        "animalAssigned": true
+      },
       "want": "red"
     },
     {
       "name": "koyun normal aralık sarı",
       "species": "sheep",
-      "input": {"flowLpm": 0.3, "elapsedSec": 60, "volumeMl": 300, "expectedMl": 700, "attached": true, "animalAssigned": true},
+      "input": {
+        "flowLpm": 0.3,
+        "elapsedSec": 60,
+        "volumeMl": 300,
+        "expectedMl": 700,
+        "attached": true,
+        "animalAssigned": true
+      },
       "want": "yellow"
     },
     {
       "name": "koyun ısınmada düşük debi sarı",
       "species": "sheep",
-      "input": {"flowLpm": 0.1, "elapsedSec": 10, "volumeMl": 20, "expectedMl": 700, "attached": true, "animalAssigned": true},
+      "input": {
+        "flowLpm": 0.1,
+        "elapsedSec": 10,
+        "volumeMl": 20,
+        "expectedMl": 700,
+        "attached": true,
+        "animalAssigned": true
+      },
       "want": "yellow"
     }
   ],
-
   "yieldCases": [
-    {"name": "beklenen yok gri", "species": "cow", "volumeMl": 5000, "expectedMl": 0, "wantColor": "grey", "wantPct": 0},
-    {"name": "hedefin üstü yeşil", "species": "cow", "volumeMl": 12000, "expectedMl": 11000, "wantColor": "green", "wantPct": 109.0909090909091},
-    {"name": "sınır: tam %90 yeşil", "species": "cow", "volumeMl": 9900, "expectedMl": 11000, "wantColor": "green", "wantPct": 90},
-    {"name": "sınır: %90'ın hemen altı sarı", "species": "cow", "volumeMl": 9899, "expectedMl": 11000, "wantColor": "yellow", "wantPct": 89.99090909090908},
-    {"name": "sınır: tam %60 sarı", "species": "cow", "volumeMl": 6600, "expectedMl": 11000, "wantColor": "yellow", "wantPct": 60},
-    {"name": "sınır: %60'ın hemen altı kırmızı", "species": "cow", "volumeMl": 6599, "expectedMl": 11000, "wantColor": "red", "wantPct": 59.99090909090909},
-    {"name": "hiç süt vermemiş kırmızı", "species": "cow", "volumeMl": 0, "expectedMl": 11000, "wantColor": "red", "wantPct": 0},
-    {"name": "keçi yeşil", "species": "goat", "volumeMl": 1150, "expectedMl": 1200, "wantColor": "green", "wantPct": 95.83333333333334},
-    {"name": "koyun kırmızı", "species": "sheep", "volumeMl": 300, "expectedMl": 700, "wantColor": "red", "wantPct": 42.857142857142854}
+    {
+      "name": "beklenen yok gri",
+      "species": "cow",
+      "volumeMl": 5000,
+      "expectedMl": 0,
+      "wantColor": "grey",
+      "wantPct": 0
+    },
+    {
+      "name": "hedefin üstü yeşil",
+      "species": "cow",
+      "volumeMl": 12000,
+      "expectedMl": 11000,
+      "wantColor": "green",
+      "wantPct": 109.0909090909091
+    },
+    {
+      "name": "sınır: tam %90 yeşil",
+      "species": "cow",
+      "volumeMl": 9900,
+      "expectedMl": 11000,
+      "wantColor": "green",
+      "wantPct": 90
+    },
+    {
+      "name": "sınır: %90'ın hemen altı sarı",
+      "species": "cow",
+      "volumeMl": 9899,
+      "expectedMl": 11000,
+      "wantColor": "yellow",
+      "wantPct": 89.99090909090908
+    },
+    {
+      "name": "sınır: tam %60 sarı",
+      "species": "cow",
+      "volumeMl": 6600,
+      "expectedMl": 11000,
+      "wantColor": "yellow",
+      "wantPct": 60
+    },
+    {
+      "name": "sınır: %60'ın hemen altı kırmızı",
+      "species": "cow",
+      "volumeMl": 6599,
+      "expectedMl": 11000,
+      "wantColor": "red",
+      "wantPct": 59.99090909090909
+    },
+    {
+      "name": "hiç süt vermemiş kırmızı",
+      "species": "cow",
+      "volumeMl": 0,
+      "expectedMl": 11000,
+      "wantColor": "red",
+      "wantPct": 0
+    },
+    {
+      "name": "keçi yeşil",
+      "species": "goat",
+      "volumeMl": 1150,
+      "expectedMl": 1200,
+      "wantColor": "green",
+      "wantPct": 95.83333333333334
+    },
+    {
+      "name": "koyun kırmızı",
+      "species": "sheep",
+      "volumeMl": 300,
+      "expectedMl": 700,
+      "wantColor": "red",
+      "wantPct": 42.857142857142854
+    }
   ],
-
   "classifyCases": [
     {
       "name": "son sağımların hepsi sıfır → süt vermiyor",
       "species": "cow",
-      "input": {"ma7Ml": 0, "ma30Ml": 12000, "recentZeroMilkings": 6, "recentMilkings": 6},
+      "input": {
+        "ma7Ml": 0,
+        "ma30Ml": 12000,
+        "recentZeroMilkings": 6,
+        "recentMilkings": 6,
+        "positiveDays": 0
+      },
       "want": "no_milk"
     },
     {
       "name": "alt eşiğin altında → kuruya çıkma adayı",
       "species": "cow",
-      "input": {"ma7Ml": 6000, "ma30Ml": 14000, "recentZeroMilkings": 0, "recentMilkings": 6},
+      "input": {
+        "ma7Ml": 6000,
+        "ma30Ml": 14000,
+        "recentZeroMilkings": 0,
+        "recentMilkings": 6,
+        "positiveDays": 25
+      },
       "want": "dry_off_candidate"
     },
     {
       "name": "üst eşiğin üstünde → yüksek verimli",
       "species": "cow",
-      "input": {"ma7Ml": 32000, "ma30Ml": 31000, "recentZeroMilkings": 0, "recentMilkings": 6},
+      "input": {
+        "ma7Ml": 32000,
+        "ma30Ml": 31000,
+        "recentZeroMilkings": 0,
+        "recentMilkings": 6,
+        "positiveDays": 28
+      },
       "want": "high"
     },
     {
       "name": "yüksek verimli hayvan gerilese bile düşüşte DEĞİL",
       "species": "cow",
-      "input": {"ma7Ml": 31000, "ma30Ml": 40000, "recentZeroMilkings": 0, "recentMilkings": 6},
+      "input": {
+        "ma7Ml": 31000,
+        "ma30Ml": 40000,
+        "recentZeroMilkings": 0,
+        "recentMilkings": 6,
+        "positiveDays": 28
+      },
       "want": "high"
     },
     {
       "name": "30 güne göre belirgin düşüş → düşüşte",
       "species": "cow",
-      "input": {"ma7Ml": 15000, "ma30Ml": 20000, "recentZeroMilkings": 0, "recentMilkings": 6},
+      "input": {
+        "ma7Ml": 15000,
+        "ma30Ml": 20000,
+        "recentZeroMilkings": 0,
+        "recentMilkings": 6,
+        "positiveDays": 26
+      },
       "want": "declining"
     },
     {
       "name": "sınır: tam %80 düşüşte değil",
       "species": "cow",
-      "input": {"ma7Ml": 16000, "ma30Ml": 20000, "recentZeroMilkings": 0, "recentMilkings": 6},
+      "input": {
+        "ma7Ml": 16000,
+        "ma30Ml": 20000,
+        "recentZeroMilkings": 0,
+        "recentMilkings": 6,
+        "positiveDays": 26
+      },
       "want": "normal"
     },
     {
       "name": "stabil → normal",
       "species": "cow",
-      "input": {"ma7Ml": 20000, "ma30Ml": 20000, "recentZeroMilkings": 0, "recentMilkings": 6},
+      "input": {
+        "ma7Ml": 20000,
+        "ma30Ml": 20000,
+        "recentZeroMilkings": 0,
+        "recentMilkings": 6,
+        "positiveDays": 30
+      },
       "want": "normal"
     },
     {
       "name": "bazı sağımlar sıfır ama hepsi değil → süt vermiyor DEĞİL",
       "species": "cow",
-      "input": {"ma7Ml": 18000, "ma30Ml": 19000, "recentZeroMilkings": 3, "recentMilkings": 6},
+      "input": {
+        "ma7Ml": 18000,
+        "ma30Ml": 19000,
+        "recentZeroMilkings": 3,
+        "recentMilkings": 6,
+        "positiveDays": 22
+      },
       "want": "normal"
     },
     {
       "name": "keçi kuruya çıkma adayı",
       "species": "goat",
-      "input": {"ma7Ml": 400, "ma30Ml": 1500, "recentZeroMilkings": 0, "recentMilkings": 4},
+      "input": {
+        "ma7Ml": 400,
+        "ma30Ml": 1500,
+        "recentZeroMilkings": 0,
+        "recentMilkings": 4,
+        "positiveDays": 24
+      },
       "want": "dry_off_candidate"
     },
     {
       "name": "koyun yüksek verimli",
       "species": "sheep",
-      "input": {"ma7Ml": 1900, "ma30Ml": 1850, "recentZeroMilkings": 0, "recentMilkings": 4},
+      "input": {
+        "ma7Ml": 1900,
+        "ma30Ml": 1850,
+        "recentZeroMilkings": 0,
+        "recentMilkings": 4,
+        "positiveDays": 27
+      },
       "want": "high"
+    },
+    {
+      "name": "hiç dolu sağım yok → kanıt yetersiz, normal kalır",
+      "species": "cow",
+      "input": {
+        "ma7Ml": 0,
+        "ma30Ml": 0,
+        "recentZeroMilkings": 1,
+        "recentMilkings": 4,
+        "positiveDays": 0
+      },
+      "want": "normal"
     }
   ]
 }
