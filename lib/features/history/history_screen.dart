@@ -54,6 +54,7 @@ class _AnimalsTab extends ConsumerWidget {
     return Column(
       children: [
         const _Filters(),
+        _ActiveFilter(count: animals.value?.length ?? 0),
         Expanded(
           child: AsyncView(
             value: animals,
@@ -106,6 +107,63 @@ class _Filters extends ConsumerWidget {
                 selected: filter.yieldClass == c,
                 onTap: () => notifier.toggleClass(c),
               ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Etkin filtrenin özeti ve temizleme düğmesi.
+///
+/// Çip şeridi YATAY kaydırmalı: dashboard'dan "kuruya aday" ile gelindiğinde
+/// seçili çip ekranın dışında kalıyor ve kullanıcı listenin neden 3 satır
+/// olduğunu göremiyordu. Temizlemek için de o çipi bulmak gerekiyordu.
+class _ActiveFilter extends ConsumerWidget {
+  const _ActiveFilter({required this.count});
+
+  final int count;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final filter = ref.watch(animalFilterStateProvider);
+    if (filter.speciesId == null && filter.yieldClass == null) {
+      return const SizedBox.shrink();
+    }
+
+    final species = ref.watch(speciesListProvider).value ?? const <Species>[];
+    final labels = [
+      if (filter.speciesId case final id?)
+        species.where((s) => s.id == id).map((s) => s.nameTr).firstOrNull ??
+            'Tür',
+      if (filter.yieldClass case final c?) c.label,
+    ];
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+          AppSpacing.lg, 0, AppSpacing.sm, AppSpacing.xs),
+      child: Row(
+        children: [
+          const Icon(Icons.filter_alt_outlined,
+              size: 14, color: AppColors.onSurfaceMuted),
+          const SizedBox(width: AppSpacing.xs),
+          Expanded(
+            child: Text(
+              '${labels.join(' · ')} · $count hayvan',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                  fontSize: 12, color: AppColors.onSurfaceMuted),
+            ),
+          ),
+          TextButton(
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.darkGreenColor,
+              visualDensity: VisualDensity.compact,
+            ),
+            onPressed: () =>
+                ref.read(animalFilterStateProvider.notifier).clear(),
+            child: const Text('Temizle', style: TextStyle(fontSize: 12)),
+          ),
         ],
       ),
     );

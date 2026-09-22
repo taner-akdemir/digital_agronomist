@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/format.dart';
 import 'package:milktrace/data/models/alert.dart';
-import 'package:milktrace/domain/flow_color.dart';
+import 'package:milktrace/features/alerts/alert_style.dart';
 import 'package:milktrace/features/alerts/alerts_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
 import 'package:milktrace/widgets/milk_palette.dart';
@@ -64,7 +64,7 @@ class _AlertCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final palette = MilkPalette.of(_severityColor(alert.severity));
+    final palette = MilkPalette.of(AlertStyle.color(alert.severity));
     final acked = alert.isAcknowledged;
     final animalId = alert.animalId;
 
@@ -92,7 +92,7 @@ class _AlertCard extends ConsumerWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(_icon(alert.type),
+                Icon(AlertStyle.icon(alert.type),
                     size: 20,
                     color: acked ? AppColors.lightGreyColor : palette.foreground),
                 const SizedBox(width: AppSpacing.md),
@@ -144,28 +144,6 @@ class _AlertCard extends ConsumerWidget {
     final stamp = '${Fmt.dayMonth(t)} · ${Fmt.time(t)}';
     return a.isAcknowledged ? '$stamp · okundu' : stamp;
   }
-
-  /// Uyarı şiddeti → §6.2 renk bandı.
-  ///
-  /// Bilinmeyen şiddet SARIdır, kırmızı değil: tanımadığımız bir uyarıyı
-  /// en yüksek aciliyetle göstermek yanlış alarm üretirdi.
-  static MilkColor _severityColor(String severity) => switch (severity) {
-        'critical' => MilkColor.red,
-        'info' => MilkColor.grey,
-        _ => MilkColor.yellow,
-      };
-
-  /// Uyarı türü → ikon. Bilinmeyen tür genel zil ikonunu alır; tür listesi
-  /// §8.4'te sabitlenmedi ve backend yenisini ekleyebilir.
-  static IconData _icon(String type) => switch (type) {
-        'low_flow' => Icons.water_drop_outlined,
-        'low_yield' => Icons.trending_down,
-        'declining' => Icons.trending_down,
-        'no_milk' => Icons.report_gmailerrorred_outlined,
-        'dry_off' => Icons.event_available_outlined,
-        'device_offline' => Icons.sensors_off_outlined,
-        _ => Icons.notifications_none_outlined,
-      };
 }
 
 class _Empty extends StatelessWidget {

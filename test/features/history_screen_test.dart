@@ -149,4 +149,28 @@ void main() {
 
     expect(find.text('Bu hayvan kayıtlı değil'), findsOneWidget);
   });
+
+  // Etkin filtrenin ÖZETLENDİĞİNİ ve temizlenebildiğini doğrular.
+  //
+  // Çip şeridi yatay kaydırmalı; dashboard'dan gelindiğinde seçili çip
+  // ekranın dışında kalıyor ve kullanıcı listenin neden kısaldığını
+  // göremiyordu.
+  testWidgets('etkin filtre özetlenir ve temizlenebilir', (tester) async {
+    await tester.pumpWidget(wrap(const HistoryScreen()));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Temizle'), findsNothing,
+        reason: 'filtre yokken özet satırı da olmamalı');
+
+    await tester.tap(find.widgetWithText(FilterChip, YieldClass.declining.label));
+    await tester.pumpAndSettle();
+
+    expect(find.text('${YieldClass.declining.label} · 3 hayvan'), findsOneWidget);
+
+    await tester.tap(find.text('Temizle'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Temizle'), findsNothing);
+    expect(find.byIcon(Icons.chevron_right), findsWidgets);
+  });
 }

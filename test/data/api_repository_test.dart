@@ -307,4 +307,42 @@ void main() {
     expect(r.adapter.requests.single.path, '/alerts/al1/ack');
     expect(r.adapter.requests.single.method, 'POST');
   });
+
+  test('dashboard özeti parse edilir', () async {
+    final r = rig((o) async => okEnvelope({
+          'date': '2026-09-22',
+          'totalMl': 412300,
+          'milkingCount': 28,
+          'animalCount': 28,
+          'activeSessions': 1,
+          'openAlerts': 5,
+          'bySpecies': [
+            {'speciesId': 'sp1', 'totalMl': 380000, 'animalCount': 20},
+            {'speciesId': 'sp2', 'totalMl': 32300, 'animalCount': 8},
+          ],
+          'classDistribution': [
+            {'yieldClass': 'high', 'count': 3},
+            {'yieldClass': 'dry_off_candidate', 'count': 2},
+          ],
+        }));
+
+    final d = await r.repo.dashboard();
+
+    expect(r.adapter.requests.single.path, '/dashboard');
+    expect(d.totalMl, 412300);
+    expect(d.bySpecies, hasLength(2));
+    expect(d.classDistribution.last.yieldClass, YieldClass.dryOffCandidate);
+  });
+
+  // Eksik alanların özeti düşürmediğini doğrular: backend bir alanı
+  // göndermezse dashboard boş değil, o satırı eksik gösterir.
+  test('eksik alanlar varsayılana düşer', () async {
+    final r = rig((o) async => okEnvelope({'totalMl': 1000}));
+
+    final d = await r.repo.dashboard();
+
+    expect(d.totalMl, 1000);
+    expect(d.openAlerts, 0);
+    expect(d.classDistribution, isEmpty);
+  });
 }

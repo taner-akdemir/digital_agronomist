@@ -30,7 +30,14 @@ Future<AnimalTrend> animalTrend(Ref ref, String animalId) =>
 /// liste iki kez yeniden hesaplanırdı.
 typedef AnimalFilter = ({String? speciesId, YieldClass? yieldClass});
 
-@riverpod
+/// keepAlive: filtre, onu okuyan ekran YOKKEN de yaşamalı.
+///
+/// Dashboard'daki "3 hayvan kuruya aday" satırı Geçmiş ekranı kurulmadan
+/// önce filtreyi ayarlıyor; autoDispose ile bu değer ekran açılmadan
+/// siliniyor ve kullanıcı 30 hayvanın tamamını görüyordu. Ayrıca sekmeden
+/// çıkıp dönünce seçimin durması beklenen davranış — kabuk zaten sekme
+/// yığınını koruyor.
+@Riverpod(keepAlive: true)
 class AnimalFilterState extends _$AnimalFilterState {
   @override
   AnimalFilter build() => (speciesId: null, yieldClass: null);
@@ -45,6 +52,14 @@ class AnimalFilterState extends _$AnimalFilterState {
         speciesId: state.speciesId,
         yieldClass: state.yieldClass == c ? null : c,
       );
+
+  /// Filtreyi TEK bir sınıfa sabitler.
+  ///
+  /// toggleClass'tan farkı: aynı sınıfa ikinci kez gelince kaldırmaz.
+  /// Dashboard'dan "3 hayvan kuruya aday" satırına basıldığında filtrenin
+  /// kalkması, kullanıcıyı 30 hayvanlık tam listeye düşürürdü.
+  void showOnly(YieldClass c) =>
+      state = (speciesId: null, yieldClass: c);
 
   void clear() => state = (speciesId: null, yieldClass: null);
 }

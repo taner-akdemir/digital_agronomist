@@ -224,18 +224,40 @@ final class AnimalTrendFamily extends $Family
   String toString() => r'animalTrendProvider';
 }
 
+/// keepAlive: filtre, onu okuyan ekran YOKKEN de yaşamalı.
+///
+/// Dashboard'daki "3 hayvan kuruya aday" satırı Geçmiş ekranı kurulmadan
+/// önce filtreyi ayarlıyor; autoDispose ile bu değer ekran açılmadan
+/// siliniyor ve kullanıcı 30 hayvanın tamamını görüyordu. Ayrıca sekmeden
+/// çıkıp dönünce seçimin durması beklenen davranış — kabuk zaten sekme
+/// yığınını koruyor.
+
 @ProviderFor(AnimalFilterState)
 final animalFilterStateProvider = AnimalFilterStateProvider._();
 
+/// keepAlive: filtre, onu okuyan ekran YOKKEN de yaşamalı.
+///
+/// Dashboard'daki "3 hayvan kuruya aday" satırı Geçmiş ekranı kurulmadan
+/// önce filtreyi ayarlıyor; autoDispose ile bu değer ekran açılmadan
+/// siliniyor ve kullanıcı 30 hayvanın tamamını görüyordu. Ayrıca sekmeden
+/// çıkıp dönünce seçimin durması beklenen davranış — kabuk zaten sekme
+/// yığınını koruyor.
 final class AnimalFilterStateProvider
     extends $NotifierProvider<AnimalFilterState, AnimalFilter> {
+  /// keepAlive: filtre, onu okuyan ekran YOKKEN de yaşamalı.
+  ///
+  /// Dashboard'daki "3 hayvan kuruya aday" satırı Geçmiş ekranı kurulmadan
+  /// önce filtreyi ayarlıyor; autoDispose ile bu değer ekran açılmadan
+  /// siliniyor ve kullanıcı 30 hayvanın tamamını görüyordu. Ayrıca sekmeden
+  /// çıkıp dönünce seçimin durması beklenen davranış — kabuk zaten sekme
+  /// yığınını koruyor.
   AnimalFilterStateProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
         name: r'animalFilterStateProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -256,7 +278,15 @@ final class AnimalFilterStateProvider
   }
 }
 
-String _$animalFilterStateHash() => r'3a9e8e47a38b5bdf8885f21f3a95fa024279bede';
+String _$animalFilterStateHash() => r'9bfba3297f49db71648cdb110ce2f9f7f84cda52';
+
+/// keepAlive: filtre, onu okuyan ekran YOKKEN de yaşamalı.
+///
+/// Dashboard'daki "3 hayvan kuruya aday" satırı Geçmiş ekranı kurulmadan
+/// önce filtreyi ayarlıyor; autoDispose ile bu değer ekran açılmadan
+/// siliniyor ve kullanıcı 30 hayvanın tamamını görüyordu. Ayrıca sekmeden
+/// çıkıp dönünce seçimin durması beklenen davranış — kabuk zaten sekme
+/// yığınını koruyor.
 
 abstract class _$AnimalFilterState extends $Notifier<AnimalFilter> {
   AnimalFilter build();

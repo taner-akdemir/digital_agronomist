@@ -150,4 +150,77 @@ void main() {
     expect(sessions, isNotEmpty);
     expect(sessions.every((s) => s.hallId == hall.id), isTrue);
   });
+
+  // Dashboard'un GÜN ORTASINDA doğru saydığını doğrular.
+  //
+  // Akşam sağımı henüz olmadan toplama girerse, sabah 8'de bakan kullanıcı
+  // günün sonundaki rakamı görür ve "bu süt nerede?" diye sorar.
+  group('dashboard', () {
+    // Öğlen: sabah sağımı olmuş, akşam sağımı olmamış.
+    final noon = DateTime(2026, 9, 22, 12);
+    late MockRepository repo;
+    setUp(() => repo = MockRepository(latency: Duration.zero, today: noon));
+
+    test('yalnızca yapılmış sağımlar toplanır', () async {
+      final d = await repo.dashboard();
+
+      expect(d.milkingCount, d.animalCount,
+          reason: 'öğlen her hayvanın yalnızca sabah sağımı olmalı');
+      expect(d.totalMl, greaterThan(0));
+    });
+
+    test('toplam, hayvanların geçmişiyle tutarlıdır', () async {
+      final animals = await repo.animals();
+
+      var expected = 0;
+      for (final a in animals) {
+        final today = await repo.animalHistory(a.id,
+            from: DateTime(noon.year, noon.month, noon.day));
+        for (final m in today) {
+          if (m.startedAt!.isBefore(noon)) expected += m.volumeMl;
+        }
+      }
+
+      expect((await repo.dashboard()).totalMl, expected);
+    });
+
+    test('gün başında henüz sağım yoktur', () async {
+      final midnight = MockRepository(
+          latency: Duration.zero, today: DateTime(2026, 9, 22));
+
+      final d = await midnight.dashboard();
+
+      expect(d.totalMl, 0);
+      expect(d.bySpecies, isEmpty);
+    });
+
+    // Sayısı SIFIR olan sınıfın da döndüğünü doğrular: ekran "bu sınıfta
+    // hiç yok" ile "bu sınıf hiç hesaplanmadı"yı ayırabilmeli.
+    test('sınıf dağılımı tüm sınıfları ve toplam sürüyü kapsar', () async {
+      final d = await repo.dashboard();
+
+      expect(d.classDistribution.map((c) => c.yieldClass),
+          containsAll(YieldClass.values));
+      expect(d.classDistribution.fold(0, (a, c) => a + c.count),
+          (await repo.animals()).length);
+    });
+
+    test('tür dağılımı üç türü de içerir', () async {
+      final d = await repo.dashboard();
+
+      expect(d.bySpecies, hasLength(3));
+      expect(d.bySpecies.every((s) => s.animalCount == 10), isTrue);
+    });
+
+    test('açık uyarı sayısı uyarı listesiyle aynıdır', () async {
+      final open =
+          (await repo.alerts()).where((a) => !a.isAcknowledged).length;
+
+      expect((await repo.dashboard()).openAlerts, open);
+    });
+
+    test('açık oturum sayılır', () async {
+      expect((await repo.dashboard()).activeSessions, 1);
+    });
+  });
 }

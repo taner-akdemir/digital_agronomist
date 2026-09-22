@@ -168,9 +168,18 @@ gösterilir (§16) — uygulama kendi metnini uydurmaz. `type` ve `severity` **s
 enum değil: §8.4 bu sütunların alacağı değerleri saymıyor ve kapalı bir enum, backend yeni
 bir tür eklediğinde listeyi komple düşürürdü.
 
+**Dashboard tamamdır:** günün toplamı (kaç sağım, kaç hayvan), tür bazında dağılım, §6.4
+sınıf dağılımı ve açık uyarı özeti; `GET /dashboard`. Sınıf satırına basmak Geçmiş sekmesini
+o sınıfa filtreler — bu yüzden `animalFilterStateProvider` **keepAlive**'dır: autoDispose
+ile, filtre Geçmiş ekranı kurulmadan önce siliniyordu.
+
+Özet ile uyarı LİSTESİ ayrı uçlardan okunur. Uyarıları dashboard payload'ına da koymak,
+kullanıcı bir uyarıyı okundu işaretledikten sonra dashboard'un eski kopyayı göstermesi
+demekti.
+
 **Faz 4'ten kalan:** FCM push (`firebase_messaging` + `flutter_local_notifications`) — bir
-Firebase projesi ve `google-services.json` gerekiyor, bu repoda yok. Dashboard ve Cihazlar
-sekmeleri **iskelet**; Dashboard'un `GET /dashboard` özeti de Faz 4'e ait.
+Firebase projesi ve `google-services.json` gerekiyor, bu repoda yok. Cihazlar sekmesi
+hâlâ **iskelet** (Faz 5, §17).
 
 Mock moda dönmek: `flutter run --dart-define=MT_API=mock`. O modda kimlik sunucusu
 olmadığı için giriş ekranı atlanır ve demo kullanıcısıyla çalışılır.

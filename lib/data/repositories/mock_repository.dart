@@ -7,6 +7,7 @@ import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
+import 'package:milktrace/data/models/dashboard_summary.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/hall.dart';
@@ -20,6 +21,7 @@ import 'package:milktrace/data/repositories/milktrace_repository.dart';
 import 'package:milktrace/data/repositories/mock_lactation.dart';
 import 'package:milktrace/domain/flow_color.dart';
 import 'package:milktrace/domain/thresholds_engine.dart';
+import 'package:milktrace/domain/yield_class.dart';
 
 /// Asset JSON'larından okuyan sahte kaynak.
 ///
@@ -299,4 +301,73 @@ class MockRepository implements MilkTraceRepository {
   @override
   Future<void> ackAlert(String alertId) =>
       _delayed(() async => _acks[alertId] = _clock);
+
+  /// Günün özeti.
+  ///
+  /// Diğer ekranlarla AYNI kaynaklardan hesaplanır (aynı üretilmiş geçmiş,
+  /// aynı uyarı dosyası): dashboard'un toplamıyla hayvan detayındaki
+  /// sağımların toplamı tutmazsa mock'a kimse güvenmez.
+  @override
+  Future<DashboardSummary> dashboard() => _delayed(() async {
+        final animals = await _list('animals.json', Animal.fromJson);
+        final thresholds = await _list('thresholds.json', Thresholds.fromJson);
+
+        var totalMl = 0;
+        var milkingCount = 0;
+        final milkedAnimals = <String>{};
+        final speciesMl = <String, int>{};
+        final speciesAnimals = <String, Set<String>>{};
+
+        for (final animal in animals) {
+          final t = thresholds.firstWhere(
+            (x) => x.speciesId == animal.speciesId,
+            orElse: () => ThresholdsEngine.cowDefaults,
+          );
+
+          for (final m
+              in MockLactation.history(animal, t, _now, from: _now)) {
+            // HENÜZ OLMAMIŞ sağım sayılmaz: sabah yapılan bir demoda akşam
+            // sağımı da toplama giriyordu ve gün ortasında günlük toplam
+            // akşamki değerini gösteriyordu.
+            if (m.startedAt == null || m.startedAt!.isAfter(_clock)) continue;
+
+            totalMl += m.volumeMl;
+            milkingCount++;
+            milkedAnimals.add(animal.id);
+            speciesMl.update(animal.speciesId, (v) => v + m.volumeMl,
+                ifAbsent: () => m.volumeMl);
+            (speciesAnimals[animal.speciesId] ??= {}).add(animal.id);
+          }
+        }
+
+        final counts = <YieldClass, int>{for (final c in YieldClass.values) c: 0};
+        for (final a in animals) {
+          counts[a.yieldClass] = (counts[a.yieldClass] ?? 0) + 1;
+        }
+
+        final alertList = await alerts();
+        final sessionList = await sessions();
+
+        return DashboardSummary(
+          date: _now,
+          totalMl: totalMl,
+          milkingCount: milkingCount,
+          animalCount: milkedAnimals.length,
+          activeSessions:
+              sessionList.where((s) => s.status == 'active').length,
+          openAlerts: alertList.where((a) => !a.isAcknowledged).length,
+          bySpecies: [
+            for (final entry in speciesMl.entries)
+              SpeciesTotal(
+                speciesId: entry.key,
+                totalMl: entry.value,
+                animalCount: speciesAnimals[entry.key]?.length ?? 0,
+              ),
+          ],
+          classDistribution: [
+            for (final entry in counts.entries)
+              YieldClassCount(yieldClass: entry.key, count: entry.value),
+          ],
+        );
+      });
 }

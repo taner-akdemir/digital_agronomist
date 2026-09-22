@@ -3,6 +3,7 @@ import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
+import 'package:milktrace/data/models/dashboard_summary.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/hall.dart';
@@ -191,4 +192,8 @@ class ApiRepository implements MilkTraceRepository {
   @override
   Future<void> ackAlert(String alertId) =>
       _dio.post<dynamic>('/alerts/$alertId/ack');
+
+  @override
+  Future<DashboardSummary> dashboard() async => DashboardSummary.fromJson(
+      _dataOf(await _dio.get<dynamic>('/dashboard')));
 }
