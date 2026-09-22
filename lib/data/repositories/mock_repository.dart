@@ -110,8 +110,27 @@ class MockRepository implements MilkTraceRepository {
       });
 
   @override
-  Future<List<Device>> devices() =>
-      _delayed(() => _list('devices.json', Device.fromJson));
+  Future<List<Device>> devices() => _delayed(() async {
+        final all = await _list('devices.json', Device.fromJson);
+        return [
+          for (final d in all) d.copyWith(lastSeenAt: _lastSeen(d)),
+        ];
+      });
+
+  /// "Son görülme" damgasını ŞU ANA göre üretir.
+  ///
+  /// Asset'teki damga sabit: demo hangi gün yapılırsa yapılsın çevrimiçi bir
+  /// sayaç "3 gün önce görüldü" diyordu ve Cihazlar ekranı kendi kendisiyle
+  /// çelişiyordu. Çevrimiçi sayaç saniyeler, çevrimdışı sayaç dakikalar önce
+  /// görülmüş sayılır; takılı olmayanın damgası yoktur.
+  DateTime? _lastSeen(Device d) {
+    final jitter = d.id.hashCode.abs();
+    return switch (d.status) {
+      'online' => _clock.subtract(Duration(seconds: 3 + jitter % 40)),
+      'offline' => _clock.subtract(Duration(minutes: 12 + jitter % 50)),
+      _ => null,
+    };
+  }
 
   @override
   Future<List<Animal>> animals() =>

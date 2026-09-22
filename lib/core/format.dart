@@ -50,4 +50,26 @@ abstract final class Fmt {
 
   /// "%86" — yüzde KIRPILMAZ, hayvan beklenenin üstünde süt verebilir.
   static String percent(double pct) => '%${pct.toStringAsFixed(0)}';
+
+  /// "az önce" / "12 dk önce" / "3 sa önce" / "2 gün önce".
+  ///
+  /// Cihaz listesinde MUTLAK saat işe yaramıyor: "06:12" yazan bir sayacın
+  /// şu an sorunlu olup olmadığını anlamak için kullanıcının saate bakıp
+  /// çıkarma yapması gerekirdi.
+  /// "24 dk" / "3 sa" / "2 gün" — since'in "önce"siz, dar hâli.
+  static String sinceShort(DateTime t, {DateTime? now}) {
+    final d = (now ?? DateTime.now()).difference(t);
+    if (d.isNegative || d.inMinutes < 1) return 'şimdi';
+    if (d.inMinutes < 60) return '${d.inMinutes} dk';
+    if (d.inHours < 24) return '${d.inHours} sa';
+    return '${d.inDays} gün';
+  }
+
+  static String since(DateTime t, {DateTime? now}) {
+    final d = (now ?? DateTime.now()).difference(t);
+    if (d.isNegative || d.inSeconds < 60) return 'az önce';
+    if (d.inMinutes < 60) return '${d.inMinutes} dk önce';
+    if (d.inHours < 24) return '${d.inHours} sa önce';
+    return '${d.inDays} gün önce';
+  }
 }

@@ -98,15 +98,23 @@ void main() {
         .map((e) => Spout.fromJson(e as Map<String, dynamic>).id)
         .toSet();
 
-    expect(devices, hasLength(30));
     final assigned = devices.map((d) => d.spoutId).whereType<String>().toList();
     expect(assigned.toSet(), hasLength(assigned.length),
         reason: 'aynı noktaya iki cihaz takılı olamaz');
     for (final d in devices) {
       if (d.spoutId != null) expect(spoutIds, contains(d.spoutId));
     }
-    expect(devices.map((d) => d.serialNo).toSet(), hasLength(30),
+    expect(devices.map((d) => d.serialNo).toSet(), hasLength(devices.length),
         reason: 'seri numaraları tekil olmalı');
+
+    // Fixture'da her üç durum da BULUNMALI: Cihazlar ekranı çevrimiçi,
+    // çevrimdışı, takılı olmayan sayaç ve sayaçsız nokta hâllerinin
+    // dördünü de çiziyor; hepsi online olsaydı üçü hiç denenmezdi.
+    expect(devices.where((d) => d.status == 'online'), isNotEmpty);
+    expect(devices.where((d) => d.status == 'offline'), isNotEmpty);
+    expect(devices.where((d) => d.spoutId == null), isNotEmpty);
+    expect(spoutIds.difference(assigned.toSet()), isNotEmpty,
+        reason: 'sayaç takılmamış en az bir nokta olmalı');
   });
 
   test('hayvanlar çözülür; küpe numarası var, tür id ile bağlı', () {

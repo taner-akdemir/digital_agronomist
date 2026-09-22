@@ -177,9 +177,22 @@ ile, filtre Geçmiş ekranı kurulmadan önce siliniyordu.
 kullanıcı bir uyarıyı okundu işaretledikten sonra dashboard'un eski kopyayı göstermesi
 demekti.
 
-**Faz 4'ten kalan:** FCM push (`firebase_messaging` + `flutter_local_notifications`) — bir
-Firebase projesi ve `google-services.json` gerekiyor, bu repoda yok. Cihazlar sekmesi
-hâlâ **iskelet** (Faz 5, §17).
+**Cihazlar sekmesi tamamdır:** bölge → ünite → nokta ağacı, sayaçların çevrimiçi/çevrimdışı
+durumu ve sayaç ayrıntısı (yazılım sürümü, kalibrasyon katsayısı, son görülme, simülatör
+işareti). Sorunu olan ünite açık, sorunsuz olan kapalı gelir — 30 noktayı birden açmak,
+ilgilenilmesi gereken iki satırı kaydırma içinde kaybederdi.
+
+Dört durum ayrı ayrı çizilir: çevrimiçi, çevrimdışı, **sayaç takılı olmayan nokta** ve
+**noktaya takılı olmayan sayaç** (dolapta bekleyen yedek — arıza değil). Durum yalnızca
+renge bırakılmaz, sorunlu satırda etiket yazıyla da durur.
+
+Burada çevrimdışı **kırmızıdır**, §6.2'deki gri DEĞİL: §6.2 canlı tabloda AKIŞIN olmamasını
+anlatıyor, bu ekran cihazın kendisini. Çevrimdışı sayaç müdahale gerektirir.
+
+**Faz 4'ten kalan tek şey:** FCM push (`firebase_messaging` + `flutter_local_notifications`)
+— bir Firebase projesi ve `google-services.json` gerekiyor, bu repoda yok.
+
+Böylece dört sekmenin dördü de gerçek: **iskelet ekran kalmadı**, `StubScreen` silindi.
 
 Mock moda dönmek: `flutter run --dart-define=MT_API=mock`. O modda kimlik sunucusu
 olmadığı için giriş ekranı atlanır ve demo kullanıcısıyla çalışılır.
