@@ -1,6 +1,5 @@
 import 'package:milktrace/core/env.dart';
 import 'package:milktrace/data/repositories/api_repository.dart';
-import 'package:milktrace/data/repositories/api_with_mock_live_repository.dart';
 import 'package:milktrace/data/repositories/milktrace_repository.dart';
 import 'package:milktrace/data/repositories/mock_repository.dart';
 import 'package:milktrace/providers/auth_providers.dart';
@@ -11,7 +10,7 @@ part 'repository_providers.g.dart';
 /// Uygulamanın veri kaynağı.
 ///
 /// Mock mu gerçek API mi olduğu YALNIZCA burada bilinir; ekranlar arayüzü
-/// görür. Geçiş `--dart-define=MT_API=mock` ile yapılır (§15.2).
+/// görür. Mock'a dönüş `--dart-define=MT_API=mock` ile yapılır (§15.2).
 ///
 /// Dio'yu BURADA kurmuyoruz: kimlik doğrulamalı istemci AuthSession'a ait.
 /// İki ayrı Dio olsaydı token yenileme yalnızca birinde çalışır, diğeri
@@ -24,12 +23,8 @@ MilkTraceRepository repository(Ref ref) {
 
   final session = ref.watch(authSessionProvider);
 
-  final api = ApiRepository(
-    dio: session.authed,
-    wsBaseUrl: Env.apiBaseUrl.replaceFirst('http', 'ws').replaceFirst('/api/v1', ''),
-  );
-
-  // GEÇİCİ: canlı akış mock'tan gelir, çünkü milking servisi Faz 3'te.
-  // Açıklaması ApiWithMockLiveRepository'de.
-  return ApiWithMockLiveRepository(api: api, live: MockRepository());
+  // wsBaseUrl YOK: §8.5'teki WebSocket ucunu sunan `realtime` servisi henüz
+  // yazılmadı ve canlı akış geçici olarak yoklamayla çalışıyor. Kullanılmayan
+  // bir alan taşımak, WebSocket varmış izlenimi bırakırdı.
+  return ApiRepository(dio: session.authed);
 }

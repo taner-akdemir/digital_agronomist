@@ -41,6 +41,10 @@ ResponseBody jsonResponse(int status, Map<String, dynamic> body) => ResponseBody
 ResponseBody okEnvelope(Map<String, dynamic> data) =>
     jsonResponse(200, {'success': true, 'data': data, 'msg': ''});
 
+/// §16 başarı zarfı, LİSTE gövdesiyle.
+ResponseBody okEnvelope2(List<dynamic> data) =>
+    jsonResponse(200, {'success': true, 'data': data, 'msg': ''});
+
 /// §16 hata zarfı.
 ResponseBody errEnvelope(int status, String code, String message) => jsonResponse(
     status, {'success': false, 'error': {'code': code, 'message': message}});

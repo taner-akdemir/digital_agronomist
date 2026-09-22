@@ -101,15 +101,15 @@ WebSocket `spout.update` payload'ı — **mock JSON'lar da bu şekle birebir uya
 |---|---|
 | State | Riverpod 3, `@riverpod` codegen Notifier'lar |
 | Ağ | `dio` (interceptor ile token yenileme) |
-| Canlı veri | `web_socket_channel` + yeniden bağlanma; ilk yükleme `GET /sessions/{id}/live` |
+| Canlı veri | Hedef: `web_socket_channel` + yeniden bağlanma. Bugün: 5 sn yoklama (§6). İlk yükleme `GET /sessions/{id}/live` |
 | Depolama | Token → `flutter_secure_storage`; basit ayarlar → `shared_preferences` |
 | Model | `freezed` + `json_serializable`. Elle `fromJson` YAZILMAZ. |
 | Navigasyon | `go_router` + `StatefulShellRoute` (4 sekme) |
 | Veri katmanı | `MilkTraceRepository` arayüzü + `MockRepository` / `ApiRepository` |
 
-**Mock ↔ gerçek geçişi:** `--dart-define=MT_API=mock` (varsayılan) veya `http`. Backend hazır
-olana kadar mock ile geliştirilir. Mock asset'leri gerçek API'nin şekliyle birebir aynıdır;
-geçiş bir bayrak değişimidir, yeniden yazım değil.
+**Mock ↔ gerçek geçişi:** `--dart-define=MT_API=http` (varsayılan) veya `mock`. Mock
+asset'leri gerçek API'nin şekliyle birebir aynıdır; geçiş bir bayrak değişimidir, yeniden
+yazım değil. Mock, backend ayakta değilken ve testlerde kullanılır.
 
 ---
 
@@ -133,15 +133,20 @@ flutter run
 
 ## 6. Kapsam çiti
 
-Şu anki faz: **Faz 2 — gerçek API bağlantısı** (§17).
+Şu anki faz: **Faz 3 — canlı sağım akışı** (§17).
 
-Uygulama artık **varsayılan olarak gerçek API'ye** bağlanır (`MT_API=http`). Giriş, oturum
+Uygulama **varsayılan olarak gerçek API'ye** bağlanır (`MT_API=http`). Giriş, oturum
 yenileme, oturumu geri yükleme ve çıkış çalışır; bölge/ünite/nokta/cihaz/hayvan verisi
-gateway'den gelir.
+gateway'den gelir. Canlı sağım da artık gerçek uçlardan okunur: açık oturum
+`GET /sessions` listesinden seçilir, ilk yükleme `GET /sessions/{id}/live`'dan gelir.
+`ApiWithMockLiveRepository` köprüsü **silindi**; mock yalnızca `MT_API=mock` modunda çalışır.
 
-**Canlı sağım akışı hâlâ mock'tur** ve bu geçicidir: `milking` servisinin HTTP katmanı
-(`/sessions`, `/ws`) Faz 3'te yazılacak. Köprü `ApiWithMockLiveRepository`'de ve tek
-commit'te silinecek şekilde izole; hangi metodun nereye gittiği orada tek tek yazılı.
+**Canlı akış GEÇİCİ OLARAK yoklamadır (polling), WebSocket değil:** §8.5'teki `/ws` ucunu
+sunan `realtime` servisi henüz yazılmadı, bağlanmayı denemek canlı ekranı ilk karede
+dondururdu. `ApiRepository.watchSession` 5 saniyede bir `/sessions/{id}/live` okur ve
+yalnızca `ts`'si değişen noktaları yayınlar; ağ hatası akışı bitirmez, oturum kapanınca
+akış biter. `realtime` gelince **yalnızca bu metot** değişir — ekran ve provider Stream
+gördüğü için aynı kalır. Bu yüzden `web_socket_channel` bağımlılığı şimdilik kaldırıldı.
 
 Dashboard, Geçmiş ve Cihazlar sekmeleri **iskelet**tir. Push bildirimleri (FCM) ve trend
 grafikleri Faz 3–4'e aittir; şimdi yazılmaz.
