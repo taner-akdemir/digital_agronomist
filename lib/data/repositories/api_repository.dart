@@ -196,4 +196,16 @@ class ApiRepository implements MilkTraceRepository {
   @override
   Future<DashboardSummary> dashboard() async => DashboardSummary.fromJson(
       _dataOf(await _dio.get<dynamic>('/dashboard')));
+
+  @override
+  Future<void> registerPushToken({
+    required String token,
+    required String platform,
+  }) =>
+      _dio.post<dynamic>('/me/push-tokens',
+          data: {'token': token, 'platform': platform});
+
+  @override
+  Future<void> unregisterPushToken(String token) =>
+      _dio.delete<dynamic>('/me/push-tokens/$token');
 }

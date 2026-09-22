@@ -23,6 +23,17 @@ dependencies:
   flutter_secure_storage: ^10.0.0
   shared_preferences: ^2.5.4
 
+  # Push bildirimleri (§15.2).
+  #
+  # google-services.json HENÜZ YOK: Firebase projesi sonra bağlanacak.
+  # Bu yüzden com.google.gms.google-services Gradle eklentisi de EKLENMEDİ —
+  # eklenseydi dosya yokken derleme kırılırdı. Paketler derlemeye giriyor ama
+  # Firebase çalışma zamanında başlatılamıyor ve uygulama push'suz çalışıyor;
+  # PushGateway bunu sessizce yutuyor. Bağlama adımları CLAUDE.md §7'de.
+  firebase_core: ^4.3.0
+  firebase_messaging: ^16.0.4
+  flutter_local_notifications: ^20.0.1
+
   # Sunum
   fl_chart: ^1.2.0            # charts_flutter terk edilmişti, kaldırıldı
 

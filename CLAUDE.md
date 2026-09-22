@@ -189,10 +189,47 @@ renge bırakılmaz, sorunlu satırda etiket yazıyla da durur.
 Burada çevrimdışı **kırmızıdır**, §6.2'deki gri DEĞİL: §6.2 canlı tabloda AKIŞIN olmamasını
 anlatıyor, bu ekran cihazın kendisini. Çevrimdışı sayaç müdahale gerektirir.
 
-**Faz 4'ten kalan tek şey:** FCM push (`firebase_messaging` + `flutter_local_notifications`)
-— bir Firebase projesi ve `google-services.json` gerekiyor, bu repoda yok.
+**Push bildirimleri yazıldı ama HENÜZ KAPALI:** Firebase projesi bağlanmadı. Uygulama
+bunu bir hata saymaz — `Firebase.initializeApp()` düşünce `FirebasePushGateway` log atıp
+`null` döner, `PushRegistration` `unavailable` durumunda kalır ve sağım push'suz sürer.
+Proje bağlandığında **hiçbir Dart dosyası değişmez**; adımlar §7'de.
 
 Böylece dört sekmenin dördü de gerçek: **iskelet ekran kalmadı**, `StubScreen` silindi.
 
 Mock moda dönmek: `flutter run --dart-define=MT_API=mock`. O modda kimlik sunucusu
 olmadığı için giriş ekranı atlanır ve demo kullanıcısıyla çalışılır.
+
+---
+
+## 7. Firebase / push bağlama
+
+Kod tarafı hazır; eksik olan tek şey Firebase projesi. `google-services.json` olmadan da
+derlendiği için `com.google.gms.google-services` Gradle eklentisi **bilerek eklenmedi** —
+eklenseydi dosya yokken `assembleDebug` kırılırdı.
+
+**Proje bağlanınca yapılacaklar:**
+
+1. Firebase Console'da proje aç; Android uygulaması ekle — applicationId
+   `com.algebran.milktrace.milktrace`. iOS için bundle id'yi ekle.
+2. `google-services.json` → `android/app/`, `GoogleService-Info.plist` → `ios/Runner/`.
+3. `android/settings.gradle.kts` → plugins bloğuna
+   `id("com.google.gms.google-services") version "4.4.2" apply false`;
+   `android/app/build.gradle.kts` → plugins bloğuna `id("com.google.gms.google-services")`.
+4. iOS: APNs anahtarını Firebase'e yükle, Xcode'da **Push Notifications** ve
+   **Background Modes → Remote notifications** yeteneklerini aç.
+5. Dart tarafında değişiklik YOK. Bunu doğrulamak için mock modda geçici olarak gerçek
+   kapı açılıp cihazda denendi: `Firebase.initializeApp` düştü, uygulama normal çalıştı.
+
+**Backend sözleşmesi (`notification` servisi yazılırken doğrulanacak):**
+
+- FCM mesajı **`notification` bloğu taşımalı**. Uygulama kapalıyken bildirimi sistem
+  tepsisine Android koyuyor; yalnızca `data` gönderilirse hiçbir şey görünmez. Uygulama
+  AÇIKKEN bildirim tepsiye düşmez, o yüzden `flutter_local_notifications` ile elle
+  gösteriliyor — kanal kimliği `milktrace_alerts`, AndroidManifest'teki
+  `default_notification_channel_id` ile aynı olmak zorunda.
+- `data.animalId` varsa bildirime dokunuş `/history/animal/{id}`'ye, yoksa `/alerts`'e
+  gider. Bilinmeyen/eksik alan `/alerts`'e düşer (`PushMessage.fromRemote`).
+- Metinler Türkçe ve olduğu gibi gösterilir (§16).
+- **Jeton uçları VARSAYIMDIR**, §8.5 bunları listelemiyor:
+  `POST /me/push-tokens {token, platform}` ve `DELETE /me/push-tokens/{token}`.
+  Jeton oturum açılınca yazılır, kapanınca silinir, yenilenince yeniden yazılır.

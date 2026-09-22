@@ -63,6 +63,17 @@ abstract interface class MilkTraceRepository {
   /// Uyarılar (§8.5 GET /alerts). Yeniden eskiye sıralı.
   Future<List<Alert>> alerts();
 
+  /// Push jetonunu kullanıcıya bağlar.
+  ///
+  /// VARSAYIM: §8.5 bu ucu listelemiyor. FCM jetonu bir yere yazılmadan
+  /// `notification` servisi kime push atacağını bilemez; yol o servis
+  /// yazılırken doğrulanmalı (§18).
+  Future<void> registerPushToken({required String token, required String platform});
+
+  /// Jetonun bağını koparır: çıkış yapan kullanıcının telefonuna, artık onun
+  /// olmayan sürünün uyarıları gitmemeli.
+  Future<void> unregisterPushToken(String token);
+
   /// Uyarıyı okundu işaretler (§8.5 POST /alerts/{id}/ack).
   ///
   /// Dönüş yok: güncel kaydı sunucudan tekrar okumak, iki kullanıcının aynı

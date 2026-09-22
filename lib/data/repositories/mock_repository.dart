@@ -389,4 +389,22 @@ class MockRepository implements MilkTraceRepository {
           ],
         );
       });
+
+  /// Kayıtlı push jetonları.
+  ///
+  /// Mock'ta gidecek bir sunucu yok; yine de TUTULUYOR, çünkü "jeton
+  /// kaydedildi mi, çıkışta silindi mi" sorusunun cevabı ancak böyle
+  /// doğrulanabiliyor.
+  final List<String> pushTokens = [];
+
+  @override
+  Future<void> registerPushToken({
+    required String token,
+    required String platform,
+  }) =>
+      _delayed(() async => pushTokens.add(token));
+
+  @override
+  Future<void> unregisterPushToken(String token) =>
+      _delayed(() async => pushTokens.remove(token));
 }

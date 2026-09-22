@@ -345,4 +345,26 @@ void main() {
     expect(d.openAlerts, 0);
     expect(d.classDistribution, isEmpty);
   });
+
+  // Push jetonu uçları (VARSAYIM: §8.5 bunları listelemiyor, `notification`
+  // servisi yazılırken doğrulanmalı).
+  test('push jetonu kaydedilir', () async {
+    final r = rig((o) async => okEnvelope({}));
+
+    await r.repo.registerPushToken(token: 'tok-1', platform: 'android');
+
+    final req = r.adapter.requests.single;
+    expect(req.path, '/me/push-tokens');
+    expect(req.method, 'POST');
+    expect(req.data, {'token': 'tok-1', 'platform': 'android'});
+  });
+
+  test('push jetonu silinir', () async {
+    final r = rig((o) async => okEnvelope({}));
+
+    await r.repo.unregisterPushToken('tok-1');
+
+    expect(r.adapter.requests.single.path, '/me/push-tokens/tok-1');
+    expect(r.adapter.requests.single.method, 'DELETE');
+  });
 }

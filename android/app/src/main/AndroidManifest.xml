@@ -2,6 +2,9 @@
     <!-- Uygulama API ile konuşur; izin YALNIZCA debug manifest'inde
          olsaydı release derlemesi ağa hiç çıkamazdı. -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Android 13+ bildirim izni. İzin ÇALIŞMA ZAMANINDA da istenir;
+         yalnızca manifest'te olması bildirim göstermeye yetmez. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
         android:label="milktrace"
@@ -29,6 +32,13 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <!-- Uygulama KAPALIYKEN gelen push'un düşeceği kanal. Kanal
+             tanımlanmazsa Android 8+ bildirimi sessizce yutar. Kimlik,
+             PushGateway'in oluşturduğu kanalla birebir aynı olmalı. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="milktrace_alerts" />
+
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
