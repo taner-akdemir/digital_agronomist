@@ -25,6 +25,16 @@ abstract interface class MilkTraceRepository {
   Future<List<Species>> species();
   Future<List<Thresholds>> thresholds();
 
+  /// Bir türün eşiklerini günceller (§8.5 PUT /species/thresholds, owner).
+  ///
+  /// VARSAYIM: §8.5 yolu veriyor ama gövde şeklini vermiyor. Tek türün tam
+  /// nesnesi gönderiliyor; kısmi güncelleme yerine tam nesne, iki kullanıcı
+  /// aynı anda kaydettiğinde hangi alanın kazandığını belirsiz bırakmıyor.
+  ///
+  /// Dönen kayıt SUNUCUNUNKİdir: backend değerleri kırpabilir ya da
+  /// normalize edebilir ve ekran kendi yazdığını doğru sanmamalı.
+  Future<Thresholds> updateThresholds(Thresholds thresholds);
+
   Future<List<Farm>> farms();
   Future<List<Hall>> halls();
   Future<List<Vacuum>> vacuums({String? hallId});

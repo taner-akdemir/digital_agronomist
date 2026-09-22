@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/env.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 
-/// Hesap kartı: kim giriş yapmış ve çıkış.
+/// Hesap kartı: kim giriş yapmış, rolü ne, ayarlar ve çıkış.
 ///
-/// Çıkış AYRI BİR EKRAN DEĞİL: dört sekmenin hiçbirine ait olmadığı için
-/// kabuğun üstünde bir sayfa açmak gezinme yığınını karıştırırdı.
+/// §15.1'in "profil" ekranı BUDUR. Ayrı bir sekme ya da tam ekran sayfa
+/// değil: dört sekmenin hiçbirine ait olmadığı için kabuğun üstünde bir
+/// sayfa açmak gezinme yığınını karıştırırdı.
 Future<void> showAccountSheet(BuildContext context) => showModalBottomSheet<void>(
       context: context,
       showDragHandle: true,
@@ -49,11 +51,19 @@ class _AccountSheet extends ConsumerWidget {
                         style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 16),
                       ),
-                      if (user != null)
+                      if (user != null) ...[
                         Text(
                           user.email,
                           style: const TextStyle(color: AppColors.onSurfaceMuted),
                         ),
+                        // Rol GÖRÜNÜR olmalı: eşik ayarlarının neden salt
+                        // okunur açıldığının cevabı burada.
+                        Text(
+                          _roleLabel(user.role),
+                          style: const TextStyle(
+                              fontSize: 12, color: AppColors.lightGreyColor),
+                        ),
+                      ],
                     ],
                   ),
                 ),
@@ -63,7 +73,24 @@ class _AccountSheet extends ConsumerWidget {
               const SizedBox(height: AppSpacing.lg),
               const _ModeBadge(),
             ],
-            const SizedBox(height: AppSpacing.xl),
+            const SizedBox(height: AppSpacing.lg),
+            // Eşik ayarları HERKESE açık, düzenleme yalnızca owner'a
+            // (§15.1): sağımdaki "bu kırmızı neden kırmızı?" sorusunun
+            // cevabı orada ve gizlemek kimseye yaramaz.
+            OutlinedButton.icon(
+              onPressed: () {
+                Navigator.of(context).pop();
+                context.push('/settings/thresholds');
+              },
+              icon: const Icon(Icons.tune),
+              label: const Text('Eşik ayarları'),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: AppColors.darkGreenColor,
+                padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+                shape: const RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.sm),
             OutlinedButton.icon(
               onPressed: Env.apiMode == ApiMode.mock
                   // Mock modda kimlik sunucusu yok; çıkış kullanıcıyı asla
@@ -87,6 +114,18 @@ class _AccountSheet extends ConsumerWidget {
     );
   }
 }
+
+/// Rolün Türkçe adı (§5 kullanıcı rolleri).
+///
+/// Tanınmayan rol KODU olduğu gibi gösterilir: backend yeni bir rol
+/// eklediğinde kullanıcıya boş bir satır göstermektense ham kod yeğdir.
+String _roleLabel(String role) => switch (role) {
+      'tenant_owner' => 'İşletme sahibi',
+      'tenant_operator' => 'Operatör',
+      'tenant_viewer' => 'Görüntüleyici',
+      'platform_admin' => 'Platform yöneticisi',
+      _ => role,
+    };
 
 class _ModeBadge extends StatelessWidget {
   const _ModeBadge();

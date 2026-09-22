@@ -208,4 +208,10 @@ class ApiRepository implements MilkTraceRepository {
   @override
   Future<void> unregisterPushToken(String token) =>
       _dio.delete<dynamic>('/me/push-tokens/$token');
+
+  @override
+  Future<Thresholds> updateThresholds(Thresholds thresholds) async =>
+      Thresholds.fromJson(_dataOf(await _dio.put<dynamic>(
+          '/species/thresholds',
+          data: thresholds.toJson())));
 }

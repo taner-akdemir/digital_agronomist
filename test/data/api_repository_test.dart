@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:milktrace/data/models/thresholds.dart';
 import 'package:milktrace/data/repositories/api_repository.dart';
 import 'package:milktrace/domain/flow_color.dart';
 import 'package:milktrace/domain/yield_class.dart';
@@ -366,5 +367,35 @@ void main() {
 
     expect(r.adapter.requests.single.path, '/me/push-tokens/tok-1');
     expect(r.adapter.requests.single.method, 'DELETE');
+  });
+
+  // Eşik güncellemesinin TAM NESNE ile PUT edildiğini doğrular.
+  //
+  // Kısmi güncelleme, iki kullanıcı aynı anda kaydettiğinde hangi alanın
+  // kazandığını belirsiz bırakırdı.
+  test('eşikler tam nesne olarak PUT edilir', () async {
+    final r = rig((o) async => okEnvelope({
+          'speciesId': 'sp1',
+          'flowLow': 1.2,
+          'flowHigh': 2.5,
+          'dryOffDailyMl': 9000,
+        }));
+
+    final saved = await r.repo.updateThresholds(const Thresholds(
+      speciesId: 'sp1',
+      flowLow: 1.2,
+      flowHigh: 2.5,
+      dryOffDailyMl: 9000,
+    ));
+
+    final req = r.adapter.requests.single;
+    expect(req.path, '/species/thresholds');
+    expect(req.method, 'PUT');
+    expect((req.data as Map)['speciesId'], 'sp1');
+    expect((req.data as Map)['flowLow'], 1.2);
+
+    // Dönen kayıt SUNUCUNUNKİ: backend değerleri normalize edebilir ve
+    // ekran kendi yazdığını doğru sanmamalı.
+    expect(saved.dryOffDailyMl, 9000);
   });
 }

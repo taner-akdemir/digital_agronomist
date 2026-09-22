@@ -218,6 +218,30 @@ ayrımı kaybolurdu.
 Canlı ekran protokolden habersizdir ve öyle kalmalı: veri `collector-*` katmanında
 kanonik hâle geliyor (§9.0), ekran L/dk ve mL görüyor.
 
+### Eşik ayarları ve profil
+
+§15.1'in "Diğer" satırındaki son iki ekran da yazıldı.
+
+**Eşik ayarları** (`/settings/thresholds`, hesap kartından açılır): tür bazında debi
+bantları, verim bantları, yanlış alarm koruması, sağım kapanışı ve sınıflandırma eşikleri.
+Bunlar renk motorunun TÜM girdileri; şimdiye kadar sabit gelip hiçbir yerden
+değiştirilemiyorlardı. `GET /species/thresholds` · `PUT` (§8.5).
+
+- **§6.5'in kalibrasyon notu ekranda durur** — doküman bunu açıkça istiyor.
+- Yazma yalnızca `tenant_owner`'da; diğer roller ekranı GÖRÜR. Gizlemek, sağımdaki
+  "bu kırmızı neden kırmızı?" sorusunu cevapsız bırakırdı.
+- Çiftlerin sırası doğrulanır (alt eşik < üst eşik, kırmızı < yeşil, kuruya < yüksek):
+  ters girilirse renk motoru o bandı hiç üretmez ve bant sessizce kaybolurdu.
+- Günlük verim LİTRE girilir, mL kaydedilir (§3).
+- PUT gövdesi VARSAYIMDIR: §8.5 yolu veriyor, gövde şeklini vermiyor. Tam nesne
+  gönderiliyor — kısmi güncelleme, iki kullanıcı aynı anda kaydettiğinde hangi alanın
+  kazandığını belirsiz bırakırdı.
+
+**Profil ekranı = hesap kartıdır** (`showAccountSheet`). Ayrı bir sayfa açılmadı: dört
+sekmenin hiçbirine ait olmadığı için kabuğun üstünde tam ekran bir sayfa gezinme yığınını
+karıştırırdı. Kartta ad, e-posta, **rol** ve eşik ayarları bağlantısı var; rol görünür
+olmalı çünkü eşiklerin neden salt okunur açıldığının cevabı orada.
+
 Mock moda dönmek: `flutter run --dart-define=MT_API=mock`. O modda kimlik sunucusu
 olmadığı için giriş ekranı atlanır ve demo kullanıcısıyla çalışılır.
 

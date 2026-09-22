@@ -86,8 +86,30 @@ class MockRepository implements MilkTraceRepository {
       _delayed(() => _list('species.json', Species.fromJson));
 
   @override
-  Future<List<Thresholds>> thresholds() =>
-      _delayed(() => _list('thresholds.json', Thresholds.fromJson));
+  Future<List<Thresholds>> thresholds() => _delayed(() async {
+        final all = await _list('thresholds.json', Thresholds.fromJson);
+        return [for (final t in all) _thresholdOverrides[t.speciesId] ?? t];
+      });
+
+  /// Kaydedilen eşikler, YAZILMA SIRASIYLA. Testler "kaydet gerçekten bir
+  /// şey yaptı mı" sorusunu ancak böyle sorabiliyor.
+  List<Thresholds> get thresholdWrites => List.unmodifiable(_thresholdWrites);
+  final List<Thresholds> _thresholdWrites = [];
+
+  /// Eşik ayarları ekranında kaydedilen değerler.
+  ///
+  /// Asset dosyası salt okunur; değişiklikler BELLEKTE tutuluyor ki mock
+  /// modda "kaydet" gerçekten bir şey yapsın ve canlı ekranın renkleri
+  /// yeni eşiklere göre hesaplansın. Uygulama kapanınca sıfırlanır.
+  final Map<String, Thresholds> _thresholdOverrides = {};
+
+  @override
+  Future<Thresholds> updateThresholds(Thresholds thresholds) =>
+      _delayed(() async {
+        _thresholdOverrides[thresholds.speciesId] = thresholds;
+        _thresholdWrites.add(thresholds);
+        return thresholds;
+      });
 
   @override
   Future<List<Farm>> farms() => _delayed(() => _list('farms.json', Farm.fromJson));
