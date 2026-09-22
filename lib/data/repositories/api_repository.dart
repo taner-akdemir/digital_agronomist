@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:milktrace/data/models/animal.dart';
+import 'package:milktrace/data/models/animal_milking.dart';
+import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/hall.dart';
@@ -100,12 +102,7 @@ class ApiRepository implements MilkTraceRepository {
   /// körlemesine almak, bölgede son sağım bitmişse KAPALI bir oturumu canlı
   /// sanmak olurdu.
   Future<MilkingSession?> _activeSession(String hallId) async {
-    final r = await _dio.get<dynamic>('/sessions',
-        queryParameters: {'hallId': hallId});
-
-    final list = (r.data as Map<String, dynamic>)['data'] as List<dynamic>? ?? [];
-    for (final raw in list) {
-      final s = MilkingSession.fromJson(raw as Map<String, dynamic>);
+    for (final s in await sessions(hallId: hallId)) {
       if (s.status == 'active') return s;
     }
     return null;
@@ -155,4 +152,34 @@ class ApiRepository implements MilkTraceRepository {
       }
     }
   }
+
+  @override
+  Future<List<MilkingSession>> sessions(
+      {String? hallId, DateTime? from, DateTime? to}) async {
+    final r = await _dio.get<dynamic>('/sessions',
+        queryParameters: {..._range(from, to), 'hallId': ?hallId});
+    return _listOf(r, MilkingSession.fromJson);
+  }
+
+  @override
+  Future<List<AnimalMilking>> animalHistory(String animalId,
+      {DateTime? from, DateTime? to}) async {
+    final r = await _dio.get<dynamic>('/animals/$animalId/history',
+        queryParameters: _range(from, to));
+    return _listOf(r, AnimalMilking.fromJson);
+  }
+
+  @override
+  Future<AnimalTrend> animalTrend(String animalId) async =>
+      AnimalTrend.fromJson(_dataOf(await _dio.get<dynamic>('/animals/$animalId/trend')));
+
+  /// from/to parametreleri, verilmişlerse.
+  ///
+  /// UTC'ye ÇEVRİLİR: ekranlar Europe/Istanbul'da çalışır (§16) ve yerel
+  /// gece yarısını olduğu gibi göndermek, backend'de üç saat kayık bir
+  /// aralık sorgulamak olurdu.
+  Map<String, dynamic> _range(DateTime? from, DateTime? to) => {
+        'from': ?from?.toUtc().toIso8601String(),
+        'to': ?to?.toUtc().toIso8601String(),
+      };
 }

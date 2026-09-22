@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:milktrace/domain/yield_class.dart';
 
 part 'animal.freezed.dart';
 part 'animal.g.dart';
@@ -31,8 +32,14 @@ abstract class Animal with _$Animal {
     /// active | dry | sold | slaughtered | dead
     @Default('active') String status,
 
-    /// §6.4 sınıflandırması: high | normal | declining | dry_off_candidate | no_milk
-    @Default('normal') String yieldClass,
+    /// §6.4 sınıflandırması. Analytics hesaplar, uygulama gösterir.
+    ///
+    /// Bilinmeyen değer `normal`'a düşer: backend ileride yeni bir sınıf
+    /// eklerse (§6.4 "konfigüre edilebilir") uygulama parse hatası verip
+    /// hayvan listesini komple kaybetmemeli.
+    @Default(YieldClass.normal)
+    @JsonKey(unknownEnumValue: YieldClass.normal)
+    YieldClass yieldClass,
   }) = _Animal;
 
   factory Animal.fromJson(Map<String, dynamic> json) => _$AnimalFromJson(json);

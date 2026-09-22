@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:milktrace/data/repositories/api_repository.dart';
+import 'package:milktrace/domain/flow_color.dart';
+import 'package:milktrace/domain/yield_class.dart';
 
 import '../auth/fake_backend.dart';
 
@@ -173,5 +175,95 @@ void main() {
 
     expect(await r.repo.watchSession('').toList(), isEmpty);
     expect(r.adapter.requests, isEmpty);
+  });
+
+  // Geçmiş sorgusunun tarih aralığını UTC olarak GÖNDERDİĞİNİ doğrular.
+  //
+  // Ekranlar Europe/Istanbul'da çalışıyor (§16); yerel gece yarısını olduğu
+  // gibi göndermek backend'de üç saat kayık bir aralık sorgulamak olurdu.
+  test('geçmiş sorgusu tarihleri UTC gönderir', () async {
+    final r = rig((o) async => okEnvelope2([]));
+
+    await r.repo.animalHistory('a1',
+        from: DateTime.utc(2026, 9, 1, 3), to: DateTime.utc(2026, 9, 22, 3));
+
+    final q = r.adapter.requests.single.queryParameters;
+    expect(r.adapter.requests.single.path, '/animals/a1/history');
+    expect(q['from'], '2026-09-01T03:00:00.000Z');
+    expect(q['to'], '2026-09-22T03:00:00.000Z');
+  });
+
+  test('tarih verilmezse from/to parametreleri hiç gönderilmez', () async {
+    final r = rig((o) async => okEnvelope2([]));
+
+    await r.repo.animalHistory('a1');
+
+    expect(r.adapter.requests.single.queryParameters, isEmpty);
+  });
+
+  test('geçmiş kayıtları parse edilir', () async {
+    final r = rig((o) async => okEnvelope2([
+          {
+            'id': 'm1',
+            'sessionId': 's1',
+            'animalId': 'a1',
+            'volumeMl': 9500,
+            'expectedMl': 11000,
+            'yieldPct': 86.4,
+            'color': 'yellow',
+            'sessionType': 'evening',
+            'startedAt': '2026-09-21T15:05:00Z',
+          }
+        ]));
+
+    final history = await r.repo.animalHistory('a1');
+
+    expect(history.single.volumeMl, 9500);
+    expect(history.single.color, MilkColor.yellow);
+    expect(history.single.sessionType, 'evening');
+  });
+
+  test('trend parse edilir', () async {
+    final r = rig((o) async => okEnvelope({
+          'animalId': 'a1',
+          'yieldClass': 'declining',
+          'ma7Ml': 17200,
+          'ma30Ml': 21800,
+          'trendSlope': -142.5,
+          'daily': [
+            {'date': '2026-09-21', 'totalMl': 17000, 'milkingCount': 2, 'ma7Ml': 17200},
+          ],
+        }));
+
+    final trend = await r.repo.animalTrend('a1');
+
+    expect(r.adapter.requests.single.path, '/animals/a1/trend');
+    expect(trend.yieldClass, YieldClass.declining);
+    expect(trend.trendSlope, -142.5);
+    expect(trend.daily.single.ma30Ml, isNull);
+  });
+
+  // BİLİNMEYEN sınıfın listeyi düşürmediğini doğrular.
+  //
+  // Backend §6.4'e yeni bir sınıf eklerse eski uygulama parse hatası verip
+  // hayvan listesini komple kaybetmemeli; normal'a düşer.
+  test('bilinmeyen verim sınıfı normal sayılır', () async {
+    final r = rig((o) async => okEnvelope({
+          'animalId': 'a1',
+          'yieldClass': 'pregnant_hold',
+        }));
+
+    expect((await r.repo.animalTrend('a1')).yieldClass, YieldClass.normal);
+  });
+
+  test('oturum listesi bölge ve aralıkla sorgulanır', () async {
+    final r = rig((o) async => okEnvelope2([session('s1', 'ended')]));
+
+    final sessions =
+        await r.repo.sessions(hallId: _hallId, from: DateTime.utc(2026, 9, 1));
+
+    expect(sessions.single.status, 'ended');
+    expect(r.adapter.requests.single.queryParameters,
+        {'from': '2026-09-01T00:00:00.000Z', 'hallId': _hallId});
   });
 }

@@ -21,7 +21,13 @@ _Animal _$AnimalFromJson(Map<String, dynamic> json) => _Animal(
       : DateTime.parse(json['lastCalvingDate'] as String),
   lactationNo: (json['lactationNo'] as num?)?.toInt() ?? 0,
   status: json['status'] as String? ?? 'active',
-  yieldClass: json['yieldClass'] as String? ?? 'normal',
+  yieldClass:
+      $enumDecodeNullable(
+        _$YieldClassEnumMap,
+        json['yieldClass'],
+        unknownValue: YieldClass.normal,
+      ) ??
+      YieldClass.normal,
 );
 
 Map<String, dynamic> _$AnimalToJson(_Animal instance) => <String, dynamic>{
@@ -35,5 +41,13 @@ Map<String, dynamic> _$AnimalToJson(_Animal instance) => <String, dynamic>{
   'lastCalvingDate': instance.lastCalvingDate?.toIso8601String(),
   'lactationNo': instance.lactationNo,
   'status': instance.status,
-  'yieldClass': instance.yieldClass,
+  'yieldClass': _$YieldClassEnumMap[instance.yieldClass]!,
+};
+
+const _$YieldClassEnumMap = {
+  YieldClass.high: 'high',
+  YieldClass.normal: 'normal',
+  YieldClass.declining: 'declining',
+  YieldClass.dryOffCandidate: 'dry_off_candidate',
+  YieldClass.noMilk: 'no_milk',
 };

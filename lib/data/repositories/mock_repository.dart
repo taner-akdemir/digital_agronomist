@@ -4,6 +4,8 @@ import 'dart:math';
 
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:milktrace/data/models/animal.dart';
+import 'package:milktrace/data/models/animal_milking.dart';
+import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/hall.dart';
@@ -14,6 +16,7 @@ import 'package:milktrace/data/models/spout_update.dart';
 import 'package:milktrace/data/models/thresholds.dart';
 import 'package:milktrace/data/models/vacuum.dart';
 import 'package:milktrace/data/repositories/milktrace_repository.dart';
+import 'package:milktrace/data/repositories/mock_lactation.dart';
 import 'package:milktrace/domain/flow_color.dart';
 import 'package:milktrace/domain/thresholds_engine.dart';
 
@@ -23,8 +26,23 @@ import 'package:milktrace/domain/thresholds_engine.dart';
 /// kez okunup belleğe alınır — eski Api sınıfı HER çağrıda bundle'dan okuyup
 /// yeniden parse ediyordu.
 class MockRepository implements MilkTraceRepository {
-  MockRepository({this.latency = const Duration(milliseconds: 400), Random? random})
-      : _random = random ?? Random(7);
+  MockRepository({
+    this.latency = const Duration(milliseconds: 400),
+    Random? random,
+    DateTime? today,
+  })  : _random = random ?? Random(7),
+        _today = today;
+
+  /// Geçmiş verisinin dayandığı "bugün".
+  ///
+  /// Testler sabit bir gün verir: üretilen seri tarihe bağlı olduğu için
+  /// DateTime.now() ile beklenen değerler her gün kayardı.
+  final DateTime? _today;
+
+  DateTime get _now {
+    final t = _today ?? DateTime.now();
+    return DateTime(t.year, t.month, t.day);
+  }
 
   /// Yapay gecikme: yükleniyor göstergelerinin gerçekten görünmesi için.
   final Duration latency;
@@ -165,5 +183,85 @@ class MockRepository implements MilkTraceRepository {
       yieldColor: ThresholdsEngine.yieldColor(
           volume, u.expectedMl, ThresholdsEngine.cowDefaults),
     );
+  }
+
+  @override
+  Future<List<MilkingSession>> sessions(
+          {String? hallId, DateTime? from, DateTime? to}) =>
+      _delayed(() async {
+        final halls = await _list('halls.json', Hall.fromJson);
+        final live = await _load('live_session.json',
+            (json) => LiveSession.fromJson(json as Map<String, dynamic>));
+
+        final out = <MilkingSession>[];
+
+        // Açık oturum EN ÜSTTE ve canlı ekrandakiyle AYNI kayıt: iki ekranın
+        // aynı anda farklı oturum göstermesi mock'u güvenilmez yapardı.
+        if (hallId == null || live.session.hallId == hallId) {
+          out.add(live.session);
+        }
+
+        for (var back = 0; back < 14; back++) {
+          final day = _now.subtract(Duration(days: back));
+          if (from != null && day.isBefore(from)) continue;
+          if (to != null && day.isAfter(to)) continue;
+
+          for (final hall in halls) {
+            if (hallId != null && hall.id != hallId) continue;
+            for (final type in const ['evening', 'morning']) {
+              final started = DateTime(day.year, day.month, day.day,
+                  type == 'morning' ? 6 : 18, 5);
+              if (started.isAfter(_now.add(const Duration(days: 1)))) continue;
+              if (back == 0 && hall.id == live.session.hallId &&
+                  type == live.session.type) {
+                continue; // az önce eklenen açık oturumun kendisi
+              }
+
+              out.add(MilkingSession(
+                id: 'mock-${hall.id}-${day.toIso8601String().substring(0, 10)}-$type',
+                hallId: hall.id,
+                type: type,
+                startedAt: started,
+                endedAt: started.add(const Duration(minutes: 75)),
+                status: 'ended',
+              ));
+            }
+          }
+        }
+        return List.unmodifiable(out);
+      });
+
+  @override
+  Future<List<AnimalMilking>> animalHistory(String animalId,
+          {DateTime? from, DateTime? to}) =>
+      _delayed(() async {
+        final (animal, t) = await _animalWithThresholds(animalId);
+        return MockLactation.history(animal, t, _now, from: from, to: to);
+      });
+
+  @override
+  Future<AnimalTrend> animalTrend(String animalId) => _delayed(() async {
+        final (animal, t) = await _animalWithThresholds(animalId);
+        return MockLactation.trend(animal, t, _now);
+      });
+
+  /// Hayvan + TÜRÜNÜN eşikleri.
+  ///
+  /// Eşikler tür bazındadır (§4) ve keçi ile ineğin beklenen verimi on kat
+  /// farklı; inek varsayılanını herkese uygulamak keçilerin tamamını
+  /// "süt vermiyor" gösterirdi.
+  Future<(Animal, Thresholds)> _animalWithThresholds(String animalId) async {
+    final animals = await _list('animals.json', Animal.fromJson);
+    final animal = animals.firstWhere(
+      (a) => a.id == animalId,
+      orElse: () => throw ArgumentError('mock: hayvan yok: $animalId'),
+    );
+
+    final all = await _list('thresholds.json', Thresholds.fromJson);
+    final t = all.firstWhere(
+      (x) => x.speciesId == animal.speciesId,
+      orElse: () => ThresholdsEngine.cowDefaults,
+    );
+    return (animal, t);
   }
 }

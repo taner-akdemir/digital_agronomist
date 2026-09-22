@@ -19,8 +19,12 @@ mixin _$Animal {
  String get earTag;/// RFID küpe; cihaz okuyabiliyorsa otomatik eşleştirme bununla yapılır.
  String? get rfid;/// Çiftçinin verdiği ad ("Sarıkız"). Zorunlu değil.
  String? get name; String? get breed; DateTime? get birthDate; DateTime? get lastCalvingDate; int get lactationNo;/// active | dry | sold | slaughtered | dead
- String get status;/// §6.4 sınıflandırması: high | normal | declining | dry_off_candidate | no_milk
- String get yieldClass;
+ String get status;/// §6.4 sınıflandırması. Analytics hesaplar, uygulama gösterir.
+///
+/// Bilinmeyen değer `normal`'a düşer: backend ileride yeni bir sınıf
+/// eklerse (§6.4 "konfigüre edilebilir") uygulama parse hatası verip
+/// hayvan listesini komple kaybetmemeli.
+@JsonKey(unknownEnumValue: YieldClass.normal) YieldClass get yieldClass;
 /// Create a copy of Animal
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -53,7 +57,7 @@ abstract mixin class $AnimalCopyWith<$Res>  {
   factory $AnimalCopyWith(Animal value, $Res Function(Animal) _then) = _$AnimalCopyWithImpl;
 @useResult
 $Res call({
- String id, String speciesId, String earTag, String? rfid, String? name, String? breed, DateTime? birthDate, DateTime? lastCalvingDate, int lactationNo, String status, String yieldClass
+ String id, String speciesId, String earTag, String? rfid, String? name, String? breed, DateTime? birthDate, DateTime? lastCalvingDate, int lactationNo, String status,@JsonKey(unknownEnumValue: YieldClass.normal) YieldClass yieldClass
 });
 
 
@@ -83,7 +87,7 @@ as DateTime?,lastCalvingDate: freezed == lastCalvingDate ? _self.lastCalvingDate
 as DateTime?,lactationNo: null == lactationNo ? _self.lactationNo : lactationNo // ignore: cast_nullable_to_non_nullable
 as int,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as String,yieldClass: null == yieldClass ? _self.yieldClass : yieldClass // ignore: cast_nullable_to_non_nullable
-as String,
+as YieldClass,
   ));
 }
 
@@ -168,7 +172,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String speciesId,  String earTag,  String? rfid,  String? name,  String? breed,  DateTime? birthDate,  DateTime? lastCalvingDate,  int lactationNo,  String status,  String yieldClass)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String speciesId,  String earTag,  String? rfid,  String? name,  String? breed,  DateTime? birthDate,  DateTime? lastCalvingDate,  int lactationNo,  String status, @JsonKey(unknownEnumValue: YieldClass.normal)  YieldClass yieldClass)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Animal() when $default != null:
 return $default(_that.id,_that.speciesId,_that.earTag,_that.rfid,_that.name,_that.breed,_that.birthDate,_that.lastCalvingDate,_that.lactationNo,_that.status,_that.yieldClass);case _:
@@ -189,7 +193,7 @@ return $default(_that.id,_that.speciesId,_that.earTag,_that.rfid,_that.name,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String speciesId,  String earTag,  String? rfid,  String? name,  String? breed,  DateTime? birthDate,  DateTime? lastCalvingDate,  int lactationNo,  String status,  String yieldClass)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String speciesId,  String earTag,  String? rfid,  String? name,  String? breed,  DateTime? birthDate,  DateTime? lastCalvingDate,  int lactationNo,  String status, @JsonKey(unknownEnumValue: YieldClass.normal)  YieldClass yieldClass)  $default,) {final _that = this;
 switch (_that) {
 case _Animal():
 return $default(_that.id,_that.speciesId,_that.earTag,_that.rfid,_that.name,_that.breed,_that.birthDate,_that.lastCalvingDate,_that.lactationNo,_that.status,_that.yieldClass);case _:
@@ -209,7 +213,7 @@ return $default(_that.id,_that.speciesId,_that.earTag,_that.rfid,_that.name,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String speciesId,  String earTag,  String? rfid,  String? name,  String? breed,  DateTime? birthDate,  DateTime? lastCalvingDate,  int lactationNo,  String status,  String yieldClass)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String speciesId,  String earTag,  String? rfid,  String? name,  String? breed,  DateTime? birthDate,  DateTime? lastCalvingDate,  int lactationNo,  String status, @JsonKey(unknownEnumValue: YieldClass.normal)  YieldClass yieldClass)?  $default,) {final _that = this;
 switch (_that) {
 case _Animal() when $default != null:
 return $default(_that.id,_that.speciesId,_that.earTag,_that.rfid,_that.name,_that.breed,_that.birthDate,_that.lastCalvingDate,_that.lactationNo,_that.status,_that.yieldClass);case _:
@@ -224,7 +228,7 @@ return $default(_that.id,_that.speciesId,_that.earTag,_that.rfid,_that.name,_tha
 @JsonSerializable()
 
 class _Animal implements Animal {
-  const _Animal({required this.id, required this.speciesId, required this.earTag, this.rfid, this.name, this.breed, this.birthDate, this.lastCalvingDate, this.lactationNo = 0, this.status = 'active', this.yieldClass = 'normal'});
+  const _Animal({required this.id, required this.speciesId, required this.earTag, this.rfid, this.name, this.breed, this.birthDate, this.lastCalvingDate, this.lactationNo = 0, this.status = 'active', @JsonKey(unknownEnumValue: YieldClass.normal) this.yieldClass = YieldClass.normal});
   factory _Animal.fromJson(Map<String, dynamic> json) => _$AnimalFromJson(json);
 
 @override final  String id;
@@ -241,8 +245,12 @@ class _Animal implements Animal {
 @override@JsonKey() final  int lactationNo;
 /// active | dry | sold | slaughtered | dead
 @override@JsonKey() final  String status;
-/// §6.4 sınıflandırması: high | normal | declining | dry_off_candidate | no_milk
-@override@JsonKey() final  String yieldClass;
+/// §6.4 sınıflandırması. Analytics hesaplar, uygulama gösterir.
+///
+/// Bilinmeyen değer `normal`'a düşer: backend ileride yeni bir sınıf
+/// eklerse (§6.4 "konfigüre edilebilir") uygulama parse hatası verip
+/// hayvan listesini komple kaybetmemeli.
+@override@JsonKey(unknownEnumValue: YieldClass.normal) final  YieldClass yieldClass;
 
 /// Create a copy of Animal
 /// with the given fields replaced by the non-null parameter values.
@@ -277,7 +285,7 @@ abstract mixin class _$AnimalCopyWith<$Res> implements $AnimalCopyWith<$Res> {
   factory _$AnimalCopyWith(_Animal value, $Res Function(_Animal) _then) = __$AnimalCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String speciesId, String earTag, String? rfid, String? name, String? breed, DateTime? birthDate, DateTime? lastCalvingDate, int lactationNo, String status, String yieldClass
+ String id, String speciesId, String earTag, String? rfid, String? name, String? breed, DateTime? birthDate, DateTime? lastCalvingDate, int lactationNo, String status,@JsonKey(unknownEnumValue: YieldClass.normal) YieldClass yieldClass
 });
 
 
@@ -307,7 +315,7 @@ as DateTime?,lastCalvingDate: freezed == lastCalvingDate ? _self.lastCalvingDate
 as DateTime?,lactationNo: null == lactationNo ? _self.lactationNo : lactationNo // ignore: cast_nullable_to_non_nullable
 as int,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as String,yieldClass: null == yieldClass ? _self.yieldClass : yieldClass // ignore: cast_nullable_to_non_nullable
-as String,
+as YieldClass,
   ));
 }
 

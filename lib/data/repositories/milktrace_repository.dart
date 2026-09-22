@@ -1,4 +1,6 @@
 import 'package:milktrace/data/models/animal.dart';
+import 'package:milktrace/data/models/animal_milking.dart';
+import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/hall.dart';
@@ -37,4 +39,19 @@ abstract interface class MilkTraceRepository {
   /// İlk yükleme liveSession() ile yapılır; bu akış onun üzerine gelen
   /// değişiklikleri taşır.
   Stream<SpoutUpdate> watchSession(String sessionId);
+
+  /// Geçmiş oturumlar (§8.5 GET /sessions?hallId&from&to).
+  ///
+  /// Canlı akıştaki liveSession() ile aynı ucu kullanır ama amacı başka:
+  /// orada AÇIK oturum aranır, burada kapanmışlar listelenir.
+  Future<List<MilkingSession>> sessions({String? hallId, DateTime? from, DateTime? to});
+
+  /// Bir hayvanın sağım geçmişi (§8.5 GET /animals/{id}/history?from&to).
+  ///
+  /// Yeniden eskiye sıralı gelir: geçmiş listesinde son sağım en üsttedir.
+  Future<List<AnimalMilking>> animalHistory(String animalId,
+      {DateTime? from, DateTime? to});
+
+  /// Bir hayvanın 7/30 gün trendi ve sınıfı (§8.5 GET /animals/{id}/trend).
+  Future<AnimalTrend> animalTrend(String animalId);
 }
