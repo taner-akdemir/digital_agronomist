@@ -133,7 +133,7 @@ flutter run
 
 ## 6. Kapsam çiti
 
-Şu anki faz: **Faz 3 — canlı sağım akışı** (§17).
+Şu anki faz: **Faz 4 — uyarı & trend** (§17).
 
 Uygulama **varsayılan olarak gerçek API'ye** bağlanır (`MT_API=http`). Giriş, oturum
 yenileme, oturumu geri yükleme ve çıkış çalışır; bölge/ünite/nokta/cihaz/hayvan verisi
@@ -148,8 +148,22 @@ yalnızca `ts`'si değişen noktaları yayınlar; ağ hatası akışı bitirmez,
 akış biter. `realtime` gelince **yalnızca bu metot** değişir — ekran ve provider Stream
 gördüğü için aynı kalır. Bu yüzden `web_socket_channel` bağımlılığı şimdilik kaldırıldı.
 
-Dashboard, Geçmiş ve Cihazlar sekmeleri **iskelet**tir. Push bildirimleri (FCM) ve trend
-grafikleri Faz 3–4'e aittir; şimdi yazılmaz.
+**Geçmiş sekmesi tamamdır** (§15.1): oturum listesi, tür/sınıf filtreli hayvan listesi ve
+hayvan detayı — sınıf rozeti (§6.4), 7/30 gün ortalaması, 30 günlük eğilim, 90 günlük verim
+grafiği (fl_chart) ve son sağımlar. Uçlar `GET /sessions`, `/animals/{id}/history`,
+`/animals/{id}/trend`.
+
+Mock modda geçmiş **asset değil, üretilmiştir**: `MockLactation` §10'daki Wood laktasyon
+eğrisiyle deterministik seri üretir. 30 hayvan × 90 gün × 2 sağım elle tutulabilecek bir
+JSON değil. Bugünkü seviye hayvanın SINIFINA sabitlenir ki rozet ile grafik çelişmesin.
+
+Grafik, §6.2 durum renklerini (yeşil/sarı/kırmızı) seri rengi olarak KULLANMAZ; o renkler
+"düşük debi", "izlenmeli" gibi sabit anlamlar taşır. Ana seri koyu yeşil, bağlam serisi
+nötr gridir (`AppColors.chartPrimary` / `chartContext`).
+
+**Faz 4'ten kalan:** bildirim merkezi + `GET /alerts` · `POST /alerts/{id}/ack` ve FCM push
+(`firebase_messaging`; Firebase projesi ve `google-services.json` gerekiyor — bu repoda yok).
+Üst çubuktaki zil hâlâ "Faz 4 ile gelecek" diyor. Dashboard ve Cihazlar sekmeleri **iskelet**.
 
 Mock moda dönmek: `flutter run --dart-define=MT_API=mock`. O modda kimlik sunucusu
 olmadığı için giriş ekranı atlanır ve demo kullanıcısıyla çalışılır.

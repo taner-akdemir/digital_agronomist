@@ -45,6 +45,21 @@ abstract final class AppColors {
   static const Color flowRedSurface = lightRedColor;
   static const Color flowGreySurface = veryLightGreyColor;
 
+  // --- grafik çizgileri (§15.1 verim grafiği) ---
+  //
+  // Verim grafiği DURUM RENKLERİNİ (yeşil/sarı/kırmızı) seri rengi olarak
+  // KULLANMAZ: o üç renk §6.2/§6.3'te "düşük debi", "izlenmeli" gibi sabit
+  // anlamlar taşıyor. Bir çizgiyi sırf ikinci seri olduğu için sarıya
+  // boyamak, o anlamı sulandırırdı.
+  //
+  // Bu yüzden ana seri (7 gün ortalaması) koyu yeşil, bağlam serisi (günlük
+  // toplam) nötr gridir. Gri, lightGreyColor'dan KOYUdur: o ton beyaz
+  // üzerinde 2.08:1 kontrasttaydı ve 90 günlük ince çizgi silik kalıyordu;
+  // bu ton 3:1 eşiğini geçiyor.
+  static const Color chartPrimary = darkGreenColor;
+  static const Color chartContext = Color.fromRGBO(120, 134, 126, 1);
+  static const Color chartGrid = veryLightGreyColor;
+
   // --- yüzeyler ---
   static const Color background = primaryColor;
   static const Color surface = Colors.white;

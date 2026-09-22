@@ -4,6 +4,7 @@ import 'package:milktrace/data/models/auth_state.dart';
 import 'package:milktrace/features/auth/login_screen.dart';
 import 'package:milktrace/features/dashboard/dashboard_screen.dart';
 import 'package:milktrace/features/devices/devices_screen.dart';
+import 'package:milktrace/features/history/animal_detail_screen.dart';
 import 'package:milktrace/features/history/history_screen.dart';
 import 'package:milktrace/features/live/live_board_screen.dart';
 import 'package:milktrace/features/shell/scaffold_with_nav_bar.dart';
@@ -66,7 +67,21 @@ GoRouter router(Ref ref) {
             GoRoute(path: '/live', builder: (_, _) => const LiveBoardScreen()),
           ]),
           StatefulShellBranch(routes: [
-            GoRoute(path: '/history', builder: (_, _) => const HistoryScreen()),
+            GoRoute(
+              path: '/history',
+              builder: (_, _) => const HistoryScreen(),
+              routes: [
+                // ALT ROTA: hayvan detayı Geçmiş sekmesinin yığınında açılır.
+                // Kök seviyede olsaydı detaydan geri dönüş sekmeyi de
+                // sıfırlar, seçili filtreler kaybolurdu.
+                GoRoute(
+                  path: 'animal/:id',
+                  builder: (_, state) => AnimalDetailScreen(
+                    animalId: state.pathParameters['id']!,
+                  ),
+                ),
+              ],
+            ),
           ]),
           StatefulShellBranch(routes: [
             GoRoute(path: '/devices', builder: (_, _) => const DevicesScreen()),

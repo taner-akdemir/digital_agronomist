@@ -1,34 +1,12 @@
-import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/hall.dart';
-import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_update.dart';
-import 'package:milktrace/data/models/thresholds.dart';
 import 'package:milktrace/data/models/vacuum.dart';
+import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'live_providers.g.dart';
-
-/// Bölge listesi.
-///
-/// Bir kez yüklenir ve seçili bölgeden BAĞIMSIZDIR. Eski ekranda her bölge
-/// değişiminde bölge listesi de yeniden çekiliyordu ve açılır menü kısa süre
-/// kayboluyordu (§15.3/11).
-@riverpod
-Future<List<Hall>> halls(Ref ref) => ref.watch(repositoryProvider).halls();
-
-@riverpod
-Future<List<Species>> speciesList(Ref ref) =>
-    ref.watch(repositoryProvider).species();
-
-@riverpod
-Future<List<Thresholds>> thresholdsList(Ref ref) =>
-    ref.watch(repositoryProvider).thresholds();
-
-@riverpod
-Future<List<Animal>> animals(Ref ref) =>
-    ref.watch(repositoryProvider).animals();
 
 /// Seçili sağım bölgesi.
 ///

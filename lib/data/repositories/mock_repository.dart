@@ -30,8 +30,18 @@ class MockRepository implements MilkTraceRepository {
     this.latency = const Duration(milliseconds: 400),
     Random? random,
     DateTime? today,
+    Future<String> Function(String assetPath)? loadAsset,
   })  : _random = random ?? Random(7),
-        _today = today;
+        _today = today,
+        _loadAsset = loadAsset ?? rootBundle.loadString;
+
+  /// Asset okuyucu.
+  ///
+  /// Widget testleri diskten okuyan bir işlev veriyor: rootBundle'ın dosya
+  /// okuması GERÇEK asenkron iş ve testWidgets'ın sahte saatinde ikinci
+  /// ekran kurulumundan itibaren tamamlanmıyordu — liste sonsuza kadar
+  /// yükleniyor görünüyordu.
+  final Future<String> Function(String assetPath) _loadAsset;
 
   /// Geçmiş verisinin dayandığı "bugün".
   ///
@@ -39,10 +49,10 @@ class MockRepository implements MilkTraceRepository {
   /// DateTime.now() ile beklenen değerler her gün kayardı.
   final DateTime? _today;
 
-  DateTime get _now {
-    final t = _today ?? DateTime.now();
-    return DateTime(t.year, t.month, t.day);
-  }
+  /// Şu an. Gün matematiği için [_now] (gün başı) kullanılır.
+  DateTime get _clock => _today ?? DateTime.now();
+
+  DateTime get _now => DateTime(_clock.year, _clock.month, _clock.day);
 
   /// Yapay gecikme: yükleniyor göstergelerinin gerçekten görünmesi için.
   final Duration latency;
@@ -52,7 +62,7 @@ class MockRepository implements MilkTraceRepository {
 
   Future<T> _load<T>(String name, T Function(dynamic json) parse) async {
     if (_cache.containsKey(name)) return _cache[name] as T;
-    final raw = await rootBundle.loadString('assets/data/$name');
+    final raw = await _loadAsset('assets/data/$name');
     final parsed = parse(jsonDecode(raw));
     _cache[name] = parsed;
     return parsed;
@@ -211,7 +221,9 @@ class MockRepository implements MilkTraceRepository {
             for (final type in const ['evening', 'morning']) {
               final started = DateTime(day.year, day.month, day.day,
                   type == 'morning' ? 6 : 18, 5);
-              if (started.isAfter(_now.add(const Duration(days: 1)))) continue;
+              // HENÜZ OLMAMIŞ sağım listelenmez: bugünün akşam sağımı sabah
+              // yapılan bir demoda "geçmiş"te görünüyordu.
+              if (started.isAfter(_clock)) continue;
               if (back == 0 && hall.id == live.session.hallId &&
                   type == live.session.type) {
                 continue; // az önce eklenen açık oturumun kendisi

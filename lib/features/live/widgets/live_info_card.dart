@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:milktrace/app/theme.dart';
+import 'package:milktrace/core/format.dart';
 import 'package:milktrace/data/models/spout_update.dart';
 import 'package:milktrace/domain/flow_color.dart';
+import 'package:milktrace/widgets/milk_palette.dart';
 
 /// Bir sağım noktasının canlı kartı (§6.2, §6.3).
 ///
@@ -23,7 +25,7 @@ class LiveInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final palette = _Palette.of(update.flowColor);
+    final palette = MilkPalette.of(update.flowColor);
     final animal = update.animal;
 
     return Container(
@@ -59,8 +61,8 @@ class LiveInfoCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.sm),
           _progress(palette),
           const SizedBox(height: AppSpacing.sm),
-          _amountRow('Şu an', '${_litres(update.volumeMl)} L'),
-          _amountRow('Hedef', '${_litres(update.expectedMl)} L'),
+          _amountRow('Şu an', '${Fmt.litres(update.volumeMl)} L'),
+          _amountRow('Hedef', '${Fmt.litres(update.expectedMl)} L'),
           if (update.flowColor == MilkColor.red) ...[
             const SizedBox(height: AppSpacing.sm),
             // Ölçülen şey BASINÇ DEĞİL DEBİ. Eski metin "Düşük Basınç"
@@ -86,7 +88,7 @@ class LiveInfoCard extends StatelessWidget {
     );
   }
 
-  Widget _header(_Palette palette) {
+  Widget _header(MilkPalette palette) {
     return Row(
       children: [
         Expanded(
@@ -109,7 +111,7 @@ class LiveInfoCard extends StatelessWidget {
     );
   }
 
-  Widget _flowRow(_Palette palette) {
+  Widget _flowRow(MilkPalette palette) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -137,7 +139,7 @@ class LiveInfoCard extends StatelessWidget {
     );
   }
 
-  Widget _progress(_Palette palette) {
+  Widget _progress(MilkPalette palette) {
     // Eski kart TitledProgressBar(maxSteps: targetAmount.toInt(),
     // currentStep: sessionYield.toInt()) kullanıyordu. Üç ayrı hatası vardı
     // (§15.3/16): hedef 0 ise bölme hatası, hedef aşılınca taşma, ve .toInt()
@@ -163,7 +165,7 @@ class LiveInfoCard extends StatelessWidget {
         Text(
           update.expectedMl == 0
               ? 'Hedef tanımsız'
-              : '%${update.yieldPct.toStringAsFixed(0)}',
+              : Fmt.percent(update.yieldPct),
           style: const TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w600,
@@ -196,28 +198,4 @@ class LiveInfoCard extends StatelessWidget {
       ),
     );
   }
-
-  /// mL -> L. Hacimler her yerde tamsayı mL taşınır (§8.4); çevirme yalnızca
-  /// gösterim anında yapılır.
-  static String _litres(int ml) => (ml / 1000).toStringAsFixed(1);
-}
-
-/// Bir rengin kart üzerindeki üç tonu.
-class _Palette {
-  const _Palette(this.foreground, this.surface, this.border);
-
-  final Color foreground;
-  final Color surface;
-  final Color border;
-
-  static _Palette of(MilkColor color) => switch (color) {
-        MilkColor.green => const _Palette(
-            AppColors.flowGreen, AppColors.surface, AppColors.lightGreenColor),
-        MilkColor.yellow => const _Palette(
-            AppColors.flowYellow, AppColors.surface, AppColors.lightAmberColor),
-        MilkColor.red => const _Palette(
-            AppColors.flowRed, AppColors.flowRedSurface, AppColors.lightRedColor),
-        MilkColor.grey => const _Palette(
-            AppColors.flowGrey, AppColors.surfaceAlt, AppColors.border),
-      };
 }

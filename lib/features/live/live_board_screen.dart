@@ -8,6 +8,8 @@ import 'package:milktrace/data/models/vacuum.dart';
 import 'package:milktrace/domain/flow_color.dart';
 import 'package:milktrace/features/live/live_providers.dart';
 import 'package:milktrace/features/live/widgets/live_info_card.dart';
+import 'package:milktrace/providers/catalog_providers.dart';
+import 'package:milktrace/widgets/error_view.dart';
 import 'package:milktrace/widgets/light_info.dart';
 
 /// Canlı sağım ekranı (§15.1).
@@ -22,7 +24,7 @@ class LiveBoardScreen extends ConsumerWidget {
 
     return hall.when(
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (e, _) => _ErrorView(message: 'Bölgeler yüklenemedi', detail: '$e'),
+      error: (e, _) => ErrorView(message: 'Bölgeler yüklenemedi', error: e),
       data: (h) => h == null
           ? const Center(child: Text('Tanımlı sağım bölgesi yok'))
           : _Board(hall: h),
@@ -61,8 +63,8 @@ class _Board extends ConsumerWidget {
               ),
             AsyncError(:final error) => SliverFillRemaining(
                 hasScrollBody: false,
-                child: _ErrorView(
-                    message: 'Canlı veri alınamadı', detail: '$error'),
+                child: ErrorView(
+                    message: 'Canlı veri alınamadı', error: error),
               ),
             AsyncData(:final value) => _Grid(
                 updates: value,
@@ -188,34 +190,6 @@ class _Grid extends StatelessWidget {
             );
           },
         ),
-      ),
-    );
-  }
-}
-
-class _ErrorView extends StatelessWidget {
-  const _ErrorView({required this.message, required this.detail});
-
-  final String message;
-  final String detail;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(AppSpacing.xl),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(Icons.error_outline, color: AppColors.flowRed, size: 40),
-          const SizedBox(height: AppSpacing.sm),
-          Text(message,
-              style: const TextStyle(fontWeight: FontWeight.bold)),
-          const SizedBox(height: AppSpacing.xs),
-          Text(detail,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                  fontSize: 12, color: AppColors.onSurfaceMuted)),
-        ],
       ),
     );
   }
