@@ -16,7 +16,12 @@ T _$identity<T>(T value) => value;
 mixin _$DeviceProfile {
 
  String get id;/// Üretici kodu, ör. `MILKTRACE`, `ORNEK-URETICI`.
- String get vendor; String get model;/// mqtt | modbus-rtu | modbus-tcp | http (§9.0)
+ String get vendor; String get model;/// mqtt | modbus | modbus-rtu | modbus-tcp | http (§9.0)
+///
+/// Backend'in referans Modbus profili `modbus` yazar: §9.4 register
+/// haritası RTU ile TCP'de aynıdır ve taşıma türü profilde değil,
+/// cihazın bağlantı bilgisindedir (`devices.conn`). `modbus-rtu` /
+/// `modbus-tcp` profil editöründen gelebilir, o yüzden onlar da tanınır.
  String get protocol; int get version;/// approved | draft | deprecated
  String get status;
 /// Create a copy of DeviceProfile
@@ -224,7 +229,12 @@ class _DeviceProfile extends DeviceProfile {
 /// Üretici kodu, ör. `MILKTRACE`, `ORNEK-URETICI`.
 @override@JsonKey() final  String vendor;
 @override@JsonKey() final  String model;
-/// mqtt | modbus-rtu | modbus-tcp | http (§9.0)
+/// mqtt | modbus | modbus-rtu | modbus-tcp | http (§9.0)
+///
+/// Backend'in referans Modbus profili `modbus` yazar: §9.4 register
+/// haritası RTU ile TCP'de aynıdır ve taşıma türü profilde değil,
+/// cihazın bağlantı bilgisindedir (`devices.conn`). `modbus-rtu` /
+/// `modbus-tcp` profil editöründen gelebilir, o yüzden onlar da tanınır.
 @override@JsonKey() final  String protocol;
 @override@JsonKey() final  int version;
 /// approved | draft | deprecated
