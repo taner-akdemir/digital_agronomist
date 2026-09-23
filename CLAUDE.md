@@ -133,7 +133,9 @@ flutter run
 
 ## 6. Kapsam çiti
 
-Şu anki faz: **Faz 4 — uyarı & trend** (§17).
+Şu anki faz: **Faz 6 — cihaz** (§17). Faz 4 ve Faz 5'in mobil payı tamam; Faz 6'nın
+kalemleri (üretici görüşmesi, edge gateway donanımı, `collector-http`, saha pilotu)
+backend reposunda ve sahada — bu repoya düşen yeni bir ekran yok.
 
 Uygulama **varsayılan olarak gerçek API'ye** bağlanır (`MT_API=http`). Giriş, oturum
 yenileme, oturumu geri yükleme ve çıkış çalışır; bölge/ünite/nokta/cihaz/hayvan verisi
@@ -223,6 +225,17 @@ editörü) → `~/WebstormProjects/milktrace-web` (ADR 0014). Bu repoya düşen 
 Bunun için `Device.profile` eklendi (§8.4 `devices.profile_id`): üretici, model, protokol,
 sürüm. Cihazlar ekranı karışık kaynaklı tesiste "Kaynaklar" satırını gösteriyor ve her
 satıra protokolü yazıyor; profil ayrıntısı sayaç sayfasında.
+
+**Profil `GET /devices` cevabına GÖMÜLÜ gelir** (backend `1a96c8b`). Önceden yalnızca
+`profileId` geliyordu ve "Kaynaklar" satırı gerçek API'de hiç görünmüyordu — mock modda
+göründüğü için fark edilmedi. Kiracının profilleri ayrıca okuyabileceği bir uç YOK
+(`/admin/profiles` platform yöneticisinin); profili ayrı çekmeye çalışma.
+
+**Protokol kodları backend'in yazdıklarıdır:** `mqtt`, `modbus` (referans Modbus profili;
+register haritası RTU/TCP'de aynı, taşıma türü `devices.conn`'da), `http` (webhook,
+backend ADR 0023). `modbus-rtu`/`modbus-tcp` profil editöründen gelebilir. Mock asset'leri
+de AYNI kodları kullanmalı: mock'ta `modbus-tcp` kaldığı için ham "modbus" etiketi gerçek
+API'de görünüp mock'ta gizli kalmıştı.
 
 **§16/1 korunur:** marka/model adı koda GÖMÜLMEZ. `vendor` ve `model` birer veridir;
 uygulamada `if (vendor == '...')` yazan tek satır yok. Eşleme yalnızca PROTOKOL kodu
