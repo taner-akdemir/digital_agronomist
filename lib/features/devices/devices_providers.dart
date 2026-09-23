@@ -62,12 +62,14 @@ bool hasMixedSources(DeviceTree tree) => tree.sources.length > 1;
 @riverpod
 Future<DeviceTree> deviceTree(Ref ref) async {
   final repo = ref.watch(repositoryProvider);
-  final (halls, vacuums, spouts, devices) =
-      await (repo.halls(), repo.vacuums(), repo.spouts(), repo.devices()).wait;
+  final (halls, vacuums, spouts, devices) = await (
+    repo.halls(),
+    repo.vacuums(),
+    repo.spouts(),
+    repo.devices(),
+  ).wait;
 
-  final deviceBySpout = {
-    for (final d in devices) ?d.spoutId: d,
-  };
+  final deviceBySpout = {for (final d in devices) ?d.spoutId: d};
 
   final spoutsByVacuum = <String, List<Spout>>{};
   for (final s in spouts) {
@@ -113,8 +115,7 @@ Future<DeviceTree> deviceTree(Ref ref) async {
       protocols.update(profile.protocol, (v) => v + 1, ifAbsent: () => 1);
     }
     final seen = byProfile[profile.id];
-    byProfile[profile.id] =
-        (profile: profile, count: (seen?.count ?? 0) + 1);
+    byProfile[profile.id] = (profile: profile, count: (seen?.count ?? 0) + 1);
   }
 
   final sources = byProfile.values.toList()
@@ -128,8 +129,7 @@ Future<DeviceTree> deviceTree(Ref ref) async {
     ],
     online: devices.where((d) => d.status == 'online').length,
     offline: devices.where((d) => d.status == 'offline').length,
-    emptySpouts:
-        spouts.where((s) => !deviceBySpout.containsKey(s.id)).length,
+    emptySpouts: spouts.where((s) => !deviceBySpout.containsKey(s.id)).length,
     sources: List<DeviceSource>.unmodifiable(sources),
     protocols: Map<String, int>.unmodifiable(protocols),
     unprofiled: unprofiled,

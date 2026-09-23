@@ -39,10 +39,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     });
 
     try {
-      await ref.read(authProvider.notifier).signIn(
-            email: _email.text.trim(),
-            password: _password.text,
-          );
+      await ref
+          .read(authProvider.notifier)
+          .signIn(email: _email.text.trim(), password: _password.text);
       // Yönlendirme router'ın işi: oturum açılınca redirect devreye girer.
       // Burada context.go çağırmak İKİ yönlendirme kaynağı yaratırdı.
     } on ApiException catch (e) {
@@ -94,7 +93,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       decoration: const InputDecoration(
                         labelText: 'E-posta',
                         prefixIcon: Icon(Icons.alternate_email),
-                        border: OutlineInputBorder(borderRadius: AppRadius.mdAll),
+                        border: OutlineInputBorder(
+                          borderRadius: AppRadius.mdAll,
+                        ),
                       ),
                       validator: (v) {
                         final value = v?.trim() ?? '';
@@ -116,10 +117,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       decoration: InputDecoration(
                         labelText: 'Parola',
                         prefixIcon: const Icon(Icons.lock_outline),
-                        border: const OutlineInputBorder(borderRadius: AppRadius.mdAll),
+                        border: const OutlineInputBorder(
+                          borderRadius: AppRadius.mdAll,
+                        ),
                         suffixIcon: IconButton(
-                          icon: Icon(_obscure ? Icons.visibility_off : Icons.visibility),
-                          tooltip: _obscure ? 'Parolayı göster' : 'Parolayı gizle',
+                          icon: Icon(
+                            _obscure ? Icons.visibility_off : Icons.visibility,
+                          ),
+                          tooltip: _obscure
+                              ? 'Parolayı göster'
+                              : 'Parolayı gizle',
                           onPressed: () => setState(() => _obscure = !_obscure),
                         ),
                       ),
@@ -135,16 +142,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       onPressed: _busy ? null : _submit,
                       style: FilledButton.styleFrom(
                         backgroundColor: AppColors.darkGreenColor,
-                        padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: AppSpacing.lg,
+                        ),
                         shape: const RoundedRectangleBorder(
-                            borderRadius: AppRadius.mdAll),
+                          borderRadius: AppRadius.mdAll,
+                        ),
                       ),
                       child: _busy
                           ? const SizedBox(
                               height: 20,
                               width: 20,
                               child: CircularProgressIndicator(
-                                  strokeWidth: 2, color: Colors.white),
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
                             )
                           : const Text('Giriş yap'),
                     ),
@@ -175,10 +187,17 @@ class _ErrorBanner extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.error_outline, color: AppColors.darkRedColor, size: 20),
+          const Icon(
+            Icons.error_outline,
+            color: AppColors.darkRedColor,
+            size: 20,
+          ),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
-            child: Text(message, style: const TextStyle(color: AppColors.darkRedColor)),
+            child: Text(
+              message,
+              style: const TextStyle(color: AppColors.darkRedColor),
+            ),
           ),
         ],
       ),

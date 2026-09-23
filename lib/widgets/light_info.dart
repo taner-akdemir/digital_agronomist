@@ -16,7 +16,9 @@ class LightInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
       decoration: const BoxDecoration(
         color: AppColors.surface,
         borderRadius: AppRadius.smAll,

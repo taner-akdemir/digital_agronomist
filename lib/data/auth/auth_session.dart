@@ -21,18 +21,18 @@ class AuthSession {
     required this.interceptor,
     required Dio bare,
     required Dio retry,
-  })  : _bare = bare,
-        _retry = retry;
+  }) : _bare = bare,
+       _retry = retry;
 
   factory AuthSession({required String baseUrl, TokenStore? store}) {
     BaseOptions options() => BaseOptions(
-          baseUrl: baseUrl,
-          connectTimeout: const Duration(seconds: 10),
-          receiveTimeout: const Duration(seconds: 15),
-          // Zarf her zaman JSON; dio'nun içerik tipini tahmin etmesine
-          // bırakmıyoruz.
-          contentType: Headers.jsonContentType,
-        );
+      baseUrl: baseUrl,
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 15),
+      // Zarf her zaman JSON; dio'nun içerik tipini tahmin etmesine
+      // bırakmıyoruz.
+      contentType: Headers.jsonContentType,
+    );
 
     final bare = Dio(options());
     final retry = Dio(options());

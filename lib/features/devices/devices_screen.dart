@@ -32,7 +32,11 @@ class DevicesScreen extends ConsumerWidget {
         errorMessage: 'Cihazlar yüklenemedi',
         builder: (t) => ListView(
           padding: const EdgeInsets.fromLTRB(
-              AppSpacing.lg, AppSpacing.md, AppSpacing.lg, AppSpacing.lg),
+            AppSpacing.lg,
+            AppSpacing.md,
+            AppSpacing.lg,
+            AppSpacing.lg,
+          ),
           children: [
             _Summary(tree: t),
             if (hasMixedSources(t)) _Sources(tree: t),
@@ -61,20 +65,27 @@ class _Summary extends StatelessWidget {
       runSpacing: AppSpacing.sm,
       children: [
         LightInfo(
-            color: AppColors.flowGreen, label: '${tree.online} Çevrimiçi'),
-        LightInfo(color: AppColors.flowRed, label: '${tree.offline} Çevrimdışı'),
+          color: AppColors.flowGreen,
+          label: '${tree.online} Çevrimiçi',
+        ),
+        LightInfo(
+          color: AppColors.flowRed,
+          label: '${tree.offline} Çevrimdışı',
+        ),
         // Sayaçsız nokta SAYILIR: sağım başladığında o noktadan hiç veri
         // gelmeyecek ve eksik ancak burada fark edilir.
         if (tree.emptySpouts > 0)
           LightInfo(
-              color: AppColors.flowGrey,
-              label: '${tree.emptySpouts} Sayaçsız nokta'),
+            color: AppColors.flowGrey,
+            label: '${tree.emptySpouts} Sayaçsız nokta',
+          ),
         // Profili olmayan sayaç KARANTİNADA bekliyor (§8.4) ve verisi
         // işlenmiyor; sessizce gizlense eksik verinin sebebi aranamazdı.
         if (tree.unprofiled > 0)
           LightInfo(
-              color: AppColors.flowYellow,
-              label: '${tree.unprofiled} Profilsiz sayaç'),
+            color: AppColors.flowYellow,
+            label: '${tree.unprofiled} Profilsiz sayaç',
+          ),
       ],
     );
   }
@@ -100,16 +111,21 @@ class _Sources extends StatelessWidget {
         spacing: AppSpacing.md,
         runSpacing: AppSpacing.xs,
         children: [
-          const Text('Kaynaklar:',
-              style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.onSurfaceMuted)),
+          const Text(
+            'Kaynaklar:',
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: AppColors.onSurfaceMuted,
+            ),
+          ),
           for (final s in tree.sources)
             Text(
               '${s.profile.vendor} · ${s.profile.protocolLabel} · ${s.count}',
               style: const TextStyle(
-                  fontSize: 12, color: AppColors.onSurfaceMuted),
+                fontSize: 12,
+                color: AppColors.onSurfaceMuted,
+              ),
             ),
         ],
       ),
@@ -130,7 +146,9 @@ class _HallSection extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(
-              left: AppSpacing.xs, bottom: AppSpacing.sm),
+            left: AppSpacing.xs,
+            bottom: AppSpacing.sm,
+          ),
           child: Text(
             '${node.hall.name} Bölgesi',
             style: const TextStyle(
@@ -142,9 +160,10 @@ class _HallSection extends StatelessWidget {
         ),
         if (node.vacuums.isEmpty)
           const _Card(
-            child: Text('Bu bölgede tanımlı ünite yok',
-                style:
-                    TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted)),
+            child: Text(
+              'Bu bölgede tanımlı ünite yok',
+              style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
+            ),
           )
         else
           for (final v in node.vacuums) ...[
@@ -181,8 +200,7 @@ class _VacuumCard extends StatelessWidget {
         // (§15 tasarım dili).
         iconColor: AppColors.darkGreenColor,
         collapsedIconColor: AppColors.iconGreyColor,
-        tilePadding:
-            const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+        tilePadding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
         childrenPadding: const EdgeInsets.only(bottom: AppSpacing.sm),
         title: Text(
           'Ünite ${node.vacuum.name}',
@@ -224,20 +242,26 @@ class _SpoutRow extends StatelessWidget {
       onTap: device == null ? null : () => _showDeviceSheet(context, device),
       child: Padding(
         padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.lg, vertical: AppSpacing.sm),
+          horizontal: AppSpacing.lg,
+          vertical: AppSpacing.sm,
+        ),
         child: Row(
           children: [
             Container(
               width: 8,
               height: 8,
               decoration: BoxDecoration(
-                  color: palette.foreground, shape: BoxShape.circle),
+                color: palette.foreground,
+                shape: BoxShape.circle,
+              ),
             ),
             const SizedBox(width: AppSpacing.md),
             SizedBox(
               width: 68,
-              child: Text('Nokta ${node.spout.positionNo}',
-                  style: const TextStyle(fontSize: 13)),
+              child: Text(
+                'Nokta ${node.spout.positionNo}',
+                style: const TextStyle(fontSize: 13),
+              ),
             ),
             Expanded(
               child: Text(
@@ -245,7 +269,9 @@ class _SpoutRow extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
-                    fontSize: 12, color: AppColors.onSurfaceMuted),
+                  fontSize: 12,
+                  color: AppColors.onSurfaceMuted,
+                ),
               ),
             ),
             ConstrainedBox(
@@ -286,15 +312,18 @@ class _UnassignedCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Takılı olmayan sayaçlar',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+          const Text(
+            'Takılı olmayan sayaçlar',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          ),
           const SizedBox(height: AppSpacing.xs),
           // Bunlar ARIZA DEĞİL: dolapta bekleyen yedekler de buraya düşer.
           // Ayrı başlık altında olmaları, üstteki ağaçtaki eksikle
           // karıştırılmalarını önlüyor.
-          const Text('Bir sağım noktasına bağlı değil.',
-              style:
-                  TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted)),
+          const Text(
+            'Bir sağım noktasına bağlı değil.',
+            style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
+          ),
           const SizedBox(height: AppSpacing.sm),
           for (final d in devices)
             InkWell(
@@ -303,17 +332,24 @@ class _UnassignedCard extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                 child: Row(
                   children: [
-                    const Icon(Icons.sensors_off_outlined,
-                        size: 16, color: AppColors.lightGreyColor),
+                    const Icon(
+                      Icons.sensors_off_outlined,
+                      size: 16,
+                      color: AppColors.lightGreyColor,
+                    ),
                     const SizedBox(width: AppSpacing.md),
                     Expanded(
-                      child: Text(d.serialNo,
-                          style: const TextStyle(fontSize: 13)),
+                      child: Text(
+                        d.serialNo,
+                        style: const TextStyle(fontSize: 13),
+                      ),
                     ),
                     Text(
                       'Yazılım ${d.firmware ?? '—'}',
                       style: const TextStyle(
-                          fontSize: 11, color: AppColors.onSurfaceMuted),
+                        fontSize: 11,
+                        color: AppColors.onSurfaceMuted,
+                      ),
                     ),
                   ],
                 ),
@@ -349,13 +385,19 @@ void _showDeviceSheet(BuildContext context, Device device) {
             Row(
               children: [
                 Expanded(
-                  child: Text(device.serialNo,
-                      style: const TextStyle(
-                          fontSize: 17, fontWeight: FontWeight.bold)),
+                  child: Text(
+                    device.serialNo,
+                    style: const TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.md, vertical: AppSpacing.xs),
+                    horizontal: AppSpacing.md,
+                    vertical: AppSpacing.xs,
+                  ),
                   decoration: BoxDecoration(
                     color: MilkPalette.of(status.color).filled.surface,
                     borderRadius: AppRadius.smAll,
@@ -374,20 +416,26 @@ void _showDeviceSheet(BuildContext context, Device device) {
             const SizedBox(height: AppSpacing.lg),
             // Profil §16/1 gereği VERİdir: uygulama üretici adını gösterir,
             // hiçbir yerde ona göre davranmaz.
-            _DetailRow('Profil',
-                device.profile?.title ?? 'Atanmamış (karantinada)'),
             _DetailRow(
-                'Protokol', device.profile?.protocolLabel ?? 'Bilinmiyor'),
+              'Profil',
+              device.profile?.title ?? 'Atanmamış (karantinada)',
+            ),
+            _DetailRow(
+              'Protokol',
+              device.profile?.protocolLabel ?? 'Bilinmiyor',
+            ),
             _DetailRow('Yazılım sürümü', device.firmware ?? 'Bilinmiyor'),
-            _DetailRow('Kalibrasyon katsayısı',
-                device.calibrationFactor.toStringAsFixed(3)),
+            _DetailRow(
+              'Kalibrasyon katsayısı',
+              device.calibrationFactor.toStringAsFixed(3),
+            ),
             _DetailRow(
               'Son görülme',
               device.lastSeenAt == null
                   ? 'Kayıt yok'
                   : '${Fmt.since(device.lastSeenAt!)} '
-                      '(${Fmt.dayMonth(device.lastSeenAt!)} '
-                      '${Fmt.time(device.lastSeenAt!)})',
+                        '(${Fmt.dayMonth(device.lastSeenAt!)} '
+                        '${Fmt.time(device.lastSeenAt!)})',
             ),
             if (device.isSimulated)
               // Simülatör cihazı GÖRÜNÜR olmalı: demo verisini gerçek sanıp
@@ -396,12 +444,19 @@ void _showDeviceSheet(BuildContext context, Device device) {
                 padding: EdgeInsets.only(top: AppSpacing.md),
                 child: Row(
                   children: [
-                    Icon(Icons.science_outlined,
-                        size: 14, color: AppColors.lightGreyColor),
+                    Icon(
+                      Icons.science_outlined,
+                      size: 14,
+                      color: AppColors.lightGreyColor,
+                    ),
                     SizedBox(width: AppSpacing.xs),
-                    Text('Simülatör cihazı',
-                        style: TextStyle(
-                            fontSize: 11, color: AppColors.onSurfaceMuted)),
+                    Text(
+                      'Simülatör cihazı',
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: AppColors.onSurfaceMuted,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -427,14 +482,19 @@ class _DetailRow extends StatelessWidget {
         children: [
           SizedBox(
             width: 150,
-            child: Text(label,
-                style: const TextStyle(
-                    fontSize: 13, color: AppColors.onSurfaceMuted)),
+            child: Text(
+              label,
+              style: const TextStyle(
+                fontSize: 13,
+                color: AppColors.onSurfaceMuted,
+              ),
+            ),
           ),
           Expanded(
-            child: Text(value,
-                style: const TextStyle(
-                    fontSize: 13, fontWeight: FontWeight.w600)),
+            child: Text(
+              value,
+              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+            ),
           ),
         ],
       ),
@@ -451,11 +511,11 @@ class _DeviceStatus {
 
   /// Cihaz yoksa nokta BOŞtur — "bilinmiyor" ile aynı şey değil.
   static _DeviceStatus of(Device? device) => switch (device?.status) {
-        null => const _DeviceStatus('Sayaç takılı değil', MilkColor.grey),
-        'online' => const _DeviceStatus('Çevrimiçi', MilkColor.green),
-        'offline' => const _DeviceStatus('Çevrimdışı', MilkColor.red),
-        _ => const _DeviceStatus('Bilinmiyor', MilkColor.grey),
-      };
+    null => const _DeviceStatus('Sayaç takılı değil', MilkColor.grey),
+    'online' => const _DeviceStatus('Çevrimiçi', MilkColor.green),
+    'offline' => const _DeviceStatus('Çevrimdışı', MilkColor.red),
+    _ => const _DeviceStatus('Bilinmiyor', MilkColor.grey),
+  };
 
   /// Satır sonunda görünen metin.
   ///
@@ -481,13 +541,13 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: padding ?? const EdgeInsets.all(AppSpacing.lg),
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: AppRadius.mdAll,
-          border: Border.all(color: AppColors.border),
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: child,
-      );
+    padding: padding ?? const EdgeInsets.all(AppSpacing.lg),
+    decoration: BoxDecoration(
+      color: AppColors.surface,
+      borderRadius: AppRadius.mdAll,
+      border: Border.all(color: AppColors.border),
+    ),
+    clipBehavior: Clip.antiAlias,
+    child: child,
+  );
 }

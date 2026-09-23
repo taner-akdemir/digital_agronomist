@@ -14,15 +14,18 @@ final _today = DateTime(2026, 9, 22, 12);
 /// Asset'i diskten okur; gerekçesi history_screen_test'te.
 Future<String> _diskAsset(String path) async => File(path).readAsStringSync();
 
-MockRepository _repo() =>
-    MockRepository(latency: Duration.zero, today: _today, loadAsset: _diskAsset);
+MockRepository _repo() => MockRepository(
+  latency: Duration.zero,
+  today: _today,
+  loadAsset: _diskAsset,
+);
 
 late ProviderContainer _container;
 
 Widget wrap(Widget child) => UncontrolledProviderScope(
-      container: _container,
-      child: MaterialApp(home: Scaffold(body: child)),
-    );
+  container: _container,
+  child: MaterialApp(home: Scaffold(body: child)),
+);
 
 Future<void> pumpDevices(WidgetTester tester) async {
   // Ağaç varsayılan 800x600 test yüzeyine sığmıyor; alttaki kartlar hiç
@@ -38,9 +41,13 @@ Future<void> pumpDevices(WidgetTester tester) async {
 
 void main() {
   setUp(() {
-    _container = ProviderContainer(overrides: [
-      repositoryProvider.overrideWith((ref) => _repo() as MilkTraceRepository),
-    ]);
+    _container = ProviderContainer(
+      overrides: [
+        repositoryProvider.overrideWith(
+          (ref) => _repo() as MilkTraceRepository,
+        ),
+      ],
+    );
   });
   tearDown(() => _container.dispose());
 
@@ -80,8 +87,9 @@ void main() {
     }
   });
 
-  testWidgets('özet, bölgeler ve takılı olmayan sayaçlar çizilir',
-      (tester) async {
+  testWidgets('özet, bölgeler ve takılı olmayan sayaçlar çizilir', (
+    tester,
+  ) async {
     await pumpDevices(tester);
 
     expect(find.text('27 Çevrimiçi'), findsOneWidget);
@@ -93,8 +101,9 @@ void main() {
 
   // Sorunlu ünitenin AÇIK geldiğini doğrular: 30 noktayı birden açmak,
   // ilgilenilmesi gereken iki satırı kaydırma içinde kaybederdi.
-  testWidgets('sorunlu ünite açık, sorunsuz ünite kapalı gelir',
-      (tester) async {
+  testWidgets('sorunlu ünite açık, sorunsuz ünite kapalı gelir', (
+    tester,
+  ) async {
     await pumpDevices(tester);
 
     // A-1'de sorun yok (10 nokta, hepsi çevrimiçi) → kapalı.
@@ -127,16 +136,22 @@ void main() {
     // üretici ayrımı kaybolurdu.
     expect(tree.protocols, {'mqtt': 20, 'modbus': 9});
     expect(tree.sources, hasLength(3));
-    expect(tree.sources.map((s) => s.profile.vendor),
-        containsAll(['MILKTRACE', 'ORNEK-URETICI', 'AKIS-METRE']));
+    expect(
+      tree.sources.map((s) => s.profile.vendor),
+      containsAll(['MILKTRACE', 'ORNEK-URETICI', 'AKIS-METRE']),
+    );
     expect(tree.sources.first.count, 10);
     expect(hasMixedSources(tree), isTrue);
-    expect(tree.unprofiled, 0,
-        reason: 'takılı sayaçların hepsinin profili olmalı');
+    expect(
+      tree.unprofiled,
+      0,
+      reason: 'takılı sayaçların hepsinin profili olmalı',
+    );
   });
 
-  testWidgets('karışık kaynaklı tesiste satırda protokol yazar',
-      (tester) async {
+  testWidgets('karışık kaynaklı tesiste satırda protokol yazar', (
+    tester,
+  ) async {
     await pumpDevices(tester);
 
     expect(find.text('Kaynaklar:'), findsOneWidget);

@@ -18,7 +18,8 @@ abstract class AuthUser with _$AuthUser {
     String? tenantId,
   }) = _AuthUser;
 
-  factory AuthUser.fromJson(Map<String, dynamic> json) => _$AuthUserFromJson(json);
+  factory AuthUser.fromJson(Map<String, dynamic> json) =>
+      _$AuthUserFromJson(json);
 }
 
 /// Erişim + yenileme token çifti.
@@ -35,7 +36,8 @@ abstract class AuthTokens with _$AuthTokens {
     required String refreshToken,
   }) = _AuthTokens;
 
-  factory AuthTokens.fromJson(Map<String, dynamic> json) => _$AuthTokensFromJson(json);
+  factory AuthTokens.fromJson(Map<String, dynamic> json) =>
+      _$AuthTokensFromJson(json);
 }
 
 /// POST /auth/login yanıtı.
@@ -47,5 +49,6 @@ abstract class LoginResult with _$LoginResult {
     required AuthUser user,
   }) = _LoginResult;
 
-  factory LoginResult.fromJson(Map<String, dynamic> json) => _$LoginResultFromJson(json);
+  factory LoginResult.fromJson(Map<String, dynamic> json) =>
+      _$LoginResultFromJson(json);
 }

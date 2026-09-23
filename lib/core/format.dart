@@ -5,8 +5,18 @@
 /// verisi taşımak olurdu.
 abstract final class Fmt {
   static const _months = [
-    'Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz',
-    'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara',
+    'Oca',
+    'Şub',
+    'Mar',
+    'Nis',
+    'May',
+    'Haz',
+    'Tem',
+    'Ağu',
+    'Eyl',
+    'Eki',
+    'Kas',
+    'Ara',
   ];
 
   /// mL → "10.4" (L).
@@ -26,7 +36,8 @@ abstract final class Fmt {
   }
 
   /// "22 Eyl 2026".
-  static String dayMonthYear(DateTime t) => '${dayMonth(t)} ${t.toLocal().year}';
+  static String dayMonthYear(DateTime t) =>
+      '${dayMonth(t)} ${t.toLocal().year}';
 
   /// "06:05".
   static String time(DateTime t) {
@@ -43,10 +54,10 @@ abstract final class Fmt {
 
   /// Oturum tipinin Türkçe adı (§8.4: morning | evening | other).
   static String sessionType(String type) => switch (type) {
-        'morning' => 'Sabah',
-        'evening' => 'Akşam',
-        _ => 'Diğer',
-      };
+    'morning' => 'Sabah',
+    'evening' => 'Akşam',
+    _ => 'Diğer',
+  };
 
   /// "%86" — yüzde KIRPILMAZ, hayvan beklenenin üstünde süt verebilir.
   static String percent(double pct) => '%${pct.toStringAsFixed(0)}';

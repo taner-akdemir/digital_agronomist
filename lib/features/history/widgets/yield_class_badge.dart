@@ -9,7 +9,11 @@ import 'package:milktrace/widgets/milk_palette.dart';
 /// normaldir ve hepsini rozetlemek, gerçekten ilgilenilmesi gereken üç
 /// hayvanı görünmez yapardı.
 class YieldClassBadge extends StatelessWidget {
-  const YieldClassBadge({super.key, required this.yieldClass, this.dense = false});
+  const YieldClassBadge({
+    super.key,
+    required this.yieldClass,
+    this.dense = false,
+  });
 
   final YieldClass yieldClass;
 

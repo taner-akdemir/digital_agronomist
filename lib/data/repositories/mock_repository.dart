@@ -34,9 +34,9 @@ class MockRepository implements MilkTraceRepository {
     Random? random,
     DateTime? today,
     Future<String> Function(String assetPath)? loadAsset,
-  })  : _random = random ?? Random(7),
-        _today = today,
-        _loadAsset = loadAsset ?? rootBundle.loadString;
+  }) : _random = random ?? Random(7),
+       _today = today,
+       _loadAsset = loadAsset ?? rootBundle.loadString;
 
   /// Asset okuyucu.
   ///
@@ -71,10 +71,15 @@ class MockRepository implements MilkTraceRepository {
     return parsed;
   }
 
-  Future<List<T>> _list<T>(String name, T Function(Map<String, dynamic>) from) =>
-      _load(name, (json) => (json as List)
-          .map((e) => from(e as Map<String, dynamic>))
-          .toList(growable: false));
+  Future<List<T>> _list<T>(
+    String name,
+    T Function(Map<String, dynamic>) from,
+  ) => _load(
+    name,
+    (json) => (json as List)
+        .map((e) => from(e as Map<String, dynamic>))
+        .toList(growable: false),
+  );
 
   Future<T> _delayed<T>(Future<T> Function() body) async {
     await Future<void>.delayed(latency);
@@ -87,9 +92,9 @@ class MockRepository implements MilkTraceRepository {
 
   @override
   Future<List<Thresholds>> thresholds() => _delayed(() async {
-        final all = await _list('thresholds.json', Thresholds.fromJson);
-        return [for (final t in all) _thresholdOverrides[t.speciesId] ?? t];
-      });
+    final all = await _list('thresholds.json', Thresholds.fromJson);
+    return [for (final t in all) _thresholdOverrides[t.speciesId] ?? t];
+  });
 
   /// Kaydedilen eşikler, YAZILMA SIRASIYLA. Testler "kaydet gerçekten bir
   /// şey yaptı mı" sorusunu ancak böyle sorabiliyor.
@@ -112,32 +117,32 @@ class MockRepository implements MilkTraceRepository {
       });
 
   @override
-  Future<List<Farm>> farms() => _delayed(() => _list('farms.json', Farm.fromJson));
+  Future<List<Farm>> farms() =>
+      _delayed(() => _list('farms.json', Farm.fromJson));
 
   @override
-  Future<List<Hall>> halls() => _delayed(() => _list('halls.json', Hall.fromJson));
+  Future<List<Hall>> halls() =>
+      _delayed(() => _list('halls.json', Hall.fromJson));
 
   @override
   Future<List<Vacuum>> vacuums({String? hallId}) => _delayed(() async {
-        final all = await _list('vacuums.json', Vacuum.fromJson);
-        if (hallId == null) return all;
-        return all.where((v) => v.hallId == hallId).toList(growable: false);
-      });
+    final all = await _list('vacuums.json', Vacuum.fromJson);
+    if (hallId == null) return all;
+    return all.where((v) => v.hallId == hallId).toList(growable: false);
+  });
 
   @override
   Future<List<Spout>> spouts({String? vacuumId}) => _delayed(() async {
-        final all = await _list('spouts.json', Spout.fromJson);
-        if (vacuumId == null) return all;
-        return all.where((s) => s.vacuumId == vacuumId).toList(growable: false);
-      });
+    final all = await _list('spouts.json', Spout.fromJson);
+    if (vacuumId == null) return all;
+    return all.where((s) => s.vacuumId == vacuumId).toList(growable: false);
+  });
 
   @override
   Future<List<Device>> devices() => _delayed(() async {
-        final all = await _list('devices.json', Device.fromJson);
-        return [
-          for (final d in all) d.copyWith(lastSeenAt: _lastSeen(d)),
-        ];
-      });
+    final all = await _list('devices.json', Device.fromJson);
+    return [for (final d in all) d.copyWith(lastSeenAt: _lastSeen(d))];
+  });
 
   /// "Son görülme" damgasını ŞU ANA göre üretir.
   ///
@@ -159,29 +164,31 @@ class MockRepository implements MilkTraceRepository {
       _delayed(() => _list('animals.json', Animal.fromJson));
 
   @override
-  Future<LiveSession> liveSession({required String hallId}) => _delayed(() async {
-        final live = await _load('live_session.json',
-            (json) => LiveSession.fromJson(json as Map<String, dynamic>));
+  Future<LiveSession> liveSession({required String hallId}) => _delayed(
+    () async {
+      final live = await _load(
+        'live_session.json',
+        (json) => LiveSession.fromJson(json as Map<String, dynamic>),
+      );
 
-        if (_sessionEnded) {
-          // Oturum yok: ekran "Sağımı Başlat" diyebilsin. Boş liste
-          // "oturum var ama nokta yok" ile karışırdı.
-          return LiveSession(
-            session: MilkingSession(id: '', hallId: hallId, status: 'none'),
-          );
-        }
-
-        final updates = [
-          for (final u in live.updates) await _withAssignment(u),
-        ];
-
-        // Mock'ta tek bir oturum var; istenen bölgeye uyarlanır ki bölge
-        // değiştirildiğinde ekran boş kalmasın.
-        return live.copyWith(
-          session: live.session.copyWith(hallId: hallId),
-          updates: updates,
+      if (_sessionEnded) {
+        // Oturum yok: ekran "Sağımı Başlat" diyebilsin. Boş liste
+        // "oturum var ama nokta yok" ile karışırdı.
+        return LiveSession(
+          session: MilkingSession(id: '', hallId: hallId, status: 'none'),
         );
-      });
+      }
+
+      final updates = [for (final u in live.updates) await _withAssignment(u)];
+
+      // Mock'ta tek bir oturum var; istenen bölgeye uyarlanır ki bölge
+      // değiştirildiğinde ekran boş kalmasın.
+      return live.copyWith(
+        session: live.session.copyWith(hallId: hallId),
+        updates: updates,
+      );
+    },
+  );
 
   /// Elle eşleştirilmiş noktaya hayvanı yazar.
   ///
@@ -196,7 +203,10 @@ class MockRepository implements MilkTraceRepository {
     if (animal == null) return u;
 
     final species = await _list('species.json', Species.fromJson);
-    final code = species.where((sp) => sp.id == animal.speciesId).firstOrNull?.code;
+    final code = species
+        .where((sp) => sp.id == animal.speciesId)
+        .firstOrNull
+        ?.code;
 
     return u.copyWith(
       animal: SpoutAnimal(
@@ -210,8 +220,10 @@ class MockRepository implements MilkTraceRepository {
 
   @override
   Stream<SpoutUpdate> watchSession(String sessionId) async* {
-    final live = await _load('live_session.json',
-        (json) => LiveSession.fromJson(json as Map<String, dynamic>));
+    final live = await _load(
+      'live_session.json',
+      (json) => LiveSession.fromJson(json as Map<String, dynamic>),
+    );
 
     final updates = List<SpoutUpdate>.from(live.updates);
 
@@ -274,71 +286,88 @@ class MockRepository implements MilkTraceRepository {
         t: ThresholdsEngine.cowDefaults,
       ),
       yieldColor: ThresholdsEngine.yieldColor(
-          volume, u.expectedMl, ThresholdsEngine.cowDefaults),
+        volume,
+        u.expectedMl,
+        ThresholdsEngine.cowDefaults,
+      ),
     );
   }
 
   @override
-  Future<List<MilkingSession>> sessions(
-          {String? hallId, DateTime? from, DateTime? to}) =>
-      _delayed(() async {
-        final halls = await _list('halls.json', Hall.fromJson);
-        final live = await _load('live_session.json',
-            (json) => LiveSession.fromJson(json as Map<String, dynamic>));
+  Future<List<MilkingSession>> sessions({
+    String? hallId,
+    DateTime? from,
+    DateTime? to,
+  }) => _delayed(() async {
+    final halls = await _list('halls.json', Hall.fromJson);
+    final live = await _load(
+      'live_session.json',
+      (json) => LiveSession.fromJson(json as Map<String, dynamic>),
+    );
 
-        final out = <MilkingSession>[];
+    final out = <MilkingSession>[];
 
-        // Açık oturum EN ÜSTTE ve canlı ekrandakiyle AYNI kayıt: iki ekranın
-        // aynı anda farklı oturum göstermesi mock'u güvenilmez yapardı.
-        if (hallId == null || live.session.hallId == hallId) {
-          out.add(live.session);
-        }
+    // Açık oturum EN ÜSTTE ve canlı ekrandakiyle AYNI kayıt: iki ekranın
+    // aynı anda farklı oturum göstermesi mock'u güvenilmez yapardı.
+    if (hallId == null || live.session.hallId == hallId) {
+      out.add(live.session);
+    }
 
-        for (var back = 0; back < 14; back++) {
-          final day = _now.subtract(Duration(days: back));
-          if (from != null && day.isBefore(from)) continue;
-          if (to != null && day.isAfter(to)) continue;
+    for (var back = 0; back < 14; back++) {
+      final day = _now.subtract(Duration(days: back));
+      if (from != null && day.isBefore(from)) continue;
+      if (to != null && day.isAfter(to)) continue;
 
-          for (final hall in halls) {
-            if (hallId != null && hall.id != hallId) continue;
-            for (final type in const ['evening', 'morning']) {
-              final started = DateTime(day.year, day.month, day.day,
-                  type == 'morning' ? 6 : 18, 5);
-              // HENÜZ OLMAMIŞ sağım listelenmez: bugünün akşam sağımı sabah
-              // yapılan bir demoda "geçmiş"te görünüyordu.
-              if (started.isAfter(_clock)) continue;
-              if (back == 0 && hall.id == live.session.hallId &&
-                  type == live.session.type) {
-                continue; // az önce eklenen açık oturumun kendisi
-              }
-
-              out.add(MilkingSession(
-                id: 'mock-${hall.id}-${day.toIso8601String().substring(0, 10)}-$type',
-                hallId: hall.id,
-                type: type,
-                startedAt: started,
-                endedAt: started.add(const Duration(minutes: 75)),
-                status: 'ended',
-              ));
-            }
+      for (final hall in halls) {
+        if (hallId != null && hall.id != hallId) continue;
+        for (final type in const ['evening', 'morning']) {
+          final started = DateTime(
+            day.year,
+            day.month,
+            day.day,
+            type == 'morning' ? 6 : 18,
+            5,
+          );
+          // HENÜZ OLMAMIŞ sağım listelenmez: bugünün akşam sağımı sabah
+          // yapılan bir demoda "geçmiş"te görünüyordu.
+          if (started.isAfter(_clock)) continue;
+          if (back == 0 &&
+              hall.id == live.session.hallId &&
+              type == live.session.type) {
+            continue; // az önce eklenen açık oturumun kendisi
           }
+
+          out.add(
+            MilkingSession(
+              id: 'mock-${hall.id}-${day.toIso8601String().substring(0, 10)}-$type',
+              hallId: hall.id,
+              type: type,
+              startedAt: started,
+              endedAt: started.add(const Duration(minutes: 75)),
+              status: 'ended',
+            ),
+          );
         }
-        return List.unmodifiable(out);
-      });
+      }
+    }
+    return List.unmodifiable(out);
+  });
 
   @override
-  Future<List<AnimalMilking>> animalHistory(String animalId,
-          {DateTime? from, DateTime? to}) =>
-      _delayed(() async {
-        final (animal, t) = await _animalWithThresholds(animalId);
-        return MockLactation.history(animal, t, _now, from: from, to: to);
-      });
+  Future<List<AnimalMilking>> animalHistory(
+    String animalId, {
+    DateTime? from,
+    DateTime? to,
+  }) => _delayed(() async {
+    final (animal, t) = await _animalWithThresholds(animalId);
+    return MockLactation.history(animal, t, _now, from: from, to: to);
+  });
 
   @override
   Future<AnimalTrend> animalTrend(String animalId) => _delayed(() async {
-        final (animal, t) = await _animalWithThresholds(animalId);
-        return MockLactation.trend(animal, t, _now);
-      });
+    final (animal, t) = await _animalWithThresholds(animalId);
+    return MockLactation.trend(animal, t, _now);
+  });
 
   /// Hayvan + TÜRÜNÜN eşikleri.
   ///
@@ -368,15 +397,15 @@ class MockRepository implements MilkTraceRepository {
 
   @override
   Future<List<Alert>> alerts() => _delayed(() async {
-        final all = await _list('alerts.json', Alert.fromJson);
-        return [
-          for (final a in all)
-            if (_acks[a.id] case final at?)
-              a.copyWith(acknowledgedAt: at, acknowledgedBy: 'demo')
-            else
-              a,
-        ];
-      });
+    final all = await _list('alerts.json', Alert.fromJson);
+    return [
+      for (final a in all)
+        if (_acks[a.id] case final at?)
+          a.copyWith(acknowledgedAt: at, acknowledgedBy: 'demo')
+        else
+          a,
+    ];
+  });
 
   @override
   Future<void> ackAlert(String alertId) =>
@@ -389,67 +418,68 @@ class MockRepository implements MilkTraceRepository {
   /// sağımların toplamı tutmazsa mock'a kimse güvenmez.
   @override
   Future<DashboardSummary> dashboard() => _delayed(() async {
-        final animals = await _list('animals.json', Animal.fromJson);
-        final thresholds = await _list('thresholds.json', Thresholds.fromJson);
+    final animals = await _list('animals.json', Animal.fromJson);
+    final thresholds = await _list('thresholds.json', Thresholds.fromJson);
 
-        var totalMl = 0;
-        var milkingCount = 0;
-        final milkedAnimals = <String>{};
-        final speciesMl = <String, int>{};
-        final speciesAnimals = <String, Set<String>>{};
+    var totalMl = 0;
+    var milkingCount = 0;
+    final milkedAnimals = <String>{};
+    final speciesMl = <String, int>{};
+    final speciesAnimals = <String, Set<String>>{};
 
-        for (final animal in animals) {
-          final t = thresholds.firstWhere(
-            (x) => x.speciesId == animal.speciesId,
-            orElse: () => ThresholdsEngine.cowDefaults,
-          );
+    for (final animal in animals) {
+      final t = thresholds.firstWhere(
+        (x) => x.speciesId == animal.speciesId,
+        orElse: () => ThresholdsEngine.cowDefaults,
+      );
 
-          for (final m
-              in MockLactation.history(animal, t, _now, from: _now)) {
-            // HENÜZ OLMAMIŞ sağım sayılmaz: sabah yapılan bir demoda akşam
-            // sağımı da toplama giriyordu ve gün ortasında günlük toplam
-            // akşamki değerini gösteriyordu.
-            if (m.startedAt == null || m.startedAt!.isAfter(_clock)) continue;
+      for (final m in MockLactation.history(animal, t, _now, from: _now)) {
+        // HENÜZ OLMAMIŞ sağım sayılmaz: sabah yapılan bir demoda akşam
+        // sağımı da toplama giriyordu ve gün ortasında günlük toplam
+        // akşamki değerini gösteriyordu.
+        if (m.startedAt == null || m.startedAt!.isAfter(_clock)) continue;
 
-            totalMl += m.volumeMl;
-            milkingCount++;
-            milkedAnimals.add(animal.id);
-            speciesMl.update(animal.speciesId, (v) => v + m.volumeMl,
-                ifAbsent: () => m.volumeMl);
-            (speciesAnimals[animal.speciesId] ??= {}).add(animal.id);
-          }
-        }
-
-        final counts = <YieldClass, int>{for (final c in YieldClass.values) c: 0};
-        for (final a in animals) {
-          counts[a.yieldClass] = (counts[a.yieldClass] ?? 0) + 1;
-        }
-
-        final alertList = await alerts();
-        final sessionList = await sessions();
-
-        return DashboardSummary(
-          date: _now,
-          totalMl: totalMl,
-          milkingCount: milkingCount,
-          animalCount: milkedAnimals.length,
-          activeSessions:
-              sessionList.where((s) => s.status == 'active').length,
-          openAlerts: alertList.where((a) => !a.isAcknowledged).length,
-          bySpecies: [
-            for (final entry in speciesMl.entries)
-              SpeciesTotal(
-                speciesId: entry.key,
-                totalMl: entry.value,
-                animalCount: speciesAnimals[entry.key]?.length ?? 0,
-              ),
-          ],
-          classDistribution: [
-            for (final entry in counts.entries)
-              YieldClassCount(yieldClass: entry.key, count: entry.value),
-          ],
+        totalMl += m.volumeMl;
+        milkingCount++;
+        milkedAnimals.add(animal.id);
+        speciesMl.update(
+          animal.speciesId,
+          (v) => v + m.volumeMl,
+          ifAbsent: () => m.volumeMl,
         );
-      });
+        (speciesAnimals[animal.speciesId] ??= {}).add(animal.id);
+      }
+    }
+
+    final counts = <YieldClass, int>{for (final c in YieldClass.values) c: 0};
+    for (final a in animals) {
+      counts[a.yieldClass] = (counts[a.yieldClass] ?? 0) + 1;
+    }
+
+    final alertList = await alerts();
+    final sessionList = await sessions();
+
+    return DashboardSummary(
+      date: _now,
+      totalMl: totalMl,
+      milkingCount: milkingCount,
+      animalCount: milkedAnimals.length,
+      activeSessions: sessionList.where((s) => s.status == 'active').length,
+      openAlerts: alertList.where((a) => !a.isAcknowledged).length,
+      bySpecies: [
+        for (final entry in speciesMl.entries)
+          SpeciesTotal(
+            speciesId: entry.key,
+            totalMl: entry.value,
+            animalCount: speciesAnimals[entry.key]?.length ?? 0,
+          ),
+      ],
+      classDistribution: [
+        for (final entry in counts.entries)
+          YieldClassCount(yieldClass: entry.key, count: entry.value),
+      ],
+    );
+  });
 
   /// Kayıtlı push jetonları.
   ///
@@ -462,8 +492,7 @@ class MockRepository implements MilkTraceRepository {
   Future<void> registerPushToken({
     required String token,
     required String platform,
-  }) =>
-      _delayed(() async => pushTokens.add(token));
+  }) => _delayed(() async => pushTokens.add(token));
 
   @override
   Future<void> unregisterPushToken(String token) =>
@@ -488,33 +517,35 @@ class MockRepository implements MilkTraceRepository {
   Future<MilkingSession> startSession({
     required String hallId,
     required String type,
-  }) =>
-      _delayed(() async {
-        final live = await _load('live_session.json',
-            (json) => LiveSession.fromJson(json as Map<String, dynamic>));
+  }) => _delayed(() async {
+    final live = await _load(
+      'live_session.json',
+      (json) => LiveSession.fromJson(json as Map<String, dynamic>),
+    );
 
-        // Fixture'daki oturum YENİDEN KULLANILIR: canlı ekran, geçmiş ve
-        // dashboard hep o kimliğe bakıyor. Yeni bir kimlik üretmek mock'u
-        // kendi içinde tutarsız yapardı.
-        _sessionEnded = false;
-        return live.session.copyWith(hallId: hallId, type: type, status: 'active');
-      });
+    // Fixture'daki oturum YENİDEN KULLANILIR: canlı ekran, geçmiş ve
+    // dashboard hep o kimliğe bakıyor. Yeni bir kimlik üretmek mock'u
+    // kendi içinde tutarsız yapardı.
+    _sessionEnded = false;
+    return live.session.copyWith(hallId: hallId, type: type, status: 'active');
+  });
 
   @override
   Future<void> assignAnimal({
     required String sessionId,
     required String spoutId,
     required String animalId,
-  }) =>
-      _delayed(() async => _assignments[spoutId] = animalId);
+  }) => _delayed(() async => _assignments[spoutId] = animalId);
 
   @override
   Future<MilkingSession> endSession(String sessionId) => _delayed(() async {
-        final live = await _load('live_session.json',
-            (json) => LiveSession.fromJson(json as Map<String, dynamic>));
+    final live = await _load(
+      'live_session.json',
+      (json) => LiveSession.fromJson(json as Map<String, dynamic>),
+    );
 
-        _sessionEnded = true;
-        _assignments.clear();
-        return live.session.copyWith(status: 'ended', endedAt: _clock);
-      });
+    _sessionEnded = true;
+    _assignments.clear();
+    return live.session.copyWith(status: 'ended', endedAt: _clock);
+  });
 }

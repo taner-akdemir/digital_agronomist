@@ -57,7 +57,8 @@ abstract class SpeciesTotal with _$SpeciesTotal {
 @freezed
 abstract class YieldClassCount with _$YieldClassCount {
   const factory YieldClassCount({
-    @JsonKey(unknownEnumValue: YieldClass.normal) required YieldClass yieldClass,
+    @JsonKey(unknownEnumValue: YieldClass.normal)
+    required YieldClass yieldClass,
     @Default(0) int count,
   }) = _YieldClassCount;
 

@@ -30,39 +30,42 @@ void main() {
           as Map<String, dynamic>;
 
   test('türler ve eşikler çözülür', () {
-    final species = readList('species.json')
-        .map((e) => Species.fromJson(e as Map<String, dynamic>))
-        .toList();
+    final species = readList(
+      'species.json',
+    ).map((e) => Species.fromJson(e as Map<String, dynamic>)).toList();
     expect(species, hasLength(3));
     expect(species.map((s) => s.code), containsAll(['cow', 'goat', 'sheep']));
 
-    final thresholds = readList('thresholds.json')
-        .map((e) => Thresholds.fromJson(e as Map<String, dynamic>))
-        .toList();
+    final thresholds = readList(
+      'thresholds.json',
+    ).map((e) => Thresholds.fromJson(e as Map<String, dynamic>)).toList();
     expect(thresholds, hasLength(3));
 
     final speciesIds = species.map((s) => s.id).toSet();
     for (final t in thresholds) {
-      expect(speciesIds, contains(t.speciesId),
-          reason: 'eşik tanımsız bir türe bağlı');
+      expect(
+        speciesIds,
+        contains(t.speciesId),
+        reason: 'eşik tanımsız bir türe bağlı',
+      );
       expect(t.flowLow, lessThan(t.flowHigh));
       expect(t.yieldRedPct, lessThan(t.yieldGreenPct));
     }
   });
 
   test('tesis hiyerarşisi çözülür ve yabancı anahtarlar tutarlı', () {
-    final farms = readList('farms.json')
-        .map((e) => Farm.fromJson(e as Map<String, dynamic>))
-        .toList();
-    final halls = readList('halls.json')
-        .map((e) => Hall.fromJson(e as Map<String, dynamic>))
-        .toList();
-    final vacuums = readList('vacuums.json')
-        .map((e) => Vacuum.fromJson(e as Map<String, dynamic>))
-        .toList();
-    final spouts = readList('spouts.json')
-        .map((e) => Spout.fromJson(e as Map<String, dynamic>))
-        .toList();
+    final farms = readList(
+      'farms.json',
+    ).map((e) => Farm.fromJson(e as Map<String, dynamic>)).toList();
+    final halls = readList(
+      'halls.json',
+    ).map((e) => Hall.fromJson(e as Map<String, dynamic>)).toList();
+    final vacuums = readList(
+      'vacuums.json',
+    ).map((e) => Vacuum.fromJson(e as Map<String, dynamic>)).toList();
+    final spouts = readList(
+      'spouts.json',
+    ).map((e) => Spout.fromJson(e as Map<String, dynamic>)).toList();
 
     expect(farms, hasLength(1));
     expect(halls, hasLength(3));
@@ -77,36 +80,53 @@ void main() {
       expect(farmIds, contains(h.farmId));
     }
     for (final v in vacuums) {
-      expect(hallIds, contains(v.hallId), reason: 'ünite tanımsız bölgeye bağlı');
+      expect(
+        hallIds,
+        contains(v.hallId),
+        reason: 'ünite tanımsız bölgeye bağlı',
+      );
     }
     for (final s in spouts) {
-      expect(vacuumIds, contains(s.vacuumId), reason: 'nokta tanımsız üniteye bağlı');
+      expect(
+        vacuumIds,
+        contains(s.vacuumId),
+        reason: 'nokta tanımsız üniteye bağlı',
+      );
     }
 
     // Ünitenin bildirdiği nokta sayısı gerçekten var mı?
     for (final v in vacuums) {
       final count = spouts.where((s) => s.vacuumId == v.id).length;
-      expect(count, v.totalSpouts,
-          reason: '${v.name} totalSpouts=${v.totalSpouts} ama $count nokta var');
+      expect(
+        count,
+        v.totalSpouts,
+        reason: '${v.name} totalSpouts=${v.totalSpouts} ama $count nokta var',
+      );
     }
   });
 
   test('cihazlar noktalara bire bir bağlı', () {
-    final devices = readList('devices.json')
-        .map((e) => Device.fromJson(e as Map<String, dynamic>))
-        .toList();
-    final spoutIds = readList('spouts.json')
-        .map((e) => Spout.fromJson(e as Map<String, dynamic>).id)
-        .toSet();
+    final devices = readList(
+      'devices.json',
+    ).map((e) => Device.fromJson(e as Map<String, dynamic>)).toList();
+    final spoutIds = readList(
+      'spouts.json',
+    ).map((e) => Spout.fromJson(e as Map<String, dynamic>).id).toSet();
 
     final assigned = devices.map((d) => d.spoutId).whereType<String>().toList();
-    expect(assigned.toSet(), hasLength(assigned.length),
-        reason: 'aynı noktaya iki cihaz takılı olamaz');
+    expect(
+      assigned.toSet(),
+      hasLength(assigned.length),
+      reason: 'aynı noktaya iki cihaz takılı olamaz',
+    );
     for (final d in devices) {
       if (d.spoutId != null) expect(spoutIds, contains(d.spoutId));
     }
-    expect(devices.map((d) => d.serialNo).toSet(), hasLength(devices.length),
-        reason: 'seri numaraları tekil olmalı');
+    expect(
+      devices.map((d) => d.serialNo).toSet(),
+      hasLength(devices.length),
+      reason: 'seri numaraları tekil olmalı',
+    );
 
     // Fixture'da her üç durum da BULUNMALI: Cihazlar ekranı çevrimiçi,
     // çevrimdışı, takılı olmayan sayaç ve sayaçsız nokta hâllerinin
@@ -114,8 +134,11 @@ void main() {
     expect(devices.where((d) => d.status == 'online'), isNotEmpty);
     expect(devices.where((d) => d.status == 'offline'), isNotEmpty);
     expect(devices.where((d) => d.spoutId == null), isNotEmpty);
-    expect(spoutIds.difference(assigned.toSet()), isNotEmpty,
-        reason: 'sayaç takılmamış en az bir nokta olmalı');
+    expect(
+      spoutIds.difference(assigned.toSet()),
+      isNotEmpty,
+      reason: 'sayaç takılmamış en az bir nokta olmalı',
+    );
 
     // §17 Faz 5 demosu birden fazla protokol istiyor; tek protokol olsaydı
     // karışım hiç denenmemiş olurdu.
@@ -124,25 +147,31 @@ void main() {
         .whereType<String>()
         .toSet();
     expect(protocols.length, greaterThan(1), reason: 'protokol karışımı yok');
-    expect(devices.where((d) => d.profile == null), isNotEmpty,
-        reason: 'profili atanmamış (karantinadaki) bir cihaz da olmalı');
+    expect(
+      devices.where((d) => d.profile == null),
+      isNotEmpty,
+      reason: 'profili atanmamış (karantinadaki) bir cihaz da olmalı',
+    );
   });
 
   test('hayvanlar çözülür; küpe numarası var, tür id ile bağlı', () {
-    final animals = readList('animals.json')
-        .map((e) => Animal.fromJson(e as Map<String, dynamic>))
-        .toList();
-    final speciesIds = readList('species.json')
-        .map((e) => Species.fromJson(e as Map<String, dynamic>).id)
-        .toSet();
+    final animals = readList(
+      'animals.json',
+    ).map((e) => Animal.fromJson(e as Map<String, dynamic>)).toList();
+    final speciesIds = readList(
+      'species.json',
+    ).map((e) => Species.fromJson(e as Map<String, dynamic>).id).toSet();
 
     expect(animals, hasLength(30));
     for (final a in animals) {
       expect(a.earTag, isNotEmpty, reason: 'küpe numarası zorunlu (§15.3/8)');
       expect(speciesIds, contains(a.speciesId));
     }
-    expect(animals.map((a) => a.earTag).toSet(), hasLength(30),
-        reason: 'küpe numaraları tekil olmalı');
+    expect(
+      animals.map((a) => a.earTag).toSet(),
+      hasLength(30),
+      reason: 'küpe numaraları tekil olmalı',
+    );
   });
 
   test('canlı oturum §8.5 payload şekliyle çözülür', () {
@@ -151,9 +180,9 @@ void main() {
     expect(live.session.hallId, isNotEmpty);
     expect(live.updates, hasLength(10));
 
-    final spoutIds = readList('spouts.json')
-        .map((e) => Spout.fromJson(e as Map<String, dynamic>).id)
-        .toSet();
+    final spoutIds = readList(
+      'spouts.json',
+    ).map((e) => Spout.fromJson(e as Map<String, dynamic>).id).toSet();
     for (final u in live.updates) {
       expect(spoutIds, contains(u.spoutId));
       expect(u.sessionId, live.session.id);
@@ -162,8 +191,15 @@ void main() {
     // Dört rengin de demoda görünmesi gerekiyor; aksi halde sarı bandı
     // (§15.3/14) yine fark edilmez.
     final colors = live.updates.map((u) => u.flowColor).toSet();
-    expect(colors, containsAll([MilkColor.green, MilkColor.yellow,
-        MilkColor.red, MilkColor.grey]));
+    expect(
+      colors,
+      containsAll([
+        MilkColor.green,
+        MilkColor.yellow,
+        MilkColor.red,
+        MilkColor.grey,
+      ]),
+    );
   });
 
   test('eşleşmemiş nokta hayvansız ve gri gelir', () {
@@ -199,8 +235,7 @@ void main() {
   // API'de ekranda ham "modbus" görünüyordu. Mock `modbus-tcp` kullandığı
   // için bu, mock modda hiç fark edilmedi.
   test('protokol etiketi backend kodlarını tanır', () {
-    String label(String p) =>
-        DeviceProfile(id: 'p', protocol: p).protocolLabel;
+    String label(String p) => DeviceProfile(id: 'p', protocol: p).protocolLabel;
 
     expect(label('mqtt'), 'MQTT');
     expect(label('modbus'), 'Modbus');

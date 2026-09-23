@@ -25,15 +25,15 @@ class _FakeAuth extends Auth {
   AuthState build() => _initial;
 
   void enter() => state = const AuthState(
-        status: AuthStatus.signedIn,
-        user: AuthUser(
-          id: 'u1',
-          email: 'ciftci@milktrace.local',
-          fullName: 'Demo',
-          role: 'tenant_owner',
-          tenantId: 't1',
-        ),
-      );
+    status: AuthStatus.signedIn,
+    user: AuthUser(
+      id: 'u1',
+      email: 'ciftci@milktrace.local',
+      fullName: 'Demo',
+      role: 'tenant_owner',
+      tenantId: 't1',
+    ),
+  );
 
   void leave() => state = AuthState.signedOut;
 }
@@ -83,11 +83,13 @@ void main() {
     gateway = _FakeGateway();
     repo = MockRepository(latency: Duration.zero);
 
-    return ProviderContainer(overrides: [
-      pushGatewayProvider.overrideWithValue(gateway),
-      repositoryProvider.overrideWith((ref) => repo as MilkTraceRepository),
-      authProvider.overrideWith(() => _FakeAuth(auth)),
-    ]);
+    return ProviderContainer(
+      overrides: [
+        pushGatewayProvider.overrideWithValue(gateway),
+        repositoryProvider.overrideWith((ref) => repo as MilkTraceRepository),
+        authProvider.overrideWith(() => _FakeAuth(auth)),
+      ],
+    );
   }
 
   tearDown(() => container.dispose());
@@ -99,8 +101,10 @@ void main() {
   test('oturum kapalıyken jeton kaydedilmez', () async {
     container = build();
 
-    expect(await container.read(pushRegistrationProvider.future),
-        PushStatus.idle);
+    expect(
+      await container.read(pushRegistrationProvider.future),
+      PushStatus.idle,
+    );
     expect(gateway.starts, 0);
     expect(repo.pushTokens, isEmpty);
   });
@@ -111,8 +115,10 @@ void main() {
 
     (container.read(authProvider.notifier) as _FakeAuth).enter();
 
-    expect(await container.read(pushRegistrationProvider.future),
-        PushStatus.registered);
+    expect(
+      await container.read(pushRegistrationProvider.future),
+      PushStatus.registered,
+    );
     expect(repo.pushTokens, ['tok-1']);
   });
 
@@ -123,8 +129,10 @@ void main() {
     container = build(auth: const AuthState(status: AuthStatus.signedIn));
     gateway.token = null;
 
-    expect(await container.read(pushRegistrationProvider.future),
-        PushStatus.unavailable);
+    expect(
+      await container.read(pushRegistrationProvider.future),
+      PushStatus.unavailable,
+    );
     expect(repo.pushTokens, isEmpty);
   });
 
@@ -158,8 +166,10 @@ void main() {
 
     (container.read(authProvider.notifier) as _FakeAuth).leave();
 
-    expect(await container.read(pushRegistrationProvider.future),
-        PushStatus.idle);
+    expect(
+      await container.read(pushRegistrationProvider.future),
+      PushStatus.idle,
+    );
     expect(repo.pushTokens, isEmpty);
     expect(gateway.stops, greaterThan(0));
   });

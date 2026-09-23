@@ -15,6 +15,7 @@ abstract class Device with _$Device {
 
     /// Takılı olduğu nokta; stokta bekleyen cihazda null.
     String? spoutId,
+
     /// Cihazın konuştuğu sözleşme (§9.0). Profil atanmamış cihaz karantinada
     /// bekliyor demektir (§8.4 quarantine) ve verisi işlenmiyor.
     ///

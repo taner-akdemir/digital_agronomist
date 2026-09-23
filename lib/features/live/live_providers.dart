@@ -75,9 +75,9 @@ class LiveBoard extends _$LiveBoard {
     final sub = repo.watchSession(live.session.id).listen(
       (u) {
         bySpout[u.spoutId] = u;
-        state = AsyncData(live.copyWith(
-          updates: bySpout.values.toList(growable: false),
-        ));
+        state = AsyncData(
+          live.copyWith(updates: bySpout.values.toList(growable: false)),
+        );
       },
       // Akış BİTTİYSE oturum kapanmıştır (session.ended). Tahtayı yeniden
       // kurmak "oturum yok" durumuna geçirir; aksi hâlde ekran kapanmış bir
@@ -105,23 +105,24 @@ class MilkingControl extends _$MilkingControl {
   bool build() => false; // true = bir komut sürüyor
 
   /// Bölgede sağım başlatır.
-  Future<void> start({required String hallId, required String type}) =>
-      _run(() => ref.read(repositoryProvider).startSession(
-            hallId: hallId,
-            type: type,
-          ));
+  Future<void> start({required String hallId, required String type}) => _run(
+    () => ref.read(repositoryProvider).startSession(hallId: hallId, type: type),
+  );
 
   /// Noktaya hayvan eşleştirir.
   Future<void> assign({
     required String sessionId,
     required String spoutId,
     required String animalId,
-  }) =>
-      _run(() => ref.read(repositoryProvider).assignAnimal(
-            sessionId: sessionId,
-            spoutId: spoutId,
-            animalId: animalId,
-          ));
+  }) => _run(
+    () => ref
+        .read(repositoryProvider)
+        .assignAnimal(
+          sessionId: sessionId,
+          spoutId: spoutId,
+          animalId: animalId,
+        ),
+  );
 
   /// Sağımı bitirir.
   Future<void> end({required String sessionId}) =>

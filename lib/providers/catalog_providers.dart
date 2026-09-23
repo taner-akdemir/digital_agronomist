@@ -24,4 +24,5 @@ Future<List<Thresholds>> thresholdsList(Ref ref) =>
     ref.watch(repositoryProvider).thresholds();
 
 @riverpod
-Future<List<Animal>> animals(Ref ref) => ref.watch(repositoryProvider).animals();
+Future<List<Animal>> animals(Ref ref) =>
+    ref.watch(repositoryProvider).animals();

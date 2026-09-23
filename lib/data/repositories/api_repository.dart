@@ -31,11 +31,11 @@ class ApiRepository implements MilkTraceRepository {
     String? Function()? accessToken,
     WebSocketChannel Function(Uri uri, Map<String, dynamic> headers)? connect,
     Duration reconnectDelay = const Duration(seconds: 3),
-  })  : _dio = dio,
-        _wsBaseUrl = wsBaseUrl,
-        _accessToken = accessToken ?? _noToken,
-        _connect = connect ?? _defaultConnect,
-        _reconnectDelay = reconnectDelay;
+  }) : _dio = dio,
+       _wsBaseUrl = wsBaseUrl,
+       _accessToken = accessToken ?? _noToken,
+       _connect = connect ?? _defaultConnect,
+       _reconnectDelay = reconnectDelay;
 
   final Dio _dio;
 
@@ -51,20 +51,28 @@ class ApiRepository implements MilkTraceRepository {
   final String? Function() _accessToken;
 
   /// Bağlantı kurucu; testler sahte kanal veriyor.
-  final WebSocketChannel Function(Uri uri, Map<String, dynamic> headers) _connect;
+  final WebSocketChannel Function(Uri uri, Map<String, dynamic> headers)
+  _connect;
 
   /// Kopan bağlantıdan sonra beklenen süre.
   final Duration _reconnectDelay;
 
   static String? _noToken() => null;
 
-  static WebSocketChannel _defaultConnect(Uri uri, Map<String, dynamic> headers) =>
-      IOWebSocketChannel.connect(uri, headers: headers);
+  static WebSocketChannel _defaultConnect(
+    Uri uri,
+    Map<String, dynamic> headers,
+  ) => IOWebSocketChannel.connect(uri, headers: headers);
 
   /// §16'daki zarf: {"success":..,"data":..,"error":{"code","message"}}
-  List<T> _listOf<T>(Response<dynamic> r, T Function(Map<String, dynamic>) from) {
+  List<T> _listOf<T>(
+    Response<dynamic> r,
+    T Function(Map<String, dynamic>) from,
+  ) {
     final data = (r.data as Map<String, dynamic>)['data'] as List<dynamic>;
-    return data.map((e) => from(e as Map<String, dynamic>)).toList(growable: false);
+    return data
+        .map((e) => from(e as Map<String, dynamic>))
+        .toList(growable: false);
   }
 
   Map<String, dynamic> _dataOf(Response<dynamic> r) =>
@@ -75,8 +83,10 @@ class ApiRepository implements MilkTraceRepository {
       _listOf(await _dio.get<dynamic>('/species'), Species.fromJson);
 
   @override
-  Future<List<Thresholds>> thresholds() async =>
-      _listOf(await _dio.get<dynamic>('/species/thresholds'), Thresholds.fromJson);
+  Future<List<Thresholds>> thresholds() async => _listOf(
+    await _dio.get<dynamic>('/species/thresholds'),
+    Thresholds.fromJson,
+  );
 
   @override
   Future<List<Farm>> farms() async =>
@@ -88,15 +98,18 @@ class ApiRepository implements MilkTraceRepository {
 
   @override
   Future<List<Vacuum>> vacuums({String? hallId}) async => _listOf(
-      await _dio.get<dynamic>('/vacuums',
-          queryParameters: {'hallId': ?hallId}),
-      Vacuum.fromJson);
+    await _dio.get<dynamic>('/vacuums', queryParameters: {'hallId': ?hallId}),
+    Vacuum.fromJson,
+  );
 
   @override
   Future<List<Spout>> spouts({String? vacuumId}) async => _listOf(
-      await _dio.get<dynamic>('/spouts',
-          queryParameters: {'vacuumId': ?vacuumId}),
-      Spout.fromJson);
+    await _dio.get<dynamic>(
+      '/spouts',
+      queryParameters: {'vacuumId': ?vacuumId},
+    ),
+    Spout.fromJson,
+  );
 
   @override
   Future<List<Device>> devices() async =>
@@ -216,9 +229,7 @@ class ApiRepository implements MilkTraceRepository {
     final uri = Uri.parse('$_wsBaseUrl/ws?sessionId=$sessionId');
     final token = _accessToken();
 
-    return _connect(uri, {
-      if (token != null) 'Authorization': 'Bearer $token',
-    });
+    return _connect(uri, {if (token != null) 'Authorization': 'Bearer $token'});
   }
 
   /// Gelen çerçeveyi çözer: güncelleme, oturum sonu ya da tanınmayan (null).
@@ -240,24 +251,36 @@ class ApiRepository implements MilkTraceRepository {
   }
 
   @override
-  Future<List<MilkingSession>> sessions(
-      {String? hallId, DateTime? from, DateTime? to}) async {
-    final r = await _dio.get<dynamic>('/sessions',
-        queryParameters: {..._range(from, to), 'hallId': ?hallId});
+  Future<List<MilkingSession>> sessions({
+    String? hallId,
+    DateTime? from,
+    DateTime? to,
+  }) async {
+    final r = await _dio.get<dynamic>(
+      '/sessions',
+      queryParameters: {..._range(from, to), 'hallId': ?hallId},
+    );
     return _listOf(r, MilkingSession.fromJson);
   }
 
   @override
-  Future<List<AnimalMilking>> animalHistory(String animalId,
-      {DateTime? from, DateTime? to}) async {
-    final r = await _dio.get<dynamic>('/animals/$animalId/history',
-        queryParameters: _range(from, to));
+  Future<List<AnimalMilking>> animalHistory(
+    String animalId, {
+    DateTime? from,
+    DateTime? to,
+  }) async {
+    final r = await _dio.get<dynamic>(
+      '/animals/$animalId/history',
+      queryParameters: _range(from, to),
+    );
     return _listOf(r, AnimalMilking.fromJson);
   }
 
   @override
   Future<AnimalTrend> animalTrend(String animalId) async =>
-      AnimalTrend.fromJson(_dataOf(await _dio.get<dynamic>('/animals/$animalId/trend')));
+      AnimalTrend.fromJson(
+        _dataOf(await _dio.get<dynamic>('/animals/$animalId/trend')),
+      );
 
   /// from/to parametreleri, verilmişlerse.
   ///
@@ -265,9 +288,9 @@ class ApiRepository implements MilkTraceRepository {
   /// gece yarısını olduğu gibi göndermek, backend'de üç saat kayık bir
   /// aralık sorgulamak olurdu.
   Map<String, dynamic> _range(DateTime? from, DateTime? to) => {
-        'from': ?from?.toUtc().toIso8601String(),
-        'to': ?to?.toUtc().toIso8601String(),
-      };
+    'from': ?from?.toUtc().toIso8601String(),
+    'to': ?to?.toUtc().toIso8601String(),
+  };
 
   @override
   Future<List<Alert>> alerts() async =>
@@ -278,16 +301,17 @@ class ApiRepository implements MilkTraceRepository {
       _dio.post<dynamic>('/alerts/$alertId/ack');
 
   @override
-  Future<DashboardSummary> dashboard() async => DashboardSummary.fromJson(
-      _dataOf(await _dio.get<dynamic>('/dashboard')));
+  Future<DashboardSummary> dashboard() async =>
+      DashboardSummary.fromJson(_dataOf(await _dio.get<dynamic>('/dashboard')));
 
   @override
   Future<void> registerPushToken({
     required String token,
     required String platform,
-  }) =>
-      _dio.post<dynamic>('/me/push-tokens',
-          data: {'token': token, 'platform': platform});
+  }) => _dio.post<dynamic>(
+    '/me/push-tokens',
+    data: {'token': token, 'platform': platform},
+  );
 
   @override
   Future<void> unregisterPushToken(String token) =>
@@ -295,34 +319,44 @@ class ApiRepository implements MilkTraceRepository {
 
   @override
   Future<Thresholds> updateThresholds(Thresholds thresholds) async =>
-      Thresholds.fromJson(_dataOf(await _dio.put<dynamic>(
-          '/species/thresholds',
-          data: thresholds.toJson())));
+      Thresholds.fromJson(
+        _dataOf(
+          await _dio.put<dynamic>(
+            '/species/thresholds',
+            data: thresholds.toJson(),
+          ),
+        ),
+      );
 
   @override
   Future<MilkingSession> startSession({
     required String hallId,
     required String type,
-  }) async =>
-      MilkingSession.fromJson(_dataOf(await _dio.post<dynamic>('/sessions',
-          data: {'hallId': hallId, 'type': type})));
+  }) async => MilkingSession.fromJson(
+    _dataOf(
+      await _dio.post<dynamic>(
+        '/sessions',
+        data: {'hallId': hallId, 'type': type},
+      ),
+    ),
+  );
 
   @override
   Future<void> assignAnimal({
     required String sessionId,
     required String spoutId,
     required String animalId,
-  }) =>
-      _dio.put<dynamic>('/sessions/$sessionId/spouts/$spoutId/animal',
-          data: {'animalId': animalId});
+  }) => _dio.put<dynamic>(
+    '/sessions/$sessionId/spouts/$spoutId/animal',
+    data: {'animalId': animalId},
+  );
 
   @override
   Future<MilkingSession> endSession(String sessionId) async =>
       MilkingSession.fromJson(
-          _dataOf(await _dio.post<dynamic>('/sessions/$sessionId/end')));
+        _dataOf(await _dio.post<dynamic>('/sessions/$sessionId/end')),
+      );
 }
-
-
 
 /// Oturumun kapandığını bildiren iç işaret.
 class _SessionEnded {

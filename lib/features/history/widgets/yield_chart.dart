@@ -24,8 +24,10 @@ class YieldChart extends StatelessWidget {
       return const SizedBox(
         height: 180,
         child: Center(
-          child: Text('Grafik için yeterli geçmiş yok',
-              style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted)),
+          child: Text(
+            'Grafik için yeterli geçmiş yok',
+            style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
+          ),
         ),
       );
     }
@@ -83,7 +85,9 @@ class YieldChart extends StatelessWidget {
                     getTitlesWidget: (value, meta) => Text(
                       value == meta.max ? '' : value.toStringAsFixed(0),
                       style: const TextStyle(
-                          fontSize: 10, color: AppColors.onSurfaceMuted),
+                        fontSize: 10,
+                        color: AppColors.onSurfaceMuted,
+                      ),
                     ),
                   ),
                 ),
@@ -102,12 +106,13 @@ class YieldChart extends StatelessWidget {
                       return SideTitleWidget(
                         meta: meta,
                         space: AppSpacing.xs,
-                        fitInside:
-                            SideTitleFitInsideData.fromTitleMeta(meta),
+                        fitInside: SideTitleFitInsideData.fromTitleMeta(meta),
                         child: Text(
                           Fmt.dayMonth(daily[i].date),
                           style: const TextStyle(
-                              fontSize: 10, color: AppColors.onSurfaceMuted),
+                            fontSize: 10,
+                            color: AppColors.onSurfaceMuted,
+                          ),
                         ),
                       );
                     },
@@ -123,7 +128,7 @@ class YieldChart extends StatelessWidget {
                         s.barIndex == 1
                             ? '7 gün ort. ${s.y.toStringAsFixed(1)} L'
                             : '${Fmt.dayMonth(daily[s.x.round()].date)}  '
-                                '${s.y.toStringAsFixed(1)} L',
+                                  '${s.y.toStringAsFixed(1)} L',
                         const TextStyle(color: Colors.white, fontSize: 11),
                       ),
                   ],
@@ -165,9 +170,10 @@ class _LegendItem extends StatelessWidget {
         const SizedBox(width: AppSpacing.xs),
         // Etiket METİN rengindedir, seri rengi DEĞİL: kimliği yanındaki
         // renkli çizgi taşır.
-        Text(label,
-            style: const TextStyle(
-                fontSize: 11, color: AppColors.onSurfaceMuted)),
+        Text(
+          label,
+          style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceMuted),
+        ),
       ],
     );
   }

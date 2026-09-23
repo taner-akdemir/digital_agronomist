@@ -21,10 +21,10 @@ final _today = DateTime(2026, 9, 22);
 Future<String> _diskAsset(String path) async => File(path).readAsStringSync();
 
 MockRepository _repo() => MockRepository(
-      latency: Duration.zero,
-      today: _today,
-      loadAsset: _diskAsset,
-    );
+  latency: Duration.zero,
+  today: _today,
+  loadAsset: _diskAsset,
+);
 
 /// Ekranı mock kaynakla sarar.
 ///
@@ -32,11 +32,11 @@ MockRepository _repo() => MockRepository(
 /// göstergesi görünsün diye) ve testte bu, her ekran için boşuna zaman
 /// ilerletmek demekti.
 Widget wrap(Widget child) => ProviderScope(
-      overrides: [
-        repositoryProvider.overrideWith((ref) => _repo() as MilkTraceRepository),
-      ],
-      child: MaterialApp(home: Scaffold(body: child)),
-    );
+  overrides: [
+    repositoryProvider.overrideWith((ref) => _repo() as MilkTraceRepository),
+  ],
+  child: MaterialApp(home: Scaffold(body: child)),
+);
 
 /// Fixture'dan sınıfa göre hayvan seçer.
 ///
@@ -51,7 +51,11 @@ Future<Animal> animalOf(WidgetTester tester, YieldClass c) async {
 /// Hayvan listesindeki (filtre çubuğu DEĞİL) metinler, ekrandaki sırayla.
 Iterable<String> listTexts(WidgetTester tester) => tester
     .widgetList<Text>(
-        find.descendant(of: find.byType(ListView).at(1), matching: find.byType(Text)))
+      find.descendant(
+        of: find.byType(ListView).at(1),
+        matching: find.byType(Text),
+      ),
+    )
     .map((t) => t.data ?? '');
 
 void main() {
@@ -59,30 +63,38 @@ void main() {
   //
   // Küpe numarasına göre sıralamak, 30 hayvanlık bir sürüde bile sorunlu
   // olanı tek tek aramak demekti.
-  testWidgets('ilgilenilmesi gereken hayvanlar listenin başında', (tester) async {
+  testWidgets('ilgilenilmesi gereken hayvanlar listenin başında', (
+    tester,
+  ) async {
     await tester.pumpWidget(wrap(const HistoryScreen()));
     await tester.pumpAndSettle();
 
-    final badges = listTexts(tester)
-        .where((t) => YieldClass.values.any((c) => c.label == t));
+    final badges = listTexts(
+      tester,
+    ).where((t) => YieldClass.values.any((c) => c.label == t));
 
     expect(badges.first, YieldClass.noMilk.label);
   });
 
-  testWidgets('sınıf filtresi listeyi daraltır, tekrar basınca kalkar',
-      (tester) async {
+  testWidgets('sınıf filtresi listeyi daraltır, tekrar basınca kalkar', (
+    tester,
+  ) async {
     await tester.pumpWidget(wrap(const HistoryScreen()));
     await tester.pumpAndSettle();
 
     final all = find.byIcon(Icons.chevron_right).evaluate().length;
 
-    await tester.tap(find.widgetWithText(FilterChip, YieldClass.declining.label));
+    await tester.tap(
+      find.widgetWithText(FilterChip, YieldClass.declining.label),
+    );
     await tester.pumpAndSettle();
 
     expect(find.byIcon(Icons.chevron_right).evaluate().length, lessThan(all));
     expect(listTexts(tester), isNot(contains(YieldClass.noMilk.label)));
 
-    await tester.tap(find.widgetWithText(FilterChip, YieldClass.declining.label));
+    await tester.tap(
+      find.widgetWithText(FilterChip, YieldClass.declining.label),
+    );
     await tester.pumpAndSettle();
 
     expect(find.byIcon(Icons.chevron_right).evaluate(), hasLength(all));
@@ -110,8 +122,9 @@ void main() {
     expect(find.textContaining('Sağımı'), findsWidgets);
   });
 
-  testWidgets('hayvan detayı sınıfı, trendi ve son sağımları gösterir',
-      (tester) async {
+  testWidgets('hayvan detayı sınıfı, trendi ve son sağımları gösterir', (
+    tester,
+  ) async {
     final animal = await animalOf(tester, YieldClass.high);
 
     await tester.pumpWidget(wrap(AnimalDetailScreen(animalId: animal.id)));
@@ -159,13 +172,21 @@ void main() {
     await tester.pumpWidget(wrap(const HistoryScreen()));
     await tester.pumpAndSettle();
 
-    expect(find.text('Temizle'), findsNothing,
-        reason: 'filtre yokken özet satırı da olmamalı');
+    expect(
+      find.text('Temizle'),
+      findsNothing,
+      reason: 'filtre yokken özet satırı da olmamalı',
+    );
 
-    await tester.tap(find.widgetWithText(FilterChip, YieldClass.declining.label));
+    await tester.tap(
+      find.widgetWithText(FilterChip, YieldClass.declining.label),
+    );
     await tester.pumpAndSettle();
 
-    expect(find.text('${YieldClass.declining.label} · 3 hayvan'), findsOneWidget);
+    expect(
+      find.text('${YieldClass.declining.label} · 3 hayvan'),
+      findsOneWidget,
+    );
 
     await tester.tap(find.text('Temizle'));
     await tester.pumpAndSettle();

@@ -63,20 +63,19 @@ class _Board extends ConsumerWidget {
           ),
           switch (board) {
             AsyncLoading() when live == null => const SliverFillRemaining(
-                hasScrollBody: false,
-                child: Center(child: CircularProgressIndicator()),
-              ),
+              hasScrollBody: false,
+              child: Center(child: CircularProgressIndicator()),
+            ),
             AsyncError(:final error) => SliverFillRemaining(
-                hasScrollBody: false,
-                child: ErrorView(
-                    message: 'Canlı veri alınamadı', error: error),
-              ),
+              hasScrollBody: false,
+              child: ErrorView(message: 'Canlı veri alınamadı', error: error),
+            ),
             _ => _Grid(
-                live: live!,
-                hall: hall,
-                spouts: spouts.value ?? const [],
-                vacuums: vacuums.value ?? const [],
-              ),
+              live: live!,
+              hall: hall,
+              spouts: spouts.value ?? const [],
+              vacuums: vacuums.value ?? const [],
+            ),
           },
           const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.lg)),
         ],
@@ -101,12 +100,18 @@ class _Header extends ConsumerWidget {
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(
-          AppSpacing.lg, AppSpacing.md, AppSpacing.lg, AppSpacing.sm),
+        AppSpacing.lg,
+        AppSpacing.md,
+        AppSpacing.lg,
+        AppSpacing.sm,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Canlı Veriler',
-              style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted)),
+          const Text(
+            'Canlı Veriler',
+            style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
+          ),
           const SizedBox(height: AppSpacing.xs),
           Row(
             children: [
@@ -178,7 +183,8 @@ class _SessionControls extends ConsumerWidget {
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.darkRedColor,
                     shape: const RoundedRectangleBorder(
-                        borderRadius: AppRadius.smAll),
+                      borderRadius: AppRadius.smAll,
+                    ),
                   ),
                 )
               : FilledButton.icon(
@@ -188,7 +194,8 @@ class _SessionControls extends ConsumerWidget {
                   style: FilledButton.styleFrom(
                     backgroundColor: AppColors.darkGreenColor,
                     shape: const RoundedRectangleBorder(
-                        borderRadius: AppRadius.smAll),
+                      borderRadius: AppRadius.smAll,
+                    ),
                   ),
                 ),
         ),
@@ -205,11 +212,13 @@ class _SessionControls extends ConsumerWidget {
     );
     if (type == null || !context.mounted) return;
 
-    await _guard(context, ref, () =>
-        ref.read(milkingControlProvider.notifier).start(
-              hallId: hall.id,
-              type: type,
-            ));
+    await _guard(
+      context,
+      ref,
+      () => ref
+          .read(milkingControlProvider.notifier)
+          .start(hallId: hall.id, type: type),
+    );
   }
 
   Future<void> _end(BuildContext context, WidgetRef ref) async {
@@ -220,8 +229,9 @@ class _SessionControls extends ConsumerWidget {
       builder: (ctx) => AlertDialog(
         title: const Text('Sağımı bitir'),
         content: const Text(
-            'Açık kalan hayvan sağımları kapatılacak ve oturum özetleri '
-            'hesaplanacak. Bu işlem geri alınamaz.'),
+          'Açık kalan hayvan sağımları kapatılacak ve oturum özetleri '
+          'hesaplanacak. Bu işlem geri alınamaz.',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
@@ -229,7 +239,9 @@ class _SessionControls extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(true),
-            style: TextButton.styleFrom(foregroundColor: AppColors.darkRedColor),
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.darkRedColor,
+            ),
             child: const Text('Bitir'),
           ),
         ],
@@ -237,10 +249,13 @@ class _SessionControls extends ConsumerWidget {
     );
     if (ok != true || !context.mounted) return;
 
-    await _guard(context, ref, () =>
-        ref.read(milkingControlProvider.notifier).end(
-              sessionId: live!.session.id,
-            ));
+    await _guard(
+      context,
+      ref,
+      () => ref
+          .read(milkingControlProvider.notifier)
+          .end(sessionId: live!.session.id),
+    );
   }
 }
 
@@ -256,11 +271,17 @@ class _SessionTypeSheet extends StatelessWidget {
         children: [
           const Padding(
             padding: EdgeInsets.fromLTRB(
-                AppSpacing.xl, 0, AppSpacing.xl, AppSpacing.sm),
+              AppSpacing.xl,
+              0,
+              AppSpacing.xl,
+              AppSpacing.sm,
+            ),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Text('Sağım tipi',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              child: Text(
+                'Sağım tipi',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
             ),
           ),
           // Beklenen verim oturum tipine göre ayrışıyor (§6.3): sabah sağımı
@@ -296,10 +317,9 @@ Future<void> _guard(
   try {
     await action();
   } on Object catch (e) {
-    messenger.showSnackBar(SnackBar(
-      content: Text(_message(e)),
-      backgroundColor: AppColors.flowRed,
-    ));
+    messenger.showSnackBar(
+      SnackBar(content: Text(_message(e)), backgroundColor: AppColors.flowRed),
+    );
   }
 }
 
@@ -370,26 +390,26 @@ class _Grid extends ConsumerWidget {
           crossAxisSpacing: AppSpacing.md,
           mainAxisSpacing: AppSpacing.md,
         ),
-        delegate: SliverChildBuilderDelegate(
-          childCount: updates.length,
-          (context, index) {
-            final u = updates[index];
-            final spout = spoutById[u.spoutId];
-            final vacuum = spout == null ? null : vacuumById[spout.vacuumId];
-            final title = spout == null
-                ? 'Nokta'
-                : '${vacuum?.name ?? 'Ünite'} · Nokta ${spout.positionNo}';
+        delegate: SliverChildBuilderDelegate(childCount: updates.length, (
+          context,
+          index,
+        ) {
+          final u = updates[index];
+          final spout = spoutById[u.spoutId];
+          final vacuum = spout == null ? null : vacuumById[spout.vacuumId];
+          final title = spout == null
+              ? 'Nokta'
+              : '${vacuum?.name ?? 'Ünite'} · Nokta ${spout.positionNo}';
 
-            return GestureDetector(
-              // EŞLEŞTİRME KARTA DOKUNARAK: sağım sırasında operatörün eli
-              // dolu ve ayrı bir ekrana gidip nokta seçmesi gereksiz bir
-              // adım olurdu. Hayvanı olan karta dokunmak da eşleştirmeyi
-              // değiştirmeye izin verir — yanlış hayvan bağlanabilir.
-              onTap: () => _assign(context, ref, u.spoutId, title, assigned),
-              child: LiveInfoCard(update: u, title: title),
-            );
-          },
-        ),
+          return GestureDetector(
+            // EŞLEŞTİRME KARTA DOKUNARAK: sağım sırasında operatörün eli
+            // dolu ve ayrı bir ekrana gidip nokta seçmesi gereksiz bir
+            // adım olurdu. Hayvanı olan karta dokunmak da eşleştirmeyi
+            // değiştirmeye izin verir — yanlış hayvan bağlanabilir.
+            onTap: () => _assign(context, ref, u.spoutId, title, assigned),
+            child: LiveInfoCard(update: u, title: title),
+          );
+        }),
       ),
     );
   }
@@ -408,12 +428,16 @@ class _Grid extends ConsumerWidget {
     );
     if (animalId == null || !context.mounted) return;
 
-    await _guard(context, ref, () =>
-        ref.read(milkingControlProvider.notifier).assign(
-              sessionId: live.session.id,
-              spoutId: spoutId,
-              animalId: animalId,
-            ));
+    await _guard(
+      context,
+      ref,
+      () => ref
+          .read(milkingControlProvider.notifier)
+          .assign(
+            sessionId: live.session.id,
+            spoutId: spoutId,
+            animalId: animalId,
+          ),
+    );
   }
 }
-

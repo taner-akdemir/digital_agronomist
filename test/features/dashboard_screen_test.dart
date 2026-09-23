@@ -16,15 +16,19 @@ final _noon = DateTime(2026, 9, 22, 12);
 Future<String> _diskAsset(String path) async => File(path).readAsStringSync();
 
 Widget wrap(Widget child, {DateTime? today}) => ProviderScope(
-      overrides: [
-        repositoryProvider.overrideWith((ref) => MockRepository(
-              latency: Duration.zero,
-              today: today ?? _noon,
-              loadAsset: _diskAsset,
-            ) as MilkTraceRepository),
-      ],
-      child: MaterialApp(home: Scaffold(body: child)),
-    );
+  overrides: [
+    repositoryProvider.overrideWith(
+      (ref) =>
+          MockRepository(
+                latency: Duration.zero,
+                today: today ?? _noon,
+                loadAsset: _diskAsset,
+              )
+              as MilkTraceRepository,
+    ),
+  ],
+  child: MaterialApp(home: Scaffold(body: child)),
+);
 
 void main() {
   // Dört kart varsayılan 800x600 test yüzeyine sığmıyor ve alttakiler hiç
@@ -60,8 +64,9 @@ void main() {
     expect(find.text('Verim sınıfları · 30 hayvan'), findsOneWidget);
   });
 
-  testWidgets('açık uyarılar özetlenir ve tümüne geçiş sunulur',
-      (tester) async {
+  testWidgets('açık uyarılar özetlenir ve tümüne geçiş sunulur', (
+    tester,
+  ) async {
     await pumpDashboard(tester);
 
     expect(find.text('Açık uyarılar'), findsOneWidget);

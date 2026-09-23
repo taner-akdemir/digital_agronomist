@@ -24,10 +24,15 @@ void main() {
     final a = await animalOf(YieldClass.normal);
 
     final first = await repo.animalTrend(a.id);
-    final second =
-        await MockRepository(latency: Duration.zero, today: _today).animalTrend(a.id);
+    final second = await MockRepository(
+      latency: Duration.zero,
+      today: _today,
+    ).animalTrend(a.id);
 
-    expect(second.daily.map((d) => d.totalMl), first.daily.map((d) => d.totalMl));
+    expect(
+      second.daily.map((d) => d.totalMl),
+      first.daily.map((d) => d.totalMl),
+    );
   });
 
   // Sınıf ile GRAFİĞİN birbirini tuttuğunu doğrular (§6.4).
@@ -36,23 +41,35 @@ void main() {
   // kalsaydı, ekran kendi kendisiyle çelişirdi.
   test('yüksek verimli hayvanın 7 gün ortalaması üst eşiğin üstünde', () async {
     final a = await animalOf(YieldClass.high);
-    final t = (await repo.thresholds()).firstWhere((x) => x.speciesId == a.speciesId);
+    final t = (await repo.thresholds()).firstWhere(
+      (x) => x.speciesId == a.speciesId,
+    );
 
-    expect((await repo.animalTrend(a.id)).ma7Ml, greaterThan(t.highYieldDailyMl));
+    expect(
+      (await repo.animalTrend(a.id)).ma7Ml,
+      greaterThan(t.highYieldDailyMl),
+    );
   });
 
   test('kuruya çıkma adayının 7 gün ortalaması alt eşiğin altında', () async {
     final a = await animalOf(YieldClass.dryOffCandidate);
-    final t = (await repo.thresholds()).firstWhere((x) => x.speciesId == a.speciesId);
+    final t = (await repo.thresholds()).firstWhere(
+      (x) => x.speciesId == a.speciesId,
+    );
 
     expect((await repo.animalTrend(a.id)).ma7Ml, lessThan(t.dryOffDailyMl));
   });
 
   test('süt vermeyen hayvanın ortalaması sıfıra yakın', () async {
     final a = await animalOf(YieldClass.noMilk);
-    final t = (await repo.thresholds()).firstWhere((x) => x.speciesId == a.speciesId);
+    final t = (await repo.thresholds()).firstWhere(
+      (x) => x.speciesId == a.speciesId,
+    );
 
-    expect((await repo.animalTrend(a.id)).ma7Ml, lessThan(t.dryOffDailyMl ~/ 10));
+    expect(
+      (await repo.animalTrend(a.id)).ma7Ml,
+      lessThan(t.dryOffDailyMl ~/ 10),
+    );
   });
 
   // DÜŞÜŞTE olan hayvanın eğiminin NEGATİF olduğunu doğrular.
@@ -65,19 +82,32 @@ void main() {
     expect((await repo.animalTrend(a.id)).trendSlope, lessThan(0));
   });
 
-  test('trend 90 günlük seri döndürür ve hareketli ortalamalar doludur', () async {
-    final trend = await repo.animalTrend((await animalOf(YieldClass.normal)).id);
+  test(
+    'trend 90 günlük seri döndürür ve hareketli ortalamalar doludur',
+    () async {
+      final trend = await repo.animalTrend(
+        (await animalOf(YieldClass.normal)).id,
+      );
 
-    expect(trend.daily, hasLength(90));
-    expect(trend.daily.first.date.isBefore(trend.daily.last.date), isTrue,
-        reason: 'seri eskiden yeniye sıralı olmalı');
-    expect(trend.daily.map((d) => d.ma30Ml), everyElement(isNotNull),
-        reason: '30 gün ısınma üretildiği için ilk gün de dolu olmalı');
-  });
+      expect(trend.daily, hasLength(90));
+      expect(
+        trend.daily.first.date.isBefore(trend.daily.last.date),
+        isTrue,
+        reason: 'seri eskiden yeniye sıralı olmalı',
+      );
+      expect(
+        trend.daily.map((d) => d.ma30Ml),
+        everyElement(isNotNull),
+        reason: '30 gün ısınma üretildiği için ilk gün de dolu olmalı',
+      );
+    },
+  );
 
   // Geçmişin YENİDEN ESKİYE sıralı geldiğini doğrular: son sağım en üstte.
   test('geçmiş yeniden eskiye sıralıdır ve günde iki sağım vardır', () async {
-    final history = await repo.animalHistory((await animalOf(YieldClass.normal)).id);
+    final history = await repo.animalHistory(
+      (await animalOf(YieldClass.normal)).id,
+    );
 
     expect(history, hasLength(90 * 2));
     expect(history.first.startedAt!.isAfter(history.last.startedAt!), isTrue);
@@ -89,7 +119,9 @@ void main() {
   //
   // 50/50 bölünseydi oturum tipi ayrımı anlamsız kalırdı.
   test('sabah sağımı akşamdan yüksektir', () async {
-    final history = await repo.animalHistory((await animalOf(YieldClass.normal)).id);
+    final history = await repo.animalHistory(
+      (await animalOf(YieldClass.normal)).id,
+    );
 
     expect(history.first.volumeMl, greaterThan(history[1].volumeMl));
   });
@@ -99,11 +131,16 @@ void main() {
   // O günün kendisi dahil edilseydi hayvan kendi sonucuyla kıyaslanır ve
   // her sağım yeşil çıkardı — renk bandı hiç çalışmazdı.
   test('beklenen verim o günün kendi sonucu değildir', () async {
-    final history = await repo.animalHistory((await animalOf(YieldClass.declining)).id);
+    final history = await repo.animalHistory(
+      (await animalOf(YieldClass.declining)).id,
+    );
 
     expect(history.map((m) => m.expectedMl == m.volumeMl), anyElement(isFalse));
-    expect(history.first.expectedMl, greaterThan(history.first.volumeMl),
-        reason: 'düşüşteki hayvan beklenenin altında kalmalı');
+    expect(
+      history.first.expectedMl,
+      greaterThan(history.first.volumeMl),
+      reason: 'düşüşteki hayvan beklenenin altında kalmalı',
+    );
   });
 
   test('tarih aralığı filtresi uygulanır', () async {
@@ -123,7 +160,9 @@ void main() {
   test('keçi kendi eşikleriyle üretilir', () async {
     final species = await repo.species();
     final goatId = species.firstWhere((s) => s.code == 'goat').id;
-    final goat = (await repo.animals()).firstWhere((a) => a.speciesId == goatId);
+    final goat = (await repo.animals()).firstWhere(
+      (a) => a.speciesId == goatId,
+    );
     final cow = await animalOf(YieldClass.normal);
 
     final goatMa = (await repo.animalTrend(goat.id)).ma7Ml;
@@ -164,8 +203,11 @@ void main() {
     test('yalnızca yapılmış sağımlar toplanır', () async {
       final d = await repo.dashboard();
 
-      expect(d.milkingCount, d.animalCount,
-          reason: 'öğlen her hayvanın yalnızca sabah sağımı olmalı');
+      expect(
+        d.milkingCount,
+        d.animalCount,
+        reason: 'öğlen her hayvanın yalnızca sabah sağımı olmalı',
+      );
       expect(d.totalMl, greaterThan(0));
     });
 
@@ -174,8 +216,10 @@ void main() {
 
       var expected = 0;
       for (final a in animals) {
-        final today = await repo.animalHistory(a.id,
-            from: DateTime(noon.year, noon.month, noon.day));
+        final today = await repo.animalHistory(
+          a.id,
+          from: DateTime(noon.year, noon.month, noon.day),
+        );
         for (final m in today) {
           if (m.startedAt!.isBefore(noon)) expected += m.volumeMl;
         }
@@ -186,7 +230,9 @@ void main() {
 
     test('gün başında henüz sağım yoktur', () async {
       final midnight = MockRepository(
-          latency: Duration.zero, today: DateTime(2026, 9, 22));
+        latency: Duration.zero,
+        today: DateTime(2026, 9, 22),
+      );
 
       final d = await midnight.dashboard();
 
@@ -199,10 +245,14 @@ void main() {
     test('sınıf dağılımı tüm sınıfları ve toplam sürüyü kapsar', () async {
       final d = await repo.dashboard();
 
-      expect(d.classDistribution.map((c) => c.yieldClass),
-          containsAll(YieldClass.values));
-      expect(d.classDistribution.fold(0, (a, c) => a + c.count),
-          (await repo.animals()).length);
+      expect(
+        d.classDistribution.map((c) => c.yieldClass),
+        containsAll(YieldClass.values),
+      );
+      expect(
+        d.classDistribution.fold(0, (a, c) => a + c.count),
+        (await repo.animals()).length,
+      );
     });
 
     test('tür dağılımı üç türü de içerir', () async {
@@ -213,8 +263,7 @@ void main() {
     });
 
     test('açık uyarı sayısı uyarı listesiyle aynıdır', () async {
-      final open =
-          (await repo.alerts()).where((a) => !a.isAcknowledged).length;
+      final open = (await repo.alerts()).where((a) => !a.isAcknowledged).length;
 
       expect((await repo.dashboard()).openAlerts, open);
     });

@@ -79,13 +79,20 @@ abstract interface class MilkTraceRepository {
   ///
   /// Canlı akıştaki liveSession() ile aynı ucu kullanır ama amacı başka:
   /// orada AÇIK oturum aranır, burada kapanmışlar listelenir.
-  Future<List<MilkingSession>> sessions({String? hallId, DateTime? from, DateTime? to});
+  Future<List<MilkingSession>> sessions({
+    String? hallId,
+    DateTime? from,
+    DateTime? to,
+  });
 
   /// Bir hayvanın sağım geçmişi (§8.5 GET /animals/{id}/history?from&to).
   ///
   /// Yeniden eskiye sıralı gelir: geçmiş listesinde son sağım en üsttedir.
-  Future<List<AnimalMilking>> animalHistory(String animalId,
-      {DateTime? from, DateTime? to});
+  Future<List<AnimalMilking>> animalHistory(
+    String animalId, {
+    DateTime? from,
+    DateTime? to,
+  });
 
   /// Bir hayvanın 7/30 gün trendi ve sınıfı (§8.5 GET /animals/{id}/trend).
   Future<AnimalTrend> animalTrend(String animalId);
@@ -101,7 +108,10 @@ abstract interface class MilkTraceRepository {
   /// VARSAYIM: §8.5 bu ucu listelemiyor. FCM jetonu bir yere yazılmadan
   /// `notification` servisi kime push atacağını bilemez; yol o servis
   /// yazılırken doğrulanmalı (§18).
-  Future<void> registerPushToken({required String token, required String platform});
+  Future<void> registerPushToken({
+    required String token,
+    required String platform,
+  });
 
   /// Jetonun bağını koparır: çıkış yapan kullanıcının telefonuna, artık onun
   /// olmayan sürünün uyarıları gitmemeli.

@@ -202,8 +202,12 @@ abstract final class MockLactation {
       // sağım yeşil çıkardı.
       final expectedDaily = _movingAverage(series, i - 1, 7) ?? series[i];
 
-      out.add(_milking(animal, t, day, series[i], expectedDaily, morning: true));
-      out.add(_milking(animal, t, day, series[i], expectedDaily, morning: false));
+      out.add(
+        _milking(animal, t, day, series[i], expectedDaily, morning: true),
+      );
+      out.add(
+        _milking(animal, t, day, series[i], expectedDaily, morning: false),
+      );
     }
     return List.unmodifiable(out);
   }
@@ -227,9 +231,11 @@ abstract final class MockLactation {
     final startedAt = DateTime(day.year, day.month, day.day, morning ? 6 : 18);
 
     return AnimalMilking(
-      id: '${animal.id}-${day.toIso8601String().substring(0, 10)}-'
+      id:
+          '${animal.id}-${day.toIso8601String().substring(0, 10)}-'
           '${morning ? 'm' : 'e'}',
-      sessionId: 'mock-${day.toIso8601String().substring(0, 10)}-'
+      sessionId:
+          'mock-${day.toIso8601String().substring(0, 10)}-'
           '${morning ? 'm' : 'e'}',
       animalId: animal.id,
       startedAt: startedAt,

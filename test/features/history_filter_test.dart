@@ -21,7 +21,9 @@ void main() {
     // autoDispose'a çalışma fırsatı.
     await Future<void>.delayed(Duration.zero);
 
-    expect(container.read(animalFilterStateProvider).yieldClass,
-        YieldClass.dryOffCandidate);
+    expect(
+      container.read(animalFilterStateProvider).yieldClass,
+      YieldClass.dryOffCandidate,
+    );
   });
 }

@@ -48,7 +48,7 @@ final class AlertListProvider
   AlertList create() => AlertList();
 }
 
-String _$alertListHash() => r'303985eab07b1d44b9aeaab0aa3e48ab1248f857';
+String _$alertListHash() => r'1c3dff3db3bb8ef707417912ffe25ddca2ac9063';
 
 /// Uyarı listesi (§8.5 GET /alerts).
 ///

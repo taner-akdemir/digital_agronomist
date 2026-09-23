@@ -38,17 +38,17 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
   }
 
   List<Widget> _defaultActions(BuildContext context, WidgetRef ref) => [
-        IconButton(
-          tooltip: 'Uyarılar',
-          onPressed: () => context.push('/alerts'),
-          icon: _BellWithBadge(count: ref.watch(openAlertCountProvider)),
-        ),
-        IconButton(
-          tooltip: 'Hesap',
-          onPressed: () => showAccountSheet(context),
-          icon: const Icon(CupertinoIcons.person_circle),
-        ),
-      ];
+    IconButton(
+      tooltip: 'Uyarılar',
+      onPressed: () => context.push('/alerts'),
+      icon: _BellWithBadge(count: ref.watch(openAlertCountProvider)),
+    ),
+    IconButton(
+      tooltip: 'Hesap',
+      onPressed: () => showAccountSheet(context),
+      icon: const Icon(CupertinoIcons.person_circle),
+    ),
+  ];
 
   // kToolbarHeight kullanılır: sabit 50 px, Material'ın varsayılan 56 px'inden
   // küçüktü ve ikonlar dikeyde sıkışıyordu.

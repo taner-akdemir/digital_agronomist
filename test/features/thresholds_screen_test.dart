@@ -22,27 +22,31 @@ class _FakeAuth extends Auth {
 
   @override
   AuthState build() => AuthState(
-        status: AuthStatus.signedIn,
-        user: AuthUser(
-          id: 'u1',
-          email: 'a@b.c',
-          fullName: 'Demo',
-          role: role,
-          tenantId: 't1',
-        ),
-      );
+    status: AuthStatus.signedIn,
+    user: AuthUser(
+      id: 'u1',
+      email: 'a@b.c',
+      fullName: 'Demo',
+      role: role,
+      tenantId: 't1',
+    ),
+  );
 }
 
 late MockRepository repo;
 late ProviderContainer container;
 
-Future<void> pumpScreen(WidgetTester tester,
-    {String role = 'tenant_owner'}) async {
+Future<void> pumpScreen(
+  WidgetTester tester, {
+  String role = 'tenant_owner',
+}) async {
   repo = MockRepository(latency: Duration.zero, loadAsset: _diskAsset);
-  container = ProviderContainer(overrides: [
-    repositoryProvider.overrideWith((ref) => repo as MilkTraceRepository),
-    authProvider.overrideWith(() => _FakeAuth(role)),
-  ]);
+  container = ProviderContainer(
+    overrides: [
+      repositoryProvider.overrideWith((ref) => repo as MilkTraceRepository),
+      authProvider.overrideWith(() => _FakeAuth(role)),
+    ],
+  );
   addTearDown(container.dispose);
 
   // Form uzun; ListView yalnızca görüneni kurduğu için Kaydet düğmesi
@@ -52,10 +56,12 @@ Future<void> pumpScreen(WidgetTester tester,
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);
 
-  await tester.pumpWidget(UncontrolledProviderScope(
-    container: container,
-    child: const MaterialApp(home: ThresholdsScreen()),
-  ));
+  await tester.pumpWidget(
+    UncontrolledProviderScope(
+      container: container,
+      child: const MaterialApp(home: ThresholdsScreen()),
+    ),
+  );
   await tester.pumpAndSettle();
 }
 
@@ -85,8 +91,10 @@ void main() {
   testWidgets('kalibrasyon uyarısı gösterilir', (tester) async {
     await pumpScreen(tester);
 
-    expect(find.textContaining('tahmini başlangıç değerleridir'),
-        findsOneWidget);
+    expect(
+      find.textContaining('tahmini başlangıç değerleridir'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('her tür için ayrı sekme açılır', (tester) async {
@@ -108,7 +116,8 @@ void main() {
     expect(find.text('Alt eşik'), findsWidgets);
 
     final save = tester.widget<FilledButton>(
-        find.widgetWithText(FilledButton, 'Kaydet'));
+      find.widgetWithText(FilledButton, 'Kaydet'),
+    );
     expect(save.onPressed, isNull);
   });
 
@@ -116,7 +125,8 @@ void main() {
     await pumpScreen(tester);
 
     final save = tester.widget<FilledButton>(
-        find.widgetWithText(FilledButton, 'Kaydet'));
+      find.widgetWithText(FilledButton, 'Kaydet'),
+    );
     expect(save.onPressed, isNotNull);
   });
 
@@ -133,7 +143,11 @@ void main() {
 
     await tapSave(tester);
 
-    expect(repo.thresholdWrites, isEmpty, reason: 'geçersiz form kaydedilmemeli');
+    expect(
+      repo.thresholdWrites,
+      isEmpty,
+      reason: 'geçersiz form kaydedilmemeli',
+    );
   });
 
   testWidgets('verim yüzdesi 100ü geçemez', (tester) async {
@@ -167,6 +181,13 @@ void main() {
     await tapSave(tester);
 
     final list = await container.read(thresholdsListProvider.future);
-    expect(list.firstWhere((t) => t.speciesId == repo.thresholdWrites.single.speciesId).flowLow, 1.4);
+    expect(
+      list
+          .firstWhere(
+            (t) => t.speciesId == repo.thresholdWrites.single.speciesId,
+          )
+          .flowLow,
+      1.4,
+    );
   });
 }

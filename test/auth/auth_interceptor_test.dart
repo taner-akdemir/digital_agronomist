@@ -46,7 +46,8 @@ void main() {
     final rig = _Rig(handler: (o) async => okEnvelope({'ok': true}));
     addTearDown(rig.dispose);
     rig.interceptor.setTokens(
-        const AuthTokens(accessToken: 'A1', refreshToken: 'R1'));
+      const AuthTokens(accessToken: 'A1', refreshToken: 'R1'),
+    );
 
     await rig.authed.get<dynamic>('/halls');
 
@@ -61,54 +62,70 @@ void main() {
 
     await rig.authed.get<dynamic>('/halls');
 
-    expect(rig.adapter.requests.single.headers.containsKey('Authorization'), isFalse);
+    expect(
+      rig.adapter.requests.single.headers.containsKey('Authorization'),
+      isFalse,
+    );
   });
 
-  test('401 alınca token yenilenir ve istek yeni token\'la tekrarlanır', () async {
-    var hallsCalls = 0;
-    final rig = _Rig(handler: (o) async {
-      if (o.path == '/auth/refresh') {
-        return okEnvelope({'accessToken': 'A2', 'refreshToken': 'R2'});
-      }
-      hallsCalls++;
-      // İlk çağrı süresi dolmuş token'la geliyor.
-      if (o.headers['Authorization'] == 'Bearer A1') {
-        return errEnvelope(401, 'TOKEN_EXPIRED', 'Oturum süresi doldu.');
-      }
-      return okEnvelope({'ok': true});
-    });
-    addTearDown(rig.dispose);
-    rig.interceptor.setTokens(
-        const AuthTokens(accessToken: 'A1', refreshToken: 'R1'));
+  test(
+    '401 alınca token yenilenir ve istek yeni token\'la tekrarlanır',
+    () async {
+      var hallsCalls = 0;
+      final rig = _Rig(
+        handler: (o) async {
+          if (o.path == '/auth/refresh') {
+            return okEnvelope({'accessToken': 'A2', 'refreshToken': 'R2'});
+          }
+          hallsCalls++;
+          // İlk çağrı süresi dolmuş token'la geliyor.
+          if (o.headers['Authorization'] == 'Bearer A1') {
+            return errEnvelope(401, 'TOKEN_EXPIRED', 'Oturum süresi doldu.');
+          }
+          return okEnvelope({'ok': true});
+        },
+      );
+      addTearDown(rig.dispose);
+      rig.interceptor.setTokens(
+        const AuthTokens(accessToken: 'A1', refreshToken: 'R1'),
+      );
 
-    final r = await rig.authed.get<dynamic>('/halls');
+      final r = await rig.authed.get<dynamic>('/halls');
 
-    expect(r.statusCode, 200);
-    expect(hallsCalls, 2, reason: 'bir kez düşmeli, bir kez tekrarlanmalı');
-    expect(rig.adapter.countOf('/auth/refresh'), 1);
-  });
+      expect(r.statusCode, 200);
+      expect(hallsCalls, 2, reason: 'bir kez düşmeli, bir kez tekrarlanmalı');
+      expect(rig.adapter.countOf('/auth/refresh'), 1);
+    },
+  );
 
   test('yenilemede dönen İKİ token da diske yazılır', () async {
     // Yalnızca erişim token'ı yazılsaydı bir sonraki yenileme eski (artık
     // iptal edilmiş) yenileme token'ını gönderir ve sunucu bunu TEKRAR
     // KULLANIM sayıp kullanıcının tüm oturumlarını kapatırdı.
-    final rig = _Rig(handler: (o) async {
-      if (o.path == '/auth/refresh') {
-        return okEnvelope({'accessToken': 'A2', 'refreshToken': 'R2'});
-      }
-      return o.headers['Authorization'] == 'Bearer A1'
-          ? errEnvelope(401, 'TOKEN_EXPIRED', 'Oturum süresi doldu.')
-          : okEnvelope({'ok': true});
-    });
+    final rig = _Rig(
+      handler: (o) async {
+        if (o.path == '/auth/refresh') {
+          return okEnvelope({'accessToken': 'A2', 'refreshToken': 'R2'});
+        }
+        return o.headers['Authorization'] == 'Bearer A1'
+            ? errEnvelope(401, 'TOKEN_EXPIRED', 'Oturum süresi doldu.')
+            : okEnvelope({'ok': true});
+      },
+    );
     addTearDown(rig.dispose);
     rig.interceptor.setTokens(
-        const AuthTokens(accessToken: 'A1', refreshToken: 'R1'));
+      const AuthTokens(accessToken: 'A1', refreshToken: 'R1'),
+    );
 
     await rig.authed.get<dynamic>('/halls');
 
     final saved = await rig.store.readTokens();
     expect(saved?.accessToken, 'A2');
-    expect(saved?.refreshToken, 'R2', reason: 'yenileme token\'ı da dönmüş olmalı');
+    expect(
+      saved?.refreshToken,
+      'R2',
+      reason: 'yenileme token\'ı da dönmüş olmalı',
+    );
   });
 
   test('EŞZAMANLI 401\'lerde yalnızca BİR yenileme yapılır', () async {
@@ -116,19 +133,22 @@ void main() {
     // süresi dolmuşsa beşi de 401 alır. Her biri ayrı yenileme yapsaydı,
     // dönen yenileme token'ı yüzünden ikinci istek sunucuya TEKRAR KULLANIM
     // gibi görünür ve kullanıcı hiç yoktan oturumdan atılırdı.
-    final rig = _Rig(handler: (o) async {
-      if (o.path == '/auth/refresh') {
-        // Yarış penceresini gerçekçi kılmak için gecikme.
-        await Future<void>.delayed(const Duration(milliseconds: 30));
-        return okEnvelope({'accessToken': 'A2', 'refreshToken': 'R2'});
-      }
-      return o.headers['Authorization'] == 'Bearer A1'
-          ? errEnvelope(401, 'TOKEN_EXPIRED', 'Oturum süresi doldu.')
-          : okEnvelope({'ok': true});
-    });
+    final rig = _Rig(
+      handler: (o) async {
+        if (o.path == '/auth/refresh') {
+          // Yarış penceresini gerçekçi kılmak için gecikme.
+          await Future<void>.delayed(const Duration(milliseconds: 30));
+          return okEnvelope({'accessToken': 'A2', 'refreshToken': 'R2'});
+        }
+        return o.headers['Authorization'] == 'Bearer A1'
+            ? errEnvelope(401, 'TOKEN_EXPIRED', 'Oturum süresi doldu.')
+            : okEnvelope({'ok': true});
+      },
+    );
     addTearDown(rig.dispose);
     rig.interceptor.setTokens(
-        const AuthTokens(accessToken: 'A1', refreshToken: 'R1'));
+      const AuthTokens(accessToken: 'A1', refreshToken: 'R1'),
+    );
 
     final responses = await Future.wait([
       rig.authed.get<dynamic>('/halls'),
@@ -139,26 +159,36 @@ void main() {
     ]);
 
     expect(responses.every((r) => r.statusCode == 200), isTrue);
-    expect(rig.adapter.countOf('/auth/refresh'), 1,
-        reason: 'beş istek tek bir yenilemeyi paylaşmalı');
+    expect(
+      rig.adapter.countOf('/auth/refresh'),
+      1,
+      reason: 'beş istek tek bir yenilemeyi paylaşmalı',
+    );
   });
 
   test('yenileme düşerse oturum kapanır ve token\'lar silinir', () async {
-    final rig = _Rig(handler: (o) async {
-      if (o.path == '/auth/refresh') {
-        return errEnvelope(401, 'INVALID_REFRESH_TOKEN', 'Oturum sonlandı.');
-      }
-      return errEnvelope(401, 'TOKEN_EXPIRED', 'Oturum süresi doldu.');
-    });
+    final rig = _Rig(
+      handler: (o) async {
+        if (o.path == '/auth/refresh') {
+          return errEnvelope(401, 'INVALID_REFRESH_TOKEN', 'Oturum sonlandı.');
+        }
+        return errEnvelope(401, 'TOKEN_EXPIRED', 'Oturum süresi doldu.');
+      },
+    );
     addTearDown(rig.dispose);
     rig.interceptor.setTokens(
-        const AuthTokens(accessToken: 'A1', refreshToken: 'R1'));
+      const AuthTokens(accessToken: 'A1', refreshToken: 'R1'),
+    );
     await rig.store.writeTokens(
-        const AuthTokens(accessToken: 'A1', refreshToken: 'R1'));
+      const AuthTokens(accessToken: 'A1', refreshToken: 'R1'),
+    );
 
     final signedOut = rig.interceptor.onForcedSignOut.first;
 
-    await expectLater(rig.authed.get<dynamic>('/halls'), throwsA(isA<DioException>()));
+    await expectLater(
+      rig.authed.get<dynamic>('/halls'),
+      throwsA(isA<DioException>()),
+    );
 
     await signedOut.timeout(const Duration(seconds: 2));
     expect(await rig.store.readTokens(), isNull);
@@ -167,15 +197,25 @@ void main() {
   test('/auth/* uçlarındaki 401 yenilemeyi TETİKLEMEZ', () async {
     // Yanlış parolayla giriş 401 döner. Bu da yenilemeyi tetikleseydi
     // her hatalı giriş denemesi gereksiz bir yenileme turu başlatırdı.
-    final rig = _Rig(handler: (o) async =>
-        errEnvelope(401, 'INVALID_CREDENTIALS', 'E-posta veya parola hatalı.'));
+    final rig = _Rig(
+      handler: (o) async => errEnvelope(
+        401,
+        'INVALID_CREDENTIALS',
+        'E-posta veya parola hatalı.',
+      ),
+    );
     addTearDown(rig.dispose);
     rig.interceptor.setTokens(
-        const AuthTokens(accessToken: 'A1', refreshToken: 'R1'));
+      const AuthTokens(accessToken: 'A1', refreshToken: 'R1'),
+    );
 
     await expectLater(
-        rig.authed.post<dynamic>('/auth/login', data: {'email': 'a@b.c', 'password': 'x'}),
-        throwsA(isA<DioException>()));
+      rig.authed.post<dynamic>(
+        '/auth/login',
+        data: {'email': 'a@b.c', 'password': 'x'},
+      ),
+      throwsA(isA<DioException>()),
+    );
 
     expect(rig.adapter.countOf('/auth/refresh'), 0);
   });
@@ -184,21 +224,30 @@ void main() {
     // Yetkisiz bir uca (örn. platform yöneticisi ucu) istek atılırsa 401
     // token yüzünden değildir; sonsuz yenile-dene döngüsüne girilmemeli.
     var refreshes = 0;
-    final rig = _Rig(handler: (o) async {
-      if (o.path == '/auth/refresh') {
-        refreshes++;
-        return okEnvelope({'accessToken': 'A2', 'refreshToken': 'R2'});
-      }
-      return errEnvelope(401, 'UNAUTHORIZED', 'Yetkiniz yok.');
-    });
+    final rig = _Rig(
+      handler: (o) async {
+        if (o.path == '/auth/refresh') {
+          refreshes++;
+          return okEnvelope({'accessToken': 'A2', 'refreshToken': 'R2'});
+        }
+        return errEnvelope(401, 'UNAUTHORIZED', 'Yetkiniz yok.');
+      },
+    );
     addTearDown(rig.dispose);
     rig.interceptor.setTokens(
-        const AuthTokens(accessToken: 'A1', refreshToken: 'R1'));
+      const AuthTokens(accessToken: 'A1', refreshToken: 'R1'),
+    );
 
     await expectLater(
-        rig.authed.get<dynamic>('/admin/devices'), throwsA(isA<DioException>()));
+      rig.authed.get<dynamic>('/admin/devices'),
+      throwsA(isA<DioException>()),
+    );
 
     expect(refreshes, 1, reason: 'yalnızca bir kez yenilenmeli');
-    expect(rig.adapter.countOf('/admin/devices'), 2, reason: 'bir deneme + bir tekrar');
+    expect(
+      rig.adapter.countOf('/admin/devices'),
+      2,
+      reason: 'bir deneme + bir tekrar',
+    );
   });
 }

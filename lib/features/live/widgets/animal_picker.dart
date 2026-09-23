@@ -13,20 +13,20 @@ Future<String?> showAnimalPicker(
   BuildContext context, {
   required String spoutLabel,
   required Set<String> alreadyAssigned,
-}) =>
-    showModalBottomSheet<String>(
-      context: context,
-      isScrollControlled: true,
-      showDragHandle: true,
-      backgroundColor: AppColors.surface,
-      builder: (_) => _AnimalPicker(
-        spoutLabel: spoutLabel,
-        alreadyAssigned: alreadyAssigned,
-      ),
-    );
+}) => showModalBottomSheet<String>(
+  context: context,
+  isScrollControlled: true,
+  showDragHandle: true,
+  backgroundColor: AppColors.surface,
+  builder: (_) =>
+      _AnimalPicker(spoutLabel: spoutLabel, alreadyAssigned: alreadyAssigned),
+);
 
 class _AnimalPicker extends ConsumerStatefulWidget {
-  const _AnimalPicker({required this.spoutLabel, required this.alreadyAssigned});
+  const _AnimalPicker({
+    required this.spoutLabel,
+    required this.alreadyAssigned,
+  });
 
   final String spoutLabel;
 
@@ -48,20 +48,30 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
 
     return Padding(
       // Klavye açılınca liste ezilmesin.
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
       child: SizedBox(
         height: MediaQuery.of(context).size.height * 0.75,
         child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.lg, 0, AppSpacing.lg, AppSpacing.sm),
+                AppSpacing.lg,
+                0,
+                AppSpacing.lg,
+                AppSpacing.sm,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('${widget.spoutLabel} · hayvan seç',
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold)),
+                  Text(
+                    '${widget.spoutLabel} · hayvan seç',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   const SizedBox(height: AppSpacing.sm),
                   TextField(
                     autofocus: true,
@@ -88,8 +98,10 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
                   final matches = _filter(list);
                   if (matches.isEmpty) {
                     return const Center(
-                      child: Text('Eşleşen hayvan yok',
-                          style: TextStyle(color: AppColors.onSurfaceMuted)),
+                      child: Text(
+                        'Eşleşen hayvan yok',
+                        style: TextStyle(color: AppColors.onSurfaceMuted),
+                      ),
                     );
                   }
                   return ListView.builder(
@@ -110,7 +122,9 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
                         // iki noktaya bağlamak, iki ayrı sağım kaydı üretip
                         // günlük verimi ikiye bölerdi.
                         enabled: !taken,
-                        onTap: taken ? null : () => Navigator.of(context).pop(a.id),
+                        onTap: taken
+                            ? null
+                            : () => Navigator.of(context).pop(a.id),
                       );
                     },
                   );

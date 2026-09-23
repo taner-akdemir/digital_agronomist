@@ -24,15 +24,17 @@ class AlertsScreen extends ConsumerWidget {
       appBar: AppBar(
         leading: IconButton(
           tooltip: 'Geri',
-          onPressed: () => context.canPop() ? context.pop() : context.go('/live'),
+          onPressed: () =>
+              context.canPop() ? context.pop() : context.go('/live'),
           icon: const Icon(Icons.arrow_back),
         ),
         title: const Text(
           'Uyarılar',
           style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-              color: AppColors.darkGreenColor),
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            color: AppColors.darkGreenColor,
+          ),
         ),
       ),
       body: RefreshIndicator(
@@ -48,7 +50,8 @@ class AlertsScreen extends ConsumerWidget {
               : ListView.separated(
                   padding: const EdgeInsets.all(AppSpacing.lg),
                   itemCount: list.length,
-                  separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm),
+                  separatorBuilder: (_, _) =>
+                      const SizedBox(height: AppSpacing.sm),
                   itemBuilder: (_, i) => _AlertCard(alert: list[i]),
                 ),
         ),
@@ -87,14 +90,17 @@ class _AlertCard extends ConsumerWidget {
             decoration: BoxDecoration(
               borderRadius: AppRadius.mdAll,
               border: Border.all(
-                  color: acked ? AppColors.border : palette.border),
+                color: acked ? AppColors.border : palette.border,
+              ),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(AlertStyle.icon(alert.type),
-                    size: 20,
-                    color: acked ? AppColors.lightGreyColor : palette.foreground),
+                Icon(
+                  AlertStyle.icon(alert.type),
+                  size: 20,
+                  color: acked ? AppColors.lightGreyColor : palette.foreground,
+                ),
                 const SizedBox(width: AppSpacing.md),
                 Expanded(
                   child: Column(
@@ -102,13 +108,17 @@ class _AlertCard extends ConsumerWidget {
                     children: [
                       // Metin BACKEND'DEN gelir ve olduğu gibi gösterilir:
                       // hangi kuralın tetiklendiğini sunucu bilir (§16).
-                      Text(alert.message,
-                          style: const TextStyle(fontSize: 13, height: 1.35)),
+                      Text(
+                        alert.message,
+                        style: const TextStyle(fontSize: 13, height: 1.35),
+                      ),
                       const SizedBox(height: AppSpacing.xs),
                       Text(
                         _when(alert),
                         style: const TextStyle(
-                            fontSize: 11, color: AppColors.onSurfaceMuted),
+                          fontSize: 11,
+                          color: AppColors.onSurfaceMuted,
+                        ),
                       ),
                     ],
                   ),
@@ -119,7 +129,8 @@ class _AlertCard extends ConsumerWidget {
                     // rengi mavi ve düğme, yeşil paletin ortasında tek başına
                     // mavi duruyordu (§15 tasarım dili).
                     style: TextButton.styleFrom(
-                        foregroundColor: AppColors.darkGreenColor),
+                      foregroundColor: AppColors.darkGreenColor,
+                    ),
                     onPressed: () =>
                         ref.read(alertListProvider.notifier).ack(alert.id),
                     child: const Text('Okundu', style: TextStyle(fontSize: 12)),
@@ -127,8 +138,11 @@ class _AlertCard extends ConsumerWidget {
                 else
                   const Padding(
                     padding: EdgeInsets.only(left: AppSpacing.sm, top: 2),
-                    child: Icon(Icons.check,
-                        size: 16, color: AppColors.lightGreyColor),
+                    child: Icon(
+                      Icons.check,
+                      size: 16,
+                      color: AppColors.lightGreyColor,
+                    ),
                   ),
               ],
             ),
@@ -156,12 +170,17 @@ class _Empty extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.xxl),
       children: const [
         SizedBox(height: AppSpacing.xxl),
-        Icon(Icons.notifications_none_outlined,
-            size: 44, color: AppColors.lightGreyColor),
+        Icon(
+          Icons.notifications_none_outlined,
+          size: 44,
+          color: AppColors.lightGreyColor,
+        ),
         SizedBox(height: AppSpacing.md),
-        Text('Açık uyarı yok',
-            textAlign: TextAlign.center,
-            style: TextStyle(color: AppColors.onSurfaceMuted)),
+        Text(
+          'Açık uyarı yok',
+          textAlign: TextAlign.center,
+          style: TextStyle(color: AppColors.onSurfaceMuted),
+        ),
       ],
     );
   }

@@ -19,26 +19,26 @@ const _spout2 = '0192a1f0-0050-7000-8000-000000000002';
 
 /// session, GET /sessions listesindeki bir satır.
 Map<String, dynamic> session(String id, String status) => {
-      'id': id,
-      'hallId': _hallId,
-      'type': 'morning',
-      'status': status,
-      'startedAt': '2026-09-22T06:00:00Z',
-    };
+  'id': id,
+  'hallId': _hallId,
+  'type': 'morning',
+  'status': status,
+  'startedAt': '2026-09-22T06:00:00Z',
+};
 
 /// update, §8.5'teki spout.update payload'ı.
 Map<String, dynamic> update(String spoutId, String ts, {double flow = 2.5}) => {
-      'sessionId': 's1',
-      'spoutId': spoutId,
-      'flowRate': flow,
-      'volumeMl': 5000,
-      'expectedMl': 11000,
-      'yieldPct': 45.5,
-      'flowColor': 'green',
-      'yieldColor': 'yellow',
-      'state': 'milking',
-      'ts': ts,
-    };
+  'sessionId': 's1',
+  'spoutId': spoutId,
+  'flowRate': flow,
+  'volumeMl': 5000,
+  'expectedMl': 11000,
+  'yieldPct': 45.5,
+  'flowColor': 'green',
+  'yieldColor': 'yellow',
+  'state': 'milking',
+  'ts': ts,
+};
 
 /// FakeSocket, testin elinde tuttuğu WebSocket kanalı.
 ///
@@ -59,7 +59,8 @@ class FakeSocket {
   void drop() => _in.close();
 }
 
-class _FakeChannel extends StreamChannelMixin<dynamic> implements WebSocketChannel {
+class _FakeChannel extends StreamChannelMixin<dynamic>
+    implements WebSocketChannel {
   _FakeChannel(this._socket);
 
   final FakeSocket _socket;
@@ -71,8 +72,9 @@ class _FakeChannel extends StreamChannelMixin<dynamic> implements WebSocketChann
   WebSocketSink get sink => _FakeSink(_socket);
 
   @override
-  dynamic noSuchMethod(Invocation invocation) =>
-      throw UnimplementedError('testte kullanılmıyor: ${invocation.memberName}');
+  dynamic noSuchMethod(Invocation invocation) => throw UnimplementedError(
+    'testte kullanılmıyor: ${invocation.memberName}',
+  );
 }
 
 class _FakeSink implements WebSocketSink {
@@ -86,12 +88,20 @@ class _FakeSink implements WebSocketSink {
   }
 
   @override
-  dynamic noSuchMethod(Invocation invocation) =>
-      throw UnimplementedError('testte kullanılmıyor: ${invocation.memberName}');
+  dynamic noSuchMethod(Invocation invocation) => throw UnimplementedError(
+    'testte kullanılmıyor: ${invocation.memberName}',
+  );
 }
 
 /// rig, sahte backend ve sahte WebSocket'e bağlı bir ApiRepository kurar.
-({ApiRepository repo, FakeAdapter adapter, List<FakeSocket> sockets, List<Uri> dialed, List<Map<String, dynamic>> headers}) rig(
+({
+  ApiRepository repo,
+  FakeAdapter adapter,
+  List<FakeSocket> sockets,
+  List<Uri> dialed,
+  List<Map<String, dynamic>> headers,
+})
+rig(
   Future<ResponseBody> Function(RequestOptions) handler, {
   List<FakeSocket>? sockets,
   String? token,
@@ -128,10 +138,8 @@ class _FakeSink implements WebSocketSink {
 }
 
 /// activeLive, açık oturumun anlık görüntüsü.
-ResponseBody activeLive(List<Map<String, dynamic>> updates) => okEnvelope({
-      'session': session('s1', 'active'),
-      'updates': updates,
-    });
+ResponseBody activeLive(List<Map<String, dynamic>> updates) =>
+    okEnvelope({'session': session('s1', 'active'), 'updates': updates});
 
 void main() {
   // AÇIK oturumun listeden DOĞRU seçildiğini doğrular.
@@ -186,12 +194,18 @@ void main() {
   // Yalnızca WebSocket dinlenseydi, sağımın ortasında açılan bir ekran ilk
   // güncelleme gelene kadar (nokta başına ~2 sn) boş kalırdı.
   test('bağlanınca önce anlık görüntü yayınlanır', () async {
-    final r = rig((o) async => activeLive([
-          update(_spout1, '2026-09-22T06:10:00Z'),
-          update(_spout2, '2026-09-22T06:10:00Z'),
-        ]));
+    final r = rig(
+      (o) async => activeLive([
+        update(_spout1, '2026-09-22T06:10:00Z'),
+        update(_spout2, '2026-09-22T06:10:00Z'),
+      ]),
+    );
 
-    final got = await r.repo.watchSession('s1').take(2).map((u) => u.spoutId).toList();
+    final got = await r.repo
+        .watchSession('s1')
+        .take(2)
+        .map((u) => u.spoutId)
+        .toList();
 
     expect(got, [_spout1, _spout2]);
     expect(r.adapter.requests.single.path, '/sessions/s1/live');
@@ -201,11 +215,21 @@ void main() {
     final socket = FakeSocket();
     final r = rig((o) async => activeLive([]), sockets: [socket]);
 
-    final got = r.repo.watchSession('s1').take(2).map((u) => u.spoutId).toList();
+    final got = r.repo
+        .watchSession('s1')
+        .take(2)
+        .map((u) => u.spoutId)
+        .toList();
 
     await Future<void>.delayed(const Duration(milliseconds: 20));
-    socket.send({'type': 'spout.update', ...update(_spout1, '2026-09-22T06:10:01Z')});
-    socket.send({'type': 'spout.update', ...update(_spout2, '2026-09-22T06:10:02Z')});
+    socket.send({
+      'type': 'spout.update',
+      ...update(_spout1, '2026-09-22T06:10:01Z'),
+    });
+    socket.send({
+      'type': 'spout.update',
+      ...update(_spout2, '2026-09-22T06:10:02Z'),
+    });
 
     expect(await got, [_spout1, _spout2]);
   });
@@ -215,11 +239,18 @@ void main() {
   // Sorgu dizesinde gitseydi sunucu loglarına ve proxy geçmişine düşerdi.
   test('token Authorization başlığıyla gönderilir', () async {
     final socket = FakeSocket();
-    final r = rig((o) async => activeLive([]), sockets: [socket], token: 'tok-1');
+    final r = rig(
+      (o) async => activeLive([]),
+      sockets: [socket],
+      token: 'tok-1',
+    );
 
     final done = r.repo.watchSession('s1').take(1).toList();
     await Future<void>.delayed(const Duration(milliseconds: 20));
-    socket.send({'type': 'spout.update', ...update(_spout1, '2026-09-22T06:10:01Z')});
+    socket.send({
+      'type': 'spout.update',
+      ...update(_spout1, '2026-09-22T06:10:01Z'),
+    });
     await done;
 
     expect(r.dialed.single, Uri.parse('ws://test/api/v1/ws?sessionId=s1'));
@@ -237,7 +268,10 @@ void main() {
     final got = r.repo.watchSession('s1').toList();
 
     await Future<void>.delayed(const Duration(milliseconds: 20));
-    socket.send({'type': 'spout.update', ...update(_spout1, '2026-09-22T06:10:01Z')});
+    socket.send({
+      'type': 'spout.update',
+      ...update(_spout1, '2026-09-22T06:10:01Z'),
+    });
     socket.send({'type': 'session.ended', 'sessionId': 's1'});
 
     expect(await got, hasLength(1), reason: 'kapanıştan sonra yayın olmamalı');
@@ -246,10 +280,12 @@ void main() {
 
   // Zaten KAPANMIŞ bir oturuma bağlanılmadığını doğrular.
   test('oturum kapalıysa hiç bağlanılmaz', () async {
-    final r = rig((o) async => okEnvelope({
-          'session': session('s1', 'ended'),
-          'updates': [update(_spout1, '2026-09-22T06:10:00Z')],
-        }));
+    final r = rig(
+      (o) async => okEnvelope({
+        'session': session('s1', 'ended'),
+        'updates': [update(_spout1, '2026-09-22T06:10:00Z')],
+      }),
+    );
 
     expect(await r.repo.watchSession('s1').toList(), isEmpty);
     expect(r.dialed, isEmpty);
@@ -266,17 +302,30 @@ void main() {
     var snapshots = 0;
     final r = rig((o) async {
       snapshots++;
-      return activeLive([update(_spout1, '2026-09-22T06:10:0$snapshots' 'Z')]);
+      return activeLive([
+        update(
+          _spout1,
+          '2026-09-22T06:10:0$snapshots'
+          'Z',
+        ),
+      ]);
     }, sockets: [first, second]);
 
     // Üçüncü olay YENİ bağlantıdan gelir; ikiyle yetinseydik akışın
     // yeniden bağlandığı değil yalnızca görüntüyü tazelediği doğrulanırdı.
-    final got = r.repo.watchSession('s1').take(3).map((u) => u.spoutId).toList();
+    final got = r.repo
+        .watchSession('s1')
+        .take(3)
+        .map((u) => u.spoutId)
+        .toList();
 
     await Future<void>.delayed(const Duration(milliseconds: 20));
     first.drop();
     await Future<void>.delayed(const Duration(milliseconds: 40));
-    second.send({'type': 'spout.update', ...update(_spout2, '2026-09-22T06:11:00Z')});
+    second.send({
+      'type': 'spout.update',
+      ...update(_spout2, '2026-09-22T06:11:00Z'),
+    });
 
     expect(await got, [_spout1, _spout1, _spout2]);
     expect(snapshots, 2, reason: 'her bağlanışta görüntü tazelenmeli');
@@ -291,12 +340,19 @@ void main() {
     final socket = FakeSocket();
     final r = rig((o) async => activeLive([]), sockets: [socket]);
 
-    final got = r.repo.watchSession('s1').take(1).map((u) => u.spoutId).toList();
+    final got = r.repo
+        .watchSession('s1')
+        .take(1)
+        .map((u) => u.spoutId)
+        .toList();
 
     await Future<void>.delayed(const Duration(milliseconds: 20));
     socket.send({'type': 'alert.raised', 'alertId': 'al1'});
     socket._in.add('bozuk-json');
-    socket.send({'type': 'spout.update', ...update(_spout1, '2026-09-22T06:10:01Z')});
+    socket.send({
+      'type': 'spout.update',
+      ...update(_spout1, '2026-09-22T06:10:01Z'),
+    });
 
     expect(await got, [_spout1]);
   });
@@ -317,8 +373,11 @@ void main() {
   test('geçmiş sorgusu tarihleri UTC gönderir', () async {
     final r = rig((o) async => okEnvelope2([]));
 
-    await r.repo.animalHistory('a1',
-        from: DateTime.utc(2026, 9, 1, 3), to: DateTime.utc(2026, 9, 22, 3));
+    await r.repo.animalHistory(
+      'a1',
+      from: DateTime.utc(2026, 9, 1, 3),
+      to: DateTime.utc(2026, 9, 22, 3),
+    );
 
     final q = r.adapter.requests.single.queryParameters;
     expect(r.adapter.requests.single.path, '/animals/a1/history');
@@ -335,19 +394,21 @@ void main() {
   });
 
   test('geçmiş kayıtları parse edilir', () async {
-    final r = rig((o) async => okEnvelope2([
-          {
-            'id': 'm1',
-            'sessionId': 's1',
-            'animalId': 'a1',
-            'volumeMl': 9500,
-            'expectedMl': 11000,
-            'yieldPct': 86.4,
-            'color': 'yellow',
-            'sessionType': 'evening',
-            'startedAt': '2026-09-21T15:05:00Z',
-          }
-        ]));
+    final r = rig(
+      (o) async => okEnvelope2([
+        {
+          'id': 'm1',
+          'sessionId': 's1',
+          'animalId': 'a1',
+          'volumeMl': 9500,
+          'expectedMl': 11000,
+          'yieldPct': 86.4,
+          'color': 'yellow',
+          'sessionType': 'evening',
+          'startedAt': '2026-09-21T15:05:00Z',
+        },
+      ]),
+    );
 
     final history = await r.repo.animalHistory('a1');
 
@@ -357,16 +418,23 @@ void main() {
   });
 
   test('trend parse edilir', () async {
-    final r = rig((o) async => okEnvelope({
-          'animalId': 'a1',
-          'yieldClass': 'declining',
-          'ma7Ml': 17200,
-          'ma30Ml': 21800,
-          'trendSlope': -142.5,
-          'daily': [
-            {'date': '2026-09-21', 'totalMl': 17000, 'milkingCount': 2, 'ma7Ml': 17200},
-          ],
-        }));
+    final r = rig(
+      (o) async => okEnvelope({
+        'animalId': 'a1',
+        'yieldClass': 'declining',
+        'ma7Ml': 17200,
+        'ma30Ml': 21800,
+        'trendSlope': -142.5,
+        'daily': [
+          {
+            'date': '2026-09-21',
+            'totalMl': 17000,
+            'milkingCount': 2,
+            'ma7Ml': 17200,
+          },
+        ],
+      }),
+    );
 
     final trend = await r.repo.animalTrend('a1');
 
@@ -381,10 +449,10 @@ void main() {
   // Backend §6.4'e yeni bir sınıf eklerse eski uygulama parse hatası verip
   // hayvan listesini komple kaybetmemeli; normal'a düşer.
   test('bilinmeyen verim sınıfı normal sayılır', () async {
-    final r = rig((o) async => okEnvelope({
-          'animalId': 'a1',
-          'yieldClass': 'pregnant_hold',
-        }));
+    final r = rig(
+      (o) async =>
+          okEnvelope({'animalId': 'a1', 'yieldClass': 'pregnant_hold'}),
+    );
 
     expect((await r.repo.animalTrend('a1')).yieldClass, YieldClass.normal);
   });
@@ -392,25 +460,31 @@ void main() {
   test('oturum listesi bölge ve aralıkla sorgulanır', () async {
     final r = rig((o) async => okEnvelope2([session('s1', 'ended')]));
 
-    final sessions =
-        await r.repo.sessions(hallId: _hallId, from: DateTime.utc(2026, 9, 1));
+    final sessions = await r.repo.sessions(
+      hallId: _hallId,
+      from: DateTime.utc(2026, 9, 1),
+    );
 
     expect(sessions.single.status, 'ended');
-    expect(r.adapter.requests.single.queryParameters,
-        {'from': '2026-09-01T00:00:00.000Z', 'hallId': _hallId});
+    expect(r.adapter.requests.single.queryParameters, {
+      'from': '2026-09-01T00:00:00.000Z',
+      'hallId': _hallId,
+    });
   });
 
   test('uyarılar parse edilir', () async {
-    final r = rig((o) async => okEnvelope2([
-          {
-            'id': 'al1',
-            'animalId': 'a1',
-            'type': 'low_flow',
-            'severity': 'critical',
-            'message': 'Benekli düşük debiyle sağılıyor.',
-            'createdAt': '2026-09-22T06:14:00Z',
-          }
-        ]));
+    final r = rig(
+      (o) async => okEnvelope2([
+        {
+          'id': 'al1',
+          'animalId': 'a1',
+          'type': 'low_flow',
+          'severity': 'critical',
+          'message': 'Benekli düşük debiyle sağılıyor.',
+          'createdAt': '2026-09-22T06:14:00Z',
+        },
+      ]),
+    );
 
     final alerts = await r.repo.alerts();
 
@@ -425,9 +499,16 @@ void main() {
   // backend yeni bir uyarı türü eklediğinde listenin komple kaybolması
   // demekti.
   test('bilinmeyen uyarı türü listeyi düşürmez', () async {
-    final r = rig((o) async => okEnvelope2([
-          {'id': 'al1', 'type': 'udder_temp', 'severity': 'fatal', 'message': 'x'}
-        ]));
+    final r = rig(
+      (o) async => okEnvelope2([
+        {
+          'id': 'al1',
+          'type': 'udder_temp',
+          'severity': 'fatal',
+          'message': 'x',
+        },
+      ]),
+    );
 
     expect((await r.repo.alerts()).single.type, 'udder_temp');
   });
@@ -442,22 +523,24 @@ void main() {
   });
 
   test('dashboard özeti parse edilir', () async {
-    final r = rig((o) async => okEnvelope({
-          'date': '2026-09-22',
-          'totalMl': 412300,
-          'milkingCount': 28,
-          'animalCount': 28,
-          'activeSessions': 1,
-          'openAlerts': 5,
-          'bySpecies': [
-            {'speciesId': 'sp1', 'totalMl': 380000, 'animalCount': 20},
-            {'speciesId': 'sp2', 'totalMl': 32300, 'animalCount': 8},
-          ],
-          'classDistribution': [
-            {'yieldClass': 'high', 'count': 3},
-            {'yieldClass': 'dry_off_candidate', 'count': 2},
-          ],
-        }));
+    final r = rig(
+      (o) async => okEnvelope({
+        'date': '2026-09-22',
+        'totalMl': 412300,
+        'milkingCount': 28,
+        'animalCount': 28,
+        'activeSessions': 1,
+        'openAlerts': 5,
+        'bySpecies': [
+          {'speciesId': 'sp1', 'totalMl': 380000, 'animalCount': 20},
+          {'speciesId': 'sp2', 'totalMl': 32300, 'animalCount': 8},
+        ],
+        'classDistribution': [
+          {'yieldClass': 'high', 'count': 3},
+          {'yieldClass': 'dry_off_candidate', 'count': 2},
+        ],
+      }),
+    );
 
     final d = await r.repo.dashboard();
 
@@ -506,19 +589,23 @@ void main() {
   // Kısmi güncelleme, iki kullanıcı aynı anda kaydettiğinde hangi alanın
   // kazandığını belirsiz bırakırdı.
   test('eşikler tam nesne olarak PUT edilir', () async {
-    final r = rig((o) async => okEnvelope({
-          'speciesId': 'sp1',
-          'flowLow': 1.2,
-          'flowHigh': 2.5,
-          'dryOffDailyMl': 9000,
-        }));
+    final r = rig(
+      (o) async => okEnvelope({
+        'speciesId': 'sp1',
+        'flowLow': 1.2,
+        'flowHigh': 2.5,
+        'dryOffDailyMl': 9000,
+      }),
+    );
 
-    final saved = await r.repo.updateThresholds(const Thresholds(
-      speciesId: 'sp1',
-      flowLow: 1.2,
-      flowHigh: 2.5,
-      dryOffDailyMl: 9000,
-    ));
+    final saved = await r.repo.updateThresholds(
+      const Thresholds(
+        speciesId: 'sp1',
+        flowLow: 1.2,
+        flowHigh: 2.5,
+        dryOffDailyMl: 9000,
+      ),
+    );
 
     final req = r.adapter.requests.single;
     expect(req.path, '/species/thresholds');
@@ -549,7 +636,10 @@ void main() {
     final r = rig((o) async => okEnvelope({}));
 
     await r.repo.assignAnimal(
-        sessionId: 's1', spoutId: _spout1, animalId: 'a1');
+      sessionId: 's1',
+      spoutId: _spout1,
+      animalId: 'a1',
+    );
 
     final req = r.adapter.requests.single;
     expect(req.path, '/sessions/s1/spouts/$_spout1/animal');
@@ -572,8 +662,13 @@ void main() {
   // "bu bölgede zaten açık bir sağım oturumu var" cevabını kendi metnimizle
   // değiştirmek, kullanıcının gerçek sebebi görmesini engellerdi.
   test('çakışan sağım hatası olduğu gibi yukarı taşınır', () async {
-    final r = rig((o) async => errEnvelope(
-        409, 'CONFLICT', 'bu bölgede zaten açık bir sağım oturumu var'));
+    final r = rig(
+      (o) async => errEnvelope(
+        409,
+        'CONFLICT',
+        'bu bölgede zaten açık bir sağım oturumu var',
+      ),
+    );
 
     await expectLater(
       r.repo.startSession(hallId: _hallId, type: 'morning'),

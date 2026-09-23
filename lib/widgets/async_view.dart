@@ -32,7 +32,9 @@ class AsyncView<T> extends StatelessWidget {
     // çemberin almasına yol açıyordu — filtreye basan kullanıcı, listenin
     // kaybolup geri gelmesini görüyordu.
     if (value.hasError) {
-      return Center(child: ErrorView(message: errorMessage, error: value.error));
+      return Center(
+        child: ErrorView(message: errorMessage, error: value.error),
+      );
     }
     if (value.hasValue) return builder(value.requireValue);
     return const Center(child: CircularProgressIndicator());

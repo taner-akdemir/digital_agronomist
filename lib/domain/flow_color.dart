@@ -14,7 +14,7 @@ enum MilkColor {
 
   /// Akış yok, eşleşme yok ya da cihaz çevrimdışı.
   @JsonValue('grey')
-  grey;
+  grey,
 }
 
 /// Bir sağım noktasının anlık durumu.
@@ -32,5 +32,5 @@ enum SpoutState {
   done,
 
   @JsonValue('error')
-  error;
+  error,
 }

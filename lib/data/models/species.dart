@@ -17,5 +17,6 @@ abstract class Species with _$Species {
     required String nameTr,
   }) = _Species;
 
-  factory Species.fromJson(Map<String, dynamic> json) => _$SpeciesFromJson(json);
+  factory Species.fromJson(Map<String, dynamic> json) =>
+      _$SpeciesFromJson(json);
 }

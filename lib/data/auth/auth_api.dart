@@ -23,21 +23,24 @@ class AuthApi {
     }
   }
 
-  Future<LoginResult> login({required String email, required String password}) =>
-      _call(() async {
-        final r = await _dio.post<dynamic>('/auth/login', data: {
-          'email': email,
-          'password': password,
-        });
-        return LoginResult.fromJson(_data(r));
-      });
+  Future<LoginResult> login({
+    required String email,
+    required String password,
+  }) => _call(() async {
+    final r = await _dio.post<dynamic>(
+      '/auth/login',
+      data: {'email': email, 'password': password},
+    );
+    return LoginResult.fromJson(_data(r));
+  });
 
   Future<AuthTokens> refresh(String refreshToken) => _call(() async {
-        final r = await _dio.post<dynamic>('/auth/refresh', data: {
-          'refreshToken': refreshToken,
-        });
-        return AuthTokens.fromJson(_data(r));
-      });
+    final r = await _dio.post<dynamic>(
+      '/auth/refresh',
+      data: {'refreshToken': refreshToken},
+    );
+    return AuthTokens.fromJson(_data(r));
+  });
 
   /// Sunucudaki yenileme token'ını iptal eder.
   ///
@@ -46,15 +49,20 @@ class AuthApi {
   /// çok daha kötü olurdu.
   Future<void> logout(String refreshToken) async {
     try {
-      await _dio.post<dynamic>('/auth/logout', data: {'refreshToken': refreshToken});
+      await _dio.post<dynamic>(
+        '/auth/logout',
+        data: {'refreshToken': refreshToken},
+      );
     } on DioException {
       // yoksay
     }
   }
 
   Future<AuthUser> me(String accessToken) => _call(() async {
-        final r = await _dio.get<dynamic>('/me',
-            options: Options(headers: {'Authorization': 'Bearer $accessToken'}));
-        return AuthUser.fromJson(_data(r));
-      });
+    final r = await _dio.get<dynamic>(
+      '/me',
+      options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
+    );
+    return AuthUser.fromJson(_data(r));
+  });
 }

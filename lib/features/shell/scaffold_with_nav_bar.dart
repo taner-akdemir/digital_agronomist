@@ -41,7 +41,10 @@ class ScaffoldWithNavBar extends StatelessWidget {
           for (final t in _tabs)
             NavigationDestination(
               icon: Icon(t.icon, color: AppColors.iconGreyColor),
-              selectedIcon: Icon(t.selectedIcon, color: AppColors.darkGreenColor),
+              selectedIcon: Icon(
+                t.selectedIcon,
+                color: AppColors.darkGreenColor,
+              ),
               label: t.label,
             ),
         ],

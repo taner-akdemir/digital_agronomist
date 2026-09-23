@@ -10,7 +10,8 @@ import 'package:milktrace/providers/auth_providers.dart';
 /// §15.1'in "profil" ekranı BUDUR. Ayrı bir sekme ya da tam ekran sayfa
 /// değil: dört sekmenin hiçbirine ait olmadığı için kabuğun üstünde bir
 /// sayfa açmak gezinme yığınını karıştırırdı.
-Future<void> showAccountSheet(BuildContext context) => showModalBottomSheet<void>(
+Future<void> showAccountSheet(BuildContext context) =>
+    showModalBottomSheet<void>(
       context: context,
       showDragHandle: true,
       backgroundColor: AppColors.surface,
@@ -27,7 +28,11 @@ class _AccountSheet extends ConsumerWidget {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(
-            AppSpacing.xl, 0, AppSpacing.xl, AppSpacing.xl),
+          AppSpacing.xl,
+          0,
+          AppSpacing.xl,
+          AppSpacing.xl,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -49,19 +54,25 @@ class _AccountSheet extends ConsumerWidget {
                             ? user!.fullName
                             : 'Kullanıcı',
                         style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
                       if (user != null) ...[
                         Text(
                           user.email,
-                          style: const TextStyle(color: AppColors.onSurfaceMuted),
+                          style: const TextStyle(
+                            color: AppColors.onSurfaceMuted,
+                          ),
                         ),
                         // Rol GÖRÜNÜR olmalı: eşik ayarlarının neden salt
                         // okunur açıldığının cevabı burada.
                         Text(
                           _roleLabel(user.role),
                           style: const TextStyle(
-                              fontSize: 12, color: AppColors.lightGreyColor),
+                            fontSize: 12,
+                            color: AppColors.lightGreyColor,
+                          ),
                         ),
                       ],
                     ],
@@ -87,7 +98,9 @@ class _AccountSheet extends ConsumerWidget {
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppColors.darkGreenColor,
                 padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
-                shape: const RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadius.mdAll,
+                ),
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -105,7 +118,9 @@ class _AccountSheet extends ConsumerWidget {
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppColors.darkRedColor,
                 padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
-                shape: const RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadius.mdAll,
+                ),
               ),
             ),
           ],
@@ -120,12 +135,12 @@ class _AccountSheet extends ConsumerWidget {
 /// Tanınmayan rol KODU olduğu gibi gösterilir: backend yeni bir rol
 /// eklediğinde kullanıcıya boş bir satır göstermektense ham kod yeğdir.
 String _roleLabel(String role) => switch (role) {
-      'tenant_owner' => 'İşletme sahibi',
-      'tenant_operator' => 'Operatör',
-      'tenant_viewer' => 'Görüntüleyici',
-      'platform_admin' => 'Platform yöneticisi',
-      _ => role,
-    };
+  'tenant_owner' => 'İşletme sahibi',
+  'tenant_operator' => 'Operatör',
+  'tenant_viewer' => 'Görüntüleyici',
+  'platform_admin' => 'Platform yöneticisi',
+  _ => role,
+};
 
 class _ModeBadge extends StatelessWidget {
   const _ModeBadge();
@@ -140,7 +155,11 @@ class _ModeBadge extends StatelessWidget {
       ),
       child: const Row(
         children: [
-          Icon(Icons.science_outlined, size: 18, color: AppColors.darkAmberColor),
+          Icon(
+            Icons.science_outlined,
+            size: 18,
+            color: AppColors.darkAmberColor,
+          ),
           SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(

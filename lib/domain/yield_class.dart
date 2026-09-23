@@ -32,38 +32,37 @@ enum YieldClass {
   /// aracıdır, kesim kararı vermez. Yüksek verimli bir hayvanın bu listeye
   /// düşmemesi projenin çıkış noktası (§6.4).
   String get label => switch (this) {
-        YieldClass.high => 'Yüksek Verimli',
-        YieldClass.normal => 'Normal',
-        YieldClass.declining => 'Düşüşte',
-        YieldClass.dryOffCandidate => 'Kuruya Çıkma Adayı',
-        YieldClass.noMilk => 'Süt Vermiyor',
-      };
+    YieldClass.high => 'Yüksek Verimli',
+    YieldClass.normal => 'Normal',
+    YieldClass.declining => 'Düşüşte',
+    YieldClass.dryOffCandidate => 'Kuruya Çıkma Adayı',
+    YieldClass.noMilk => 'Süt Vermiyor',
+  };
 
   /// Rozet rengi (§6.4 UI sütunu).
   ///
   /// `normal` GRİdİR, yeşil değil: sürünün çoğu normaldir ve hepsini yeşil
   /// boyamak, gerçekten yüksek verimli olan üç hayvanı görünmez yapardı.
   MilkColor get color => switch (this) {
-        YieldClass.high => MilkColor.green,
-        YieldClass.normal => MilkColor.grey,
-        YieldClass.declining => MilkColor.yellow,
-        YieldClass.dryOffCandidate => MilkColor.red,
-        YieldClass.noMilk => MilkColor.red,
-      };
+    YieldClass.high => MilkColor.green,
+    YieldClass.normal => MilkColor.grey,
+    YieldClass.declining => MilkColor.yellow,
+    YieldClass.dryOffCandidate => MilkColor.red,
+    YieldClass.noMilk => MilkColor.red,
+  };
 
   /// Sınıfın ne anlama geldiği — hayvan detayında rozetin altında görünür.
   String get explanation => switch (this) {
-        YieldClass.high =>
-          'Son 7 günün ortalaması tür üst eşiğinin üzerinde. Bu hayvan sürünün '
-              'en verimlileri arasında.',
-        YieldClass.normal => 'Verim beklenen aralıkta, eğim stabil.',
-        YieldClass.declining =>
-          'Son 30 günde belirgin düşüş var. Gebelik, laktasyon dönemi veya '
-              'hastalık olabilir; takip listesinde.',
-        YieldClass.dryOffCandidate =>
-          'Son 7 günün ortalaması tür alt eşiğinin altında. Kuruya çıkarma '
-              'zamanı gelmiş olabilir.',
-        YieldClass.noMilk =>
-          'Son sağımlarda süt alınamadı. Değerlendirme gerekli.',
-      };
+    YieldClass.high =>
+      'Son 7 günün ortalaması tür üst eşiğinin üzerinde. Bu hayvan sürünün '
+          'en verimlileri arasında.',
+    YieldClass.normal => 'Verim beklenen aralıkta, eğim stabil.',
+    YieldClass.declining =>
+      'Son 30 günde belirgin düşüş var. Gebelik, laktasyon dönemi veya '
+          'hastalık olabilir; takip listesinde.',
+    YieldClass.dryOffCandidate =>
+      'Son 7 günün ortalaması tür alt eşiğinin altında. Kuruya çıkarma '
+          'zamanı gelmiş olabilir.',
+    YieldClass.noMilk => 'Son sağımlarda süt alınamadı. Değerlendirme gerekli.',
+  };
 }

@@ -44,9 +44,15 @@ void main() {
 
     expect(live.updates, hasLength(10));
     final colors = live.updates.map((u) => u.flowColor).toSet();
-    expect(colors, containsAll([
-      MilkColor.green, MilkColor.yellow, MilkColor.red, MilkColor.grey,
-    ]));
+    expect(
+      colors,
+      containsAll([
+        MilkColor.green,
+        MilkColor.yellow,
+        MilkColor.red,
+        MilkColor.grey,
+      ]),
+    );
   });
 
   test('canlı akış hacmi biriktirir ve rengi günceller', () async {
@@ -63,8 +69,11 @@ void main() {
       }
     }
 
-    expect(updates.first.volumeMl, greaterThan(first.volumeMl),
-        reason: 'sağım sürdükçe hacim artmalı');
+    expect(
+      updates.first.volumeMl,
+      greaterThan(first.volumeMl),
+      reason: 'sağım sürdükçe hacim artmalı',
+    );
     expect(updates[1].volumeMl, greaterThan(updates.first.volumeMl));
   });
 
@@ -86,15 +95,21 @@ void main() {
     var seen = 0;
     await for (final u in repo.watchSession(live.session.id)) {
       if (u.spoutId != rampUp.spoutId) continue;
-      expect(u.flowColor, isNot(MilkColor.red),
-          reason: 'ısınma süresi dolmadan kırmızı üretilmemeli');
+      expect(
+        u.flowColor,
+        isNot(MilkColor.red),
+        reason: 'ısınma süresi dolmadan kırmızı üretilmemeli',
+      );
       if (++seen >= 3) break;
     }
   });
 
-  test('sonuçlar önbelleğe alınır, her çağrıda yeniden parse edilmez', () async {
-    final a = await repo.halls();
-    final b = await repo.halls();
-    expect(identical(a, b), isTrue);
-  });
+  test(
+    'sonuçlar önbelleğe alınır, her çağrıda yeniden parse edilmez',
+    () async {
+      final a = await repo.halls();
+      final b = await repo.halls();
+      expect(identical(a, b), isTrue);
+    },
+  );
 }

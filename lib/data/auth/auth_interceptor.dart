@@ -24,9 +24,9 @@ class AuthInterceptor extends Interceptor {
     required AuthApi authApi,
     required TokenStore store,
     required Dio retryDio,
-  })  : _authApi = authApi,
-        _store = store,
-        _retryDio = retryDio;
+  }) : _authApi = authApi,
+       _store = store,
+       _retryDio = retryDio;
 
   final AuthApi _authApi;
   final TokenStore _store;
@@ -71,7 +71,9 @@ class AuthInterceptor extends Interceptor {
 
   @override
   Future<void> onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     final token = _tokens?.accessToken;
     if (token != null) {
       options.headers['Authorization'] = 'Bearer $token';
@@ -80,7 +82,10 @@ class AuthInterceptor extends Interceptor {
   }
 
   @override
-  Future<void> onError(DioException err, ErrorInterceptorHandler handler) async {
+  Future<void> onError(
+    DioException err,
+    ErrorInterceptorHandler handler,
+  ) async {
     final isAuthEndpoint = err.requestOptions.path.startsWith('/auth/');
     if (err.response?.statusCode != 401 || isAuthEndpoint) {
       handler.next(err);

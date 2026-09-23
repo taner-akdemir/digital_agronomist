@@ -44,22 +44,21 @@ class AnimalFilterState extends _$AnimalFilterState {
 
   /// Aynı değere tekrar basmak filtreyi KALDIRIR — çipler böyle çalışır.
   void toggleSpecies(String id) => state = (
-        speciesId: state.speciesId == id ? null : id,
-        yieldClass: state.yieldClass,
-      );
+    speciesId: state.speciesId == id ? null : id,
+    yieldClass: state.yieldClass,
+  );
 
   void toggleClass(YieldClass c) => state = (
-        speciesId: state.speciesId,
-        yieldClass: state.yieldClass == c ? null : c,
-      );
+    speciesId: state.speciesId,
+    yieldClass: state.yieldClass == c ? null : c,
+  );
 
   /// Filtreyi TEK bir sınıfa sabitler.
   ///
   /// toggleClass'tan farkı: aynı sınıfa ikinci kez gelince kaldırmaz.
   /// Dashboard'dan "3 hayvan kuruya aday" satırına basıldığında filtrenin
   /// kalkması, kullanıcıyı 30 hayvanlık tam listeye düşürürdü.
-  void showOnly(YieldClass c) =>
-      state = (speciesId: null, yieldClass: c);
+  void showOnly(YieldClass c) => state = (speciesId: null, yieldClass: c);
 
   void clear() => state = (speciesId: null, yieldClass: null);
 }
@@ -80,7 +79,9 @@ Future<List<Animal>> filteredAnimals(Ref ref) async {
       .toList();
 
   out.sort((a, b) {
-    final byClass = _attention(a.yieldClass).compareTo(_attention(b.yieldClass));
+    final byClass = _attention(
+      a.yieldClass,
+    ).compareTo(_attention(b.yieldClass));
     return byClass != 0 ? byClass : a.earTag.compareTo(b.earTag);
   });
   return List.unmodifiable(out);
@@ -88,9 +89,9 @@ Future<List<Animal>> filteredAnimals(Ref ref) async {
 
 /// Sınıfın "önce bak" sırası. Küçük = daha acil.
 int _attention(YieldClass c) => switch (c) {
-      YieldClass.noMilk => 0,
-      YieldClass.dryOffCandidate => 1,
-      YieldClass.declining => 2,
-      YieldClass.high => 3,
-      YieldClass.normal => 4,
-    };
+  YieldClass.noMilk => 0,
+  YieldClass.dryOffCandidate => 1,
+  YieldClass.declining => 2,
+  YieldClass.high => 3,
+  YieldClass.normal => 4,
+};

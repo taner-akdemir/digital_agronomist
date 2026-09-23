@@ -36,7 +36,9 @@ class ErrorView extends StatelessWidget {
               detail,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                  fontSize: 12, color: AppColors.onSurfaceMuted),
+                fontSize: 12,
+                color: AppColors.onSurfaceMuted,
+              ),
             ),
           ],
         ],

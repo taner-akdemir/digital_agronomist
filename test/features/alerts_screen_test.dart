@@ -14,21 +14,28 @@ final _today = DateTime(2026, 9, 22);
 /// Asset'i diskten okur; gerekçesi history_screen_test'te.
 Future<String> _diskAsset(String path) async => File(path).readAsStringSync();
 
-MockRepository _repo() =>
-    MockRepository(latency: Duration.zero, today: _today, loadAsset: _diskAsset);
+MockRepository _repo() => MockRepository(
+  latency: Duration.zero,
+  today: _today,
+  loadAsset: _diskAsset,
+);
 
 late ProviderContainer _container;
 
 Widget wrap(Widget child) => UncontrolledProviderScope(
-      container: _container,
-      child: MaterialApp(home: child),
-    );
+  container: _container,
+  child: MaterialApp(home: child),
+);
 
 void main() {
   setUp(() {
-    _container = ProviderContainer(overrides: [
-      repositoryProvider.overrideWith((ref) => _repo() as MilkTraceRepository),
-    ]);
+    _container = ProviderContainer(
+      overrides: [
+        repositoryProvider.overrideWith(
+          (ref) => _repo() as MilkTraceRepository,
+        ),
+      ],
+    );
   });
   tearDown(() => _container.dispose());
 
@@ -54,8 +61,9 @@ void main() {
   });
 
   // "Okundu" düğmesinin GERÇEKTEN bir şey yaptığını doğrular.
-  testWidgets('okundu işaretlenen uyarı listeden düşer ve sayaç azalır',
-      (tester) async {
+  testWidgets('okundu işaretlenen uyarı listeden düşer ve sayaç azalır', (
+    tester,
+  ) async {
     await tester.pumpWidget(wrap(const AlertsScreen()));
     await tester.pumpAndSettle();
 
@@ -84,7 +92,9 @@ void main() {
     expect(find.text('Okundu'), findsNWidgets(4));
   });
 
-  testWidgets('uyarı metni backend\'den geldiği gibi gösterilir', (tester) async {
+  testWidgets('uyarı metni backend\'den geldiği gibi gösterilir', (
+    tester,
+  ) async {
     await tester.pumpWidget(wrap(const AlertsScreen()));
     await tester.pumpAndSettle();
 

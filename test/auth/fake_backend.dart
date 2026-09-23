@@ -19,8 +19,11 @@ class FakeAdapter implements HttpClientAdapter {
   int countOf(String path) => requests.where((r) => r.path == path).length;
 
   @override
-  Future<ResponseBody> fetch(RequestOptions options, Stream<Uint8List>? requestStream,
-          Future<void>? cancelFuture) async {
+  Future<ResponseBody> fetch(
+    RequestOptions options,
+    Stream<Uint8List>? requestStream,
+    Future<void>? cancelFuture,
+  ) async {
     requests.add(options);
     return handler(options);
   }
@@ -29,7 +32,8 @@ class FakeAdapter implements HttpClientAdapter {
   void close({bool force = false}) {}
 }
 
-ResponseBody jsonResponse(int status, Map<String, dynamic> body) => ResponseBody.fromString(
+ResponseBody jsonResponse(int status, Map<String, dynamic> body) =>
+    ResponseBody.fromString(
       jsonEncode(body),
       status,
       headers: {
@@ -46,8 +50,11 @@ ResponseBody okEnvelope2(List<dynamic> data) =>
     jsonResponse(200, {'success': true, 'data': data, 'msg': ''});
 
 /// §16 hata zarfı.
-ResponseBody errEnvelope(int status, String code, String message) => jsonResponse(
-    status, {'success': false, 'error': {'code': code, 'message': message}});
+ResponseBody errEnvelope(int status, String code, String message) =>
+    jsonResponse(status, {
+      'success': false,
+      'error': {'code': code, 'message': message},
+    });
 
 /// Bellekte duran secure storage.
 ///
@@ -56,14 +63,27 @@ class InMemorySecureStorage implements FlutterSecureStorage {
   final Map<String, String> values = {};
 
   @override
-  Future<String?> read({required String key, dynamic iOptions, dynamic aOptions,
-          dynamic lOptions, dynamic webOptions, dynamic mOptions, dynamic wOptions}) async =>
-      values[key];
+  Future<String?> read({
+    required String key,
+    dynamic iOptions,
+    dynamic aOptions,
+    dynamic lOptions,
+    dynamic webOptions,
+    dynamic mOptions,
+    dynamic wOptions,
+  }) async => values[key];
 
   @override
-  Future<void> write({required String key, required String? value, dynamic iOptions,
-      dynamic aOptions, dynamic lOptions, dynamic webOptions, dynamic mOptions,
-      dynamic wOptions}) async {
+  Future<void> write({
+    required String key,
+    required String? value,
+    dynamic iOptions,
+    dynamic aOptions,
+    dynamic lOptions,
+    dynamic webOptions,
+    dynamic mOptions,
+    dynamic wOptions,
+  }) async {
     if (value == null) {
       values.remove(key);
     } else {
@@ -72,12 +92,20 @@ class InMemorySecureStorage implements FlutterSecureStorage {
   }
 
   @override
-  Future<void> delete({required String key, dynamic iOptions, dynamic aOptions,
-      dynamic lOptions, dynamic webOptions, dynamic mOptions, dynamic wOptions}) async {
+  Future<void> delete({
+    required String key,
+    dynamic iOptions,
+    dynamic aOptions,
+    dynamic lOptions,
+    dynamic webOptions,
+    dynamic mOptions,
+    dynamic wOptions,
+  }) async {
     values.remove(key);
   }
 
   @override
-  dynamic noSuchMethod(Invocation invocation) =>
-      throw UnimplementedError('testte kullanılmıyor: ${invocation.memberName}');
+  dynamic noSuchMethod(Invocation invocation) => throw UnimplementedError(
+    'testte kullanılmıyor: ${invocation.memberName}',
+  );
 }

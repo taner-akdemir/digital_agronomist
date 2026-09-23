@@ -62,8 +62,12 @@ class _AnimalsTab extends ConsumerWidget {
             builder: (list) => list.isEmpty
                 ? const _Empty('Bu filtreye uyan hayvan yok')
                 : ListView.separated(
-                    padding: const EdgeInsets.fromLTRB(AppSpacing.lg, 0,
-                        AppSpacing.lg, AppSpacing.lg),
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.lg,
+                      0,
+                      AppSpacing.lg,
+                      AppSpacing.lg,
+                    ),
                     itemCount: list.length,
                     separatorBuilder: (_, _) =>
                         const SizedBox(height: AppSpacing.sm),
@@ -99,7 +103,11 @@ class _Filters extends ConsumerWidget {
               selected: filter.speciesId == s.id,
               onTap: () => notifier.toggleSpecies(s.id),
             ),
-          const VerticalDivider(width: AppSpacing.lg, indent: 10, endIndent: 10),
+          const VerticalDivider(
+            width: AppSpacing.lg,
+            indent: 10,
+            endIndent: 10,
+          ),
           for (final c in YieldClass.values)
             if (c != YieldClass.normal)
               _Chip(
@@ -140,11 +148,18 @@ class _ActiveFilter extends ConsumerWidget {
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(
-          AppSpacing.lg, 0, AppSpacing.sm, AppSpacing.xs),
+        AppSpacing.lg,
+        0,
+        AppSpacing.sm,
+        AppSpacing.xs,
+      ),
       child: Row(
         children: [
-          const Icon(Icons.filter_alt_outlined,
-              size: 14, color: AppColors.onSurfaceMuted),
+          const Icon(
+            Icons.filter_alt_outlined,
+            size: 14,
+            color: AppColors.onSurfaceMuted,
+          ),
           const SizedBox(width: AppSpacing.xs),
           Expanded(
             child: Text(
@@ -152,7 +167,9 @@ class _ActiveFilter extends ConsumerWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
-                  fontSize: 12, color: AppColors.onSurfaceMuted),
+                fontSize: 12,
+                color: AppColors.onSurfaceMuted,
+              ),
             ),
           ),
           TextButton(
@@ -171,7 +188,11 @@ class _ActiveFilter extends ConsumerWidget {
 }
 
 class _Chip extends StatelessWidget {
-  const _Chip({required this.label, required this.selected, required this.onTap});
+  const _Chip({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
 
   final String label;
   final bool selected;
@@ -220,7 +241,9 @@ class _AnimalTile extends StatelessWidget {
                     Text(
                       animal.name ?? animal.earTag,
                       style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 15),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
                     ),
                     Text(
                       // Ad varsa küpe altta: ad boş olabilir ama küpe
@@ -229,7 +252,9 @@ class _AnimalTile extends StatelessWidget {
                           ? '${animal.breed ?? ''} · ${animal.lactationNo}. laktasyon'
                           : animal.earTag,
                       style: const TextStyle(
-                          fontSize: 12, color: AppColors.onSurfaceMuted),
+                        fontSize: 12,
+                        color: AppColors.onSurfaceMuted,
+                      ),
                     ),
                   ],
                 ),
@@ -263,8 +288,10 @@ class _SessionsTab extends ConsumerWidget {
               padding: const EdgeInsets.all(AppSpacing.lg),
               itemCount: list.length,
               separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm),
-              itemBuilder: (_, i) =>
-                  _SessionTile(session: list[i], hall: hallById[list[i].hallId]),
+              itemBuilder: (_, i) => _SessionTile(
+                session: list[i],
+                hall: hallById[list[i].hallId],
+              ),
             ),
     );
   }
@@ -306,15 +333,19 @@ class _SessionTile extends StatelessWidget {
                   '${hall?.name ?? '?'} Bölgesi · '
                   '${Fmt.sessionType(session.type)} Sağımı',
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 14),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
                 ),
                 Text(
                   started == null
                       ? 'Başlangıç bilinmiyor'
                       : '${Fmt.dayMonth(started)} · ${Fmt.time(started)}'
-                          '${ended == null ? '' : ' – ${Fmt.time(ended)}'}',
+                            '${ended == null ? '' : ' – ${Fmt.time(ended)}'}',
                   style: const TextStyle(
-                      fontSize: 12, color: AppColors.onSurfaceMuted),
+                    fontSize: 12,
+                    color: AppColors.onSurfaceMuted,
+                  ),
                 ),
               ],
             ),
@@ -332,7 +363,9 @@ class _SessionTile extends StatelessWidget {
             Text(
               Fmt.duration(ended.difference(started)),
               style: const TextStyle(
-                  fontSize: 12, color: AppColors.onSurfaceMuted),
+                fontSize: 12,
+                color: AppColors.onSurfaceMuted,
+              ),
             ),
         ],
       ),
@@ -347,13 +380,13 @@ class _Empty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Center(
-        child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.xl),
-          child: Text(
-            message,
-            textAlign: TextAlign.center,
-            style: const TextStyle(color: AppColors.onSurfaceMuted),
-          ),
-        ),
-      );
+    child: Padding(
+      padding: const EdgeInsets.all(AppSpacing.xl),
+      child: Text(
+        message,
+        textAlign: TextAlign.center,
+        style: const TextStyle(color: AppColors.onSurfaceMuted),
+      ),
+    ),
+  );
 }

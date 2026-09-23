@@ -11,7 +11,7 @@ import 'package:milktrace/data/models/auth_user.dart';
 /// BEKLEMEDEN selamlama gösterilebilsin; doğruluk kaynağı yine sunucudur.
 class TokenStore {
   TokenStore({FlutterSecureStorage? storage})
-      : _storage = storage ?? const FlutterSecureStorage();
+    : _storage = storage ?? const FlutterSecureStorage();
 
   final FlutterSecureStorage _storage;
 
@@ -60,7 +60,13 @@ class TokenStore {
   /// başka amaçla yazdığı secure storage kayıtlarını da süpürür.
   Future<void> clear() async {
     for (final k in const [
-      _kAccess, _kRefresh, _kUserId, _kUserEmail, _kUserName, _kUserRole, _kUserTenant,
+      _kAccess,
+      _kRefresh,
+      _kUserId,
+      _kUserEmail,
+      _kUserName,
+      _kUserRole,
+      _kUserTenant,
     ]) {
       await _storage.delete(key: k);
     }

@@ -8,7 +8,10 @@ enum ApiMode { mock, http }
 /// `flutter run --dart-define=MT_API=mock` — kimlik sunucusu olmadan
 /// çalışmak, uçak modunda demo yapmak veya ekran tasarlamak için.
 abstract final class Env {
-  static const String _api = String.fromEnvironment('MT_API', defaultValue: 'http');
+  static const String _api = String.fromEnvironment(
+    'MT_API',
+    defaultValue: 'http',
+  );
 
   static ApiMode get apiMode => _api == 'mock' ? ApiMode.mock : ApiMode.http;
 
@@ -17,8 +20,10 @@ abstract final class Env {
   /// 10.0.2.2 Android emülatöründen ana makineye giden adrestir; iOS
   /// simülatöründe veya masaüstünde `--dart-define=MT_API_BASE=...` ile
   /// localhost verilir.
-  static const String apiBaseUrl =
-      String.fromEnvironment('MT_API_BASE', defaultValue: 'http://10.0.2.2:8190/api/v1');
+  static const String apiBaseUrl = String.fromEnvironment(
+    'MT_API_BASE',
+    defaultValue: 'http://10.0.2.2:8190/api/v1',
+  );
 
   /// Canlı akışın WebSocket tabanı (§8.5 WS /ws).
   ///

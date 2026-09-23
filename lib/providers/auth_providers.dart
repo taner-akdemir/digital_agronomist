@@ -98,10 +98,12 @@ class Auth extends _$Auth {
   Future<void> signIn({required String email, required String password}) async {
     final result = await _session.api.login(email: email, password: password);
 
-    await _session.adopt(AuthTokens(
-      accessToken: result.accessToken,
-      refreshToken: result.refreshToken,
-    ));
+    await _session.adopt(
+      AuthTokens(
+        accessToken: result.accessToken,
+        refreshToken: result.refreshToken,
+      ),
+    );
     await _session.store.writeUser(result.user);
     state = AuthState(status: AuthStatus.signedIn, user: result.user);
   }

@@ -32,7 +32,8 @@ class AnimalDetailScreen extends ConsumerWidget {
     return Column(
       children: [
         _BackBar(
-          title: animals.value
+          title:
+              animals.value
                   ?.where((a) => a.id == animalId)
                   .map((a) => a.name ?? a.earTag)
                   .firstOrNull ??
@@ -66,7 +67,12 @@ class _BackBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(AppSpacing.sm, AppSpacing.sm, AppSpacing.lg, 0),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.sm,
+        AppSpacing.sm,
+        AppSpacing.lg,
+        0,
+      ),
       child: Row(
         children: [
           IconButton(
@@ -150,12 +156,20 @@ class _IdentityCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(animal.name ?? animal.earTag,
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
-                    Text(animal.earTag,
-                        style: const TextStyle(
-                            fontSize: 12, color: AppColors.onSurfaceMuted)),
+                    Text(
+                      animal.name ?? animal.earTag,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      animal.earTag,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: AppColors.onSurfaceMuted,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -170,12 +184,17 @@ class _IdentityCard extends StatelessWidget {
               if (animal.breed != null) _Fact('Irk', animal.breed!),
               _Fact('Laktasyon', '${animal.lactationNo}.'),
               if (animal.lastCalvingDate != null)
-                _Fact('Son buzağılama', Fmt.dayMonthYear(animal.lastCalvingDate!)),
+                _Fact(
+                  'Son buzağılama',
+                  Fmt.dayMonthYear(animal.lastCalvingDate!),
+                ),
             ],
           ),
           const SizedBox(height: AppSpacing.md),
-          Text(cls.explanation,
-              style: const TextStyle(fontSize: 12, height: 1.4)),
+          Text(
+            cls.explanation,
+            style: const TextStyle(fontSize: 12, height: 1.4),
+          ),
           if (cls != YieldClass.normal && cls != YieldClass.high) ...[
             const SizedBox(height: AppSpacing.sm),
             // §6.4'ün uyarısı ekranda DURMALI: sistem karar destek aracıdır,
@@ -184,14 +203,21 @@ class _IdentityCard extends StatelessWidget {
             const Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.info_outline, size: 14, color: AppColors.lightGreyColor),
+                Icon(
+                  Icons.info_outline,
+                  size: 14,
+                  color: AppColors.lightGreyColor,
+                ),
                 SizedBox(width: AppSpacing.xs),
                 Expanded(
                   child: Text(
                     'Bu bir öneridir, teşhis değildir. Gebelik, laktasyon dönemi '
                     've hastalık verimi düşürebilir; veteriner kontrolü gerekir.',
                     style: TextStyle(
-                        fontSize: 11, color: AppColors.onSurfaceMuted, height: 1.4),
+                      fontSize: 11,
+                      color: AppColors.onSurfaceMuted,
+                      height: 1.4,
+                    ),
                   ),
                 ),
               ],
@@ -225,8 +251,10 @@ class _TrendCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Verim trendi',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+          const Text(
+            'Verim trendi',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          ),
           const SizedBox(height: AppSpacing.md),
           Row(
             children: [
@@ -238,8 +266,8 @@ class _TrendCard extends StatelessWidget {
                 color: !notable
                     ? null
                     : monthly < 0
-                        ? AppColors.flowRed
-                        : AppColors.flowGreen,
+                    ? AppColors.flowRed
+                    : AppColors.flowGreen,
               ),
             ],
           ),
@@ -267,8 +295,10 @@ class _HistoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     if (milkings.isEmpty) {
       return const _Card(
-        child: Text('Bu hayvana ait sağım kaydı yok',
-            style: TextStyle(color: AppColors.onSurfaceMuted)),
+        child: Text(
+          'Bu hayvana ait sağım kaydı yok',
+          style: TextStyle(color: AppColors.onSurfaceMuted),
+        ),
       );
     }
 
@@ -278,8 +308,10 @@ class _HistoryCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Son sağımlar',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+          const Text(
+            'Son sağımlar',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          ),
           const SizedBox(height: AppSpacing.sm),
           for (final m in shown) _MilkingRow(milking: m),
           if (milkings.length > _limit) ...[
@@ -287,7 +319,9 @@ class _HistoryCard extends StatelessWidget {
             Text(
               '${milkings.length} sağımın ilk $_limit tanesi gösteriliyor',
               style: const TextStyle(
-                  fontSize: 11, color: AppColors.onSurfaceMuted),
+                fontSize: 11,
+                color: AppColors.onSurfaceMuted,
+              ),
             ),
           ],
         ],
@@ -313,8 +347,10 @@ class _MilkingRow extends StatelessWidget {
           Container(
             width: 8,
             height: 8,
-            decoration:
-                BoxDecoration(color: palette.foreground, shape: BoxShape.circle),
+            decoration: BoxDecoration(
+              color: palette.foreground,
+              shape: BoxShape.circle,
+            ),
           ),
           const SizedBox(width: AppSpacing.md),
           Expanded(
@@ -322,13 +358,14 @@ class _MilkingRow extends StatelessWidget {
               started == null
                   ? Fmt.sessionType(milking.sessionType)
                   : '${Fmt.dayMonth(started)} · '
-                      '${Fmt.sessionType(milking.sessionType)}',
+                        '${Fmt.sessionType(milking.sessionType)}',
               style: const TextStyle(fontSize: 13),
             ),
           ),
-          Text('${Fmt.litres(milking.volumeMl)} L',
-              style: const TextStyle(
-                  fontSize: 13, fontWeight: FontWeight.bold)),
+          Text(
+            '${Fmt.litres(milking.volumeMl)} L',
+            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+          ),
           const SizedBox(width: AppSpacing.sm),
           SizedBox(
             width: 46,
@@ -337,7 +374,9 @@ class _MilkingRow extends StatelessWidget {
               milking.expectedMl == 0 ? '—' : Fmt.percent(milking.yieldPct),
               textAlign: TextAlign.right,
               style: const TextStyle(
-                  fontSize: 12, color: AppColors.onSurfaceMuted),
+                fontSize: 12,
+                color: AppColors.onSurfaceMuted,
+              ),
             ),
           ),
         ],
@@ -359,16 +398,22 @@ class _Stat extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label,
-              style: const TextStyle(
-                  fontSize: 11, color: AppColors.onSurfaceMuted)),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 11,
+              color: AppColors.onSurfaceMuted,
+            ),
+          ),
           const SizedBox(height: 2),
-          Text(value,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: color ?? AppColors.onSurface,
-              )),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: color ?? AppColors.onSurface,
+            ),
+          ),
         ],
       ),
     );
@@ -388,12 +433,16 @@ class _Fact extends StatelessWidget {
         style: const TextStyle(fontFamily: 'Poppins', fontSize: 12),
         children: [
           TextSpan(
-              text: '$label: ',
-              style: const TextStyle(color: AppColors.onSurfaceMuted)),
+            text: '$label: ',
+            style: const TextStyle(color: AppColors.onSurfaceMuted),
+          ),
           TextSpan(
-              text: value,
-              style: const TextStyle(
-                  color: AppColors.onSurface, fontWeight: FontWeight.w600)),
+            text: value,
+            style: const TextStyle(
+              color: AppColors.onSurface,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ],
       ),
     );
@@ -407,12 +456,12 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.all(AppSpacing.lg),
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: AppRadius.mdAll,
-          border: Border.all(color: AppColors.border),
-        ),
-        child: child,
-      );
+    padding: const EdgeInsets.all(AppSpacing.lg),
+    decoration: BoxDecoration(
+      color: AppColors.surface,
+      borderRadius: AppRadius.mdAll,
+      border: Border.all(color: AppColors.border),
+    ),
+    child: child,
+  );
 }

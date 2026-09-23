@@ -18,15 +18,27 @@ class MilkPalette {
   final Color border;
 
   static MilkPalette of(MilkColor color) => switch (color) {
-        MilkColor.green => const MilkPalette(
-            AppColors.flowGreen, AppColors.surface, AppColors.lightGreenColor),
-        MilkColor.yellow => const MilkPalette(
-            AppColors.flowYellow, AppColors.surface, AppColors.lightAmberColor),
-        MilkColor.red => const MilkPalette(
-            AppColors.flowRed, AppColors.flowRedSurface, AppColors.lightRedColor),
-        MilkColor.grey => const MilkPalette(
-            AppColors.flowGrey, AppColors.surfaceAlt, AppColors.border),
-      };
+    MilkColor.green => const MilkPalette(
+      AppColors.flowGreen,
+      AppColors.surface,
+      AppColors.lightGreenColor,
+    ),
+    MilkColor.yellow => const MilkPalette(
+      AppColors.flowYellow,
+      AppColors.surface,
+      AppColors.lightAmberColor,
+    ),
+    MilkColor.red => const MilkPalette(
+      AppColors.flowRed,
+      AppColors.flowRedSurface,
+      AppColors.lightRedColor,
+    ),
+    MilkColor.grey => const MilkPalette(
+      AppColors.flowGrey,
+      AppColors.surfaceAlt,
+      AppColors.border,
+    ),
+  };
 
   /// Rozet gibi RENKLİ zemin isteyen yerler için yumuşak dolgu.
   MilkPalette get filled => MilkPalette(foreground, border, border);

@@ -12,10 +12,8 @@ enum AuthStatus { restoring, signedOut, signedIn }
 
 @freezed
 abstract class AuthState with _$AuthState {
-  const factory AuthState({
-    required AuthStatus status,
-    AuthUser? user,
-  }) = _AuthState;
+  const factory AuthState({required AuthStatus status, AuthUser? user}) =
+      _AuthState;
 
   const AuthState._();
 

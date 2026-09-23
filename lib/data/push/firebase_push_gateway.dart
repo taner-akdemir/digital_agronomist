@@ -16,7 +16,7 @@ import 'package:milktrace/data/push/push_message.dart';
 /// tek satır bile değişmeden çalışmaya başlar.
 class FirebasePushGateway implements PushGateway {
   FirebasePushGateway({FlutterLocalNotificationsPlugin? local})
-      : _local = local ?? FlutterLocalNotificationsPlugin();
+    : _local = local ?? FlutterLocalNotificationsPlugin();
 
   /// Ön planda gelen bildirimleri gösteren eklenti.
   ///
@@ -65,9 +65,11 @@ class FirebasePushGateway implements PushGateway {
     await _setupLocalNotifications();
 
     _subs.add(FirebaseMessaging.onMessage.listen(_showForeground));
-    _subs.add(FirebaseMessaging.onMessageOpenedApp.listen(
-      (m) => _taps.add(_toMessage(m)),
-    ));
+    _subs.add(
+      FirebaseMessaging.onMessageOpenedApp.listen(
+        (m) => _taps.add(_toMessage(m)),
+      ),
+    );
     _subs.add(FirebaseMessaging.instance.onTokenRefresh.listen(_tokens.add));
 
     // Uygulama KAPALIYKEN gelen bildirime dokunularak açıldıysa, o bildirim
@@ -95,7 +97,8 @@ class FirebasePushGateway implements PushGateway {
 
     await _local
         .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
+          AndroidFlutterLocalNotificationsPlugin
+        >()
         ?.createNotificationChannel(_channel);
   }
 
@@ -122,10 +125,10 @@ class FirebasePushGateway implements PushGateway {
   }
 
   static PushMessage _toMessage(RemoteMessage m) => PushMessage.fromRemote(
-        title: m.notification?.title,
-        body: m.notification?.body,
-        data: m.data,
-      );
+    title: m.notification?.title,
+    body: m.notification?.body,
+    data: m.data,
+  );
 
   /// Ön plandaki bildirime dokunulduğunda payload JSON olarak geri gelir.
   static PushMessage _fromPayload(String payload) {

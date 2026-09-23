@@ -16,7 +16,9 @@ class AlertList extends _$AlertList {
     final alerts = [...await ref.watch(repositoryProvider).alerts()];
 
     alerts.sort((a, b) {
-      if (a.isAcknowledged != b.isAcknowledged) return a.isAcknowledged ? 1 : -1;
+      if (a.isAcknowledged != b.isAcknowledged) {
+        return a.isAcknowledged ? 1 : -1;
+      }
       final at = a.createdAt, bt = b.createdAt;
       if (at == null || bt == null) return 0;
       return bt.compareTo(at);
@@ -53,5 +55,9 @@ class AlertList extends _$AlertList {
 /// Açık (okunmamış) uyarı sayısı — üst çubuktaki zilin rozeti.
 @riverpod
 int openAlertCount(Ref ref) =>
-    ref.watch(alertListProvider).value?.where((a) => !a.isAcknowledged).length ??
+    ref
+        .watch(alertListProvider)
+        .value
+        ?.where((a) => !a.isAcknowledged)
+        .length ??
     0;

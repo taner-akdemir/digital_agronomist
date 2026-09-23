@@ -12,11 +12,7 @@ import 'package:milktrace/widgets/milk_palette.dart';
 /// tekrarlıyordu. Artık renk bir kez çözülür ve kartın her parçası aynı
 /// karardan beslenir.
 class LiveInfoCard extends StatelessWidget {
-  const LiveInfoCard({
-    super.key,
-    required this.update,
-    required this.title,
-  });
+  const LiveInfoCard({super.key, required this.update, required this.title});
 
   final SpoutUpdate update;
 
@@ -48,13 +44,18 @@ class LiveInfoCard extends StatelessWidget {
             style: TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.bold,
-              color: animal == null ? AppColors.lightGreyColor : AppColors.onSurface,
+              color: animal == null
+                  ? AppColors.lightGreyColor
+                  : AppColors.onSurface,
             ),
           ),
           if (animal?.name != null)
             Text(
               animal!.earTag,
-              style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceMuted),
+              style: const TextStyle(
+                fontSize: 11,
+                color: AppColors.onSurfaceMuted,
+              ),
             ),
           const SizedBox(height: AppSpacing.md),
           _flowRow(palette),
@@ -69,8 +70,11 @@ class LiveInfoCard extends StatelessWidget {
             // yazıyordu ve yanlıştı (§15.3/15).
             Row(
               children: [
-                const Icon(Icons.warning_amber_rounded,
-                    size: 16, color: AppColors.flowRed),
+                const Icon(
+                  Icons.warning_amber_rounded,
+                  size: 16,
+                  color: AppColors.flowRed,
+                ),
                 const SizedBox(width: AppSpacing.xs),
                 Text(
                   'Düşük Debi',
@@ -96,7 +100,10 @@ class LiveInfoCard extends StatelessWidget {
             title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontSize: 12, color: AppColors.lightGreyColor),
+            style: const TextStyle(
+              fontSize: 12,
+              color: AppColors.lightGreyColor,
+            ),
           ),
         ),
         Container(
@@ -132,8 +139,10 @@ class LiveInfoCard extends StatelessWidget {
         const SizedBox(width: AppSpacing.xs),
         const Padding(
           padding: EdgeInsets.only(bottom: 2),
-          child: Text('L/dk',
-              style: TextStyle(fontSize: 11, color: AppColors.onSurfaceMuted)),
+          child: Text(
+            'L/dk',
+            style: TextStyle(fontSize: 11, color: AppColors.onSurfaceMuted),
+          ),
         ),
       ],
     );
@@ -182,9 +191,13 @@ class LiveInfoCard extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: Text(label,
-                style: const TextStyle(
-                    fontSize: 13, color: AppColors.onSurfaceMuted)),
+            child: Text(
+              label,
+              style: const TextStyle(
+                fontSize: 13,
+                color: AppColors.onSurfaceMuted,
+              ),
+            ),
           ),
           Text(
             value,

@@ -27,15 +27,17 @@ class ThresholdsScreen extends ConsumerWidget {
       appBar: AppBar(
         leading: IconButton(
           tooltip: 'Geri',
-          onPressed: () => context.canPop() ? context.pop() : context.go('/live'),
+          onPressed: () =>
+              context.canPop() ? context.pop() : context.go('/live'),
           icon: const Icon(Icons.arrow_back),
         ),
         title: const Text(
           'Eşik ayarları',
           style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-              color: AppColors.darkGreenColor),
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            color: AppColors.darkGreenColor,
+          ),
         ),
       ),
       body: AsyncView(
@@ -183,7 +185,8 @@ class _FormState extends ConsumerState<_Form> {
           ),
           _Group(
             title: 'Yanlış alarm koruması',
-            hint: 'Sağımın ilk saniyelerinde kırmızı üretilmez; kırmızı '
+            hint:
+                'Sağımın ilk saniyelerinde kırmızı üretilmez; kırmızı '
                 'durum bu süre boyunca sürmeden uyarı gönderilmez (§6.2).',
             children: [
               _field('rampUp', 'Isınma süresi', 'sn'),
@@ -192,7 +195,8 @@ class _FormState extends ConsumerState<_Form> {
           ),
           _Group(
             title: 'Sağım kapanışı',
-            hint: 'Debi bu değerin altında bu süre kalırsa hayvanın sağımı '
+            hint:
+                'Debi bu değerin altında bu süre kalırsa hayvanın sağımı '
                 'kapanır (§6.1).',
             children: [
               _field('endFlow', 'Bitiş debisi', 'L/dk'),
@@ -201,7 +205,8 @@ class _FormState extends ConsumerState<_Form> {
           ),
           _Group(
             title: 'Sınıflandırma eşikleri',
-            hint: '7 günlük ortalama alt eşiğin altındaysa kuruya aday, üst '
+            hint:
+                '7 günlük ortalama alt eşiğin altındaysa kuruya aday, üst '
                 'eşiğin üstündeyse yüksek verimli (§6.4).',
             children: [
               _field('dryOff', 'Kuruya çıkma alt eşiği', 'L/gün'),
@@ -214,7 +219,9 @@ class _FormState extends ConsumerState<_Form> {
             style: FilledButton.styleFrom(
               backgroundColor: AppColors.darkGreenColor,
               padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
-              shape: const RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+              shape: const RoundedRectangleBorder(
+                borderRadius: AppRadius.mdAll,
+              ),
             ),
             child: Text(_saving ? 'Kaydediliyor…' : 'Kaydet'),
           ),
@@ -224,12 +231,12 @@ class _FormState extends ConsumerState<_Form> {
   }
 
   Widget _field(String key, String label, String unit) => _NumberField(
-        controller: _fields[key]!,
-        label: label,
-        unit: unit,
-        enabled: _canEdit,
-        validator: (raw) => _validate(key, raw),
-      );
+    controller: _fields[key]!,
+    label: label,
+    unit: unit,
+    enabled: _canEdit,
+    validator: (raw) => _validate(key, raw),
+  );
 
   /// Alan doğrulaması.
   ///
@@ -291,11 +298,12 @@ class _FormState extends ConsumerState<_Form> {
   }
 
   void _toast(String message, {bool error = false}) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(message),
-      backgroundColor:
-          error ? AppColors.flowRed : AppColors.darkGreenColor,
-    ));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: error ? AppColors.flowRed : AppColors.darkGreenColor,
+      ),
+    );
   }
 }
 
@@ -324,7 +332,9 @@ class _NumberField extends StatelessWidget {
         // Ondalık klavye: saha telefonunda tam sayı klavyesiyle "1.5"
         // yazılamıyordu.
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
+        ],
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: validator,
         decoration: InputDecoration(
@@ -356,15 +366,21 @@ class _Group extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title,
-              style:
-                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+          Text(
+            title,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          ),
           const SizedBox(height: AppSpacing.xs),
           // Her grubun NE İŞE YARADIĞI yazıyor: "rampUpSec" gibi bir alan
           // adı, onu ilk kez gören çiftçiye hiçbir şey anlatmıyor.
-          Text(hint,
-              style: const TextStyle(
-                  fontSize: 11, color: AppColors.onSurfaceMuted, height: 1.35)),
+          Text(
+            hint,
+            style: const TextStyle(
+              fontSize: 11,
+              color: AppColors.onSurfaceMuted,
+              height: 1.35,
+            ),
+          ),
           const SizedBox(height: AppSpacing.sm),
           ...children,
         ],
@@ -399,7 +415,10 @@ class _CalibrationNote extends StatelessWidget {
               'dönemi ve işletmeye göre çok değişir; saha verisi ve ziraat '
               'mühendisi/veteriner görüşüyle kalibre edilmelidir.',
               style: TextStyle(
-                  fontSize: 12, color: AppColors.darkAmberColor, height: 1.35),
+                fontSize: 12,
+                color: AppColors.darkAmberColor,
+                height: 1.35,
+              ),
             ),
           ),
         ],

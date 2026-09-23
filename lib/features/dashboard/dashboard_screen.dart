@@ -70,9 +70,13 @@ class _TodayCard extends StatelessWidget {
           Row(
             children: [
               const Expanded(
-                child: Text('Bugün toplanan süt',
-                    style: TextStyle(
-                        fontSize: 13, color: AppColors.onSurfaceMuted)),
+                child: Text(
+                  'Bugün toplanan süt',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: AppColors.onSurfaceMuted,
+                  ),
+                ),
               ),
               if (summary.activeSessions > 0)
                 Row(
@@ -81,7 +85,9 @@ class _TodayCard extends StatelessWidget {
                       width: 8,
                       height: 8,
                       decoration: const BoxDecoration(
-                          color: AppColors.flowGreen, shape: BoxShape.circle),
+                        color: AppColors.flowGreen,
+                        shape: BoxShape.circle,
+                      ),
                     ),
                     const SizedBox(width: AppSpacing.xs),
                     Text(
@@ -110,9 +116,10 @@ class _TodayCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.xs),
-              const Text('L',
-                  style: TextStyle(
-                      fontSize: 15, color: AppColors.onSurfaceMuted)),
+              const Text(
+                'L',
+                style: TextStyle(fontSize: 15, color: AppColors.onSurfaceMuted),
+              ),
             ],
           ),
           const SizedBox(height: AppSpacing.xs),
@@ -121,7 +128,9 @@ class _TodayCard extends StatelessWidget {
             // kaç hayvandan geldiği olmadan toplam yorumlanamaz.
             '${summary.milkingCount} sağım · ${summary.animalCount} hayvan',
             style: const TextStyle(
-                fontSize: 12, color: AppColors.onSurfaceMuted),
+              fontSize: 12,
+              color: AppColors.onSurfaceMuted,
+            ),
           ),
         ],
       ),
@@ -141,8 +150,10 @@ class _SpeciesCard extends ConsumerWidget {
 
     if (summary.bySpecies.isEmpty) {
       return const _Card(
-        child: Text('Bugün henüz sağım yapılmadı',
-            style: TextStyle(color: AppColors.onSurfaceMuted)),
+        child: Text(
+          'Bugün henüz sağım yapılmadı',
+          style: TextStyle(color: AppColors.onSurfaceMuted),
+        ),
       );
     }
 
@@ -154,8 +165,10 @@ class _SpeciesCard extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Tür bazında',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+          const Text(
+            'Tür bazında',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          ),
           const SizedBox(height: AppSpacing.md),
           for (final row in summary.bySpecies) ...[
             _SpeciesRow(
@@ -190,14 +203,19 @@ class _SpeciesRow extends StatelessWidget {
         Row(
           children: [
             Expanded(
-              child: Text('$label · ${row.animalCount} hayvan',
-                  style: const TextStyle(fontSize: 13)),
+              child: Text(
+                '$label · ${row.animalCount} hayvan',
+                style: const TextStyle(fontSize: 13),
+              ),
             ),
-            Text('${Fmt.litres(row.totalMl)} L',
-                style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.darkGreenColor)),
+            Text(
+              '${Fmt.litres(row.totalMl)} L',
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.bold,
+                color: AppColors.darkGreenColor,
+              ),
+            ),
           ],
         ),
         const SizedBox(height: AppSpacing.xs),
@@ -210,8 +228,9 @@ class _SpeciesRow extends StatelessWidget {
             value: ratio,
             minHeight: 6,
             backgroundColor: AppColors.veryLightGreyColor,
-            valueColor:
-                const AlwaysStoppedAnimation<Color>(AppColors.chartPrimary),
+            valueColor: const AlwaysStoppedAnimation<Color>(
+              AppColors.chartPrimary,
+            ),
           ),
         ),
       ],
@@ -235,8 +254,10 @@ class _ClassCard extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Verim sınıfları · $total hayvan',
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+          Text(
+            'Verim sınıfları · $total hayvan',
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          ),
           const SizedBox(height: AppSpacing.md),
           for (final c in YieldClass.values)
             if (c != YieldClass.normal || (counts[c] ?? 0) > 0)
@@ -289,17 +310,20 @@ class _ClassRow extends StatelessWidget {
               width: 10,
               height: 10,
               decoration: BoxDecoration(
-                  color: palette.foreground, shape: BoxShape.circle),
+                color: palette.foreground,
+                shape: BoxShape.circle,
+              ),
             ),
             const SizedBox(width: AppSpacing.md),
             Expanded(
-              child: Text(yieldClass.label,
-                  style: const TextStyle(fontSize: 13)),
+              child: Text(
+                yieldClass.label,
+                style: const TextStyle(fontSize: 13),
+              ),
             ),
             Text(
               '$count',
-              style: const TextStyle(
-                  fontSize: 14, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
             ),
             SizedBox(
               width: 52,
@@ -307,14 +331,18 @@ class _ClassRow extends StatelessWidget {
                 total == 0 ? '' : Fmt.percent(count / total * 100),
                 textAlign: TextAlign.right,
                 style: const TextStyle(
-                    fontSize: 12, color: AppColors.onSurfaceMuted),
+                  fontSize: 12,
+                  color: AppColors.onSurfaceMuted,
+                ),
               ),
             ),
-            Icon(Icons.chevron_right,
-                size: 18,
-                color: onTap == null
-                    ? Colors.transparent
-                    : AppColors.lightGreyColor),
+            Icon(
+              Icons.chevron_right,
+              size: 18,
+              color: onTap == null
+                  ? Colors.transparent
+                  : AppColors.lightGreyColor,
+            ),
           ],
         ),
       ),
@@ -342,14 +370,16 @@ class _AlertsCard extends ConsumerWidget {
           Row(
             children: [
               const Expanded(
-                child: Text('Açık uyarılar',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                child: Text(
+                  'Açık uyarılar',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                ),
               ),
               if (open.isNotEmpty)
                 TextButton(
                   style: TextButton.styleFrom(
-                      foregroundColor: AppColors.darkGreenColor),
+                    foregroundColor: AppColors.darkGreenColor,
+                  ),
                   onPressed: () => context.push('/alerts'),
                   child: const Text('Tümü', style: TextStyle(fontSize: 12)),
                 ),
@@ -358,9 +388,10 @@ class _AlertsCard extends ConsumerWidget {
           if (open.isEmpty)
             const Padding(
               padding: EdgeInsets.symmetric(vertical: AppSpacing.sm),
-              child: Text('Açık uyarı yok',
-                  style: TextStyle(
-                      fontSize: 13, color: AppColors.onSurfaceMuted)),
+              child: Text(
+                'Açık uyarı yok',
+                style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
+              ),
             )
           else ...[
             for (final a in open.take(_limit)) _AlertRow(alert: a),
@@ -370,7 +401,9 @@ class _AlertsCard extends ConsumerWidget {
                 child: Text(
                   '${open.length - _limit} uyarı daha',
                   style: const TextStyle(
-                      fontSize: 11, color: AppColors.onSurfaceMuted),
+                    fontSize: 11,
+                    color: AppColors.onSurfaceMuted,
+                  ),
                 ),
               ),
           ],
@@ -394,8 +427,11 @@ class _AlertRow extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(AlertStyle.icon(alert.type),
-              size: 18, color: palette.foreground),
+          Icon(
+            AlertStyle.icon(alert.type),
+            size: 18,
+            color: palette.foreground,
+          ),
           const SizedBox(width: AppSpacing.md),
           Expanded(
             child: Text(
@@ -421,12 +457,12 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.all(AppSpacing.lg),
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: AppRadius.mdAll,
-          border: Border.all(color: AppColors.border),
-        ),
-        child: child,
-      );
+    padding: const EdgeInsets.all(AppSpacing.lg),
+    decoration: BoxDecoration(
+      color: AppColors.surface,
+      borderRadius: AppRadius.mdAll,
+      border: Border.all(color: AppColors.border),
+    ),
+    child: child,
+  );
 }

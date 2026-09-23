@@ -56,10 +56,14 @@ void main() {
         final expected = tc['expectedMl'] as int;
         final t = thresholds[tc['species']]!;
 
-        expect(ThresholdsEngine.yieldColor(volume, expected, t),
-            colorOf(tc['wantColor'] as String));
-        expect(ThresholdsEngine.yieldPct(volume, expected),
-            closeTo((tc['wantPct'] as num).toDouble(), 1e-9));
+        expect(
+          ThresholdsEngine.yieldColor(volume, expected, t),
+          colorOf(tc['wantColor'] as String),
+        );
+        expect(
+          ThresholdsEngine.yieldPct(volume, expected),
+          closeTo((tc['wantPct'] as num).toDouble(), 1e-9),
+        );
       });
     }
   });
@@ -72,13 +76,17 @@ void main() {
     // Yol yerel geliştirme kurulumuna göre; CI'da bu kontrol
     // `make check-color-fixture` ile yapılır.
     final backend = File(
-        '${Platform.environment['HOME']}/GolandProjects/milktrace/'
-        'common/milkrules/testdata/color_cases.json');
+      '${Platform.environment['HOME']}/GolandProjects/milktrace/'
+      'common/milkrules/testdata/color_cases.json',
+    );
     if (!backend.existsSync()) {
       markTestSkipped('backend repo bulunamadı, karşılaştırma atlandı');
       return;
     }
-    expect(backend.readAsStringSync(), raw,
-        reason: 'golden fixture ayrışmış — iki taraf farklı renk üretir');
+    expect(
+      backend.readAsStringSync(),
+      raw,
+      reason: 'golden fixture ayrışmış — iki taraf farklı renk üretir',
+    );
   });
 }

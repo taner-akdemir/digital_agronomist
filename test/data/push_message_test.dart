@@ -18,9 +18,7 @@ void main() {
   });
 
   test('hayvan kimliği yoksa uyarı listesine gider', () {
-    final m = PushMessage.fromRemote(
-      data: {'type': 'alert', 'alertId': 'al1'},
-    );
+    final m = PushMessage.fromRemote(data: {'type': 'alert', 'alertId': 'al1'});
 
     expect(m.route, PushMessage.alertsRoute);
   });
@@ -29,16 +27,22 @@ void main() {
   //
   // '/history/animal/' gibi yarım bir yol router'ın hata sayfasına düşerdi.
   test('boş ya da eksik alanlar uyarı listesine düşer', () {
-    expect(PushMessage.fromRemote(data: {'animalId': ''}).route,
-        PushMessage.alertsRoute);
-    expect(PushMessage.fromRemote(data: {'animalId': '   '}).route,
-        PushMessage.alertsRoute);
+    expect(
+      PushMessage.fromRemote(data: {'animalId': ''}).route,
+      PushMessage.alertsRoute,
+    );
+    expect(
+      PushMessage.fromRemote(data: {'animalId': '   '}).route,
+      PushMessage.alertsRoute,
+    );
     expect(PushMessage.fromRemote().route, PushMessage.alertsRoute);
   });
 
   // FCM data değerleri STRING gelir; başka tip sızarsa da çökmemeli.
   test('string olmayan kimlik metne çevrilir', () {
-    expect(PushMessage.fromRemote(data: {'animalId': 42}).route,
-        '/history/animal/42');
+    expect(
+      PushMessage.fromRemote(data: {'animalId': 42}).route,
+      '/history/animal/42',
+    );
   });
 }

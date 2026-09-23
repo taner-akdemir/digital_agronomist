@@ -51,20 +51,11 @@ GoRouter router(Ref ref) {
       return null;
     },
     routes: [
-      GoRoute(
-        path: '/splash',
-        builder: (_, _) => const SplashScreen(),
-      ),
-      GoRoute(
-        path: '/login',
-        builder: (_, _) => const LoginScreen(),
-      ),
+      GoRoute(path: '/splash', builder: (_, _) => const SplashScreen()),
+      GoRoute(path: '/login', builder: (_, _) => const LoginScreen()),
       // Kabuğun DIŞINDA: uyarı listesi bir sekmeye ait değil, her sekmeden
       // açılır ve tam ekran gelir.
-      GoRoute(
-        path: '/alerts',
-        builder: (_, _) => const AlertsScreen(),
-      ),
+      GoRoute(path: '/alerts', builder: (_, _) => const AlertsScreen()),
       // Eşik ayarları da kabuğun dışında: hesap kartından açılıyor ve bir
       // sekmeye ait değil.
       GoRoute(
@@ -74,32 +65,49 @@ GoRouter router(Ref ref) {
       StatefulShellRoute.indexedStack(
         builder: (_, _, shell) => ScaffoldWithNavBar(navigationShell: shell),
         branches: [
-          StatefulShellBranch(routes: [
-            GoRoute(path: '/dashboard', builder: (_, _) => const DashboardScreen()),
-          ]),
-          StatefulShellBranch(routes: [
-            GoRoute(path: '/live', builder: (_, _) => const LiveBoardScreen()),
-          ]),
-          StatefulShellBranch(routes: [
-            GoRoute(
-              path: '/history',
-              builder: (_, _) => const HistoryScreen(),
-              routes: [
-                // ALT ROTA: hayvan detayı Geçmiş sekmesinin yığınında açılır.
-                // Kök seviyede olsaydı detaydan geri dönüş sekmeyi de
-                // sıfırlar, seçili filtreler kaybolurdu.
-                GoRoute(
-                  path: 'animal/:id',
-                  builder: (_, state) => AnimalDetailScreen(
-                    animalId: state.pathParameters['id']!,
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/dashboard',
+                builder: (_, _) => const DashboardScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/live',
+                builder: (_, _) => const LiveBoardScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/history',
+                builder: (_, _) => const HistoryScreen(),
+                routes: [
+                  // ALT ROTA: hayvan detayı Geçmiş sekmesinin yığınında açılır.
+                  // Kök seviyede olsaydı detaydan geri dönüş sekmeyi de
+                  // sıfırlar, seçili filtreler kaybolurdu.
+                  GoRoute(
+                    path: 'animal/:id',
+                    builder: (_, state) => AnimalDetailScreen(
+                      animalId: state.pathParameters['id']!,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ]),
-          StatefulShellBranch(routes: [
-            GoRoute(path: '/devices', builder: (_, _) => const DevicesScreen()),
-          ]),
+                ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/devices',
+                builder: (_, _) => const DevicesScreen(),
+              ),
+            ],
+          ),
         ],
       ),
     ],

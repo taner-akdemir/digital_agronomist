@@ -47,14 +47,14 @@ abstract class DeviceProfile with _$DeviceProfile {
   /// protokol kodu olduğu gibi gösterilir — boş bırakmak, cihazın
   /// protokolsüz olduğu izlenimi verirdi.
   String get protocolLabel => switch (protocol) {
-        'mqtt' => 'MQTT',
-        'modbus' => 'Modbus',
-        'modbus-rtu' => 'Modbus RTU',
-        'modbus-tcp' => 'Modbus TCP',
-        'http' => 'HTTP',
-        '' => 'Bilinmiyor',
-        _ => protocol,
-      };
+    'mqtt' => 'MQTT',
+    'modbus' => 'Modbus',
+    'modbus-rtu' => 'Modbus RTU',
+    'modbus-tcp' => 'Modbus TCP',
+    'http' => 'HTTP',
+    '' => 'Bilinmiyor',
+    _ => protocol,
+  };
 
   /// "ORNEK-URETICI MM-200 · v1"
   String get title {
