@@ -1,0 +1,11 @@
+# git blame'in atlayacağı commit'ler: yalnızca biçim değiştiren toplu
+# değişiklikler. Satırın asıl sahibi bunların ÖNCESİNDEKİ commit'tir.
+#
+# GitHub bu dosyayı kendiliğinden tanır. Yerelde bir kez:
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+#
+# Buraya YALNIZCA davranış değiştirmeyen commit eklenir; aksi halde blame
+# gerçek bir değişikliği gizler.
+
+# style: dart format ile toplu biçimlendirme (Dart 3.11.1, 62 dosya)
+5f7d4d8ea5865428ab615f26b8d0220191d4a80c
