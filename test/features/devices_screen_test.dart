@@ -125,7 +125,7 @@ void main() {
     // Native MQTT ile üretici MQTT aynı protokolü konuşuyor; protokole göre
     // sayılsaydı üç kaynak iki satıra düşer ve demonun asıl noktası olan
     // üretici ayrımı kaybolurdu.
-    expect(tree.protocols, {'mqtt': 20, 'modbus-tcp': 9});
+    expect(tree.protocols, {'mqtt': 20, 'modbus': 9});
     expect(tree.sources, hasLength(3));
     expect(tree.sources.map((s) => s.profile.vendor),
         containsAll(['MILKTRACE', 'ORNEK-URETICI', 'AKIS-METRE']));
@@ -141,9 +141,9 @@ void main() {
 
     expect(find.text('Kaynaklar:'), findsOneWidget);
     expect(find.text('ORNEK-URETICI · MQTT · 10'), findsOneWidget);
-    expect(find.text('AKIS-METRE · Modbus TCP · 9'), findsOneWidget);
+    expect(find.text('AKIS-METRE · Modbus · 9'), findsOneWidget);
     // B-1 üretici MQTT, C-1 Modbus: ikisi de açık geliyor.
-    expect(find.textContaining('MT-C1-000022 · Modbus TCP'), findsOneWidget);
+    expect(find.textContaining('MT-C1-000022 · Modbus'), findsOneWidget);
   });
 
   // Profil bilgisinin AYRINTIDA da durduğunu doğrular.

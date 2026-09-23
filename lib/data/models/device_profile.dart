@@ -22,7 +22,12 @@ abstract class DeviceProfile with _$DeviceProfile {
     @Default('') String vendor,
     @Default('') String model,
 
-    /// mqtt | modbus-rtu | modbus-tcp | http (§9.0)
+    /// mqtt | modbus | modbus-rtu | modbus-tcp | http (§9.0)
+    ///
+    /// Backend'in referans Modbus profili `modbus` yazar: §9.4 register
+    /// haritası RTU ile TCP'de aynıdır ve taşıma türü profilde değil,
+    /// cihazın bağlantı bilgisindedir (`devices.conn`). `modbus-rtu` /
+    /// `modbus-tcp` profil editöründen gelebilir, o yüzden onlar da tanınır.
     @Default('') String protocol,
     @Default(1) int version,
 
@@ -43,6 +48,7 @@ abstract class DeviceProfile with _$DeviceProfile {
   /// protokolsüz olduğu izlenimi verirdi.
   String get protocolLabel => switch (protocol) {
         'mqtt' => 'MQTT',
+        'modbus' => 'Modbus',
         'modbus-rtu' => 'Modbus RTU',
         'modbus-tcp' => 'Modbus TCP',
         'http' => 'HTTP',

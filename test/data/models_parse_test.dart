@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/device.dart';
+import 'package:milktrace/data/models/device_profile.dart';
 import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/milking_session.dart';
@@ -189,5 +190,25 @@ void main() {
     });
     expect(u.flowRate, 2.0);
     expect(u.yieldPct, 9.0);
+  });
+
+  // Protokol etiketi backend'in GERÇEKTEN yazdığı kodları tanımalı.
+  //
+  // Referans Modbus profili `modbus` yazıyor (register haritası RTU/TCP'de
+  // aynı); eşleme yalnızca modbus-rtu/modbus-tcp'yi tanıdığı için gerçek
+  // API'de ekranda ham "modbus" görünüyordu. Mock `modbus-tcp` kullandığı
+  // için bu, mock modda hiç fark edilmedi.
+  test('protokol etiketi backend kodlarını tanır', () {
+    String label(String p) =>
+        DeviceProfile(id: 'p', protocol: p).protocolLabel;
+
+    expect(label('mqtt'), 'MQTT');
+    expect(label('modbus'), 'Modbus');
+    expect(label('modbus-rtu'), 'Modbus RTU');
+    expect(label('modbus-tcp'), 'Modbus TCP');
+    expect(label('http'), 'HTTP');
+    expect(label(''), 'Bilinmiyor');
+    // Tanınmayan kod olduğu gibi: boş bırakmak protokolsüz izlenimi verirdi.
+    expect(label('bacnet-ip'), 'bacnet-ip');
   });
 }

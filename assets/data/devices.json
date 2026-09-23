@@ -372,7 +372,7 @@
       "id": "0192a1f0-00b0-7000-8000-000000000003",
       "vendor": "AKIS-METRE",
       "model": "AM-50",
-      "protocol": "modbus-tcp",
+      "protocol": "modbus",
       "version": 2,
       "status": "approved"
     }
@@ -390,7 +390,7 @@
       "id": "0192a1f0-00b0-7000-8000-000000000003",
       "vendor": "AKIS-METRE",
       "model": "AM-50",
-      "protocol": "modbus-tcp",
+      "protocol": "modbus",
       "version": 2,
       "status": "approved"
     }
@@ -408,7 +408,7 @@
       "id": "0192a1f0-00b0-7000-8000-000000000003",
       "vendor": "AKIS-METRE",
       "model": "AM-50",
-      "protocol": "modbus-tcp",
+      "protocol": "modbus",
       "version": 2,
       "status": "approved"
     }
@@ -426,7 +426,7 @@
       "id": "0192a1f0-00b0-7000-8000-000000000003",
       "vendor": "AKIS-METRE",
       "model": "AM-50",
-      "protocol": "modbus-tcp",
+      "protocol": "modbus",
       "version": 2,
       "status": "approved"
     }
@@ -444,7 +444,7 @@
       "id": "0192a1f0-00b0-7000-8000-000000000003",
       "vendor": "AKIS-METRE",
       "model": "AM-50",
-      "protocol": "modbus-tcp",
+      "protocol": "modbus",
       "version": 2,
       "status": "approved"
     }
@@ -462,7 +462,7 @@
       "id": "0192a1f0-00b0-7000-8000-000000000003",
       "vendor": "AKIS-METRE",
       "model": "AM-50",
-      "protocol": "modbus-tcp",
+      "protocol": "modbus",
       "version": 2,
       "status": "approved"
     }
@@ -480,7 +480,7 @@
       "id": "0192a1f0-00b0-7000-8000-000000000003",
       "vendor": "AKIS-METRE",
       "model": "AM-50",
-      "protocol": "modbus-tcp",
+      "protocol": "modbus",
       "version": 2,
       "status": "approved"
     }
@@ -498,7 +498,7 @@
       "id": "0192a1f0-00b0-7000-8000-000000000003",
       "vendor": "AKIS-METRE",
       "model": "AM-50",
-      "protocol": "modbus-tcp",
+      "protocol": "modbus",
       "version": 2,
       "status": "approved"
     }
@@ -516,7 +516,7 @@
       "id": "0192a1f0-00b0-7000-8000-000000000003",
       "vendor": "AKIS-METRE",
       "model": "AM-50",
-      "protocol": "modbus-tcp",
+      "protocol": "modbus",
       "version": 2,
       "status": "approved"
     }
