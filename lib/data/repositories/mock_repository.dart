@@ -239,6 +239,16 @@ class MockRepository implements MilkTraceRepository {
   /// Hayvan bulunamazsa nokta OLDUĞU GİBİ kalır: mock verisiyle tutarsız
   /// bir kimlik yüzünden canlı ekranı düşürmek orantısız olurdu.
   Future<SpoutUpdate> _withAssignment(SpoutUpdate u) async {
+    // Eşleştirmesi kaldırılan nokta boşa döner; asset'teki hayvanı ve
+    // ölçümü (backend'de silinen sağım) artık görünmez.
+    if (_unassigned.contains(u.spoutId)) {
+      return SpoutUpdate(
+        sessionId: u.sessionId,
+        spoutId: u.spoutId,
+        ts: u.ts,
+        unmatchedTag: u.unmatchedTag,
+      );
+    }
     final animalId = _assignments[u.spoutId];
     if (animalId == null) return u;
 
@@ -740,6 +750,9 @@ class MockRepository implements MilkTraceRepository {
   /// düğmenin çalışmadığı izlenimi verirdi.
   final Map<String, String> _assignments = {};
 
+  /// Eşleştirmesi kaldırılan noktalar (asset'te hayvanı olanlar dahil).
+  final Set<String> _unassigned = {};
+
   @override
   Future<MilkingSession> startSession({
     required String hallId,
@@ -762,7 +775,19 @@ class MockRepository implements MilkTraceRepository {
     required String sessionId,
     required String spoutId,
     required String animalId,
-  }) => _delayed(() async => _assignments[spoutId] = animalId);
+  }) => _delayed(() async {
+    _assignments[spoutId] = animalId;
+    _unassigned.remove(spoutId);
+  });
+
+  @override
+  Future<void> unassignAnimal({
+    required String sessionId,
+    required String spoutId,
+  }) => _delayed(() async {
+    _assignments.remove(spoutId);
+    _unassigned.add(spoutId);
+  });
 
   @override
   Future<MilkingSession> endSession(String sessionId) => _delayed(() async {
@@ -773,6 +798,7 @@ class MockRepository implements MilkTraceRepository {
 
     _sessionEnded = true;
     _assignments.clear();
+    _unassigned.clear();
     return live.session.copyWith(status: 'ended', endedAt: _clock);
   });
 }

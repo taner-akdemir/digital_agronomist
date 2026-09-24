@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/data/models/spout_update.dart';
 import 'package:milktrace/data/repositories/mock_repository.dart';
 import 'package:milktrace/domain/flow_color.dart';
@@ -131,4 +132,31 @@ void main() {
     expect(v.animal?.id, animal.id);
     expect(v.unmatchedTag, isNull);
   });
+
+  test(
+    'eşleştirme kaldırılınca nokta boşa döner, yeniden bağlanabilir',
+    () async {
+      const spout1 = '0192a1f0-0050-7000-8000-000000000001';
+      SpoutUpdate at(LiveSession l) =>
+          l.updates.firstWhere((u) => u.spoutId == spout1);
+
+      final before = await repo.liveSession(hallId: 'h');
+      expect(at(before).animal, isNotNull);
+
+      await repo.unassignAnimal(sessionId: before.session.id, spoutId: spout1);
+      final cleared = at(await repo.liveSession(hallId: 'h'));
+      expect(cleared.animal, isNull);
+      expect(cleared.volumeMl, 0, reason: 'silinen sağımın ölçümü görünmez');
+      expect(cleared.state, SpoutState.idle);
+      expect(cleared.flowColor, MilkColor.grey);
+
+      final animal = (await repo.animals()).firstWhere((a) => a.isMilking);
+      await repo.assignAnimal(
+        sessionId: before.session.id,
+        spoutId: spout1,
+        animalId: animal.id,
+      );
+      expect(at(await repo.liveSession(hallId: 'h')).animal?.id, animal.id);
+    },
+  );
 }

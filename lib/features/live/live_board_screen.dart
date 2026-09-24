@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/api_exception.dart';
+import 'package:milktrace/core/format.dart';
 import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/data/models/spout.dart';
@@ -422,24 +423,71 @@ class _Grid extends ConsumerWidget {
     Set<String> assigned,
   ) async {
     final spoutId = update.spoutId;
-    final animalId = await showAnimalPicker(
+    final pick = await showAnimalPicker(
       context,
       spoutLabel: title,
       alreadyAssigned: assigned,
       unmatched: update.unmatchedTag,
+      current: update.animal,
     );
-    if (animalId == null || !context.mounted) return;
+    if (pick == null || !context.mounted) return;
 
-    await _guard(
-      context,
-      ref,
-      () => ref
-          .read(milkingControlProvider.notifier)
-          .assign(
+    final control = ref.read(milkingControlProvider.notifier);
+    switch (pick) {
+      case PickAnimal(:final animalId):
+        await _guard(
+          context,
+          ref,
+          () => control.assign(
             sessionId: live.session.id,
             spoutId: spoutId,
             animalId: animalId,
           ),
+        );
+      case ClearAnimal():
+        // Geri alınamaz: ölçülen süt silinir. Kaza dokunuşunu ayırmak
+        // için sorulur ve kaybolacak miktar yazılır.
+        if (!await _confirmClear(context, update) || !context.mounted) return;
+        await _guard(
+          context,
+          ref,
+          () => control.unassign(sessionId: live.session.id, spoutId: spoutId),
+        );
+    }
+  }
+
+  Future<bool> _confirmClear(BuildContext context, SpoutUpdate u) async {
+    // Hayvanın adı cümleye ek almadan yazılır: Türkçe iyelik eki ("-ın",
+    // "-in", "-un"…) ada göre değişiyor ve yanlış ek, doğru bilginin
+    // üstüne göze batan bir hata koyardı.
+    final a = u.animal;
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Eşleştirme kaldırılsın mı?'),
+        content: Text(
+          [
+            if (a != null)
+              a.name == null ? a.earTag : '${a.name} · ${a.earTag}',
+            u.volumeMl > 0
+                ? 'Bu sağımdaki ölçüm (${Fmt.litres(u.volumeMl)} L) silinecek '
+                      've hiçbir hayvana yazılmayacak.'
+                : 'Bu sağım silinecek.',
+          ].join('\n'),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Vazgeç'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            style: TextButton.styleFrom(foregroundColor: AppColors.redColor),
+            child: const Text('Kaldır'),
+          ),
+        ],
+      ),
     );
+    return ok ?? false;
   }
 }

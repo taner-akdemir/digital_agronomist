@@ -124,6 +124,14 @@ class MilkingControl extends _$MilkingControl {
         ),
   );
 
+  /// Yanlış eşleştirmeyi geri alır.
+  Future<void> unassign({required String sessionId, required String spoutId}) =>
+      _run(
+        () => ref
+            .read(repositoryProvider)
+            .unassignAnimal(sessionId: sessionId, spoutId: spoutId),
+      );
+
   /// Sağımı bitirir.
   Future<void> end({required String sessionId}) =>
       _run(() => ref.read(repositoryProvider).endSession(sessionId));

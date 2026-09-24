@@ -451,6 +451,12 @@ class ApiRepository implements MilkTraceRepository {
   );
 
   @override
+  Future<void> unassignAnimal({
+    required String sessionId,
+    required String spoutId,
+  }) => _dio.delete<dynamic>('/sessions/$sessionId/spouts/$spoutId/animal');
+
+  @override
   Future<MilkingSession> endSession(String sessionId) async =>
       MilkingSession.fromJson(
         _dataOf(await _dio.post<dynamic>('/sessions/$sessionId/end')),

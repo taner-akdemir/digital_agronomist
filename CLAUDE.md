@@ -170,6 +170,11 @@ Kart amber "Tanınmayan küpe" ve mesajı gösterir; hayvan varken mesaj küpe s
 geçer (kart yüksekliği sabit, testle kilitli). Seçici başta okunan küpeyi ve ne yapılacağını
 yazar. Yeni sağım açılınca backend siler; `reason` string'dir, mesaj olduğu gibi gösterilir.
 
+**Eşleştirme seçicisi** (`showAnimalPicker` → `PickAnimal` / `ClearAnimal`, backend ADR 0053):
+noktada hayvan varken "Eşleştirmeyi kaldır" (`DELETE …/spouts/{spoutId}/animal`) — açık sağım
+SİLİNİR, ölçülen süt kimseye yazılmaz; onay penceresi miktarı söyler. Karışık sürüde tür
+süzgeci çıkar; varsayılan, oturumdaki eşleşmelerin hepsi aynı türdense o tür.
+
 `Env.wsBaseUrl`, `apiBaseUrl`'den **türetilir** (`http` → `ws`): ayrı tanımlansaydı biri
 değişip diğeri unutulduğunda canlı ekran sessizce bağlanamazdı.
 

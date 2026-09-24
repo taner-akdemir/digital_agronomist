@@ -732,6 +732,16 @@ void main() {
     expect(req.data, {'animalId': 'a1'});
   });
 
+  test('eşleştirme kaldırılır', () async {
+    final r = rig((o) async => okEnvelope({}));
+
+    await r.repo.unassignAnimal(sessionId: 's1', spoutId: _spout1);
+
+    final req = r.adapter.requests.single;
+    expect(req.path, '/sessions/s1/spouts/$_spout1/animal');
+    expect(req.method, 'DELETE');
+  });
+
   test('sağım bitirilir', () async {
     final r = rig((o) async => okEnvelope(session('s1', 'ended')));
 

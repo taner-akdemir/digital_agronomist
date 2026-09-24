@@ -81,6 +81,14 @@ abstract interface class MilkTraceRepository {
     required String animalId,
   });
 
+  /// Yanlış eşleştirmeyi geri alır (DELETE /sessions/{id}/spouts/{spoutId}/
+  /// animal, backend ADR 0053): noktadaki AÇIK sağım silinir, ölçülen süt
+  /// kimseye yazılmaz. Noktada açık sağım yoksa da başarılıdır.
+  Future<void> unassignAnimal({
+    required String sessionId,
+    required String spoutId,
+  });
+
   /// Sağımı bitirir (§8.5 POST /sessions/{id}/end).
   Future<MilkingSession> endSession(String sessionId);
 
