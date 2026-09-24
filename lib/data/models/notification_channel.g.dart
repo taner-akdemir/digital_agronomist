@@ -35,7 +35,7 @@ _NotificationChannel _$NotificationChannelFromJson(Map<String, dynamic> json) =>
           (json['sources'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
-          const <String>['ops', 'herd'],
+          const <String>['ops', 'summary'],
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),

@@ -288,8 +288,10 @@ tarafı `~/GolandProjects/milktrace` ADR 0028; uçlar `/notification-channels`,
 - **Sırlar gelmez ve boş gönderilmez:** API sırrı döndürmez, yalnızca `secrets`'ta
   ayarlı olup olmadığını söyler. Güncelleme kısmidir; boş bırakılan sır alanı gövdeye
   HİÇ konmaz (boş dize backend'de "sil" demek).
-- **Kaynak seçimi (`sources`):** `ops` sistem alarmları (kutu sustu), `herd` sürü
-  uyarıları (düşük debi). SMS/arama varsayılan önemi "kritik".
+- **Kaynak seçimi (`sources`):** `ops` sistem alarmları (kutu sustu), `summary` sağım
+  özeti (oturum bitince tek mesaj; önem sınırı uygulanmaz), `herd` her sürü uyarısı
+  ayrı (düşük debi). Yeni kanal varsayılanı `ops` + `summary` (backend ile aynı);
+  `herd` gürültülü, isteyen açıkça seçer. SMS/arama varsayılan önemi "kritik".
 - **Alıcı numaraları E.164** (`+905…`); yerel biçim reddedilir.
 - Mock'ta sağlayıcı listesi `assets/data/notification_providers.json`: backend'in
   sağlayıcı tanımlarından ÜRETİLDİ, elle düzenlenmez. Backend'e sağlayıcı eklenince

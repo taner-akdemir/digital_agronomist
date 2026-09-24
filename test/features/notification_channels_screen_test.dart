@@ -143,7 +143,7 @@ void main() {
     expect(find.text('Çiftlik e-postası'), findsOneWidget);
     expect(find.textContaining('SMTP'), findsOneWidget);
     expect(find.textContaining('Uyarı ve üstü'), findsOneWidget);
-    expect(find.textContaining('Sürü uyarıları'), findsOneWidget);
+    expect(find.textContaining('Her sürü uyarısı'), findsOneWidget);
   });
 
   testWidgets('SMS kanalı eklenir; numara uluslararası biçimde olmalı', (
@@ -187,6 +187,12 @@ void main() {
     expect(sms.recipients, ['+905321112233']);
     expect(sms.secrets, {'password': true});
     expect(sms.minSeverity, 'critical');
+    expect(
+      sms.sources,
+      ['ops', 'summary'],
+      reason:
+          'varsayılan: sistem alarmları + sağım özeti; her uyarı ayrı değil',
+    );
   });
 
   // Sırlar sunucudan gelmez; boş bırakılan sır alanı GÖNDERİLMEZ, yoksa

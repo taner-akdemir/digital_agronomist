@@ -121,9 +121,7 @@ class _FormState extends ConsumerState<_Form> {
         (kind == 'sms' || kind == 'ivr' ? 'critical' : 'warning');
     _sendResolved = e?.sendResolved ?? true;
     _enabled = e?.enabled ?? true;
-    _sources = {
-      ...(e?.sources ?? const ['ops', 'herd']),
-    };
+    _sources = {...(e?.sources ?? defaultChannelSources)};
   }
 
   @override
@@ -198,7 +196,7 @@ class _FormState extends ConsumerState<_Form> {
             ),
           ),
           const SizedBox(height: AppSpacing.md),
-          for (final s in const ['ops', 'herd'])
+          for (final s in channelSources)
             CheckboxListTile(
               contentPadding: EdgeInsets.zero,
               value: _sources.contains(s),
@@ -372,7 +370,7 @@ class _FormState extends ConsumerState<_Form> {
       sendResolved: _sendResolved,
       enabled: _enabled,
       sources: [
-        for (final s in const ['ops', 'herd'])
+        for (final s in channelSources)
           if (_sources.contains(s)) s,
       ],
     );

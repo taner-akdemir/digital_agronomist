@@ -19,7 +19,8 @@ mixin _$NotificationChannel {
  String get kind;/// smtp | sendgrid | slack | teams | webhook | twilio | netgsm | ...
  String get provider; String? get tenantId; Map<String, String> get config; Map<String, bool> get secrets;/// E-posta adresleri ya da E.164 numaralar; Slack/Teams/webhook'ta boş.
  List<String> get recipients;/// info | warning | critical: bu kanala gidecek en düşük önem.
- String get minSeverity; bool get sendResolved; bool get enabled;/// ops (operasyon alarmları) | herd (sürü uyarıları)
+ String get minSeverity; bool get sendResolved; bool get enabled;/// ops (sistem alarmları) | summary (sağım özeti) | herd (her sürü
+/// uyarısı ayrı)
  List<String> get sources; DateTime? get createdAt; DateTime? get updatedAt;
 /// Create a copy of NotificationChannel
 /// with the given fields replaced by the non-null parameter values.
@@ -227,7 +228,7 @@ return $default(_that.id,_that.name,_that.kind,_that.provider,_that.tenantId,_th
 @JsonSerializable()
 
 class _NotificationChannel implements NotificationChannel {
-  const _NotificationChannel({required this.id, required this.name, required this.kind, required this.provider, this.tenantId, final  Map<String, String> config = const <String, String>{}, final  Map<String, bool> secrets = const <String, bool>{}, final  List<String> recipients = const <String>[], this.minSeverity = 'warning', this.sendResolved = true, this.enabled = true, final  List<String> sources = const <String>['ops', 'herd'], this.createdAt, this.updatedAt}): _config = config,_secrets = secrets,_recipients = recipients,_sources = sources;
+  const _NotificationChannel({required this.id, required this.name, required this.kind, required this.provider, this.tenantId, final  Map<String, String> config = const <String, String>{}, final  Map<String, bool> secrets = const <String, bool>{}, final  List<String> recipients = const <String>[], this.minSeverity = 'warning', this.sendResolved = true, this.enabled = true, final  List<String> sources = const <String>['ops', 'summary'], this.createdAt, this.updatedAt}): _config = config,_secrets = secrets,_recipients = recipients,_sources = sources;
   factory _NotificationChannel.fromJson(Map<String, dynamic> json) => _$NotificationChannelFromJson(json);
 
 @override final  String id;
@@ -264,9 +265,11 @@ class _NotificationChannel implements NotificationChannel {
 @override@JsonKey() final  String minSeverity;
 @override@JsonKey() final  bool sendResolved;
 @override@JsonKey() final  bool enabled;
-/// ops (operasyon alarmları) | herd (sürü uyarıları)
+/// ops (sistem alarmları) | summary (sağım özeti) | herd (her sürü
+/// uyarısı ayrı)
  final  List<String> _sources;
-/// ops (operasyon alarmları) | herd (sürü uyarıları)
+/// ops (sistem alarmları) | summary (sağım özeti) | herd (her sürü
+/// uyarısı ayrı)
 @override@JsonKey() List<String> get sources {
   if (_sources is EqualUnmodifiableListView) return _sources;
   // ignore: implicit_dynamic_type

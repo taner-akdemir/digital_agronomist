@@ -37,8 +37,9 @@ abstract class NotificationChannel with _$NotificationChannel {
     @Default(true) bool sendResolved,
     @Default(true) bool enabled,
 
-    /// ops (operasyon alarmları) | herd (sürü uyarıları)
-    @Default(<String>['ops', 'herd']) List<String> sources,
+    /// ops (sistem alarmları) | summary (sağım özeti) | herd (her sürü
+    /// uyarısı ayrı)
+    @Default(<String>['ops', 'summary']) List<String> sources,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _NotificationChannel;

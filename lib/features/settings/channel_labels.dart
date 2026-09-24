@@ -49,15 +49,25 @@ String severityLabel(String severity) => switch (severity) {
 /// Kaynaklar: kanal hangi bildirimleri alır.
 String sourceLabel(String source) => switch (source) {
   'ops' => 'Sistem alarmları',
-  'herd' => 'Sürü uyarıları',
+  'summary' => 'Sağım özeti',
+  'herd' => 'Her sürü uyarısı',
   _ => source,
 };
 
 String sourceHint(String source) => switch (source) {
   'ops' => 'Sayaç kutusu sustu, veri kaybı gibi sistem sorunları',
-  'herd' => 'Düşük debi gibi sağım sırasındaki uyarılar',
+  'summary' =>
+    'Sağım bitince tek mesaj: toplam süt, düşük verim ve düşük debi '
+        'olan hayvanlar',
+  'herd' => 'Düşük debi olan her hayvan için ayrı mesaj (kalabalık olabilir)',
   _ => '',
 };
+
+/// Formda gösterilen kaynaklar, sırasıyla. Yeni kanal varsayılanı ilk ikisi:
+/// tek tek hayvan uyarıları gürültülü, isteyen açıkça seçer (backend ile
+/// aynı varsayılan).
+const channelSources = ['ops', 'summary', 'herd'];
+const defaultChannelSources = ['ops', 'summary'];
 
 /// Ayar alanlarının etiketleri. Alan listesi backend'den gelir; burada
 /// olmayan alan adıyla gösterilir.
