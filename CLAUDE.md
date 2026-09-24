@@ -340,6 +340,9 @@ eklenseydi dosya yokken `assembleDebug` kırılırdı.
    **Background Modes → Remote notifications** yeteneklerini aç.
 5. Dart tarafında değişiklik YOK. Bunu doğrulamak için mock modda geçici olarak gerçek
    kapı açılıp cihazda denendi: `Firebase.initializeApp` düştü, uygulama normal çalıştı.
+6. Doğrulama: hesap kartında **"Bu telefona test bildirimi"** (push kayıtlıysa görünür;
+   kapalıysa sebebi yazar) → `POST /me/push-tokens/test`. Backend tarafı ve sorun
+   giderme: `~/GolandProjects/milktrace/docs/saha/push-kurulum.md` (backend ADR 0048).
 
 **Backend sözleşmesi (`notification` servisi yazılırken doğrulanacak):**
 
@@ -351,6 +354,11 @@ eklenseydi dosya yokken `assembleDebug` kırılırdı.
 - `data.animalId` varsa bildirime dokunuş `/history/animal/{id}`'ye, yoksa `/alerts`'e
   gider. Bilinmeyen/eksik alan `/alerts`'e düşer (`PushMessage.fromRemote`).
 - Metinler Türkçe ve olduğu gibi gösterilir (§16).
-- **Jeton uçları VARSAYIMDIR**, §8.5 bunları listelemiyor:
-  `POST /me/push-tokens {token, platform}` ve `DELETE /me/push-tokens/{token}`.
-  Jeton oturum açılınca yazılır, kapanınca silinir, yenilenince yeniden yazılır.
+- **Jeton uçları** (§8.5 listelemiyor, backend'de yazılı ve bu yollarla):
+  `POST /me/push-tokens {token, platform}`, `DELETE /me/push-tokens/{token}` ve test için
+  `POST /me/push-tokens/test`. Jeton oturum açılınca yazılır, kapanınca silinir,
+  yenilenince yeniden yazılır.
+- **Etiket:** FCM mesajı uyarı kimliğini `tag` / `apns-collapse-id` olarak taşır; aynı
+  uyarının "geri geldi" duyurusu tepside "çevrimdışı"nın YERİNE geçer. Uygulama açıkken
+  gösterilen yerel bildirimin kimliği de `alertId`'den türer (aynı davranış). Uyarı
+  yüksek öncelikli ve sesli, çözülme duyurusu sessiz.

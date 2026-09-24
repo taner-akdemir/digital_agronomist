@@ -677,6 +677,9 @@ class MockRepository implements MilkTraceRepository {
   Future<void> unregisterPushToken(String token) =>
       _delayed(() async => pushTokens.remove(token));
 
+  @override
+  Future<int> sendTestPush() => _delayed(() async => pushTokens.length);
+
   // ------------------------------------------------- sağım kontrolü --
 
   /// Oturum kapatıldı mı.

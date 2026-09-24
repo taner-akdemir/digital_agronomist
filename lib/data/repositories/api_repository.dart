@@ -319,6 +319,12 @@ class ApiRepository implements MilkTraceRepository {
       _dio.delete<dynamic>('/me/push-tokens/$token');
 
   @override
+  Future<int> sendTestPush() async {
+    final data = _dataOf(await _dio.post<dynamic>('/me/push-tokens/test'));
+    return (data['sent'] as num?)?.toInt() ?? 0;
+  }
+
+  @override
   Future<List<NotificationProvider>> notificationProviders() async => _listOf(
     await _dio.get<dynamic>('/notification-providers'),
     NotificationProvider.fromJson,

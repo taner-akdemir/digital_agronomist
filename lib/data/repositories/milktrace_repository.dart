@@ -118,6 +118,11 @@ abstract interface class MilkTraceRepository {
   /// olmayan sürünün uyarıları gitmemeli.
   Future<void> unregisterPushToken(String token);
 
+  /// Bu kullanıcının telefonlarına test bildirimi gönderir
+  /// (POST /me/push-tokens/test); FCM'in kabul ettiği telefon sayısını döner.
+  /// Firebase bağlandığı gün "push çalışıyor mu?" sorusunun cevabı.
+  Future<int> sendTestPush();
+
   /// Kanal türleri ve ayar alanları (GET /notification-providers).
   Future<List<NotificationProvider>> notificationProviders();
 

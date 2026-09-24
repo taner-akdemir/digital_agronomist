@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:milktrace/app/theme.dart';
+import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/core/env.dart';
 import 'package:milktrace/providers/auth_providers.dart';
+import 'package:milktrace/providers/push_providers.dart';
+import 'package:milktrace/providers/repository_providers.dart';
 
 /// Hesap kartı: kim giriş yapmış, rolü ne, ayarlar ve çıkış.
 ///
@@ -25,97 +28,80 @@ class _AccountSheet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(authProvider).user;
 
+    // KAYDIRILABİLİR: alt sayfa varsayılan olarak ekranın yarısı kadar;
+    // küçük telefonda (ve yatayda) düğmeler taşıyordu.
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(
-          AppSpacing.xl,
-          0,
-          AppSpacing.xl,
-          AppSpacing.xl,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              children: [
-                const CircleAvatar(
-                  radius: 24,
-                  backgroundColor: AppColors.lightGreenColor,
-                  child: Icon(Icons.person, color: AppColors.darkGreenColor),
-                ),
-                const SizedBox(width: AppSpacing.lg),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        user?.fullName.isNotEmpty == true
-                            ? user!.fullName
-                            : 'Kullanıcı',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      if (user != null) ...[
-                        Text(
-                          user.email,
-                          style: const TextStyle(
-                            color: AppColors.onSurfaceMuted,
-                          ),
-                        ),
-                        // Rol GÖRÜNÜR olmalı: eşik ayarlarının neden salt
-                        // okunur açıldığının cevabı burada.
-                        Text(
-                          _roleLabel(user.role),
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: AppColors.lightGreyColor,
-                          ),
-                        ),
-                      ],
-                    ],
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.xl,
+            0,
+            AppSpacing.xl,
+            AppSpacing.xl,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  const CircleAvatar(
+                    radius: 24,
+                    backgroundColor: AppColors.lightGreenColor,
+                    child: Icon(Icons.person, color: AppColors.darkGreenColor),
                   ),
-                ),
-              ],
-            ),
-            if (Env.apiMode == ApiMode.mock) ...[
-              const SizedBox(height: AppSpacing.lg),
-              const _ModeBadge(),
-            ],
-            const SizedBox(height: AppSpacing.lg),
-            // Eşik ayarları HERKESE açık, düzenleme yalnızca owner'a
-            // (§15.1): sağımdaki "bu kırmızı neden kırmızı?" sorusunun
-            // cevabı orada ve gizlemek kimseye yaramaz.
-            OutlinedButton.icon(
-              onPressed: () {
-                Navigator.of(context).pop();
-                context.push('/settings/thresholds');
-              },
-              icon: const Icon(Icons.tune),
-              label: const Text('Eşik ayarları'),
-              style: OutlinedButton.styleFrom(
-                foregroundColor: AppColors.darkGreenColor,
-                padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: AppRadius.mdAll,
-                ),
+                  const SizedBox(width: AppSpacing.lg),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          user?.fullName.isNotEmpty == true
+                              ? user!.fullName
+                              : 'Kullanıcı',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        if (user != null) ...[
+                          Text(
+                            user.email,
+                            style: const TextStyle(
+                              color: AppColors.onSurfaceMuted,
+                            ),
+                          ),
+                          // Rol GÖRÜNÜR olmalı: eşik ayarlarının neden salt
+                          // okunur açıldığının cevabı burada.
+                          Text(
+                            _roleLabel(user.role),
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: AppColors.lightGreyColor,
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ),
-            // Bildirim kanalları YALNIZCA işletme sahibine: kanallar alıcı
-            // telefonlarını ve API anahtarlarını taşır, backend diğer
-            // rollere 403 döner. Boş bir ekran açıp hata göstermek yerine
-            // düğme hiç görünmez.
-            if (user?.role == 'tenant_owner') ...[
-              const SizedBox(height: AppSpacing.sm),
+              if (Env.apiMode == ApiMode.mock) ...[
+                const SizedBox(height: AppSpacing.lg),
+                const _ModeBadge(),
+              ],
+              const SizedBox(height: AppSpacing.lg),
+              const _PushRow(),
+              // Eşik ayarları HERKESE açık, düzenleme yalnızca owner'a
+              // (§15.1): sağımdaki "bu kırmızı neden kırmızı?" sorusunun
+              // cevabı orada ve gizlemek kimseye yaramaz.
               OutlinedButton.icon(
                 onPressed: () {
                   Navigator.of(context).pop();
-                  context.push('/settings/notifications');
+                  context.push('/settings/thresholds');
                 },
-                icon: const Icon(Icons.notifications_active_outlined),
-                label: const Text('Bildirim kanalları'),
+                icon: const Icon(Icons.tune),
+                label: const Text('Eşik ayarları'),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.darkGreenColor,
                   padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
@@ -124,31 +110,139 @@ class _AccountSheet extends ConsumerWidget {
                   ),
                 ),
               ),
-            ],
-            const SizedBox(height: AppSpacing.sm),
-            OutlinedButton.icon(
-              onPressed: Env.apiMode == ApiMode.mock
-                  // Mock modda kimlik sunucusu yok; çıkış kullanıcıyı asla
-                  // geçemeyeceği bir giriş ekranına kilitlerdi.
-                  ? null
-                  : () async {
-                      Navigator.of(context).pop();
-                      await ref.read(authProvider.notifier).signOut();
-                    },
-              icon: const Icon(Icons.logout),
-              label: const Text('Çıkış yap'),
-              style: OutlinedButton.styleFrom(
-                foregroundColor: AppColors.darkRedColor,
-                padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
-                shape: const RoundedRectangleBorder(
-                  borderRadius: AppRadius.mdAll,
+              // Bildirim kanalları YALNIZCA işletme sahibine: kanallar alıcı
+              // telefonlarını ve API anahtarlarını taşır, backend diğer
+              // rollere 403 döner. Boş bir ekran açıp hata göstermek yerine
+              // düğme hiç görünmez.
+              if (user?.role == 'tenant_owner') ...[
+                const SizedBox(height: AppSpacing.sm),
+                OutlinedButton.icon(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    context.push('/settings/notifications');
+                  },
+                  icon: const Icon(Icons.notifications_active_outlined),
+                  label: const Text('Bildirim kanalları'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.darkGreenColor,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppSpacing.lg,
+                    ),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadius.mdAll,
+                    ),
+                  ),
                 ),
+              ],
+              const SizedBox(height: AppSpacing.sm),
+              OutlinedButton.icon(
+                onPressed: Env.apiMode == ApiMode.mock
+                    // Mock modda kimlik sunucusu yok; çıkış kullanıcıyı asla
+                    // geçemeyeceği bir giriş ekranına kilitlerdi.
+                    ? null
+                    : () async {
+                        Navigator.of(context).pop();
+                        await ref.read(authProvider.notifier).signOut();
+                      },
+                icon: const Icon(Icons.logout),
+                label: const Text('Çıkış yap'),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: AppColors.darkRedColor,
+                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadius.mdAll,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Push durumu ve test bildirimi (backend ADR 0048).
+///
+/// Kayıtlıysa "Bu telefona test bildirimi" düğmesi: Firebase bağlandığı gün
+/// ve saha pilotunda "bildirim bu telefona geliyor mu?" sorusunun tek
+/// dokunuşluk cevabı. Kapalıysa SEBEBİ yazar: bildirim gelmeyen kullanıcı
+/// bunun bir hata mı yoksa beklenen durum mu olduğunu bilsin.
+class _PushRow extends ConsumerStatefulWidget {
+  const _PushRow();
+
+  @override
+  ConsumerState<_PushRow> createState() => _PushRowState();
+}
+
+class _PushRowState extends ConsumerState<_PushRow> {
+  bool _busy = false;
+
+  Future<void> _send() async {
+    setState(() => _busy = true);
+    final messenger = ScaffoldMessenger.of(context);
+    try {
+      final sent = await ref.read(repositoryProvider).sendTestPush();
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(
+            sent == 0
+                ? 'Test bildirimi hiçbir telefona ulaşmadı'
+                : 'Test bildirimi gönderildi ($sent telefon)',
+          ),
+        ),
+      );
+    } catch (e) {
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(userMessage(e) ?? 'Test bildirimi gönderilemedi: $e'),
+        ),
+      );
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final status = ref.watch(pushRegistrationProvider).value;
+    return switch (status) {
+      PushStatus.registered => Padding(
+        padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+        child: OutlinedButton.icon(
+          onPressed: _busy ? null : _send,
+          icon: const Icon(Icons.phonelink_ring_outlined),
+          label: Text(_busy ? 'Gönderiliyor…' : 'Bu telefona test bildirimi'),
+          style: OutlinedButton.styleFrom(
+            foregroundColor: AppColors.darkGreenColor,
+            padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+            shape: const RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+          ),
+        ),
+      ),
+      PushStatus.unavailable => const Padding(
+        padding: EdgeInsets.only(bottom: AppSpacing.md),
+        child: Row(
+          children: [
+            Icon(
+              Icons.notifications_off_outlined,
+              size: 18,
+              color: AppColors.onSurfaceMuted,
+            ),
+            SizedBox(width: AppSpacing.sm),
+            Expanded(
+              child: Text(
+                'Bu telefonda bildirim kapalı: izin verilmedi ya da '
+                'bildirim servisi henüz bağlanmadı. Uyarılar bildirim '
+                'merkezinde görünmeye devam eder.',
+                style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
               ),
             ),
           ],
         ),
       ),
-    );
+      _ => const SizedBox.shrink(),
+    };
   }
 }
 

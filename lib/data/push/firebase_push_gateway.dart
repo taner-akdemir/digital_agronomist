@@ -107,7 +107,10 @@ class FirebasePushGateway implements PushGateway {
     if (notification == null) return;
 
     await _local.show(
-      id: message.hashCode,
+      // Kimlik UYARIDAN türetilir: aynı uyarının "geri geldi" duyurusu,
+      // uygulama açıkken de tepsideki "çevrimdışı" bildiriminin yerine
+      // geçsin (backend FCM tag ile aynı davranış).
+      id: (message.data['alertId'] as String?)?.hashCode ?? message.hashCode,
       title: notification.title,
       body: notification.body,
       notificationDetails: NotificationDetails(

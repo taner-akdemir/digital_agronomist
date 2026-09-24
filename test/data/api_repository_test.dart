@@ -575,6 +575,15 @@ void main() {
     expect(req.data, {'token': 'tok-1', 'platform': 'android'});
   });
 
+  // Test bildirimi (backend ADR 0048): kabul edilen telefon sayısı döner.
+  test('test bildirimi gönderilir', () async {
+    final r = rig((o) async => okEnvelope({'sent': 2, 'invalid': 0}));
+
+    expect(await r.repo.sendTestPush(), 2);
+    expect(r.adapter.requests.single.path, '/me/push-tokens/test');
+    expect(r.adapter.requests.single.method, 'POST');
+  });
+
   test('push jetonu silinir', () async {
     final r = rig((o) async => okEnvelope({}));
 
