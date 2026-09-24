@@ -1,5 +1,6 @@
-# Uncomment this line to define a global platform for your project
-# platform :ios, '13.0'
+# iOS 15: firebase_core (push, CLAUDE.md §7) en az 15 istiyor; 13'te
+# `pod install` düşüyor ve iOS derlemesi hiç çalışmıyordu.
+platform :ios, '15.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -39,5 +40,13 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
+    # Pod'ların bir kısmı kendi hedefini 9.0-13.0 bildiriyor; güncel Xcode
+    # 15'in altını simülatörde HATA sayıyor ve derleme düşüyordu.
+    # Uygulamanın hedefine (15.0) çekilir.
+    target.build_configurations.each do |config|
+      if config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'].to_f < 15.0
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
+      end
+    end
   end
 end
