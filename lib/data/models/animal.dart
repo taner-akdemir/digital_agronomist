@@ -42,5 +42,22 @@ abstract class Animal with _$Animal {
     YieldClass yieldClass,
   }) = _Animal;
 
+  const Animal._();
+
+  /// Sağmal mı. Yalnızca sağmal hayvan eşleştirilir, sınıflandırılır ve
+  /// panoda sayılır (backend: kurudaki ya da satılmış hayvanın eşleştirmesi
+  /// reddedilir). Kurudaki/satılmış hayvanın sınıf etiketi ESKİDİR.
+  bool get isMilking => status == 'active';
+
+  /// Durumun Türkçe adı; tanınmayan kod olduğu gibi.
+  String get statusLabel => switch (status) {
+    'active' => 'Sağmal',
+    'dry' => 'Kuruda',
+    'sold' => 'Satıldı',
+    'slaughtered' => 'Kesildi',
+    'dead' => 'Öldü',
+    _ => status,
+  };
+
   factory Animal.fromJson(Map<String, dynamic> json) => _$AnimalFromJson(json);
 }

@@ -75,10 +75,19 @@ Future<List<Animal>> filteredAnimals(Ref ref) async {
 
   final out = all
       .where((a) => f.speciesId == null || a.speciesId == f.speciesId)
-      .where((a) => f.yieldClass == null || a.yieldClass == f.yieldClass)
+      // Sınıf süzgecinde yalnızca SAĞMAL hayvan: pano sınıf dağılımını
+      // sağmallardan sayıyor; dokununca açılan liste aynı sayıyı göstermeli.
+      .where(
+        (a) =>
+            f.yieldClass == null ||
+            (a.isMilking && a.yieldClass == f.yieldClass),
+      )
       .toList();
 
+  // Sağmal olmayanlar EN ALTTA: sınıfları eskidir ve "önce bak" sırasına
+  // girmemeli.
   out.sort((a, b) {
+    if (a.isMilking != b.isMilking) return a.isMilking ? -1 : 1;
     final byClass = _attention(
       a.yieldClass,
     ).compareTo(_attention(b.yieldClass));

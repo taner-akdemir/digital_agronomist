@@ -141,9 +141,12 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
     final q = _query.toLowerCase();
     final matches = [
       for (final a in all)
-        if (q.isEmpty ||
-            a.earTag.toLowerCase().contains(q) ||
-            (a.name?.toLowerCase().contains(q) ?? false))
+        // Yalnızca SAĞMAL hayvan: kurudaki ya da satılmış hayvanı listede
+        // görmek operatörü yavaşlatır, seçerse backend zaten reddeder.
+        if (a.isMilking &&
+            (q.isEmpty ||
+                a.earTag.toLowerCase().contains(q) ||
+                (a.name?.toLowerCase().contains(q) ?? false)))
           a,
     ];
 

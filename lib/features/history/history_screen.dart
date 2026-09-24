@@ -259,7 +259,11 @@ class _AnimalTile extends StatelessWidget {
                   ],
                 ),
               ),
-              YieldClassBadge(yieldClass: animal.yieldClass, dense: true),
+              // Sağmal olmayan hayvanın sınıfı eskidir: yerine durumu.
+              if (animal.isMilking)
+                YieldClassBadge(yieldClass: animal.yieldClass, dense: true)
+              else
+                _StatusChip(label: animal.statusLabel),
               const SizedBox(width: AppSpacing.xs),
               const Icon(Icons.chevron_right, color: AppColors.lightGreyColor),
             ],
@@ -387,6 +391,30 @@ class _Empty extends StatelessWidget {
         textAlign: TextAlign.center,
         style: const TextStyle(color: AppColors.onSurfaceMuted),
       ),
+    ),
+  );
+}
+
+/// Sağmal olmayan hayvanın durumu ("Kuruda", "Satıldı"): nötr gri, çünkü
+/// bir sorun değil, bir bilgi.
+class _StatusChip extends StatelessWidget {
+  const _StatusChip({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.symmetric(
+      horizontal: AppSpacing.sm,
+      vertical: AppSpacing.xs,
+    ),
+    decoration: const BoxDecoration(
+      color: AppColors.background,
+      borderRadius: AppRadius.smAll,
+    ),
+    child: Text(
+      label,
+      style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceMuted),
     ),
   );
 }

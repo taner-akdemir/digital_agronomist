@@ -227,8 +227,8 @@ return $default(_that.id,_that.speciesId,_that.earTag,_that.rfid,_that.name,_tha
 /// @nodoc
 @JsonSerializable()
 
-class _Animal implements Animal {
-  const _Animal({required this.id, required this.speciesId, required this.earTag, this.rfid, this.name, this.breed, this.birthDate, this.lastCalvingDate, this.lactationNo = 0, this.status = 'active', @JsonKey(unknownEnumValue: YieldClass.normal) this.yieldClass = YieldClass.normal});
+class _Animal extends Animal {
+  const _Animal({required this.id, required this.speciesId, required this.earTag, this.rfid, this.name, this.breed, this.birthDate, this.lastCalvingDate, this.lactationNo = 0, this.status = 'active', @JsonKey(unknownEnumValue: YieldClass.normal) this.yieldClass = YieldClass.normal}): super._();
   factory _Animal.fromJson(Map<String, dynamic> json) => _$AnimalFromJson(json);
 
 @override final  String id;

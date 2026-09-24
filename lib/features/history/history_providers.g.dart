@@ -360,4 +360,4 @@ final class FilteredAnimalsProvider
   }
 }
 
-String _$filteredAnimalsHash() => r'b59be6ec0ebdcd0dca9184cfe07368739817b4c4';
+String _$filteredAnimalsHash() => r'c7344ce9c0388b94e62ce8cfe1682ff315532868';

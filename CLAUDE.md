@@ -172,6 +172,11 @@ hayvan detayı — sınıf rozeti (§6.4), 7/30 gün ortalaması, 30 günlük e�
 grafiği (fl_chart) ve son sağımlar. Uçlar `GET /sessions`, `/animals/{id}/history`,
 `/animals/{id}/trend`.
 
+**Hayvan durumu** (`Animal.isMilking`, backend ADR 0049): yalnızca sağmal (`active`) hayvan
+eşleştirme listesine çıkar ve panodan açılan sınıf süzgecine girer; sağmal olmayanın
+sınıf rozeti yerine durumu ("Kuruda", "Satıldı") görünür ve listenin en altında durur.
+Backend de kurudaki/satılmış hayvanın eşleştirmesini reddeder.
+
 Mock modda geçmiş **asset değil, üretilmiştir**: `MockLactation` §10'daki Wood laktasyon
 eğrisiyle deterministik seri üretir. 30 hayvan × 90 gün × 2 sağım elle tutulabilecek bir
 JSON değil. Bugünkü seviye hayvanın SINIFINA sabitlenir ki rozet ile grafik çelişmesin.
