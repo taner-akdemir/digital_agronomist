@@ -85,4 +85,30 @@ void main() {
       reason: 'tanınmayan durum olduğu gibi',
     );
   });
+
+  // Laktasyon günü (backend ADR 0051): takvim günü, saat önemsiz; tarih yoksa
+  // ya da gelecekteyse null.
+  test('laktasyon günü', () {
+    Animal a(DateTime? c) =>
+        Animal(id: '1', speciesId: 'cow', earTag: 'T', lastCalvingDate: c);
+    final today = DateTime(2026, 9, 24, 7, 30);
+
+    expect(a(DateTime.utc(2026, 9, 14)).daysInMilk(today), 10);
+    expect(
+      a(DateTime.utc(2026, 9, 24)).daysInMilk(today),
+      0,
+      reason: 'bugün buzağıladı',
+    );
+    expect(
+      a(DateTime.utc(2026, 9, 23, 23)).daysInMilk(DateTime(2026, 9, 24, 0, 5)),
+      1,
+      reason: 'saat değil takvim günü',
+    );
+    expect(a(null).daysInMilk(today), isNull);
+    expect(
+      a(DateTime.utc(2026, 10, 1)).daysInMilk(today),
+      isNull,
+      reason: 'gelecek',
+    );
+  });
 }

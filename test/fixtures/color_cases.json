@@ -492,6 +492,71 @@
         "positiveDays": 0
       },
       "want": "normal"
+    },
+    {
+      "name": "taze laktasyon (10. gün), 7 gün ortalaması alt eşiğin altında → normal, kuruya aday DEĞİL",
+      "species": "cow",
+      "input": {
+        "ma7Ml": 6000,
+        "ma30Ml": 2000,
+        "recentZeroMilkings": 0,
+        "recentMilkings": 6,
+        "positiveDays": 10,
+        "daysInMilk": 10
+      },
+      "want": "normal"
+    },
+    {
+      "name": "taze laktasyon (20. gün), ortalama düşüyor → normal, düşüşte DEĞİL",
+      "species": "cow",
+      "input": {
+        "ma7Ml": 15000,
+        "ma30Ml": 25000,
+        "recentZeroMilkings": 0,
+        "recentMilkings": 6,
+        "positiveDays": 20,
+        "daysInMilk": 20
+      },
+      "want": "normal"
+    },
+    {
+      "name": "taze laktasyon, eşiğin üstünde → yüksek verimli",
+      "species": "cow",
+      "input": {
+        "ma7Ml": 32000,
+        "ma30Ml": 20000,
+        "recentZeroMilkings": 0,
+        "recentMilkings": 6,
+        "positiveDays": 25,
+        "daysInMilk": 25
+      },
+      "want": "high"
+    },
+    {
+      "name": "taze laktasyon ama hiç süt yok → süt vermiyor (bastırılmaz)",
+      "species": "cow",
+      "input": {
+        "ma7Ml": 0,
+        "ma30Ml": 0,
+        "recentZeroMilkings": 6,
+        "recentMilkings": 6,
+        "positiveDays": 0,
+        "daysInMilk": 5
+      },
+      "want": "no_milk"
+    },
+    {
+      "name": "laktasyonun 30. günü taze sayılmaz → kuruya aday",
+      "species": "cow",
+      "input": {
+        "ma7Ml": 6000,
+        "ma30Ml": 7000,
+        "recentZeroMilkings": 0,
+        "recentMilkings": 6,
+        "positiveDays": 30,
+        "daysInMilk": 30
+      },
+      "want": "dry_off_candidate"
     }
   ]
 }

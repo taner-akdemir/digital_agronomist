@@ -185,6 +185,11 @@ ekle" ve hayvan detayındaki düzenle simgesi; ikisi de YALNIZCA işletme sahibi
 silinir. Verim sınıfı GÖNDERİLMEZ (gece hesabının alanı). Tarihler gün olarak, UTC gece
 yarısı.
 
+**Laktasyon günü** (`Animal.daysInMilk`, backend ADR 0051): son buzağılamadan bu yana takvim
+günü; detayda sağmal hayvanda görünür. İlk 30 gün backend "düşüşte" ve "kuruya çıkarma adayı"
+vermez; kart bunu açıklar. `test/fixtures/color_cases.json`'daki yeni `classifyCases`
+(daysInMilk) backend'den kopyalandı; mobil onları okumuyor.
+
 **Hayvan notları** (`GET/POST /animals/{id}/notes`, backend ADR 0050): detayda kimlik
 kartının hemen altında "Notlar" kartı; en yeni 5 not yazarı ve anıyla. BÜTÜN roller yazar
 (görüntüleyici = veteriner/danışman); notlar düzenlenmez, silinmez.

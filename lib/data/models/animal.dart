@@ -49,6 +49,23 @@ abstract class Animal with _$Animal {
   /// reddedilir). Kurudaki/satılmış hayvanın sınıf etiketi ESKİDİR.
   bool get isMilking => status == 'active';
 
+  /// Taze laktasyon süresi: bu günlerde backend "düşüşte" ve "kuruya
+  /// çıkarma adayı" etiketi vermez (backend ADR 0051, milkrules).
+  static const freshLactationDays = 30;
+
+  /// Laktasyonun kaçıncı günü: [today] ile son buzağılama arasındaki TAKVİM
+  /// günü. Buzağılama tarihi yoksa ya da gelecekteyse null.
+  int? daysInMilk(DateTime today) {
+    final c = lastCalvingDate;
+    if (c == null) return null;
+    final d = DateTime.utc(
+      today.year,
+      today.month,
+      today.day,
+    ).difference(DateTime.utc(c.year, c.month, c.day)).inDays;
+    return d < 0 ? null : d;
+  }
+
   /// Durumun Türkçe adı; tanınmayan kod olduğu gibi.
   String get statusLabel => switch (status) {
     'active' => 'Sağmal',

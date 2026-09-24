@@ -163,6 +163,7 @@ class _IdentityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cls = animal.yieldClass;
+    final dim = animal.daysInMilk(DateTime.now());
 
     return _Card(
       child: Column(
@@ -206,8 +207,23 @@ class _IdentityCard extends StatelessWidget {
                   'Son buzağılama',
                   Fmt.dayMonthYear(animal.lastCalvingDate!),
                 ),
+              // Laktasyon günü yalnızca SAĞMAL hayvanda anlamlı.
+              if (animal.isMilking && dim != null)
+                _Fact('Laktasyon günü', '$dim.'),
             ],
           ),
+          if (animal.isMilking &&
+              dim != null &&
+              dim < Animal.freshLactationDays) ...[
+            const SizedBox(height: AppSpacing.sm),
+            // Neden "düşüşte" ya da "kuruya aday" görünmediği: sınıf
+            // etiketinin kendisi kadar açıklaması da ekranda (§6.4).
+            const Text(
+              'Taze laktasyon: ilk 30 günde "düşüşte" ve "kuruya çıkarma '
+              'adayı" etiketi verilmez; verim henüz yükseliyor.',
+              style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
+            ),
+          ],
           const SizedBox(height: AppSpacing.md),
           Text(
             cls.explanation,
