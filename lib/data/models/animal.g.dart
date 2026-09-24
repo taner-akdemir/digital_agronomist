@@ -28,6 +28,9 @@ _Animal _$AnimalFromJson(Map<String, dynamic> json) => _Animal(
         unknownValue: YieldClass.normal,
       ) ??
       YieldClass.normal,
+  yieldClassAt: json['yieldClassAt'] == null
+      ? null
+      : DateTime.parse(json['yieldClassAt'] as String),
 );
 
 Map<String, dynamic> _$AnimalToJson(_Animal instance) => <String, dynamic>{

@@ -40,6 +40,12 @@ abstract class Animal with _$Animal {
     @Default(YieldClass.normal)
     @JsonKey(unknownEnumValue: YieldClass.normal)
     YieldClass yieldClass,
+
+    /// Sınıfın hesaplandığı gün (backend ADR 0055). Gece hesabı yalnızca
+    /// sağmal hayvanı güncellediği için sağmaldan çıkan hayvanda DONAR:
+    /// etiket "o gün böyleydi" demektir. Null = hiç hesaplanmadı ya da
+    /// tarihi bilinmiyor. Formdan gönderilmez.
+    @JsonKey(includeToJson: false) DateTime? yieldClassAt,
   }) = _Animal;
 
   const Animal._();

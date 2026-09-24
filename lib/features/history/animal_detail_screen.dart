@@ -9,6 +9,7 @@ import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/domain/yield_class.dart';
 import 'package:milktrace/features/history/history_providers.dart';
+import 'package:milktrace/features/history/widgets/animal_status_chip.dart';
 import 'package:milktrace/features/history/widgets/yield_chart.dart';
 import 'package:milktrace/features/history/widgets/yield_class_badge.dart';
 import 'package:milktrace/providers/auth_providers.dart';
@@ -192,7 +193,12 @@ class _IdentityCard extends StatelessWidget {
                   ],
                 ),
               ),
-              YieldClassBadge(yieldClass: cls),
+              // Sağmal olmayanın sınıfı DONMUŞTUR: rozet yerine durum;
+              // son etiket aşağıda tarihiyle (backend ADR 0055).
+              if (animal.isMilking)
+                YieldClassBadge(yieldClass: cls)
+              else
+                AnimalStatusChip(label: animal.statusLabel),
             ],
           ),
           const SizedBox(height: AppSpacing.sm),
@@ -225,11 +231,28 @@ class _IdentityCard extends StatelessWidget {
             ),
           ],
           const SizedBox(height: AppSpacing.md),
-          Text(
-            cls.explanation,
-            style: const TextStyle(fontSize: 12, height: 1.4),
-          ),
-          if (cls != YieldClass.normal && cls != YieldClass.high) ...[
+          if (!animal.isMilking)
+            _FrozenClass(animal: animal)
+          else ...[
+            Text(
+              cls.explanation,
+              style: const TextStyle(fontSize: 12, height: 1.4),
+            ),
+            if (_stale(animal) case final at?) ...[
+              const SizedBox(height: AppSpacing.xs),
+              Text(
+                'Sınıf ${Fmt.dayMonthYear(at)} hesabından: gece hesabı '
+                'yalnızca son 30 günde sağılan hayvanı yeniler.',
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: AppColors.onSurfaceMuted,
+                ),
+              ),
+            ],
+          ],
+          if (animal.isMilking &&
+              cls != YieldClass.normal &&
+              cls != YieldClass.high) ...[
             const SizedBox(height: AppSpacing.sm),
             // §6.4'ün uyarısı ekranda DURMALI: sistem karar destek aracıdır,
             // kesim kararı vermez. Bu cümle olmadan rozet bir teşhis gibi
@@ -259,6 +282,50 @@ class _IdentityCard extends StatelessWidget {
           ],
         ],
       ),
+    );
+  }
+}
+
+/// Sağmal hayvanın sınıfı ESKİYSE hesap günü; değilse null.
+///
+/// Gece hesabı dünü hesaplıyor, yani güncel bir sınıf en çok bir iki gün
+/// geridedir. Daha eskisi, hayvanın pencerede sağımı olmadığı için
+/// yenilenmemiş demektir ve kullanıcı bunu bilmeli.
+DateTime? _stale(Animal a) {
+  final at = a.yieldClassAt;
+  if (at == null) return null;
+  final days = DateTime.now().difference(at).inDays;
+  return days > 2 ? at : null;
+}
+
+/// Sağmal olmayan hayvanın DONMUŞ sınıfı (backend ADR 0055).
+///
+/// Etiket silinmez: "kuruya çıkarken yüksek verimliydi" laktasyonlar arası
+/// karşılaştırmada değerli. Ama güncel bir değerlendirme gibi de okunmamalı;
+/// açıklaması ve kesim uyarısı bu yüzden gösterilmez.
+class _FrozenClass extends StatelessWidget {
+  const _FrozenClass({required this.animal});
+
+  final Animal animal;
+
+  @override
+  Widget build(BuildContext context) {
+    final at = animal.yieldClassAt;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Son sınıf: ${animal.yieldClass.label}'
+          '${at == null ? '' : ' (${Fmt.dayMonthYear(at)})'}',
+          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+        ),
+        const SizedBox(height: AppSpacing.xs),
+        const Text(
+          'Sağmal olmayan hayvan sınıflandırılmaz; bu etiket sağmalken '
+          'yapılan son hesaptan kalmadır.',
+          style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
+        ),
+      ],
     );
   }
 }

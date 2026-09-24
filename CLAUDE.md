@@ -187,6 +187,9 @@ grafiği (fl_chart) ve son sağımlar. Uçlar `GET /sessions`, `/animals/{id}/hi
 eşleştirme listesine çıkar ve panodan açılan sınıf süzgecine girer; sağmal olmayanın
 sınıf rozeti yerine durumu ("Kuruda", "Satıldı") görünür ve listenin en altında durur.
 Backend de kurudaki/satılmış hayvanın eşleştirmesini reddeder.
+Sağmal olmayanın sınıfı **donar** (`Animal.yieldClassAt`, backend ADR 0055): detayda rozet
+yerine durum, altta "Son sınıf: … (tarih)"; güncel açıklama ve veteriner uyarısı gizli.
+Sağmal hayvanın sınıfı iki günden eskiyse tarih ve sebebi yazılır.
 
 **Hayvan ekleme/düzenleme** (`/animals/new`, `/animals/:id/edit`; kabuğun dışında tam
 ekran form): küpe (zorunlu, işletmede tekil), tür, ad, ırk, RFID, doğum ve son buzağılama

@@ -9,6 +9,7 @@ import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/domain/yield_class.dart';
 import 'package:milktrace/features/history/history_providers.dart';
+import 'package:milktrace/features/history/widgets/animal_status_chip.dart';
 import 'package:milktrace/features/history/widgets/yield_class_badge.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
@@ -286,7 +287,7 @@ class _AnimalTile extends StatelessWidget {
               if (animal.isMilking)
                 YieldClassBadge(yieldClass: animal.yieldClass, dense: true)
               else
-                _StatusChip(label: animal.statusLabel),
+                AnimalStatusChip(label: animal.statusLabel),
               const SizedBox(width: AppSpacing.xs),
               const Icon(Icons.chevron_right, color: AppColors.lightGreyColor),
             ],
@@ -420,24 +421,3 @@ class _Empty extends StatelessWidget {
 
 /// Sağmal olmayan hayvanın durumu ("Kuruda", "Satıldı"): nötr gri, çünkü
 /// bir sorun değil, bir bilgi.
-class _StatusChip extends StatelessWidget {
-  const _StatusChip({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.symmetric(
-      horizontal: AppSpacing.sm,
-      vertical: AppSpacing.xs,
-    ),
-    decoration: const BoxDecoration(
-      color: AppColors.background,
-      borderRadius: AppRadius.smAll,
-    ),
-    child: Text(
-      label,
-      style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceMuted),
-    ),
-  );
-}
