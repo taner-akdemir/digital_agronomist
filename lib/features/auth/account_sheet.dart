@@ -103,6 +103,28 @@ class _AccountSheet extends ConsumerWidget {
                 ),
               ),
             ),
+            // Bildirim kanalları YALNIZCA işletme sahibine: kanallar alıcı
+            // telefonlarını ve API anahtarlarını taşır, backend diğer
+            // rollere 403 döner. Boş bir ekran açıp hata göstermek yerine
+            // düğme hiç görünmez.
+            if (user?.role == 'tenant_owner') ...[
+              const SizedBox(height: AppSpacing.sm),
+              OutlinedButton.icon(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  context.push('/settings/notifications');
+                },
+                icon: const Icon(Icons.notifications_active_outlined),
+                label: const Text('Bildirim kanalları'),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: AppColors.darkGreenColor,
+                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadius.mdAll,
+                  ),
+                ),
+              ),
+            ],
             const SizedBox(height: AppSpacing.sm),
             OutlinedButton.icon(
               onPressed: Env.apiMode == ApiMode.mock

@@ -1,0 +1,23 @@
+[
+  {
+    "id": "0192a1f0-00a0-7000-8000-000000000001",
+    "tenantId": "0192a1f0-0001-7000-8000-000000000001",
+    "name": "Çiftlik e-postası",
+    "kind": "email",
+    "provider": "smtp",
+    "config": {
+      "host": "smtp.ornekciftlik.com.tr",
+      "port": "587",
+      "from": "alarm@ornekciftlik.com.tr",
+      "from_name": "Milk Trace"
+    },
+    "secrets": { "password": true },
+    "recipients": ["sahip@ornekciftlik.com.tr"],
+    "minSeverity": "warning",
+    "sendResolved": true,
+    "enabled": true,
+    "sources": ["ops", "herd"],
+    "createdAt": "2026-09-20T08:00:00Z",
+    "updatedAt": "2026-09-20T08:00:00Z"
+  }
+]

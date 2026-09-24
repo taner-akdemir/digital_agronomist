@@ -4,7 +4,7 @@ import 'package:milktrace/core/api_exception.dart';
 
 /// Yükleme hatası gösterimi.
 ///
-/// Ayrıntı satırı ApiException ise BACKEND'İN MESAJI gösterilir: §16'ya göre
+/// Ayrıntı satırı API hatasıysa BACKEND'İN MESAJI gösterilir: §16'ya göre
 /// hata mesajları Türkçedir ve doğrudan kullanıcıya gösterilebilir.
 /// Onun yerine "DioException [bad response]..." yazmak, sahadaki operatöre
 /// hiçbir şey anlatmazdı.
@@ -18,8 +18,7 @@ class ErrorView extends StatelessWidget {
   Widget build(BuildContext context) {
     final detail = switch (error) {
       null => null,
-      final ApiException e => e.message,
-      final e => '$e',
+      final e => userMessage(e) ?? '$e',
     };
 
     return Padding(

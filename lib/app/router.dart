@@ -8,6 +8,8 @@ import 'package:milktrace/features/devices/devices_screen.dart';
 import 'package:milktrace/features/history/animal_detail_screen.dart';
 import 'package:milktrace/features/history/history_screen.dart';
 import 'package:milktrace/features/live/live_board_screen.dart';
+import 'package:milktrace/features/settings/notification_channel_form_screen.dart';
+import 'package:milktrace/features/settings/notification_channels_screen.dart';
 import 'package:milktrace/features/settings/thresholds_screen.dart';
 import 'package:milktrace/features/shell/scaffold_with_nav_bar.dart';
 import 'package:milktrace/features/splash/splash_screen.dart';
@@ -61,6 +63,29 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/settings/thresholds',
         builder: (_, _) => const ThresholdsScreen(),
+      ),
+      // Bildirim kanalları (backend ADR 0028): hesap kartından, yalnızca
+      // işletme sahibine.
+      GoRoute(
+        path: '/settings/notifications',
+        builder: (_, _) => const NotificationChannelsScreen(),
+        routes: [
+          // "new" SABİT YOL, ":id"den önce: yoksa "new" bir kanal kimliği
+          // sanılırdı.
+          GoRoute(
+            path: 'new',
+            builder: (_, state) => NotificationChannelFormScreen(
+              kind: state.uri.queryParameters['kind'],
+              provider: state.uri.queryParameters['provider'],
+            ),
+          ),
+          GoRoute(
+            path: ':id',
+            builder: (_, state) => NotificationChannelFormScreen(
+              channelId: state.pathParameters['id'],
+            ),
+          ),
+        ],
       ),
       StatefulShellRoute.indexedStack(
         builder: (_, _, shell) => ScaffoldWithNavBar(navigationShell: shell),

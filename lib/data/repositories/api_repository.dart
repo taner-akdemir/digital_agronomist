@@ -11,6 +11,7 @@ import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/milking_session.dart';
+import 'package:milktrace/data/models/notification_channel.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_update.dart';
@@ -316,6 +317,51 @@ class ApiRepository implements MilkTraceRepository {
   @override
   Future<void> unregisterPushToken(String token) =>
       _dio.delete<dynamic>('/me/push-tokens/$token');
+
+  @override
+  Future<List<NotificationProvider>> notificationProviders() async => _listOf(
+    await _dio.get<dynamic>('/notification-providers'),
+    NotificationProvider.fromJson,
+  );
+
+  @override
+  Future<List<NotificationChannel>> notificationChannels() async => _listOf(
+    await _dio.get<dynamic>('/notification-channels'),
+    NotificationChannel.fromJson,
+  );
+
+  @override
+  Future<NotificationChannel> createNotificationChannel(
+    NotificationChannelDraft draft,
+  ) async => NotificationChannel.fromJson(
+    _dataOf(
+      await _dio.post<dynamic>('/notification-channels', data: draft.toJson()),
+    ),
+  );
+
+  @override
+  Future<NotificationChannel> updateNotificationChannel(
+    String id,
+    NotificationChannelDraft draft,
+  ) async => NotificationChannel.fromJson(
+    _dataOf(
+      await _dio.put<dynamic>(
+        '/notification-channels/$id',
+        // Tür ve sağlayıcı değişmez; backend okumuyor, göndermiyoruz.
+        data: draft.toJson()
+          ..remove('kind')
+          ..remove('provider'),
+      ),
+    ),
+  );
+
+  @override
+  Future<void> deleteNotificationChannel(String id) =>
+      _dio.delete<dynamic>('/notification-channels/$id');
+
+  @override
+  Future<void> testNotificationChannel(String id) =>
+      _dio.post<dynamic>('/notification-channels/$id/test');
 
   @override
   Future<Thresholds> updateThresholds(Thresholds thresholds) async =>

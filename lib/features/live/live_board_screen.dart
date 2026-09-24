@@ -324,7 +324,7 @@ Future<void> _guard(
 }
 
 String _message(Object error) =>
-    error is ApiException ? error.message : 'İşlem tamamlanamadı: $error';
+    userMessage(error) ?? 'İşlem tamamlanamadı: $error';
 
 class _Grid extends ConsumerWidget {
   const _Grid({

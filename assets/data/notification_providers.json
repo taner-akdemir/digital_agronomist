@@ -1,0 +1,308 @@
+[
+  {
+    "kind": "email",
+    "provider": "sendgrid",
+    "recipients": "email",
+    "fields": [
+      {
+        "name": "api_key",
+        "required": true,
+        "secret": true
+      },
+      {
+        "name": "from",
+        "required": true,
+        "secret": false
+      },
+      {
+        "name": "from_name",
+        "required": false,
+        "secret": false
+      },
+      {
+        "name": "region",
+        "required": false,
+        "secret": false
+      }
+    ]
+  },
+  {
+    "kind": "email",
+    "provider": "smtp",
+    "recipients": "email",
+    "fields": [
+      {
+        "name": "host",
+        "required": true,
+        "secret": false
+      },
+      {
+        "name": "port",
+        "required": true,
+        "secret": false
+      },
+      {
+        "name": "username",
+        "required": false,
+        "secret": false
+      },
+      {
+        "name": "password",
+        "required": false,
+        "secret": true
+      },
+      {
+        "name": "from",
+        "required": true,
+        "secret": false
+      },
+      {
+        "name": "from_name",
+        "required": false,
+        "secret": false
+      },
+      {
+        "name": "tls",
+        "required": false,
+        "secret": false
+      }
+    ]
+  },
+  {
+    "kind": "ivr",
+    "provider": "netgsm",
+    "recipients": "phone",
+    "fields": [
+      {
+        "name": "usercode",
+        "required": true,
+        "secret": false
+      },
+      {
+        "name": "password",
+        "required": true,
+        "secret": true
+      }
+    ]
+  },
+  {
+    "kind": "ivr",
+    "provider": "twilio",
+    "recipients": "phone",
+    "fields": [
+      {
+        "name": "account_sid",
+        "required": true,
+        "secret": false
+      },
+      {
+        "name": "auth_token",
+        "required": true,
+        "secret": true
+      },
+      {
+        "name": "from",
+        "required": true,
+        "secret": false
+      },
+      {
+        "name": "voice",
+        "required": false,
+        "secret": false
+      },
+      {
+        "name": "language",
+        "required": false,
+        "secret": false
+      }
+    ]
+  },
+  {
+    "kind": "ivr",
+    "provider": "vonage",
+    "recipients": "phone",
+    "fields": [
+      {
+        "name": "application_id",
+        "required": true,
+        "secret": false
+      },
+      {
+        "name": "private_key",
+        "required": true,
+        "secret": true
+      },
+      {
+        "name": "from",
+        "required": true,
+        "secret": false
+      },
+      {
+        "name": "region",
+        "required": false,
+        "secret": false
+      }
+    ]
+  },
+  {
+    "kind": "slack",
+    "provider": "slack",
+    "recipients": "none",
+    "fields": [
+      {
+        "name": "webhook_url",
+        "required": true,
+        "secret": true
+      }
+    ]
+  },
+  {
+    "kind": "sms",
+    "provider": "iletimerkezi",
+    "recipients": "phone",
+    "fields": [
+      {
+        "name": "api_key",
+        "required": true,
+        "secret": true
+      },
+      {
+        "name": "hash",
+        "required": true,
+        "secret": true
+      },
+      {
+        "name": "sender",
+        "required": true,
+        "secret": false
+      }
+    ]
+  },
+  {
+    "kind": "sms",
+    "provider": "jetsms",
+    "recipients": "phone",
+    "fields": [
+      {
+        "name": "user",
+        "required": true,
+        "secret": false
+      },
+      {
+        "name": "password",
+        "required": true,
+        "secret": true
+      },
+      {
+        "name": "originator",
+        "required": true,
+        "secret": false
+      }
+    ]
+  },
+  {
+    "kind": "sms",
+    "provider": "netgsm",
+    "recipients": "phone",
+    "fields": [
+      {
+        "name": "usercode",
+        "required": true,
+        "secret": false
+      },
+      {
+        "name": "password",
+        "required": true,
+        "secret": true
+      },
+      {
+        "name": "msgheader",
+        "required": true,
+        "secret": false
+      }
+    ]
+  },
+  {
+    "kind": "sms",
+    "provider": "twilio",
+    "recipients": "phone",
+    "fields": [
+      {
+        "name": "account_sid",
+        "required": true,
+        "secret": false
+      },
+      {
+        "name": "auth_token",
+        "required": true,
+        "secret": true
+      },
+      {
+        "name": "from",
+        "required": false,
+        "secret": false
+      },
+      {
+        "name": "messaging_service_sid",
+        "required": false,
+        "secret": false
+      }
+    ]
+  },
+  {
+    "kind": "sms",
+    "provider": "vonage",
+    "recipients": "phone",
+    "fields": [
+      {
+        "name": "api_key",
+        "required": true,
+        "secret": false
+      },
+      {
+        "name": "api_secret",
+        "required": true,
+        "secret": true
+      },
+      {
+        "name": "from",
+        "required": true,
+        "secret": false
+      }
+    ]
+  },
+  {
+    "kind": "teams",
+    "provider": "teams",
+    "recipients": "none",
+    "fields": [
+      {
+        "name": "webhook_url",
+        "required": true,
+        "secret": true
+      }
+    ]
+  },
+  {
+    "kind": "webhook",
+    "provider": "webhook",
+    "recipients": "none",
+    "fields": [
+      {
+        "name": "url",
+        "required": true,
+        "secret": true
+      },
+      {
+        "name": "secret",
+        "required": false,
+        "secret": true
+      },
+      {
+        "name": "bearer_token",
+        "required": false,
+        "secret": true
+      }
+    ]
+  }
+]

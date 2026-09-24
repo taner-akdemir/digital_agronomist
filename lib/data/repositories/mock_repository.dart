@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
@@ -12,6 +13,7 @@ import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/milking_session.dart';
+import 'package:milktrace/data/models/notification_channel.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_update.dart';
@@ -387,6 +389,172 @@ class MockRepository implements MilkTraceRepository {
       orElse: () => ThresholdsEngine.cowDefaults,
     );
     return (animal, t);
+  }
+
+  // ------------------------------------------------------ bildirim kanalları
+
+  @override
+  Future<List<NotificationProvider>> notificationProviders() => _delayed(
+    () => _list('notification_providers.json', NotificationProvider.fromJson),
+  );
+
+  /// Bildirim kanalları BELLEKTE: asset'teki demo kanalla başlar, eklenen ve
+  /// değiştirilenler uygulama kapanınca sıfırlanır. Sırlar ayrı tutulur ve
+  /// backend gibi GERİ DÖNMEZ; yalnızca ayarlı olup olmadıkları görünür.
+  Map<String, NotificationChannel>? _channels;
+  final Map<String, Map<String, String>> _channelSecrets = {};
+  int _channelSeq = 0;
+
+  Future<Map<String, NotificationChannel>> _channelMap() async {
+    if (_channels case final map?) return map;
+    final seeded = await _list(
+      'notification_channels.json',
+      NotificationChannel.fromJson,
+    );
+    // Asset'teki kanalın sırrı "kayıtlı" işaretli ama değeri yok. Yer tutucu
+    // saklanmazsa ilk güncellemede sır kaybolmuş görünürdü; gerçek backend
+    // gönderilmeyen sırrı korur.
+    for (final c in seeded) {
+      _channelSecrets[c.id] = {
+        for (final e in c.secrets.entries)
+          if (e.value) e.key: 'demo',
+      };
+    }
+    return _channels = {for (final c in seeded) c.id: c};
+  }
+
+  @override
+  Future<List<NotificationChannel>> notificationChannels() =>
+      _delayed(() async => (await _channelMap()).values.toList());
+
+  @override
+  Future<NotificationChannel> createNotificationChannel(
+    NotificationChannelDraft draft,
+  ) => _delayed(() async {
+    final spec = await _providerSpec(draft.kind, draft.provider);
+    final id = 'mock-channel-${++_channelSeq}';
+    final channel = _applyDraft(
+      NotificationChannel(
+        id: id,
+        name: draft.name,
+        kind: draft.kind,
+        provider: draft.provider,
+        createdAt: _clock,
+      ),
+      spec,
+      draft,
+      previousSecrets: const {},
+    );
+    (await _channelMap())[id] = channel;
+    return channel;
+  });
+
+  @override
+  Future<NotificationChannel> updateNotificationChannel(
+    String id,
+    NotificationChannelDraft draft,
+  ) => _delayed(() async {
+    final map = await _channelMap();
+    final old = map[id];
+    if (old == null) {
+      throw const ApiException(
+        code: 'NOT_FOUND',
+        message: 'kanal bulunamadı',
+        status: 404,
+      );
+    }
+    final spec = await _providerSpec(old.kind, old.provider);
+    final channel = _applyDraft(
+      old,
+      spec,
+      draft,
+      previousConfig: old.config,
+      previousSecrets: _channelSecrets[id] ?? const {},
+    );
+    map[id] = channel;
+    return channel;
+  });
+
+  @override
+  Future<void> deleteNotificationChannel(String id) => _delayed(() async {
+    (await _channelMap()).remove(id);
+    _channelSecrets.remove(id);
+  });
+
+  /// Demo modda gerçek gönderim yok; kanal varsa başarılı sayılır.
+  @override
+  Future<void> testNotificationChannel(String id) => _delayed(() async {
+    if (!(await _channelMap()).containsKey(id)) {
+      throw const ApiException(
+        code: 'NOT_FOUND',
+        message: 'kanal bulunamadı',
+        status: 404,
+      );
+    }
+  });
+
+  Future<NotificationProvider> _providerSpec(
+    String kind,
+    String provider,
+  ) async {
+    final specs = await _list(
+      'notification_providers.json',
+      NotificationProvider.fromJson,
+    );
+    return specs.firstWhere(
+      (s) => s.kind == kind && s.provider == provider,
+      orElse: () => throw const ApiException(
+        code: 'VALIDATION',
+        message: 'bilinmeyen kanal türü ya da sağlayıcı',
+        status: 422,
+      ),
+    );
+  }
+
+  /// Backend'in birleştirme kuralı: gönderilmeyen ayar korunur, boş dize
+  /// siler; zorunlu alan eksikse aynı Türkçe hata.
+  NotificationChannel _applyDraft(
+    NotificationChannel base,
+    NotificationProvider spec,
+    NotificationChannelDraft draft, {
+    Map<String, String> previousConfig = const {},
+    required Map<String, String> previousSecrets,
+  }) {
+    final merged = {...previousConfig, ...previousSecrets};
+    draft.config.forEach(
+      (k, v) => v.isEmpty ? merged.remove(k) : merged[k] = v,
+    );
+    for (final f in spec.fields) {
+      if (f.required && (merged[f.name] ?? '').trim().isEmpty) {
+        throw ApiException(
+          code: 'VALIDATION',
+          message: '${f.name} ayarı gerekli',
+          status: 422,
+        );
+      }
+    }
+    final secretNames = {
+      for (final f in spec.fields)
+        if (f.secret) f.name,
+    };
+    _channelSecrets[base.id] = {
+      for (final e in merged.entries)
+        if (secretNames.contains(e.key)) e.key: e.value,
+    };
+    return base.copyWith(
+      name: draft.name,
+      config: {
+        for (final e in merged.entries)
+          if (!secretNames.contains(e.key)) e.key: e.value,
+      },
+      secrets: {for (final s in secretNames) s: merged[s]?.isNotEmpty == true},
+      recipients: draft.recipients,
+      minSeverity: draft.minSeverity,
+      sendResolved: draft.sendResolved,
+      enabled: draft.enabled,
+      sources: draft.sources,
+      updatedAt: _clock,
+    );
   }
 
   /// Okundu işaretlenen uyarılar.

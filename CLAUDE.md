@@ -272,6 +272,34 @@ sekmenin hiçbirine ait olmadığı için kabuğun üstünde tam ekran bir sayfa
 karıştırırdı. Kartta ad, e-posta, **rol** ve eşik ayarları bağlantısı var; rol görünür
 olmalı çünkü eşiklerin neden salt okunur açıldığının cevabı orada.
 
+### Bildirim kanalları
+
+**Hesap kartı → Bildirim kanalları** (`/settings/notifications`): işletme sahibi push'un
+yanında e-posta (SMTP, SendGrid), Slack, Teams, webhook, SMS (Twilio, NetGSM, İleti
+Merkezi, Vonage, JetSMS) ve sesli arama (Twilio, NetGSM, Vonage) kanalı ekler. Backend
+tarafı `~/GolandProjects/milktrace` ADR 0028; uçlar `/notification-channels`,
+`/notification-providers`, `…/{id}/test`.
+
+- **Yalnızca `tenant_owner`:** kanallar alıcı telefonlarını ve API anahtarlarını taşır,
+  backend diğer rollere 403 döner. Hesap kartındaki düğme de yalnızca owner'a görünür.
+- **Form sağlayıcıdan çizilir:** alan listesi `GET /notification-providers`'tan gelir;
+  yeni bir sağlayıcı uygulama güncellenmeden yapılandırılabilir. Kod → Türkçe etiket
+  eşlemesi `channel_labels.dart`'ta; tanınmayan kod ham gösterilir.
+- **Sırlar gelmez ve boş gönderilmez:** API sırrı döndürmez, yalnızca `secrets`'ta
+  ayarlı olup olmadığını söyler. Güncelleme kısmidir; boş bırakılan sır alanı gövdeye
+  HİÇ konmaz (boş dize backend'de "sil" demek).
+- **Kaynak seçimi (`sources`):** `ops` sistem alarmları (kutu sustu), `herd` sürü
+  uyarıları (düşük debi). SMS/arama varsayılan önemi "kritik".
+- **Alıcı numaraları E.164** (`+905…`); yerel biçim reddedilir.
+- Mock'ta sağlayıcı listesi `assets/data/notification_providers.json`: backend'in
+  sağlayıcı tanımlarından ÜRETİLDİ, elle düzenlenmez. Backend'e sağlayıcı eklenince
+  yeniden üretilmeli.
+
+**Hata mesajları:** `ApiRepository` DioException fırlatır; `ApiException`'a çeviri
+yalnızca giriş ucundaydı. Bu yüzden ekranlar gerçek API'de backend'in Türkçe mesajı
+yerine "DioException…" gösteriyordu. `userMessage(error)` (core/api_exception.dart)
+ikisini de çözer; hata gösteren yerde onu kullan.
+
 Mock moda dönmek: `flutter run --dart-define=MT_API=mock`. O modda kimlik sunucusu
 olmadığı için giriş ekranı atlanır ve demo kullanıcısıyla çalışılır.
 

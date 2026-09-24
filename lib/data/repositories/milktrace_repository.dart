@@ -7,6 +7,7 @@ import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/milking_session.dart';
+import 'package:milktrace/data/models/notification_channel.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_update.dart';
@@ -116,6 +117,33 @@ abstract interface class MilkTraceRepository {
   /// Jetonun bağını koparır: çıkış yapan kullanıcının telefonuna, artık onun
   /// olmayan sürünün uyarıları gitmemeli.
   Future<void> unregisterPushToken(String token);
+
+  /// Kanal türleri ve ayar alanları (GET /notification-providers).
+  Future<List<NotificationProvider>> notificationProviders();
+
+  /// İşletmenin bildirim kanalları (GET /notification-channels).
+  ///
+  /// YALNIZCA İŞLETME SAHİBİ: kanallar alıcı telefonlarını ve API
+  /// anahtarlarını taşır; backend diğer rollere 403 döner.
+  Future<List<NotificationChannel>> notificationChannels();
+
+  Future<NotificationChannel> createNotificationChannel(
+    NotificationChannelDraft draft,
+  );
+
+  /// Kanalı günceller. `config` KISMİDİR: gönderilmeyen ayar (ör. boş
+  /// bırakılan parola) eski değerini korur.
+  Future<NotificationChannel> updateNotificationChannel(
+    String id,
+    NotificationChannelDraft draft,
+  );
+
+  Future<void> deleteNotificationChannel(String id);
+
+  /// Kanala hemen bir deneme bildirimi gönderir. Sağlayıcı reddederse
+  /// hata mesajı kullanıcıya gösterilir: "yanlış API anahtarı" gibi bir
+  /// cevabı görmeden ayar düzeltilemez.
+  Future<void> testNotificationChannel(String id);
 
   /// Uyarıyı okundu işaretler (§8.5 POST /alerts/{id}/ack).
   ///

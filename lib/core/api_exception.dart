@@ -60,3 +60,15 @@ class ApiException implements Exception {
   @override
   String toString() => 'ApiException($code, $status): $message';
 }
+
+/// Hatanın kullanıcıya gösterilecek metni; API hatası değilse null.
+///
+/// ApiRepository DioException fırlatır (dönüşüm yalnızca giriş ucundaydı).
+/// Ekranlar yalnızca `is ApiException`'a baktığı için gerçek API'de
+/// backend'in Türkçe mesajı hiç görünmüyor, yerine "DioException [bad
+/// response]..." yazıyordu. İkisi de burada çözülür.
+String? userMessage(Object? error) => switch (error) {
+  final ApiException e => e.message,
+  final DioException e => ApiException.from(e).message,
+  _ => null,
+};

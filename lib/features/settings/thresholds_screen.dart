@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:milktrace/app/theme.dart';
+import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/thresholds.dart';
 import 'package:milktrace/providers/auth_providers.dart';
@@ -291,7 +292,9 @@ class _FormState extends ConsumerState<_Form> {
       ref.invalidate(thresholdsListProvider);
       if (mounted) _toast('${widget.species.nameTr} eşikleri kaydedildi');
     } catch (e) {
-      if (mounted) _toast('Kaydedilemedi: $e', error: true);
+      if (mounted) {
+        _toast(userMessage(e) ?? 'Kaydedilemedi: $e', error: true);
+      }
     } finally {
       if (mounted) setState(() => _saving = false);
     }
