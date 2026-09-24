@@ -192,6 +192,10 @@ sınıf dağılımı ve açık uyarı özeti; `GET /dashboard`. Sınıf satırı
 o sınıfa filtreler — bu yüzden `animalFilterStateProvider` **keepAlive**'dır: autoDispose
 ile, filtre Geçmiş ekranı kurulmadan önce siliniyordu.
 
+Sayaç uyarısı (`device_offline`) **çözülebilir**: `resolvedAt` doluysa sayaç geri
+gelmiştir (backend ADR 0041). Çözüldü ile okundu AYRI alanlardır — çözülen uyarı listede
+açık kalır, zaman satırında "geri geldi HH:mm" yazar; okununca kapanır.
+
 Özet ile uyarı LİSTESİ ayrı uçlardan okunur. Uyarıları dashboard payload'ına da koymak,
 kullanıcı bir uyarıyı okundu işaretledikten sonra dashboard'un eski kopyayı göstermesi
 demekti.

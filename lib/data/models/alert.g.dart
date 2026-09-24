@@ -20,6 +20,9 @@ _Alert _$AlertFromJson(Map<String, dynamic> json) => _Alert(
   acknowledgedAt: json['acknowledgedAt'] == null
       ? null
       : DateTime.parse(json['acknowledgedAt'] as String),
+  resolvedAt: json['resolvedAt'] == null
+      ? null
+      : DateTime.parse(json['resolvedAt'] as String),
 );
 
 Map<String, dynamic> _$AlertToJson(_Alert instance) => <String, dynamic>{
@@ -32,4 +35,5 @@ Map<String, dynamic> _$AlertToJson(_Alert instance) => <String, dynamic>{
   'createdAt': instance.createdAt?.toIso8601String(),
   'acknowledgedBy': instance.acknowledgedBy,
   'acknowledgedAt': instance.acknowledgedAt?.toIso8601String(),
+  'resolvedAt': instance.resolvedAt?.toIso8601String(),
 };

@@ -155,8 +155,12 @@ class _AlertCard extends ConsumerWidget {
   static String _when(Alert a) {
     final t = a.createdAt;
     if (t == null) return '';
-    final stamp = '${Fmt.dayMonth(t)} · ${Fmt.time(t)}';
-    return a.isAcknowledged ? '$stamp · okundu' : stamp;
+    final parts = ['${Fmt.dayMonth(t)} · ${Fmt.time(t)}'];
+    // "Geri geldi" okundudan önce: sağımcının ilk sorusu "hâlâ sorun var mı".
+    final resolved = a.resolvedAt;
+    if (resolved != null) parts.add('geri geldi ${Fmt.time(resolved)}');
+    if (a.isAcknowledged) parts.add('okundu');
+    return parts.join(' · ');
   }
 }
 

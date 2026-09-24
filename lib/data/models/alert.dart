@@ -28,6 +28,10 @@ abstract class Alert with _$Alert {
     DateTime? createdAt,
     String? acknowledgedBy,
     DateTime? acknowledgedAt,
+
+    /// Sorunun geçtiği an: sayaç geri geldi (backend ADR 0041). Okundu
+    /// bilgisinden BAĞIMSIZ — sağımcı görmeden sayaç dönmüş olabilir.
+    DateTime? resolvedAt,
   }) = _Alert;
 
   const Alert._();
@@ -35,6 +39,9 @@ abstract class Alert with _$Alert {
   /// Okundu işaretlenmiş mi. Zamanı bakılır, kullanıcıya DEĞİL: uyarıyı
   /// kimin kapattığı silinebilir ama kapanma anı kalır.
   bool get isAcknowledged => acknowledgedAt != null;
+
+  /// Sorun geçti mi (sayaç geri geldi).
+  bool get isResolved => resolvedAt != null;
 
   factory Alert.fromJson(Map<String, dynamic> json) => _$AlertFromJson(json);
 }

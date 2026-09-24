@@ -61,6 +61,18 @@ void main() {
   });
 
   // "Okundu" düğmesinin GERÇEKTEN bir şey yaptığını doğrular.
+  // Geri gelen sayacın uyarısı açık kalır ama "geri geldi" saati görünür
+  // (backend ADR 0041). Saat Europe/Istanbul: 18:29Z → 21:29.
+  testWidgets('geri gelen sayaç uyarısında dönüş saati görünür', (
+    tester,
+  ) async {
+    await tester.pumpWidget(wrap(const AlertsScreen()));
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(find.textContaining('geri geldi'), 200);
+    expect(find.textContaining('· geri geldi 21:29'), findsOneWidget);
+  });
+
   testWidgets('okundu işaretlenen uyarı listeden düşer ve sayaç azalır', (
     tester,
   ) async {
