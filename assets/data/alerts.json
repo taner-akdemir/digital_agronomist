@@ -49,7 +49,7 @@
     "sessionId": null,
     "type": "device_offline",
     "severity": "warning",
-    "message": "A Bölgesi, Ünite A-2, Nokta 7 sayacı 12 dakikadır veri göndermiyor.",
+    "message": "A Bölgesi · A-2 · 7. nokta: sayaç çevrimdışı, sağım verisi gelmiyor",
     "createdAt": "2026-09-21T18:22:00Z",
     "acknowledgedBy": null,
     "acknowledgedAt": null
