@@ -28,6 +28,7 @@ abstract final class AlertStyle {
     'no_milk' => Icons.report_gmailerrorred_outlined,
     'dry_off' => Icons.event_available_outlined,
     'device_offline' => Icons.sensors_off_outlined,
+    'device_error' => Icons.error_outline,
     _ => Icons.notifications_none_outlined,
   };
 }
