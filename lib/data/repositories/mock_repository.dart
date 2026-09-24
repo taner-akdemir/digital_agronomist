@@ -252,7 +252,10 @@ class MockRepository implements MilkTraceRepository {
         .firstOrNull
         ?.code;
 
+    // Elle eşleştirme tanınmayan küpe uyarısını siler (backend de yeni
+    // sağım açılınca siliyor).
     return u.copyWith(
+      unmatchedTag: null,
       animal: SpoutAnimal(
         id: animal.id,
         earTag: animal.earTag,

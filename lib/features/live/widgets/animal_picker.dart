@@ -3,32 +3,43 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/species.dart';
+import 'package:milktrace/data/models/spout_update.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
 
 /// Noktaya hayvan seçtirir (§15.1 nokta–hayvan eşleştirme).
 ///
 /// Seçilen hayvanın kimliğini döner; vazgeçilirse null.
+///
+/// [unmatched] noktada okunup eşleştirilemeyen küpedir: sağımcı çoğu zaman
+/// seçiciyi tam da bu yüzden açıyor ve hangi küpenin neden tanınmadığını
+/// başta görmeli.
 Future<String?> showAnimalPicker(
   BuildContext context, {
   required String spoutLabel,
   required Set<String> alreadyAssigned,
+  UnmatchedTag? unmatched,
 }) => showModalBottomSheet<String>(
   context: context,
   isScrollControlled: true,
   showDragHandle: true,
   backgroundColor: AppColors.surface,
-  builder: (_) =>
-      _AnimalPicker(spoutLabel: spoutLabel, alreadyAssigned: alreadyAssigned),
+  builder: (_) => _AnimalPicker(
+    spoutLabel: spoutLabel,
+    alreadyAssigned: alreadyAssigned,
+    unmatched: unmatched,
+  ),
 );
 
 class _AnimalPicker extends ConsumerStatefulWidget {
   const _AnimalPicker({
     required this.spoutLabel,
     required this.alreadyAssigned,
+    this.unmatched,
   });
 
   final String spoutLabel;
+  final UnmatchedTag? unmatched;
 
   /// Bu oturumda BAŞKA noktalara eşleştirilmiş hayvanlar.
   final Set<String> alreadyAssigned;
@@ -72,6 +83,10 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  if (widget.unmatched case final u?) ...[
+                    const SizedBox(height: AppSpacing.sm),
+                    _UnmatchedNotice(tag: u),
+                  ],
                   const SizedBox(height: AppSpacing.sm),
                   TextField(
                     autofocus: true,
@@ -157,5 +172,47 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
       return ta != tb ? ta - tb : a.earTag.compareTo(b.earTag);
     });
     return matches;
+  }
+}
+
+/// Seçicinin başındaki "okunan küpe tanınmadı" kutusu.
+class _UnmatchedNotice extends StatelessWidget {
+  const _UnmatchedNotice({required this.tag});
+
+  final UnmatchedTag tag;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(AppSpacing.sm),
+      decoration: const BoxDecoration(
+        color: AppColors.lightAmberColor,
+        borderRadius: AppRadius.smAll,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(Icons.nfc, size: 18, color: AppColors.darkAmberColor),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: Text(
+              // Sebebe göre yönlendirme: kayıtlı olmayan küpenin hayvanı
+              // listede küpe numarasıyla aranır; sağmal olmayan hayvan
+              // listede YOK, önce durumu değiştirilmeli.
+              tag.reason == 'not_milking'
+                  ? '${tag.message}: listede yok. Yanlışlıkla girdiyse '
+                        'başlığı çıkarın; sağılacaksa önce hayvanın '
+                        'durumunu değiştirin.'
+                  : '${tag.message}. Hayvanı aşağıdan seçin.',
+              style: const TextStyle(
+                fontSize: 13,
+                color: AppColors.darkAmberColor,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

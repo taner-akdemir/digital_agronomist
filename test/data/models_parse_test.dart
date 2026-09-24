@@ -213,6 +213,20 @@ void main() {
     }
   });
 
+  test('tanınmayan küpe canlı karede çözülür', () {
+    final live = LiveSession.fromJson(readMap('live_session.json'));
+    final tagged = live.updates.where((u) => u.unmatchedTag != null).toList();
+
+    // Demoda en az bir tane olmalı; yoksa kartın bu hâli hiç görünmez.
+    expect(tagged, hasLength(1));
+    final t = tagged.single.unmatchedTag!;
+    expect(t.rfid, '982000123456789');
+    expect(t.reason, 'unknown');
+    expect(t.message, 'küpe 982000123456789 kayıtlı değil');
+    expect(t.at, DateTime.utc(2026, 9, 21, 6, 11, 48));
+    expect(tagged.single.animal, isNull);
+  });
+
   test('int/double karışıklığına dayanıklı', () {
     // Eski modelde json["targetAmount"] as double sert cast'i vardı ve JSON'da
     // 20 (int) gelirse ÇÖKÜYORDU (§15.3/5,6). Üretilen kod num -> double

@@ -406,7 +406,7 @@ class _Grid extends ConsumerWidget {
             // dolu ve ayrı bir ekrana gidip nokta seçmesi gereksiz bir
             // adım olurdu. Hayvanı olan karta dokunmak da eşleştirmeyi
             // değiştirmeye izin verir — yanlış hayvan bağlanabilir.
-            onTap: () => _assign(context, ref, u.spoutId, title, assigned),
+            onTap: () => _assign(context, ref, u, title, assigned),
             child: LiveInfoCard(update: u, title: title),
           );
         }),
@@ -417,14 +417,16 @@ class _Grid extends ConsumerWidget {
   Future<void> _assign(
     BuildContext context,
     WidgetRef ref,
-    String spoutId,
+    SpoutUpdate update,
     String title,
     Set<String> assigned,
   ) async {
+    final spoutId = update.spoutId;
     final animalId = await showAnimalPicker(
       context,
       spoutLabel: title,
       alreadyAssigned: assigned,
+      unmatched: update.unmatchedTag,
     );
     if (animalId == null || !context.mounted) return;
 

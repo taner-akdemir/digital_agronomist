@@ -23,6 +23,7 @@ class LiveInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final palette = MilkPalette.of(update.flowColor);
     final animal = update.animal;
+    final unmatched = update.unmatchedTag;
 
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
@@ -38,18 +39,50 @@ class LiveInfoCard extends StatelessWidget {
           _header(palette),
           const SizedBox(height: AppSpacing.sm),
           Text(
-            animal?.name ?? animal?.earTag ?? 'Hayvan eşleştirilmedi',
+            animal?.name ??
+                animal?.earTag ??
+                (unmatched != null
+                    ? 'Tanınmayan küpe'
+                    : 'Hayvan eşleştirilmedi'),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.bold,
-              color: animal == null
-                  ? AppColors.lightGreyColor
-                  : AppColors.onSurface,
+              color: animal != null
+                  ? AppColors.onSurface
+                  : unmatched != null
+                  ? AppColors.darkAmberColor
+                  : AppColors.lightGreyColor,
             ),
           ),
-          if (animal?.name != null)
+          // Tanınmayan küpe, küpe numarası satırının YERİNE geçer: kartın
+          // yüksekliği sabit ve önceki hayvanın sağımı sürerken yeni gelen
+          // hayvanın tanınmadığını görmek, önceki küpeyi görmekten acil.
+          if (unmatched != null)
+            Row(
+              children: [
+                const Icon(
+                  Icons.nfc,
+                  size: 13,
+                  color: AppColors.darkAmberColor,
+                ),
+                const SizedBox(width: AppSpacing.xs),
+                Expanded(
+                  child: Text(
+                    unmatched.message,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.darkAmberColor,
+                    ),
+                  ),
+                ),
+              ],
+            )
+          else if (animal?.name != null)
             Text(
               animal!.earTag,
               style: const TextStyle(

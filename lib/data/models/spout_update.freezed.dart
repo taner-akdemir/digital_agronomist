@@ -22,7 +22,9 @@ mixin _$SpoutUpdate {
  int get expectedMl;/// volumeMl / expectedMl yüzdesi. Backend hesaplar.
  double get yieldPct;/// Anlık debi rengi (§6.2). Backend hesaplar; uygulama AYNALAR.
  MilkColor get flowColor;/// Oturum verimi rengi (§6.3).
- MilkColor get yieldColor; SpoutState get state; DateTime? get ts;
+ MilkColor get yieldColor; SpoutState get state; DateTime? get ts;/// Noktada okunan ama eşleştirilemeyen son küpe (kayıtlı değil ya da
+/// hayvan sağmal değil). Yeni sağım açılınca backend siler.
+ UnmatchedTag? get unmatchedTag;
 /// Create a copy of SpoutUpdate
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -35,16 +37,16 @@ $SpoutUpdateCopyWith<SpoutUpdate> get copyWith => _$SpoutUpdateCopyWithImpl<Spou
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SpoutUpdate&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.spoutId, spoutId) || other.spoutId == spoutId)&&(identical(other.animal, animal) || other.animal == animal)&&(identical(other.flowRate, flowRate) || other.flowRate == flowRate)&&(identical(other.volumeMl, volumeMl) || other.volumeMl == volumeMl)&&(identical(other.expectedMl, expectedMl) || other.expectedMl == expectedMl)&&(identical(other.yieldPct, yieldPct) || other.yieldPct == yieldPct)&&(identical(other.flowColor, flowColor) || other.flowColor == flowColor)&&(identical(other.yieldColor, yieldColor) || other.yieldColor == yieldColor)&&(identical(other.state, state) || other.state == state)&&(identical(other.ts, ts) || other.ts == ts));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SpoutUpdate&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.spoutId, spoutId) || other.spoutId == spoutId)&&(identical(other.animal, animal) || other.animal == animal)&&(identical(other.flowRate, flowRate) || other.flowRate == flowRate)&&(identical(other.volumeMl, volumeMl) || other.volumeMl == volumeMl)&&(identical(other.expectedMl, expectedMl) || other.expectedMl == expectedMl)&&(identical(other.yieldPct, yieldPct) || other.yieldPct == yieldPct)&&(identical(other.flowColor, flowColor) || other.flowColor == flowColor)&&(identical(other.yieldColor, yieldColor) || other.yieldColor == yieldColor)&&(identical(other.state, state) || other.state == state)&&(identical(other.ts, ts) || other.ts == ts)&&(identical(other.unmatchedTag, unmatchedTag) || other.unmatchedTag == unmatchedTag));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,sessionId,spoutId,animal,flowRate,volumeMl,expectedMl,yieldPct,flowColor,yieldColor,state,ts);
+int get hashCode => Object.hash(runtimeType,sessionId,spoutId,animal,flowRate,volumeMl,expectedMl,yieldPct,flowColor,yieldColor,state,ts,unmatchedTag);
 
 @override
 String toString() {
-  return 'SpoutUpdate(sessionId: $sessionId, spoutId: $spoutId, animal: $animal, flowRate: $flowRate, volumeMl: $volumeMl, expectedMl: $expectedMl, yieldPct: $yieldPct, flowColor: $flowColor, yieldColor: $yieldColor, state: $state, ts: $ts)';
+  return 'SpoutUpdate(sessionId: $sessionId, spoutId: $spoutId, animal: $animal, flowRate: $flowRate, volumeMl: $volumeMl, expectedMl: $expectedMl, yieldPct: $yieldPct, flowColor: $flowColor, yieldColor: $yieldColor, state: $state, ts: $ts, unmatchedTag: $unmatchedTag)';
 }
 
 
@@ -55,11 +57,11 @@ abstract mixin class $SpoutUpdateCopyWith<$Res>  {
   factory $SpoutUpdateCopyWith(SpoutUpdate value, $Res Function(SpoutUpdate) _then) = _$SpoutUpdateCopyWithImpl;
 @useResult
 $Res call({
- String sessionId, String spoutId, SpoutAnimal? animal, double flowRate, int volumeMl, int expectedMl, double yieldPct, MilkColor flowColor, MilkColor yieldColor, SpoutState state, DateTime? ts
+ String sessionId, String spoutId, SpoutAnimal? animal, double flowRate, int volumeMl, int expectedMl, double yieldPct, MilkColor flowColor, MilkColor yieldColor, SpoutState state, DateTime? ts, UnmatchedTag? unmatchedTag
 });
 
 
-$SpoutAnimalCopyWith<$Res>? get animal;
+$SpoutAnimalCopyWith<$Res>? get animal;$UnmatchedTagCopyWith<$Res>? get unmatchedTag;
 
 }
 /// @nodoc
@@ -72,7 +74,7 @@ class _$SpoutUpdateCopyWithImpl<$Res>
 
 /// Create a copy of SpoutUpdate
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? sessionId = null,Object? spoutId = null,Object? animal = freezed,Object? flowRate = null,Object? volumeMl = null,Object? expectedMl = null,Object? yieldPct = null,Object? flowColor = null,Object? yieldColor = null,Object? state = null,Object? ts = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? sessionId = null,Object? spoutId = null,Object? animal = freezed,Object? flowRate = null,Object? volumeMl = null,Object? expectedMl = null,Object? yieldPct = null,Object? flowColor = null,Object? yieldColor = null,Object? state = null,Object? ts = freezed,Object? unmatchedTag = freezed,}) {
   return _then(_self.copyWith(
 sessionId: null == sessionId ? _self.sessionId : sessionId // ignore: cast_nullable_to_non_nullable
 as String,spoutId: null == spoutId ? _self.spoutId : spoutId // ignore: cast_nullable_to_non_nullable
@@ -85,7 +87,8 @@ as double,flowColor: null == flowColor ? _self.flowColor : flowColor // ignore: 
 as MilkColor,yieldColor: null == yieldColor ? _self.yieldColor : yieldColor // ignore: cast_nullable_to_non_nullable
 as MilkColor,state: null == state ? _self.state : state // ignore: cast_nullable_to_non_nullable
 as SpoutState,ts: freezed == ts ? _self.ts : ts // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+as DateTime?,unmatchedTag: freezed == unmatchedTag ? _self.unmatchedTag : unmatchedTag // ignore: cast_nullable_to_non_nullable
+as UnmatchedTag?,
   ));
 }
 /// Create a copy of SpoutUpdate
@@ -99,6 +102,18 @@ $SpoutAnimalCopyWith<$Res>? get animal {
 
   return $SpoutAnimalCopyWith<$Res>(_self.animal!, (value) {
     return _then(_self.copyWith(animal: value));
+  });
+}/// Create a copy of SpoutUpdate
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$UnmatchedTagCopyWith<$Res>? get unmatchedTag {
+    if (_self.unmatchedTag == null) {
+    return null;
+  }
+
+  return $UnmatchedTagCopyWith<$Res>(_self.unmatchedTag!, (value) {
+    return _then(_self.copyWith(unmatchedTag: value));
   });
 }
 }
@@ -182,10 +197,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String sessionId,  String spoutId,  SpoutAnimal? animal,  double flowRate,  int volumeMl,  int expectedMl,  double yieldPct,  MilkColor flowColor,  MilkColor yieldColor,  SpoutState state,  DateTime? ts)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String sessionId,  String spoutId,  SpoutAnimal? animal,  double flowRate,  int volumeMl,  int expectedMl,  double yieldPct,  MilkColor flowColor,  MilkColor yieldColor,  SpoutState state,  DateTime? ts,  UnmatchedTag? unmatchedTag)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SpoutUpdate() when $default != null:
-return $default(_that.sessionId,_that.spoutId,_that.animal,_that.flowRate,_that.volumeMl,_that.expectedMl,_that.yieldPct,_that.flowColor,_that.yieldColor,_that.state,_that.ts);case _:
+return $default(_that.sessionId,_that.spoutId,_that.animal,_that.flowRate,_that.volumeMl,_that.expectedMl,_that.yieldPct,_that.flowColor,_that.yieldColor,_that.state,_that.ts,_that.unmatchedTag);case _:
   return orElse();
 
 }
@@ -203,10 +218,10 @@ return $default(_that.sessionId,_that.spoutId,_that.animal,_that.flowRate,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String sessionId,  String spoutId,  SpoutAnimal? animal,  double flowRate,  int volumeMl,  int expectedMl,  double yieldPct,  MilkColor flowColor,  MilkColor yieldColor,  SpoutState state,  DateTime? ts)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String sessionId,  String spoutId,  SpoutAnimal? animal,  double flowRate,  int volumeMl,  int expectedMl,  double yieldPct,  MilkColor flowColor,  MilkColor yieldColor,  SpoutState state,  DateTime? ts,  UnmatchedTag? unmatchedTag)  $default,) {final _that = this;
 switch (_that) {
 case _SpoutUpdate():
-return $default(_that.sessionId,_that.spoutId,_that.animal,_that.flowRate,_that.volumeMl,_that.expectedMl,_that.yieldPct,_that.flowColor,_that.yieldColor,_that.state,_that.ts);case _:
+return $default(_that.sessionId,_that.spoutId,_that.animal,_that.flowRate,_that.volumeMl,_that.expectedMl,_that.yieldPct,_that.flowColor,_that.yieldColor,_that.state,_that.ts,_that.unmatchedTag);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -223,10 +238,10 @@ return $default(_that.sessionId,_that.spoutId,_that.animal,_that.flowRate,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String sessionId,  String spoutId,  SpoutAnimal? animal,  double flowRate,  int volumeMl,  int expectedMl,  double yieldPct,  MilkColor flowColor,  MilkColor yieldColor,  SpoutState state,  DateTime? ts)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String sessionId,  String spoutId,  SpoutAnimal? animal,  double flowRate,  int volumeMl,  int expectedMl,  double yieldPct,  MilkColor flowColor,  MilkColor yieldColor,  SpoutState state,  DateTime? ts,  UnmatchedTag? unmatchedTag)?  $default,) {final _that = this;
 switch (_that) {
 case _SpoutUpdate() when $default != null:
-return $default(_that.sessionId,_that.spoutId,_that.animal,_that.flowRate,_that.volumeMl,_that.expectedMl,_that.yieldPct,_that.flowColor,_that.yieldColor,_that.state,_that.ts);case _:
+return $default(_that.sessionId,_that.spoutId,_that.animal,_that.flowRate,_that.volumeMl,_that.expectedMl,_that.yieldPct,_that.flowColor,_that.yieldColor,_that.state,_that.ts,_that.unmatchedTag);case _:
   return null;
 
 }
@@ -238,7 +253,7 @@ return $default(_that.sessionId,_that.spoutId,_that.animal,_that.flowRate,_that.
 @JsonSerializable()
 
 class _SpoutUpdate implements SpoutUpdate {
-  const _SpoutUpdate({required this.sessionId, required this.spoutId, this.animal, this.flowRate = 0, this.volumeMl = 0, this.expectedMl = 0, this.yieldPct = 0, this.flowColor = MilkColor.grey, this.yieldColor = MilkColor.grey, this.state = SpoutState.idle, this.ts});
+  const _SpoutUpdate({required this.sessionId, required this.spoutId, this.animal, this.flowRate = 0, this.volumeMl = 0, this.expectedMl = 0, this.yieldPct = 0, this.flowColor = MilkColor.grey, this.yieldColor = MilkColor.grey, this.state = SpoutState.idle, this.ts, this.unmatchedTag});
   factory _SpoutUpdate.fromJson(Map<String, dynamic> json) => _$SpoutUpdateFromJson(json);
 
 @override final  String sessionId;
@@ -259,6 +274,9 @@ class _SpoutUpdate implements SpoutUpdate {
 @override@JsonKey() final  MilkColor yieldColor;
 @override@JsonKey() final  SpoutState state;
 @override final  DateTime? ts;
+/// Noktada okunan ama eşleştirilemeyen son küpe (kayıtlı değil ya da
+/// hayvan sağmal değil). Yeni sağım açılınca backend siler.
+@override final  UnmatchedTag? unmatchedTag;
 
 /// Create a copy of SpoutUpdate
 /// with the given fields replaced by the non-null parameter values.
@@ -273,16 +291,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SpoutUpdate&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.spoutId, spoutId) || other.spoutId == spoutId)&&(identical(other.animal, animal) || other.animal == animal)&&(identical(other.flowRate, flowRate) || other.flowRate == flowRate)&&(identical(other.volumeMl, volumeMl) || other.volumeMl == volumeMl)&&(identical(other.expectedMl, expectedMl) || other.expectedMl == expectedMl)&&(identical(other.yieldPct, yieldPct) || other.yieldPct == yieldPct)&&(identical(other.flowColor, flowColor) || other.flowColor == flowColor)&&(identical(other.yieldColor, yieldColor) || other.yieldColor == yieldColor)&&(identical(other.state, state) || other.state == state)&&(identical(other.ts, ts) || other.ts == ts));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SpoutUpdate&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.spoutId, spoutId) || other.spoutId == spoutId)&&(identical(other.animal, animal) || other.animal == animal)&&(identical(other.flowRate, flowRate) || other.flowRate == flowRate)&&(identical(other.volumeMl, volumeMl) || other.volumeMl == volumeMl)&&(identical(other.expectedMl, expectedMl) || other.expectedMl == expectedMl)&&(identical(other.yieldPct, yieldPct) || other.yieldPct == yieldPct)&&(identical(other.flowColor, flowColor) || other.flowColor == flowColor)&&(identical(other.yieldColor, yieldColor) || other.yieldColor == yieldColor)&&(identical(other.state, state) || other.state == state)&&(identical(other.ts, ts) || other.ts == ts)&&(identical(other.unmatchedTag, unmatchedTag) || other.unmatchedTag == unmatchedTag));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,sessionId,spoutId,animal,flowRate,volumeMl,expectedMl,yieldPct,flowColor,yieldColor,state,ts);
+int get hashCode => Object.hash(runtimeType,sessionId,spoutId,animal,flowRate,volumeMl,expectedMl,yieldPct,flowColor,yieldColor,state,ts,unmatchedTag);
 
 @override
 String toString() {
-  return 'SpoutUpdate(sessionId: $sessionId, spoutId: $spoutId, animal: $animal, flowRate: $flowRate, volumeMl: $volumeMl, expectedMl: $expectedMl, yieldPct: $yieldPct, flowColor: $flowColor, yieldColor: $yieldColor, state: $state, ts: $ts)';
+  return 'SpoutUpdate(sessionId: $sessionId, spoutId: $spoutId, animal: $animal, flowRate: $flowRate, volumeMl: $volumeMl, expectedMl: $expectedMl, yieldPct: $yieldPct, flowColor: $flowColor, yieldColor: $yieldColor, state: $state, ts: $ts, unmatchedTag: $unmatchedTag)';
 }
 
 
@@ -293,11 +311,11 @@ abstract mixin class _$SpoutUpdateCopyWith<$Res> implements $SpoutUpdateCopyWith
   factory _$SpoutUpdateCopyWith(_SpoutUpdate value, $Res Function(_SpoutUpdate) _then) = __$SpoutUpdateCopyWithImpl;
 @override @useResult
 $Res call({
- String sessionId, String spoutId, SpoutAnimal? animal, double flowRate, int volumeMl, int expectedMl, double yieldPct, MilkColor flowColor, MilkColor yieldColor, SpoutState state, DateTime? ts
+ String sessionId, String spoutId, SpoutAnimal? animal, double flowRate, int volumeMl, int expectedMl, double yieldPct, MilkColor flowColor, MilkColor yieldColor, SpoutState state, DateTime? ts, UnmatchedTag? unmatchedTag
 });
 
 
-@override $SpoutAnimalCopyWith<$Res>? get animal;
+@override $SpoutAnimalCopyWith<$Res>? get animal;@override $UnmatchedTagCopyWith<$Res>? get unmatchedTag;
 
 }
 /// @nodoc
@@ -310,7 +328,7 @@ class __$SpoutUpdateCopyWithImpl<$Res>
 
 /// Create a copy of SpoutUpdate
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? sessionId = null,Object? spoutId = null,Object? animal = freezed,Object? flowRate = null,Object? volumeMl = null,Object? expectedMl = null,Object? yieldPct = null,Object? flowColor = null,Object? yieldColor = null,Object? state = null,Object? ts = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? sessionId = null,Object? spoutId = null,Object? animal = freezed,Object? flowRate = null,Object? volumeMl = null,Object? expectedMl = null,Object? yieldPct = null,Object? flowColor = null,Object? yieldColor = null,Object? state = null,Object? ts = freezed,Object? unmatchedTag = freezed,}) {
   return _then(_SpoutUpdate(
 sessionId: null == sessionId ? _self.sessionId : sessionId // ignore: cast_nullable_to_non_nullable
 as String,spoutId: null == spoutId ? _self.spoutId : spoutId // ignore: cast_nullable_to_non_nullable
@@ -323,7 +341,8 @@ as double,flowColor: null == flowColor ? _self.flowColor : flowColor // ignore: 
 as MilkColor,yieldColor: null == yieldColor ? _self.yieldColor : yieldColor // ignore: cast_nullable_to_non_nullable
 as MilkColor,state: null == state ? _self.state : state // ignore: cast_nullable_to_non_nullable
 as SpoutState,ts: freezed == ts ? _self.ts : ts // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+as DateTime?,unmatchedTag: freezed == unmatchedTag ? _self.unmatchedTag : unmatchedTag // ignore: cast_nullable_to_non_nullable
+as UnmatchedTag?,
   ));
 }
 
@@ -338,6 +357,18 @@ $SpoutAnimalCopyWith<$Res>? get animal {
 
   return $SpoutAnimalCopyWith<$Res>(_self.animal!, (value) {
     return _then(_self.copyWith(animal: value));
+  });
+}/// Create a copy of SpoutUpdate
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$UnmatchedTagCopyWith<$Res>? get unmatchedTag {
+    if (_self.unmatchedTag == null) {
+    return null;
+  }
+
+  return $UnmatchedTagCopyWith<$Res>(_self.unmatchedTag!, (value) {
+    return _then(_self.copyWith(unmatchedTag: value));
   });
 }
 }
@@ -608,6 +639,282 @@ as String,earTag: null == earTag ? _self.earTag : earTag // ignore: cast_nullabl
 as String,species: freezed == species ? _self.species : species // ignore: cast_nullable_to_non_nullable
 as String?,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String?,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$UnmatchedTag {
+
+ String get rfid;/// `unknown` (küpe kayıtlı değil) ya da `not_milking` (hayvan sağmal
+/// değil).
+ String get reason; String get message; DateTime? get at;
+/// Create a copy of UnmatchedTag
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$UnmatchedTagCopyWith<UnmatchedTag> get copyWith => _$UnmatchedTagCopyWithImpl<UnmatchedTag>(this as UnmatchedTag, _$identity);
+
+  /// Serializes this UnmatchedTag to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UnmatchedTag&&(identical(other.rfid, rfid) || other.rfid == rfid)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.message, message) || other.message == message)&&(identical(other.at, at) || other.at == at));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,rfid,reason,message,at);
+
+@override
+String toString() {
+  return 'UnmatchedTag(rfid: $rfid, reason: $reason, message: $message, at: $at)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $UnmatchedTagCopyWith<$Res>  {
+  factory $UnmatchedTagCopyWith(UnmatchedTag value, $Res Function(UnmatchedTag) _then) = _$UnmatchedTagCopyWithImpl;
+@useResult
+$Res call({
+ String rfid, String reason, String message, DateTime? at
+});
+
+
+
+
+}
+/// @nodoc
+class _$UnmatchedTagCopyWithImpl<$Res>
+    implements $UnmatchedTagCopyWith<$Res> {
+  _$UnmatchedTagCopyWithImpl(this._self, this._then);
+
+  final UnmatchedTag _self;
+  final $Res Function(UnmatchedTag) _then;
+
+/// Create a copy of UnmatchedTag
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? rfid = null,Object? reason = null,Object? message = null,Object? at = freezed,}) {
+  return _then(_self.copyWith(
+rfid: null == rfid ? _self.rfid : rfid // ignore: cast_nullable_to_non_nullable
+as String,reason: null == reason ? _self.reason : reason // ignore: cast_nullable_to_non_nullable
+as String,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,at: freezed == at ? _self.at : at // ignore: cast_nullable_to_non_nullable
+as DateTime?,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [UnmatchedTag].
+extension UnmatchedTagPatterns on UnmatchedTag {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _UnmatchedTag value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _UnmatchedTag() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _UnmatchedTag value)  $default,){
+final _that = this;
+switch (_that) {
+case _UnmatchedTag():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _UnmatchedTag value)?  $default,){
+final _that = this;
+switch (_that) {
+case _UnmatchedTag() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String rfid,  String reason,  String message,  DateTime? at)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _UnmatchedTag() when $default != null:
+return $default(_that.rfid,_that.reason,_that.message,_that.at);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String rfid,  String reason,  String message,  DateTime? at)  $default,) {final _that = this;
+switch (_that) {
+case _UnmatchedTag():
+return $default(_that.rfid,_that.reason,_that.message,_that.at);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String rfid,  String reason,  String message,  DateTime? at)?  $default,) {final _that = this;
+switch (_that) {
+case _UnmatchedTag() when $default != null:
+return $default(_that.rfid,_that.reason,_that.message,_that.at);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _UnmatchedTag implements UnmatchedTag {
+  const _UnmatchedTag({required this.rfid, required this.reason, required this.message, this.at});
+  factory _UnmatchedTag.fromJson(Map<String, dynamic> json) => _$UnmatchedTagFromJson(json);
+
+@override final  String rfid;
+/// `unknown` (küpe kayıtlı değil) ya da `not_milking` (hayvan sağmal
+/// değil).
+@override final  String reason;
+@override final  String message;
+@override final  DateTime? at;
+
+/// Create a copy of UnmatchedTag
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$UnmatchedTagCopyWith<_UnmatchedTag> get copyWith => __$UnmatchedTagCopyWithImpl<_UnmatchedTag>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$UnmatchedTagToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UnmatchedTag&&(identical(other.rfid, rfid) || other.rfid == rfid)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.message, message) || other.message == message)&&(identical(other.at, at) || other.at == at));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,rfid,reason,message,at);
+
+@override
+String toString() {
+  return 'UnmatchedTag(rfid: $rfid, reason: $reason, message: $message, at: $at)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$UnmatchedTagCopyWith<$Res> implements $UnmatchedTagCopyWith<$Res> {
+  factory _$UnmatchedTagCopyWith(_UnmatchedTag value, $Res Function(_UnmatchedTag) _then) = __$UnmatchedTagCopyWithImpl;
+@override @useResult
+$Res call({
+ String rfid, String reason, String message, DateTime? at
+});
+
+
+
+
+}
+/// @nodoc
+class __$UnmatchedTagCopyWithImpl<$Res>
+    implements _$UnmatchedTagCopyWith<$Res> {
+  __$UnmatchedTagCopyWithImpl(this._self, this._then);
+
+  final _UnmatchedTag _self;
+  final $Res Function(_UnmatchedTag) _then;
+
+/// Create a copy of UnmatchedTag
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? rfid = null,Object? reason = null,Object? message = null,Object? at = freezed,}) {
+  return _then(_UnmatchedTag(
+rfid: null == rfid ? _self.rfid : rfid // ignore: cast_nullable_to_non_nullable
+as String,reason: null == reason ? _self.reason : reason // ignore: cast_nullable_to_non_nullable
+as String,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,at: freezed == at ? _self.at : at // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 

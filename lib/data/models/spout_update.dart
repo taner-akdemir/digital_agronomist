@@ -37,6 +37,10 @@ abstract class SpoutUpdate with _$SpoutUpdate {
     @Default(MilkColor.grey) MilkColor yieldColor,
     @Default(SpoutState.idle) SpoutState state,
     DateTime? ts,
+
+    /// Noktada okunan ama eşleştirilemeyen son küpe (kayıtlı değil ya da
+    /// hayvan sağmal değil). Yeni sağım açılınca backend siler.
+    UnmatchedTag? unmatchedTag,
   }) = _SpoutUpdate;
 
   factory SpoutUpdate.fromJson(Map<String, dynamic> json) =>
@@ -58,4 +62,24 @@ abstract class SpoutAnimal with _$SpoutAnimal {
 
   factory SpoutAnimal.fromJson(Map<String, dynamic> json) =>
       _$SpoutAnimalFromJson(json);
+}
+
+/// Eşleştirilemeyen küpe okuması.
+///
+/// `message` backend'den geldiği gibi gösterilir (§16). `reason` string'dir,
+/// enum değil: backend yeni bir sebep eklediğinde kare düşmesin.
+@freezed
+abstract class UnmatchedTag with _$UnmatchedTag {
+  const factory UnmatchedTag({
+    required String rfid,
+
+    /// `unknown` (küpe kayıtlı değil) ya da `not_milking` (hayvan sağmal
+    /// değil).
+    required String reason,
+    required String message,
+    DateTime? at,
+  }) = _UnmatchedTag;
+
+  factory UnmatchedTag.fromJson(Map<String, dynamic> json) =>
+      _$UnmatchedTagFromJson(json);
 }

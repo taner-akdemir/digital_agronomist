@@ -26,6 +26,9 @@ _SpoutUpdate _$SpoutUpdateFromJson(Map<String, dynamic> json) => _SpoutUpdate(
       $enumDecodeNullable(_$SpoutStateEnumMap, json['state']) ??
       SpoutState.idle,
   ts: json['ts'] == null ? null : DateTime.parse(json['ts'] as String),
+  unmatchedTag: json['unmatchedTag'] == null
+      ? null
+      : UnmatchedTag.fromJson(json['unmatchedTag'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$SpoutUpdateToJson(_SpoutUpdate instance) =>
@@ -41,6 +44,7 @@ Map<String, dynamic> _$SpoutUpdateToJson(_SpoutUpdate instance) =>
       'yieldColor': _$MilkColorEnumMap[instance.yieldColor]!,
       'state': _$SpoutStateEnumMap[instance.state]!,
       'ts': instance.ts?.toIso8601String(),
+      'unmatchedTag': instance.unmatchedTag,
     };
 
 const _$MilkColorEnumMap = {
@@ -70,4 +74,20 @@ Map<String, dynamic> _$SpoutAnimalToJson(_SpoutAnimal instance) =>
       'earTag': instance.earTag,
       'species': instance.species,
       'name': instance.name,
+    };
+
+_UnmatchedTag _$UnmatchedTagFromJson(Map<String, dynamic> json) =>
+    _UnmatchedTag(
+      rfid: json['rfid'] as String,
+      reason: json['reason'] as String,
+      message: json['message'] as String,
+      at: json['at'] == null ? null : DateTime.parse(json['at'] as String),
+    );
+
+Map<String, dynamic> _$UnmatchedTagToJson(_UnmatchedTag instance) =>
+    <String, dynamic>{
+      'rfid': instance.rfid,
+      'reason': instance.reason,
+      'message': instance.message,
+      'at': instance.at?.toIso8601String(),
     };

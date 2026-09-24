@@ -112,4 +112,23 @@ void main() {
       expect(identical(a, b), isTrue);
     },
   );
+
+  test('elle eşleştirme tanınmayan küpe uyarısını siler', () async {
+    const spout8 = '0192a1f0-0050-7000-8000-000000000008';
+    final before = await repo.liveSession(hallId: 'h');
+    final u = before.updates.firstWhere((u) => u.spoutId == spout8);
+    expect(u.unmatchedTag, isNotNull);
+
+    final animal = (await repo.animals()).firstWhere((a) => a.isMilking);
+    await repo.assignAnimal(
+      sessionId: before.session.id,
+      spoutId: spout8,
+      animalId: animal.id,
+    );
+
+    final after = await repo.liveSession(hallId: 'h');
+    final v = after.updates.firstWhere((u) => u.spoutId == spout8);
+    expect(v.animal?.id, animal.id);
+    expect(v.unmatchedTag, isNull);
+  });
 }

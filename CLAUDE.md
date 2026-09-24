@@ -164,6 +164,12 @@ gecikme demekti ve sağımın ilk saniyeleri (§6.2 ısınma fazı) o pencerede 
   loglarına ve proxy geçmişine düşer. El sıkışma sıradan bir HTTP GET olduğu için gateway
   JWT'yi diğer uçlarla birebir aynı doğrular.
 
+**Tanınmayan küpe** (`SpoutUpdate.unmatchedTag`, backend ADR 0052): cihazın okuduğu küpe
+kayıtlı değilse ya da hayvan sağmal değilse karede `{rfid, reason, message, at}` gelir.
+Kart amber "Tanınmayan küpe" ve mesajı gösterir; hayvan varken mesaj küpe satırının YERİNE
+geçer (kart yüksekliği sabit, testle kilitli). Seçici başta okunan küpeyi ve ne yapılacağını
+yazar. Yeni sağım açılınca backend siler; `reason` string'dir, mesaj olduğu gibi gösterilir.
+
 `Env.wsBaseUrl`, `apiBaseUrl`'den **türetilir** (`http` → `ws`): ayrı tanımlansaydı biri
 değişip diğeri unutulduğunda canlı ekran sessizce bağlanamazdı.
 
