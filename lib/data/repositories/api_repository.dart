@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
+import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
 import 'package:milktrace/data/models/device.dart';
@@ -129,6 +130,23 @@ class ApiRepository implements MilkTraceRepository {
         : await _dio.put<dynamic>('/animals/${a.id}', data: body);
     return Animal.fromJson(_dataOf(r));
   }
+
+  @override
+  Future<List<AnimalNote>> animalNotes(String animalId) async => _listOf(
+    await _dio.get<dynamic>('/animals/$animalId/notes'),
+    AnimalNote.fromJson,
+  );
+
+  @override
+  Future<AnimalNote> addAnimalNote(String animalId, String note) async =>
+      AnimalNote.fromJson(
+        _dataOf(
+          await _dio.post<dynamic>(
+            '/animals/$animalId/notes',
+            data: {'note': note},
+          ),
+        ),
+      );
 
   /// Formun gövdesi: kimlik ve verim sınıfı YOK (sınıfı gece hesabı yazar;
   /// formun eski bir değerle ezmesi istenmez). Tarihler gün olarak, UTC

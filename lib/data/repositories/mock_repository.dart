@@ -7,6 +7,7 @@ import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
+import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
 import 'package:milktrace/data/models/device.dart';
@@ -172,6 +173,27 @@ class MockRepository implements MilkTraceRepository {
     ];
     return out;
   });
+
+  /// Mock'ta yazılan notlar (hayvan → notlar, en yeni başta).
+  final Map<String, List<AnimalNote>> _notes = {};
+
+  @override
+  Future<List<AnimalNote>> animalNotes(String animalId) =>
+      _delayed(() async => List.unmodifiable(_notes[animalId] ?? const []));
+
+  @override
+  Future<AnimalNote> addAnimalNote(String animalId, String note) =>
+      _delayed(() async {
+        final n = AnimalNote(
+          id: 'mock-note-${(_notes[animalId]?.length ?? 0) + 1}',
+          animalId: animalId,
+          note: note.trim(),
+          authorName: 'Demo Kullanıcı',
+          createdAt: DateTime.now().toUtc(),
+        );
+        (_notes[animalId] ??= []).insert(0, n);
+        return n;
+      });
 
   /// Mock'ta kaydedilen hayvanlar (id → hayvan).
   final Map<String, Animal> _savedAnimals = {};

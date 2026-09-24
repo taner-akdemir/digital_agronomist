@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:milktrace/app/theme.dart';
+import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/core/format.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
@@ -12,6 +13,7 @@ import 'package:milktrace/features/history/widgets/yield_chart.dart';
 import 'package:milktrace/features/history/widgets/yield_class_badge.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
+import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
 import 'package:milktrace/widgets/error_view.dart';
 import 'package:milktrace/widgets/milk_palette.dart';
@@ -123,13 +125,18 @@ class _Body extends ConsumerWidget {
       onRefresh: () async {
         ref
           ..invalidate(animalTrendProvider(animal.id))
-          ..invalidate(animalHistoryProvider(animal.id));
+          ..invalidate(animalHistoryProvider(animal.id))
+          ..invalidate(animalNotesProvider(animal.id));
         await ref.read(animalTrendProvider(animal.id).future);
       },
       child: ListView(
         padding: const EdgeInsets.all(AppSpacing.lg),
         children: [
           _IdentityCard(animal: animal),
+          const SizedBox(height: AppSpacing.md),
+          // Notlar sınıf etiketinin HEMEN altında: sınıflandırma karar
+          // desteğidir, not ("mastitis, tedavide") o kararın bağlamı (§6.4).
+          _NotesCard(animalId: animal.id),
           const SizedBox(height: AppSpacing.md),
           AsyncView(
             value: trend,
@@ -458,6 +465,170 @@ class _Fact extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Hayvan notları (§6.4, backend ADR 0050): en yeni üstte, yazarı ve anıyla.
+///
+/// Bütün işletme rolleri yazar — görüntüleyici §5'te "veteriner, danışman"
+/// ve "son veteriner kontrolü" notunu tam o kişi yazar. Notlar düzenlenmez
+/// ve silinmez: bir karar izi.
+class _NotesCard extends ConsumerWidget {
+  const _NotesCard({required this.animalId});
+
+  final String animalId;
+
+  /// Kartta gösterilen en fazla not; gerisi "N not daha".
+  static const _shown = 5;
+
+  Future<void> _add(BuildContext context, WidgetRef ref) async {
+    final text = await showDialog<String>(
+      context: context,
+      builder: (_) => const _NoteDialog(),
+    );
+    if (text == null || text.trim().isEmpty || !context.mounted) return;
+    final messenger = ScaffoldMessenger.of(context);
+    try {
+      await ref.read(repositoryProvider).addAnimalNote(animalId, text);
+      ref.invalidate(animalNotesProvider(animalId));
+      messenger.showSnackBar(const SnackBar(content: Text('Not eklendi')));
+    } catch (e) {
+      messenger.showSnackBar(
+        SnackBar(content: Text(userMessage(e) ?? 'Not eklenemedi: $e')),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final notes = ref.watch(animalNotesProvider(animalId));
+
+    return _Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Expanded(
+                child: Text(
+                  'Notlar',
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                ),
+              ),
+              TextButton.icon(
+                onPressed: () => _add(context, ref),
+                icon: const Icon(Icons.add, size: 18),
+                label: const Text('Not ekle'),
+                style: TextButton.styleFrom(
+                  foregroundColor: AppColors.darkGreenColor,
+                ),
+              ),
+            ],
+          ),
+          AsyncView(
+            value: notes,
+            errorMessage: 'Notlar alınamadı',
+            builder: (list) {
+              if (list.isEmpty) {
+                return const Text(
+                  'Henüz not yok. Veteriner kontrolü, gebelik ya da tedavi '
+                  'bilgisi sınıf etiketini yorumlamaya yardım eder.',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: AppColors.onSurfaceMuted,
+                  ),
+                );
+              }
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (final n in list.take(_shown))
+                    Padding(
+                      padding: const EdgeInsets.only(top: AppSpacing.sm),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(n.note, style: const TextStyle(fontSize: 13)),
+                          Text(
+                            [
+                              if ((n.authorName ?? '').isNotEmpty)
+                                n.authorName!,
+                              '${Fmt.dayMonthYear(n.createdAt)} '
+                                  '${Fmt.time(n.createdAt)}',
+                            ].join(' · '),
+                            style: const TextStyle(
+                              fontSize: 11,
+                              color: AppColors.onSurfaceMuted,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  if (list.length > _shown)
+                    Padding(
+                      padding: const EdgeInsets.only(top: AppSpacing.sm),
+                      child: Text(
+                        '${list.length - _shown} not daha',
+                        style: const TextStyle(
+                          fontSize: 11,
+                          color: AppColors.onSurfaceMuted,
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Not yazma penceresi; en çok 1000 karakter (backend sınırı).
+class _NoteDialog extends StatefulWidget {
+  const _NoteDialog();
+
+  @override
+  State<_NoteDialog> createState() => _NoteDialogState();
+}
+
+class _NoteDialogState extends State<_NoteDialog> {
+  final _text = TextEditingController();
+
+  @override
+  void dispose() {
+    _text.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => AlertDialog(
+    title: const Text('Not ekle'),
+    content: TextField(
+      controller: _text,
+      autofocus: true,
+      minLines: 3,
+      maxLines: 6,
+      maxLength: 1000,
+      decoration: const InputDecoration(
+        hintText: 'Örn. Son veteriner kontrolü: mastitis, tedavide.',
+        border: OutlineInputBorder(borderRadius: AppRadius.smAll),
+      ),
+    ),
+    actions: [
+      TextButton(
+        onPressed: () => Navigator.of(context).pop(),
+        child: const Text('Vazgeç'),
+      ),
+      FilledButton(
+        onPressed: () => Navigator.of(context).pop(_text.text),
+        style: FilledButton.styleFrom(
+          backgroundColor: AppColors.darkGreenColor,
+        ),
+        child: const Text('Kaydet'),
+      ),
+    ],
+  );
 }
 
 class _Card extends StatelessWidget {

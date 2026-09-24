@@ -136,10 +136,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Son hata'), findsOneWidget);
-    expect(
-      find.textContaining('E17 · Akış sensörü arızası ('),
-      findsOneWidget,
-    );
+    expect(find.textContaining('E17 · Akış sensörü arızası ('), findsOneWidget);
     expect(find.textContaining('09:10)'), findsOneWidget);
   });
 

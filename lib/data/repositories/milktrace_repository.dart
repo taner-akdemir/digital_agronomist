@@ -1,6 +1,7 @@
 import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
+import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
 import 'package:milktrace/data/models/device.dart';
@@ -30,6 +31,13 @@ abstract interface class MilkTraceRepository {
   /// form her zaman bütün alanları gönderir. Yalnızca işletme sahibi.
   /// Verim sınıfı GÖNDERİLMEZ: gece hesabının alanı.
   Future<Animal> saveAnimal(Animal animal);
+
+  /// Hayvanın notları, en yeni üstte (GET /animals/{id}/notes).
+  Future<List<AnimalNote>> animalNotes(String animalId);
+
+  /// Not ekler (POST /animals/{id}/notes). Bütün işletme rolleri yazar;
+  /// yazar oturumdaki kullanıcıdır.
+  Future<AnimalNote> addAnimalNote(String animalId, String note);
   Future<List<Thresholds>> thresholds();
 
   /// Bir türün eşiklerini günceller (§8.5 PUT /species/thresholds, owner).

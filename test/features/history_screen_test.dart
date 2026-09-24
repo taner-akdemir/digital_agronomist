@@ -125,6 +125,11 @@ void main() {
   testWidgets('hayvan detayı sınıfı, trendi ve son sağımları gösterir', (
     tester,
   ) async {
+    // Uzun ekran: not kartı eklendikten sonra son sağımlar varsayılan
+    // 800x600 yüzeyde görünür alanın dışında kalıyor ve liste onu hiç
+    // çizmiyordu.
+    tester.view.physicalSize = const Size(1200, 4000);
+    addTearDown(tester.view.resetPhysicalSize);
     final animal = await animalOf(tester, YieldClass.high);
 
     await tester.pumpWidget(wrap(AnimalDetailScreen(animalId: animal.id)));
@@ -154,6 +159,29 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.textContaining('teşhis değildir'), findsNothing);
+  });
+
+  // Notlar (§6.4, backend ADR 0050): boşken yol gösterir; eklenen not
+  // yazarı ve anıyla, en üstte görünür.
+  testWidgets('hayvana not eklenir', (tester) async {
+    tester.view.physicalSize = const Size(1200, 4000);
+    addTearDown(tester.view.resetPhysicalSize);
+    final animal = await animalOf(tester, YieldClass.dryOffCandidate);
+
+    await tester.pumpWidget(wrap(AnimalDetailScreen(animalId: animal.id)));
+    await tester.pumpAndSettle();
+    expect(find.text('Notlar'), findsOneWidget);
+    expect(find.textContaining('Henüz not yok'), findsOneWidget);
+
+    await tester.tap(find.text('Not ekle'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), 'Gebe, 5. ay.');
+    await tester.tap(find.text('Kaydet'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Gebe, 5. ay.'), findsOneWidget);
+    expect(find.textContaining('Demo Kullanıcı · '), findsOneWidget);
+    expect(find.textContaining('Henüz not yok'), findsNothing);
   });
 
   testWidgets('kayıtsız hayvan kimliğinde hata gösterilir', (tester) async {

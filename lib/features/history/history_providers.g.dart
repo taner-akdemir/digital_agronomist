@@ -140,6 +140,90 @@ final class AnimalHistoryFamily extends $Family
   String toString() => r'animalHistoryProvider';
 }
 
+/// Bir hayvanın notları, en yeni üstte.
+
+@ProviderFor(animalNotes)
+final animalNotesProvider = AnimalNotesFamily._();
+
+/// Bir hayvanın notları, en yeni üstte.
+
+final class AnimalNotesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<AnimalNote>>,
+          List<AnimalNote>,
+          FutureOr<List<AnimalNote>>
+        >
+    with $FutureModifier<List<AnimalNote>>, $FutureProvider<List<AnimalNote>> {
+  /// Bir hayvanın notları, en yeni üstte.
+  AnimalNotesProvider._({
+    required AnimalNotesFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'animalNotesProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$animalNotesHash();
+
+  @override
+  String toString() {
+    return r'animalNotesProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<List<AnimalNote>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<AnimalNote>> create(Ref ref) {
+    final argument = this.argument as String;
+    return animalNotes(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is AnimalNotesProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$animalNotesHash() => r'fd21ed759bea6570b1b9f0375ae8e3dae8a92fe1';
+
+/// Bir hayvanın notları, en yeni üstte.
+
+final class AnimalNotesFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<List<AnimalNote>>, String> {
+  AnimalNotesFamily._()
+    : super(
+        retry: null,
+        name: r'animalNotesProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// Bir hayvanın notları, en yeni üstte.
+
+  AnimalNotesProvider call(String animalId) =>
+      AnimalNotesProvider._(argument: animalId, from: this);
+
+  @override
+  String toString() => r'animalNotesProvider';
+}
+
 /// Bir hayvanın trendi ve sınıfı.
 
 @ProviderFor(animalTrend)

@@ -1,5 +1,6 @@
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
+import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/domain/yield_class.dart';
@@ -18,6 +19,11 @@ Future<List<MilkingSession>> pastSessions(Ref ref) =>
 @riverpod
 Future<List<AnimalMilking>> animalHistory(Ref ref, String animalId) =>
     ref.watch(repositoryProvider).animalHistory(animalId);
+
+/// Bir hayvanın notları, en yeni üstte.
+@riverpod
+Future<List<AnimalNote>> animalNotes(Ref ref, String animalId) =>
+    ref.watch(repositoryProvider).animalNotes(animalId);
 
 /// Bir hayvanın trendi ve sınıfı.
 @riverpod

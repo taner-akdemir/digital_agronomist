@@ -185,6 +185,10 @@ ekle" ve hayvan detayındaki düzenle simgesi; ikisi de YALNIZCA işletme sahibi
 silinir. Verim sınıfı GÖNDERİLMEZ (gece hesabının alanı). Tarihler gün olarak, UTC gece
 yarısı.
 
+**Hayvan notları** (`GET/POST /animals/{id}/notes`, backend ADR 0050): detayda kimlik
+kartının hemen altında "Notlar" kartı; en yeni 5 not yazarı ve anıyla. BÜTÜN roller yazar
+(görüntüleyici = veteriner/danışman); notlar düzenlenmez, silinmez.
+
 Mock modda geçmiş **asset değil, üretilmiştir**: `MockLactation` §10'daki Wood laktasyon
 eğrisiyle deterministik seri üretir. 30 hayvan × 90 gün × 2 sağım elle tutulabilecek bir
 JSON değil. Bugünkü seviye hayvanın SINIFINA sabitlenir ki rozet ile grafik çelişmesin.

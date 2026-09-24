@@ -615,7 +615,11 @@ void main() {
     expect(post.path, '/animals');
     final body = post.data as Map<String, dynamic>;
     expect(body.containsKey('id'), isFalse);
-    expect(body.containsKey('yieldClass'), isFalse, reason: 'gece hesabının alanı');
+    expect(
+      body.containsKey('yieldClass'),
+      isFalse,
+      reason: 'gece hesabının alanı',
+    );
     expect(body['birthDate'], '2021-03-05T00:00:00.000Z');
     expect(body['rfid'], isNull);
     expect(body['status'], 'dry');
@@ -623,6 +627,37 @@ void main() {
     await r.repo.saveAnimal(draft.copyWith(id: 'a1'));
     expect(r.adapter.requests.last.method, 'PUT');
     expect(r.adapter.requests.last.path, '/animals/a1');
+  });
+
+  test('hayvan notları okunur ve eklenir', () async {
+    final r = rig(
+      (o) async => o.method == 'GET'
+          ? okEnvelope2([
+              {
+                'id': 'n1',
+                'animalId': 'a1',
+                'note': 'Gebe',
+                'authorName': 'Dr. Ayşe',
+                'createdAt': '2026-09-24T11:00:00Z',
+              },
+            ])
+          : okEnvelope({
+              'id': 'n2',
+              'animalId': 'a1',
+              'note': 'Mastitis',
+              'createdAt': '2026-09-24T12:00:00Z',
+            }),
+    );
+
+    final notes = await r.repo.animalNotes('a1');
+    expect(notes.single.authorName, 'Dr. Ayşe');
+    expect(r.adapter.requests.last.path, '/animals/a1/notes');
+
+    final added = await r.repo.addAnimalNote('a1', 'Mastitis');
+    expect(added.id, 'n2');
+    expect(added.authorName, isNull);
+    expect(r.adapter.requests.last.method, 'POST');
+    expect(r.adapter.requests.last.data, {'note': 'Mastitis'});
   });
 
   test('push jetonu silinir', () async {
