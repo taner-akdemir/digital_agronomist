@@ -147,7 +147,14 @@ class _FormState extends ConsumerState<_Form> {
     return Form(
       key: _formKey,
       child: ListView(
-        padding: const EdgeInsets.all(AppSpacing.lg),
+        // Alt pay sistem hareket çubuğu için: en alttaki düğme onun altında
+        // kalıyordu.
+        padding: EdgeInsets.fromLTRB(
+          AppSpacing.lg,
+          AppSpacing.lg,
+          AppSpacing.lg,
+          AppSpacing.lg + MediaQuery.paddingOf(context).bottom,
+        ),
         children: [
           Row(
             children: [
@@ -183,6 +190,12 @@ class _FormState extends ConsumerState<_Form> {
             ],
             selected: {_minSeverity},
             onSelectionChanged: (s) => setState(() => _minSeverity = s.first),
+            // Varsayılan tema seçimi açık maviyle çiziyordu; palet yeşil.
+            style: SegmentedButton.styleFrom(
+              selectedBackgroundColor: AppColors.lightGreenColor,
+              selectedForegroundColor: AppColors.darkGreenColor,
+              foregroundColor: AppColors.onSurfaceMuted,
+            ),
           ),
           const SizedBox(height: AppSpacing.md),
           for (final s in const ['ops', 'herd'])
