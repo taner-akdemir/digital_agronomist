@@ -188,6 +188,11 @@
     "calibrationFactor": 1.0,
     "lastSeenAt": "2026-09-21T06:12:04Z",
     "isSimulated": true,
+    "lastError": {
+      "code": "E17",
+      "description": "Akış sensörü arızası",
+      "at": "2026-09-21T06:10:30Z"
+    },
     "profile": {
       "id": "0192a1f0-00b0-7000-8000-000000000002",
       "vendor": "ORNEK-URETICI",

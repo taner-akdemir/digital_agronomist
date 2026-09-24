@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/format.dart';
 import 'package:milktrace/data/models/device.dart';
+import 'package:milktrace/data/models/device_error.dart';
 import 'package:milktrace/domain/flow_color.dart';
 import 'package:milktrace/features/devices/devices_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
@@ -183,8 +184,16 @@ class _VacuumCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final now = DateTime.now();
+    // Yakın zamanda hata bildiren sayaç da ilgilenilmeli sayılır: çevrimiçi
+    // ama arızalı bir sayaç, kapalı bir ünitenin içinde kaybolmamalı.
     final problems = node.spouts
-        .where((s) => s.device == null || s.device!.status != 'online')
+        .where(
+          (s) =>
+              s.device == null ||
+              s.device!.status != 'online' ||
+              s.device!.hasRecentError(now),
+        )
         .length;
 
     return _Card(
@@ -437,6 +446,7 @@ void _showDeviceSheet(BuildContext context, Device device) {
                         '(${Fmt.dayMonth(device.lastSeenAt!)} '
                         '${Fmt.time(device.lastSeenAt!)})',
             ),
+            _DetailRow('Son hata', _lastErrorText(device.lastError)),
             if (device.isSimulated)
               // Simülatör cihazı GÖRÜNÜR olmalı: demo verisini gerçek sanıp
               // sahada arayan olmasın (§10).
@@ -465,6 +475,15 @@ void _showDeviceSheet(BuildContext context, Device device) {
       ),
     ),
   );
+}
+
+/// Son hata satırı: "E17 · Akış sensörü arızası (3 sa önce, 24.09 14:48)".
+/// Açıklama profilin tablosundan gelir; yoksa kod ham kalır.
+String _lastErrorText(DeviceError? e) {
+  if (e == null) return 'Kayıt yok';
+  final what = e.description == null ? e.code : '${e.code} · ${e.description}';
+  return '$what (${Fmt.since(e.at)}, '
+      '${Fmt.dayMonth(e.at)} ${Fmt.time(e.at)})';
 }
 
 class _DetailRow extends StatelessWidget {
@@ -512,6 +531,13 @@ class _DeviceStatus {
   /// Cihaz yoksa nokta BOŞtur — "bilinmiyor" ile aynı şey değil.
   static _DeviceStatus of(Device? device) => switch (device?.status) {
     null => const _DeviceStatus('Sayaç takılı değil', MilkColor.grey),
+    // Çevrimiçi ama son 24 saatte hata bildirdi: SARI, kırmızı değil.
+    // Sayaç veri gönderiyor; arıza kodu ilgilenilmesi gereken bir işaret,
+    // çevrimdışı kadar acil değil (backend ADR 0044).
+    'online' when device!.hasRecentError(DateTime.now()) => const _DeviceStatus(
+      'Hata bildirdi',
+      MilkColor.yellow,
+    ),
     'online' => const _DeviceStatus('Çevrimiçi', MilkColor.green),
     'offline' => const _DeviceStatus('Çevrimdışı', MilkColor.red),
     _ => const _DeviceStatus('Bilinmiyor', MilkColor.grey),
@@ -526,6 +552,12 @@ class _DeviceStatus {
   /// Sorunlu durumlarda etiket YAZIYLA da durur: durumu yalnızca renge
   /// bırakmak, renk körü bir kullanıcı için satırı okunamaz yapardı.
   String detail(Device? device) {
+    final err = device?.lastError;
+    if (device?.status == 'online' &&
+        err != null &&
+        device!.hasRecentError(DateTime.now())) {
+      return 'Hata ${err.code} · ${Fmt.sinceShort(err.at)}';
+    }
     final seen = device?.lastSeenAt;
     if (seen == null) return label;
     if (device?.status == 'online') return Fmt.since(seen);

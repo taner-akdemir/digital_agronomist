@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:milktrace/data/models/device_error.dart';
 import 'package:milktrace/data/models/device_profile.dart';
 
 part 'device.freezed.dart';
@@ -28,7 +29,22 @@ abstract class Device with _$Device {
     @Default(1.0) double calibrationFactor,
     DateTime? lastSeenAt,
     @Default(false) bool isSimulated,
+
+    /// Son hata (backend ADR 0044); hiç hata bildirmemiş sayaçta null.
+    DeviceError? lastError,
   }) = _Device;
+
+  const Device._();
+
+  /// "Yakın zamanda" hata: son 24 saat. Sayaç hatanın geçtiğini
+  /// bildirmiyor; daha eski bir kod hâlâ sürüyor da olabilir, çoktan geçmiş
+  /// de — o yüzden eskisi detayda durur ama satırı ve üniteyi işaretlemez.
+  static const recentErrorWindow = Duration(hours: 24);
+
+  bool hasRecentError(DateTime now) {
+    final e = lastError;
+    return e != null && now.difference(e.at) < recentErrorWindow;
+  }
 
   factory Device.fromJson(Map<String, dynamic> json) => _$DeviceFromJson(json);
 }

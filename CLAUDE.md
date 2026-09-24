@@ -209,6 +209,12 @@ Dört durum ayrı ayrı çizilir: çevrimiçi, çevrimdışı, **sayaç takılı
 **noktaya takılı olmayan sayaç** (dolapta bekleyen yedek — arıza değil). Durum yalnızca
 renge bırakılmaz, sorunlu satırda etiket yazıyla da durur.
 
+**Son hata** (`Device.lastError`, backend ADR 0044): sayacın bildirdiği son hata kodu,
+profilin tablosundan açıklaması ve anı; sağım sırasında olsun olmasın. Detay sayfasında
+"Son hata" satırı. Son 24 saatte hata bildiren çevrimiçi sayaç SARI "Hata bildirdi"
+olur, satırda "Hata E17 · 3 dk" yazar ve ünitesi açık gelir; daha eski hata yalnızca
+detayda durur — sayaç hatanın geçtiğini bildirmiyor.
+
 Burada çevrimdışı **kırmızıdır**, §6.2'deki gri DEĞİL: §6.2 canlı tabloda AKIŞIN olmamasını
 anlatıyor, bu ekran cihazın kendisini. Çevrimdışı sayaç müdahale gerektirir.
 

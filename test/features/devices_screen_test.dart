@@ -126,6 +126,23 @@ void main() {
     expect(find.text('Simülatör cihazı'), findsOneWidget);
   });
 
+  // Sayacın son hatası, açıklamasıyla (backend ADR 0043/0044). Saat
+  // Europe/Istanbul: 06:10Z → 09:10.
+  testWidgets('sayaç ayrıntısı son hatayı açıklamasıyla gösterir', (
+    tester,
+  ) async {
+    await pumpDevices(tester);
+    await tester.tap(find.textContaining('MT-B1-000011'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Son hata'), findsOneWidget);
+    expect(
+      find.textContaining('E17 · Akış sensörü arızası ('),
+      findsOneWidget,
+    );
+    expect(find.textContaining('09:10)'), findsOneWidget);
+  });
+
   // §17 Faz 5 demosu: native MQTT + üretici MQTT + Modbus sayaçları AYNI
   // ekranda. Protokol dağılımının sayıldığını doğrular.
   test('kaynaklar PROFİLE göre gruplanır, protokole göre değil', () async {

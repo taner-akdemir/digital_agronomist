@@ -246,4 +246,24 @@ void main() {
     // Tanınmayan kod olduğu gibi: boş bırakmak protokolsüz izlenimi verirdi.
     expect(label('bacnet-ip'), 'bacnet-ip');
   });
+
+  // Son hata (backend ADR 0044): açıklamasız kod da, alan hiç yoksa null da
+  // okunur; "yakın zamanda" 24 saat.
+  test('sayacın son hatası okunur', () {
+    final d = Device.fromJson({
+      'id': 'd1',
+      'serialNo': 'S1',
+      'lastError': {'code': 'E42', 'at': '2026-09-24T11:48:02Z'},
+    });
+    expect(d.lastError?.code, 'E42');
+    expect(d.lastError?.description, isNull);
+
+    final at = DateTime.utc(2026, 9, 24, 11, 48, 2);
+    expect(d.hasRecentError(at.add(const Duration(hours: 23))), isTrue);
+    expect(d.hasRecentError(at.add(const Duration(hours: 25))), isFalse);
+    expect(
+      Device.fromJson({'id': 'd2', 'serialNo': 'S2'}).hasRecentError(at),
+      isFalse,
+    );
+  });
 }
