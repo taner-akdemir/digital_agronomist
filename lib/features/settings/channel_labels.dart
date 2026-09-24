@@ -118,3 +118,6 @@ String? fieldHint(String name) => switch (name) {
 
 /// Çok satırlı alan: PEM anahtarı.
 bool fieldMultiline(String name) => name == 'private_key';
+
+/// Adres alanı: sır olsa da açık yazılır, URL klavyesiyle.
+bool fieldUrl(String name) => name == 'url' || name == 'webhook_url';

@@ -218,4 +218,22 @@ void main() {
     final after = (await tester.runAsync(repo.notificationChannels))!.single;
     expect(after.secrets['password'], isTrue);
   });
+
+  // Adres sırrı parola gibi gizlenirse yapıştırılan uzun URL doğrulanamaz;
+  // gerçek sırlar (imza, jeton) gizli kalmalı.
+  testWidgets('webhook adresi açık, imza sırrı gizli yazılır', (tester) async {
+    await pumpApp(
+      tester,
+      initial: '/settings/notifications/new?kind=webhook&provider=webhook',
+    );
+    TextField field(String label) => tester.widget<TextField>(
+      find.descendant(
+        of: find.widgetWithText(TextFormField, label).first,
+        matching: find.byType(TextField),
+      ),
+    );
+    expect(field('Adres (https) *').obscureText, isFalse);
+    expect(field('Adres (https) *').keyboardType, TextInputType.url);
+    expect(field('İmza sırrı').obscureText, isTrue);
+  });
 }

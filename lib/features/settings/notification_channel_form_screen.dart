@@ -307,7 +307,10 @@ class _FormState extends ConsumerState<_Form> {
           ? 'Kayıtlı. Değiştirmek için yeni değeri yazın; boş bırakılırsa '
                 'korunur.'
           : fieldHint(f.name),
-      obscure: f.secret && !fieldMultiline(f.name),
+      // Adres sırrı (Slack/Teams/webhook URL'si) gizlenmez: yapıştırılan
+      // uzun adres görülmeden doğrulanamaz. Sunucu sırrı zaten geri vermez.
+      obscure: f.secret && !fieldMultiline(f.name) && !fieldUrl(f.name),
+      keyboard: fieldUrl(f.name) ? TextInputType.url : null,
       minLines: fieldMultiline(f.name) ? 3 : 1,
       maxLines: fieldMultiline(f.name) ? 6 : 1,
       validator: (v) {
