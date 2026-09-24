@@ -19,6 +19,7 @@ import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_update.dart';
 import 'package:milktrace/data/models/thresholds.dart';
+import 'package:milktrace/data/models/unmatched_tag_row.dart';
 import 'package:milktrace/data/models/vacuum.dart';
 import 'package:milktrace/data/repositories/milktrace_repository.dart';
 import 'package:milktrace/data/repositories/mock_lactation.dart';
@@ -779,6 +780,33 @@ class MockRepository implements MilkTraceRepository {
     _assignments[spoutId] = animalId;
     _unassigned.remove(spoutId);
   });
+
+  /// Mock'un tanınmayan küpeleri: canlı demodaki 8. noktanın küpesi
+  /// (live_session.json) — iki ekran aynı hikâyeyi anlatsın.
+  final Map<String, UnmatchedTagRow> _unmatched = {
+    '982000123456789': UnmatchedTagRow(
+      rfid: '982000123456789',
+      lastSessionId: '0192a1f0-0080-7000-8000-000000000001',
+      lastSpoutId: '0192a1f0-0050-7000-8000-000000000008',
+      firstSeenAt: DateTime.utc(2026, 9, 20, 6, 4),
+      lastSeenAt: DateTime.utc(2026, 9, 21, 6, 11, 48),
+      readCount: 3,
+    ),
+  };
+
+  @override
+  Future<List<UnmatchedTagRow>> unmatchedTags() => _delayed(() async {
+    // Backend gibi HESAPLANIR: bir hayvanın kaydına girilen küpe düşer.
+    final known = {for (final a in await animals()) ?a.rfid};
+    return [
+      for (final t in _unmatched.values)
+        if (!known.contains(t.rfid)) t,
+    ];
+  });
+
+  @override
+  Future<void> dismissUnmatchedTag(String rfid) =>
+      _delayed(() async => _unmatched.remove(rfid));
 
   @override
   Future<void> unassignAnimal({

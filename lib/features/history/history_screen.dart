@@ -77,6 +77,7 @@ class _AnimalsTab extends ConsumerWidget {
               ),
             ),
           ),
+        if (isOwner) const _UnmatchedTagsBanner(),
         const _Filters(),
         _ActiveFilter(count: animals.value?.length ?? 0),
         Expanded(
@@ -100,6 +101,43 @@ class _AnimalsTab extends ConsumerWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// Tanınmayan küpe varsa işletme sahibine bant (backend ADR 0056). Yoksa
+/// hiç yer kaplamaz: her gün boş bir "0 küpe" satırı gürültüdür.
+class _UnmatchedTagsBanner extends ConsumerWidget {
+  const _UnmatchedTagsBanner();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final n = ref.watch(unmatchedTagsProvider).value?.length ?? 0;
+    if (n == 0) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.lg,
+        AppSpacing.sm,
+        AppSpacing.lg,
+        0,
+      ),
+      child: Material(
+        color: AppColors.lightAmberColor,
+        borderRadius: AppRadius.mdAll,
+        child: ListTile(
+          leading: const Icon(Icons.nfc, color: AppColors.darkAmberColor),
+          title: Text(
+            '$n tanınmayan küpe',
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              color: AppColors.darkAmberColor,
+            ),
+          ),
+          subtitle: const Text('Sağımda okundu; hayvanına atayın'),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => context.push('/animals/unmatched-tags'),
+        ),
+      ),
     );
   }
 }

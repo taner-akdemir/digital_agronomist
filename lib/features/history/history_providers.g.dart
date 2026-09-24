@@ -224,6 +224,104 @@ final class AnimalNotesFamily extends $Family
   String toString() => r'animalNotesProvider';
 }
 
+/// Hiçbir hayvana kayıtlı olmayan okunmuş küpeler (backend ADR 0056).
+/// Yalnızca işletme sahibinin ekranında izlenir; backend başkasına 403.
+
+@ProviderFor(unmatchedTags)
+final unmatchedTagsProvider = UnmatchedTagsProvider._();
+
+/// Hiçbir hayvana kayıtlı olmayan okunmuş küpeler (backend ADR 0056).
+/// Yalnızca işletme sahibinin ekranında izlenir; backend başkasına 403.
+
+final class UnmatchedTagsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<UnmatchedTagRow>>,
+          List<UnmatchedTagRow>,
+          FutureOr<List<UnmatchedTagRow>>
+        >
+    with
+        $FutureModifier<List<UnmatchedTagRow>>,
+        $FutureProvider<List<UnmatchedTagRow>> {
+  /// Hiçbir hayvana kayıtlı olmayan okunmuş küpeler (backend ADR 0056).
+  /// Yalnızca işletme sahibinin ekranında izlenir; backend başkasına 403.
+  UnmatchedTagsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'unmatchedTagsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$unmatchedTagsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<UnmatchedTagRow>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<UnmatchedTagRow>> create(Ref ref) {
+    return unmatchedTags(ref);
+  }
+}
+
+String _$unmatchedTagsHash() => r'f66c2b0a4ac1268641e57625b6ab75309d2db001';
+
+/// Nokta kimliği → "A-1 · Nokta 7". Tanınmayan küpenin nerede okunduğunu
+/// kimlikle değil sağımcının bildiği adla göstermek için.
+
+@ProviderFor(spoutLabels)
+final spoutLabelsProvider = SpoutLabelsProvider._();
+
+/// Nokta kimliği → "A-1 · Nokta 7". Tanınmayan küpenin nerede okunduğunu
+/// kimlikle değil sağımcının bildiği adla göstermek için.
+
+final class SpoutLabelsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Map<String, String>>,
+          Map<String, String>,
+          FutureOr<Map<String, String>>
+        >
+    with
+        $FutureModifier<Map<String, String>>,
+        $FutureProvider<Map<String, String>> {
+  /// Nokta kimliği → "A-1 · Nokta 7". Tanınmayan küpenin nerede okunduğunu
+  /// kimlikle değil sağımcının bildiği adla göstermek için.
+  SpoutLabelsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'spoutLabelsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$spoutLabelsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<Map<String, String>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Map<String, String>> create(Ref ref) {
+    return spoutLabels(ref);
+  }
+}
+
+String _$spoutLabelsHash() => r'70c3cdc158b7863c47c4680ccd8c0ac75a22543b';
+
 /// Bir hayvanın trendi ve sınıfı.
 
 @ProviderFor(animalTrend)

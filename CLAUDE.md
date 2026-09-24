@@ -170,6 +170,11 @@ Kart amber "Tanınmayan küpe" ve mesajı gösterir; hayvan varken mesaj küpe s
 geçer (kart yüksekliği sabit, testle kilitli). Seçici başta okunan küpeyi ve ne yapılacağını
 yazar. Yeni sağım açılınca backend siler; `reason` string'dir, mesaj olduğu gibi gösterilir.
 
+**Tanınmayan küpe listesi** (`/animals/unmatched-tags`, backend ADR 0056): Geçmiş → Hayvanlar'da
+işletme sahibine "N tanınmayan küpe" bandı (boşken yok). Küpe "Hayvana ata" ile mevcut
+`saveAnimal` (tam kayıt PUT) üzerinden hayvana yazılır — ayrı uç yok; atanınca backend
+listeden düşürür. "Yok say" → `DELETE /unmatched-tags/{rfid}`. Otomatik öğrenme YOK.
+
 **Eşleştirme seçicisi** (`showAnimalPicker` → `PickAnimal` / `ClearAnimal`, backend ADR 0053):
 noktada hayvan varken "Eşleştirmeyi kaldır" (`DELETE …/spouts/{spoutId}/animal`) — açık sağım
 SİLİNİR, ölçülen süt kimseye yazılmaz; onay penceresi miktarı söyler. Karışık sürüde tür

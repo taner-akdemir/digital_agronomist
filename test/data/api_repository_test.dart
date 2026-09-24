@@ -774,6 +774,32 @@ void main() {
     });
   });
 
+  test('tanınmayan küpeler okunur ve yok sayılır', () async {
+    final r = rig(
+      (o) async => o.method == 'GET'
+          ? okEnvelope2([
+              {
+                'rfid': '982000123456789',
+                'lastSpoutId': _spout1,
+                'firstSeenAt': '2026-09-20T06:04:00Z',
+                'lastSeenAt': '2026-09-21T06:11:48Z',
+                'readCount': 3,
+              },
+            ])
+          : okEnvelope({}),
+    );
+
+    final list = await r.repo.unmatchedTags();
+    expect(list.single.rfid, '982000123456789');
+    expect(list.single.readCount, 3);
+    expect(list.single.lastSeenAt, DateTime.utc(2026, 9, 21, 6, 11, 48));
+
+    await r.repo.dismissUnmatchedTag('982 000/1');
+    final del = r.adapter.requests.last;
+    expect(del.method, 'DELETE');
+    expect(del.uri.path, '/api/v1/unmatched-tags/982%20000%2F1');
+  });
+
   test('eşleştirme kaldırılır', () async {
     final r = rig((o) async => okEnvelope({}));
 

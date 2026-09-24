@@ -3,6 +3,7 @@ import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/milking_session.dart';
+import 'package:milktrace/data/models/unmatched_tag_row.dart';
 import 'package:milktrace/domain/yield_class.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
@@ -24,6 +25,24 @@ Future<List<AnimalMilking>> animalHistory(Ref ref, String animalId) =>
 @riverpod
 Future<List<AnimalNote>> animalNotes(Ref ref, String animalId) =>
     ref.watch(repositoryProvider).animalNotes(animalId);
+
+/// Hiçbir hayvana kayıtlı olmayan okunmuş küpeler (backend ADR 0056).
+/// Yalnızca işletme sahibinin ekranında izlenir; backend başkasına 403.
+@riverpod
+Future<List<UnmatchedTagRow>> unmatchedTags(Ref ref) =>
+    ref.watch(repositoryProvider).unmatchedTags();
+
+/// Nokta kimliği → "A-1 · Nokta 7". Tanınmayan küpenin nerede okunduğunu
+/// kimlikle değil sağımcının bildiği adla göstermek için.
+@riverpod
+Future<Map<String, String>> spoutLabels(Ref ref) async {
+  final repo = ref.watch(repositoryProvider);
+  final vacuums = {for (final v in await repo.vacuums()) v.id: v.name};
+  return {
+    for (final s in await repo.spouts())
+      s.id: '${vacuums[s.vacuumId] ?? 'Ünite'} · Nokta ${s.positionNo}',
+  };
+}
 
 /// Bir hayvanın trendi ve sınıfı.
 @riverpod

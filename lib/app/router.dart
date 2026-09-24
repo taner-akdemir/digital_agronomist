@@ -8,6 +8,7 @@ import 'package:milktrace/features/devices/devices_screen.dart';
 import 'package:milktrace/features/history/animal_detail_screen.dart';
 import 'package:milktrace/features/history/animal_form_screen.dart';
 import 'package:milktrace/features/history/history_screen.dart';
+import 'package:milktrace/features/history/unmatched_tags_screen.dart';
 import 'package:milktrace/features/live/live_board_screen.dart';
 import 'package:milktrace/features/settings/notification_channel_form_screen.dart';
 import 'package:milktrace/features/settings/notification_channels_screen.dart';
@@ -93,6 +94,11 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/animals/new',
         builder: (_, _) => const AnimalFormScreen(),
+      ),
+      // Tanınmayan küpeler (backend ADR 0056): yalnızca işletme sahibi.
+      GoRoute(
+        path: '/animals/unmatched-tags',
+        builder: (_, _) => const UnmatchedTagsScreen(),
       ),
       GoRoute(
         path: '/animals/:id/edit',

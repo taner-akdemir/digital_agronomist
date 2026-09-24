@@ -18,6 +18,7 @@ import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_update.dart';
 import 'package:milktrace/data/models/thresholds.dart';
+import 'package:milktrace/data/models/unmatched_tag_row.dart';
 import 'package:milktrace/data/models/vacuum.dart';
 import 'package:milktrace/data/repositories/milktrace_repository.dart';
 import 'package:web_socket_channel/io.dart';
@@ -452,6 +453,16 @@ class ApiRepository implements MilkTraceRepository {
     '/sessions/$sessionId/spouts/$spoutId/animal',
     data: {'animalId': animalId},
   );
+
+  @override
+  Future<List<UnmatchedTagRow>> unmatchedTags() async => _listOf(
+    await _dio.get<dynamic>('/unmatched-tags'),
+    UnmatchedTagRow.fromJson,
+  );
+
+  @override
+  Future<void> dismissUnmatchedTag(String rfid) =>
+      _dio.delete<dynamic>('/unmatched-tags/${Uri.encodeComponent(rfid)}');
 
   @override
   Future<void> unassignAnimal({

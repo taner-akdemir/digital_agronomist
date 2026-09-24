@@ -13,6 +13,7 @@ import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_update.dart';
 import 'package:milktrace/data/models/thresholds.dart';
+import 'package:milktrace/data/models/unmatched_tag_row.dart';
 import 'package:milktrace/data/models/vacuum.dart';
 
 /// Uygulamanın veri kaynağı sözleşmesi (§15.2).
@@ -34,6 +35,15 @@ abstract interface class MilkTraceRepository {
 
   /// Hayvanın notları, en yeni üstte (GET /animals/{id}/notes).
   Future<List<AnimalNote>> animalNotes(String animalId);
+
+  /// Hiçbir hayvana kayıtlı olmayan okunmuş küpeler (GET /unmatched-tags,
+  /// backend ADR 0056). Yalnızca işletme sahibi. Küpe hayvana [saveAnimal]
+  /// ile atanır; atanınca listeden düşer.
+  Future<List<UnmatchedTagRow>> unmatchedTags();
+
+  /// Küpeyi yok sayar (DELETE /unmatched-tags/{rfid}): komşu çiftliğin
+  /// hayvanı ya da bozuk okuma. Yeniden okunsa da listeye dönmez.
+  Future<void> dismissUnmatchedTag(String rfid);
 
   /// Not ekler (POST /animals/{id}/notes). Bütün işletme rolleri yazar;
   /// yazar oturumdaki kullanıcıdır.
