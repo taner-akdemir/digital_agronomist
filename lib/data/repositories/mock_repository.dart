@@ -162,8 +162,28 @@ class MockRepository implements MilkTraceRepository {
   }
 
   @override
-  Future<List<Animal>> animals() =>
-      _delayed(() => _list('animals.json', Animal.fromJson));
+  Future<List<Animal>> animals() => _delayed(() async {
+    final base = await _list('animals.json', Animal.fromJson);
+    // Kaydedilenler asset'in ÜSTÜNE: düzenlenen yerini alır, yeni eklenir.
+    final out = [
+      for (final a in base) _savedAnimals[a.id] ?? a,
+      for (final a in _savedAnimals.values)
+        if (!base.any((b) => b.id == a.id)) a,
+    ];
+    return out;
+  });
+
+  /// Mock'ta kaydedilen hayvanlar (id → hayvan).
+  final Map<String, Animal> _savedAnimals = {};
+
+  @override
+  Future<Animal> saveAnimal(Animal a) => _delayed(() async {
+    final saved = a.id.isEmpty
+        ? a.copyWith(id: 'mock-animal-${_savedAnimals.length + 1}')
+        : a;
+    _savedAnimals[saved.id] = saved;
+    return saved;
+  });
 
   @override
   Future<LiveSession> liveSession({required String hallId}) => _delayed(

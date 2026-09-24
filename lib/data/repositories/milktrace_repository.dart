@@ -24,6 +24,12 @@ import 'package:milktrace/data/models/vacuum.dart';
 /// bir bayrak değişimidir, yeniden yazım değil.
 abstract interface class MilkTraceRepository {
   Future<List<Species>> species();
+
+  /// Hayvanı kaydeder: kimlik boşsa ekler (POST /animals), doluysa TAM
+  /// kaydı yazar (PUT /animals/{id}) — gönderilmeyen alan silinir, bu yüzden
+  /// form her zaman bütün alanları gönderir. Yalnızca işletme sahibi.
+  /// Verim sınıfı GÖNDERİLMEZ: gece hesabının alanı.
+  Future<Animal> saveAnimal(Animal animal);
   Future<List<Thresholds>> thresholds();
 
   /// Bir türün eşiklerini günceller (§8.5 PUT /species/thresholds, owner).

@@ -10,6 +10,7 @@ import 'package:milktrace/domain/yield_class.dart';
 import 'package:milktrace/features/history/history_providers.dart';
 import 'package:milktrace/features/history/widgets/yield_chart.dart';
 import 'package:milktrace/features/history/widgets/yield_class_badge.dart';
+import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
 import 'package:milktrace/widgets/error_view.dart';
@@ -32,6 +33,7 @@ class AnimalDetailScreen extends ConsumerWidget {
     return Column(
       children: [
         _BackBar(
+          animalId: animalId,
           title:
               animals.value
                   ?.where((a) => a.id == animalId)
@@ -59,13 +61,16 @@ class AnimalDetailScreen extends ConsumerWidget {
   }
 }
 
-class _BackBar extends StatelessWidget {
-  const _BackBar({required this.title});
+class _BackBar extends ConsumerWidget {
+  const _BackBar({required this.title, required this.animalId});
 
   final String title;
+  final String animalId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Düzenleme YALNIZCA işletme sahibine (§5); backend de 403 döner.
+    final isOwner = ref.watch(authProvider).user?.role == 'tenant_owner';
     return Padding(
       padding: const EdgeInsets.fromLTRB(
         AppSpacing.sm,
@@ -92,6 +97,12 @@ class _BackBar extends StatelessWidget {
               ),
             ),
           ),
+          if (isOwner)
+            IconButton(
+              tooltip: 'Düzenle',
+              onPressed: () => context.push('/animals/$animalId/edit'),
+              icon: const Icon(Icons.edit_outlined),
+            ),
         ],
       ),
     );

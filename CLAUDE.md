@@ -177,6 +177,14 @@ eşleştirme listesine çıkar ve panodan açılan sınıf süzgecine girer; sa�
 sınıf rozeti yerine durumu ("Kuruda", "Satıldı") görünür ve listenin en altında durur.
 Backend de kurudaki/satılmış hayvanın eşleştirmesini reddeder.
 
+**Hayvan ekleme/düzenleme** (`/animals/new`, `/animals/:id/edit`; kabuğun dışında tam
+ekran form): küpe (zorunlu, işletmede tekil), tür, ad, ırk, RFID, doğum ve son buzağılama
+tarihi (gelecek seçilemez), laktasyon sırası, durum. Giriş Geçmiş → Hayvanlar'daki "Hayvan
+ekle" ve hayvan detayındaki düzenle simgesi; ikisi de YALNIZCA işletme sahibine (backend de
+403). `PUT /animals/{id}` TAM kayıttır — form her zaman bütün alanları gönderir, boş alan
+silinir. Verim sınıfı GÖNDERİLMEZ (gece hesabının alanı). Tarihler gün olarak, UTC gece
+yarısı.
+
 Mock modda geçmiş **asset değil, üretilmiştir**: `MockLactation` §10'daki Wood laktasyon
 eğrisiyle deterministik seri üretir. 30 hayvan × 90 gün × 2 sağım elle tutulabilecek bir
 JSON değil. Bugünkü seviye hayvanın SINIFINA sabitlenir ki rozet ile grafik çelişmesin.

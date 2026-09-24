@@ -6,6 +6,7 @@ import 'package:milktrace/features/auth/login_screen.dart';
 import 'package:milktrace/features/dashboard/dashboard_screen.dart';
 import 'package:milktrace/features/devices/devices_screen.dart';
 import 'package:milktrace/features/history/animal_detail_screen.dart';
+import 'package:milktrace/features/history/animal_form_screen.dart';
 import 'package:milktrace/features/history/history_screen.dart';
 import 'package:milktrace/features/live/live_board_screen.dart';
 import 'package:milktrace/features/settings/notification_channel_form_screen.dart';
@@ -86,6 +87,17 @@ GoRouter router(Ref ref) {
             ),
           ),
         ],
+      ),
+      // Hayvan ekleme/düzenleme: kabuğun dışında, tam ekran form (kanal
+      // formuyla aynı). Yalnızca işletme sahibi açar.
+      GoRoute(
+        path: '/animals/new',
+        builder: (_, _) => const AnimalFormScreen(),
+      ),
+      GoRoute(
+        path: '/animals/:id/edit',
+        builder: (_, state) =>
+            AnimalFormScreen(animalId: state.pathParameters['id']),
       ),
       StatefulShellRoute.indexedStack(
         builder: (_, _, shell) => ScaffoldWithNavBar(navigationShell: shell),

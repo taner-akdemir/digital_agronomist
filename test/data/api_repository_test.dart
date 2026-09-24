@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/thresholds.dart';
 import 'package:milktrace/data/repositories/api_repository.dart';
 import 'package:milktrace/domain/flow_color.dart';
@@ -582,6 +583,46 @@ void main() {
     expect(await r.repo.sendTestPush(), 2);
     expect(r.adapter.requests.single.path, '/me/push-tokens/test');
     expect(r.adapter.requests.single.method, 'POST');
+  });
+
+  // Hayvan formu: ekleme POST, düzenleme PUT (tam kayıt). Gövdede kimlik ve
+  // verim sınıfı YOK; tarihler gün olarak; boş alanlar null (backend ADR 0049).
+  test('hayvan eklenir ve düzenlenir', () async {
+    final r = rig(
+      (o) async => okEnvelope({
+        'id': 'a1',
+        'speciesId': 'sp1',
+        'earTag': 'TR1',
+        'lactationNo': 2,
+        'status': 'dry',
+      }),
+    );
+
+    final draft = Animal(
+      id: '',
+      speciesId: 'sp1',
+      earTag: 'TR1',
+      birthDate: DateTime(2021, 3, 5, 14, 30),
+      lactationNo: 2,
+      status: 'dry',
+      yieldClass: YieldClass.high,
+    );
+    final saved = await r.repo.saveAnimal(draft);
+    expect(saved.id, 'a1');
+
+    final post = r.adapter.requests.single;
+    expect(post.method, 'POST');
+    expect(post.path, '/animals');
+    final body = post.data as Map<String, dynamic>;
+    expect(body.containsKey('id'), isFalse);
+    expect(body.containsKey('yieldClass'), isFalse, reason: 'gece hesabının alanı');
+    expect(body['birthDate'], '2021-03-05T00:00:00.000Z');
+    expect(body['rfid'], isNull);
+    expect(body['status'], 'dry');
+
+    await r.repo.saveAnimal(draft.copyWith(id: 'a1'));
+    expect(r.adapter.requests.last.method, 'PUT');
+    expect(r.adapter.requests.last.path, '/animals/a1');
   });
 
   test('push jetonu silinir', () async {

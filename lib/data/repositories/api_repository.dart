@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
@@ -119,6 +120,34 @@ class ApiRepository implements MilkTraceRepository {
   @override
   Future<List<Animal>> animals() async =>
       _listOf(await _dio.get<dynamic>('/animals'), Animal.fromJson);
+
+  @override
+  Future<Animal> saveAnimal(Animal a) async {
+    final body = animalBody(a);
+    final r = a.id.isEmpty
+        ? await _dio.post<dynamic>('/animals', data: body)
+        : await _dio.put<dynamic>('/animals/${a.id}', data: body);
+    return Animal.fromJson(_dataOf(r));
+  }
+
+  /// Formun gövdesi: kimlik ve verim sınıfı YOK (sınıfı gece hesabı yazar;
+  /// formun eski bir değerle ezmesi istenmez). Tarihler gün olarak, UTC
+  /// gece yarısı: saat dilimi kayması doğum gününü bir gün geri atmasın.
+  @visibleForTesting
+  static Map<String, dynamic> animalBody(Animal a) => {
+    'speciesId': a.speciesId,
+    'earTag': a.earTag,
+    'rfid': a.rfid,
+    'name': a.name,
+    'breed': a.breed,
+    'birthDate': _day(a.birthDate),
+    'lastCalvingDate': _day(a.lastCalvingDate),
+    'lactationNo': a.lactationNo,
+    'status': a.status,
+  };
+
+  static String? _day(DateTime? d) =>
+      d == null ? null : DateTime.utc(d.year, d.month, d.day).toIso8601String();
 
   @override
   Future<LiveSession> liveSession({required String hallId}) async {

@@ -10,6 +10,7 @@ import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/domain/yield_class.dart';
 import 'package:milktrace/features/history/history_providers.dart';
 import 'package:milktrace/features/history/widgets/yield_class_badge.dart';
+import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
 
@@ -50,9 +51,31 @@ class _AnimalsTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final animals = ref.watch(filteredAnimalsProvider);
+    // Hayvan ekleme YALNIZCA işletme sahibine (§5); backend de 403 döner.
+    final isOwner = ref.watch(authProvider).user?.role == 'tenant_owner';
 
     return Column(
       children: [
+        if (isOwner)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.lg,
+              AppSpacing.sm,
+              AppSpacing.lg,
+              0,
+            ),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: TextButton.icon(
+                onPressed: () => context.push('/animals/new'),
+                icon: const Icon(Icons.add),
+                label: const Text('Hayvan ekle'),
+                style: TextButton.styleFrom(
+                  foregroundColor: AppColors.darkGreenColor,
+                ),
+              ),
+            ),
+          ),
         const _Filters(),
         _ActiveFilter(count: animals.value?.length ?? 0),
         Expanded(
