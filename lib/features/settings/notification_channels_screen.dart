@@ -227,6 +227,7 @@ class _ChannelCard extends ConsumerWidget {
                       c.enabled
                           ? '${severityLabel(c.minSeverity)} ve üstü · '
                                 '${c.sources.map(sourceLabel).join(', ')}'
+                                '${c.effectiveDailyLimit > 0 ? ' · günde en çok ${c.effectiveDailyLimit}' : ''}'
                           : 'Kapalı',
                       style: TextStyle(
                         fontSize: 11,
@@ -273,6 +274,9 @@ class _ChannelCard extends ConsumerWidget {
               sendResolved: c.sendResolved,
               enabled: on,
               sources: c.sources,
+              // Gövde tam: gönderilmezse 0 gider ve ayarlanmış sınır
+              // varsayılana dönerdi.
+              dailyLimit: c.dailyLimit ?? 0,
             ),
           );
     } catch (e) {

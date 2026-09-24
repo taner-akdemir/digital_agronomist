@@ -21,7 +21,9 @@ mixin _$NotificationChannel {
  List<String> get recipients;/// info | warning | critical: bu kanala gidecek en düşük önem.
  String get minSeverity; bool get sendResolved; bool get enabled;/// ops (sistem alarmları) | summary (sağım özeti) | herd (her sürü
 /// uyarısı ayrı)
- List<String> get sources; DateTime? get createdAt; DateTime? get updatedAt;
+ List<String> get sources;/// Günde en çok kaç bildirim; null ise türün varsayılanı.
+ int? get dailyLimit;/// Uygulanan sınır (ayarlı değer ya da varsayılan); 0 sınırsız.
+ int get effectiveDailyLimit; DateTime? get createdAt; DateTime? get updatedAt;
 /// Create a copy of NotificationChannel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -34,16 +36,16 @@ $NotificationChannelCopyWith<NotificationChannel> get copyWith => _$Notification
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationChannel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.tenantId, tenantId) || other.tenantId == tenantId)&&const DeepCollectionEquality().equals(other.config, config)&&const DeepCollectionEquality().equals(other.secrets, secrets)&&const DeepCollectionEquality().equals(other.recipients, recipients)&&(identical(other.minSeverity, minSeverity) || other.minSeverity == minSeverity)&&(identical(other.sendResolved, sendResolved) || other.sendResolved == sendResolved)&&(identical(other.enabled, enabled) || other.enabled == enabled)&&const DeepCollectionEquality().equals(other.sources, sources)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationChannel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.tenantId, tenantId) || other.tenantId == tenantId)&&const DeepCollectionEquality().equals(other.config, config)&&const DeepCollectionEquality().equals(other.secrets, secrets)&&const DeepCollectionEquality().equals(other.recipients, recipients)&&(identical(other.minSeverity, minSeverity) || other.minSeverity == minSeverity)&&(identical(other.sendResolved, sendResolved) || other.sendResolved == sendResolved)&&(identical(other.enabled, enabled) || other.enabled == enabled)&&const DeepCollectionEquality().equals(other.sources, sources)&&(identical(other.dailyLimit, dailyLimit) || other.dailyLimit == dailyLimit)&&(identical(other.effectiveDailyLimit, effectiveDailyLimit) || other.effectiveDailyLimit == effectiveDailyLimit)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,kind,provider,tenantId,const DeepCollectionEquality().hash(config),const DeepCollectionEquality().hash(secrets),const DeepCollectionEquality().hash(recipients),minSeverity,sendResolved,enabled,const DeepCollectionEquality().hash(sources),createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,name,kind,provider,tenantId,const DeepCollectionEquality().hash(config),const DeepCollectionEquality().hash(secrets),const DeepCollectionEquality().hash(recipients),minSeverity,sendResolved,enabled,const DeepCollectionEquality().hash(sources),dailyLimit,effectiveDailyLimit,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'NotificationChannel(id: $id, name: $name, kind: $kind, provider: $provider, tenantId: $tenantId, config: $config, secrets: $secrets, recipients: $recipients, minSeverity: $minSeverity, sendResolved: $sendResolved, enabled: $enabled, sources: $sources, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'NotificationChannel(id: $id, name: $name, kind: $kind, provider: $provider, tenantId: $tenantId, config: $config, secrets: $secrets, recipients: $recipients, minSeverity: $minSeverity, sendResolved: $sendResolved, enabled: $enabled, sources: $sources, dailyLimit: $dailyLimit, effectiveDailyLimit: $effectiveDailyLimit, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -54,7 +56,7 @@ abstract mixin class $NotificationChannelCopyWith<$Res>  {
   factory $NotificationChannelCopyWith(NotificationChannel value, $Res Function(NotificationChannel) _then) = _$NotificationChannelCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String kind, String provider, String? tenantId, Map<String, String> config, Map<String, bool> secrets, List<String> recipients, String minSeverity, bool sendResolved, bool enabled, List<String> sources, DateTime? createdAt, DateTime? updatedAt
+ String id, String name, String kind, String provider, String? tenantId, Map<String, String> config, Map<String, bool> secrets, List<String> recipients, String minSeverity, bool sendResolved, bool enabled, List<String> sources, int? dailyLimit, int effectiveDailyLimit, DateTime? createdAt, DateTime? updatedAt
 });
 
 
@@ -71,7 +73,7 @@ class _$NotificationChannelCopyWithImpl<$Res>
 
 /// Create a copy of NotificationChannel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? kind = null,Object? provider = null,Object? tenantId = freezed,Object? config = null,Object? secrets = null,Object? recipients = null,Object? minSeverity = null,Object? sendResolved = null,Object? enabled = null,Object? sources = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? kind = null,Object? provider = null,Object? tenantId = freezed,Object? config = null,Object? secrets = null,Object? recipients = null,Object? minSeverity = null,Object? sendResolved = null,Object? enabled = null,Object? sources = null,Object? dailyLimit = freezed,Object? effectiveDailyLimit = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -85,7 +87,9 @@ as List<String>,minSeverity: null == minSeverity ? _self.minSeverity : minSeveri
 as String,sendResolved: null == sendResolved ? _self.sendResolved : sendResolved // ignore: cast_nullable_to_non_nullable
 as bool,enabled: null == enabled ? _self.enabled : enabled // ignore: cast_nullable_to_non_nullable
 as bool,sources: null == sources ? _self.sources : sources // ignore: cast_nullable_to_non_nullable
-as List<String>,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as List<String>,dailyLimit: freezed == dailyLimit ? _self.dailyLimit : dailyLimit // ignore: cast_nullable_to_non_nullable
+as int?,effectiveDailyLimit: null == effectiveDailyLimit ? _self.effectiveDailyLimit : effectiveDailyLimit // ignore: cast_nullable_to_non_nullable
+as int,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
@@ -172,10 +176,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String kind,  String provider,  String? tenantId,  Map<String, String> config,  Map<String, bool> secrets,  List<String> recipients,  String minSeverity,  bool sendResolved,  bool enabled,  List<String> sources,  DateTime? createdAt,  DateTime? updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String kind,  String provider,  String? tenantId,  Map<String, String> config,  Map<String, bool> secrets,  List<String> recipients,  String minSeverity,  bool sendResolved,  bool enabled,  List<String> sources,  int? dailyLimit,  int effectiveDailyLimit,  DateTime? createdAt,  DateTime? updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _NotificationChannel() when $default != null:
-return $default(_that.id,_that.name,_that.kind,_that.provider,_that.tenantId,_that.config,_that.secrets,_that.recipients,_that.minSeverity,_that.sendResolved,_that.enabled,_that.sources,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.name,_that.kind,_that.provider,_that.tenantId,_that.config,_that.secrets,_that.recipients,_that.minSeverity,_that.sendResolved,_that.enabled,_that.sources,_that.dailyLimit,_that.effectiveDailyLimit,_that.createdAt,_that.updatedAt);case _:
   return orElse();
 
 }
@@ -193,10 +197,10 @@ return $default(_that.id,_that.name,_that.kind,_that.provider,_that.tenantId,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String kind,  String provider,  String? tenantId,  Map<String, String> config,  Map<String, bool> secrets,  List<String> recipients,  String minSeverity,  bool sendResolved,  bool enabled,  List<String> sources,  DateTime? createdAt,  DateTime? updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String kind,  String provider,  String? tenantId,  Map<String, String> config,  Map<String, bool> secrets,  List<String> recipients,  String minSeverity,  bool sendResolved,  bool enabled,  List<String> sources,  int? dailyLimit,  int effectiveDailyLimit,  DateTime? createdAt,  DateTime? updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _NotificationChannel():
-return $default(_that.id,_that.name,_that.kind,_that.provider,_that.tenantId,_that.config,_that.secrets,_that.recipients,_that.minSeverity,_that.sendResolved,_that.enabled,_that.sources,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.name,_that.kind,_that.provider,_that.tenantId,_that.config,_that.secrets,_that.recipients,_that.minSeverity,_that.sendResolved,_that.enabled,_that.sources,_that.dailyLimit,_that.effectiveDailyLimit,_that.createdAt,_that.updatedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -213,10 +217,10 @@ return $default(_that.id,_that.name,_that.kind,_that.provider,_that.tenantId,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String kind,  String provider,  String? tenantId,  Map<String, String> config,  Map<String, bool> secrets,  List<String> recipients,  String minSeverity,  bool sendResolved,  bool enabled,  List<String> sources,  DateTime? createdAt,  DateTime? updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String kind,  String provider,  String? tenantId,  Map<String, String> config,  Map<String, bool> secrets,  List<String> recipients,  String minSeverity,  bool sendResolved,  bool enabled,  List<String> sources,  int? dailyLimit,  int effectiveDailyLimit,  DateTime? createdAt,  DateTime? updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _NotificationChannel() when $default != null:
-return $default(_that.id,_that.name,_that.kind,_that.provider,_that.tenantId,_that.config,_that.secrets,_that.recipients,_that.minSeverity,_that.sendResolved,_that.enabled,_that.sources,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.name,_that.kind,_that.provider,_that.tenantId,_that.config,_that.secrets,_that.recipients,_that.minSeverity,_that.sendResolved,_that.enabled,_that.sources,_that.dailyLimit,_that.effectiveDailyLimit,_that.createdAt,_that.updatedAt);case _:
   return null;
 
 }
@@ -228,7 +232,7 @@ return $default(_that.id,_that.name,_that.kind,_that.provider,_that.tenantId,_th
 @JsonSerializable()
 
 class _NotificationChannel implements NotificationChannel {
-  const _NotificationChannel({required this.id, required this.name, required this.kind, required this.provider, this.tenantId, final  Map<String, String> config = const <String, String>{}, final  Map<String, bool> secrets = const <String, bool>{}, final  List<String> recipients = const <String>[], this.minSeverity = 'warning', this.sendResolved = true, this.enabled = true, final  List<String> sources = const <String>['ops', 'summary'], this.createdAt, this.updatedAt}): _config = config,_secrets = secrets,_recipients = recipients,_sources = sources;
+  const _NotificationChannel({required this.id, required this.name, required this.kind, required this.provider, this.tenantId, final  Map<String, String> config = const <String, String>{}, final  Map<String, bool> secrets = const <String, bool>{}, final  List<String> recipients = const <String>[], this.minSeverity = 'warning', this.sendResolved = true, this.enabled = true, final  List<String> sources = const <String>['ops', 'summary'], this.dailyLimit, this.effectiveDailyLimit = 0, this.createdAt, this.updatedAt}): _config = config,_secrets = secrets,_recipients = recipients,_sources = sources;
   factory _NotificationChannel.fromJson(Map<String, dynamic> json) => _$NotificationChannelFromJson(json);
 
 @override final  String id;
@@ -276,6 +280,10 @@ class _NotificationChannel implements NotificationChannel {
   return EqualUnmodifiableListView(_sources);
 }
 
+/// Günde en çok kaç bildirim; null ise türün varsayılanı.
+@override final  int? dailyLimit;
+/// Uygulanan sınır (ayarlı değer ya da varsayılan); 0 sınırsız.
+@override@JsonKey() final  int effectiveDailyLimit;
 @override final  DateTime? createdAt;
 @override final  DateTime? updatedAt;
 
@@ -292,16 +300,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotificationChannel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.tenantId, tenantId) || other.tenantId == tenantId)&&const DeepCollectionEquality().equals(other._config, _config)&&const DeepCollectionEquality().equals(other._secrets, _secrets)&&const DeepCollectionEquality().equals(other._recipients, _recipients)&&(identical(other.minSeverity, minSeverity) || other.minSeverity == minSeverity)&&(identical(other.sendResolved, sendResolved) || other.sendResolved == sendResolved)&&(identical(other.enabled, enabled) || other.enabled == enabled)&&const DeepCollectionEquality().equals(other._sources, _sources)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotificationChannel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.tenantId, tenantId) || other.tenantId == tenantId)&&const DeepCollectionEquality().equals(other._config, _config)&&const DeepCollectionEquality().equals(other._secrets, _secrets)&&const DeepCollectionEquality().equals(other._recipients, _recipients)&&(identical(other.minSeverity, minSeverity) || other.minSeverity == minSeverity)&&(identical(other.sendResolved, sendResolved) || other.sendResolved == sendResolved)&&(identical(other.enabled, enabled) || other.enabled == enabled)&&const DeepCollectionEquality().equals(other._sources, _sources)&&(identical(other.dailyLimit, dailyLimit) || other.dailyLimit == dailyLimit)&&(identical(other.effectiveDailyLimit, effectiveDailyLimit) || other.effectiveDailyLimit == effectiveDailyLimit)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,kind,provider,tenantId,const DeepCollectionEquality().hash(_config),const DeepCollectionEquality().hash(_secrets),const DeepCollectionEquality().hash(_recipients),minSeverity,sendResolved,enabled,const DeepCollectionEquality().hash(_sources),createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,id,name,kind,provider,tenantId,const DeepCollectionEquality().hash(_config),const DeepCollectionEquality().hash(_secrets),const DeepCollectionEquality().hash(_recipients),minSeverity,sendResolved,enabled,const DeepCollectionEquality().hash(_sources),dailyLimit,effectiveDailyLimit,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'NotificationChannel(id: $id, name: $name, kind: $kind, provider: $provider, tenantId: $tenantId, config: $config, secrets: $secrets, recipients: $recipients, minSeverity: $minSeverity, sendResolved: $sendResolved, enabled: $enabled, sources: $sources, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'NotificationChannel(id: $id, name: $name, kind: $kind, provider: $provider, tenantId: $tenantId, config: $config, secrets: $secrets, recipients: $recipients, minSeverity: $minSeverity, sendResolved: $sendResolved, enabled: $enabled, sources: $sources, dailyLimit: $dailyLimit, effectiveDailyLimit: $effectiveDailyLimit, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -312,7 +320,7 @@ abstract mixin class _$NotificationChannelCopyWith<$Res> implements $Notificatio
   factory _$NotificationChannelCopyWith(_NotificationChannel value, $Res Function(_NotificationChannel) _then) = __$NotificationChannelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String kind, String provider, String? tenantId, Map<String, String> config, Map<String, bool> secrets, List<String> recipients, String minSeverity, bool sendResolved, bool enabled, List<String> sources, DateTime? createdAt, DateTime? updatedAt
+ String id, String name, String kind, String provider, String? tenantId, Map<String, String> config, Map<String, bool> secrets, List<String> recipients, String minSeverity, bool sendResolved, bool enabled, List<String> sources, int? dailyLimit, int effectiveDailyLimit, DateTime? createdAt, DateTime? updatedAt
 });
 
 
@@ -329,7 +337,7 @@ class __$NotificationChannelCopyWithImpl<$Res>
 
 /// Create a copy of NotificationChannel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? kind = null,Object? provider = null,Object? tenantId = freezed,Object? config = null,Object? secrets = null,Object? recipients = null,Object? minSeverity = null,Object? sendResolved = null,Object? enabled = null,Object? sources = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? kind = null,Object? provider = null,Object? tenantId = freezed,Object? config = null,Object? secrets = null,Object? recipients = null,Object? minSeverity = null,Object? sendResolved = null,Object? enabled = null,Object? sources = null,Object? dailyLimit = freezed,Object? effectiveDailyLimit = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_NotificationChannel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -343,7 +351,9 @@ as List<String>,minSeverity: null == minSeverity ? _self.minSeverity : minSeveri
 as String,sendResolved: null == sendResolved ? _self.sendResolved : sendResolved // ignore: cast_nullable_to_non_nullable
 as bool,enabled: null == enabled ? _self.enabled : enabled // ignore: cast_nullable_to_non_nullable
 as bool,sources: null == sources ? _self._sources : sources // ignore: cast_nullable_to_non_nullable
-as List<String>,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as List<String>,dailyLimit: freezed == dailyLimit ? _self.dailyLimit : dailyLimit // ignore: cast_nullable_to_non_nullable
+as int?,effectiveDailyLimit: null == effectiveDailyLimit ? _self.effectiveDailyLimit : effectiveDailyLimit // ignore: cast_nullable_to_non_nullable
+as int,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
@@ -357,7 +367,8 @@ as DateTime?,
 mixin _$NotificationProvider {
 
  String get kind; String get provider;/// email | phone | none
- String get recipients; List<ProviderField> get fields;
+ String get recipients; List<ProviderField> get fields;/// Günlük sınır ayarlanmazsa uygulanan; 0 sınırsız (SMS 50, arama 20).
+ int get defaultDailyLimit;
 /// Create a copy of NotificationProvider
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -370,16 +381,16 @@ $NotificationProviderCopyWith<NotificationProvider> get copyWith => _$Notificati
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationProvider&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.recipients, recipients) || other.recipients == recipients)&&const DeepCollectionEquality().equals(other.fields, fields));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationProvider&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.recipients, recipients) || other.recipients == recipients)&&const DeepCollectionEquality().equals(other.fields, fields)&&(identical(other.defaultDailyLimit, defaultDailyLimit) || other.defaultDailyLimit == defaultDailyLimit));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,kind,provider,recipients,const DeepCollectionEquality().hash(fields));
+int get hashCode => Object.hash(runtimeType,kind,provider,recipients,const DeepCollectionEquality().hash(fields),defaultDailyLimit);
 
 @override
 String toString() {
-  return 'NotificationProvider(kind: $kind, provider: $provider, recipients: $recipients, fields: $fields)';
+  return 'NotificationProvider(kind: $kind, provider: $provider, recipients: $recipients, fields: $fields, defaultDailyLimit: $defaultDailyLimit)';
 }
 
 
@@ -390,7 +401,7 @@ abstract mixin class $NotificationProviderCopyWith<$Res>  {
   factory $NotificationProviderCopyWith(NotificationProvider value, $Res Function(NotificationProvider) _then) = _$NotificationProviderCopyWithImpl;
 @useResult
 $Res call({
- String kind, String provider, String recipients, List<ProviderField> fields
+ String kind, String provider, String recipients, List<ProviderField> fields, int defaultDailyLimit
 });
 
 
@@ -407,13 +418,14 @@ class _$NotificationProviderCopyWithImpl<$Res>
 
 /// Create a copy of NotificationProvider
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? kind = null,Object? provider = null,Object? recipients = null,Object? fields = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? kind = null,Object? provider = null,Object? recipients = null,Object? fields = null,Object? defaultDailyLimit = null,}) {
   return _then(_self.copyWith(
 kind: null == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
 as String,provider: null == provider ? _self.provider : provider // ignore: cast_nullable_to_non_nullable
 as String,recipients: null == recipients ? _self.recipients : recipients // ignore: cast_nullable_to_non_nullable
 as String,fields: null == fields ? _self.fields : fields // ignore: cast_nullable_to_non_nullable
-as List<ProviderField>,
+as List<ProviderField>,defaultDailyLimit: null == defaultDailyLimit ? _self.defaultDailyLimit : defaultDailyLimit // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 
@@ -498,10 +510,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String kind,  String provider,  String recipients,  List<ProviderField> fields)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String kind,  String provider,  String recipients,  List<ProviderField> fields,  int defaultDailyLimit)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _NotificationProvider() when $default != null:
-return $default(_that.kind,_that.provider,_that.recipients,_that.fields);case _:
+return $default(_that.kind,_that.provider,_that.recipients,_that.fields,_that.defaultDailyLimit);case _:
   return orElse();
 
 }
@@ -519,10 +531,10 @@ return $default(_that.kind,_that.provider,_that.recipients,_that.fields);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String kind,  String provider,  String recipients,  List<ProviderField> fields)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String kind,  String provider,  String recipients,  List<ProviderField> fields,  int defaultDailyLimit)  $default,) {final _that = this;
 switch (_that) {
 case _NotificationProvider():
-return $default(_that.kind,_that.provider,_that.recipients,_that.fields);case _:
+return $default(_that.kind,_that.provider,_that.recipients,_that.fields,_that.defaultDailyLimit);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -539,10 +551,10 @@ return $default(_that.kind,_that.provider,_that.recipients,_that.fields);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String kind,  String provider,  String recipients,  List<ProviderField> fields)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String kind,  String provider,  String recipients,  List<ProviderField> fields,  int defaultDailyLimit)?  $default,) {final _that = this;
 switch (_that) {
 case _NotificationProvider() when $default != null:
-return $default(_that.kind,_that.provider,_that.recipients,_that.fields);case _:
+return $default(_that.kind,_that.provider,_that.recipients,_that.fields,_that.defaultDailyLimit);case _:
   return null;
 
 }
@@ -554,7 +566,7 @@ return $default(_that.kind,_that.provider,_that.recipients,_that.fields);case _:
 @JsonSerializable()
 
 class _NotificationProvider implements NotificationProvider {
-  const _NotificationProvider({required this.kind, required this.provider, this.recipients = 'none', final  List<ProviderField> fields = const <ProviderField>[]}): _fields = fields;
+  const _NotificationProvider({required this.kind, required this.provider, this.recipients = 'none', final  List<ProviderField> fields = const <ProviderField>[], this.defaultDailyLimit = 0}): _fields = fields;
   factory _NotificationProvider.fromJson(Map<String, dynamic> json) => _$NotificationProviderFromJson(json);
 
 @override final  String kind;
@@ -568,6 +580,8 @@ class _NotificationProvider implements NotificationProvider {
   return EqualUnmodifiableListView(_fields);
 }
 
+/// Günlük sınır ayarlanmazsa uygulanan; 0 sınırsız (SMS 50, arama 20).
+@override@JsonKey() final  int defaultDailyLimit;
 
 /// Create a copy of NotificationProvider
 /// with the given fields replaced by the non-null parameter values.
@@ -582,16 +596,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotificationProvider&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.recipients, recipients) || other.recipients == recipients)&&const DeepCollectionEquality().equals(other._fields, _fields));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotificationProvider&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.recipients, recipients) || other.recipients == recipients)&&const DeepCollectionEquality().equals(other._fields, _fields)&&(identical(other.defaultDailyLimit, defaultDailyLimit) || other.defaultDailyLimit == defaultDailyLimit));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,kind,provider,recipients,const DeepCollectionEquality().hash(_fields));
+int get hashCode => Object.hash(runtimeType,kind,provider,recipients,const DeepCollectionEquality().hash(_fields),defaultDailyLimit);
 
 @override
 String toString() {
-  return 'NotificationProvider(kind: $kind, provider: $provider, recipients: $recipients, fields: $fields)';
+  return 'NotificationProvider(kind: $kind, provider: $provider, recipients: $recipients, fields: $fields, defaultDailyLimit: $defaultDailyLimit)';
 }
 
 
@@ -602,7 +616,7 @@ abstract mixin class _$NotificationProviderCopyWith<$Res> implements $Notificati
   factory _$NotificationProviderCopyWith(_NotificationProvider value, $Res Function(_NotificationProvider) _then) = __$NotificationProviderCopyWithImpl;
 @override @useResult
 $Res call({
- String kind, String provider, String recipients, List<ProviderField> fields
+ String kind, String provider, String recipients, List<ProviderField> fields, int defaultDailyLimit
 });
 
 
@@ -619,13 +633,14 @@ class __$NotificationProviderCopyWithImpl<$Res>
 
 /// Create a copy of NotificationProvider
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? kind = null,Object? provider = null,Object? recipients = null,Object? fields = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? kind = null,Object? provider = null,Object? recipients = null,Object? fields = null,Object? defaultDailyLimit = null,}) {
   return _then(_NotificationProvider(
 kind: null == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
 as String,provider: null == provider ? _self.provider : provider // ignore: cast_nullable_to_non_nullable
 as String,recipients: null == recipients ? _self.recipients : recipients // ignore: cast_nullable_to_non_nullable
 as String,fields: null == fields ? _self._fields : fields // ignore: cast_nullable_to_non_nullable
-as List<ProviderField>,
+as List<ProviderField>,defaultDailyLimit: null == defaultDailyLimit ? _self.defaultDailyLimit : defaultDailyLimit // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 

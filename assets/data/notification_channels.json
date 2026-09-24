@@ -17,6 +17,8 @@
     "sendResolved": true,
     "enabled": true,
     "sources": ["ops", "herd"],
+    "dailyLimit": null,
+    "effectiveDailyLimit": 0,
     "createdAt": "2026-09-20T08:00:00Z",
     "updatedAt": "2026-09-20T08:00:00Z"
   }

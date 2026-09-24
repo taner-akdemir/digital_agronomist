@@ -293,6 +293,11 @@ tarafı `~/GolandProjects/milktrace` ADR 0028; uçlar `/notification-channels`,
   ayrı (düşük debi). Yeni kanal varsayılanı `ops` + `summary` (backend ile aynı);
   `herd` gürültülü, isteyen açıkça seçer. SMS/arama varsayılan önemi "kritik".
 - **Alıcı numaraları E.164** (`+905…`); yerel biçim reddedilir.
+- **Günlük sınır** (`dailyLimit`): boş = türün varsayılanı (SMS 50, arama 20,
+  öbürleri sınırsız; `NotificationProvider.defaultDailyLimit`), `0` göndermek
+  varsayılana döndürür. Listedeki aç/kapa TAM gövde gönderir; sınırı
+  eklemeyi unutursan kanalı kapatıp açmak ayarlanmış sınırı sıfırlar
+  (testle kilitli).
 - Mock'ta sağlayıcı listesi `assets/data/notification_providers.json`: backend'in
   sağlayıcı tanımlarından ÜRETİLDİ, elle düzenlenmez. Backend'e sağlayıcı eklenince
   yeniden üretilmeli.

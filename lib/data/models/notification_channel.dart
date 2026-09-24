@@ -40,6 +40,12 @@ abstract class NotificationChannel with _$NotificationChannel {
     /// ops (sistem alarmları) | summary (sağım özeti) | herd (her sürü
     /// uyarısı ayrı)
     @Default(<String>['ops', 'summary']) List<String> sources,
+
+    /// Günde en çok kaç bildirim; null ise türün varsayılanı.
+    int? dailyLimit,
+
+    /// Uygulanan sınır (ayarlı değer ya da varsayılan); 0 sınırsız.
+    @Default(0) int effectiveDailyLimit,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _NotificationChannel;
@@ -60,6 +66,9 @@ abstract class NotificationProvider with _$NotificationProvider {
     /// email | phone | none
     @Default('none') String recipients,
     @Default(<ProviderField>[]) List<ProviderField> fields,
+
+    /// Günlük sınır ayarlanmazsa uygulanan; 0 sınırsız (SMS 50, arama 20).
+    @Default(0) int defaultDailyLimit,
   }) = _NotificationProvider;
 
   factory NotificationProvider.fromJson(Map<String, dynamic> json) =>
@@ -94,6 +103,7 @@ class NotificationChannelDraft {
     required this.sendResolved,
     required this.enabled,
     required this.sources,
+    this.dailyLimit = 0,
   });
 
   final String name;
@@ -106,6 +116,9 @@ class NotificationChannelDraft {
   final bool enabled;
   final List<String> sources;
 
+  /// 1–10000; 0 türün varsayılanına döner (güncellemede de).
+  final int dailyLimit;
+
   Map<String, dynamic> toJson() => {
     'name': name,
     'kind': kind,
@@ -116,5 +129,6 @@ class NotificationChannelDraft {
     'sendResolved': sendResolved,
     'enabled': enabled,
     'sources': sources,
+    'dailyLimit': dailyLimit,
   };
 }

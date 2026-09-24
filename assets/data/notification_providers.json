@@ -24,7 +24,8 @@
         "required": false,
         "secret": false
       }
-    ]
+    ],
+    "defaultDailyLimit": 0
   },
   {
     "kind": "email",
@@ -66,7 +67,8 @@
         "required": false,
         "secret": false
       }
-    ]
+    ],
+    "defaultDailyLimit": 0
   },
   {
     "kind": "ivr",
@@ -83,7 +85,8 @@
         "required": true,
         "secret": true
       }
-    ]
+    ],
+    "defaultDailyLimit": 20
   },
   {
     "kind": "ivr",
@@ -115,7 +118,8 @@
         "required": false,
         "secret": false
       }
-    ]
+    ],
+    "defaultDailyLimit": 20
   },
   {
     "kind": "ivr",
@@ -142,7 +146,8 @@
         "required": false,
         "secret": false
       }
-    ]
+    ],
+    "defaultDailyLimit": 20
   },
   {
     "kind": "slack",
@@ -154,7 +159,8 @@
         "required": true,
         "secret": true
       }
-    ]
+    ],
+    "defaultDailyLimit": 0
   },
   {
     "kind": "sms",
@@ -176,7 +182,8 @@
         "required": true,
         "secret": false
       }
-    ]
+    ],
+    "defaultDailyLimit": 50
   },
   {
     "kind": "sms",
@@ -198,7 +205,8 @@
         "required": true,
         "secret": false
       }
-    ]
+    ],
+    "defaultDailyLimit": 50
   },
   {
     "kind": "sms",
@@ -220,7 +228,8 @@
         "required": true,
         "secret": false
       }
-    ]
+    ],
+    "defaultDailyLimit": 50
   },
   {
     "kind": "sms",
@@ -247,7 +256,8 @@
         "required": false,
         "secret": false
       }
-    ]
+    ],
+    "defaultDailyLimit": 50
   },
   {
     "kind": "sms",
@@ -269,7 +279,8 @@
         "required": true,
         "secret": false
       }
-    ]
+    ],
+    "defaultDailyLimit": 50
   },
   {
     "kind": "teams",
@@ -281,7 +292,8 @@
         "required": true,
         "secret": true
       }
-    ]
+    ],
+    "defaultDailyLimit": 0
   },
   {
     "kind": "webhook",
@@ -303,6 +315,7 @@
         "required": false,
         "secret": true
       }
-    ]
+    ],
+    "defaultDailyLimit": 0
   }
 ]

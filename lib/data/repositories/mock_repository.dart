@@ -533,6 +533,15 @@ class MockRepository implements MilkTraceRepository {
         );
       }
     }
+    // Backend ile aynı: 0 türün varsayılanı, aralık dışı reddedilir.
+    if (draft.dailyLimit < 0 || draft.dailyLimit > 10000) {
+      throw const ApiException(
+        code: 'VALIDATION',
+        message: 'günlük sınır 1 ile 10000 arasında olmalı (0: varsayılan)',
+        status: 422,
+      );
+    }
+    final limit = draft.dailyLimit == 0 ? null : draft.dailyLimit;
     final secretNames = {
       for (final f in spec.fields)
         if (f.secret) f.name,
@@ -553,6 +562,8 @@ class MockRepository implements MilkTraceRepository {
       sendResolved: draft.sendResolved,
       enabled: draft.enabled,
       sources: draft.sources,
+      dailyLimit: limit,
+      effectiveDailyLimit: limit ?? spec.defaultDailyLimit,
       updatedAt: _clock,
     );
   }

@@ -57,8 +57,10 @@ Future<void> pumpApp(
   WidgetTester tester, {
   String role = 'tenant_owner',
   String initial = '/settings/notifications',
+  Future<Object?> Function(RecordingRepo repo)? seed,
 }) async {
   repo = RecordingRepo();
+  if (seed != null) await tester.runAsync(() => seed(repo));
   final container = ProviderContainer(
     overrides: [
       repositoryProvider.overrideWith((ref) => repo as MilkTraceRepository),
@@ -168,6 +170,12 @@ void main() {
     await tester.enterText(field('Kullanıcı kodu *'), '8501112233');
     await tester.enterText(field('Parola *'), 'gizli');
     await tester.enterText(field('SMS başlığı *'), 'MILKTRACE');
+    expect(
+      find.textContaining('Boş bırakılırsa 50'),
+      findsOneWidget,
+      reason: 'SMS varsayılan sınırı ipucunda',
+    );
+    await tester.enterText(field('Günlük sınır'), '0');
     await tester.tap(find.text('Kaydet'));
     await tester.pumpAndSettle();
     expect(
@@ -176,7 +184,9 @@ void main() {
       reason: 'yerel biçim reddedilmeli',
     );
 
+    expect(find.text('1 ile 10000 arasında olmalı'), findsOneWidget);
     await tester.enterText(field('Telefon numaraları'), '+905321112233');
+    await tester.enterText(field('Günlük sınır'), '10');
     await tester.tap(find.text('Kaydet'));
     await tester.pumpAndSettle();
 
@@ -187,6 +197,8 @@ void main() {
     expect(sms.recipients, ['+905321112233']);
     expect(sms.secrets, {'password': true});
     expect(sms.minSeverity, 'critical');
+    expect(sms.dailyLimit, 10);
+    expect(sms.effectiveDailyLimit, 10);
     expect(
       sms.sources,
       ['ops', 'summary'],
@@ -235,5 +247,39 @@ void main() {
     expect(field('Adres (https) *').obscureText, isFalse);
     expect(field('Adres (https) *').keyboardType, TextInputType.url);
     expect(field('İmza sırrı').obscureText, isTrue);
+  });
+
+  // Listedeki aç/kapa tam gövde gönderir; sınır eklenmezse 0 gidip
+  // ayarlanmış sınırı varsayılana döndürürdü.
+  testWidgets('aç/kapa günlük sınırı korur', (tester) async {
+    await pumpApp(
+      tester,
+      seed: (r) => r.createNotificationChannel(
+        const NotificationChannelDraft(
+          name: 'Sahip SMS',
+          kind: 'sms',
+          provider: 'netgsm',
+          config: {'usercode': 'u', 'password': 'p', 'msgheader': 'MILKTRACE'},
+          recipients: ['+905321112233'],
+          minSeverity: 'critical',
+          sendResolved: true,
+          enabled: true,
+          sources: ['ops'],
+          dailyLimit: 7,
+        ),
+      ),
+    );
+    expect(find.textContaining('günde en çok 7'), findsOneWidget);
+
+    final card = find.ancestor(
+      of: find.text('Sahip SMS'),
+      matching: find.byType(Card),
+    );
+    await tester.tap(find.descendant(of: card, matching: find.byType(Switch)));
+    await tester.pumpAndSettle();
+
+    final sent = repo.updates.single;
+    expect(sent.enabled, isFalse);
+    expect(sent.dailyLimit, 7);
   });
 }

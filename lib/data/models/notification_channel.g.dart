@@ -36,6 +36,8 @@ _NotificationChannel _$NotificationChannelFromJson(Map<String, dynamic> json) =>
               ?.map((e) => e as String)
               .toList() ??
           const <String>['ops', 'summary'],
+      dailyLimit: (json['dailyLimit'] as num?)?.toInt(),
+      effectiveDailyLimit: (json['effectiveDailyLimit'] as num?)?.toInt() ?? 0,
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
@@ -59,6 +61,8 @@ Map<String, dynamic> _$NotificationChannelToJson(
   'sendResolved': instance.sendResolved,
   'enabled': instance.enabled,
   'sources': instance.sources,
+  'dailyLimit': instance.dailyLimit,
+  'effectiveDailyLimit': instance.effectiveDailyLimit,
   'createdAt': instance.createdAt?.toIso8601String(),
   'updatedAt': instance.updatedAt?.toIso8601String(),
 };
@@ -74,6 +78,7 @@ _NotificationProvider _$NotificationProviderFromJson(
           ?.map((e) => ProviderField.fromJson(e as Map<String, dynamic>))
           .toList() ??
       const <ProviderField>[],
+  defaultDailyLimit: (json['defaultDailyLimit'] as num?)?.toInt() ?? 0,
 );
 
 Map<String, dynamic> _$NotificationProviderToJson(
@@ -83,6 +88,7 @@ Map<String, dynamic> _$NotificationProviderToJson(
   'provider': instance.provider,
   'recipients': instance.recipients,
   'fields': instance.fields,
+  'defaultDailyLimit': instance.defaultDailyLimit,
 };
 
 _ProviderField _$ProviderFieldFromJson(Map<String, dynamic> json) =>

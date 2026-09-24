@@ -91,6 +91,7 @@ class _FormState extends ConsumerState<_Form> {
   late final TextEditingController _name;
   late final TextEditingController _recipients;
   late final Map<String, TextEditingController> _fields;
+  late final TextEditingController _dailyLimit;
   late String _minSeverity;
   late bool _sendResolved;
   late bool _enabled;
@@ -122,12 +123,16 @@ class _FormState extends ConsumerState<_Form> {
     _sendResolved = e?.sendResolved ?? true;
     _enabled = e?.enabled ?? true;
     _sources = {...(e?.sources ?? defaultChannelSources)};
+    // Boş: türün varsayılanı. Ayarlanmış değer gösterilir, varsayılan
+    // ipucunda.
+    _dailyLimit = TextEditingController(text: e?.dailyLimit?.toString() ?? '');
   }
 
   @override
   void dispose() {
     _name.dispose();
     _recipients.dispose();
+    _dailyLimit.dispose();
     for (final c in _fields.values) {
       c.dispose();
     }
@@ -195,7 +200,23 @@ class _FormState extends ConsumerState<_Form> {
               foregroundColor: AppColors.onSurfaceMuted,
             ),
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: AppSpacing.lg),
+          _text(
+            controller: _dailyLimit,
+            label: 'Günlük sınır',
+            helper:
+                '${spec.defaultDailyLimit > 0 ? 'Boş bırakılırsa ${spec.defaultDailyLimit}. ' : 'Boş bırakılırsa sınırsız. '}'
+                'Sınırdan sonrakiler gönderilmez; sayaç gece yarısı sıfırlanır.',
+            keyboard: TextInputType.number,
+            validator: (v) {
+              final t = (v ?? '').trim();
+              if (t.isEmpty) return null;
+              final n = int.tryParse(t);
+              return n == null || n < 1 || n > 10000
+                  ? '1 ile 10000 arasında olmalı'
+                  : null;
+            },
+          ),
           for (final s in channelSources)
             CheckboxListTile(
               contentPadding: EdgeInsets.zero,
@@ -376,6 +397,8 @@ class _FormState extends ConsumerState<_Form> {
         for (final s in channelSources)
           if (_sources.contains(s)) s,
       ],
+      // 0: türün varsayılanı (güncellemede de varsayılana döner).
+      dailyLimit: int.tryParse(_dailyLimit.text.trim()) ?? 0,
     );
   }
 
