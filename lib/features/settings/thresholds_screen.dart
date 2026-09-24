@@ -132,6 +132,12 @@ class _FormState extends ConsumerState<_Form> {
       'endGrace': TextEditingController(text: '${t.endGraceSec}'),
       'dryOff': TextEditingController(text: _num(t.dryOffDailyMl / 1000)),
       'highYield': TextEditingController(text: _num(t.highYieldDailyMl / 1000)),
+      'expected': TextEditingController(
+        text: _num(t.expectedPerMilkingMl / 1000),
+      ),
+      'decline': TextEditingController(text: '${t.declinePct}'),
+      'noMilk': TextEditingController(text: '${t.noMilkMl}'),
+      'noMilkCount': TextEditingController(text: '${t.noMilkMilkings}'),
     };
   }
 
@@ -178,10 +184,13 @@ class _FormState extends ConsumerState<_Form> {
           ),
           _Group(
             title: 'Oturum verimi bantları',
-            hint: 'Alınan sütün beklenene oranı (§6.3).',
+            hint:
+                'Alınan sütün beklenene oranı (§6.3). Geçmişi olmayan '
+                'hayvanda beklenen, sağım başına bu değerdir.',
             children: [
               _field('yieldGreen', 'Yeşil eşiği', '%'),
               _field('yieldRed', 'Kırmızı eşiği', '%'),
+              _field('expected', 'Sağım başına beklenen', 'L'),
             ],
           ),
           _Group(
@@ -212,6 +221,18 @@ class _FormState extends ConsumerState<_Form> {
             children: [
               _field('dryOff', 'Kuruya çıkma alt eşiği', 'L/gün'),
               _field('highYield', 'Yüksek verim üst eşiği', 'L/gün'),
+            ],
+          ),
+          _Group(
+            title: 'Sınıflandırma kuralları',
+            hint:
+                '7 günlük ortalama 30 günlükten bu oranda fazla düşükse '
+                'düşüşte. Son sağımların hepsi boş sağım sınırının '
+                'altındaysa süt vermiyor (§6.4).',
+            children: [
+              _field('decline', 'Düşüş eşiği', '%'),
+              _field('noMilk', 'Boş sağım sınırı', 'mL'),
+              _field('noMilkCount', 'Bakılan son sağım', 'sağım'),
             ],
           ),
           const SizedBox(height: AppSpacing.lg),
@@ -263,6 +284,17 @@ class _FormState extends ConsumerState<_Form> {
         'Yüksek verim eşiğinden küçük olmalı',
       'highYield' when v <= (_value('dryOff') ?? 0) =>
         'Kuruya çıkma eşiğinden büyük olmalı',
+      'decline' when v > 90 => 'En çok 90 olabilir',
+      'noMilkCount' when v > 20 => 'En çok 20 olabilir',
+      'decline' ||
+      'noMilk' ||
+      'noMilkCount' when v != v.roundToDouble() => 'Tam sayı girin',
+      // Beklenen sağım hacmine eşit bir "boş sağım" sınırı normal sağılan
+      // her hayvanı "süt vermiyor" yapardı.
+      'noMilk' when v >= (_value('expected') ?? double.infinity) * 1000 =>
+        'Sağım başına beklenenden küçük olmalı',
+      'expected' when v * 1000 <= (_value('noMilk') ?? 0) =>
+        'Boş sağım sınırından büyük olmalı',
       _ => null,
     };
   }
@@ -283,6 +315,10 @@ class _FormState extends ConsumerState<_Form> {
       // Litre girilir, mL taşınır (§3).
       dryOffDailyMl: (_value('dryOff')! * 1000).round(),
       highYieldDailyMl: (_value('highYield')! * 1000).round(),
+      expectedPerMilkingMl: (_value('expected')! * 1000).round(),
+      declinePct: _value('decline')!.round(),
+      noMilkMl: _value('noMilk')!.round(),
+      noMilkMilkings: _value('noMilkCount')!.round(),
     );
 
     try {

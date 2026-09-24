@@ -30,6 +30,25 @@ abstract class Thresholds with _$Thresholds {
     @Default(10) int endGraceSec,
     @Default(0) int dryOffDailyMl,
     @Default(0) int highYieldDailyMl,
+
+    /// Hayvanın GEÇMİŞİ YOKKEN beklenen sağım hacmi, mL (§6.3). Kaydetmede
+    /// GÖNDERİLMELİ: backend sıfırı reddediyor.
+    @Default(0) int expectedPerMilkingMl,
+
+    /// false: işletme kendi eşiğini tanımlamamış, platform varsayılanı.
+    @Default(false) bool tenantScoped,
+
+    /// Sınıflandırma kuralları (§6.4, backend ADR 0054). Varsayılanlar
+    /// backend'inkilerle aynı.
+    ///
+    /// 7 günlük ortalama 30 günlüğe göre yüzde kaç düşünce "düşüşte".
+    @Default(20) int declinePct,
+
+    /// Bu değerin altındaki sağım boş sayılır (mL).
+    @Default(100) int noMilkMl,
+
+    /// Son kaç sağımın hepsi boşsa "süt vermiyor".
+    @Default(4) int noMilkMilkings,
   }) = _Thresholds;
 
   factory Thresholds.fromJson(Map<String, dynamic> json) =>

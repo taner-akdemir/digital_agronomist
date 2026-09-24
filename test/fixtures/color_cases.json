@@ -23,7 +23,10 @@
       "endFlowThreshold": 0.2,
       "endGraceSec": 10,
       "dryOffDailyMl": 8000,
-      "highYieldDailyMl": 30000
+      "highYieldDailyMl": 30000,
+      "declinePct": 20,
+      "noMilkMl": 100,
+      "noMilkMilkings": 4
     },
     "goat": {
       "flowLow": 0.3,
@@ -35,7 +38,10 @@
       "endFlowThreshold": 0.05,
       "endGraceSec": 8,
       "dryOffDailyMl": 500,
-      "highYieldDailyMl": 3500
+      "highYieldDailyMl": 3500,
+      "declinePct": 20,
+      "noMilkMl": 100,
+      "noMilkMilkings": 4
     },
     "sheep": {
       "flowLow": 0.2,
@@ -47,7 +53,10 @@
       "endFlowThreshold": 0.03,
       "endGraceSec": 6,
       "dryOffDailyMl": 300,
-      "highYieldDailyMl": 1800
+      "highYieldDailyMl": 1800,
+      "declinePct": 20,
+      "noMilkMl": 100,
+      "noMilkMilkings": 4
     }
   },
   "flowCases": [

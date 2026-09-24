@@ -732,6 +732,48 @@ void main() {
     expect(req.data, {'animalId': 'a1'});
   });
 
+  group('eşik kaydı', () {
+    const t = Thresholds(
+      speciesId: 'cow',
+      flowLow: 1,
+      flowHigh: 2.5,
+      expectedPerMilkingMl: 11000,
+      declinePct: 30,
+      noMilkMl: 250,
+      noMilkMilkings: 6,
+    );
+
+    test('gövde beklenen verimi ve kuralları taşır', () async {
+      final r = rig(
+        (o) async => okEnvelope(t.copyWith(tenantScoped: true).toJson()),
+      );
+
+      final saved = await r.repo.updateThresholds(t);
+
+      final req = r.adapter.requests.single;
+      expect(req.method, 'PUT');
+      expect(req.path, '/species/thresholds');
+      final body = req.data as Map<String, dynamic>;
+      expect(body['expectedPerMilkingMl'], 11000);
+      expect(body['declinePct'], 30);
+      expect(body['noMilkMl'], 250);
+      expect(body['noMilkMilkings'], 6);
+      expect(saved.tenantScoped, isTrue);
+    });
+
+    test('gövdesiz cevap kaydı düşürmez', () async {
+      final r = rig(
+        (o) async =>
+            jsonResponse(200, {'success': true, 'msg': 'eşikler güncellendi'}),
+      );
+
+      final saved = await r.repo.updateThresholds(t);
+
+      expect(saved.noMilkMl, 250);
+      expect(saved.tenantScoped, isTrue);
+    });
+  });
+
   test('eşleştirme kaldırılır', () async {
     final r = rig((o) async => okEnvelope({}));
 

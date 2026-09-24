@@ -417,15 +417,18 @@ class ApiRepository implements MilkTraceRepository {
       _dio.post<dynamic>('/notification-channels/$id/test');
 
   @override
-  Future<Thresholds> updateThresholds(Thresholds thresholds) async =>
-      Thresholds.fromJson(
-        _dataOf(
-          await _dio.put<dynamic>(
-            '/species/thresholds',
-            data: thresholds.toJson(),
-          ),
-        ),
-      );
+  Future<Thresholds> updateThresholds(Thresholds thresholds) async {
+    final r = await _dio.put<dynamic>(
+      '/species/thresholds',
+      data: thresholds.toJson(),
+    );
+    // Eski backend gövdesiz ("data" yok) cevap veriyordu ve burada
+    // düşülüyordu: kayıt başarılıyken ekran "kaydedilemedi" diyordu.
+    final data = (r.data as Map<String, dynamic>?)?['data'];
+    return data is Map<String, dynamic>
+        ? Thresholds.fromJson(data)
+        : thresholds.copyWith(tenantScoped: true);
+  }
 
   @override
   Future<MilkingSession> startSession({

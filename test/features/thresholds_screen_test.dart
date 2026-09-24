@@ -190,4 +190,48 @@ void main() {
       1.4,
     );
   });
+
+  // Sınıflandırma kuralları (backend ADR 0054) ve sağım başına beklenen
+  // verim kaydedilir. Beklenen önceden modelde hiç yoktu ve gerçek API
+  // gövdesiz kaydı 422 ile reddediyordu.
+  testWidgets('sınıflandırma kuralları ve beklenen verim kaydedilir', (
+    tester,
+  ) async {
+    await pumpScreen(tester);
+
+    await enter(tester, 'Düşüş eşiği', '30');
+    await enter(tester, 'Boş sağım sınırı', '250');
+    await enter(tester, 'Bakılan son sağım', '6');
+    await tapSave(tester);
+
+    final saved = repo.thresholdWrites.single;
+    expect(saved.declinePct, 30);
+    expect(saved.noMilkMl, 250);
+    expect(saved.noMilkMilkings, 6);
+    expect(saved.expectedPerMilkingMl, 11000, reason: 'dokunulmadı, korunur');
+    expect(saved.toJson()['expectedPerMilkingMl'], 11000);
+  });
+
+  testWidgets('kural aralıkları doğrulanır', (tester) async {
+    await pumpScreen(tester);
+
+    await enter(tester, 'Düşüş eşiği', '95');
+    expect(find.text('En çok 90 olabilir'), findsOneWidget);
+    await enter(tester, 'Düşüş eşiği', '0');
+    expect(find.text('Sıfır olamaz'), findsOneWidget);
+    await enter(tester, 'Düşüş eşiği', '20');
+
+    await enter(tester, 'Bakılan son sağım', '2.5');
+    expect(find.text('Tam sayı girin'), findsOneWidget);
+    await enter(tester, 'Bakılan son sağım', '21');
+    expect(find.text('En çok 20 olabilir'), findsOneWidget);
+    await enter(tester, 'Bakılan son sağım', '4');
+
+    // İnekte beklenen 11 L: boş sağım sınırı ona ulaşamaz.
+    await enter(tester, 'Boş sağım sınırı', '11000');
+    expect(find.text('Sağım başına beklenenden küçük olmalı'), findsOneWidget);
+
+    await tapSave(tester);
+    expect(repo.thresholdWrites, isEmpty);
+  });
 }

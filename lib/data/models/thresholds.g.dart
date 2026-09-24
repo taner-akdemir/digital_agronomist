@@ -18,6 +18,11 @@ _Thresholds _$ThresholdsFromJson(Map<String, dynamic> json) => _Thresholds(
   endGraceSec: (json['endGraceSec'] as num?)?.toInt() ?? 10,
   dryOffDailyMl: (json['dryOffDailyMl'] as num?)?.toInt() ?? 0,
   highYieldDailyMl: (json['highYieldDailyMl'] as num?)?.toInt() ?? 0,
+  expectedPerMilkingMl: (json['expectedPerMilkingMl'] as num?)?.toInt() ?? 0,
+  tenantScoped: json['tenantScoped'] as bool? ?? false,
+  declinePct: (json['declinePct'] as num?)?.toInt() ?? 20,
+  noMilkMl: (json['noMilkMl'] as num?)?.toInt() ?? 100,
+  noMilkMilkings: (json['noMilkMilkings'] as num?)?.toInt() ?? 4,
 );
 
 Map<String, dynamic> _$ThresholdsToJson(_Thresholds instance) =>
@@ -33,4 +38,9 @@ Map<String, dynamic> _$ThresholdsToJson(_Thresholds instance) =>
       'endGraceSec': instance.endGraceSec,
       'dryOffDailyMl': instance.dryOffDailyMl,
       'highYieldDailyMl': instance.highYieldDailyMl,
+      'expectedPerMilkingMl': instance.expectedPerMilkingMl,
+      'tenantScoped': instance.tenantScoped,
+      'declinePct': instance.declinePct,
+      'noMilkMl': instance.noMilkMl,
+      'noMilkMilkings': instance.noMilkMilkings,
     };

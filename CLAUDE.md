@@ -306,6 +306,10 @@ değiştirilemiyorlardı. `GET /species/thresholds` · `PUT` (§8.5).
 - Çiftlerin sırası doğrulanır (alt eşik < üst eşik, kırmızı < yeşil, kuruya < yüksek):
   ters girilirse renk motoru o bandı hiç üretmez ve bant sessizce kaybolurdu.
 - Günlük verim LİTRE girilir, mL kaydedilir (§3).
+- **Sınıflandırma kuralları** da eşiktir (backend ADR 0054): düşüş eşiği (%), boş sağım
+  sınırı (mL) ve bakılan son sağım sayısı; tür bazında. `expectedPerMilkingMl` modelde ve
+  formda — önceden yoktu ve gerçek API gövdesiz kaydı 422'yle reddediyordu. PUT kaydedilen
+  satırı döner; gövdesiz cevapta gönderilen değer kullanılır.
 - PUT gövdesi VARSAYIMDIR: §8.5 yolu veriyor, gövde şeklini vermiyor. Tam nesne
   gönderiliyor — kısmi güncelleme, iki kullanıcı aynı anda kaydettiğinde hangi alanın
   kazandığını belirsiz bırakırdı.
