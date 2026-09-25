@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'alert.dart';
@@ -9,6 +9,7 @@ part of 'alert.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -33,16 +34,21 @@ $AlertCopyWith<Alert> get copyWith => _$AlertCopyWithImpl<Alert>(this as Alert, 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Alert&&(identical(other.id, id) || other.id == id)&&(identical(other.message, message) || other.message == message)&&(identical(other.type, type) || other.type == type)&&(identical(other.severity, severity) || other.severity == severity)&&(identical(other.animalId, animalId) || other.animalId == animalId)&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.acknowledgedBy, acknowledgedBy) || other.acknowledgedBy == acknowledgedBy)&&(identical(other.acknowledgedAt, acknowledgedAt) || other.acknowledgedAt == acknowledgedAt)&&(identical(other.resolvedAt, resolvedAt) || other.resolvedAt == resolvedAt));
+  final _this = this as Alert;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Alert&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.message, _this.message) || other.message == _this.message)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.severity, _this.severity) || other.severity == _this.severity)&&(identical(other.animalId, _this.animalId) || other.animalId == _this.animalId)&&(identical(other.sessionId, _this.sessionId) || other.sessionId == _this.sessionId)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.acknowledgedBy, _this.acknowledgedBy) || other.acknowledgedBy == _this.acknowledgedBy)&&(identical(other.acknowledgedAt, _this.acknowledgedAt) || other.acknowledgedAt == _this.acknowledgedAt)&&(identical(other.resolvedAt, _this.resolvedAt) || other.resolvedAt == _this.resolvedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,message,type,severity,animalId,sessionId,createdAt,acknowledgedBy,acknowledgedAt,resolvedAt);
+int get hashCode {
+  final _this = this as Alert;
+  return Object.hash(runtimeType,_this.id,_this.message,_this.type,_this.severity,_this.animalId,_this.sessionId,_this.createdAt,_this.acknowledgedBy,_this.acknowledgedAt,_this.resolvedAt);
+}
 
 @override
 String toString() {
-  return 'Alert(id: $id, message: $message, type: $type, severity: $severity, animalId: $animalId, sessionId: $sessionId, createdAt: $createdAt, acknowledgedBy: $acknowledgedBy, acknowledgedAt: $acknowledgedAt, resolvedAt: $resolvedAt)';
+  final _this = this as Alert;
+  return 'Alert(id: ${_this.id}, message: ${_this.message}, type: ${_this.type}, severity: ${_this.severity}, animalId: ${_this.animalId}, sessionId: ${_this.sessionId}, createdAt: ${_this.createdAt}, acknowledgedBy: ${_this.acknowledgedBy}, acknowledgedAt: ${_this.acknowledgedAt}, resolvedAt: ${_this.resolvedAt})';
 }
 
 
@@ -71,7 +77,7 @@ class _$AlertCopyWithImpl<$Res>
 /// Create a copy of Alert
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? message = null,Object? type = null,Object? severity = null,Object? animalId = freezed,Object? sessionId = freezed,Object? createdAt = freezed,Object? acknowledgedBy = freezed,Object? acknowledgedAt = freezed,Object? resolvedAt = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(Alert(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
@@ -255,16 +261,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Alert&&(identical(other.id, id) || other.id == id)&&(identical(other.message, message) || other.message == message)&&(identical(other.type, type) || other.type == type)&&(identical(other.severity, severity) || other.severity == severity)&&(identical(other.animalId, animalId) || other.animalId == animalId)&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.acknowledgedBy, acknowledgedBy) || other.acknowledgedBy == acknowledgedBy)&&(identical(other.acknowledgedAt, acknowledgedAt) || other.acknowledgedAt == acknowledgedAt)&&(identical(other.resolvedAt, resolvedAt) || other.resolvedAt == resolvedAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Alert&&(identical(other.id, id) || other.id == id)&&(identical(other.message, message) || other.message == message)&&(identical(other.type, type) || other.type == type)&&(identical(other.severity, severity) || other.severity == severity)&&(identical(other.animalId, animalId) || other.animalId == animalId)&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.acknowledgedBy, acknowledgedBy) || other.acknowledgedBy == acknowledgedBy)&&(identical(other.acknowledgedAt, acknowledgedAt) || other.acknowledgedAt == acknowledgedAt)&&(identical(other.resolvedAt, resolvedAt) || other.resolvedAt == resolvedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,message,type,severity,animalId,sessionId,createdAt,acknowledgedBy,acknowledgedAt,resolvedAt);
+int get hashCode {
+    return Object.hash(runtimeType,id,message,type,severity,animalId,sessionId,createdAt,acknowledgedBy,acknowledgedAt,resolvedAt);
+}
 
 @override
 String toString() {
-  return 'Alert(id: $id, message: $message, type: $type, severity: $severity, animalId: $animalId, sessionId: $sessionId, createdAt: $createdAt, acknowledgedBy: $acknowledgedBy, acknowledgedAt: $acknowledgedAt, resolvedAt: $resolvedAt)';
+    return 'Alert(id: $id, message: $message, type: $type, severity: $severity, animalId: $animalId, sessionId: $sessionId, createdAt: $createdAt, acknowledgedBy: $acknowledgedBy, acknowledgedAt: $acknowledgedAt, resolvedAt: $resolvedAt)';
 }
 
 

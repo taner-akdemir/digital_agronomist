@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'spout_update.dart';
@@ -9,6 +9,7 @@ part of 'spout_update.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -37,16 +38,21 @@ $SpoutUpdateCopyWith<SpoutUpdate> get copyWith => _$SpoutUpdateCopyWithImpl<Spou
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SpoutUpdate&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.spoutId, spoutId) || other.spoutId == spoutId)&&(identical(other.animal, animal) || other.animal == animal)&&(identical(other.flowRate, flowRate) || other.flowRate == flowRate)&&(identical(other.volumeMl, volumeMl) || other.volumeMl == volumeMl)&&(identical(other.expectedMl, expectedMl) || other.expectedMl == expectedMl)&&(identical(other.yieldPct, yieldPct) || other.yieldPct == yieldPct)&&(identical(other.flowColor, flowColor) || other.flowColor == flowColor)&&(identical(other.yieldColor, yieldColor) || other.yieldColor == yieldColor)&&(identical(other.state, state) || other.state == state)&&(identical(other.ts, ts) || other.ts == ts)&&(identical(other.unmatchedTag, unmatchedTag) || other.unmatchedTag == unmatchedTag));
+  final _this = this as SpoutUpdate;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SpoutUpdate&&(identical(other.sessionId, _this.sessionId) || other.sessionId == _this.sessionId)&&(identical(other.spoutId, _this.spoutId) || other.spoutId == _this.spoutId)&&(identical(other.animal, _this.animal) || other.animal == _this.animal)&&(identical(other.flowRate, _this.flowRate) || other.flowRate == _this.flowRate)&&(identical(other.volumeMl, _this.volumeMl) || other.volumeMl == _this.volumeMl)&&(identical(other.expectedMl, _this.expectedMl) || other.expectedMl == _this.expectedMl)&&(identical(other.yieldPct, _this.yieldPct) || other.yieldPct == _this.yieldPct)&&(identical(other.flowColor, _this.flowColor) || other.flowColor == _this.flowColor)&&(identical(other.yieldColor, _this.yieldColor) || other.yieldColor == _this.yieldColor)&&(identical(other.state, _this.state) || other.state == _this.state)&&(identical(other.ts, _this.ts) || other.ts == _this.ts)&&(identical(other.unmatchedTag, _this.unmatchedTag) || other.unmatchedTag == _this.unmatchedTag));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,sessionId,spoutId,animal,flowRate,volumeMl,expectedMl,yieldPct,flowColor,yieldColor,state,ts,unmatchedTag);
+int get hashCode {
+  final _this = this as SpoutUpdate;
+  return Object.hash(runtimeType,_this.sessionId,_this.spoutId,_this.animal,_this.flowRate,_this.volumeMl,_this.expectedMl,_this.yieldPct,_this.flowColor,_this.yieldColor,_this.state,_this.ts,_this.unmatchedTag);
+}
 
 @override
 String toString() {
-  return 'SpoutUpdate(sessionId: $sessionId, spoutId: $spoutId, animal: $animal, flowRate: $flowRate, volumeMl: $volumeMl, expectedMl: $expectedMl, yieldPct: $yieldPct, flowColor: $flowColor, yieldColor: $yieldColor, state: $state, ts: $ts, unmatchedTag: $unmatchedTag)';
+  final _this = this as SpoutUpdate;
+  return 'SpoutUpdate(sessionId: ${_this.sessionId}, spoutId: ${_this.spoutId}, animal: ${_this.animal}, flowRate: ${_this.flowRate}, volumeMl: ${_this.volumeMl}, expectedMl: ${_this.expectedMl}, yieldPct: ${_this.yieldPct}, flowColor: ${_this.flowColor}, yieldColor: ${_this.yieldColor}, state: ${_this.state}, ts: ${_this.ts}, unmatchedTag: ${_this.unmatchedTag})';
 }
 
 
@@ -75,7 +81,7 @@ class _$SpoutUpdateCopyWithImpl<$Res>
 /// Create a copy of SpoutUpdate
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? sessionId = null,Object? spoutId = null,Object? animal = freezed,Object? flowRate = null,Object? volumeMl = null,Object? expectedMl = null,Object? yieldPct = null,Object? flowColor = null,Object? yieldColor = null,Object? state = null,Object? ts = freezed,Object? unmatchedTag = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(SpoutUpdate(
 sessionId: null == sessionId ? _self.sessionId : sessionId // ignore: cast_nullable_to_non_nullable
 as String,spoutId: null == spoutId ? _self.spoutId : spoutId // ignore: cast_nullable_to_non_nullable
 as String,animal: freezed == animal ? _self.animal : animal // ignore: cast_nullable_to_non_nullable
@@ -291,16 +297,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SpoutUpdate&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.spoutId, spoutId) || other.spoutId == spoutId)&&(identical(other.animal, animal) || other.animal == animal)&&(identical(other.flowRate, flowRate) || other.flowRate == flowRate)&&(identical(other.volumeMl, volumeMl) || other.volumeMl == volumeMl)&&(identical(other.expectedMl, expectedMl) || other.expectedMl == expectedMl)&&(identical(other.yieldPct, yieldPct) || other.yieldPct == yieldPct)&&(identical(other.flowColor, flowColor) || other.flowColor == flowColor)&&(identical(other.yieldColor, yieldColor) || other.yieldColor == yieldColor)&&(identical(other.state, state) || other.state == state)&&(identical(other.ts, ts) || other.ts == ts)&&(identical(other.unmatchedTag, unmatchedTag) || other.unmatchedTag == unmatchedTag));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SpoutUpdate&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.spoutId, spoutId) || other.spoutId == spoutId)&&(identical(other.animal, animal) || other.animal == animal)&&(identical(other.flowRate, flowRate) || other.flowRate == flowRate)&&(identical(other.volumeMl, volumeMl) || other.volumeMl == volumeMl)&&(identical(other.expectedMl, expectedMl) || other.expectedMl == expectedMl)&&(identical(other.yieldPct, yieldPct) || other.yieldPct == yieldPct)&&(identical(other.flowColor, flowColor) || other.flowColor == flowColor)&&(identical(other.yieldColor, yieldColor) || other.yieldColor == yieldColor)&&(identical(other.state, state) || other.state == state)&&(identical(other.ts, ts) || other.ts == ts)&&(identical(other.unmatchedTag, unmatchedTag) || other.unmatchedTag == unmatchedTag));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,sessionId,spoutId,animal,flowRate,volumeMl,expectedMl,yieldPct,flowColor,yieldColor,state,ts,unmatchedTag);
+int get hashCode {
+    return Object.hash(runtimeType,sessionId,spoutId,animal,flowRate,volumeMl,expectedMl,yieldPct,flowColor,yieldColor,state,ts,unmatchedTag);
+}
 
 @override
 String toString() {
-  return 'SpoutUpdate(sessionId: $sessionId, spoutId: $spoutId, animal: $animal, flowRate: $flowRate, volumeMl: $volumeMl, expectedMl: $expectedMl, yieldPct: $yieldPct, flowColor: $flowColor, yieldColor: $yieldColor, state: $state, ts: $ts, unmatchedTag: $unmatchedTag)';
+    return 'SpoutUpdate(sessionId: $sessionId, spoutId: $spoutId, animal: $animal, flowRate: $flowRate, volumeMl: $volumeMl, expectedMl: $expectedMl, yieldPct: $yieldPct, flowColor: $flowColor, yieldColor: $yieldColor, state: $state, ts: $ts, unmatchedTag: $unmatchedTag)';
 }
 
 
@@ -390,16 +398,21 @@ $SpoutAnimalCopyWith<SpoutAnimal> get copyWith => _$SpoutAnimalCopyWithImpl<Spou
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SpoutAnimal&&(identical(other.id, id) || other.id == id)&&(identical(other.earTag, earTag) || other.earTag == earTag)&&(identical(other.species, species) || other.species == species)&&(identical(other.name, name) || other.name == name));
+  final _this = this as SpoutAnimal;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SpoutAnimal&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.earTag, _this.earTag) || other.earTag == _this.earTag)&&(identical(other.species, _this.species) || other.species == _this.species)&&(identical(other.name, _this.name) || other.name == _this.name));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,earTag,species,name);
+int get hashCode {
+  final _this = this as SpoutAnimal;
+  return Object.hash(runtimeType,_this.id,_this.earTag,_this.species,_this.name);
+}
 
 @override
 String toString() {
-  return 'SpoutAnimal(id: $id, earTag: $earTag, species: $species, name: $name)';
+  final _this = this as SpoutAnimal;
+  return 'SpoutAnimal(id: ${_this.id}, earTag: ${_this.earTag}, species: ${_this.species}, name: ${_this.name})';
 }
 
 
@@ -428,7 +441,7 @@ class _$SpoutAnimalCopyWithImpl<$Res>
 /// Create a copy of SpoutAnimal
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? earTag = null,Object? species = freezed,Object? name = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(SpoutAnimal(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,earTag: null == earTag ? _self.earTag : earTag // ignore: cast_nullable_to_non_nullable
 as String,species: freezed == species ? _self.species : species // ignore: cast_nullable_to_non_nullable
@@ -595,16 +608,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SpoutAnimal&&(identical(other.id, id) || other.id == id)&&(identical(other.earTag, earTag) || other.earTag == earTag)&&(identical(other.species, species) || other.species == species)&&(identical(other.name, name) || other.name == name));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SpoutAnimal&&(identical(other.id, id) || other.id == id)&&(identical(other.earTag, earTag) || other.earTag == earTag)&&(identical(other.species, species) || other.species == species)&&(identical(other.name, name) || other.name == name));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,earTag,species,name);
+int get hashCode {
+    return Object.hash(runtimeType,id,earTag,species,name);
+}
 
 @override
 String toString() {
-  return 'SpoutAnimal(id: $id, earTag: $earTag, species: $species, name: $name)';
+    return 'SpoutAnimal(id: $id, earTag: $earTag, species: $species, name: $name)';
 }
 
 
@@ -664,16 +679,21 @@ $UnmatchedTagCopyWith<UnmatchedTag> get copyWith => _$UnmatchedTagCopyWithImpl<U
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UnmatchedTag&&(identical(other.rfid, rfid) || other.rfid == rfid)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.message, message) || other.message == message)&&(identical(other.at, at) || other.at == at));
+  final _this = this as UnmatchedTag;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UnmatchedTag&&(identical(other.rfid, _this.rfid) || other.rfid == _this.rfid)&&(identical(other.reason, _this.reason) || other.reason == _this.reason)&&(identical(other.message, _this.message) || other.message == _this.message)&&(identical(other.at, _this.at) || other.at == _this.at));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,rfid,reason,message,at);
+int get hashCode {
+  final _this = this as UnmatchedTag;
+  return Object.hash(runtimeType,_this.rfid,_this.reason,_this.message,_this.at);
+}
 
 @override
 String toString() {
-  return 'UnmatchedTag(rfid: $rfid, reason: $reason, message: $message, at: $at)';
+  final _this = this as UnmatchedTag;
+  return 'UnmatchedTag(rfid: ${_this.rfid}, reason: ${_this.reason}, message: ${_this.message}, at: ${_this.at})';
 }
 
 
@@ -702,7 +722,7 @@ class _$UnmatchedTagCopyWithImpl<$Res>
 /// Create a copy of UnmatchedTag
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? rfid = null,Object? reason = null,Object? message = null,Object? at = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(UnmatchedTag(
 rfid: null == rfid ? _self.rfid : rfid // ignore: cast_nullable_to_non_nullable
 as String,reason: null == reason ? _self.reason : reason // ignore: cast_nullable_to_non_nullable
 as String,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
@@ -871,16 +891,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UnmatchedTag&&(identical(other.rfid, rfid) || other.rfid == rfid)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.message, message) || other.message == message)&&(identical(other.at, at) || other.at == at));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _UnmatchedTag&&(identical(other.rfid, rfid) || other.rfid == rfid)&&(identical(other.reason, reason) || other.reason == reason)&&(identical(other.message, message) || other.message == message)&&(identical(other.at, at) || other.at == at));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,rfid,reason,message,at);
+int get hashCode {
+    return Object.hash(runtimeType,rfid,reason,message,at);
+}
 
 @override
 String toString() {
-  return 'UnmatchedTag(rfid: $rfid, reason: $reason, message: $message, at: $at)';
+    return 'UnmatchedTag(rfid: $rfid, reason: $reason, message: $message, at: $at)';
 }
 
 

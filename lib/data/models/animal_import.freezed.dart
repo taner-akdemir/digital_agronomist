@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'animal_import.dart';
@@ -9,6 +9,7 @@ part of 'animal_import.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -32,16 +33,21 @@ $AnimalImportReportCopyWith<AnimalImportReport> get copyWith => _$AnimalImportRe
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AnimalImportReport&&(identical(other.dryRun, dryRun) || other.dryRun == dryRun)&&(identical(other.total, total) || other.total == total)&&(identical(other.create, create) || other.create == create)&&(identical(other.exists, exists) || other.exists == exists)&&(identical(other.errors, errors) || other.errors == errors)&&const DeepCollectionEquality().equals(other.ignoredColumns, ignoredColumns)&&const DeepCollectionEquality().equals(other.rows, rows));
+  final _this = this as AnimalImportReport;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AnimalImportReport&&(identical(other.dryRun, _this.dryRun) || other.dryRun == _this.dryRun)&&(identical(other.total, _this.total) || other.total == _this.total)&&(identical(other.create, _this.create) || other.create == _this.create)&&(identical(other.exists, _this.exists) || other.exists == _this.exists)&&(identical(other.errors, _this.errors) || other.errors == _this.errors)&&const DeepCollectionEquality().equals(other.ignoredColumns, _this.ignoredColumns)&&const DeepCollectionEquality().equals(other.rows, _this.rows));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,dryRun,total,create,exists,errors,const DeepCollectionEquality().hash(ignoredColumns),const DeepCollectionEquality().hash(rows));
+int get hashCode {
+  final _this = this as AnimalImportReport;
+  return Object.hash(runtimeType,_this.dryRun,_this.total,_this.create,_this.exists,_this.errors,const DeepCollectionEquality().hash(_this.ignoredColumns),const DeepCollectionEquality().hash(_this.rows));
+}
 
 @override
 String toString() {
-  return 'AnimalImportReport(dryRun: $dryRun, total: $total, create: $create, exists: $exists, errors: $errors, ignoredColumns: $ignoredColumns, rows: $rows)';
+  final _this = this as AnimalImportReport;
+  return 'AnimalImportReport(dryRun: ${_this.dryRun}, total: ${_this.total}, create: ${_this.create}, exists: ${_this.exists}, errors: ${_this.errors}, ignoredColumns: ${_this.ignoredColumns}, rows: ${_this.rows})';
 }
 
 
@@ -70,7 +76,7 @@ class _$AnimalImportReportCopyWithImpl<$Res>
 /// Create a copy of AnimalImportReport
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? dryRun = null,Object? total = null,Object? create = null,Object? exists = null,Object? errors = null,Object? ignoredColumns = null,Object? rows = null,}) {
-  return _then(_self.copyWith(
+  return _then(AnimalImportReport(
 dryRun: null == dryRun ? _self.dryRun : dryRun // ignore: cast_nullable_to_non_nullable
 as bool,total: null == total ? _self.total : total // ignore: cast_nullable_to_non_nullable
 as int,create: null == create ? _self.create : create // ignore: cast_nullable_to_non_nullable
@@ -219,7 +225,7 @@ return $default(_that.dryRun,_that.total,_that.create,_that.exists,_that.errors,
 @JsonSerializable()
 
 class _AnimalImportReport implements AnimalImportReport {
-  const _AnimalImportReport({this.dryRun = false, this.total = 0, this.create = 0, this.exists = 0, this.errors = 0, final  List<String> ignoredColumns = const <String>[], final  List<AnimalImportRow> rows = const <AnimalImportRow>[]}): _ignoredColumns = ignoredColumns,_rows = rows;
+  const _AnimalImportReport({this.dryRun = false, this.total = 0, this.create = 0, this.exists = 0, this.errors = 0,  List<String> ignoredColumns = const <String>[],  List<AnimalImportRow> rows = const <AnimalImportRow>[]}): _ignoredColumns = ignoredColumns,_rows = rows;
   factory _AnimalImportReport.fromJson(Map<String, dynamic> json) => _$AnimalImportReportFromJson(json);
 
 @override@JsonKey() final  bool dryRun;
@@ -260,16 +266,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AnimalImportReport&&(identical(other.dryRun, dryRun) || other.dryRun == dryRun)&&(identical(other.total, total) || other.total == total)&&(identical(other.create, create) || other.create == create)&&(identical(other.exists, exists) || other.exists == exists)&&(identical(other.errors, errors) || other.errors == errors)&&const DeepCollectionEquality().equals(other._ignoredColumns, _ignoredColumns)&&const DeepCollectionEquality().equals(other._rows, _rows));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AnimalImportReport&&(identical(other.dryRun, dryRun) || other.dryRun == dryRun)&&(identical(other.total, total) || other.total == total)&&(identical(other.create, create) || other.create == create)&&(identical(other.exists, exists) || other.exists == exists)&&(identical(other.errors, errors) || other.errors == errors)&&const DeepCollectionEquality().equals(other.ignoredColumns, _ignoredColumns)&&const DeepCollectionEquality().equals(other.rows, _rows));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,dryRun,total,create,exists,errors,const DeepCollectionEquality().hash(_ignoredColumns),const DeepCollectionEquality().hash(_rows));
+int get hashCode {
+    return Object.hash(runtimeType,dryRun,total,create,exists,errors,const DeepCollectionEquality().hash(_ignoredColumns),const DeepCollectionEquality().hash(_rows));
+}
 
 @override
 String toString() {
-  return 'AnimalImportReport(dryRun: $dryRun, total: $total, create: $create, exists: $exists, errors: $errors, ignoredColumns: $ignoredColumns, rows: $rows)';
+    return 'AnimalImportReport(dryRun: $dryRun, total: $total, create: $create, exists: $exists, errors: $errors, ignoredColumns: $ignoredColumns, rows: $rows)';
 }
 
 
@@ -335,16 +343,21 @@ $AnimalImportRowCopyWith<AnimalImportRow> get copyWith => _$AnimalImportRowCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AnimalImportRow&&(identical(other.line, line) || other.line == line)&&(identical(other.earTag, earTag) || other.earTag == earTag)&&(identical(other.name, name) || other.name == name)&&(identical(other.outcome, outcome) || other.outcome == outcome)&&(identical(other.message, message) || other.message == message)&&(identical(other.warning, warning) || other.warning == warning)&&(identical(other.animalId, animalId) || other.animalId == animalId));
+  final _this = this as AnimalImportRow;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AnimalImportRow&&(identical(other.line, _this.line) || other.line == _this.line)&&(identical(other.earTag, _this.earTag) || other.earTag == _this.earTag)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.outcome, _this.outcome) || other.outcome == _this.outcome)&&(identical(other.message, _this.message) || other.message == _this.message)&&(identical(other.warning, _this.warning) || other.warning == _this.warning)&&(identical(other.animalId, _this.animalId) || other.animalId == _this.animalId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,line,earTag,name,outcome,message,warning,animalId);
+int get hashCode {
+  final _this = this as AnimalImportRow;
+  return Object.hash(runtimeType,_this.line,_this.earTag,_this.name,_this.outcome,_this.message,_this.warning,_this.animalId);
+}
 
 @override
 String toString() {
-  return 'AnimalImportRow(line: $line, earTag: $earTag, name: $name, outcome: $outcome, message: $message, warning: $warning, animalId: $animalId)';
+  final _this = this as AnimalImportRow;
+  return 'AnimalImportRow(line: ${_this.line}, earTag: ${_this.earTag}, name: ${_this.name}, outcome: ${_this.outcome}, message: ${_this.message}, warning: ${_this.warning}, animalId: ${_this.animalId})';
 }
 
 
@@ -373,7 +386,7 @@ class _$AnimalImportRowCopyWithImpl<$Res>
 /// Create a copy of AnimalImportRow
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? line = null,Object? earTag = null,Object? name = freezed,Object? outcome = null,Object? message = freezed,Object? warning = freezed,Object? animalId = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(AnimalImportRow(
 line: null == line ? _self.line : line // ignore: cast_nullable_to_non_nullable
 as int,earTag: null == earTag ? _self.earTag : earTag // ignore: cast_nullable_to_non_nullable
 as String,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -551,16 +564,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AnimalImportRow&&(identical(other.line, line) || other.line == line)&&(identical(other.earTag, earTag) || other.earTag == earTag)&&(identical(other.name, name) || other.name == name)&&(identical(other.outcome, outcome) || other.outcome == outcome)&&(identical(other.message, message) || other.message == message)&&(identical(other.warning, warning) || other.warning == warning)&&(identical(other.animalId, animalId) || other.animalId == animalId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AnimalImportRow&&(identical(other.line, line) || other.line == line)&&(identical(other.earTag, earTag) || other.earTag == earTag)&&(identical(other.name, name) || other.name == name)&&(identical(other.outcome, outcome) || other.outcome == outcome)&&(identical(other.message, message) || other.message == message)&&(identical(other.warning, warning) || other.warning == warning)&&(identical(other.animalId, animalId) || other.animalId == animalId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,line,earTag,name,outcome,message,warning,animalId);
+int get hashCode {
+    return Object.hash(runtimeType,line,earTag,name,outcome,message,warning,animalId);
+}
 
 @override
 String toString() {
-  return 'AnimalImportRow(line: $line, earTag: $earTag, name: $name, outcome: $outcome, message: $message, warning: $warning, animalId: $animalId)';
+    return 'AnimalImportRow(line: $line, earTag: $earTag, name: $name, outcome: $outcome, message: $message, warning: $warning, animalId: $animalId)';
 }
 
 

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'spout.dart';
@@ -9,6 +9,7 @@ part of 'spout.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -29,16 +30,21 @@ $SpoutCopyWith<Spout> get copyWith => _$SpoutCopyWithImpl<Spout>(this as Spout, 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Spout&&(identical(other.id, id) || other.id == id)&&(identical(other.vacuumId, vacuumId) || other.vacuumId == vacuumId)&&(identical(other.positionNo, positionNo) || other.positionNo == positionNo));
+  final _this = this as Spout;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Spout&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.vacuumId, _this.vacuumId) || other.vacuumId == _this.vacuumId)&&(identical(other.positionNo, _this.positionNo) || other.positionNo == _this.positionNo));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,vacuumId,positionNo);
+int get hashCode {
+  final _this = this as Spout;
+  return Object.hash(runtimeType,_this.id,_this.vacuumId,_this.positionNo);
+}
 
 @override
 String toString() {
-  return 'Spout(id: $id, vacuumId: $vacuumId, positionNo: $positionNo)';
+  final _this = this as Spout;
+  return 'Spout(id: ${_this.id}, vacuumId: ${_this.vacuumId}, positionNo: ${_this.positionNo})';
 }
 
 
@@ -67,7 +73,7 @@ class _$SpoutCopyWithImpl<$Res>
 /// Create a copy of Spout
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? vacuumId = null,Object? positionNo = null,}) {
-  return _then(_self.copyWith(
+  return _then(Spout(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,vacuumId: null == vacuumId ? _self.vacuumId : vacuumId // ignore: cast_nullable_to_non_nullable
 as String,positionNo: null == positionNo ? _self.positionNo : positionNo // ignore: cast_nullable_to_non_nullable
@@ -233,16 +239,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Spout&&(identical(other.id, id) || other.id == id)&&(identical(other.vacuumId, vacuumId) || other.vacuumId == vacuumId)&&(identical(other.positionNo, positionNo) || other.positionNo == positionNo));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Spout&&(identical(other.id, id) || other.id == id)&&(identical(other.vacuumId, vacuumId) || other.vacuumId == vacuumId)&&(identical(other.positionNo, positionNo) || other.positionNo == positionNo));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,vacuumId,positionNo);
+int get hashCode {
+    return Object.hash(runtimeType,id,vacuumId,positionNo);
+}
 
 @override
 String toString() {
-  return 'Spout(id: $id, vacuumId: $vacuumId, positionNo: $positionNo)';
+    return 'Spout(id: $id, vacuumId: $vacuumId, positionNo: $positionNo)';
 }
 
 

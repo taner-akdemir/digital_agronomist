@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'device_profile.dart';
@@ -9,6 +9,7 @@ part of 'device_profile.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -36,16 +37,21 @@ $DeviceProfileCopyWith<DeviceProfile> get copyWith => _$DeviceProfileCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DeviceProfile&&(identical(other.id, id) || other.id == id)&&(identical(other.vendor, vendor) || other.vendor == vendor)&&(identical(other.model, model) || other.model == model)&&(identical(other.protocol, protocol) || other.protocol == protocol)&&(identical(other.version, version) || other.version == version)&&(identical(other.status, status) || other.status == status));
+  final _this = this as DeviceProfile;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DeviceProfile&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.vendor, _this.vendor) || other.vendor == _this.vendor)&&(identical(other.model, _this.model) || other.model == _this.model)&&(identical(other.protocol, _this.protocol) || other.protocol == _this.protocol)&&(identical(other.version, _this.version) || other.version == _this.version)&&(identical(other.status, _this.status) || other.status == _this.status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,vendor,model,protocol,version,status);
+int get hashCode {
+  final _this = this as DeviceProfile;
+  return Object.hash(runtimeType,_this.id,_this.vendor,_this.model,_this.protocol,_this.version,_this.status);
+}
 
 @override
 String toString() {
-  return 'DeviceProfile(id: $id, vendor: $vendor, model: $model, protocol: $protocol, version: $version, status: $status)';
+  final _this = this as DeviceProfile;
+  return 'DeviceProfile(id: ${_this.id}, vendor: ${_this.vendor}, model: ${_this.model}, protocol: ${_this.protocol}, version: ${_this.version}, status: ${_this.status})';
 }
 
 
@@ -74,7 +80,7 @@ class _$DeviceProfileCopyWithImpl<$Res>
 /// Create a copy of DeviceProfile
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? vendor = null,Object? model = null,Object? protocol = null,Object? version = null,Object? status = null,}) {
-  return _then(_self.copyWith(
+  return _then(DeviceProfile(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,vendor: null == vendor ? _self.vendor : vendor // ignore: cast_nullable_to_non_nullable
 as String,model: null == model ? _self.model : model // ignore: cast_nullable_to_non_nullable
@@ -253,16 +259,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DeviceProfile&&(identical(other.id, id) || other.id == id)&&(identical(other.vendor, vendor) || other.vendor == vendor)&&(identical(other.model, model) || other.model == model)&&(identical(other.protocol, protocol) || other.protocol == protocol)&&(identical(other.version, version) || other.version == version)&&(identical(other.status, status) || other.status == status));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _DeviceProfile&&(identical(other.id, id) || other.id == id)&&(identical(other.vendor, vendor) || other.vendor == vendor)&&(identical(other.model, model) || other.model == model)&&(identical(other.protocol, protocol) || other.protocol == protocol)&&(identical(other.version, version) || other.version == version)&&(identical(other.status, status) || other.status == status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,vendor,model,protocol,version,status);
+int get hashCode {
+    return Object.hash(runtimeType,id,vendor,model,protocol,version,status);
+}
 
 @override
 String toString() {
-  return 'DeviceProfile(id: $id, vendor: $vendor, model: $model, protocol: $protocol, version: $version, status: $status)';
+    return 'DeviceProfile(id: $id, vendor: $vendor, model: $model, protocol: $protocol, version: $version, status: $status)';
 }
 
 

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'notification_channel.dart';
@@ -9,6 +9,7 @@ part of 'notification_channel.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -36,16 +37,21 @@ $NotificationChannelCopyWith<NotificationChannel> get copyWith => _$Notification
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationChannel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.tenantId, tenantId) || other.tenantId == tenantId)&&const DeepCollectionEquality().equals(other.config, config)&&const DeepCollectionEquality().equals(other.secrets, secrets)&&const DeepCollectionEquality().equals(other.recipients, recipients)&&(identical(other.minSeverity, minSeverity) || other.minSeverity == minSeverity)&&(identical(other.sendResolved, sendResolved) || other.sendResolved == sendResolved)&&(identical(other.enabled, enabled) || other.enabled == enabled)&&const DeepCollectionEquality().equals(other.sources, sources)&&(identical(other.dailyLimit, dailyLimit) || other.dailyLimit == dailyLimit)&&(identical(other.effectiveDailyLimit, effectiveDailyLimit) || other.effectiveDailyLimit == effectiveDailyLimit)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  final _this = this as NotificationChannel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationChannel&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.kind, _this.kind) || other.kind == _this.kind)&&(identical(other.provider, _this.provider) || other.provider == _this.provider)&&(identical(other.tenantId, _this.tenantId) || other.tenantId == _this.tenantId)&&const DeepCollectionEquality().equals(other.config, _this.config)&&const DeepCollectionEquality().equals(other.secrets, _this.secrets)&&const DeepCollectionEquality().equals(other.recipients, _this.recipients)&&(identical(other.minSeverity, _this.minSeverity) || other.minSeverity == _this.minSeverity)&&(identical(other.sendResolved, _this.sendResolved) || other.sendResolved == _this.sendResolved)&&(identical(other.enabled, _this.enabled) || other.enabled == _this.enabled)&&const DeepCollectionEquality().equals(other.sources, _this.sources)&&(identical(other.dailyLimit, _this.dailyLimit) || other.dailyLimit == _this.dailyLimit)&&(identical(other.effectiveDailyLimit, _this.effectiveDailyLimit) || other.effectiveDailyLimit == _this.effectiveDailyLimit)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,kind,provider,tenantId,const DeepCollectionEquality().hash(config),const DeepCollectionEquality().hash(secrets),const DeepCollectionEquality().hash(recipients),minSeverity,sendResolved,enabled,const DeepCollectionEquality().hash(sources),dailyLimit,effectiveDailyLimit,createdAt,updatedAt);
+int get hashCode {
+  final _this = this as NotificationChannel;
+  return Object.hash(runtimeType,_this.id,_this.name,_this.kind,_this.provider,_this.tenantId,const DeepCollectionEquality().hash(_this.config),const DeepCollectionEquality().hash(_this.secrets),const DeepCollectionEquality().hash(_this.recipients),_this.minSeverity,_this.sendResolved,_this.enabled,const DeepCollectionEquality().hash(_this.sources),_this.dailyLimit,_this.effectiveDailyLimit,_this.createdAt,_this.updatedAt);
+}
 
 @override
 String toString() {
-  return 'NotificationChannel(id: $id, name: $name, kind: $kind, provider: $provider, tenantId: $tenantId, config: $config, secrets: $secrets, recipients: $recipients, minSeverity: $minSeverity, sendResolved: $sendResolved, enabled: $enabled, sources: $sources, dailyLimit: $dailyLimit, effectiveDailyLimit: $effectiveDailyLimit, createdAt: $createdAt, updatedAt: $updatedAt)';
+  final _this = this as NotificationChannel;
+  return 'NotificationChannel(id: ${_this.id}, name: ${_this.name}, kind: ${_this.kind}, provider: ${_this.provider}, tenantId: ${_this.tenantId}, config: ${_this.config}, secrets: ${_this.secrets}, recipients: ${_this.recipients}, minSeverity: ${_this.minSeverity}, sendResolved: ${_this.sendResolved}, enabled: ${_this.enabled}, sources: ${_this.sources}, dailyLimit: ${_this.dailyLimit}, effectiveDailyLimit: ${_this.effectiveDailyLimit}, createdAt: ${_this.createdAt}, updatedAt: ${_this.updatedAt})';
 }
 
 
@@ -74,7 +80,7 @@ class _$NotificationChannelCopyWithImpl<$Res>
 /// Create a copy of NotificationChannel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? kind = null,Object? provider = null,Object? tenantId = freezed,Object? config = null,Object? secrets = null,Object? recipients = null,Object? minSeverity = null,Object? sendResolved = null,Object? enabled = null,Object? sources = null,Object? dailyLimit = freezed,Object? effectiveDailyLimit = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(NotificationChannel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,kind: null == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
@@ -232,7 +238,7 @@ return $default(_that.id,_that.name,_that.kind,_that.provider,_that.tenantId,_th
 @JsonSerializable()
 
 class _NotificationChannel implements NotificationChannel {
-  const _NotificationChannel({required this.id, required this.name, required this.kind, required this.provider, this.tenantId, final  Map<String, String> config = const <String, String>{}, final  Map<String, bool> secrets = const <String, bool>{}, final  List<String> recipients = const <String>[], this.minSeverity = 'warning', this.sendResolved = true, this.enabled = true, final  List<String> sources = const <String>['ops', 'summary'], this.dailyLimit, this.effectiveDailyLimit = 0, this.createdAt, this.updatedAt}): _config = config,_secrets = secrets,_recipients = recipients,_sources = sources;
+  const _NotificationChannel({required this.id, required this.name, required this.kind, required this.provider, this.tenantId,  Map<String, String> config = const <String, String>{},  Map<String, bool> secrets = const <String, bool>{},  List<String> recipients = const <String>[], this.minSeverity = 'warning', this.sendResolved = true, this.enabled = true,  List<String> sources = const <String>['ops', 'summary'], this.dailyLimit, this.effectiveDailyLimit = 0, this.createdAt, this.updatedAt}): _config = config,_secrets = secrets,_recipients = recipients,_sources = sources;
   factory _NotificationChannel.fromJson(Map<String, dynamic> json) => _$NotificationChannelFromJson(json);
 
 @override final  String id;
@@ -300,16 +306,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotificationChannel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.tenantId, tenantId) || other.tenantId == tenantId)&&const DeepCollectionEquality().equals(other._config, _config)&&const DeepCollectionEquality().equals(other._secrets, _secrets)&&const DeepCollectionEquality().equals(other._recipients, _recipients)&&(identical(other.minSeverity, minSeverity) || other.minSeverity == minSeverity)&&(identical(other.sendResolved, sendResolved) || other.sendResolved == sendResolved)&&(identical(other.enabled, enabled) || other.enabled == enabled)&&const DeepCollectionEquality().equals(other._sources, _sources)&&(identical(other.dailyLimit, dailyLimit) || other.dailyLimit == dailyLimit)&&(identical(other.effectiveDailyLimit, effectiveDailyLimit) || other.effectiveDailyLimit == effectiveDailyLimit)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotificationChannel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.tenantId, tenantId) || other.tenantId == tenantId)&&const DeepCollectionEquality().equals(other.config, _config)&&const DeepCollectionEquality().equals(other.secrets, _secrets)&&const DeepCollectionEquality().equals(other.recipients, _recipients)&&(identical(other.minSeverity, minSeverity) || other.minSeverity == minSeverity)&&(identical(other.sendResolved, sendResolved) || other.sendResolved == sendResolved)&&(identical(other.enabled, enabled) || other.enabled == enabled)&&const DeepCollectionEquality().equals(other.sources, _sources)&&(identical(other.dailyLimit, dailyLimit) || other.dailyLimit == dailyLimit)&&(identical(other.effectiveDailyLimit, effectiveDailyLimit) || other.effectiveDailyLimit == effectiveDailyLimit)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,kind,provider,tenantId,const DeepCollectionEquality().hash(_config),const DeepCollectionEquality().hash(_secrets),const DeepCollectionEquality().hash(_recipients),minSeverity,sendResolved,enabled,const DeepCollectionEquality().hash(_sources),dailyLimit,effectiveDailyLimit,createdAt,updatedAt);
+int get hashCode {
+    return Object.hash(runtimeType,id,name,kind,provider,tenantId,const DeepCollectionEquality().hash(_config),const DeepCollectionEquality().hash(_secrets),const DeepCollectionEquality().hash(_recipients),minSeverity,sendResolved,enabled,const DeepCollectionEquality().hash(_sources),dailyLimit,effectiveDailyLimit,createdAt,updatedAt);
+}
 
 @override
 String toString() {
-  return 'NotificationChannel(id: $id, name: $name, kind: $kind, provider: $provider, tenantId: $tenantId, config: $config, secrets: $secrets, recipients: $recipients, minSeverity: $minSeverity, sendResolved: $sendResolved, enabled: $enabled, sources: $sources, dailyLimit: $dailyLimit, effectiveDailyLimit: $effectiveDailyLimit, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'NotificationChannel(id: $id, name: $name, kind: $kind, provider: $provider, tenantId: $tenantId, config: $config, secrets: $secrets, recipients: $recipients, minSeverity: $minSeverity, sendResolved: $sendResolved, enabled: $enabled, sources: $sources, dailyLimit: $dailyLimit, effectiveDailyLimit: $effectiveDailyLimit, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -381,16 +389,21 @@ $NotificationProviderCopyWith<NotificationProvider> get copyWith => _$Notificati
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationProvider&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.recipients, recipients) || other.recipients == recipients)&&const DeepCollectionEquality().equals(other.fields, fields)&&(identical(other.defaultDailyLimit, defaultDailyLimit) || other.defaultDailyLimit == defaultDailyLimit));
+  final _this = this as NotificationProvider;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NotificationProvider&&(identical(other.kind, _this.kind) || other.kind == _this.kind)&&(identical(other.provider, _this.provider) || other.provider == _this.provider)&&(identical(other.recipients, _this.recipients) || other.recipients == _this.recipients)&&const DeepCollectionEquality().equals(other.fields, _this.fields)&&(identical(other.defaultDailyLimit, _this.defaultDailyLimit) || other.defaultDailyLimit == _this.defaultDailyLimit));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,kind,provider,recipients,const DeepCollectionEquality().hash(fields),defaultDailyLimit);
+int get hashCode {
+  final _this = this as NotificationProvider;
+  return Object.hash(runtimeType,_this.kind,_this.provider,_this.recipients,const DeepCollectionEquality().hash(_this.fields),_this.defaultDailyLimit);
+}
 
 @override
 String toString() {
-  return 'NotificationProvider(kind: $kind, provider: $provider, recipients: $recipients, fields: $fields, defaultDailyLimit: $defaultDailyLimit)';
+  final _this = this as NotificationProvider;
+  return 'NotificationProvider(kind: ${_this.kind}, provider: ${_this.provider}, recipients: ${_this.recipients}, fields: ${_this.fields}, defaultDailyLimit: ${_this.defaultDailyLimit})';
 }
 
 
@@ -419,7 +432,7 @@ class _$NotificationProviderCopyWithImpl<$Res>
 /// Create a copy of NotificationProvider
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? kind = null,Object? provider = null,Object? recipients = null,Object? fields = null,Object? defaultDailyLimit = null,}) {
-  return _then(_self.copyWith(
+  return _then(NotificationProvider(
 kind: null == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
 as String,provider: null == provider ? _self.provider : provider // ignore: cast_nullable_to_non_nullable
 as String,recipients: null == recipients ? _self.recipients : recipients // ignore: cast_nullable_to_non_nullable
@@ -566,7 +579,7 @@ return $default(_that.kind,_that.provider,_that.recipients,_that.fields,_that.de
 @JsonSerializable()
 
 class _NotificationProvider implements NotificationProvider {
-  const _NotificationProvider({required this.kind, required this.provider, this.recipients = 'none', final  List<ProviderField> fields = const <ProviderField>[], this.defaultDailyLimit = 0}): _fields = fields;
+  const _NotificationProvider({required this.kind, required this.provider, this.recipients = 'none',  List<ProviderField> fields = const <ProviderField>[], this.defaultDailyLimit = 0}): _fields = fields;
   factory _NotificationProvider.fromJson(Map<String, dynamic> json) => _$NotificationProviderFromJson(json);
 
 @override final  String kind;
@@ -596,16 +609,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotificationProvider&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.recipients, recipients) || other.recipients == recipients)&&const DeepCollectionEquality().equals(other._fields, _fields)&&(identical(other.defaultDailyLimit, defaultDailyLimit) || other.defaultDailyLimit == defaultDailyLimit));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _NotificationProvider&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.provider, provider) || other.provider == provider)&&(identical(other.recipients, recipients) || other.recipients == recipients)&&const DeepCollectionEquality().equals(other.fields, _fields)&&(identical(other.defaultDailyLimit, defaultDailyLimit) || other.defaultDailyLimit == defaultDailyLimit));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,kind,provider,recipients,const DeepCollectionEquality().hash(_fields),defaultDailyLimit);
+int get hashCode {
+    return Object.hash(runtimeType,kind,provider,recipients,const DeepCollectionEquality().hash(_fields),defaultDailyLimit);
+}
 
 @override
 String toString() {
-  return 'NotificationProvider(kind: $kind, provider: $provider, recipients: $recipients, fields: $fields, defaultDailyLimit: $defaultDailyLimit)';
+    return 'NotificationProvider(kind: $kind, provider: $provider, recipients: $recipients, fields: $fields, defaultDailyLimit: $defaultDailyLimit)';
 }
 
 
@@ -664,16 +679,21 @@ $ProviderFieldCopyWith<ProviderField> get copyWith => _$ProviderFieldCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProviderField&&(identical(other.name, name) || other.name == name)&&(identical(other.required, required) || other.required == required)&&(identical(other.secret, secret) || other.secret == secret));
+  final _this = this as ProviderField;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProviderField&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.required, _this.required) || other.required == _this.required)&&(identical(other.secret, _this.secret) || other.secret == _this.secret));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,required,secret);
+int get hashCode {
+  final _this = this as ProviderField;
+  return Object.hash(runtimeType,_this.name,_this.required,_this.secret);
+}
 
 @override
 String toString() {
-  return 'ProviderField(name: $name, required: $required, secret: $secret)';
+  final _this = this as ProviderField;
+  return 'ProviderField(name: ${_this.name}, required: ${_this.required}, secret: ${_this.secret})';
 }
 
 
@@ -702,7 +722,7 @@ class _$ProviderFieldCopyWithImpl<$Res>
 /// Create a copy of ProviderField
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? required = null,Object? secret = null,}) {
-  return _then(_self.copyWith(
+  return _then(ProviderField(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,required: null == required ? _self.required : required // ignore: cast_nullable_to_non_nullable
 as bool,secret: null == secret ? _self.secret : secret // ignore: cast_nullable_to_non_nullable
@@ -867,16 +887,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProviderField&&(identical(other.name, name) || other.name == name)&&(identical(other.required, required) || other.required == required)&&(identical(other.secret, secret) || other.secret == secret));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProviderField&&(identical(other.name, name) || other.name == name)&&(identical(other.required, required) || other.required == required)&&(identical(other.secret, secret) || other.secret == secret));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,required,secret);
+int get hashCode {
+    return Object.hash(runtimeType,name,required,secret);
+}
 
 @override
 String toString() {
-  return 'ProviderField(name: $name, required: $required, secret: $secret)';
+    return 'ProviderField(name: $name, required: $required, secret: $secret)';
 }
 
 

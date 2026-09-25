@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'animal_milking.dart';
@@ -9,6 +9,7 @@ part of 'animal_milking.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -39,16 +40,21 @@ $AnimalMilkingCopyWith<AnimalMilking> get copyWith => _$AnimalMilkingCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AnimalMilking&&(identical(other.id, id) || other.id == id)&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.animalId, animalId) || other.animalId == animalId)&&(identical(other.spoutId, spoutId) || other.spoutId == spoutId)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.endedAt, endedAt) || other.endedAt == endedAt)&&(identical(other.volumeMl, volumeMl) || other.volumeMl == volumeMl)&&(identical(other.expectedMl, expectedMl) || other.expectedMl == expectedMl)&&(identical(other.peakFlow, peakFlow) || other.peakFlow == peakFlow)&&(identical(other.avgFlow, avgFlow) || other.avgFlow == avgFlow)&&(identical(other.yieldPct, yieldPct) || other.yieldPct == yieldPct)&&(identical(other.color, color) || other.color == color)&&(identical(other.sessionType, sessionType) || other.sessionType == sessionType)&&(identical(other.endReason, endReason) || other.endReason == endReason));
+  final _this = this as AnimalMilking;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AnimalMilking&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.sessionId, _this.sessionId) || other.sessionId == _this.sessionId)&&(identical(other.animalId, _this.animalId) || other.animalId == _this.animalId)&&(identical(other.spoutId, _this.spoutId) || other.spoutId == _this.spoutId)&&(identical(other.startedAt, _this.startedAt) || other.startedAt == _this.startedAt)&&(identical(other.endedAt, _this.endedAt) || other.endedAt == _this.endedAt)&&(identical(other.volumeMl, _this.volumeMl) || other.volumeMl == _this.volumeMl)&&(identical(other.expectedMl, _this.expectedMl) || other.expectedMl == _this.expectedMl)&&(identical(other.peakFlow, _this.peakFlow) || other.peakFlow == _this.peakFlow)&&(identical(other.avgFlow, _this.avgFlow) || other.avgFlow == _this.avgFlow)&&(identical(other.yieldPct, _this.yieldPct) || other.yieldPct == _this.yieldPct)&&(identical(other.color, _this.color) || other.color == _this.color)&&(identical(other.sessionType, _this.sessionType) || other.sessionType == _this.sessionType)&&(identical(other.endReason, _this.endReason) || other.endReason == _this.endReason));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,sessionId,animalId,spoutId,startedAt,endedAt,volumeMl,expectedMl,peakFlow,avgFlow,yieldPct,color,sessionType,endReason);
+int get hashCode {
+  final _this = this as AnimalMilking;
+  return Object.hash(runtimeType,_this.id,_this.sessionId,_this.animalId,_this.spoutId,_this.startedAt,_this.endedAt,_this.volumeMl,_this.expectedMl,_this.peakFlow,_this.avgFlow,_this.yieldPct,_this.color,_this.sessionType,_this.endReason);
+}
 
 @override
 String toString() {
-  return 'AnimalMilking(id: $id, sessionId: $sessionId, animalId: $animalId, spoutId: $spoutId, startedAt: $startedAt, endedAt: $endedAt, volumeMl: $volumeMl, expectedMl: $expectedMl, peakFlow: $peakFlow, avgFlow: $avgFlow, yieldPct: $yieldPct, color: $color, sessionType: $sessionType, endReason: $endReason)';
+  final _this = this as AnimalMilking;
+  return 'AnimalMilking(id: ${_this.id}, sessionId: ${_this.sessionId}, animalId: ${_this.animalId}, spoutId: ${_this.spoutId}, startedAt: ${_this.startedAt}, endedAt: ${_this.endedAt}, volumeMl: ${_this.volumeMl}, expectedMl: ${_this.expectedMl}, peakFlow: ${_this.peakFlow}, avgFlow: ${_this.avgFlow}, yieldPct: ${_this.yieldPct}, color: ${_this.color}, sessionType: ${_this.sessionType}, endReason: ${_this.endReason})';
 }
 
 
@@ -77,7 +83,7 @@ class _$AnimalMilkingCopyWithImpl<$Res>
 /// Create a copy of AnimalMilking
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? sessionId = null,Object? animalId = null,Object? spoutId = freezed,Object? startedAt = freezed,Object? endedAt = freezed,Object? volumeMl = null,Object? expectedMl = null,Object? peakFlow = null,Object? avgFlow = null,Object? yieldPct = null,Object? color = null,Object? sessionType = null,Object? endReason = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(AnimalMilking(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,sessionId: null == sessionId ? _self.sessionId : sessionId // ignore: cast_nullable_to_non_nullable
 as String,animalId: null == animalId ? _self.animalId : animalId // ignore: cast_nullable_to_non_nullable
@@ -275,16 +281,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AnimalMilking&&(identical(other.id, id) || other.id == id)&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.animalId, animalId) || other.animalId == animalId)&&(identical(other.spoutId, spoutId) || other.spoutId == spoutId)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.endedAt, endedAt) || other.endedAt == endedAt)&&(identical(other.volumeMl, volumeMl) || other.volumeMl == volumeMl)&&(identical(other.expectedMl, expectedMl) || other.expectedMl == expectedMl)&&(identical(other.peakFlow, peakFlow) || other.peakFlow == peakFlow)&&(identical(other.avgFlow, avgFlow) || other.avgFlow == avgFlow)&&(identical(other.yieldPct, yieldPct) || other.yieldPct == yieldPct)&&(identical(other.color, color) || other.color == color)&&(identical(other.sessionType, sessionType) || other.sessionType == sessionType)&&(identical(other.endReason, endReason) || other.endReason == endReason));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AnimalMilking&&(identical(other.id, id) || other.id == id)&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.animalId, animalId) || other.animalId == animalId)&&(identical(other.spoutId, spoutId) || other.spoutId == spoutId)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.endedAt, endedAt) || other.endedAt == endedAt)&&(identical(other.volumeMl, volumeMl) || other.volumeMl == volumeMl)&&(identical(other.expectedMl, expectedMl) || other.expectedMl == expectedMl)&&(identical(other.peakFlow, peakFlow) || other.peakFlow == peakFlow)&&(identical(other.avgFlow, avgFlow) || other.avgFlow == avgFlow)&&(identical(other.yieldPct, yieldPct) || other.yieldPct == yieldPct)&&(identical(other.color, color) || other.color == color)&&(identical(other.sessionType, sessionType) || other.sessionType == sessionType)&&(identical(other.endReason, endReason) || other.endReason == endReason));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,sessionId,animalId,spoutId,startedAt,endedAt,volumeMl,expectedMl,peakFlow,avgFlow,yieldPct,color,sessionType,endReason);
+int get hashCode {
+    return Object.hash(runtimeType,id,sessionId,animalId,spoutId,startedAt,endedAt,volumeMl,expectedMl,peakFlow,avgFlow,yieldPct,color,sessionType,endReason);
+}
 
 @override
 String toString() {
-  return 'AnimalMilking(id: $id, sessionId: $sessionId, animalId: $animalId, spoutId: $spoutId, startedAt: $startedAt, endedAt: $endedAt, volumeMl: $volumeMl, expectedMl: $expectedMl, peakFlow: $peakFlow, avgFlow: $avgFlow, yieldPct: $yieldPct, color: $color, sessionType: $sessionType, endReason: $endReason)';
+    return 'AnimalMilking(id: $id, sessionId: $sessionId, animalId: $animalId, spoutId: $spoutId, startedAt: $startedAt, endedAt: $endedAt, volumeMl: $volumeMl, expectedMl: $expectedMl, peakFlow: $peakFlow, avgFlow: $avgFlow, yieldPct: $yieldPct, color: $color, sessionType: $sessionType, endReason: $endReason)';
 }
 
 

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'dashboard_summary.dart';
@@ -9,6 +9,7 @@ part of 'dashboard_summary.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -35,16 +36,21 @@ $DashboardSummaryCopyWith<DashboardSummary> get copyWith => _$DashboardSummaryCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DashboardSummary&&(identical(other.date, date) || other.date == date)&&(identical(other.totalMl, totalMl) || other.totalMl == totalMl)&&(identical(other.milkingCount, milkingCount) || other.milkingCount == milkingCount)&&(identical(other.animalCount, animalCount) || other.animalCount == animalCount)&&(identical(other.activeSessions, activeSessions) || other.activeSessions == activeSessions)&&(identical(other.openAlerts, openAlerts) || other.openAlerts == openAlerts)&&const DeepCollectionEquality().equals(other.bySpecies, bySpecies)&&const DeepCollectionEquality().equals(other.classDistribution, classDistribution));
+  final _this = this as DashboardSummary;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DashboardSummary&&(identical(other.date, _this.date) || other.date == _this.date)&&(identical(other.totalMl, _this.totalMl) || other.totalMl == _this.totalMl)&&(identical(other.milkingCount, _this.milkingCount) || other.milkingCount == _this.milkingCount)&&(identical(other.animalCount, _this.animalCount) || other.animalCount == _this.animalCount)&&(identical(other.activeSessions, _this.activeSessions) || other.activeSessions == _this.activeSessions)&&(identical(other.openAlerts, _this.openAlerts) || other.openAlerts == _this.openAlerts)&&const DeepCollectionEquality().equals(other.bySpecies, _this.bySpecies)&&const DeepCollectionEquality().equals(other.classDistribution, _this.classDistribution));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,date,totalMl,milkingCount,animalCount,activeSessions,openAlerts,const DeepCollectionEquality().hash(bySpecies),const DeepCollectionEquality().hash(classDistribution));
+int get hashCode {
+  final _this = this as DashboardSummary;
+  return Object.hash(runtimeType,_this.date,_this.totalMl,_this.milkingCount,_this.animalCount,_this.activeSessions,_this.openAlerts,const DeepCollectionEquality().hash(_this.bySpecies),const DeepCollectionEquality().hash(_this.classDistribution));
+}
 
 @override
 String toString() {
-  return 'DashboardSummary(date: $date, totalMl: $totalMl, milkingCount: $milkingCount, animalCount: $animalCount, activeSessions: $activeSessions, openAlerts: $openAlerts, bySpecies: $bySpecies, classDistribution: $classDistribution)';
+  final _this = this as DashboardSummary;
+  return 'DashboardSummary(date: ${_this.date}, totalMl: ${_this.totalMl}, milkingCount: ${_this.milkingCount}, animalCount: ${_this.animalCount}, activeSessions: ${_this.activeSessions}, openAlerts: ${_this.openAlerts}, bySpecies: ${_this.bySpecies}, classDistribution: ${_this.classDistribution})';
 }
 
 
@@ -73,7 +79,7 @@ class _$DashboardSummaryCopyWithImpl<$Res>
 /// Create a copy of DashboardSummary
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? date = freezed,Object? totalMl = null,Object? milkingCount = null,Object? animalCount = null,Object? activeSessions = null,Object? openAlerts = null,Object? bySpecies = null,Object? classDistribution = null,}) {
-  return _then(_self.copyWith(
+  return _then(DashboardSummary(
 date: freezed == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as DateTime?,totalMl: null == totalMl ? _self.totalMl : totalMl // ignore: cast_nullable_to_non_nullable
 as int,milkingCount: null == milkingCount ? _self.milkingCount : milkingCount // ignore: cast_nullable_to_non_nullable
@@ -223,7 +229,7 @@ return $default(_that.date,_that.totalMl,_that.milkingCount,_that.animalCount,_t
 @JsonSerializable()
 
 class _DashboardSummary implements DashboardSummary {
-  const _DashboardSummary({this.date, this.totalMl = 0, this.milkingCount = 0, this.animalCount = 0, this.activeSessions = 0, this.openAlerts = 0, final  List<SpeciesTotal> bySpecies = const <SpeciesTotal>[], final  List<YieldClassCount> classDistribution = const <YieldClassCount>[]}): _bySpecies = bySpecies,_classDistribution = classDistribution;
+  const _DashboardSummary({this.date, this.totalMl = 0, this.milkingCount = 0, this.animalCount = 0, this.activeSessions = 0, this.openAlerts = 0,  List<SpeciesTotal> bySpecies = const <SpeciesTotal>[],  List<YieldClassCount> classDistribution = const <YieldClassCount>[]}): _bySpecies = bySpecies,_classDistribution = classDistribution;
   factory _DashboardSummary.fromJson(Map<String, dynamic> json) => _$DashboardSummaryFromJson(json);
 
 /// Özetin ait olduğu gün.
@@ -269,16 +275,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DashboardSummary&&(identical(other.date, date) || other.date == date)&&(identical(other.totalMl, totalMl) || other.totalMl == totalMl)&&(identical(other.milkingCount, milkingCount) || other.milkingCount == milkingCount)&&(identical(other.animalCount, animalCount) || other.animalCount == animalCount)&&(identical(other.activeSessions, activeSessions) || other.activeSessions == activeSessions)&&(identical(other.openAlerts, openAlerts) || other.openAlerts == openAlerts)&&const DeepCollectionEquality().equals(other._bySpecies, _bySpecies)&&const DeepCollectionEquality().equals(other._classDistribution, _classDistribution));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _DashboardSummary&&(identical(other.date, date) || other.date == date)&&(identical(other.totalMl, totalMl) || other.totalMl == totalMl)&&(identical(other.milkingCount, milkingCount) || other.milkingCount == milkingCount)&&(identical(other.animalCount, animalCount) || other.animalCount == animalCount)&&(identical(other.activeSessions, activeSessions) || other.activeSessions == activeSessions)&&(identical(other.openAlerts, openAlerts) || other.openAlerts == openAlerts)&&const DeepCollectionEquality().equals(other.bySpecies, _bySpecies)&&const DeepCollectionEquality().equals(other.classDistribution, _classDistribution));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,date,totalMl,milkingCount,animalCount,activeSessions,openAlerts,const DeepCollectionEquality().hash(_bySpecies),const DeepCollectionEquality().hash(_classDistribution));
+int get hashCode {
+    return Object.hash(runtimeType,date,totalMl,milkingCount,animalCount,activeSessions,openAlerts,const DeepCollectionEquality().hash(_bySpecies),const DeepCollectionEquality().hash(_classDistribution));
+}
 
 @override
 String toString() {
-  return 'DashboardSummary(date: $date, totalMl: $totalMl, milkingCount: $milkingCount, animalCount: $animalCount, activeSessions: $activeSessions, openAlerts: $openAlerts, bySpecies: $bySpecies, classDistribution: $classDistribution)';
+    return 'DashboardSummary(date: $date, totalMl: $totalMl, milkingCount: $milkingCount, animalCount: $animalCount, activeSessions: $activeSessions, openAlerts: $openAlerts, bySpecies: $bySpecies, classDistribution: $classDistribution)';
 }
 
 
@@ -340,16 +348,21 @@ $SpeciesTotalCopyWith<SpeciesTotal> get copyWith => _$SpeciesTotalCopyWithImpl<S
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SpeciesTotal&&(identical(other.speciesId, speciesId) || other.speciesId == speciesId)&&(identical(other.totalMl, totalMl) || other.totalMl == totalMl)&&(identical(other.animalCount, animalCount) || other.animalCount == animalCount));
+  final _this = this as SpeciesTotal;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SpeciesTotal&&(identical(other.speciesId, _this.speciesId) || other.speciesId == _this.speciesId)&&(identical(other.totalMl, _this.totalMl) || other.totalMl == _this.totalMl)&&(identical(other.animalCount, _this.animalCount) || other.animalCount == _this.animalCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,speciesId,totalMl,animalCount);
+int get hashCode {
+  final _this = this as SpeciesTotal;
+  return Object.hash(runtimeType,_this.speciesId,_this.totalMl,_this.animalCount);
+}
 
 @override
 String toString() {
-  return 'SpeciesTotal(speciesId: $speciesId, totalMl: $totalMl, animalCount: $animalCount)';
+  final _this = this as SpeciesTotal;
+  return 'SpeciesTotal(speciesId: ${_this.speciesId}, totalMl: ${_this.totalMl}, animalCount: ${_this.animalCount})';
 }
 
 
@@ -378,7 +391,7 @@ class _$SpeciesTotalCopyWithImpl<$Res>
 /// Create a copy of SpeciesTotal
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? speciesId = null,Object? totalMl = null,Object? animalCount = null,}) {
-  return _then(_self.copyWith(
+  return _then(SpeciesTotal(
 speciesId: null == speciesId ? _self.speciesId : speciesId // ignore: cast_nullable_to_non_nullable
 as String,totalMl: null == totalMl ? _self.totalMl : totalMl // ignore: cast_nullable_to_non_nullable
 as int,animalCount: null == animalCount ? _self.animalCount : animalCount // ignore: cast_nullable_to_non_nullable
@@ -543,16 +556,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SpeciesTotal&&(identical(other.speciesId, speciesId) || other.speciesId == speciesId)&&(identical(other.totalMl, totalMl) || other.totalMl == totalMl)&&(identical(other.animalCount, animalCount) || other.animalCount == animalCount));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SpeciesTotal&&(identical(other.speciesId, speciesId) || other.speciesId == speciesId)&&(identical(other.totalMl, totalMl) || other.totalMl == totalMl)&&(identical(other.animalCount, animalCount) || other.animalCount == animalCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,speciesId,totalMl,animalCount);
+int get hashCode {
+    return Object.hash(runtimeType,speciesId,totalMl,animalCount);
+}
 
 @override
 String toString() {
-  return 'SpeciesTotal(speciesId: $speciesId, totalMl: $totalMl, animalCount: $animalCount)';
+    return 'SpeciesTotal(speciesId: $speciesId, totalMl: $totalMl, animalCount: $animalCount)';
 }
 
 
@@ -609,16 +624,21 @@ $YieldClassCountCopyWith<YieldClassCount> get copyWith => _$YieldClassCountCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is YieldClassCount&&(identical(other.yieldClass, yieldClass) || other.yieldClass == yieldClass)&&(identical(other.count, count) || other.count == count));
+  final _this = this as YieldClassCount;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is YieldClassCount&&(identical(other.yieldClass, _this.yieldClass) || other.yieldClass == _this.yieldClass)&&(identical(other.count, _this.count) || other.count == _this.count));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,yieldClass,count);
+int get hashCode {
+  final _this = this as YieldClassCount;
+  return Object.hash(runtimeType,_this.yieldClass,_this.count);
+}
 
 @override
 String toString() {
-  return 'YieldClassCount(yieldClass: $yieldClass, count: $count)';
+  final _this = this as YieldClassCount;
+  return 'YieldClassCount(yieldClass: ${_this.yieldClass}, count: ${_this.count})';
 }
 
 
@@ -647,7 +667,7 @@ class _$YieldClassCountCopyWithImpl<$Res>
 /// Create a copy of YieldClassCount
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? yieldClass = null,Object? count = null,}) {
-  return _then(_self.copyWith(
+  return _then(YieldClassCount(
 yieldClass: null == yieldClass ? _self.yieldClass : yieldClass // ignore: cast_nullable_to_non_nullable
 as YieldClass,count: null == count ? _self.count : count // ignore: cast_nullable_to_non_nullable
 as int,
@@ -810,16 +830,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _YieldClassCount&&(identical(other.yieldClass, yieldClass) || other.yieldClass == yieldClass)&&(identical(other.count, count) || other.count == count));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _YieldClassCount&&(identical(other.yieldClass, yieldClass) || other.yieldClass == yieldClass)&&(identical(other.count, count) || other.count == count));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,yieldClass,count);
+int get hashCode {
+    return Object.hash(runtimeType,yieldClass,count);
+}
 
 @override
 String toString() {
-  return 'YieldClassCount(yieldClass: $yieldClass, count: $count)';
+    return 'YieldClassCount(yieldClass: $yieldClass, count: $count)';
 }
 
 

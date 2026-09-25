@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'milking_session.dart';
@@ -9,6 +9,7 @@ part of 'milking_session.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -30,16 +31,21 @@ $MilkingSessionCopyWith<MilkingSession> get copyWith => _$MilkingSessionCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MilkingSession&&(identical(other.id, id) || other.id == id)&&(identical(other.hallId, hallId) || other.hallId == hallId)&&(identical(other.type, type) || other.type == type)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.endedAt, endedAt) || other.endedAt == endedAt)&&(identical(other.status, status) || other.status == status));
+  final _this = this as MilkingSession;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MilkingSession&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.hallId, _this.hallId) || other.hallId == _this.hallId)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.startedAt, _this.startedAt) || other.startedAt == _this.startedAt)&&(identical(other.endedAt, _this.endedAt) || other.endedAt == _this.endedAt)&&(identical(other.status, _this.status) || other.status == _this.status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,hallId,type,startedAt,endedAt,status);
+int get hashCode {
+  final _this = this as MilkingSession;
+  return Object.hash(runtimeType,_this.id,_this.hallId,_this.type,_this.startedAt,_this.endedAt,_this.status);
+}
 
 @override
 String toString() {
-  return 'MilkingSession(id: $id, hallId: $hallId, type: $type, startedAt: $startedAt, endedAt: $endedAt, status: $status)';
+  final _this = this as MilkingSession;
+  return 'MilkingSession(id: ${_this.id}, hallId: ${_this.hallId}, type: ${_this.type}, startedAt: ${_this.startedAt}, endedAt: ${_this.endedAt}, status: ${_this.status})';
 }
 
 
@@ -68,7 +74,7 @@ class _$MilkingSessionCopyWithImpl<$Res>
 /// Create a copy of MilkingSession
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? hallId = null,Object? type = null,Object? startedAt = freezed,Object? endedAt = freezed,Object? status = null,}) {
-  return _then(_self.copyWith(
+  return _then(MilkingSession(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,hallId: null == hallId ? _self.hallId : hallId // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
@@ -241,16 +247,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MilkingSession&&(identical(other.id, id) || other.id == id)&&(identical(other.hallId, hallId) || other.hallId == hallId)&&(identical(other.type, type) || other.type == type)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.endedAt, endedAt) || other.endedAt == endedAt)&&(identical(other.status, status) || other.status == status));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _MilkingSession&&(identical(other.id, id) || other.id == id)&&(identical(other.hallId, hallId) || other.hallId == hallId)&&(identical(other.type, type) || other.type == type)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.endedAt, endedAt) || other.endedAt == endedAt)&&(identical(other.status, status) || other.status == status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,hallId,type,startedAt,endedAt,status);
+int get hashCode {
+    return Object.hash(runtimeType,id,hallId,type,startedAt,endedAt,status);
+}
 
 @override
 String toString() {
-  return 'MilkingSession(id: $id, hallId: $hallId, type: $type, startedAt: $startedAt, endedAt: $endedAt, status: $status)';
+    return 'MilkingSession(id: $id, hallId: $hallId, type: $type, startedAt: $startedAt, endedAt: $endedAt, status: $status)';
 }
 
 
@@ -310,16 +318,21 @@ $LiveSessionCopyWith<LiveSession> get copyWith => _$LiveSessionCopyWithImpl<Live
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LiveSession&&(identical(other.session, session) || other.session == session)&&const DeepCollectionEquality().equals(other.updates, updates));
+  final _this = this as LiveSession;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LiveSession&&(identical(other.session, _this.session) || other.session == _this.session)&&const DeepCollectionEquality().equals(other.updates, _this.updates));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,session,const DeepCollectionEquality().hash(updates));
+int get hashCode {
+  final _this = this as LiveSession;
+  return Object.hash(runtimeType,_this.session,const DeepCollectionEquality().hash(_this.updates));
+}
 
 @override
 String toString() {
-  return 'LiveSession(session: $session, updates: $updates)';
+  final _this = this as LiveSession;
+  return 'LiveSession(session: ${_this.session}, updates: ${_this.updates})';
 }
 
 
@@ -348,7 +361,7 @@ class _$LiveSessionCopyWithImpl<$Res>
 /// Create a copy of LiveSession
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? session = null,Object? updates = null,}) {
-  return _then(_self.copyWith(
+  return _then(LiveSession(
 session: null == session ? _self.session : session // ignore: cast_nullable_to_non_nullable
 as MilkingSession,updates: null == updates ? _self.updates : updates // ignore: cast_nullable_to_non_nullable
 as List<SpoutUpdate>,
@@ -501,7 +514,7 @@ return $default(_that.session,_that.updates);case _:
 @JsonSerializable()
 
 class _LiveSession implements LiveSession {
-  const _LiveSession({required this.session, final  List<SpoutUpdate> updates = const <SpoutUpdate>[]}): _updates = updates;
+  const _LiveSession({required this.session,  List<SpoutUpdate> updates = const <SpoutUpdate>[]}): _updates = updates;
   factory _LiveSession.fromJson(Map<String, dynamic> json) => _$LiveSessionFromJson(json);
 
 @override final  MilkingSession session;
@@ -526,16 +539,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LiveSession&&(identical(other.session, session) || other.session == session)&&const DeepCollectionEquality().equals(other._updates, _updates));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _LiveSession&&(identical(other.session, session) || other.session == session)&&const DeepCollectionEquality().equals(other.updates, _updates));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,session,const DeepCollectionEquality().hash(_updates));
+int get hashCode {
+    return Object.hash(runtimeType,session,const DeepCollectionEquality().hash(_updates));
+}
 
 @override
 String toString() {
-  return 'LiveSession(session: $session, updates: $updates)';
+    return 'LiveSession(session: $session, updates: $updates)';
 }
 
 

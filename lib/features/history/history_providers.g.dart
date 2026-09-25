@@ -474,7 +474,7 @@ abstract class _$AnimalFilterState extends $Notifier<AnimalFilter> {
   AnimalFilter build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<AnimalFilter, AnimalFilter>;
     final element =
         ref.element
@@ -484,7 +484,7 @@ abstract class _$AnimalFilterState extends $Notifier<AnimalFilter> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
 

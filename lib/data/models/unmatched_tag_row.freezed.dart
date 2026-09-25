@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'unmatched_tag_row.dart';
@@ -9,6 +9,7 @@ part of 'unmatched_tag_row.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -29,16 +30,21 @@ $UnmatchedTagRowCopyWith<UnmatchedTagRow> get copyWith => _$UnmatchedTagRowCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UnmatchedTagRow&&(identical(other.rfid, rfid) || other.rfid == rfid)&&(identical(other.lastSessionId, lastSessionId) || other.lastSessionId == lastSessionId)&&(identical(other.lastSpoutId, lastSpoutId) || other.lastSpoutId == lastSpoutId)&&(identical(other.firstSeenAt, firstSeenAt) || other.firstSeenAt == firstSeenAt)&&(identical(other.lastSeenAt, lastSeenAt) || other.lastSeenAt == lastSeenAt)&&(identical(other.readCount, readCount) || other.readCount == readCount));
+  final _this = this as UnmatchedTagRow;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UnmatchedTagRow&&(identical(other.rfid, _this.rfid) || other.rfid == _this.rfid)&&(identical(other.lastSessionId, _this.lastSessionId) || other.lastSessionId == _this.lastSessionId)&&(identical(other.lastSpoutId, _this.lastSpoutId) || other.lastSpoutId == _this.lastSpoutId)&&(identical(other.firstSeenAt, _this.firstSeenAt) || other.firstSeenAt == _this.firstSeenAt)&&(identical(other.lastSeenAt, _this.lastSeenAt) || other.lastSeenAt == _this.lastSeenAt)&&(identical(other.readCount, _this.readCount) || other.readCount == _this.readCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,rfid,lastSessionId,lastSpoutId,firstSeenAt,lastSeenAt,readCount);
+int get hashCode {
+  final _this = this as UnmatchedTagRow;
+  return Object.hash(runtimeType,_this.rfid,_this.lastSessionId,_this.lastSpoutId,_this.firstSeenAt,_this.lastSeenAt,_this.readCount);
+}
 
 @override
 String toString() {
-  return 'UnmatchedTagRow(rfid: $rfid, lastSessionId: $lastSessionId, lastSpoutId: $lastSpoutId, firstSeenAt: $firstSeenAt, lastSeenAt: $lastSeenAt, readCount: $readCount)';
+  final _this = this as UnmatchedTagRow;
+  return 'UnmatchedTagRow(rfid: ${_this.rfid}, lastSessionId: ${_this.lastSessionId}, lastSpoutId: ${_this.lastSpoutId}, firstSeenAt: ${_this.firstSeenAt}, lastSeenAt: ${_this.lastSeenAt}, readCount: ${_this.readCount})';
 }
 
 
@@ -67,7 +73,7 @@ class _$UnmatchedTagRowCopyWithImpl<$Res>
 /// Create a copy of UnmatchedTagRow
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? rfid = null,Object? lastSessionId = freezed,Object? lastSpoutId = freezed,Object? firstSeenAt = null,Object? lastSeenAt = null,Object? readCount = null,}) {
-  return _then(_self.copyWith(
+  return _then(UnmatchedTagRow(
 rfid: null == rfid ? _self.rfid : rfid // ignore: cast_nullable_to_non_nullable
 as String,lastSessionId: freezed == lastSessionId ? _self.lastSessionId : lastSessionId // ignore: cast_nullable_to_non_nullable
 as String?,lastSpoutId: freezed == lastSpoutId ? _self.lastSpoutId : lastSpoutId // ignore: cast_nullable_to_non_nullable
@@ -239,16 +245,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UnmatchedTagRow&&(identical(other.rfid, rfid) || other.rfid == rfid)&&(identical(other.lastSessionId, lastSessionId) || other.lastSessionId == lastSessionId)&&(identical(other.lastSpoutId, lastSpoutId) || other.lastSpoutId == lastSpoutId)&&(identical(other.firstSeenAt, firstSeenAt) || other.firstSeenAt == firstSeenAt)&&(identical(other.lastSeenAt, lastSeenAt) || other.lastSeenAt == lastSeenAt)&&(identical(other.readCount, readCount) || other.readCount == readCount));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _UnmatchedTagRow&&(identical(other.rfid, rfid) || other.rfid == rfid)&&(identical(other.lastSessionId, lastSessionId) || other.lastSessionId == lastSessionId)&&(identical(other.lastSpoutId, lastSpoutId) || other.lastSpoutId == lastSpoutId)&&(identical(other.firstSeenAt, firstSeenAt) || other.firstSeenAt == firstSeenAt)&&(identical(other.lastSeenAt, lastSeenAt) || other.lastSeenAt == lastSeenAt)&&(identical(other.readCount, readCount) || other.readCount == readCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,rfid,lastSessionId,lastSpoutId,firstSeenAt,lastSeenAt,readCount);
+int get hashCode {
+    return Object.hash(runtimeType,rfid,lastSessionId,lastSpoutId,firstSeenAt,lastSeenAt,readCount);
+}
 
 @override
 String toString() {
-  return 'UnmatchedTagRow(rfid: $rfid, lastSessionId: $lastSessionId, lastSpoutId: $lastSpoutId, firstSeenAt: $firstSeenAt, lastSeenAt: $lastSeenAt, readCount: $readCount)';
+    return 'UnmatchedTagRow(rfid: $rfid, lastSessionId: $lastSessionId, lastSpoutId: $lastSpoutId, firstSeenAt: $firstSeenAt, lastSeenAt: $lastSeenAt, readCount: $readCount)';
 }
 
 

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'species.dart';
@@ -9,6 +9,7 @@ part of 'species.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -31,16 +32,21 @@ $SpeciesCopyWith<Species> get copyWith => _$SpeciesCopyWithImpl<Species>(this as
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Species&&(identical(other.id, id) || other.id == id)&&(identical(other.code, code) || other.code == code)&&(identical(other.nameTr, nameTr) || other.nameTr == nameTr));
+  final _this = this as Species;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Species&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.code, _this.code) || other.code == _this.code)&&(identical(other.nameTr, _this.nameTr) || other.nameTr == _this.nameTr));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,code,nameTr);
+int get hashCode {
+  final _this = this as Species;
+  return Object.hash(runtimeType,_this.id,_this.code,_this.nameTr);
+}
 
 @override
 String toString() {
-  return 'Species(id: $id, code: $code, nameTr: $nameTr)';
+  final _this = this as Species;
+  return 'Species(id: ${_this.id}, code: ${_this.code}, nameTr: ${_this.nameTr})';
 }
 
 
@@ -69,7 +75,7 @@ class _$SpeciesCopyWithImpl<$Res>
 /// Create a copy of Species
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? code = null,Object? nameTr = null,}) {
-  return _then(_self.copyWith(
+  return _then(Species(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
 as String,nameTr: null == nameTr ? _self.nameTr : nameTr // ignore: cast_nullable_to_non_nullable
@@ -237,16 +243,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Species&&(identical(other.id, id) || other.id == id)&&(identical(other.code, code) || other.code == code)&&(identical(other.nameTr, nameTr) || other.nameTr == nameTr));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Species&&(identical(other.id, id) || other.id == id)&&(identical(other.code, code) || other.code == code)&&(identical(other.nameTr, nameTr) || other.nameTr == nameTr));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,code,nameTr);
+int get hashCode {
+    return Object.hash(runtimeType,id,code,nameTr);
+}
 
 @override
 String toString() {
-  return 'Species(id: $id, code: $code, nameTr: $nameTr)';
+    return 'Species(id: $id, code: $code, nameTr: $nameTr)';
 }
 
 

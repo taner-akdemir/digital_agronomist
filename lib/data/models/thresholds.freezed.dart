@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'thresholds.dart';
@@ -9,6 +9,7 @@ part of 'thresholds.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -43,16 +44,21 @@ $ThresholdsCopyWith<Thresholds> get copyWith => _$ThresholdsCopyWithImpl<Thresho
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Thresholds&&(identical(other.speciesId, speciesId) || other.speciesId == speciesId)&&(identical(other.flowLow, flowLow) || other.flowLow == flowLow)&&(identical(other.flowHigh, flowHigh) || other.flowHigh == flowHigh)&&(identical(other.yieldGreenPct, yieldGreenPct) || other.yieldGreenPct == yieldGreenPct)&&(identical(other.yieldRedPct, yieldRedPct) || other.yieldRedPct == yieldRedPct)&&(identical(other.rampUpSec, rampUpSec) || other.rampUpSec == rampUpSec)&&(identical(other.alertHoldSec, alertHoldSec) || other.alertHoldSec == alertHoldSec)&&(identical(other.endFlowThreshold, endFlowThreshold) || other.endFlowThreshold == endFlowThreshold)&&(identical(other.endGraceSec, endGraceSec) || other.endGraceSec == endGraceSec)&&(identical(other.dryOffDailyMl, dryOffDailyMl) || other.dryOffDailyMl == dryOffDailyMl)&&(identical(other.highYieldDailyMl, highYieldDailyMl) || other.highYieldDailyMl == highYieldDailyMl)&&(identical(other.expectedPerMilkingMl, expectedPerMilkingMl) || other.expectedPerMilkingMl == expectedPerMilkingMl)&&(identical(other.tenantScoped, tenantScoped) || other.tenantScoped == tenantScoped)&&(identical(other.declinePct, declinePct) || other.declinePct == declinePct)&&(identical(other.noMilkMl, noMilkMl) || other.noMilkMl == noMilkMl)&&(identical(other.noMilkMilkings, noMilkMilkings) || other.noMilkMilkings == noMilkMilkings)&&(identical(other.freshLactationDays, freshLactationDays) || other.freshLactationDays == freshLactationDays));
+  final _this = this as Thresholds;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Thresholds&&(identical(other.speciesId, _this.speciesId) || other.speciesId == _this.speciesId)&&(identical(other.flowLow, _this.flowLow) || other.flowLow == _this.flowLow)&&(identical(other.flowHigh, _this.flowHigh) || other.flowHigh == _this.flowHigh)&&(identical(other.yieldGreenPct, _this.yieldGreenPct) || other.yieldGreenPct == _this.yieldGreenPct)&&(identical(other.yieldRedPct, _this.yieldRedPct) || other.yieldRedPct == _this.yieldRedPct)&&(identical(other.rampUpSec, _this.rampUpSec) || other.rampUpSec == _this.rampUpSec)&&(identical(other.alertHoldSec, _this.alertHoldSec) || other.alertHoldSec == _this.alertHoldSec)&&(identical(other.endFlowThreshold, _this.endFlowThreshold) || other.endFlowThreshold == _this.endFlowThreshold)&&(identical(other.endGraceSec, _this.endGraceSec) || other.endGraceSec == _this.endGraceSec)&&(identical(other.dryOffDailyMl, _this.dryOffDailyMl) || other.dryOffDailyMl == _this.dryOffDailyMl)&&(identical(other.highYieldDailyMl, _this.highYieldDailyMl) || other.highYieldDailyMl == _this.highYieldDailyMl)&&(identical(other.expectedPerMilkingMl, _this.expectedPerMilkingMl) || other.expectedPerMilkingMl == _this.expectedPerMilkingMl)&&(identical(other.tenantScoped, _this.tenantScoped) || other.tenantScoped == _this.tenantScoped)&&(identical(other.declinePct, _this.declinePct) || other.declinePct == _this.declinePct)&&(identical(other.noMilkMl, _this.noMilkMl) || other.noMilkMl == _this.noMilkMl)&&(identical(other.noMilkMilkings, _this.noMilkMilkings) || other.noMilkMilkings == _this.noMilkMilkings)&&(identical(other.freshLactationDays, _this.freshLactationDays) || other.freshLactationDays == _this.freshLactationDays));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,speciesId,flowLow,flowHigh,yieldGreenPct,yieldRedPct,rampUpSec,alertHoldSec,endFlowThreshold,endGraceSec,dryOffDailyMl,highYieldDailyMl,expectedPerMilkingMl,tenantScoped,declinePct,noMilkMl,noMilkMilkings,freshLactationDays);
+int get hashCode {
+  final _this = this as Thresholds;
+  return Object.hash(runtimeType,_this.speciesId,_this.flowLow,_this.flowHigh,_this.yieldGreenPct,_this.yieldRedPct,_this.rampUpSec,_this.alertHoldSec,_this.endFlowThreshold,_this.endGraceSec,_this.dryOffDailyMl,_this.highYieldDailyMl,_this.expectedPerMilkingMl,_this.tenantScoped,_this.declinePct,_this.noMilkMl,_this.noMilkMilkings,_this.freshLactationDays);
+}
 
 @override
 String toString() {
-  return 'Thresholds(speciesId: $speciesId, flowLow: $flowLow, flowHigh: $flowHigh, yieldGreenPct: $yieldGreenPct, yieldRedPct: $yieldRedPct, rampUpSec: $rampUpSec, alertHoldSec: $alertHoldSec, endFlowThreshold: $endFlowThreshold, endGraceSec: $endGraceSec, dryOffDailyMl: $dryOffDailyMl, highYieldDailyMl: $highYieldDailyMl, expectedPerMilkingMl: $expectedPerMilkingMl, tenantScoped: $tenantScoped, declinePct: $declinePct, noMilkMl: $noMilkMl, noMilkMilkings: $noMilkMilkings, freshLactationDays: $freshLactationDays)';
+  final _this = this as Thresholds;
+  return 'Thresholds(speciesId: ${_this.speciesId}, flowLow: ${_this.flowLow}, flowHigh: ${_this.flowHigh}, yieldGreenPct: ${_this.yieldGreenPct}, yieldRedPct: ${_this.yieldRedPct}, rampUpSec: ${_this.rampUpSec}, alertHoldSec: ${_this.alertHoldSec}, endFlowThreshold: ${_this.endFlowThreshold}, endGraceSec: ${_this.endGraceSec}, dryOffDailyMl: ${_this.dryOffDailyMl}, highYieldDailyMl: ${_this.highYieldDailyMl}, expectedPerMilkingMl: ${_this.expectedPerMilkingMl}, tenantScoped: ${_this.tenantScoped}, declinePct: ${_this.declinePct}, noMilkMl: ${_this.noMilkMl}, noMilkMilkings: ${_this.noMilkMilkings}, freshLactationDays: ${_this.freshLactationDays})';
 }
 
 
@@ -81,7 +87,7 @@ class _$ThresholdsCopyWithImpl<$Res>
 /// Create a copy of Thresholds
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? speciesId = null,Object? flowLow = null,Object? flowHigh = null,Object? yieldGreenPct = null,Object? yieldRedPct = null,Object? rampUpSec = null,Object? alertHoldSec = null,Object? endFlowThreshold = null,Object? endGraceSec = null,Object? dryOffDailyMl = null,Object? highYieldDailyMl = null,Object? expectedPerMilkingMl = null,Object? tenantScoped = null,Object? declinePct = null,Object? noMilkMl = null,Object? noMilkMilkings = null,Object? freshLactationDays = null,}) {
-  return _then(_self.copyWith(
+  return _then(Thresholds(
 speciesId: null == speciesId ? _self.speciesId : speciesId // ignore: cast_nullable_to_non_nullable
 as String,flowLow: null == flowLow ? _self.flowLow : flowLow // ignore: cast_nullable_to_non_nullable
 as double,flowHigh: null == flowHigh ? _self.flowHigh : flowHigh // ignore: cast_nullable_to_non_nullable
@@ -289,16 +295,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Thresholds&&(identical(other.speciesId, speciesId) || other.speciesId == speciesId)&&(identical(other.flowLow, flowLow) || other.flowLow == flowLow)&&(identical(other.flowHigh, flowHigh) || other.flowHigh == flowHigh)&&(identical(other.yieldGreenPct, yieldGreenPct) || other.yieldGreenPct == yieldGreenPct)&&(identical(other.yieldRedPct, yieldRedPct) || other.yieldRedPct == yieldRedPct)&&(identical(other.rampUpSec, rampUpSec) || other.rampUpSec == rampUpSec)&&(identical(other.alertHoldSec, alertHoldSec) || other.alertHoldSec == alertHoldSec)&&(identical(other.endFlowThreshold, endFlowThreshold) || other.endFlowThreshold == endFlowThreshold)&&(identical(other.endGraceSec, endGraceSec) || other.endGraceSec == endGraceSec)&&(identical(other.dryOffDailyMl, dryOffDailyMl) || other.dryOffDailyMl == dryOffDailyMl)&&(identical(other.highYieldDailyMl, highYieldDailyMl) || other.highYieldDailyMl == highYieldDailyMl)&&(identical(other.expectedPerMilkingMl, expectedPerMilkingMl) || other.expectedPerMilkingMl == expectedPerMilkingMl)&&(identical(other.tenantScoped, tenantScoped) || other.tenantScoped == tenantScoped)&&(identical(other.declinePct, declinePct) || other.declinePct == declinePct)&&(identical(other.noMilkMl, noMilkMl) || other.noMilkMl == noMilkMl)&&(identical(other.noMilkMilkings, noMilkMilkings) || other.noMilkMilkings == noMilkMilkings)&&(identical(other.freshLactationDays, freshLactationDays) || other.freshLactationDays == freshLactationDays));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Thresholds&&(identical(other.speciesId, speciesId) || other.speciesId == speciesId)&&(identical(other.flowLow, flowLow) || other.flowLow == flowLow)&&(identical(other.flowHigh, flowHigh) || other.flowHigh == flowHigh)&&(identical(other.yieldGreenPct, yieldGreenPct) || other.yieldGreenPct == yieldGreenPct)&&(identical(other.yieldRedPct, yieldRedPct) || other.yieldRedPct == yieldRedPct)&&(identical(other.rampUpSec, rampUpSec) || other.rampUpSec == rampUpSec)&&(identical(other.alertHoldSec, alertHoldSec) || other.alertHoldSec == alertHoldSec)&&(identical(other.endFlowThreshold, endFlowThreshold) || other.endFlowThreshold == endFlowThreshold)&&(identical(other.endGraceSec, endGraceSec) || other.endGraceSec == endGraceSec)&&(identical(other.dryOffDailyMl, dryOffDailyMl) || other.dryOffDailyMl == dryOffDailyMl)&&(identical(other.highYieldDailyMl, highYieldDailyMl) || other.highYieldDailyMl == highYieldDailyMl)&&(identical(other.expectedPerMilkingMl, expectedPerMilkingMl) || other.expectedPerMilkingMl == expectedPerMilkingMl)&&(identical(other.tenantScoped, tenantScoped) || other.tenantScoped == tenantScoped)&&(identical(other.declinePct, declinePct) || other.declinePct == declinePct)&&(identical(other.noMilkMl, noMilkMl) || other.noMilkMl == noMilkMl)&&(identical(other.noMilkMilkings, noMilkMilkings) || other.noMilkMilkings == noMilkMilkings)&&(identical(other.freshLactationDays, freshLactationDays) || other.freshLactationDays == freshLactationDays));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,speciesId,flowLow,flowHigh,yieldGreenPct,yieldRedPct,rampUpSec,alertHoldSec,endFlowThreshold,endGraceSec,dryOffDailyMl,highYieldDailyMl,expectedPerMilkingMl,tenantScoped,declinePct,noMilkMl,noMilkMilkings,freshLactationDays);
+int get hashCode {
+    return Object.hash(runtimeType,speciesId,flowLow,flowHigh,yieldGreenPct,yieldRedPct,rampUpSec,alertHoldSec,endFlowThreshold,endGraceSec,dryOffDailyMl,highYieldDailyMl,expectedPerMilkingMl,tenantScoped,declinePct,noMilkMl,noMilkMilkings,freshLactationDays);
+}
 
 @override
 String toString() {
-  return 'Thresholds(speciesId: $speciesId, flowLow: $flowLow, flowHigh: $flowHigh, yieldGreenPct: $yieldGreenPct, yieldRedPct: $yieldRedPct, rampUpSec: $rampUpSec, alertHoldSec: $alertHoldSec, endFlowThreshold: $endFlowThreshold, endGraceSec: $endGraceSec, dryOffDailyMl: $dryOffDailyMl, highYieldDailyMl: $highYieldDailyMl, expectedPerMilkingMl: $expectedPerMilkingMl, tenantScoped: $tenantScoped, declinePct: $declinePct, noMilkMl: $noMilkMl, noMilkMilkings: $noMilkMilkings, freshLactationDays: $freshLactationDays)';
+    return 'Thresholds(speciesId: $speciesId, flowLow: $flowLow, flowHigh: $flowHigh, yieldGreenPct: $yieldGreenPct, yieldRedPct: $yieldRedPct, rampUpSec: $rampUpSec, alertHoldSec: $alertHoldSec, endFlowThreshold: $endFlowThreshold, endGraceSec: $endGraceSec, dryOffDailyMl: $dryOffDailyMl, highYieldDailyMl: $highYieldDailyMl, expectedPerMilkingMl: $expectedPerMilkingMl, tenantScoped: $tenantScoped, declinePct: $declinePct, noMilkMl: $noMilkMl, noMilkMilkings: $noMilkMilkings, freshLactationDays: $freshLactationDays)';
 }
 
 

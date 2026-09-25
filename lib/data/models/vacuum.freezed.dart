@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'vacuum.dart';
@@ -9,6 +9,7 @@ part of 'vacuum.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $VacuumCopyWith<Vacuum> get copyWith => _$VacuumCopyWithImpl<Vacuum>(this as Vac
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Vacuum&&(identical(other.id, id) || other.id == id)&&(identical(other.hallId, hallId) || other.hallId == hallId)&&(identical(other.name, name) || other.name == name)&&(identical(other.totalSpouts, totalSpouts) || other.totalSpouts == totalSpouts));
+  final _this = this as Vacuum;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Vacuum&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.hallId, _this.hallId) || other.hallId == _this.hallId)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.totalSpouts, _this.totalSpouts) || other.totalSpouts == _this.totalSpouts));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,hallId,name,totalSpouts);
+int get hashCode {
+  final _this = this as Vacuum;
+  return Object.hash(runtimeType,_this.id,_this.hallId,_this.name,_this.totalSpouts);
+}
 
 @override
 String toString() {
-  return 'Vacuum(id: $id, hallId: $hallId, name: $name, totalSpouts: $totalSpouts)';
+  final _this = this as Vacuum;
+  return 'Vacuum(id: ${_this.id}, hallId: ${_this.hallId}, name: ${_this.name}, totalSpouts: ${_this.totalSpouts})';
 }
 
 
@@ -66,7 +72,7 @@ class _$VacuumCopyWithImpl<$Res>
 /// Create a copy of Vacuum
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? hallId = null,Object? name = null,Object? totalSpouts = null,}) {
-  return _then(_self.copyWith(
+  return _then(Vacuum(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,hallId: null == hallId ? _self.hallId : hallId // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -233,16 +239,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Vacuum&&(identical(other.id, id) || other.id == id)&&(identical(other.hallId, hallId) || other.hallId == hallId)&&(identical(other.name, name) || other.name == name)&&(identical(other.totalSpouts, totalSpouts) || other.totalSpouts == totalSpouts));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Vacuum&&(identical(other.id, id) || other.id == id)&&(identical(other.hallId, hallId) || other.hallId == hallId)&&(identical(other.name, name) || other.name == name)&&(identical(other.totalSpouts, totalSpouts) || other.totalSpouts == totalSpouts));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,hallId,name,totalSpouts);
+int get hashCode {
+    return Object.hash(runtimeType,id,hallId,name,totalSpouts);
+}
 
 @override
 String toString() {
-  return 'Vacuum(id: $id, hallId: $hallId, name: $name, totalSpouts: $totalSpouts)';
+    return 'Vacuum(id: $id, hallId: $hallId, name: $name, totalSpouts: $totalSpouts)';
 }
 
 

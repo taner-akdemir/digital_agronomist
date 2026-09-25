@@ -127,7 +127,7 @@ abstract class _$PushRegistration extends $AsyncNotifier<PushStatus> {
   FutureOr<PushStatus> build();
   @$mustCallSuper
   @override
-  void runBuild() {
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<AsyncValue<PushStatus>, PushStatus>;
     final element =
         ref.element
@@ -137,7 +137,7 @@ abstract class _$PushRegistration extends $AsyncNotifier<PushStatus> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    return element.handleCreate(ref, build);
   }
 }
 

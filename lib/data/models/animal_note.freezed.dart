@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'animal_note.dart';
@@ -9,6 +9,7 @@ part of 'animal_note.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -32,16 +33,21 @@ $AnimalNoteCopyWith<AnimalNote> get copyWith => _$AnimalNoteCopyWithImpl<AnimalN
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AnimalNote&&(identical(other.id, id) || other.id == id)&&(identical(other.animalId, animalId) || other.animalId == animalId)&&(identical(other.note, note) || other.note == note)&&(identical(other.authorName, authorName) || other.authorName == authorName)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.kind, kind) || other.kind == kind));
+  final _this = this as AnimalNote;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AnimalNote&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.animalId, _this.animalId) || other.animalId == _this.animalId)&&(identical(other.note, _this.note) || other.note == _this.note)&&(identical(other.authorName, _this.authorName) || other.authorName == _this.authorName)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.kind, _this.kind) || other.kind == _this.kind));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,animalId,note,authorName,createdAt,kind);
+int get hashCode {
+  final _this = this as AnimalNote;
+  return Object.hash(runtimeType,_this.id,_this.animalId,_this.note,_this.authorName,_this.createdAt,_this.kind);
+}
 
 @override
 String toString() {
-  return 'AnimalNote(id: $id, animalId: $animalId, note: $note, authorName: $authorName, createdAt: $createdAt, kind: $kind)';
+  final _this = this as AnimalNote;
+  return 'AnimalNote(id: ${_this.id}, animalId: ${_this.animalId}, note: ${_this.note}, authorName: ${_this.authorName}, createdAt: ${_this.createdAt}, kind: ${_this.kind})';
 }
 
 
@@ -70,7 +76,7 @@ class _$AnimalNoteCopyWithImpl<$Res>
 /// Create a copy of AnimalNote
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? animalId = null,Object? note = null,Object? authorName = freezed,Object? createdAt = null,Object? kind = null,}) {
-  return _then(_self.copyWith(
+  return _then(AnimalNote(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,animalId: null == animalId ? _self.animalId : animalId // ignore: cast_nullable_to_non_nullable
 as String,note: null == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
@@ -245,16 +251,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AnimalNote&&(identical(other.id, id) || other.id == id)&&(identical(other.animalId, animalId) || other.animalId == animalId)&&(identical(other.note, note) || other.note == note)&&(identical(other.authorName, authorName) || other.authorName == authorName)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.kind, kind) || other.kind == kind));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AnimalNote&&(identical(other.id, id) || other.id == id)&&(identical(other.animalId, animalId) || other.animalId == animalId)&&(identical(other.note, note) || other.note == note)&&(identical(other.authorName, authorName) || other.authorName == authorName)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.kind, kind) || other.kind == kind));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,animalId,note,authorName,createdAt,kind);
+int get hashCode {
+    return Object.hash(runtimeType,id,animalId,note,authorName,createdAt,kind);
+}
 
 @override
 String toString() {
-  return 'AnimalNote(id: $id, animalId: $animalId, note: $note, authorName: $authorName, createdAt: $createdAt, kind: $kind)';
+    return 'AnimalNote(id: $id, animalId: $animalId, note: $note, authorName: $authorName, createdAt: $createdAt, kind: $kind)';
 }
 
 

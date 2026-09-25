@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'animal_trend.dart';
@@ -9,6 +9,7 @@ part of 'animal_trend.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -31,16 +32,21 @@ $AnimalTrendCopyWith<AnimalTrend> get copyWith => _$AnimalTrendCopyWithImpl<Anim
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AnimalTrend&&(identical(other.animalId, animalId) || other.animalId == animalId)&&(identical(other.yieldClass, yieldClass) || other.yieldClass == yieldClass)&&(identical(other.ma7Ml, ma7Ml) || other.ma7Ml == ma7Ml)&&(identical(other.ma30Ml, ma30Ml) || other.ma30Ml == ma30Ml)&&(identical(other.trendSlope, trendSlope) || other.trendSlope == trendSlope)&&const DeepCollectionEquality().equals(other.daily, daily));
+  final _this = this as AnimalTrend;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AnimalTrend&&(identical(other.animalId, _this.animalId) || other.animalId == _this.animalId)&&(identical(other.yieldClass, _this.yieldClass) || other.yieldClass == _this.yieldClass)&&(identical(other.ma7Ml, _this.ma7Ml) || other.ma7Ml == _this.ma7Ml)&&(identical(other.ma30Ml, _this.ma30Ml) || other.ma30Ml == _this.ma30Ml)&&(identical(other.trendSlope, _this.trendSlope) || other.trendSlope == _this.trendSlope)&&const DeepCollectionEquality().equals(other.daily, _this.daily));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,animalId,yieldClass,ma7Ml,ma30Ml,trendSlope,const DeepCollectionEquality().hash(daily));
+int get hashCode {
+  final _this = this as AnimalTrend;
+  return Object.hash(runtimeType,_this.animalId,_this.yieldClass,_this.ma7Ml,_this.ma30Ml,_this.trendSlope,const DeepCollectionEquality().hash(_this.daily));
+}
 
 @override
 String toString() {
-  return 'AnimalTrend(animalId: $animalId, yieldClass: $yieldClass, ma7Ml: $ma7Ml, ma30Ml: $ma30Ml, trendSlope: $trendSlope, daily: $daily)';
+  final _this = this as AnimalTrend;
+  return 'AnimalTrend(animalId: ${_this.animalId}, yieldClass: ${_this.yieldClass}, ma7Ml: ${_this.ma7Ml}, ma30Ml: ${_this.ma30Ml}, trendSlope: ${_this.trendSlope}, daily: ${_this.daily})';
 }
 
 
@@ -69,7 +75,7 @@ class _$AnimalTrendCopyWithImpl<$Res>
 /// Create a copy of AnimalTrend
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? animalId = null,Object? yieldClass = null,Object? ma7Ml = null,Object? ma30Ml = null,Object? trendSlope = null,Object? daily = null,}) {
-  return _then(_self.copyWith(
+  return _then(AnimalTrend(
 animalId: null == animalId ? _self.animalId : animalId // ignore: cast_nullable_to_non_nullable
 as String,yieldClass: null == yieldClass ? _self.yieldClass : yieldClass // ignore: cast_nullable_to_non_nullable
 as YieldClass,ma7Ml: null == ma7Ml ? _self.ma7Ml : ma7Ml // ignore: cast_nullable_to_non_nullable
@@ -217,7 +223,7 @@ return $default(_that.animalId,_that.yieldClass,_that.ma7Ml,_that.ma30Ml,_that.t
 @JsonSerializable()
 
 class _AnimalTrend implements AnimalTrend {
-  const _AnimalTrend({required this.animalId, @JsonKey(unknownEnumValue: YieldClass.normal) this.yieldClass = YieldClass.normal, this.ma7Ml = 0, this.ma30Ml = 0, this.trendSlope = 0, final  List<AnimalDailyStat> daily = const <AnimalDailyStat>[]}): _daily = daily;
+  const _AnimalTrend({required this.animalId, @JsonKey(unknownEnumValue: YieldClass.normal) this.yieldClass = YieldClass.normal, this.ma7Ml = 0, this.ma30Ml = 0, this.trendSlope = 0,  List<AnimalDailyStat> daily = const <AnimalDailyStat>[]}): _daily = daily;
   factory _AnimalTrend.fromJson(Map<String, dynamic> json) => _$AnimalTrendFromJson(json);
 
 @override final  String animalId;
@@ -250,16 +256,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AnimalTrend&&(identical(other.animalId, animalId) || other.animalId == animalId)&&(identical(other.yieldClass, yieldClass) || other.yieldClass == yieldClass)&&(identical(other.ma7Ml, ma7Ml) || other.ma7Ml == ma7Ml)&&(identical(other.ma30Ml, ma30Ml) || other.ma30Ml == ma30Ml)&&(identical(other.trendSlope, trendSlope) || other.trendSlope == trendSlope)&&const DeepCollectionEquality().equals(other._daily, _daily));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AnimalTrend&&(identical(other.animalId, animalId) || other.animalId == animalId)&&(identical(other.yieldClass, yieldClass) || other.yieldClass == yieldClass)&&(identical(other.ma7Ml, ma7Ml) || other.ma7Ml == ma7Ml)&&(identical(other.ma30Ml, ma30Ml) || other.ma30Ml == ma30Ml)&&(identical(other.trendSlope, trendSlope) || other.trendSlope == trendSlope)&&const DeepCollectionEquality().equals(other.daily, _daily));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,animalId,yieldClass,ma7Ml,ma30Ml,trendSlope,const DeepCollectionEquality().hash(_daily));
+int get hashCode {
+    return Object.hash(runtimeType,animalId,yieldClass,ma7Ml,ma30Ml,trendSlope,const DeepCollectionEquality().hash(_daily));
+}
 
 @override
 String toString() {
-  return 'AnimalTrend(animalId: $animalId, yieldClass: $yieldClass, ma7Ml: $ma7Ml, ma30Ml: $ma30Ml, trendSlope: $trendSlope, daily: $daily)';
+    return 'AnimalTrend(animalId: $animalId, yieldClass: $yieldClass, ma7Ml: $ma7Ml, ma30Ml: $ma30Ml, trendSlope: $trendSlope, daily: $daily)';
 }
 
 
@@ -321,16 +329,21 @@ $AnimalDailyStatCopyWith<AnimalDailyStat> get copyWith => _$AnimalDailyStatCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AnimalDailyStat&&(identical(other.date, date) || other.date == date)&&(identical(other.totalMl, totalMl) || other.totalMl == totalMl)&&(identical(other.milkingCount, milkingCount) || other.milkingCount == milkingCount)&&(identical(other.ma7Ml, ma7Ml) || other.ma7Ml == ma7Ml)&&(identical(other.ma30Ml, ma30Ml) || other.ma30Ml == ma30Ml));
+  final _this = this as AnimalDailyStat;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AnimalDailyStat&&(identical(other.date, _this.date) || other.date == _this.date)&&(identical(other.totalMl, _this.totalMl) || other.totalMl == _this.totalMl)&&(identical(other.milkingCount, _this.milkingCount) || other.milkingCount == _this.milkingCount)&&(identical(other.ma7Ml, _this.ma7Ml) || other.ma7Ml == _this.ma7Ml)&&(identical(other.ma30Ml, _this.ma30Ml) || other.ma30Ml == _this.ma30Ml));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,date,totalMl,milkingCount,ma7Ml,ma30Ml);
+int get hashCode {
+  final _this = this as AnimalDailyStat;
+  return Object.hash(runtimeType,_this.date,_this.totalMl,_this.milkingCount,_this.ma7Ml,_this.ma30Ml);
+}
 
 @override
 String toString() {
-  return 'AnimalDailyStat(date: $date, totalMl: $totalMl, milkingCount: $milkingCount, ma7Ml: $ma7Ml, ma30Ml: $ma30Ml)';
+  final _this = this as AnimalDailyStat;
+  return 'AnimalDailyStat(date: ${_this.date}, totalMl: ${_this.totalMl}, milkingCount: ${_this.milkingCount}, ma7Ml: ${_this.ma7Ml}, ma30Ml: ${_this.ma30Ml})';
 }
 
 
@@ -359,7 +372,7 @@ class _$AnimalDailyStatCopyWithImpl<$Res>
 /// Create a copy of AnimalDailyStat
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? date = null,Object? totalMl = null,Object? milkingCount = null,Object? ma7Ml = freezed,Object? ma30Ml = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(AnimalDailyStat(
 date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as DateTime,totalMl: null == totalMl ? _self.totalMl : totalMl // ignore: cast_nullable_to_non_nullable
 as int,milkingCount: null == milkingCount ? _self.milkingCount : milkingCount // ignore: cast_nullable_to_non_nullable
@@ -530,16 +543,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AnimalDailyStat&&(identical(other.date, date) || other.date == date)&&(identical(other.totalMl, totalMl) || other.totalMl == totalMl)&&(identical(other.milkingCount, milkingCount) || other.milkingCount == milkingCount)&&(identical(other.ma7Ml, ma7Ml) || other.ma7Ml == ma7Ml)&&(identical(other.ma30Ml, ma30Ml) || other.ma30Ml == ma30Ml));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AnimalDailyStat&&(identical(other.date, date) || other.date == date)&&(identical(other.totalMl, totalMl) || other.totalMl == totalMl)&&(identical(other.milkingCount, milkingCount) || other.milkingCount == milkingCount)&&(identical(other.ma7Ml, ma7Ml) || other.ma7Ml == ma7Ml)&&(identical(other.ma30Ml, ma30Ml) || other.ma30Ml == ma30Ml));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,date,totalMl,milkingCount,ma7Ml,ma30Ml);
+int get hashCode {
+    return Object.hash(runtimeType,date,totalMl,milkingCount,ma7Ml,ma30Ml);
+}
 
 @override
 String toString() {
-  return 'AnimalDailyStat(date: $date, totalMl: $totalMl, milkingCount: $milkingCount, ma7Ml: $ma7Ml, ma30Ml: $ma30Ml)';
+    return 'AnimalDailyStat(date: $date, totalMl: $totalMl, milkingCount: $milkingCount, ma7Ml: $ma7Ml, ma30Ml: $ma30Ml)';
 }
 
 
