@@ -102,7 +102,7 @@ WebSocket `spout.update` payload'ı — **mock JSON'lar da bu şekle birebir uya
 | State | Riverpod 3, `@riverpod` codegen Notifier'lar |
 | Ağ | `dio` (interceptor ile token yenileme) |
 | Canlı veri | Hedef: `web_socket_channel` + yeniden bağlanma. Bugün: 5 sn yoklama (§6). İlk yükleme `GET /sessions/{id}/live` |
-| Depolama | Token → `flutter_secure_storage`; basit ayarlar → `shared_preferences` |
+| Depolama | Token → `flutter_secure_storage`; basit ayarlar ve çevrimdışı önbellek → `shared_preferences` |
 | Model | `freezed` + `json_serializable`. Elle `fromJson` YAZILMAZ. |
 | Navigasyon | `go_router` + `StatefulShellRoute` (4 sekme) |
 | Veri katmanı | `MilkTraceRepository` arayüzü + `MockRepository` / `ApiRepository` |
@@ -183,6 +183,12 @@ ad ve RFID'de. Noktada hayvan varken başka hayvan seçilir ve ölçüm varsa `a
 "Sağıldı" → yalnızca bağla (backend öncekini kapatır, süt ona); "Yanlış eşleştirme" →
 `MilkingControl.replace(discardPrevious: true)`: önce kaldır, sonra bağla. Ölçüm yoksa sormadan
 temizler.
+
+**Çevrimdışı** (§18/7, backend ADR 0061): `CachingRepository` ApiRepository'yi sarar. Okuma
+cevapları cihaza yazılır (`mtcache:v1:<işletme>:<kullanıcı>:`), sunucuya ULAŞILAMAZSA son
+cevap döner ve `OfflineBanner` "Çevrimdışı · son veri HH:mm" der; sunucu hatası (4xx/5xx)
+önbellekle ÖRTÜLMEZ. Yazmalar çevrimdışıyken hata verir, kuyruk YOK (ürün kararı). Çıkışta
+önbellek silinir. Yeni bir okuma ucu eklersen `CachingRepository`'de `_read` ile sarmayı unutma.
 
 `Env.wsBaseUrl`, `apiBaseUrl`'den **türetilir** (`http` → `ws`): ayrı tanımlansaydı biri
 değişip diğeri unutulduğunda canlı ekran sessizce bağlanamazdı.

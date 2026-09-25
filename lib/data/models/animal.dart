@@ -44,8 +44,9 @@ abstract class Animal with _$Animal {
     /// Sınıfın hesaplandığı gün (backend ADR 0055). Gece hesabı yalnızca
     /// sağmal hayvanı güncellediği için sağmaldan çıkan hayvanda DONAR:
     /// etiket "o gün böyleydi" demektir. Null = hiç hesaplanmadı ya da
-    /// tarihi bilinmiyor. Formdan gönderilmez.
-    @JsonKey(includeToJson: false) DateTime? yieldClassAt,
+    /// tarihi bilinmiyor. Formdan GÖNDERİLMEZ (gövdeyi `animalBody` kuruyor);
+    /// toJson'da durur ki çevrimdışı önbellek tarihi kaybetmesin.
+    DateTime? yieldClassAt,
   }) = _Animal;
 
   const Animal._();

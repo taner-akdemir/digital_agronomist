@@ -45,6 +45,7 @@ Map<String, dynamic> _$AnimalToJson(_Animal instance) => <String, dynamic>{
   'lactationNo': instance.lactationNo,
   'status': instance.status,
   'yieldClass': _$YieldClassEnumMap[instance.yieldClass]!,
+  'yieldClassAt': instance.yieldClassAt?.toIso8601String(),
 };
 
 const _$YieldClassEnumMap = {

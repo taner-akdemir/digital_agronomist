@@ -27,8 +27,9 @@ mixin _$Animal {
 @JsonKey(unknownEnumValue: YieldClass.normal) YieldClass get yieldClass;/// Sınıfın hesaplandığı gün (backend ADR 0055). Gece hesabı yalnızca
 /// sağmal hayvanı güncellediği için sağmaldan çıkan hayvanda DONAR:
 /// etiket "o gün böyleydi" demektir. Null = hiç hesaplanmadı ya da
-/// tarihi bilinmiyor. Formdan gönderilmez.
-@JsonKey(includeToJson: false) DateTime? get yieldClassAt;
+/// tarihi bilinmiyor. Formdan GÖNDERİLMEZ (gövdeyi `animalBody` kuruyor);
+/// toJson'da durur ki çevrimdışı önbellek tarihi kaybetmesin.
+ DateTime? get yieldClassAt;
 /// Create a copy of Animal
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -61,7 +62,7 @@ abstract mixin class $AnimalCopyWith<$Res>  {
   factory $AnimalCopyWith(Animal value, $Res Function(Animal) _then) = _$AnimalCopyWithImpl;
 @useResult
 $Res call({
- String id, String speciesId, String earTag, String? rfid, String? name, String? breed, DateTime? birthDate, DateTime? lastCalvingDate, int lactationNo, String status,@JsonKey(unknownEnumValue: YieldClass.normal) YieldClass yieldClass,@JsonKey(includeToJson: false) DateTime? yieldClassAt
+ String id, String speciesId, String earTag, String? rfid, String? name, String? breed, DateTime? birthDate, DateTime? lastCalvingDate, int lactationNo, String status,@JsonKey(unknownEnumValue: YieldClass.normal) YieldClass yieldClass, DateTime? yieldClassAt
 });
 
 
@@ -177,7 +178,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String speciesId,  String earTag,  String? rfid,  String? name,  String? breed,  DateTime? birthDate,  DateTime? lastCalvingDate,  int lactationNo,  String status, @JsonKey(unknownEnumValue: YieldClass.normal)  YieldClass yieldClass, @JsonKey(includeToJson: false)  DateTime? yieldClassAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String speciesId,  String earTag,  String? rfid,  String? name,  String? breed,  DateTime? birthDate,  DateTime? lastCalvingDate,  int lactationNo,  String status, @JsonKey(unknownEnumValue: YieldClass.normal)  YieldClass yieldClass,  DateTime? yieldClassAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Animal() when $default != null:
 return $default(_that.id,_that.speciesId,_that.earTag,_that.rfid,_that.name,_that.breed,_that.birthDate,_that.lastCalvingDate,_that.lactationNo,_that.status,_that.yieldClass,_that.yieldClassAt);case _:
@@ -198,7 +199,7 @@ return $default(_that.id,_that.speciesId,_that.earTag,_that.rfid,_that.name,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String speciesId,  String earTag,  String? rfid,  String? name,  String? breed,  DateTime? birthDate,  DateTime? lastCalvingDate,  int lactationNo,  String status, @JsonKey(unknownEnumValue: YieldClass.normal)  YieldClass yieldClass, @JsonKey(includeToJson: false)  DateTime? yieldClassAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String speciesId,  String earTag,  String? rfid,  String? name,  String? breed,  DateTime? birthDate,  DateTime? lastCalvingDate,  int lactationNo,  String status, @JsonKey(unknownEnumValue: YieldClass.normal)  YieldClass yieldClass,  DateTime? yieldClassAt)  $default,) {final _that = this;
 switch (_that) {
 case _Animal():
 return $default(_that.id,_that.speciesId,_that.earTag,_that.rfid,_that.name,_that.breed,_that.birthDate,_that.lastCalvingDate,_that.lactationNo,_that.status,_that.yieldClass,_that.yieldClassAt);case _:
@@ -218,7 +219,7 @@ return $default(_that.id,_that.speciesId,_that.earTag,_that.rfid,_that.name,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String speciesId,  String earTag,  String? rfid,  String? name,  String? breed,  DateTime? birthDate,  DateTime? lastCalvingDate,  int lactationNo,  String status, @JsonKey(unknownEnumValue: YieldClass.normal)  YieldClass yieldClass, @JsonKey(includeToJson: false)  DateTime? yieldClassAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String speciesId,  String earTag,  String? rfid,  String? name,  String? breed,  DateTime? birthDate,  DateTime? lastCalvingDate,  int lactationNo,  String status, @JsonKey(unknownEnumValue: YieldClass.normal)  YieldClass yieldClass,  DateTime? yieldClassAt)?  $default,) {final _that = this;
 switch (_that) {
 case _Animal() when $default != null:
 return $default(_that.id,_that.speciesId,_that.earTag,_that.rfid,_that.name,_that.breed,_that.birthDate,_that.lastCalvingDate,_that.lactationNo,_that.status,_that.yieldClass,_that.yieldClassAt);case _:
@@ -233,7 +234,7 @@ return $default(_that.id,_that.speciesId,_that.earTag,_that.rfid,_that.name,_tha
 @JsonSerializable()
 
 class _Animal extends Animal {
-  const _Animal({required this.id, required this.speciesId, required this.earTag, this.rfid, this.name, this.breed, this.birthDate, this.lastCalvingDate, this.lactationNo = 0, this.status = 'active', @JsonKey(unknownEnumValue: YieldClass.normal) this.yieldClass = YieldClass.normal, @JsonKey(includeToJson: false) this.yieldClassAt}): super._();
+  const _Animal({required this.id, required this.speciesId, required this.earTag, this.rfid, this.name, this.breed, this.birthDate, this.lastCalvingDate, this.lactationNo = 0, this.status = 'active', @JsonKey(unknownEnumValue: YieldClass.normal) this.yieldClass = YieldClass.normal, this.yieldClassAt}): super._();
   factory _Animal.fromJson(Map<String, dynamic> json) => _$AnimalFromJson(json);
 
 @override final  String id;
@@ -259,8 +260,9 @@ class _Animal extends Animal {
 /// Sınıfın hesaplandığı gün (backend ADR 0055). Gece hesabı yalnızca
 /// sağmal hayvanı güncellediği için sağmaldan çıkan hayvanda DONAR:
 /// etiket "o gün böyleydi" demektir. Null = hiç hesaplanmadı ya da
-/// tarihi bilinmiyor. Formdan gönderilmez.
-@override@JsonKey(includeToJson: false) final  DateTime? yieldClassAt;
+/// tarihi bilinmiyor. Formdan GÖNDERİLMEZ (gövdeyi `animalBody` kuruyor);
+/// toJson'da durur ki çevrimdışı önbellek tarihi kaybetmesin.
+@override final  DateTime? yieldClassAt;
 
 /// Create a copy of Animal
 /// with the given fields replaced by the non-null parameter values.
@@ -295,7 +297,7 @@ abstract mixin class _$AnimalCopyWith<$Res> implements $AnimalCopyWith<$Res> {
   factory _$AnimalCopyWith(_Animal value, $Res Function(_Animal) _then) = __$AnimalCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String speciesId, String earTag, String? rfid, String? name, String? breed, DateTime? birthDate, DateTime? lastCalvingDate, int lactationNo, String status,@JsonKey(unknownEnumValue: YieldClass.normal) YieldClass yieldClass,@JsonKey(includeToJson: false) DateTime? yieldClassAt
+ String id, String speciesId, String earTag, String? rfid, String? name, String? breed, DateTime? birthDate, DateTime? lastCalvingDate, int lactationNo, String status,@JsonKey(unknownEnumValue: YieldClass.normal) YieldClass yieldClass, DateTime? yieldClassAt
 });
 
 

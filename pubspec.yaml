@@ -18,8 +18,8 @@ dependencies:
   # Ağ. http DEĞİL: interceptor ile token yenileme dio'da daha temiz (§15.2).
   dio: ^5.9.0
 
-  # Depolama: token'lar secure_storage'da, basit ayarlar shared_preferences'ta.
-  # hive KALDIRILDI — gerçek offline önbellek gerekene kadar (§18/7) gereksiz.
+  # Depolama: token'lar secure_storage'da; basit ayarlar ve çevrimdışı okuma
+  # önbelleği (§18/7, backend ADR 0061) shared_preferences'ta. hive gerekmedi.
   flutter_secure_storage: ^10.0.0
   shared_preferences: ^2.5.4
 

@@ -79,4 +79,4 @@ final class RepositoryProvider
   }
 }
 
-String _$repositoryHash() => r'8aabb6421e07bc8ec41e5a78317f3dceb9b0c11c';
+String _$repositoryHash() => r'8a19274d9821f72882f234953e8c7f6b87a905ec';

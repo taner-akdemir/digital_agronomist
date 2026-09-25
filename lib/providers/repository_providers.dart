@@ -1,8 +1,10 @@
 import 'package:milktrace/core/env.dart';
 import 'package:milktrace/data/repositories/api_repository.dart';
+import 'package:milktrace/data/repositories/caching_repository.dart';
 import 'package:milktrace/data/repositories/milktrace_repository.dart';
 import 'package:milktrace/data/repositories/mock_repository.dart';
 import 'package:milktrace/providers/auth_providers.dart';
+import 'package:milktrace/providers/offline_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'repository_providers.g.dart';
@@ -26,9 +28,22 @@ MilkTraceRepository repository(Ref ref) {
   // Canlı akış WebSocket'ten gelir (§8.5). Token'ı interceptor'dan
   // FONKSİYONLA okuyoruz: yenilendiğinde değişiyor ve her yeniden
   // bağlanmada güncel olanı gerekiyor.
-  return ApiRepository(
+  final api = ApiRepository(
     dio: session.authed,
     wsBaseUrl: Env.wsBaseUrl,
     accessToken: () => session.interceptor.accessToken,
+  );
+
+  // Çevrimdışı okuma önbelleği (§18/7): ahırda kapsama koptuğunda son veri
+  // gösterilir. Kapsam işletme + kullanıcı: aynı telefonda başka hesap,
+  // öncekinin verisini görmemeli.
+  final user = ref.watch(authProvider).user;
+  final status = ref.read(offlineStatusProvider.notifier);
+  return CachingRepository(
+    inner: api,
+    store: ref.watch(cacheStoreProvider),
+    scope: '$offlineCachePrefix${user?.tenantId ?? '-'}:${user?.id ?? '-'}:',
+    onOffline: status.offline,
+    onOnline: status.online,
   );
 }

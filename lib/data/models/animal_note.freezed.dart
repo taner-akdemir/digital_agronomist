@@ -16,8 +16,8 @@ T _$identity<T>(T value) => value;
 mixin _$AnimalNote {
 
  String get id; String get animalId; String get note;/// Yazanın adı; kullanıcı silindiyse boş.
- String? get authorName; DateTime get createdAt;/// "manual" (elle yazılan) ya da "status" (durum değişikliğinin
-/// kaydı, backend ADR 0057). String, enum değil: yeni tür listeyi
+ String? get authorName; DateTime get createdAt;/// "manual" (elle yazılan), "status" (durum değişikliği, backend ADR
+/// 0057) ya da "calving" (buzağılama, ADR 0060). String, enum değil: yeni tür listeyi
 /// düşürmesin.
  String get kind;
 /// Create a copy of AnimalNote
@@ -227,8 +227,8 @@ class _AnimalNote extends AnimalNote {
 /// Yazanın adı; kullanıcı silindiyse boş.
 @override final  String? authorName;
 @override final  DateTime createdAt;
-/// "manual" (elle yazılan) ya da "status" (durum değişikliğinin
-/// kaydı, backend ADR 0057). String, enum değil: yeni tür listeyi
+/// "manual" (elle yazılan), "status" (durum değişikliği, backend ADR
+/// 0057) ya da "calving" (buzağılama, ADR 0060). String, enum değil: yeni tür listeyi
 /// düşürmesin.
 @override@JsonKey() final  String kind;
 

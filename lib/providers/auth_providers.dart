@@ -5,6 +5,7 @@ import 'package:milktrace/core/env.dart';
 import 'package:milktrace/data/auth/auth_session.dart';
 import 'package:milktrace/data/models/auth_state.dart';
 import 'package:milktrace/data/models/auth_user.dart';
+import 'package:milktrace/providers/offline_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth_providers.g.dart';
@@ -31,6 +32,7 @@ class Auth extends _$Auth {
     // ekranda bir hata olarak değil, giriş ekranına dönerek görür.
     final sub = _session.interceptor.onForcedSignOut.listen((_) {
       state = AuthState.signedOut;
+      unawaited(_forgetCache());
     });
     ref.onDispose(sub.cancel);
 
@@ -116,7 +118,20 @@ class Auth extends _$Auth {
       await _session.api.logout(tokens.refreshToken);
     }
     await _session.forget();
+    await _forgetCache();
     state = AuthState.signedOut;
+  }
+
+  /// Çevrimdışı önbelleği siler: çıkıştan sonra telefonda sürü verisi
+  /// kalmasın.
+  Future<void> _forgetCache() async {
+    try {
+      await ref.read(cacheStoreProvider).clear(offlineCachePrefix);
+      ref.read(offlineStatusProvider.notifier).online();
+    } catch (_) {
+      // Önbellek silinemezse çıkış yine tamamlanır; bir sonraki girişte
+      // anahtarlar kullanıcıya göre ayrıldığı için başkası göremez.
+    }
   }
 }
 
