@@ -103,4 +103,18 @@ void main() {
     expect(find.textContaining('hesabından: gece hesabı'), findsNothing);
     expect(find.text(YieldClass.high.explanation), findsOneWidget);
   });
+
+  // Backend ADR 0057: durum değişikliği notlarda simgesiyle görünür.
+  testWidgets('durum değişikliği notu detayda simgesiyle', (tester) async {
+    await _open(tester, YieldClass.high, (a) => a.copyWith(status: 'dry'));
+
+    expect(find.text('Durum: Sağmal → Kuruda'), findsOneWidget);
+    expect(
+      find.ancestor(
+        of: find.byIcon(Icons.swap_horiz),
+        matching: find.byType(Row),
+      ),
+      findsWidgets,
+    );
+  });
 }

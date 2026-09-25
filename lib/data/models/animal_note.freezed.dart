@@ -16,7 +16,10 @@ T _$identity<T>(T value) => value;
 mixin _$AnimalNote {
 
  String get id; String get animalId; String get note;/// Yazanın adı; kullanıcı silindiyse boş.
- String? get authorName; DateTime get createdAt;
+ String? get authorName; DateTime get createdAt;/// "manual" (elle yazılan) ya da "status" (durum değişikliğinin
+/// kaydı, backend ADR 0057). String, enum değil: yeni tür listeyi
+/// düşürmesin.
+ String get kind;
 /// Create a copy of AnimalNote
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +32,16 @@ $AnimalNoteCopyWith<AnimalNote> get copyWith => _$AnimalNoteCopyWithImpl<AnimalN
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AnimalNote&&(identical(other.id, id) || other.id == id)&&(identical(other.animalId, animalId) || other.animalId == animalId)&&(identical(other.note, note) || other.note == note)&&(identical(other.authorName, authorName) || other.authorName == authorName)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AnimalNote&&(identical(other.id, id) || other.id == id)&&(identical(other.animalId, animalId) || other.animalId == animalId)&&(identical(other.note, note) || other.note == note)&&(identical(other.authorName, authorName) || other.authorName == authorName)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.kind, kind) || other.kind == kind));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,animalId,note,authorName,createdAt);
+int get hashCode => Object.hash(runtimeType,id,animalId,note,authorName,createdAt,kind);
 
 @override
 String toString() {
-  return 'AnimalNote(id: $id, animalId: $animalId, note: $note, authorName: $authorName, createdAt: $createdAt)';
+  return 'AnimalNote(id: $id, animalId: $animalId, note: $note, authorName: $authorName, createdAt: $createdAt, kind: $kind)';
 }
 
 
@@ -49,7 +52,7 @@ abstract mixin class $AnimalNoteCopyWith<$Res>  {
   factory $AnimalNoteCopyWith(AnimalNote value, $Res Function(AnimalNote) _then) = _$AnimalNoteCopyWithImpl;
 @useResult
 $Res call({
- String id, String animalId, String note, String? authorName, DateTime createdAt
+ String id, String animalId, String note, String? authorName, DateTime createdAt, String kind
 });
 
 
@@ -66,14 +69,15 @@ class _$AnimalNoteCopyWithImpl<$Res>
 
 /// Create a copy of AnimalNote
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? animalId = null,Object? note = null,Object? authorName = freezed,Object? createdAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? animalId = null,Object? note = null,Object? authorName = freezed,Object? createdAt = null,Object? kind = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,animalId: null == animalId ? _self.animalId : animalId // ignore: cast_nullable_to_non_nullable
 as String,note: null == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
 as String,authorName: freezed == authorName ? _self.authorName : authorName // ignore: cast_nullable_to_non_nullable
 as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime,
+as DateTime,kind: null == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -158,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String animalId,  String note,  String? authorName,  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String animalId,  String note,  String? authorName,  DateTime createdAt,  String kind)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AnimalNote() when $default != null:
-return $default(_that.id,_that.animalId,_that.note,_that.authorName,_that.createdAt);case _:
+return $default(_that.id,_that.animalId,_that.note,_that.authorName,_that.createdAt,_that.kind);case _:
   return orElse();
 
 }
@@ -179,10 +183,10 @@ return $default(_that.id,_that.animalId,_that.note,_that.authorName,_that.create
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String animalId,  String note,  String? authorName,  DateTime createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String animalId,  String note,  String? authorName,  DateTime createdAt,  String kind)  $default,) {final _that = this;
 switch (_that) {
 case _AnimalNote():
-return $default(_that.id,_that.animalId,_that.note,_that.authorName,_that.createdAt);case _:
+return $default(_that.id,_that.animalId,_that.note,_that.authorName,_that.createdAt,_that.kind);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -199,10 +203,10 @@ return $default(_that.id,_that.animalId,_that.note,_that.authorName,_that.create
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String animalId,  String note,  String? authorName,  DateTime createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String animalId,  String note,  String? authorName,  DateTime createdAt,  String kind)?  $default,) {final _that = this;
 switch (_that) {
 case _AnimalNote() when $default != null:
-return $default(_that.id,_that.animalId,_that.note,_that.authorName,_that.createdAt);case _:
+return $default(_that.id,_that.animalId,_that.note,_that.authorName,_that.createdAt,_that.kind);case _:
   return null;
 
 }
@@ -213,8 +217,8 @@ return $default(_that.id,_that.animalId,_that.note,_that.authorName,_that.create
 /// @nodoc
 @JsonSerializable()
 
-class _AnimalNote implements AnimalNote {
-  const _AnimalNote({required this.id, required this.animalId, required this.note, this.authorName, required this.createdAt});
+class _AnimalNote extends AnimalNote {
+  const _AnimalNote({required this.id, required this.animalId, required this.note, this.authorName, required this.createdAt, this.kind = 'manual'}): super._();
   factory _AnimalNote.fromJson(Map<String, dynamic> json) => _$AnimalNoteFromJson(json);
 
 @override final  String id;
@@ -223,6 +227,10 @@ class _AnimalNote implements AnimalNote {
 /// Yazanın adı; kullanıcı silindiyse boş.
 @override final  String? authorName;
 @override final  DateTime createdAt;
+/// "manual" (elle yazılan) ya da "status" (durum değişikliğinin
+/// kaydı, backend ADR 0057). String, enum değil: yeni tür listeyi
+/// düşürmesin.
+@override@JsonKey() final  String kind;
 
 /// Create a copy of AnimalNote
 /// with the given fields replaced by the non-null parameter values.
@@ -237,16 +245,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AnimalNote&&(identical(other.id, id) || other.id == id)&&(identical(other.animalId, animalId) || other.animalId == animalId)&&(identical(other.note, note) || other.note == note)&&(identical(other.authorName, authorName) || other.authorName == authorName)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AnimalNote&&(identical(other.id, id) || other.id == id)&&(identical(other.animalId, animalId) || other.animalId == animalId)&&(identical(other.note, note) || other.note == note)&&(identical(other.authorName, authorName) || other.authorName == authorName)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.kind, kind) || other.kind == kind));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,animalId,note,authorName,createdAt);
+int get hashCode => Object.hash(runtimeType,id,animalId,note,authorName,createdAt,kind);
 
 @override
 String toString() {
-  return 'AnimalNote(id: $id, animalId: $animalId, note: $note, authorName: $authorName, createdAt: $createdAt)';
+  return 'AnimalNote(id: $id, animalId: $animalId, note: $note, authorName: $authorName, createdAt: $createdAt, kind: $kind)';
 }
 
 
@@ -257,7 +265,7 @@ abstract mixin class _$AnimalNoteCopyWith<$Res> implements $AnimalNoteCopyWith<$
   factory _$AnimalNoteCopyWith(_AnimalNote value, $Res Function(_AnimalNote) _then) = __$AnimalNoteCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String animalId, String note, String? authorName, DateTime createdAt
+ String id, String animalId, String note, String? authorName, DateTime createdAt, String kind
 });
 
 
@@ -274,14 +282,15 @@ class __$AnimalNoteCopyWithImpl<$Res>
 
 /// Create a copy of AnimalNote
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? animalId = null,Object? note = null,Object? authorName = freezed,Object? createdAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? animalId = null,Object? note = null,Object? authorName = freezed,Object? createdAt = null,Object? kind = null,}) {
   return _then(_AnimalNote(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,animalId: null == animalId ? _self.animalId : animalId // ignore: cast_nullable_to_non_nullable
 as String,note: null == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
 as String,authorName: freezed == authorName ? _self.authorName : authorName // ignore: cast_nullable_to_non_nullable
 as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime,
+as DateTime,kind: null == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 

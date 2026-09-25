@@ -7,6 +7,7 @@ import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/core/format.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/species.dart';
+import 'package:milktrace/features/history/history_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
@@ -140,6 +141,8 @@ class _FormState extends ConsumerState<_Form> {
     try {
       final saved = await ref.read(repositoryProvider).saveAnimal(draft);
       ref.invalidate(animalsProvider);
+      // Durum değiştiyse backend not düştü (ADR 0057): detay onu göstersin.
+      ref.invalidate(animalNotesProvider(saved.id));
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

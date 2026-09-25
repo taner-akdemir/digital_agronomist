@@ -211,7 +211,9 @@ vermez; kart bunu açıklar. `test/fixtures/color_cases.json`'daki yeni `classif
 
 **Hayvan notları** (`GET/POST /animals/{id}/notes`, backend ADR 0050): detayda kimlik
 kartının hemen altında "Notlar" kartı; en yeni 5 not yazarı ve anıyla. BÜTÜN roller yazar
-(görüntüleyici = veteriner/danışman); notlar düzenlenmez, silinmez.
+(görüntüleyici = veteriner/danışman); notlar düzenlenmez, silinmez. Durum değişince backend
+aynı işlemde "Durum: Sağmal → Kuruda" notunu kendisi düşer (`AnimalNote.kind == 'status'`,
+ADR 0057); detay onu simgeyle ayırır, form kaydedince notlar tazelenir.
 
 Mock modda geçmiş **asset değil, üretilmiştir**: `MockLactation` §10'daki Wood laktasyon
 eğrisiyle deterministik seri üretir. 30 hayvan × 90 gün × 2 sağım elle tutulabilecek bir

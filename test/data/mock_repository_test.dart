@@ -159,4 +159,17 @@ void main() {
       expect(at(await repo.liveSession(hallId: 'h')).animal?.id, animal.id);
     },
   );
+
+  test('durum değişince otomatik not düşer, değişmeyince düşmez', () async {
+    final a = (await repo.animals()).firstWhere((a) => a.isMilking);
+
+    await repo.saveAnimal(a.copyWith(name: 'Yeni ad'));
+    expect(await repo.animalNotes(a.id), isEmpty);
+
+    await repo.saveAnimal(a.copyWith(status: 'dry'));
+    final notes = await repo.animalNotes(a.id);
+    expect(notes, hasLength(1));
+    expect(notes.single.note, 'Durum: Sağmal → Kuruda');
+    expect(notes.single.isStatusChange, isTrue);
+  });
 }

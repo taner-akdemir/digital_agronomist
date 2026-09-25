@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:milktrace/data/models/animal.dart';
+import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/device_profile.dart';
 import 'package:milktrace/data/models/farm.dart';
@@ -279,5 +280,24 @@ void main() {
       Device.fromJson({'id': 'd2', 'serialNo': 'S2'}).hasRecentError(at),
       isFalse,
     );
+  });
+
+  test('not türü: yoksa elle, "status" durum değişikliği', () {
+    final manual = AnimalNote.fromJson({
+      'id': 'n1',
+      'animalId': 'a1',
+      'note': 'Gebe.',
+      'createdAt': '2026-09-24T10:00:00Z',
+    });
+    expect(manual.kind, 'manual');
+    expect(manual.isStatusChange, isFalse);
+    final status = AnimalNote.fromJson({
+      'id': 'n2',
+      'animalId': 'a1',
+      'note': 'Durum: Sağmal → Kuruda',
+      'createdAt': '2026-09-24T10:00:00Z',
+      'kind': 'status',
+    });
+    expect(status.isStatusChange, isTrue);
   });
 }

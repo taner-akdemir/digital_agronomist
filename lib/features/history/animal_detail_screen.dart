@@ -630,7 +630,31 @@ class _NotesCard extends ConsumerWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(n.note, style: const TextStyle(fontSize: 13)),
+                          // Durum değişikliği kendiliğinden düşer (backend
+                          // ADR 0057); elle yazılandan ayırt edilsin.
+                          if (n.isStatusChange)
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.swap_horiz,
+                                  size: 16,
+                                  color: AppColors.darkGreenColor,
+                                ),
+                                const SizedBox(width: AppSpacing.xs),
+                                Expanded(
+                                  child: Text(
+                                    n.note,
+                                    style: const TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.darkGreenColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          else
+                            Text(n.note, style: const TextStyle(fontSize: 13)),
                           Text(
                             [
                               if ((n.authorName ?? '').isNotEmpty)

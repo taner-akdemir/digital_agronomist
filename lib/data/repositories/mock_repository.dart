@@ -201,10 +201,27 @@ class MockRepository implements MilkTraceRepository {
 
   @override
   Future<Animal> saveAnimal(Animal a) => _delayed(() async {
+    final before = a.id.isEmpty
+        ? null
+        : (await animals()).where((x) => x.id == a.id).firstOrNull;
     final saved = a.id.isEmpty
         ? a.copyWith(id: 'mock-animal-${_savedAnimals.length + 1}')
         : a;
     _savedAnimals[saved.id] = saved;
+    // Backend gibi: durum değiştiyse otomatik not (ADR 0057).
+    if (before != null && before.status != saved.status) {
+      (_notes[saved.id] ??= []).insert(
+        0,
+        AnimalNote(
+          id: 'mock-note-${(_notes[saved.id]?.length ?? 0) + 1}',
+          animalId: saved.id,
+          note: 'Durum: ${before.statusLabel} → ${saved.statusLabel}',
+          authorName: 'Demo Kullanıcı',
+          createdAt: DateTime.now().toUtc(),
+          kind: 'status',
+        ),
+      );
+    }
     return saved;
   });
 

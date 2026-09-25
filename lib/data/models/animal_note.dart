@@ -16,7 +16,17 @@ abstract class AnimalNote with _$AnimalNote {
     /// Yazanın adı; kullanıcı silindiyse boş.
     String? authorName,
     required DateTime createdAt,
+
+    /// "manual" (elle yazılan) ya da "status" (durum değişikliğinin
+    /// kaydı, backend ADR 0057). String, enum değil: yeni tür listeyi
+    /// düşürmesin.
+    @Default('manual') String kind,
   }) = _AnimalNote;
+
+  const AnimalNote._();
+
+  /// Backend'in durum değişikliğinde kendiliğinden düştüğü not.
+  bool get isStatusChange => kind == 'status';
 
   factory AnimalNote.fromJson(Map<String, dynamic> json) =>
       _$AnimalNoteFromJson(json);

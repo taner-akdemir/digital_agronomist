@@ -12,6 +12,7 @@ _AnimalNote _$AnimalNoteFromJson(Map<String, dynamic> json) => _AnimalNote(
   note: json['note'] as String,
   authorName: json['authorName'] as String?,
   createdAt: DateTime.parse(json['createdAt'] as String),
+  kind: json['kind'] as String? ?? 'manual',
 );
 
 Map<String, dynamic> _$AnimalNoteToJson(_AnimalNote instance) =>
@@ -21,4 +22,5 @@ Map<String, dynamic> _$AnimalNoteToJson(_AnimalNote instance) =>
       'note': instance.note,
       'authorName': instance.authorName,
       'createdAt': instance.createdAt.toIso8601String(),
+      'kind': instance.kind,
     };
