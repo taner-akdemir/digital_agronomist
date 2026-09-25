@@ -161,6 +161,29 @@ class ApiRepository implements MilkTraceRepository {
       );
 
   @override
+  Future<ReportFile> yieldReport({DateTime? from, DateTime? to}) async {
+    String day(DateTime d) =>
+        '${d.year.toString().padLeft(4, '0')}-'
+        '${d.month.toString().padLeft(2, '0')}-'
+        '${d.day.toString().padLeft(2, '0')}';
+    final r = await _dio.get<List<int>>(
+      '/reports/yield',
+      queryParameters: {
+        if (from != null) 'from': day(from),
+        if (to != null) 'to': day(to),
+      },
+      options: Options(responseType: ResponseType.bytes),
+    );
+    // Ad backend'in: dönem adın içinde (verim-2026-08-27_2026-09-25.xlsx).
+    final cd = r.headers.value('content-disposition') ?? '';
+    final name = RegExp('filename="?([^";]+)"?').firstMatch(cd)?.group(1);
+    return (
+      name: name ?? 'verim-raporu.xlsx',
+      bytes: Uint8List.fromList(r.data ?? const []),
+    );
+  }
+
+  @override
   Future<AnimalImportReport> importAnimals(
     List<int> file, {
     String? speciesId,

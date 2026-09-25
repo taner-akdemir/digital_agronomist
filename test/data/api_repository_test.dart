@@ -879,6 +879,32 @@ void main() {
     expect(lost, hasLength(1), reason: 'oturum sonu kopuş değil');
   });
 
+  test('verim raporu bayt olarak iner, adı başlıktan', () async {
+    final r = rig(
+      (o) async => ResponseBody.fromBytes(
+        [80, 75, 3, 4],
+        200,
+        headers: {
+          'content-type': [
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          ],
+          'content-disposition': [
+            'attachment; filename="verim-2026-09-19_2026-09-25.xlsx"',
+          ],
+        },
+      ),
+    );
+    final f = await r.repo.yieldReport(
+      from: DateTime(2026, 9, 19),
+      to: DateTime(2026, 9, 25),
+    );
+    final req = r.adapter.requests.single;
+    expect(req.path, '/reports/yield');
+    expect(req.queryParameters, {'from': '2026-09-19', 'to': '2026-09-25'});
+    expect(f.name, 'verim-2026-09-19_2026-09-25.xlsx');
+    expect(f.bytes, [80, 75, 3, 4]);
+  });
+
   test('içe aktarma dosyayı ham gövdeyle gönderir', () async {
     final r = rig(
       (o) async => okEnvelope({

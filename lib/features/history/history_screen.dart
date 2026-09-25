@@ -11,6 +11,7 @@ import 'package:milktrace/domain/yield_class.dart';
 import 'package:milktrace/features/history/history_providers.dart';
 import 'package:milktrace/features/history/widgets/animal_status_chip.dart';
 import 'package:milktrace/features/history/widgets/yield_class_badge.dart';
+import 'package:milktrace/features/history/yield_report.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
@@ -57,19 +58,28 @@ class _AnimalsTab extends ConsumerWidget {
 
     return Column(
       children: [
-        if (isOwner)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.lg,
-              AppSpacing.sm,
-              AppSpacing.lg,
-              0,
-            ),
-            // Wrap: dar ekranda ya da büyük yazıda iki düğme alt alta iner.
-            child: Wrap(
-              alignment: WrapAlignment.end,
-              children: [
-                // Sürüyü ilk kez girerken tek tek eklemek yerine (ADR 0063).
+        Padding(
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.lg,
+            AppSpacing.sm,
+            AppSpacing.lg,
+            0,
+          ),
+          // Wrap: dar ekranda ya da büyük yazıda düğmeler alt satıra iner.
+          child: Wrap(
+            alignment: WrapAlignment.end,
+            children: [
+              // Verim raporu BÜTÜN rollere: okuru veteriner (ADR 0064).
+              TextButton.icon(
+                onPressed: () => showYieldReportSheet(context),
+                icon: const Icon(Icons.ios_share),
+                label: const Text('Rapor'),
+                style: TextButton.styleFrom(
+                  foregroundColor: AppColors.darkGreenColor,
+                ),
+              ),
+              // Sürüyü ilk kez girerken tek tek eklemek yerine (ADR 0063).
+              if (isOwner)
                 TextButton.icon(
                   onPressed: () => context.push('/animals/import'),
                   icon: const Icon(Icons.upload_file),
@@ -78,6 +88,7 @@ class _AnimalsTab extends ConsumerWidget {
                     foregroundColor: AppColors.darkGreenColor,
                   ),
                 ),
+              if (isOwner)
                 TextButton.icon(
                   onPressed: () => context.push('/animals/new'),
                   icon: const Icon(Icons.add),
@@ -86,9 +97,9 @@ class _AnimalsTab extends ConsumerWidget {
                     foregroundColor: AppColors.darkGreenColor,
                   ),
                 ),
-              ],
-            ),
+            ],
           ),
+        ),
         if (isOwner) const _UnmatchedTagsBanner(),
         const _Filters(),
         _ActiveFilter(count: animals.value?.length ?? 0),

@@ -253,6 +253,12 @@ class CachingRepository implements MilkTraceRepository {
   Future<AnimalNote> addAnimalNote(String animalId, String note) =>
       _net(() => _inner.addAnimalNote(animalId, note));
 
+  /// Önbelleklenmez: dosya her seferinde güncel üretilmeli; çevrimdışıyken
+  /// eski raporu yeni diye paylaşmak yanıltıcı olurdu.
+  @override
+  Future<ReportFile> yieldReport({DateTime? from, DateTime? to}) =>
+      _net(() => _inner.yieldReport(from: from, to: to));
+
   @override
   Future<AnimalImportReport> importAnimals(
     List<int> file, {

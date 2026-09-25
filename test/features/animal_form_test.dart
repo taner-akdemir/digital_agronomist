@@ -81,6 +81,8 @@ void main() {
       await tester.tap(find.text('Hayvanlar'));
       await tester.pumpAndSettle();
       expect(find.text('Hayvan ekle'), visible ? findsOneWidget : findsNothing);
+      expect(find.text('Listeden'), visible ? findsOneWidget : findsNothing);
+      expect(find.text('Rapor'), findsOneWidget, reason: 'rapor bütün rollere');
     });
   }
 

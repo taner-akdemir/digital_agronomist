@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/animal_import.dart';
@@ -17,6 +19,9 @@ import 'package:milktrace/data/models/spout_update.dart';
 import 'package:milktrace/data/models/thresholds.dart';
 import 'package:milktrace/data/models/unmatched_tag_row.dart';
 import 'package:milktrace/data/models/vacuum.dart';
+
+/// İndirilen rapor dosyası: adı ve içeriği.
+typedef ReportFile = ({String name, Uint8List bytes});
 
 /// Uygulamanın veri kaynağı sözleşmesi (§15.2).
 ///
@@ -50,6 +55,10 @@ abstract interface class MilkTraceRepository {
   /// Not ekler (POST /animals/{id}/notes). Bütün işletme rolleri yazar;
   /// yazar oturumdaki kullanıcıdır.
   Future<AnimalNote> addAnimalNote(String animalId, String note);
+
+  /// Hayvan başına günlük verim raporu, .xlsx (GET /reports/yield, backend
+  /// ADR 0064). Dönem verilmezse son 30 gün. Bütün roller indirir.
+  Future<ReportFile> yieldReport({DateTime? from, DateTime? to});
 
   /// Hayvan listesini dosyadan içe aktarır (POST /animals/import, backend
   /// ADR 0063). Dosya CSV ya da .xlsx; olduğu gibi gönderilir, okuyan

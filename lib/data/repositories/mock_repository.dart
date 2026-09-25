@@ -198,6 +198,16 @@ class MockRepository implements MilkTraceRepository {
         return n;
       });
 
+  /// Mock'ta rapor üretici YOK: .xlsx backend'de yazılıyor (ADR 0064).
+  @override
+  Future<ReportFile> yieldReport({DateTime? from, DateTime? to}) => _delayed(
+    () async => throw const ApiException(
+      code: 'NOT_SUPPORTED',
+      message: 'Demo modunda rapor yok; gerçek sunucuyla deneyin',
+      status: 501,
+    ),
+  );
+
   /// Mock'ta dosya okuyucu YOK: CSV/.xlsx çözümü backend'de (ADR 0063) ve
   /// burada ikinci bir kopyası ayrışırdı.
   @override
