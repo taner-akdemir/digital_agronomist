@@ -305,7 +305,7 @@ anlatıyor, bu ekran cihazın kendisini. Çevrimdışı sayaç müdahale gerekti
 
 **Push bildirimleri ANDROID'DE AÇIK** (Firebase projesi `milktrace-69975`, 25.09.2026):
 emülatörde test bildirimi, gerçek sayaç uyarısı ve "geri geldi"nin aynı bildirimin yerine
-geçmesi denendi. iOS için APNs ve Xcode adımı bekliyor (§7). Firebase açılamazsa uygulama
+geçmesi denendi. iOS'ta Xcode tarafı hazır; APNs anahtarı ve imza bekliyor (§7). Firebase açılamazsa uygulama
 bunu hata saymaz — `FirebasePushGateway` log atıp `null` döner, `PushRegistration`
 `unavailable` kalır ve sağım push'suz sürer.
 
@@ -432,10 +432,19 @@ Android ve iOS, ikisi de `com.algebran.milktrace.milktrace`.
 
 **Kalan:**
 
-- **iOS:** APNs anahtarını (.p8) Firebase → Proje ayarları → Cloud Messaging'e yükle;
-  Xcode'da `GoogleService-Info.plist`'i **Runner hedefine ekle** (dosya repoda ama Xcode
-  projesine bağlı değil), **Push Notifications** ve **Background Modes → Remote
-  notifications** yeteneklerini aç.
+- **iOS (Xcode tarafı YAPILDI, 25.09.2026):** `GoogleService-Info.plist` Runner hedefinin
+  kaynaklarında; `Runner/Runner.entitlements` (`aps-environment`) üç yapılandırmada
+  `CODE_SIGN_ENTITLEMENTS`; `Info.plist`'te `UIBackgroundModes: remote-notification`;
+  `AppDelegate` bildirim merkezinin temsilcisi (yoksa ön plandaki yerel bildirim yutulur).
+  iOS'ta FCM jetonu APNs jetonundan türer: `FirebasePushGateway` önce APNs jetonunu ~5 sn
+  bekler, gelmezse `null` döner (`getToken` aksi hâlde `apns-token-not-set` atıyordu).
+  **Kalan (elle):** APNs anahtarını (.p8) Firebase → Proje ayarları → Cloud Messaging'e
+  yükle; Xcode'da Signing & Capabilities → ekip seç (`DEVELOPMENT_TEAM` boş; Apple
+  Developer Program üyeliği gerekli — ücretsiz hesap push yeteneğini imzalayamaz); gerçek
+  iPhone'da test bildirimi. Push simülatörde de denenebilir ama asıl doğrulama cihazda.
+- **Araç zinciri:** Flutter 3.41.3 + Xcode 27'de `flutter build ios --simulator` düşüyor
+  (Xcode 27 `lipo -verify_arch` birden çok mimari kabul etmiyor) — proje sorunu değil;
+  `flutter upgrade` ya da cihaz derlemesi (`--no-codesign`) kullan.
 - **Staging/üretim backend'i:** servis hesabı anahtarı kümeye Secret olarak
   (`~/GolandProjects/milktrace/docs/saha/push-kurulum.md` §2). Yerelde anahtar
   `services/notification/.env`'de (repoya girmez).

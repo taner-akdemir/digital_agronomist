@@ -78,7 +78,31 @@ class FirebasePushGateway implements PushGateway {
     final initial = await FirebaseMessaging.instance.getInitialMessage();
     if (initial != null) _taps.add(_toMessage(initial));
 
-    return FirebaseMessaging.instance.getToken();
+    try {
+      if (defaultTargetPlatform == TargetPlatform.iOS &&
+          await _waitForApnsToken() == null) {
+        // Push yeteneği/imza eksik ya da APNs'e ulaşılamıyor. getToken bu
+        // durumda hata atar; hatayı taşımak sağımı push yüzünden düşürürdü.
+        debugPrint('[push] APNs jetonu alınamadı, push kapalı');
+        return null;
+      }
+      return await FirebaseMessaging.instance.getToken();
+    } catch (e) {
+      debugPrint('[push] FCM jetonu alınamadı, push kapalı: $e');
+      return null;
+    }
+  }
+
+  /// iOS'ta FCM jetonu APNs jetonundan türer ve APNs jetonu izin verildikten
+  /// SONRA eşzamansız gelir; hemen `getToken` çağırmak `apns-token-not-set`
+  /// hatası verir. Birkaç saniye beklenir.
+  static Future<String?> _waitForApnsToken() async {
+    for (var i = 0; i < 10; i++) {
+      final token = await FirebaseMessaging.instance.getAPNSToken();
+      if (token != null) return token;
+      await Future<void>.delayed(const Duration(milliseconds: 500));
+    }
+    return null;
   }
 
   Future<void> _setupLocalNotifications() async {
