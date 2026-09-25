@@ -879,6 +879,24 @@ void main() {
     expect(lost, hasLength(1), reason: 'oturum sonu kopuş değil');
   });
 
+  test('oturumun sağımları okunur', () async {
+    final r = rig(
+      (o) async => okEnvelope2([
+        {
+          'animalId': 'a1',
+          'earTag': 'TR1',
+          'spoutId': 'p1',
+          'startedAt': '2026-09-25T06:00:00Z',
+          'volumeMl': 9000,
+        },
+      ]),
+    );
+    final ms = await r.repo.sessionMilkings('s1');
+    expect(r.adapter.requests.single.path, '/sessions/s1/milkings');
+    expect(ms.single.spoutId, 'p1');
+    expect(ms.single.volumeMl, 9000);
+  });
+
   test('eşleştirme kaldırılır', () async {
     final r = rig((o) async => okEnvelope({}));
 

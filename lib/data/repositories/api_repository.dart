@@ -14,6 +14,7 @@ import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
+import 'package:milktrace/data/models/session_milking.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_update.dart';
@@ -360,6 +361,13 @@ class ApiRepository implements MilkTraceRepository {
     );
     return _listOf(r, MilkingSession.fromJson);
   }
+
+  @override
+  Future<List<SessionMilking>> sessionMilkings(String sessionId) async =>
+      _listOf(
+        await _dio.get<dynamic>('/sessions/$sessionId/milkings'),
+        SessionMilking.fromJson,
+      );
 
   @override
   Future<List<AnimalMilking>> animalHistory(

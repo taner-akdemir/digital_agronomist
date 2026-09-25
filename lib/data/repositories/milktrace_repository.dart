@@ -9,6 +9,7 @@ import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
+import 'package:milktrace/data/models/session_milking.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_update.dart';
@@ -134,6 +135,9 @@ abstract interface class MilkTraceRepository {
 
   /// Bir hayvanın 7/30 gün trendi ve sınıfı (§8.5 GET /animals/{id}/trend).
   Future<AnimalTrend> animalTrend(String animalId);
+
+  /// Oturumun sağımları (GET /sessions/{id}/milkings, backend ADR 0062).
+  Future<List<SessionMilking>> sessionMilkings(String sessionId);
 
   /// Günün özeti ve sınıf dağılımı (§8.5 GET /dashboard).
   Future<DashboardSummary> dashboard();

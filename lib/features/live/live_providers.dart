@@ -54,6 +54,31 @@ Future<List<Spout>> spoutsByHall(Ref ref, String hallId) async {
   return lists.expand((e) => e).toList(growable: false);
 }
 
+/// Bölgenin SON BİTEN oturumunda hangi hayvan hangi noktadaydı: hayvan →
+/// nokta (backend ADR 0062).
+///
+/// RFID isteğe bağlı; okuyucusuz çiftlikte sağımcı her hayvanı elle seçiyor
+/// ve seçici bu haritayla önce muhtemel hayvanları gösteriyor. Öneri bir
+/// KOLAYLIK: okunamazsa boş harita döner, seçici eskisi gibi çalışır.
+@riverpod
+Future<Map<String, String>> previousSpouts(Ref ref, String hallId) async {
+  final repo = ref.watch(repositoryProvider);
+  try {
+    final sessions = await repo.sessions(hallId: hallId);
+    final ended = sessions.where((s) => s.status == 'ended').toList()
+      ..sort((a, b) {
+        final x = a.startedAt, y = b.startedAt;
+        if (x == null || y == null) return 0;
+        return y.compareTo(x);
+      });
+    if (ended.isEmpty) return const {};
+    final milkings = await repo.sessionMilkings(ended.first.id);
+    return {for (final m in milkings) m.animalId: ?m.spoutId};
+  } on Object {
+    return const {};
+  }
+}
+
 /// Bölgenin canlı sağım durumu.
 ///
 /// İlk yükleme `GET /sessions/{id}/live`, sonrası WebSocket akışı (§8.5).

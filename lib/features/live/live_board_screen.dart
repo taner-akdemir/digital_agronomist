@@ -350,6 +350,9 @@ class _Grid extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Önceki sağımın yerleşimi ÖNCEDEN yüklenir: seçici açıldığında hazır
+    // olsun (backend ADR 0062).
+    ref.watch(previousSpoutsProvider(hall.id));
     final active = live.session.status == 'active';
 
     if (!active) {
@@ -437,6 +440,9 @@ class _Grid extends ConsumerWidget {
       alreadyAssigned: assigned,
       unmatched: update.unmatchedTag,
       current: update.animal,
+      spoutId: spoutId,
+      previousSpouts:
+          ref.read(previousSpoutsProvider(hall.id)).value ?? const {},
     );
     if (pick == null || !context.mounted) return;
 

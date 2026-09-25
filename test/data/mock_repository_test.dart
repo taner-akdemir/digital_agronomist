@@ -1,8 +1,12 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/data/models/spout_update.dart';
+import 'package:milktrace/data/repositories/milktrace_repository.dart';
 import 'package:milktrace/data/repositories/mock_repository.dart';
 import 'package:milktrace/domain/flow_color.dart';
+import 'package:milktrace/features/live/live_providers.dart';
+import 'package:milktrace/providers/repository_providers.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -171,5 +175,21 @@ void main() {
     expect(notes, hasLength(1));
     expect(notes.single.note, 'Durum: Sağmal → Kuruda');
     expect(notes.single.isStatusChange, isTrue);
+  });
+
+  test('önceki oturumun yerleşimi (previousSpouts)', () async {
+    final c = ProviderContainer(
+      overrides: [
+        repositoryProvider.overrideWith((ref) => repo as MilkTraceRepository),
+      ],
+    );
+    addTearDown(c.dispose);
+    final hall = (await repo.halls()).first.id;
+    final prev = await c.read(previousSpoutsProvider(hall).future);
+    // Mock'ta boştaki 8. noktada önceki sağımda Gelin vardı.
+    expect(
+      prev['0192a1f0-0070-7000-8000-000000000008'],
+      '0192a1f0-0050-7000-8000-000000000008',
+    );
   });
 }

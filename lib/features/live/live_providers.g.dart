@@ -304,6 +304,117 @@ final class SpoutsByHallFamily extends $Family
   String toString() => r'spoutsByHallProvider';
 }
 
+/// Bölgenin SON BİTEN oturumunda hangi hayvan hangi noktadaydı: hayvan →
+/// nokta (backend ADR 0062).
+///
+/// RFID isteğe bağlı; okuyucusuz çiftlikte sağımcı her hayvanı elle seçiyor
+/// ve seçici bu haritayla önce muhtemel hayvanları gösteriyor. Öneri bir
+/// KOLAYLIK: okunamazsa boş harita döner, seçici eskisi gibi çalışır.
+
+@ProviderFor(previousSpouts)
+final previousSpoutsProvider = PreviousSpoutsFamily._();
+
+/// Bölgenin SON BİTEN oturumunda hangi hayvan hangi noktadaydı: hayvan →
+/// nokta (backend ADR 0062).
+///
+/// RFID isteğe bağlı; okuyucusuz çiftlikte sağımcı her hayvanı elle seçiyor
+/// ve seçici bu haritayla önce muhtemel hayvanları gösteriyor. Öneri bir
+/// KOLAYLIK: okunamazsa boş harita döner, seçici eskisi gibi çalışır.
+
+final class PreviousSpoutsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Map<String, String>>,
+          Map<String, String>,
+          FutureOr<Map<String, String>>
+        >
+    with
+        $FutureModifier<Map<String, String>>,
+        $FutureProvider<Map<String, String>> {
+  /// Bölgenin SON BİTEN oturumunda hangi hayvan hangi noktadaydı: hayvan →
+  /// nokta (backend ADR 0062).
+  ///
+  /// RFID isteğe bağlı; okuyucusuz çiftlikte sağımcı her hayvanı elle seçiyor
+  /// ve seçici bu haritayla önce muhtemel hayvanları gösteriyor. Öneri bir
+  /// KOLAYLIK: okunamazsa boş harita döner, seçici eskisi gibi çalışır.
+  PreviousSpoutsProvider._({
+    required PreviousSpoutsFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'previousSpoutsProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$previousSpoutsHash();
+
+  @override
+  String toString() {
+    return r'previousSpoutsProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<Map<String, String>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Map<String, String>> create(Ref ref) {
+    final argument = this.argument as String;
+    return previousSpouts(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is PreviousSpoutsProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$previousSpoutsHash() => r'27706461d693782f9b1a480282f98e9c4fcb3f47';
+
+/// Bölgenin SON BİTEN oturumunda hangi hayvan hangi noktadaydı: hayvan →
+/// nokta (backend ADR 0062).
+///
+/// RFID isteğe bağlı; okuyucusuz çiftlikte sağımcı her hayvanı elle seçiyor
+/// ve seçici bu haritayla önce muhtemel hayvanları gösteriyor. Öneri bir
+/// KOLAYLIK: okunamazsa boş harita döner, seçici eskisi gibi çalışır.
+
+final class PreviousSpoutsFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<Map<String, String>>, String> {
+  PreviousSpoutsFamily._()
+    : super(
+        retry: null,
+        name: r'previousSpoutsProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// Bölgenin SON BİTEN oturumunda hangi hayvan hangi noktadaydı: hayvan →
+  /// nokta (backend ADR 0062).
+  ///
+  /// RFID isteğe bağlı; okuyucusuz çiftlikte sağımcı her hayvanı elle seçiyor
+  /// ve seçici bu haritayla önce muhtemel hayvanları gösteriyor. Öneri bir
+  /// KOLAYLIK: okunamazsa boş harita döner, seçici eskisi gibi çalışır.
+
+  PreviousSpoutsProvider call(String hallId) =>
+      PreviousSpoutsProvider._(argument: hallId, from: this);
+
+  @override
+  String toString() => r'previousSpoutsProvider';
+}
+
 /// Bölgenin canlı sağım durumu.
 ///
 /// İlk yükleme `GET /sessions/{id}/live`, sonrası WebSocket akışı (§8.5).

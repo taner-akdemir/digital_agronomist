@@ -15,6 +15,7 @@ import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
+import 'package:milktrace/data/models/session_milking.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_update.dart';
@@ -425,6 +426,39 @@ class MockRepository implements MilkTraceRepository {
       ),
     );
   }
+
+  /// Geçmiş oturumun sağımları: canlı demodaki yerleşim, üstüne boştaki 8.
+  /// noktada Gelin — seçicinin "önceki sağımda bu noktadaydı" önerisi
+  /// demoda görünsün (backend ADR 0062).
+  @override
+  Future<List<SessionMilking>> sessionMilkings(String sessionId) =>
+      _delayed(() async {
+        final live = await _load(
+          'live_session.json',
+          (json) => LiveSession.fromJson(json as Map<String, dynamic>),
+        );
+        final at = DateTime.utc(2026, 9, 20, 17, 0);
+        return [
+          for (final u in live.updates)
+            if (u.animal case final a?)
+              SessionMilking(
+                animalId: a.id,
+                earTag: a.earTag,
+                spoutId: u.spoutId,
+                startedAt: at,
+                endedAt: at.add(const Duration(minutes: 7)),
+                volumeMl: 9000,
+              ),
+          SessionMilking(
+            animalId: '0192a1f0-0070-7000-8000-000000000008',
+            earTag: 'TR340000008',
+            spoutId: '0192a1f0-0050-7000-8000-000000000008',
+            startedAt: at,
+            endedAt: at.add(const Duration(minutes: 7)),
+            volumeMl: 8000,
+          ),
+        ];
+      });
 
   @override
   Future<List<MilkingSession>> sessions({

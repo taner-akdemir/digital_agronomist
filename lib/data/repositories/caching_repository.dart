@@ -14,6 +14,7 @@ import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
+import 'package:milktrace/data/models/session_milking.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_update.dart';
@@ -203,6 +204,13 @@ class CachingRepository implements MilkTraceRepository {
     'history:$animalId:${_day(from)}:${_day(to)}',
     () => _inner.animalHistory(animalId, from: from, to: to),
     (j) => _list(j, AnimalMilking.fromJson),
+  );
+
+  @override
+  Future<List<SessionMilking>> sessionMilkings(String sessionId) => _read(
+    'milkings:$sessionId',
+    () => _inner.sessionMilkings(sessionId),
+    (j) => _list(j, SessionMilking.fromJson),
   );
 
   @override

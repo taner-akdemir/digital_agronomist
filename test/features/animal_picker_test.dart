@@ -32,6 +32,8 @@ Future<void> _open(
   WidgetTester tester, {
   Set<String> assigned = const {},
   SpoutAnimal? current,
+  String? spoutId,
+  Map<String, String> previous = const {},
   MilkTraceRepository? repo,
   void Function(AnimalPick?)? onResult,
 }) async {
@@ -53,6 +55,8 @@ Future<void> _open(
                   spoutLabel: 'A-1 · Nokta 1',
                   alreadyAssigned: assigned,
                   current: current,
+                  spoutId: spoutId,
+                  previousSpouts: previous,
                 );
                 onResult?.call(r);
               },
@@ -163,5 +167,43 @@ void main() {
     final subs = _subtitles(tester);
     expect(subs, hasLength(1));
     expect(subs.single, contains('TR340000003'));
+  });
+
+  // RFID isteğe bağlı (backend ADR 0062): okuyucusuz çiftlikte önce önceki
+  // sağımın yerleşimi önerilir.
+  testWidgets('önceki sağımda bu noktadaki hayvan en üstte', (tester) async {
+    const cow5 = '0192a1f0-0070-7000-8000-000000000005';
+    const cow9 = '0192a1f0-0070-7000-8000-000000000009';
+    await _open(tester, spoutId: 'p8', previous: {cow9: 'p8', cow5: 'p3'});
+    final subs = _subtitles(tester);
+    expect(subs[0], contains('TR340000009'));
+    expect(subs[0], contains('önceki sağımda bu noktadaydı'));
+    expect(subs[1], contains('TR340000005'));
+    expect(subs[1], contains('önceki sağımda sağıldı'));
+    expect(subs[2], isNot(contains('önceki sağımda')));
+  });
+
+  testWidgets('başka noktadaki hayvan önceki yerleşime rağmen altta', (
+    tester,
+  ) async {
+    const cow9 = '0192a1f0-0070-7000-8000-000000000009';
+    await _open(
+      tester,
+      assigned: {cow9},
+      spoutId: 'p8',
+      previous: {cow9: 'p8'},
+    );
+    final subs = _subtitles(tester);
+    expect(subs.first, isNot(contains('TR340000009')));
+    // Seçilemeyen hayvan listenin sonunda; tembel listede görünene kaydır.
+    await tester.scrollUntilVisible(
+      find.textContaining('TR340000009'),
+      300,
+      scrollable: find.byType(Scrollable).last,
+    );
+    expect(
+      _subtitles(tester).firstWhere((s) => s.contains('TR340000009')),
+      contains('başka noktada'),
+    );
   });
 }

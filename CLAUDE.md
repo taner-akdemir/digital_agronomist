@@ -213,6 +213,12 @@ Sağmal olmayanın sınıfı **donar** (`Animal.yieldClassAt`, backend ADR 0055)
 yerine durum, altta "Son sınıf: … (tarih)"; güncel açıklama ve veteriner uyarısı gizli.
 Sağmal hayvanın sınıfı iki günden eskiyse tarih ve sebebi yazılır.
 
+**RFID isteğe bağlı** (backend ADR 0062): okuyucusuz çiftlikte elle eşleştirme ana yoldur.
+Seçici bölgenin son BİTMİŞ oturumunun yerleşimini (`GET /sessions/{id}/milkings`,
+`previousSpoutsProvider`) okur: önce önceki sağımda bu noktadaki hayvan ("önceki sağımda bu
+noktadaydı"), sonra önceki sağımda sağılanlar, sonra kalanlar; başka noktaya bağlı olan en
+altta. Okunamazsa öneri sessizce düşer, liste küpe sırasıyla gelir — öneri engel olmamalı.
+
 **Hayvan ekleme/düzenleme** (`/animals/new`, `/animals/:id/edit`; kabuğun dışında tam
 ekran form): küpe (zorunlu, işletmede tekil), tür, ad, ırk, RFID, doğum ve son buzağılama
 tarihi (gelecek seçilemez), laktasyon sırası, durum. Giriş Geçmiş → Hayvanlar'daki "Hayvan

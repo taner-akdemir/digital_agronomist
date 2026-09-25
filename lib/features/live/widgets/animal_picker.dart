@@ -40,6 +40,8 @@ Future<AnimalPick?> showAnimalPicker(
   required Set<String> alreadyAssigned,
   UnmatchedTag? unmatched,
   SpoutAnimal? current,
+  String? spoutId,
+  Map<String, String> previousSpouts = const {},
 }) => showModalBottomSheet<AnimalPick>(
   context: context,
   isScrollControlled: true,
@@ -50,6 +52,8 @@ Future<AnimalPick?> showAnimalPicker(
     alreadyAssigned: alreadyAssigned,
     unmatched: unmatched,
     current: current,
+    spoutId: spoutId,
+    previousSpouts: previousSpouts,
   ),
 );
 
@@ -59,11 +63,20 @@ class _AnimalPicker extends ConsumerStatefulWidget {
     required this.alreadyAssigned,
     this.unmatched,
     this.current,
+    this.spoutId,
+    this.previousSpouts = const {},
   });
 
   final String spoutLabel;
   final UnmatchedTag? unmatched;
   final SpoutAnimal? current;
+
+  /// Seçicinin açıldığı nokta.
+  final String? spoutId;
+
+  /// Önceki sağımda hayvan → nokta (backend ADR 0062). RFID isteğe bağlı;
+  /// okuyucusuz çiftlikte bu, sağımcının aradığı hayvanın en iyi tahmini.
+  final Map<String, String> previousSpouts;
 
   /// Bu oturumda BAŞKA noktalara eşleştirilmiş hayvanlar.
   final Set<String> alreadyAssigned;
@@ -232,7 +245,12 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
             [
               a.earTag,
               speciesName[a.speciesId] ?? '',
-              if (taken) 'başka noktada',
+              if (taken)
+                'başka noktada'
+              else if (_rank(a) == 0)
+                'önceki sağımda bu noktadaydı'
+              else if (_rank(a) == 1)
+                'önceki sağımda sağıldı',
             ].where((s) => s.isNotEmpty).join(' · '),
           ),
           // Zaten eşleştirilmiş hayvan SEÇİLEMEZ: aynı hayvanı iki noktaya
@@ -278,13 +296,23 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
           a,
     ];
 
-    // Eşleştirilmişler ALTTA: listenin başı seçilebilir olanlara ayrılıyor.
+    // Önce muhtemel hayvanlar, eşleştirilmişler ALTTA (bkz. _rank).
     matches.sort((a, b) {
-      final ta = widget.alreadyAssigned.contains(a.id) ? 1 : 0;
-      final tb = widget.alreadyAssigned.contains(b.id) ? 1 : 0;
-      return ta != tb ? ta - tb : a.earTag.compareTo(b.earTag);
+      final ra = _rank(a), rb = _rank(b);
+      return ra != rb ? ra - rb : a.earTag.compareTo(b.earTag);
     });
     return matches;
+  }
+
+  /// Listedeki sıra (backend ADR 0062): 0 önceki sağımda BU noktadaydı,
+  /// 1 önceki sağımda sağıldı ama bu oturumda henüz bağlanmadı, 2 diğerleri,
+  /// 3 bu oturumda başka noktada (seçilemez).
+  int _rank(Animal a) {
+    if (widget.alreadyAssigned.contains(a.id)) return 3;
+    final prev = widget.previousSpouts[a.id];
+    if (prev != null && prev == widget.spoutId) return 0;
+    if (prev != null) return 1;
+    return 2;
   }
 }
 
