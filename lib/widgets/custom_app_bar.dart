@@ -18,7 +18,8 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
     return AppBar(
       title: Row(
         children: [
-          const Icon(Icons.sensors, size: 26, color: AppColors.darkGreenColor),
+          // Marka işareti (tool/brand): ikonla aynı damla ve debi çizgisi.
+          Image.asset('assets/brand/mark.png', height: 26, width: 26),
           const SizedBox(width: AppSpacing.sm),
           Text(
             title,

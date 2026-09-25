@@ -67,6 +67,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    Image.asset('assets/brand/mark.png', height: 72),
+                    const SizedBox(height: AppSpacing.md),
                     const Text(
                       'Milk Trace',
                       textAlign: TextAlign.center,

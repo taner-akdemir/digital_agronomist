@@ -1,0 +1,8 @@
+<!-- Uygulama içi işaret: açık zeminde (üst çubuk, giriş ekranı) koyu yeşil
+     damla ve açık yeşil debi çizgisi. İkonla aynı biçim, renkleri ters. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <g transform="translate(512 512) scale(1.28) translate(-512 -485)">
+    <path d="M512 170 C512 170 300 420 300 590 C300 712 395 800 512 800 C629 800 724 712 724 590 C724 420 512 170 512 170 Z" fill="#1F4732"/>
+    <polyline points="340,600 420,600 455,520 500,690 545,470 585,640 615,600 684,600" fill="none" stroke="#B4EBC9" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
