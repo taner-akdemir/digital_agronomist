@@ -32,18 +32,14 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 /// `--dart-define=MT_API=mock` ile yapılır.
 class ApiRepository implements MilkTraceRepository {
   ApiRepository({
-    required Dio dio,
-    required String wsBaseUrl,
+    required this._dio,
+    required this._wsBaseUrl,
     String? Function()? accessToken,
     WebSocketChannel Function(Uri uri, Map<String, dynamic> headers)? connect,
-    Duration reconnectDelay = const Duration(seconds: 3),
-    void Function(DateTime lastFrameAt)? onLiveLost,
-  }) : _dio = dio,
-       _wsBaseUrl = wsBaseUrl,
-       _accessToken = accessToken ?? _noToken,
-       _connect = connect ?? _defaultConnect,
-       _reconnectDelay = reconnectDelay,
-       _onLiveLost = onLiveLost;
+    this._reconnectDelay = const Duration(seconds: 3),
+    this._onLiveLost,
+  }) : _accessToken = accessToken ?? _noToken,
+       _connect = connect ?? _defaultConnect;
 
   final Dio _dio;
 

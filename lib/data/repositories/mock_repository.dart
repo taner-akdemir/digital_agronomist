@@ -38,10 +38,9 @@ class MockRepository implements MilkTraceRepository {
   MockRepository({
     this.latency = const Duration(milliseconds: 400),
     Random? random,
-    DateTime? today,
+    this._today,
     Future<String> Function(String assetPath)? loadAsset,
   }) : _random = random ?? Random(7),
-       _today = today,
        _loadAsset = loadAsset ?? rootBundle.loadString;
 
   /// Asset okuyucu.

@@ -19,10 +19,9 @@ class AuthSession {
     required this.api,
     required this.store,
     required this.interceptor,
-    required Dio bare,
-    required Dio retry,
-  }) : _bare = bare,
-       _retry = retry;
+    required this._bare,
+    required this._retry,
+  });
 
   factory AuthSession({required String baseUrl, TokenStore? store}) {
     BaseOptions options() => BaseOptions(

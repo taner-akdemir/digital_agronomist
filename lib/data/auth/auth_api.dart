@@ -8,7 +8,7 @@ import 'package:milktrace/data/models/auth_user.dart';
 /// yenileme isteği 401 alınca interceptor yine yenilemeye kalkar ve sonsuz
 /// döngüye girerdi.
 class AuthApi {
-  AuthApi({required Dio dio}) : _dio = dio;
+  AuthApi({required this._dio});
 
   final Dio _dio;
 

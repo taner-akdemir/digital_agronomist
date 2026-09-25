@@ -21,12 +21,10 @@ import 'package:milktrace/data/models/auth_user.dart';
 ///    yazılmazsa bir sonraki yenileme kesin düşer.
 class AuthInterceptor extends Interceptor {
   AuthInterceptor({
-    required AuthApi authApi,
-    required TokenStore store,
-    required Dio retryDio,
-  }) : _authApi = authApi,
-       _store = store,
-       _retryDio = retryDio;
+    required this._authApi,
+    required this._store,
+    required this._retryDio,
+  });
 
   final AuthApi _authApi;
   final TokenStore _store;

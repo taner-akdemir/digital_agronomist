@@ -65,18 +65,13 @@ bool _unavailable(int? status) =>
 /// başka bir hesapla giriş, öncekinin verisini görmemeli.
 class CachingRepository implements MilkTraceRepository {
   CachingRepository({
-    required MilkTraceRepository inner,
-    required CacheStore store,
-    required String scope,
-    required void Function(DateTime dataAt) onOffline,
-    required void Function() onOnline,
+    required this._inner,
+    required this._store,
+    required this._scope,
+    required this._onOffline,
+    required this._onOnline,
     DateTime Function()? now,
-  }) : _inner = inner,
-       _store = store,
-       _scope = scope,
-       _onOffline = onOffline,
-       _onOnline = onOnline,
-       _now = now ?? DateTime.now;
+  }) : _now = now ?? DateTime.now;
 
   final MilkTraceRepository _inner;
   final CacheStore _store;
