@@ -15,7 +15,8 @@
     "tenantScoped": false,
     "declinePct": 20,
     "noMilkMl": 100,
-    "noMilkMilkings": 4
+    "noMilkMilkings": 4,
+    "freshLactationDays": 30
   },
   {
     "speciesId": "0192a1f0-0020-7000-8000-000000000002",
@@ -33,7 +34,8 @@
     "tenantScoped": false,
     "declinePct": 20,
     "noMilkMl": 100,
-    "noMilkMilkings": 4
+    "noMilkMilkings": 4,
+    "freshLactationDays": 30
   },
   {
     "speciesId": "0192a1f0-0020-7000-8000-000000000003",
@@ -51,6 +53,7 @@
     "tenantScoped": false,
     "declinePct": 20,
     "noMilkMl": 100,
-    "noMilkMilkings": 4
+    "noMilkMilkings": 4,
+    "freshLactationDays": 30
   }
 ]

@@ -133,7 +133,19 @@ class _Body extends ConsumerWidget {
       child: ListView(
         padding: const EdgeInsets.all(AppSpacing.lg),
         children: [
-          _IdentityCard(animal: animal),
+          _IdentityCard(
+            animal: animal,
+            // Taze süre TÜRÜN eşiğinden (backend ADR 0059); eşik yoksa
+            // varsayılan.
+            freshDays:
+                ref
+                    .watch(thresholdsListProvider)
+                    .value
+                    ?.where((t) => t.speciesId == animal.speciesId)
+                    .firstOrNull
+                    ?.freshLactationDays ??
+                Animal.freshLactationDays,
+          ),
           const SizedBox(height: AppSpacing.md),
           // Notlar sınıf etiketinin HEMEN altında: sınıflandırma karar
           // desteğidir, not ("mastitis, tedavide") o kararın bağlamı (§6.4).
@@ -157,9 +169,10 @@ class _Body extends ConsumerWidget {
 }
 
 class _IdentityCard extends StatelessWidget {
-  const _IdentityCard({required this.animal});
+  const _IdentityCard({required this.animal, required this.freshDays});
 
   final Animal animal;
+  final int freshDays;
 
   @override
   Widget build(BuildContext context) {
@@ -218,16 +231,17 @@ class _IdentityCard extends StatelessWidget {
                 _Fact('Laktasyon günü', '$dim.'),
             ],
           ),
-          if (animal.isMilking &&
-              dim != null &&
-              dim < Animal.freshLactationDays) ...[
+          if (animal.isMilking && dim != null && dim < freshDays) ...[
             const SizedBox(height: AppSpacing.sm),
             // Neden "düşüşte" ya da "kuruya aday" görünmediği: sınıf
             // etiketinin kendisi kadar açıklaması da ekranda (§6.4).
-            const Text(
-              'Taze laktasyon: ilk 30 günde "düşüşte" ve "kuruya çıkarma '
-              'adayı" etiketi verilmez; verim henüz yükseliyor.',
-              style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
+            Text(
+              'Taze laktasyon: ilk $freshDays günde "düşüşte" ve "kuruya '
+              'çıkarma adayı" etiketi verilmez; verim henüz yükseliyor.',
+              style: const TextStyle(
+                fontSize: 12,
+                color: AppColors.onSurfaceMuted,
+              ),
             ),
           ],
           const SizedBox(height: AppSpacing.md),

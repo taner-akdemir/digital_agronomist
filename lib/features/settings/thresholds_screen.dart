@@ -138,6 +138,7 @@ class _FormState extends ConsumerState<_Form> {
       'decline': TextEditingController(text: '${t.declinePct}'),
       'noMilk': TextEditingController(text: '${t.noMilkMl}'),
       'noMilkCount': TextEditingController(text: '${t.noMilkMilkings}'),
+      'fresh': TextEditingController(text: '${t.freshLactationDays}'),
     };
   }
 
@@ -228,11 +229,13 @@ class _FormState extends ConsumerState<_Form> {
             hint:
                 '7 günlük ortalama 30 günlükten bu oranda fazla düşükse '
                 'düşüşte. Son sağımların hepsi boş sağım sınırının '
-                'altındaysa süt vermiyor (§6.4).',
+                'altındaysa süt vermiyor. Buzağılamadan sonraki taze '
+                'laktasyon günlerinde düşüşte ve kuruya aday denmez (§6.4).',
             children: [
               _field('decline', 'Düşüş eşiği', '%'),
               _field('noMilk', 'Boş sağım sınırı', 'mL'),
               _field('noMilkCount', 'Bakılan son sağım', 'sağım'),
+              _field('fresh', 'Taze laktasyon', 'gün'),
             ],
           ),
           const SizedBox(height: AppSpacing.lg),
@@ -286,6 +289,7 @@ class _FormState extends ConsumerState<_Form> {
         'Kuruya çıkma eşiğinden büyük olmalı',
       'decline' when v > 90 => 'En çok 90 olabilir',
       'noMilkCount' when v > 20 => 'En çok 20 olabilir',
+      'fresh' when v > 150 => 'En çok 150 olabilir',
       'decline' ||
       'noMilk' ||
       'noMilkCount' when v != v.roundToDouble() => 'Tam sayı girin',
@@ -319,6 +323,7 @@ class _FormState extends ConsumerState<_Form> {
       declinePct: _value('decline')!.round(),
       noMilkMl: _value('noMilk')!.round(),
       noMilkMilkings: _value('noMilkCount')!.round(),
+      freshLactationDays: _value('fresh')!.round(),
     );
 
     try {

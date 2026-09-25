@@ -55,8 +55,10 @@ abstract class Animal with _$Animal {
   /// reddedilir). Kurudaki/satılmış hayvanın sınıf etiketi ESKİDİR.
   bool get isMilking => status == 'active';
 
-  /// Taze laktasyon süresi: bu günlerde backend "düşüşte" ve "kuruya
-  /// çıkarma adayı" etiketi vermez (backend ADR 0051, milkrules).
+  /// Taze laktasyon süresinin VARSAYILANI: bu günlerde backend "düşüşte"
+  /// ve "kuruya çıkarma adayı" etiketi vermez (backend ADR 0051). Asıl
+  /// değer türün eşiğinde (`Thresholds.freshLactationDays`, ADR 0059);
+  /// bu yalnızca eşik yüklenemezken kullanılır.
   static const freshLactationDays = 30;
 
   /// Laktasyonun kaçıncı günü: [today] ile son buzağılama arasındaki TAKVİM

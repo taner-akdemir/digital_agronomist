@@ -26,7 +26,8 @@
       "highYieldDailyMl": 30000,
       "declinePct": 20,
       "noMilkMl": 100,
-      "noMilkMilkings": 4
+      "noMilkMilkings": 4,
+      "freshLactationDays": 30
     },
     "goat": {
       "flowLow": 0.3,
@@ -41,7 +42,8 @@
       "highYieldDailyMl": 3500,
       "declinePct": 20,
       "noMilkMl": 100,
-      "noMilkMilkings": 4
+      "noMilkMilkings": 4,
+      "freshLactationDays": 30
     },
     "sheep": {
       "flowLow": 0.2,
@@ -56,7 +58,8 @@
       "highYieldDailyMl": 1800,
       "declinePct": 20,
       "noMilkMl": 100,
-      "noMilkMilkings": 4
+      "noMilkMilkings": 4,
+      "freshLactationDays": 30
     }
   },
   "flowCases": [

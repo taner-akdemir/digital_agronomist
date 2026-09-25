@@ -205,8 +205,9 @@ silinir. Verim sınıfı GÖNDERİLMEZ (gece hesabının alanı). Tarihler gün 
 yarısı.
 
 **Laktasyon günü** (`Animal.daysInMilk`, backend ADR 0051): son buzağılamadan bu yana takvim
-günü; detayda sağmal hayvanda görünür. İlk 30 gün backend "düşüşte" ve "kuruya çıkarma adayı"
-vermez; kart bunu açıklar. `test/fixtures/color_cases.json`'daki yeni `classifyCases`
+günü; detayda sağmal hayvanda görünür. İlk N gün (türün `Thresholds.freshLactationDays`,
+varsayılan 30; ADR 0059) backend "düşüşte" ve "kuruya çıkarma adayı" vermez; kart bunu
+türün süresiyle açıklar. Süre eşik ekranında ayarlanır. `test/fixtures/color_cases.json`'daki yeni `classifyCases`
 (daysInMilk) backend'den kopyalandı; mobil onları okumuyor.
 
 **Hayvan notları** (`GET/POST /animals/{id}/notes`, backend ADR 0050): detayda kimlik

@@ -202,12 +202,14 @@ void main() {
     await enter(tester, 'Düşüş eşiği', '30');
     await enter(tester, 'Boş sağım sınırı', '250');
     await enter(tester, 'Bakılan son sağım', '6');
+    await enter(tester, 'Taze laktasyon', '20');
     await tapSave(tester);
 
     final saved = repo.thresholdWrites.single;
     expect(saved.declinePct, 30);
     expect(saved.noMilkMl, 250);
     expect(saved.noMilkMilkings, 6);
+    expect(saved.freshLactationDays, 20);
     expect(saved.expectedPerMilkingMl, 11000, reason: 'dokunulmadı, korunur');
     expect(saved.toJson()['expectedPerMilkingMl'], 11000);
   });
@@ -226,6 +228,10 @@ void main() {
     await enter(tester, 'Bakılan son sağım', '21');
     expect(find.text('En çok 20 olabilir'), findsOneWidget);
     await enter(tester, 'Bakılan son sağım', '4');
+
+    await enter(tester, 'Taze laktasyon', '151');
+    expect(find.text('En çok 150 olabilir'), findsOneWidget);
+    await enter(tester, 'Taze laktasyon', '30');
 
     // İnekte beklenen 11 L: boş sağım sınırı ona ulaşamaz.
     await enter(tester, 'Boş sağım sınırı', '11000');

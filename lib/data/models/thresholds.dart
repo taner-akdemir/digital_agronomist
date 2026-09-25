@@ -49,6 +49,10 @@ abstract class Thresholds with _$Thresholds {
 
     /// Son kaç sağımın hepsi boşsa "süt vermiyor".
     @Default(4) int noMilkMilkings,
+
+    /// Buzağılamadan sonra "düşüşte" ve "kuruya çıkarma adayı" verilmeyen
+    /// gün sayısı (backend ADR 0051, 0059).
+    @Default(30) int freshLactationDays,
   }) = _Thresholds;
 
   factory Thresholds.fromJson(Map<String, dynamic> json) =>

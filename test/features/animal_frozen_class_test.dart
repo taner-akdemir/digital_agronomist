@@ -20,8 +20,9 @@ Future<String> _disk(String p) async => File(p).readAsStringSync();
 Future<void> _open(
   WidgetTester tester,
   YieldClass cls,
-  Animal Function(Animal) change,
-) async {
+  Animal Function(Animal) change, {
+  bool shortFresh = false,
+}) async {
   tester.view.physicalSize = const Size(1200, 4000);
   addTearDown(tester.view.resetPhysicalSize);
 
@@ -32,6 +33,12 @@ Future<void> _open(
   );
   final animal = await tester.runAsync(() async {
     final a = (await repo.animals()).firstWhere((a) => a.yieldClass == cls);
+    if (shortFresh) {
+      final t = (await repo.thresholds()).firstWhere(
+        (t) => t.speciesId == a.speciesId,
+      );
+      await repo.updateThresholds(t.copyWith(freshLactationDays: 20));
+    }
     return repo.saveAnimal(change(a));
   });
 
@@ -115,6 +122,38 @@ void main() {
         matching: find.byType(Row),
       ),
       findsWidgets,
+    );
+  });
+
+  // Taze laktasyon açıklaması TÜRÜN süresine göre (backend ADR 0059).
+  testWidgets('taze laktasyon açıklaması türün süresini kullanır', (
+    tester,
+  ) async {
+    final calved = DateTime.now().subtract(const Duration(days: 25));
+    await _open(
+      tester,
+      YieldClass.normal,
+      (a) => a.copyWith(lastCalvingDate: calved),
+    );
+    expect(
+      find.textContaining('ilk 30 günde'),
+      findsOneWidget,
+      reason: '30 gün varsayılan',
+    );
+  });
+
+  testWidgets('türün süresi kısaysa açıklama çıkmaz', (tester) async {
+    final calved = DateTime.now().subtract(const Duration(days: 25));
+    await _open(
+      tester,
+      YieldClass.normal,
+      (a) => a.copyWith(lastCalvingDate: calved),
+      shortFresh: true,
+    );
+    expect(
+      find.textContaining('Taze laktasyon'),
+      findsNothing,
+      reason: '20 günlük türde 25. gün taze değil',
     );
   });
 }
