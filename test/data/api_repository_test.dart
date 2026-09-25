@@ -879,6 +879,40 @@ void main() {
     expect(lost, hasLength(1), reason: 'oturum sonu kopuş değil');
   });
 
+  test('içe aktarma dosyayı ham gövdeyle gönderir', () async {
+    final r = rig(
+      (o) async => okEnvelope({
+        'dryRun': true,
+        'total': 2,
+        'create': 1,
+        'errors': 1,
+        'ignoredColumns': ['Anne'],
+        'rows': [
+          {'line': 2, 'earTag': 'TR1', 'outcome': 'create'},
+          {
+            'line': 3,
+            'earTag': '',
+            'outcome': 'error',
+            'message': 'küpe numarası boş',
+          },
+        ],
+      }),
+    );
+    final rep = await r.repo.importAnimals(
+      [1, 2, 3],
+      speciesId: 'cow',
+      dryRun: true,
+    );
+    final req = r.adapter.requests.single;
+    expect(req.path, '/animals/import');
+    expect(req.queryParameters, {'dryRun': 'true', 'speciesId': 'cow'});
+    expect(req.contentType, 'application/octet-stream');
+    expect(req.data, [1, 2, 3]);
+    expect(rep.create, 1);
+    expect(rep.rows.last.isError, isTrue);
+    expect(rep.ignoredColumns, ['Anne']);
+  });
+
   test('oturumun sağımları okunur', () async {
     final r = rig(
       (o) async => okEnvelope2([

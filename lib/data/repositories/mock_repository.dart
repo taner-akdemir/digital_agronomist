@@ -6,6 +6,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/animal.dart';
+import 'package:milktrace/data/models/animal_import.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
@@ -196,6 +197,21 @@ class MockRepository implements MilkTraceRepository {
         (_notes[animalId] ??= []).insert(0, n);
         return n;
       });
+
+  /// Mock'ta dosya okuyucu YOK: CSV/.xlsx çözümü backend'de (ADR 0063) ve
+  /// burada ikinci bir kopyası ayrışırdı.
+  @override
+  Future<AnimalImportReport> importAnimals(
+    List<int> file, {
+    String? speciesId,
+    required bool dryRun,
+  }) => _delayed(
+    () async => throw const ApiException(
+      code: 'NOT_SUPPORTED',
+      message: 'Demo modunda içe aktarma yok; gerçek sunucuyla deneyin',
+      status: 501,
+    ),
+  );
 
   @override
   Future<Animal> recordCalving(String animalId, DateTime date) =>

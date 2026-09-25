@@ -1,5 +1,6 @@
 import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/animal.dart';
+import 'package:milktrace/data/models/animal_import.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
@@ -49,6 +50,17 @@ abstract interface class MilkTraceRepository {
   /// Not ekler (POST /animals/{id}/notes). Bütün işletme rolleri yazar;
   /// yazar oturumdaki kullanıcıdır.
   Future<AnimalNote> addAnimalNote(String animalId, String note);
+
+  /// Hayvan listesini dosyadan içe aktarır (POST /animals/import, backend
+  /// ADR 0063). Dosya CSV ya da .xlsx; olduğu gibi gönderilir, okuyan
+  /// backend'dir. [dryRun] önizlemedir, hiçbir şey yazılmaz. [speciesId],
+  /// türü yazılmamış satırların türü. Kayıtlı küpe güncellenmez, hatalı
+  /// satır atlanır.
+  Future<AnimalImportReport> importAnimals(
+    List<int> file, {
+    String? speciesId,
+    required bool dryRun,
+  });
 
   /// Buzağılamayı kaydeder (POST /animals/{id}/calving, backend ADR 0060):
   /// tek işlemde son buzağılama tarihi, laktasyon sırası +1, durum sağmal ve

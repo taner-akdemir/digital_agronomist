@@ -227,6 +227,13 @@ ekle" ve hayvan detayındaki düzenle simgesi; ikisi de YALNIZCA işletme sahibi
 silinir. Verim sınıfı GÖNDERİLMEZ (gece hesabının alanı). Tarihler gün olarak, UTC gece
 yarısı.
 
+**Toplu içe aktarma** (`/animals/import`, backend ADR 0063): Geçmiş → Hayvanlar'da işletme
+sahibine "Listeden". Dosya (CSV/.xlsx) `file_picker` ile seçilir ve OLDUĞU GİBİ gönderilir —
+okuyan backend (Türkçe sütunlar, gün önde tarih, Windows-1254); uygulamada ikinci okuyucu
+yazma. Önce `dryRun` önizleme (eklenecek/kayıtlı/hatalı, alınmayan sütunlar), sonra onay.
+Kayıtlı küpe güncellenmez. Mock modda yok (501). Seçici `importFilePickerProvider`; testte
+sahtesi konur.
+
 **Laktasyon günü** (`Animal.daysInMilk`, backend ADR 0051): son buzağılamadan bu yana takvim
 günü; detayda sağmal hayvanda görünür. İlk N gün (türün `Thresholds.freshLactationDays`,
 varsayılan 30; ADR 0059) backend "düşüşte" ve "kuruya çıkarma adayı" vermez; kart bunu

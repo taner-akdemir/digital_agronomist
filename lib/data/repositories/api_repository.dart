@@ -2,9 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart' show visibleForTesting;
+import 'package:flutter/foundation.dart' show Uint8List, visibleForTesting;
 import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/animal.dart';
+import 'package:milktrace/data/models/animal_import.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
@@ -158,6 +159,23 @@ class ApiRepository implements MilkTraceRepository {
           ),
         ),
       );
+
+  @override
+  Future<AnimalImportReport> importAnimals(
+    List<int> file, {
+    String? speciesId,
+    required bool dryRun,
+  }) async => AnimalImportReport.fromJson(
+    _dataOf(
+      await _dio.post<dynamic>(
+        '/animals/import',
+        // Ham dosya: backend biçimi (CSV/.xlsx) içeriğinden anlar.
+        data: Uint8List.fromList(file),
+        queryParameters: {'dryRun': '$dryRun', 'speciesId': ?speciesId},
+        options: Options(contentType: 'application/octet-stream'),
+      ),
+    ),
+  );
 
   @override
   Future<Animal> recordCalving(String animalId, DateTime date) async =>

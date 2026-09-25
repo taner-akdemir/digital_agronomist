@@ -5,6 +5,7 @@ import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/data/cache/cache_store.dart';
 import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/animal.dart';
+import 'package:milktrace/data/models/animal_import.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
@@ -251,6 +252,15 @@ class CachingRepository implements MilkTraceRepository {
   @override
   Future<AnimalNote> addAnimalNote(String animalId, String note) =>
       _net(() => _inner.addAnimalNote(animalId, note));
+
+  @override
+  Future<AnimalImportReport> importAnimals(
+    List<int> file, {
+    String? speciesId,
+    required bool dryRun,
+  }) => _net(
+    () => _inner.importAnimals(file, speciesId: speciesId, dryRun: dryRun),
+  );
 
   @override
   Future<Animal> recordCalving(String animalId, DateTime date) =>

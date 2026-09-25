@@ -65,16 +65,28 @@ class _AnimalsTab extends ConsumerWidget {
               AppSpacing.lg,
               0,
             ),
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: TextButton.icon(
-                onPressed: () => context.push('/animals/new'),
-                icon: const Icon(Icons.add),
-                label: const Text('Hayvan ekle'),
-                style: TextButton.styleFrom(
-                  foregroundColor: AppColors.darkGreenColor,
+            // Wrap: dar ekranda ya da büyük yazıda iki düğme alt alta iner.
+            child: Wrap(
+              alignment: WrapAlignment.end,
+              children: [
+                // Sürüyü ilk kez girerken tek tek eklemek yerine (ADR 0063).
+                TextButton.icon(
+                  onPressed: () => context.push('/animals/import'),
+                  icon: const Icon(Icons.upload_file),
+                  label: const Text('Listeden'),
+                  style: TextButton.styleFrom(
+                    foregroundColor: AppColors.darkGreenColor,
+                  ),
                 ),
-              ),
+                TextButton.icon(
+                  onPressed: () => context.push('/animals/new'),
+                  icon: const Icon(Icons.add),
+                  label: const Text('Hayvan ekle'),
+                  style: TextButton.styleFrom(
+                    foregroundColor: AppColors.darkGreenColor,
+                  ),
+                ),
+              ],
             ),
           ),
         if (isOwner) const _UnmatchedTagsBanner(),

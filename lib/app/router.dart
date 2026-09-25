@@ -7,6 +7,7 @@ import 'package:milktrace/features/dashboard/dashboard_screen.dart';
 import 'package:milktrace/features/devices/devices_screen.dart';
 import 'package:milktrace/features/history/animal_detail_screen.dart';
 import 'package:milktrace/features/history/animal_form_screen.dart';
+import 'package:milktrace/features/history/animal_import_screen.dart';
 import 'package:milktrace/features/history/history_screen.dart';
 import 'package:milktrace/features/history/unmatched_tags_screen.dart';
 import 'package:milktrace/features/live/live_board_screen.dart';
@@ -94,6 +95,11 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/animals/new',
         builder: (_, _) => const AnimalFormScreen(),
+      ),
+      // Toplu içe aktarma (backend ADR 0063): yalnızca işletme sahibi.
+      GoRoute(
+        path: '/animals/import',
+        builder: (_, _) => const AnimalImportScreen(),
       ),
       // Tanınmayan küpeler (backend ADR 0056): yalnızca işletme sahibi.
       GoRoute(
