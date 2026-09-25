@@ -283,10 +283,11 @@ detayda durur — sayaç hatanın geçtiğini bildirmiyor.
 Burada çevrimdışı **kırmızıdır**, §6.2'deki gri DEĞİL: §6.2 canlı tabloda AKIŞIN olmamasını
 anlatıyor, bu ekran cihazın kendisini. Çevrimdışı sayaç müdahale gerektirir.
 
-**Push bildirimleri yazıldı ama HENÜZ KAPALI:** Firebase projesi bağlanmadı. Uygulama
-bunu bir hata saymaz — `Firebase.initializeApp()` düşünce `FirebasePushGateway` log atıp
-`null` döner, `PushRegistration` `unavailable` durumunda kalır ve sağım push'suz sürer.
-Proje bağlandığında **hiçbir Dart dosyası değişmez**; adımlar §7'de.
+**Push bildirimleri ANDROID'DE AÇIK** (Firebase projesi `milktrace-69975`, 25.09.2026):
+emülatörde test bildirimi, gerçek sayaç uyarısı ve "geri geldi"nin aynı bildirimin yerine
+geçmesi denendi. iOS için APNs ve Xcode adımı bekliyor (§7). Firebase açılamazsa uygulama
+bunu hata saymaz — `FirebasePushGateway` log atıp `null` döner, `PushRegistration`
+`unavailable` kalır ve sağım push'suz sürer.
 
 Böylece dört sekmenin dördü de gerçek: **iskelet ekran kalmadı**, `StubScreen` silindi.
 
@@ -393,25 +394,33 @@ olmadığı için giriş ekranı atlanır ve demo kullanıcısıyla çalışıl�
 
 ## 7. Firebase / push bağlama
 
-Kod tarafı hazır; eksik olan tek şey Firebase projesi. `google-services.json` olmadan da
-derlendiği için `com.google.gms.google-services` Gradle eklentisi **bilerek eklenmedi** —
-eklenseydi dosya yokken `assembleDebug` kırılırdı.
+Proje: **`milktrace-69975`** (Firebase Console, `algebransoft@gmail.com`). Uygulamalar:
+Android ve iOS, ikisi de `com.algebran.milktrace.milktrace`.
 
-**Proje bağlanınca yapılacaklar:**
+**Yapıldı (25.09.2026):**
 
-1. Firebase Console'da proje aç; Android uygulaması ekle — applicationId
-   `com.algebran.milktrace.milktrace`. iOS için bundle id'yi ekle.
-2. `google-services.json` → `android/app/`, `GoogleService-Info.plist` → `ios/Runner/`.
-3. `android/settings.gradle.kts` → plugins bloğuna
-   `id("com.google.gms.google-services") version "4.4.2" apply false`;
-   `android/app/build.gradle.kts` → plugins bloğuna `id("com.google.gms.google-services")`.
-4. iOS: APNs anahtarını Firebase'e yükle, Xcode'da **Push Notifications** ve
-   **Background Modes → Remote notifications** yeteneklerini aç.
-5. Dart tarafında değişiklik YOK. Bunu doğrulamak için mock modda geçici olarak gerçek
-   kapı açılıp cihazda denendi: `Firebase.initializeApp` düştü, uygulama normal çalıştı.
-6. Doğrulama: hesap kartında **"Bu telefona test bildirimi"** (push kayıtlıysa görünür;
-   kapalıysa sebebi yazar) → `POST /me/push-tokens/test`. Backend tarafı ve sorun
-   giderme: `~/GolandProjects/milktrace/docs/saha/push-kurulum.md` (backend ADR 0048).
+1. Android ve iOS uygulamaları projeye kaydedildi (`firebase apps:create`).
+2. `android/app/google-services.json` ve `ios/Runner/GoogleService-Info.plist` repoda. Sır
+   DEĞİL (içindeki API anahtarı APK'da zaten açık), ama projeye özgü: başka bir Firebase
+   projesine geçilirse ikisi birlikte `firebase apps:sdkconfig` ile yenilenir.
+3. Gradle eklentisi `com.google.gms.google-services` 4.4.2 eklendi. DİKKAT: artık
+   `google-services.json` olmadan `assembleDebug` KIRILIR; dosyayı silme.
+4. Dart tarafında değişiklik olmadı; bildirim simgesi `@drawable/ic_stat_milktrace`.
+5. Doğrulandı (Android emülatörü, gerçek API): test bildirimi uygulama açıkken ve arka
+   plandayken; gerçek "Sayaç çevrimdışı" uyarısı; "Sayaç geri geldi" aynı bildirimin
+   yerine geçti.
+
+**Kalan:**
+
+- **iOS:** APNs anahtarını (.p8) Firebase → Proje ayarları → Cloud Messaging'e yükle;
+  Xcode'da `GoogleService-Info.plist`'i **Runner hedefine ekle** (dosya repoda ama Xcode
+  projesine bağlı değil), **Push Notifications** ve **Background Modes → Remote
+  notifications** yeteneklerini aç.
+- **Staging/üretim backend'i:** servis hesabı anahtarı kümeye Secret olarak
+  (`~/GolandProjects/milktrace/docs/saha/push-kurulum.md` §2). Yerelde anahtar
+  `services/notification/.env`'de (repoya girmez).
+
+Doğrulama: hesap kartında **"Bu telefona test bildirimi"** → `POST /me/push-tokens/test`.
 
 **Backend sözleşmesi (`notification` servisi yazılırken doğrulanacak):**
 

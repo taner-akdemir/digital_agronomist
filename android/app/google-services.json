@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "751587743497",
+    "project_id": "milktrace-69975",
+    "storage_bucket": "milktrace-69975.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:751587743497:android:9f45184dcbc8effd66e5d8",
+        "android_client_info": {
+          "package_name": "com.algebran.milktrace.milktrace"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDBbkFpU1JCyKyKg4ceLOkKJw9E_oU2GI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
