@@ -800,6 +800,26 @@ void main() {
     expect(del.uri.path, '/api/v1/unmatched-tags/982%20000%2F1');
   });
 
+  test('buzağılama yalnızca GÜN gönderir', () async {
+    final r = rig(
+      (o) async => okEnvelope({
+        'id': 'a1',
+        'speciesId': 'cow',
+        'earTag': 'TR1',
+        'lactationNo': 3,
+        'status': 'active',
+      }),
+    );
+
+    final a = await r.repo.recordCalving('a1', DateTime(2026, 9, 5, 23, 30));
+
+    final req = r.adapter.requests.single;
+    expect(req.method, 'POST');
+    expect(req.path, '/animals/a1/calving');
+    expect(req.data, {'date': '2026-09-05'});
+    expect(a.lactationNo, 3);
+  });
+
   test('eşleştirme kaldırılır', () async {
     final r = rig((o) async => okEnvelope({}));
 

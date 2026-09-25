@@ -48,6 +48,11 @@ abstract interface class MilkTraceRepository {
   /// Not ekler (POST /animals/{id}/notes). Bütün işletme rolleri yazar;
   /// yazar oturumdaki kullanıcıdır.
   Future<AnimalNote> addAnimalNote(String animalId, String note);
+
+  /// Buzağılamayı kaydeder (POST /animals/{id}/calving, backend ADR 0060):
+  /// tek işlemde son buzağılama tarihi, laktasyon sırası +1, durum sağmal ve
+  /// not. Aynı tarih ikinci kez 409. Yalnızca işletme sahibi.
+  Future<Animal> recordCalving(String animalId, DateTime date);
   Future<List<Thresholds>> thresholds();
 
   /// Bir türün eşiklerini günceller (§8.5 PUT /species/thresholds, owner).

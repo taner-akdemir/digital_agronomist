@@ -149,6 +149,23 @@ class ApiRepository implements MilkTraceRepository {
         ),
       );
 
+  @override
+  Future<Animal> recordCalving(String animalId, DateTime date) async =>
+      Animal.fromJson(
+        _dataOf(
+          await _dio.post<dynamic>(
+            '/animals/$animalId/calving',
+            // Yalnızca GÜN: saat yok, saat dilimi kaydırması olmasın.
+            data: {
+              'date':
+                  '${date.year.toString().padLeft(4, '0')}-'
+                  '${date.month.toString().padLeft(2, '0')}-'
+                  '${date.day.toString().padLeft(2, '0')}',
+            },
+          ),
+        ),
+      );
+
   /// Formun gövdesi: kimlik ve verim sınıfı YOK (sınıfı gece hesabı yazar;
   /// formun eski bir değerle ezmesi istenmez). Tarihler gün olarak, UTC
   /// gece yarısı: saat dilimi kayması doğum gününü bir gün geri atmasın.

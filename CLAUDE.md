@@ -220,6 +220,10 @@ kartının hemen altında "Notlar" kartı; en yeni 5 not yazarı ve anıyla. BÜ
 aynı işlemde "Durum: Sağmal → Kuruda" notunu kendisi düşer (`AnimalNote.kind == 'status'`,
 ADR 0057); detay onu simgeyle ayırır, form kaydedince notlar tazelenir.
 
+**Buzağılama** (`recordCalving`, `POST /animals/{id}/calving`, backend ADR 0060): detayda işletme
+sahibine "Buzağıladı" düğmesi; tarih seçilir, onaylanır ve TEK istekte tarih, laktasyon +1,
+durum sağmal ve `calving` notu yazılır. Aynı tarih 409. Tarih yalnızca GÜN olarak gider.
+
 Mock modda geçmiş **asset değil, üretilmiştir**: `MockLactation` §10'daki Wood laktasyon
 eğrisiyle deterministik seri üretir. 30 hayvan × 90 gün × 2 sağım elle tutulabilecek bir
 JSON değil. Bugünkü seviye hayvanın SINIFINA sabitlenir ki rozet ile grafik çelişmesin.

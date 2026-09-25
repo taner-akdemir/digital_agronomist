@@ -196,6 +196,52 @@ class MockRepository implements MilkTraceRepository {
         return n;
       });
 
+  @override
+  Future<Animal> recordCalving(String animalId, DateTime date) =>
+      _delayed(() async {
+        final a = (await animals()).firstWhere((x) => x.id == animalId);
+        final day = DateTime.utc(date.year, date.month, date.day);
+        final last = a.lastCalvingDate;
+        // Backend'in kuralları (ADR 0060): aynı gün ikinci kez, önceki
+        // buzağılamadan önce reddedilir.
+        if (last != null && !day.isAfter(last)) {
+          throw day == last
+              ? const ApiException(
+                  code: 'CONFLICT',
+                  message: 'bu tarihte buzağılama zaten kayıtlı',
+                  status: 409,
+                )
+              : const ApiException(
+                  code: 'VALIDATION',
+                  message: 'buzağılama tarihi son buzağılamadan önce olamaz',
+                  status: 422,
+                );
+        }
+        final saved = a.copyWith(
+          lastCalvingDate: day,
+          lactationNo: a.lactationNo + 1,
+          status: 'active',
+        );
+        _savedAnimals[saved.id] = saved;
+        var note =
+            'Buzağıladı: ${day.day.toString().padLeft(2, '0')}.'
+            '${day.month.toString().padLeft(2, '0')}.${day.year} '
+            '(${saved.lactationNo}. laktasyon)';
+        if (!a.isMilking) note += '; durum: ${a.statusLabel} → Sağmal';
+        (_notes[saved.id] ??= []).insert(
+          0,
+          AnimalNote(
+            id: 'mock-note-${(_notes[saved.id]?.length ?? 0) + 1}',
+            animalId: saved.id,
+            note: note,
+            authorName: 'Demo Kullanıcı',
+            createdAt: DateTime.now().toUtc(),
+            kind: 'calving',
+          ),
+        );
+        return saved;
+      });
+
   /// Mock'ta kaydedilen hayvanlar (id → hayvan).
   final Map<String, Animal> _savedAnimals = {};
 

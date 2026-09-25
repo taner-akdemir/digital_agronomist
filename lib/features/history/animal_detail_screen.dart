@@ -146,6 +146,10 @@ class _Body extends ConsumerWidget {
                     ?.freshLactationDays ??
                 Animal.freshLactationDays,
           ),
+          // Buzağılama kaydı yalnızca işletme sahibine (backend ADR 0060;
+          // hayvan kaydı onun işi, backend de 403 döner).
+          if (ref.watch(authProvider).user?.role == 'tenant_owner')
+            _CalvingButton(animal: animal),
           const SizedBox(height: AppSpacing.md),
           // Notlar sınıf etiketinin HEMEN altında: sınıflandırma karar
           // desteğidir, not ("mastitis, tedavide") o kararın bağlamı (§6.4).
@@ -165,6 +169,104 @@ class _Body extends ConsumerWidget {
         ],
       ),
     );
+  }
+}
+
+/// "Buzağıladı" (backend ADR 0060): tarih seçtirir, özeti onaylatır ve TEK
+/// istekte tarih, laktasyon sırası, durum ve notu yazdırır. Formda üç alanı
+/// ayrı ayrı düzeltmek, birini unutmaya açıktı.
+class _CalvingButton extends ConsumerWidget {
+  const _CalvingButton({required this.animal});
+
+  final Animal animal;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: TextButton.icon(
+        onPressed: () => _record(context, ref),
+        icon: const Icon(Icons.child_friendly_outlined),
+        label: const Text('Buzağıladı'),
+        style: TextButton.styleFrom(foregroundColor: AppColors.darkGreenColor),
+      ),
+    );
+  }
+
+  Future<void> _record(BuildContext context, WidgetRef ref) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final last = animal.lastCalvingDate;
+    // Önceki buzağılamadan sonraki ilk gün; en fazla bir yıl geriye.
+    var first = today.subtract(const Duration(days: 365));
+    if (last != null) {
+      final after = DateTime(last.year, last.month, last.day + 1);
+      if (after.isAfter(first)) first = after;
+    }
+    if (first.isAfter(today)) {
+      messenger.showSnackBar(
+        const SnackBar(content: Text('Bugün için buzağılama zaten kayıtlı')),
+      );
+      return;
+    }
+    final date = await showDatePicker(
+      context: context,
+      initialDate: today,
+      firstDate: first,
+      lastDate: today,
+      helpText: 'Buzağılama tarihi',
+    );
+    if (date == null || !context.mounted) return;
+
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Buzağılama kaydedilsin mi?'),
+        content: Text(
+          [
+            '${animal.name ?? animal.earTag} · ${Fmt.dayMonthYear(date)}',
+            'Laktasyon ${animal.lactationNo} → ${animal.lactationNo + 1}',
+            if (!animal.isMilking) 'Durum ${animal.statusLabel} → Sağmal',
+          ].join('\n'),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Vazgeç'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            style: FilledButton.styleFrom(
+              backgroundColor: AppColors.darkGreenColor,
+            ),
+            child: const Text('Kaydet'),
+          ),
+        ],
+      ),
+    );
+    if (ok != true) return;
+
+    try {
+      await ref.read(repositoryProvider).recordCalving(animal.id, date);
+      ref
+        ..invalidate(animalsProvider)
+        ..invalidate(animalNotesProvider(animal.id))
+        ..invalidate(animalTrendProvider(animal.id));
+      messenger.showSnackBar(
+        const SnackBar(
+          content: Text('Buzağılama kaydedildi'),
+          backgroundColor: AppColors.darkGreenColor,
+        ),
+      );
+    } catch (e) {
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(userMessage(e) ?? 'Kaydedilemedi: $e'),
+          backgroundColor: AppColors.flowRed,
+        ),
+      );
+    }
   }
 }
 
@@ -646,11 +748,13 @@ class _NotesCard extends ConsumerWidget {
                         children: [
                           // Durum değişikliği kendiliğinden düşer (backend
                           // ADR 0057); elle yazılandan ayırt edilsin.
-                          if (n.isStatusChange)
+                          if (n.isStatusChange || n.isCalving)
                             Row(
                               children: [
-                                const Icon(
-                                  Icons.swap_horiz,
+                                Icon(
+                                  n.isCalving
+                                      ? Icons.child_friendly_outlined
+                                      : Icons.swap_horiz,
                                   size: 16,
                                   color: AppColors.darkGreenColor,
                                 ),
