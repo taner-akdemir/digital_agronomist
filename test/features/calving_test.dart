@@ -9,6 +9,7 @@ import 'package:milktrace/data/models/auth_state.dart';
 import 'package:milktrace/data/models/auth_user.dart';
 import 'package:milktrace/data/repositories/milktrace_repository.dart';
 import 'package:milktrace/data/repositories/mock_repository.dart';
+import 'package:milktrace/domain/yield_class.dart';
 import 'package:milktrace/features/history/animal_detail_screen.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
@@ -88,8 +89,21 @@ void main() {
         'durum: Kuruda → Sağmal',
       );
 
+      // Biten laktasyonun sınıfı nota girer (backend ADR 0060).
+      await repo.saveAnimal(
+        saved.copyWith(
+          yieldClass: YieldClass.high,
+          yieldClassAt: DateTime.utc(2026, 9, 22),
+        ),
+      );
+      await repo.recordCalving(a.id, DateTime(2026, 9, 24));
+      expect(
+        (await repo.animalNotes(a.id)).first.note,
+        endsWith('önceki laktasyon: Yüksek Verimli (22.09.2026 hesabı)'),
+      );
+
       await expectLater(
-        repo.recordCalving(a.id, DateTime(2026, 9, 20)),
+        repo.recordCalving(a.id, DateTime(2026, 9, 24)),
         throwsA(isA<ApiException>().having((e) => e.status, 'status', 409)),
       );
     });

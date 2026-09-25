@@ -228,6 +228,15 @@ class MockRepository implements MilkTraceRepository {
             '${day.month.toString().padLeft(2, '0')}.${day.year} '
             '(${saved.lactationNo}. laktasyon)';
         if (!a.isMilking) note += '; durum: ${a.statusLabel} → Sağmal';
+        // Biten laktasyonun son sınıfı (backend ADR 0060): yalnızca son
+        // buzağılamadan sonra hesaplandıysa.
+        final at = a.yieldClassAt;
+        if (at != null && (last == null || !at.isBefore(last))) {
+          note +=
+              '; önceki laktasyon: ${a.yieldClass.label} '
+              '(${at.day.toString().padLeft(2, '0')}.'
+              '${at.month.toString().padLeft(2, '0')}.${at.year} hesabı)';
+        }
         (_notes[saved.id] ??= []).insert(
           0,
           AnimalNote(
