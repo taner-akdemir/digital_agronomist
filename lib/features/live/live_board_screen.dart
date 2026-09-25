@@ -28,7 +28,11 @@ class LiveBoardScreen extends ConsumerWidget {
 
     return hall.when(
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (e, _) => ErrorView(message: 'Bölgeler yüklenemedi', error: e),
+      error: (e, _) => ErrorView(
+        message: 'Bölgeler yüklenemedi',
+        error: e,
+        onRetry: () => ref.invalidate(hallsProvider),
+      ),
       data: (h) => h == null
           ? const Center(child: Text('Tanımlı sağım bölgesi yok'))
           : _Board(hall: h),
@@ -69,7 +73,11 @@ class _Board extends ConsumerWidget {
             ),
             AsyncError(:final error) => SliverFillRemaining(
               hasScrollBody: false,
-              child: ErrorView(message: 'Canlı veri alınamadı', error: error),
+              child: ErrorView(
+                message: 'Canlı veri alınamadı',
+                error: error,
+                onRetry: () => ref.invalidate(liveBoardProvider(hall.id)),
+              ),
             ),
             _ => _Grid(
               live: live!,

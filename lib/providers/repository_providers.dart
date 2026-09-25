@@ -28,17 +28,19 @@ MilkTraceRepository repository(Ref ref) {
   // Canlı akış WebSocket'ten gelir (§8.5). Token'ı interceptor'dan
   // FONKSİYONLA okuyoruz: yenilendiğinde değişiyor ve her yeniden
   // bağlanmada güncel olanı gerekiyor.
+  final status = ref.read(offlineStatusProvider.notifier);
   final api = ApiRepository(
     dio: session.authed,
     wsBaseUrl: Env.wsBaseUrl,
     accessToken: () => session.interceptor.accessToken,
+    // Canlı bağlantı koptu: bant canlı tahtada da çıksın.
+    onLiveLost: status.offline,
   );
 
   // Çevrimdışı okuma önbelleği (§18/7): ahırda kapsama koptuğunda son veri
   // gösterilir. Kapsam işletme + kullanıcı: aynı telefonda başka hesap,
   // öncekinin verisini görmemeli.
   final user = ref.watch(authProvider).user;
-  final status = ref.read(offlineStatusProvider.notifier);
   return CachingRepository(
     inner: api,
     store: ref.watch(cacheStoreProvider),

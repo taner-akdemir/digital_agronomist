@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -47,8 +48,17 @@ Map<String, dynamic> update(String spoutId, String ts, {double flow = 2.5}) => {
 /// yeniden bağlanma, oturum sonu ve bozuk çerçeve gibi durumlar ancak
 /// böyle deterministik kurulabilir.
 class FakeSocket {
-  FakeSocket() : _in = StreamController<String>();
+  /// [refuse]: sunucu kapalı, el sıkışma reddedilir. Gerçek kanal gibi
+  /// akış hata verir ve sink.close() HİÇ tamamlanmaz.
+  FakeSocket({this.refuse = false}) : _in = StreamController<String>() {
+    if (refuse) {
+      _in
+        ..addError(const SocketException('Connection refused'))
+        ..close();
+    }
+  }
 
+  final bool refuse;
   final StreamController<String> _in;
   bool sinkClosed = false;
 
@@ -73,6 +83,11 @@ class _FakeChannel extends StreamChannelMixin<dynamic>
   WebSocketSink get sink => _FakeSink(_socket);
 
   @override
+  Future<void> get ready => _socket.refuse
+      ? Future.error(const SocketException('Connection refused'))
+      : Future.value();
+
+  @override
   dynamic noSuchMethod(Invocation invocation) => throw UnimplementedError(
     'testte kullanılmıyor: ${invocation.memberName}',
   );
@@ -84,8 +99,10 @@ class _FakeSink implements WebSocketSink {
   final FakeSocket _socket;
 
   @override
-  Future<void> close([int? closeCode, String? closeReason]) async {
+  Future<void> close([int? closeCode, String? closeReason]) {
     _socket.sinkClosed = true;
+    // Kurulamamış bağlantının kapanışı gerçek kanalda tamamlanmıyor.
+    return _socket.refuse ? Completer<void>().future : Future.value();
   }
 
   @override
@@ -106,6 +123,7 @@ rig(
   Future<ResponseBody> Function(RequestOptions) handler, {
   List<FakeSocket>? sockets,
   String? token,
+  void Function(DateTime)? onLiveLost,
 }) {
   final adapter = FakeAdapter(handler);
   final dio = Dio(BaseOptions(baseUrl: 'http://test/api/v1'))
@@ -130,6 +148,7 @@ rig(
       },
       // Gerçek 3 sn beklemek yeniden bağlanma testini yavaşlatırdı.
       reconnectDelay: const Duration(milliseconds: 5),
+      onLiveLost: onLiveLost,
     ),
     adapter: adapter,
     sockets: made,
@@ -818,6 +837,46 @@ void main() {
     expect(req.path, '/animals/a1/calving');
     expect(req.data, {'date': '2026-09-05'});
     expect(a.lactationNo, 3);
+  });
+
+  // Cihazda bulundu: gateway kapalıyken bağlantı reddedilince yeniden
+  // bağlanma döngüsü takılıyor, gateway dönünce canlı tahta donuk kalıyordu.
+  test('reddedilen bağlantıdan sonra yeniden bağlanır', () async {
+    final r = rig(
+      (o) async =>
+          okEnvelope({'session': session('s1', 'active'), 'updates': []}),
+      sockets: [FakeSocket(refuse: true), FakeSocket()],
+    );
+    final all = r.repo.watchSession('s1').toList();
+
+    for (var i = 0; i < 100 && r.sockets.length < 2; i++) {
+      await Future<void>.delayed(const Duration(milliseconds: 5));
+    }
+    expect(r.sockets, hasLength(2), reason: 'ikinci deneme yapılmalı');
+    r.sockets[1]
+      ..send({'type': 'spout.update', ...update('p1', '2026-09-25T07:00:00Z')})
+      ..send({'type': 'session.ended', 'sessionId': 's1'});
+
+    final got = await all.timeout(const Duration(seconds: 5));
+    expect(got.map((u) => u.spoutId), contains('p1'));
+  });
+
+  test('canlı bağlantı kurulamazsa kopuş bildirilir', () async {
+    final lost = <DateTime>[];
+    final r = rig(
+      (o) async =>
+          okEnvelope({'session': session('s1', 'active'), 'updates': []}),
+      sockets: [FakeSocket(refuse: true), FakeSocket()],
+      onLiveLost: lost.add,
+    );
+    final all = r.repo.watchSession('s1').toList();
+    for (var i = 0; i < 100 && r.sockets.length < 2; i++) {
+      await Future<void>.delayed(const Duration(milliseconds: 5));
+    }
+    expect(lost, hasLength(1), reason: 'reddedilen el sıkışma');
+    r.sockets[1].send({'type': 'session.ended', 'sessionId': 's1'});
+    await all.timeout(const Duration(seconds: 5));
+    expect(lost, hasLength(1), reason: 'oturum sonu kopuş değil');
   });
 
   test('eşleştirme kaldırılır', () async {

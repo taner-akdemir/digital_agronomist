@@ -15,6 +15,7 @@ class AsyncView<T> extends StatelessWidget {
     required this.value,
     required this.errorMessage,
     required this.builder,
+    this.onRetry,
   });
 
   final AsyncValue<T> value;
@@ -23,6 +24,9 @@ class AsyncView<T> extends StatelessWidget {
   final String errorMessage;
 
   final Widget Function(T data) builder;
+
+  /// Hata ekranındaki "Tekrar dene" (bkz. ErrorView.onRetry).
+  final VoidCallback? onRetry;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +37,11 @@ class AsyncView<T> extends StatelessWidget {
     // kaybolup geri gelmesini görüyordu.
     if (value.hasError) {
       return Center(
-        child: ErrorView(message: errorMessage, error: value.error),
+        child: ErrorView(
+          message: errorMessage,
+          error: value.error,
+          onRetry: onRetry,
+        ),
       );
     }
     if (value.hasValue) return builder(value.requireValue);

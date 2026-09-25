@@ -35,13 +35,22 @@ class ApiRepository implements MilkTraceRepository {
     String? Function()? accessToken,
     WebSocketChannel Function(Uri uri, Map<String, dynamic> headers)? connect,
     Duration reconnectDelay = const Duration(seconds: 3),
+    void Function(DateTime lastFrameAt)? onLiveLost,
   }) : _dio = dio,
        _wsBaseUrl = wsBaseUrl,
        _accessToken = accessToken ?? _noToken,
        _connect = connect ?? _defaultConnect,
-       _reconnectDelay = reconnectDelay;
+       _reconnectDelay = reconnectDelay,
+       _onLiveLost = onLiveLost;
 
   final Dio _dio;
+
+  /// Canlı bağlantı koptu ya da kurulamadı; parametre son karenin anı.
+  ///
+  /// Çevrimdışı bandı içindir (backend ADR 0061): canlı tahtada oturan
+  /// kullanıcı başka bir okuma yapmadığı için önbellek katmanı kopuşu hiç
+  /// görmüyor, değerler DONUK ama güncel görünüyordu (cihazda bulundu).
+  final void Function(DateTime lastFrameAt)? _onLiveLost;
 
   /// WebSocket tabanı: `ws://host/api/v1` (§8.5).
   final String _wsBaseUrl;
@@ -230,24 +239,42 @@ class ApiRepository implements MilkTraceRepository {
   Stream<SpoutUpdate> watchSession(String sessionId) async* {
     if (sessionId.isEmpty) return;
 
+    // Son başarılı karenin anı; kopuş bildirimi "veri ne zamandan" diye.
+    var lastFrameAt = DateTime.now();
+    void lost() => _onLiveLost?.call(lastFrameAt);
+
     while (true) {
       // Anlık görüntü: ilk bağlantıda ekranı doldurur, yeniden bağlanmada
       // kopukluk boyunca değişenleri kapatır.
       final live = await _liveOrNull(sessionId);
       if (live != null) {
         if (live.session.status != 'active') return;
+        lastFrameAt = DateTime.now();
         for (final u in live.updates) {
           yield u;
         }
       }
 
       final channel = _open(sessionId);
+      // El sıkışma BEKLENİR: sunucu kapalıyken (gateway yeniden başlıyor,
+      // ahırın interneti yok) bağlantı reddedilir. Beklenmezse hata
+      // "unhandled" düşer ve kurulamamış kanalın sink.close()'u hiç
+      // tamamlanmadığı için yeniden bağlanma döngüsü TAKILI kalırdı —
+      // cihazda denenerek bulundu: gateway dönünce canlı tahta donuk kaldı.
+      try {
+        await channel.ready;
+      } on Object {
+        lost();
+        await Future<void>.delayed(_reconnectDelay);
+        continue;
+      }
       var ended = false;
       try {
         await for (final raw in channel.stream) {
           final message = _decodeMessage(raw);
           switch (message) {
             case final SpoutUpdate u:
+              lastFrameAt = DateTime.now();
               yield u;
             case _SessionEnded():
               // Oturum kapandı: akış biter, ekran son durumu gösterir.
@@ -265,10 +292,15 @@ class ApiRepository implements MilkTraceRepository {
       } on Object {
         // Bağlantı hatası akışı BİTİRMEZ; aşağıda yeniden bağlanılır.
       } finally {
-        await channel.sink.close();
+        // Kopmuş bağlantının kapanışı sunucudan cevap beklemesin.
+        await channel.sink.close().timeout(
+          const Duration(seconds: 2),
+          onTimeout: () {},
+        );
       }
 
       if (ended) return;
+      lost();
 
       // Ahırda kapsama sık kopuyor; hemen yeniden denemek broker'ı
       // gereksiz yere döver.

@@ -84,6 +84,7 @@ class _AnimalsTab extends ConsumerWidget {
           child: AsyncView(
             value: animals,
             errorMessage: 'Hayvanlar yüklenemedi',
+            onRetry: () => ref.invalidate(animalsProvider),
             builder: (list) => list.isEmpty
                 ? const _Empty('Bu filtreye uyan hayvan yok')
                 : ListView.separated(
@@ -348,6 +349,7 @@ class _SessionsTab extends ConsumerWidget {
     return AsyncView(
       value: sessions,
       errorMessage: 'Oturumlar yüklenemedi',
+      onRetry: () => ref.invalidate(pastSessionsProvider),
       builder: (list) => list.isEmpty
           ? const _Empty('Kayıtlı sağım oturumu yok')
           : ListView.separated(

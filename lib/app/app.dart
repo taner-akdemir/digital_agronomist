@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:milktrace/app/router.dart';
 import 'package:milktrace/app/theme.dart';
@@ -36,6 +37,12 @@ class MilkTraceApp extends ConsumerWidget {
       title: 'Milk Trace',
       theme: buildAppTheme(),
       routerConfig: router,
+      // Arayüz Türkçe (§4): Material'in kendi metinleri de (tarih seçici,
+      // iletişim kutusu düğmeleri) Türkçe olmalı. Cihaz dili ne olursa olsun
+      // Türkçe: kullanıcılar Türkiye'de, uygulamanın geri kalanı da Türkçe.
+      locale: const Locale('tr', 'TR'),
+      supportedLocales: const [Locale('tr', 'TR')],
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
     );
   }
 }

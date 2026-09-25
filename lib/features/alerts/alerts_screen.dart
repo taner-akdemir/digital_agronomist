@@ -45,6 +45,7 @@ class AlertsScreen extends ConsumerWidget {
         child: AsyncView(
           value: alerts,
           errorMessage: 'Uyarılar yüklenemedi',
+          onRetry: () => ref.invalidate(alertListProvider),
           builder: (list) => list.isEmpty
               ? const _Empty()
               : ListView.separated(

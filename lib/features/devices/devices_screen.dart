@@ -31,6 +31,7 @@ class DevicesScreen extends ConsumerWidget {
       child: AsyncView(
         value: tree,
         errorMessage: 'Cihazlar yüklenemedi',
+        onRetry: () => ref.invalidate(deviceTreeProvider),
         builder: (t) => ListView(
           padding: const EdgeInsets.fromLTRB(
             AppSpacing.lg,

@@ -39,6 +39,7 @@ class DashboardScreen extends ConsumerWidget {
       child: AsyncView(
         value: summary,
         errorMessage: 'Günün özeti alınamadı',
+        onRetry: () => ref.invalidate(dashboardSummaryProvider),
         builder: (s) => ListView(
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [

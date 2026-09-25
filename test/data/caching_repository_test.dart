@@ -33,6 +33,10 @@ class _Net extends MockRepository {
 
   @override
   Future<void> ackAlert(String alertId) => _gate(() => super.ackAlert(alertId));
+
+  @override
+  Stream<SpoutUpdate> watchSession(String sessionId) =>
+      Stream.value(const SpoutUpdate(sessionId: 's', spoutId: 'p'));
 }
 
 DioException _offline() => DioException(
@@ -77,6 +81,22 @@ void main() {
     net.failure = null;
     await r.animals();
     expect(events.last, isNull, reason: 'bağlantı döndü');
+  });
+
+  // Cihazda bulundu: gateway servis yeniden başlarken 503 veriyor.
+  test('503 de ulaşılamama sayılır', () async {
+    final r = repo();
+    final online = await r.animals();
+    net.failure = DioException(
+      requestOptions: RequestOptions(path: '/x'),
+      type: DioExceptionType.badResponse,
+      response: Response(
+        requestOptions: RequestOptions(path: '/x'),
+        statusCode: 503,
+      ),
+    );
+    expect(await r.animals(), online);
+    expect(events.last, isNotNull);
   });
 
   test('önbellek yoksa ağ hatası yukarı çıkar', () async {
@@ -149,5 +169,18 @@ void main() {
     await store.write('başka', 'kalır');
     await store.clear('mtcache:v1:');
     expect(store.values.keys, ['başka']);
+  });
+
+  // Cihazda bulundu: canlı tahtada oturan kullanıcı için bant, akış
+  // yeniden bağlanınca kalkmalı.
+  test('canlı kare gelince çevrimiçi sayılır', () async {
+    final r = repo();
+    await r.animals();
+    net.failure = _offline();
+    await r.animals();
+    expect(events.last, isNotNull);
+
+    await r.watchSession('s').first;
+    expect(events.last, isNull);
   });
 }

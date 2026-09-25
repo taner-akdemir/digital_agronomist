@@ -80,6 +80,7 @@ void main() {
       final saved = await repo.recordCalving(a.id, DateTime(2026, 9, 20));
       expect(saved.lactationNo, a.lactationNo + 1);
       expect(saved.status, 'active');
+      expect(saved.yieldClass, YieldClass.normal, reason: 'yeni laktasyon');
       expect(saved.lastCalvingDate, DateTime.utc(2026, 9, 20));
       final n = (await repo.animalNotes(a.id)).first;
       expect(n.isCalving, isTrue);

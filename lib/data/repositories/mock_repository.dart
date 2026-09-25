@@ -217,10 +217,13 @@ class MockRepository implements MilkTraceRepository {
                   status: 422,
                 );
         }
+        // Yeni laktasyon: eski sınıf taşınmaz (backend ADR 0060).
         final saved = a.copyWith(
           lastCalvingDate: day,
           lactationNo: a.lactationNo + 1,
           status: 'active',
+          yieldClass: YieldClass.normal,
+          yieldClassAt: null,
         );
         _savedAnimals[saved.id] = saved;
         var note =

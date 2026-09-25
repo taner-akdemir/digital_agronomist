@@ -25,16 +25,25 @@ import 'package:milktrace/data/repositories/milktrace_repository.dart';
 /// Ağ hatası mı: sunucuya ULAŞILAMADI (bağlantı, zaman aşımı). Sunucunun
 /// verdiği hata (403, 422, 500) değil: onları önbellekle örtmek, kullanıcıya
 /// eski veriyi "doğru" diye göstermek olurdu.
+///
+/// 502/503/504 de ulaşılamama sayılır: gateway "servise şu anda
+/// ulaşılamıyor" diyor, verinin kendisi hakkında bir yargı yok. Sahada
+/// gateway ya da servis yeniden başlarken ekranın boşalmaması gerekiyor
+/// (cihazda bulundu).
 bool isNetworkError(Object e) => switch (e) {
-  DioException(:final type) =>
+  DioException(:final type, :final response) =>
     type == DioExceptionType.connectionError ||
         type == DioExceptionType.connectionTimeout ||
         type == DioExceptionType.sendTimeout ||
-        type == DioExceptionType.receiveTimeout,
+        type == DioExceptionType.receiveTimeout ||
+        _unavailable(response?.statusCode),
   ApiException(:final code, :final status) =>
-    code == 'NETWORK' && status == null,
+    (code == 'NETWORK' && status == null) || _unavailable(status),
   _ => false,
 };
+
+bool _unavailable(int? status) =>
+    status == 502 || status == 503 || status == 504;
 
 /// Çevrimdışı okuma önbelleği (§18/7, ürün kararı "son veriyi göster").
 ///
@@ -273,9 +282,15 @@ class CachingRepository implements MilkTraceRepository {
   Future<MilkingSession> endSession(String sessionId) =>
       _net(() => _inner.endSession(sessionId));
 
+  /// Canlı akıştan gelen her kare sunucuya ulaşıldığını söyler: gateway
+  /// dönünce canlı tahtada oturan kullanıcı başka bir ekrana geçmeden
+  /// "çevrimdışı" bandı kalkmalı (cihazda denenerek bulundu).
   @override
   Stream<SpoutUpdate> watchSession(String sessionId) =>
-      _inner.watchSession(sessionId);
+      _inner.watchSession(sessionId).map((u) {
+        _onOnline();
+        return u;
+      });
 
   @override
   Future<void> registerPushToken({
