@@ -29,7 +29,8 @@ abstract class Alert with _$Alert {
     String? acknowledgedBy,
     DateTime? acknowledgedAt,
 
-    /// Sorunun geçtiği an: sayaç geri geldi (backend ADR 0041). Okundu
+    /// Sorunun geçtiği an: sayaç geri geldi (ADR 0041) ya da hatası düzeldi
+    /// (ADR 0058). Okundu
     /// bilgisinden BAĞIMSIZ — sağımcı görmeden sayaç dönmüş olabilir.
     DateTime? resolvedAt,
   }) = _Alert;
@@ -40,7 +41,7 @@ abstract class Alert with _$Alert {
   /// kimin kapattığı silinebilir ama kapanma anı kalır.
   bool get isAcknowledged => acknowledgedAt != null;
 
-  /// Sorun geçti mi (sayaç geri geldi).
+  /// Sorun geçti mi (sayaç geri geldi ya da hatası düzeldi).
   bool get isResolved => resolvedAt != null;
 
   factory Alert.fromJson(Map<String, dynamic> json) => _$AlertFromJson(json);

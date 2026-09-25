@@ -114,7 +114,7 @@ class _AlertCard extends ConsumerWidget {
                       ),
                       const SizedBox(height: AppSpacing.xs),
                       Text(
-                        _when(alert),
+                        alertTimeLabel(alert),
                         style: const TextStyle(
                           fontSize: 11,
                           color: AppColors.onSurfaceMuted,
@@ -151,17 +151,23 @@ class _AlertCard extends ConsumerWidget {
       ),
     );
   }
+}
 
-  static String _when(Alert a) {
-    final t = a.createdAt;
-    if (t == null) return '';
-    final parts = ['${Fmt.dayMonth(t)} · ${Fmt.time(t)}'];
-    // "Geri geldi" okundudan önce: sağımcının ilk sorusu "hâlâ sorun var mı".
-    final resolved = a.resolvedAt;
-    if (resolved != null) parts.add('geri geldi ${Fmt.time(resolved)}');
-    if (a.isAcknowledged) parts.add('okundu');
-    return parts.join(' · ');
+/// Uyarının zaman satırı: oluşma anı, çözüldüyse ne zaman, okunduysa.
+String alertTimeLabel(Alert a) {
+  final t = a.createdAt;
+  if (t == null) return '';
+  final parts = ['${Fmt.dayMonth(t)} · ${Fmt.time(t)}'];
+  // "Geri geldi" okundudan önce: sağımcının ilk sorusu "hâlâ sorun var mı".
+  // Sayaç HATASI geri gelmez, düzelir (backend ADR 0058): sayaç hep
+  // oradaydı, yalnızca hata bildirmeyi bıraktı.
+  final resolved = a.resolvedAt;
+  if (resolved != null) {
+    final verb = a.type == 'device_error' ? 'düzeldi' : 'geri geldi';
+    parts.add('$verb ${Fmt.time(resolved)}');
   }
+  if (a.isAcknowledged) parts.add('okundu');
+  return parts.join(' · ');
 }
 
 class _Empty extends StatelessWidget {

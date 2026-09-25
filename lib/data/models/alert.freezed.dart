@@ -17,7 +17,8 @@ mixin _$Alert {
 
  String get id; String get message;/// low_flow | low_yield | device_offline | ... (§7 mt.alerts.v1)
  String get type;/// info | warning | critical
- String get severity; String? get animalId; String? get sessionId; DateTime? get createdAt; String? get acknowledgedBy; DateTime? get acknowledgedAt;/// Sorunun geçtiği an: sayaç geri geldi (backend ADR 0041). Okundu
+ String get severity; String? get animalId; String? get sessionId; DateTime? get createdAt; String? get acknowledgedBy; DateTime? get acknowledgedAt;/// Sorunun geçtiği an: sayaç geri geldi (ADR 0041) ya da hatası düzeldi
+/// (ADR 0058). Okundu
 /// bilgisinden BAĞIMSIZ — sağımcı görmeden sayaç dönmüş olabilir.
  DateTime? get resolvedAt;
 /// Create a copy of Alert
@@ -236,7 +237,8 @@ class _Alert extends Alert {
 @override final  DateTime? createdAt;
 @override final  String? acknowledgedBy;
 @override final  DateTime? acknowledgedAt;
-/// Sorunun geçtiği an: sayaç geri geldi (backend ADR 0041). Okundu
+/// Sorunun geçtiği an: sayaç geri geldi (ADR 0041) ya da hatası düzeldi
+/// (ADR 0058). Okundu
 /// bilgisinden BAĞIMSIZ — sağımcı görmeden sayaç dönmüş olabilir.
 @override final  DateTime? resolvedAt;
 

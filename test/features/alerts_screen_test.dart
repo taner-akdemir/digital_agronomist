@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/repositories/milktrace_repository.dart';
 import 'package:milktrace/data/repositories/mock_repository.dart';
 import 'package:milktrace/features/alerts/alerts_providers.dart';
@@ -111,5 +112,19 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.textContaining('düşük debiyle sağılıyor'), findsOneWidget);
+  });
+
+  // Sayaç hatası "geri gelmez", düzelir (backend ADR 0058).
+  test('çözülen sayaç hatası "düzeldi", çevrimdışı "geri geldi" yazar', () {
+    Alert a(String type) => Alert(
+      id: 'a',
+      type: type,
+      severity: 'warning',
+      message: 'm',
+      createdAt: DateTime.utc(2026, 9, 21, 18, 0),
+      resolvedAt: DateTime.utc(2026, 9, 21, 18, 29),
+    );
+    expect(alertTimeLabel(a('device_error')), contains('düzeldi 21:29'));
+    expect(alertTimeLabel(a('device_offline')), contains('geri geldi 21:29'));
   });
 }

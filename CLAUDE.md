@@ -237,7 +237,9 @@ ile, filtre Geçmiş ekranı kurulmadan önce siliniyordu.
 
 Sayaç uyarısı (`device_offline`) **çözülebilir**: `resolvedAt` doluysa sayaç geri
 gelmiştir (backend ADR 0041). Çözüldü ile okundu AYRI alanlardır — çözülen uyarı listede
-açık kalır, zaman satırında "geri geldi HH:mm" yazar; okununca kapanır.
+açık kalır, zaman satırında "geri geldi HH:mm" yazar; okununca kapanır. Sayaç hatası
+(`device_error`) da çözülür: 5 dk hatasız veriden sonra "düzeldi HH:mm" (ADR 0058;
+`alertTimeLabel`).
 
 Özet ile uyarı LİSTESİ ayrı uçlardan okunur. Uyarıları dashboard payload'ına da koymak,
 kullanıcı bir uyarıyı okundu işaretledikten sonra dashboard'un eski kopyayı göstermesi
