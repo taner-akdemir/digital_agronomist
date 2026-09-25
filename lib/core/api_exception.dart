@@ -47,6 +47,10 @@ class ApiException implements Exception {
       DioExceptionType.badCertificate => 'Sunucu sertifikası doğrulanamadı.',
       DioExceptionType.cancel => 'İstek iptal edildi.',
       DioExceptionType.badResponse => 'Sunucu beklenmeyen bir yanıt verdi.',
+      // dio 5.11: yanıt geldi ama çözümlenmesi süre sınırını aştı. Sınır
+      // koymuyoruz; sunucuya ulaşıldığı için ağ hatası da sayılmaz
+      // (isNetworkError).
+      DioExceptionType.transformTimeout => 'Sunucunun yanıtı işlenemedi.',
       DioExceptionType.unknown => 'Beklenmeyen bir hata oluştu.',
     };
 
