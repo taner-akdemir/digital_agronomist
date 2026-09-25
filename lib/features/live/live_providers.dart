@@ -124,6 +124,29 @@ class MilkingControl extends _$MilkingControl {
         ),
   );
 
+  /// Noktadaki hayvanı BAŞKASIYLA değiştirir.
+  ///
+  /// [discardPrevious] true ise önceki eşleştirme YANLIŞTI: önce kaldırılır
+  /// (açık sağımı silinir, backend ADR 0053), sonra yeni hayvan bağlanır.
+  /// false ise önceki hayvan gerçekten sağıldı: backend onun sağımını
+  /// kapatıp ölçülen sütü ona yazar.
+  Future<void> replace({
+    required String sessionId,
+    required String spoutId,
+    required String animalId,
+    required bool discardPrevious,
+  }) => _run(() async {
+    final repo = ref.read(repositoryProvider);
+    if (discardPrevious) {
+      await repo.unassignAnimal(sessionId: sessionId, spoutId: spoutId);
+    }
+    await repo.assignAnimal(
+      sessionId: sessionId,
+      spoutId: spoutId,
+      animalId: animalId,
+    );
+  });
+
   /// Yanlış eşleştirmeyi geri alır.
   Future<void> unassign({required String sessionId, required String spoutId}) =>
       _run(

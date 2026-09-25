@@ -178,7 +178,11 @@ listeden düşürür. "Yok say" → `DELETE /unmatched-tags/{rfid}`. Otomatik ö
 **Eşleştirme seçicisi** (`showAnimalPicker` → `PickAnimal` / `ClearAnimal`, backend ADR 0053):
 noktada hayvan varken "Eşleştirmeyi kaldır" (`DELETE …/spouts/{spoutId}/animal`) — açık sağım
 SİLİNİR, ölçülen süt kimseye yazılmaz; onay penceresi miktarı söyler. Karışık sürüde tür
-süzgeci çıkar; varsayılan, oturumdaki eşleşmelerin hepsi aynı türdense o tür.
+süzgeci çıkar; varsayılan, oturumdaki eşleşmelerin hepsi aynı türdense o tür. Arama küpe,
+ad ve RFID'de. Noktada hayvan varken başka hayvan seçilir ve ölçüm varsa `askReplace` sorar:
+"Sağıldı" → yalnızca bağla (backend öncekini kapatır, süt ona); "Yanlış eşleştirme" →
+`MilkingControl.replace(discardPrevious: true)`: önce kaldır, sonra bağla. Ölçüm yoksa sormadan
+temizler.
 
 `Env.wsBaseUrl`, `apiBaseUrl`'den **türetilir** (`http` → `ws`): ayrı tanımlansaydı biri
 değişip diğeri unutulduğunda canlı ekran sessizce bağlanamazdı.

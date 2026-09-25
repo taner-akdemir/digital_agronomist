@@ -435,13 +435,40 @@ class _Grid extends ConsumerWidget {
     final control = ref.read(milkingControlProvider.notifier);
     switch (pick) {
       case PickAnimal(:final animalId):
+        final previous = update.animal;
+        if (previous == null || previous.id == animalId) {
+          await _guard(
+            context,
+            ref,
+            () => control.assign(
+              sessionId: live.session.id,
+              spoutId: spoutId,
+              animalId: animalId,
+            ),
+          );
+          return;
+        }
+        // Noktada başka hayvan var (backend ADR 0053). Ölçüm yoksa sorulacak
+        // bir şey yok: önceki eşleştirme temizlenir, boş sağım kimsenin
+        // geçmişine girmez.
+        var discard = true;
+        if (update.volumeMl > 0) {
+          final choice = await askReplace(
+            context,
+            previous: previous,
+            volumeMl: update.volumeMl,
+          );
+          if (choice == null || !context.mounted) return;
+          discard = choice == ReplaceChoice.mistaken;
+        }
         await _guard(
           context,
           ref,
-          () => control.assign(
+          () => control.replace(
             sessionId: live.session.id,
             spoutId: spoutId,
             animalId: animalId,
+            discardPrevious: discard,
           ),
         );
       case ClearAnimal():

@@ -153,4 +153,15 @@ void main() {
     await _open(tester);
     expect(find.text('Eşleştirmeyi kaldır'), findsNothing);
   });
+
+  // Tanınmayan küpenin numarası canlı ekranda yazıyor: RFID ile de aranır
+  // (backend ADR 0053).
+  testWidgets('RFID ile aranır', (tester) async {
+    await _open(tester);
+    await tester.enterText(find.byType(TextField), '900123456700003');
+    await tester.pumpAndSettle();
+    final subs = _subtitles(tester);
+    expect(subs, hasLength(1));
+    expect(subs.single, contains('TR340000003'));
+  });
 }

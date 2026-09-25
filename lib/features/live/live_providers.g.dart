@@ -472,7 +472,7 @@ final class MilkingControlProvider
   }
 }
 
-String _$milkingControlHash() => r'56a5cb5c6836b02ce36384d8fef9c5bd2d64c641';
+String _$milkingControlHash() => r'b81a3ed7852617f0733bacf52b28c695fb118d6b';
 
 /// Sağım kontrolü: başlat, eşleştir, bitir (§15.1).
 ///

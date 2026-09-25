@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:milktrace/app/theme.dart';
+import 'package:milktrace/core/format.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout_update.dart';
@@ -146,7 +147,7 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
                     // bağlı bir alan (§4) ve çoğu hayvanda yok.
                     keyboardType: TextInputType.text,
                     decoration: const InputDecoration(
-                      hintText: 'Küpe numarası veya ad',
+                      hintText: 'Küpe numarası, ad veya RFID',
                       prefixIcon: Icon(Icons.search),
                       isDense: true,
                       border: OutlineInputBorder(borderRadius: AppRadius.smAll),
@@ -270,7 +271,10 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
             (species == null || a.speciesId == species) &&
             (q.isEmpty ||
                 a.earTag.toLowerCase().contains(q) ||
-                (a.name?.toLowerCase().contains(q) ?? false)))
+                (a.name?.toLowerCase().contains(q) ?? false) ||
+                // RFID de aranır (ADR 0053): tanınmayan küpenin numarası
+                // canlı ekranda yazıyor; sağımcı onu yazarak bulabilsin.
+                (a.rfid?.contains(q) ?? false)))
           a,
     ];
 
@@ -361,4 +365,51 @@ class _SpeciesChips extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Önceki hayvanın ne olacağı: sağıldı mı, eşleştirme mi yanlıştı?
+enum ReplaceChoice { milked, mistaken }
+
+/// Noktada hayvan varken başka hayvan seçilince sorulur (backend ADR 0053).
+///
+/// "Sağıldı": önceki sağım kapanır, ölçülen süt önceki hayvana yazılır.
+/// "Yanlış eşleştirme": önceki sağım SİLİNİR, süt kimseye yazılmaz. Sormadan
+/// ilki seçilseydi yanlış eşleştirmenin sütü yanlış hayvanın geçmişine ve
+/// sınıflandırmasına girerdi. Vazgeçilirse null.
+Future<ReplaceChoice?> askReplace(
+  BuildContext context, {
+  required SpoutAnimal previous,
+  required int volumeMl,
+}) {
+  final who = previous.name == null
+      ? previous.earTag
+      : '${previous.name} (${previous.earTag})';
+  return showDialog<ReplaceChoice>(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('Önceki hayvan sağıldı mı?'),
+      content: Text(
+        '$who için bu noktada ${Fmt.litres(volumeMl)} L ölçüldü.\n\n'
+        'Sağıldıysa ölçüm ona yazılır. Eşleştirme yanlışsa ölçüm silinir.',
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Vazgeç'),
+        ),
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(ReplaceChoice.mistaken),
+          style: TextButton.styleFrom(foregroundColor: AppColors.redColor),
+          child: const Text('Yanlış eşleştirme'),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.of(context).pop(ReplaceChoice.milked),
+          style: FilledButton.styleFrom(
+            backgroundColor: AppColors.darkGreenColor,
+          ),
+          child: const Text('Sağıldı'),
+        ),
+      ],
+    ),
+  );
 }
