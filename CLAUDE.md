@@ -442,9 +442,12 @@ Android ve iOS, ikisi de `com.algebran.milktrace.milktrace`.
   yükle; Xcode'da Signing & Capabilities → ekip seç (`DEVELOPMENT_TEAM` boş; Apple
   Developer Program üyeliği gerekli — ücretsiz hesap push yeteneğini imzalayamaz); gerçek
   iPhone'da test bildirimi. Push simülatörde de denenebilir ama asıl doğrulama cihazda.
-- **Araç zinciri:** Flutter 3.41.3 + Xcode 27'de `flutter build ios --simulator` düşüyor
-  (Xcode 27 `lipo -verify_arch` birden çok mimari kabul etmiyor) — proje sorunu değil;
-  `flutter upgrade` ya da cihaz derlemesi (`--no-codesign`) kullan.
+- **Araç zinciri:** Flutter ≥ 3.47 gerekir (25.09.2026'da 3.47.5'e yükseltildi). 3.41.3,
+  Xcode 27'nin `lipo -verify_arch`'ı birden çok mimari kabul etmediği için
+  `flutter build ios --simulator`'da düşüyordu. Varsayılan API tabanı platforma göre:
+  Android emülatöründe `10.0.2.2`, iOS simülatöründe `localhost` (`Env.apiBaseUrl`).
+  Simülatörde çalışıp giriş ekranına kadar açıldığı doğrulandı; izin penceresi ve giriş
+  elle geçilmeli (Xcode 27'de Simulator.app yok, `simctl` bildirim izni veremiyor).
 - **Staging/üretim backend'i:** servis hesabı anahtarı kümeye Secret olarak
   (`~/GolandProjects/milktrace/docs/saha/push-kurulum.md` §2). Yerelde anahtar
   `services/notification/.env`'de (repoya girmez).

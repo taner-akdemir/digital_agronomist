@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 /// Uygulamanın hangi veri kaynağına bağlanacağı.
 enum ApiMode { mock, http }
 
@@ -17,13 +19,20 @@ abstract final class Env {
 
   /// Gerçek API'nin tabanı. Gateway §8.5'teki /api/v1 yolunu sunar.
   ///
-  /// 10.0.2.2 Android emülatöründen ana makineye giden adrestir; iOS
-  /// simülatöründe veya masaüstünde `--dart-define=MT_API_BASE=...` ile
-  /// localhost verilir.
-  static const String apiBaseUrl = String.fromEnvironment(
-    'MT_API_BASE',
-    defaultValue: 'http://10.0.2.2:8190/api/v1',
-  );
+  /// `--dart-define=MT_API_BASE=...` verilmişse o kazanır. Verilmemişse
+  /// yerel geliştirme gateway'i: Android emülatöründen ana makine 10.0.2.2,
+  /// iOS simülatöründen ve masaüstünden localhost. Tek sabit bir varsayılan,
+  /// iOS'ta dart-define unutulduğunda girişin sessizce zaman aşımına düşmesi
+  /// demekti.
+  static String get apiBaseUrl {
+    if (_apiBase.isNotEmpty) return _apiBase;
+    final host = !kIsWeb && defaultTargetPlatform == TargetPlatform.android
+        ? '10.0.2.2'
+        : 'localhost';
+    return 'http://$host:8190/api/v1';
+  }
+
+  static const String _apiBase = String.fromEnvironment('MT_API_BASE');
 
   /// Canlı akışın WebSocket tabanı (§8.5 WS /ws).
   ///
