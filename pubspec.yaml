@@ -40,7 +40,7 @@ dependencies:
   # PushGateway bunu sessizce yutuyor. Bağlama adımları CLAUDE.md §7'de.
   firebase_core: ^4.3.0
   firebase_messaging: ^16.0.4
-  flutter_local_notifications: ^20.0.1
+  flutter_local_notifications: ^22.3.1
 
   # Sunum
   fl_chart: ^1.2.0            # charts_flutter terk edilmişti, kaldırıldı
