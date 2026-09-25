@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/data/push/push_gateway.dart';
 import 'package:milktrace/data/push/push_message.dart';
 
@@ -85,7 +86,7 @@ class FirebasePushGateway implements PushGateway {
       settings: const InitializationSettings(
         // Uygulama ikonu kullanılıyor: ayrı bir bildirim ikonu eklenene
         // kadar Android'in varsayılanı boş kare gösteriyordu.
-        android: AndroidInitializationSettings('@mipmap/ic_launcher'),
+        android: AndroidInitializationSettings('@drawable/ic_stat_milktrace'),
         iOS: DarwinInitializationSettings(),
       ),
       onDidReceiveNotificationResponse: (response) {
@@ -120,6 +121,9 @@ class FirebasePushGateway implements PushGateway {
           channelDescription: _channel.description,
           importance: Importance.high,
           priority: Priority.high,
+          // Tepside simgenin ve uygulama adının rengi (manifestteki
+          // notification_accent ile aynı).
+          color: AppColors.darkGreenColor,
         ),
         iOS: const DarwinNotificationDetails(),
       ),

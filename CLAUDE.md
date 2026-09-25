@@ -131,6 +131,11 @@ flutter run
   Renk/boşluk/köşe değerleri `lib/app/theme/` içindeki token'lardan gelir, çağrı yerinde
   sabit yazılmaz.
 
+- **Marka/ikon:** kaynaklar `tool/brand/*.svg` (koyu yeşil zemin, beyaz süt damlası, içinde
+  debi çizgisi). İkonları elle düzenleme; `tool/brand/generate.sh` Android (uyarlanabilir +
+  monokrom), iOS AppIcon ve bildirim simgesini (`drawable-*/ic_stat_milktrace`, tek renk
+  siluet) üretir. Uygulama adı "Milk Trace".
+
 ## 6. Kapsam çiti
 
 Şu anki faz: **Faz 6 — cihaz** (§17). Faz 4 ve Faz 5'in mobil payı tamam; Faz 6'nın

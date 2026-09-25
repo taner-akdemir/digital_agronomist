@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Uyarlanabilir ikonun zemini: AppColors.darkGreenColor. -->
+    <color name="ic_launcher_background">#1F4732</color>
+    <!-- Bildirim simgesinin vurgu rengi (tepside simge ve uygulama adı). -->
+    <color name="notification_accent">#1F4732</color>
+</resources>

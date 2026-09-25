@@ -1,0 +1,7 @@
+<!-- Milk Trace uygulama ikonu (tam kare; iOS ve eski Android). Beyaz süt
+     damlası ve içinde debi çizgisi: uygulama her hayvanın sütünü ölçer. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <rect width="1024" height="1024" fill="#1F4732"/>
+  <path d="M512 170 C512 170 300 420 300 590 C300 712 395 800 512 800 C629 800 724 712 724 590 C724 420 512 170 512 170 Z" fill="#FFFFFF"/>
+  <polyline points="340,600 420,600 455,520 500,690 545,470 585,640 615,600 684,600" fill="none" stroke="#2E7D55" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
