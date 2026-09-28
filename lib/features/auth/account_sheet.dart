@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/core/env.dart';
+import 'package:milktrace/features/auth/role_labels.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/push_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
@@ -74,7 +75,7 @@ class _AccountSheet extends ConsumerWidget {
                           // Rol GÖRÜNÜR olmalı: eşik ayarlarının neden salt
                           // okunur açıldığının cevabı burada.
                           Text(
-                            _roleLabel(user.role),
+                            roleLabel(user.role),
                             style: const TextStyle(
                               fontSize: 12,
                               color: AppColors.lightGreyColor,
@@ -123,6 +124,26 @@ class _AccountSheet extends ConsumerWidget {
                   },
                   icon: const Icon(Icons.notifications_active_outlined),
                   label: const Text('Bildirim kanalları'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.darkGreenColor,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppSpacing.lg,
+                    ),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadius.mdAll,
+                    ),
+                  ),
+                ),
+                // Kullanıcılar (backend ADR 0076): yalnızca sahip; backend
+                // diğer rollere 403.
+                const SizedBox(height: AppSpacing.sm),
+                OutlinedButton.icon(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    context.push('/settings/team');
+                  },
+                  icon: const Icon(Icons.group_outlined),
+                  label: const Text('Kullanıcılar'),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.darkGreenColor,
                     padding: const EdgeInsets.symmetric(
@@ -245,18 +266,6 @@ class _PushRowState extends ConsumerState<_PushRow> {
     };
   }
 }
-
-/// Rolün Türkçe adı (§5 kullanıcı rolleri).
-///
-/// Tanınmayan rol KODU olduğu gibi gösterilir: backend yeni bir rol
-/// eklediğinde kullanıcıya boş bir satır göstermektense ham kod yeğdir.
-String _roleLabel(String role) => switch (role) {
-  'tenant_owner' => 'İşletme sahibi',
-  'tenant_operator' => 'Operatör',
-  'tenant_viewer' => 'Görüntüleyici',
-  'platform_admin' => 'Platform yöneticisi',
-  _ => role,
-};
 
 class _ModeBadge extends StatelessWidget {
   const _ModeBadge();

@@ -16,6 +16,7 @@ import 'package:milktrace/features/settings/notification_channels_screen.dart';
 import 'package:milktrace/features/settings/thresholds_screen.dart';
 import 'package:milktrace/features/shell/scaffold_with_nav_bar.dart';
 import 'package:milktrace/features/splash/splash_screen.dart';
+import 'package:milktrace/features/team/team_screen.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -67,6 +68,9 @@ GoRouter router(Ref ref) {
         path: '/settings/thresholds',
         builder: (_, _) => const ThresholdsScreen(),
       ),
+      // İşletmenin kullanıcıları (backend ADR 0076): hesap kartından,
+      // yalnızca işletme sahibine.
+      GoRoute(path: '/settings/team', builder: (_, _) => const TeamScreen()),
       // Bildirim kanalları (backend ADR 0028): hesap kartından, yalnızca
       // işletme sahibine.
       GoRoute(

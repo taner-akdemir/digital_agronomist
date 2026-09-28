@@ -410,6 +410,13 @@ YOK. Posta kapalıysa 503 mesajı gösterilir. Sağlayıcı `passwordResetReques
 (testte sahtesi). Askıdaki/kapalı işletmenin kullanıcısı giremez (ADR 0072): giriş ve
 yenileme 403 ve sunucunun mesajı.
 
+**Kullanıcılar** (`/settings/team`, backend ADR 0076): hesap kartından YALNIZCA işletme
+sahibine. Operatör ve görüntüleyici ekler (parola boşsa e-postayla davet, doluysa geçici
+parola; posta kapalıyken sunucu 503 ve "geçici bir parola girin"), rolünü değiştirir,
+askıya alır, siler (notları "Silinmiş kullanıcı" kalır). Sahipler listede salt okunur;
+sahip eklemek platformun işi. Önbelleklenmez (çevrimdışı eski listeden silme olmasın).
+Mock modda bellekte. Rol etiketleri `features/auth/role_labels.dart`.
+
 **Hata mesajları:** `ApiRepository` DioException fırlatır; `ApiException`'a çeviri
 yalnızca giriş ucundaydı. Bu yüzden ekranlar gerçek API'de backend'in Türkçe mesajı
 yerine "DioException…" gösteriyordu. `userMessage(error)` (core/api_exception.dart)

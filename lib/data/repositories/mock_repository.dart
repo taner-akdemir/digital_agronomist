@@ -20,6 +20,7 @@ import 'package:milktrace/data/models/session_milking.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_update.dart';
+import 'package:milktrace/data/models/team_member.dart';
 import 'package:milktrace/data/models/thresholds.dart';
 import 'package:milktrace/data/models/unmatched_tag_row.dart';
 import 'package:milktrace/data/models/vacuum.dart';
@@ -669,6 +670,90 @@ class MockRepository implements MilkTraceRepository {
   Future<void> deleteNotificationChannel(String id) => _delayed(() async {
     (await _channelMap()).remove(id);
     _channelSecrets.remove(id);
+  });
+
+  /// İşletmenin kullanıcıları BELLEKTE (backend ADR 0076): demo sahibi ve
+  /// bir sağımcıyla başlar. Demo modda e-posta yok; parolasız ekleme de
+  /// "davet gönderildi" der ki akış gösterilebilsin.
+  late final Map<String, TeamMember> _team = {
+    // Demo kullanıcısının kendisi (auth_providers _mockUser).
+    '0192a1f0-00a0-7000-8000-000000000002': const TeamMember(
+      id: '0192a1f0-00a0-7000-8000-000000000002',
+      email: 'ciftci@milktrace.local',
+      fullName: 'Demo Çiftçi',
+      role: 'tenant_owner',
+    ),
+    'mock-operator': const TeamMember(
+      id: 'mock-operator',
+      email: 'sagimci@milktrace.local',
+      fullName: 'Mehmet Yılmaz',
+      role: 'tenant_operator',
+    ),
+  };
+  int _teamSeq = 0;
+
+  static const _teamNotFound = ApiException(
+    code: 'NOT_FOUND',
+    message: 'kullanıcı bulunamadı',
+    status: 404,
+  );
+
+  @override
+  Future<List<TeamMember>> teamMembers() =>
+      _delayed(() async => _team.values.toList());
+
+  @override
+  Future<TeamAddResult> addTeamMember({
+    required String email,
+    required String fullName,
+    required String role,
+    String? password,
+  }) => _delayed(() async {
+    final e = email.trim().toLowerCase();
+    if (_team.values.any((m) => m.email == e)) {
+      throw const ApiException(
+        code: 'CONFLICT',
+        message: 'bu e-posta başka bir hesapta kayıtlı',
+        status: 409,
+      );
+    }
+    final m = TeamMember(
+      id: 'mock-user-${++_teamSeq}',
+      email: e,
+      fullName: fullName.trim(),
+      role: role,
+    );
+    _team[m.id] = m;
+    final invited = password == null || password.isEmpty;
+    return (
+      member: m,
+      message: invited
+          ? 'kullanıcı eklendi, davet e-postası gönderildi'
+          : 'kullanıcı eklendi',
+    );
+  });
+
+  @override
+  Future<TeamMember> updateTeamMember(
+    String id, {
+    required String fullName,
+    required String role,
+    required String status,
+  }) => _delayed(() async {
+    final old = _team[id];
+    if (old == null || !old.isManageable) throw _teamNotFound;
+    return _team[id] = old.copyWith(
+      fullName: fullName,
+      role: role,
+      status: status,
+    );
+  });
+
+  @override
+  Future<void> deleteTeamMember(String id) => _delayed(() async {
+    final old = _team[id];
+    if (old == null || !old.isManageable) throw _teamNotFound;
+    _team.remove(id);
   });
 
   /// Demo modda gerçek gönderim yok; kanal varsa başarılı sayılır.

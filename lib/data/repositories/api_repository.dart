@@ -19,6 +19,7 @@ import 'package:milktrace/data/models/session_milking.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_update.dart';
+import 'package:milktrace/data/models/team_member.dart';
 import 'package:milktrace/data/models/thresholds.dart';
 import 'package:milktrace/data/models/unmatched_tag_row.dart';
 import 'package:milktrace/data/models/vacuum.dart';
@@ -510,6 +511,52 @@ class ApiRepository implements MilkTraceRepository {
   @override
   Future<void> testNotificationChannel(String id) =>
       _dio.post<dynamic>('/notification-channels/$id/test');
+
+  @override
+  Future<List<TeamMember>> teamMembers() async =>
+      _listOf(await _dio.get<dynamic>('/team'), TeamMember.fromJson);
+
+  @override
+  Future<TeamAddResult> addTeamMember({
+    required String email,
+    required String fullName,
+    required String role,
+    String? password,
+  }) async {
+    final r = await _dio.post<dynamic>(
+      '/team',
+      data: {
+        'email': email,
+        'fullName': fullName,
+        'role': role,
+        if (password != null && password.isNotEmpty) 'password': password,
+      },
+    );
+    return (
+      member: TeamMember.fromJson(_dataOf(r)),
+      message:
+          ((r.data as Map<String, dynamic>)['msg'] as String?) ??
+          'Kullanıcı eklendi.',
+    );
+  }
+
+  @override
+  Future<TeamMember> updateTeamMember(
+    String id, {
+    required String fullName,
+    required String role,
+    required String status,
+  }) async => TeamMember.fromJson(
+    _dataOf(
+      await _dio.put<dynamic>(
+        '/team/$id',
+        data: {'fullName': fullName, 'role': role, 'status': status},
+      ),
+    ),
+  );
+
+  @override
+  Future<void> deleteTeamMember(String id) => _dio.delete<dynamic>('/team/$id');
 
   @override
   Future<Thresholds> updateThresholds(Thresholds thresholds) async {

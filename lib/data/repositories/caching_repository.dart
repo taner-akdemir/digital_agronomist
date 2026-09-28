@@ -19,6 +19,7 @@ import 'package:milktrace/data/models/session_milking.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_update.dart';
+import 'package:milktrace/data/models/team_member.dart';
 import 'package:milktrace/data/models/thresholds.dart';
 import 'package:milktrace/data/models/unmatched_tag_row.dart';
 import 'package:milktrace/data/models/vacuum.dart';
@@ -352,6 +353,45 @@ class CachingRepository implements MilkTraceRepository {
   @override
   Future<void> testNotificationChannel(String id) =>
       _net(() => _inner.testNotificationChannel(id));
+
+  // Kullanıcı yönetimi önbelleklenmez: çevrimdışıyken eski bir listeden
+  // birini silmeye kalkmak yanlış kişiyi hedefleyebilirdi.
+  @override
+  Future<List<TeamMember>> teamMembers() => _net(_inner.teamMembers);
+
+  @override
+  Future<TeamAddResult> addTeamMember({
+    required String email,
+    required String fullName,
+    required String role,
+    String? password,
+  }) => _net(
+    () => _inner.addTeamMember(
+      email: email,
+      fullName: fullName,
+      role: role,
+      password: password,
+    ),
+  );
+
+  @override
+  Future<TeamMember> updateTeamMember(
+    String id, {
+    required String fullName,
+    required String role,
+    required String status,
+  }) => _net(
+    () => _inner.updateTeamMember(
+      id,
+      fullName: fullName,
+      role: role,
+      status: status,
+    ),
+  );
+
+  @override
+  Future<void> deleteTeamMember(String id) =>
+      _net(() => _inner.deleteTeamMember(id));
 
   @override
   Future<void> ackAlert(String alertId) => _net(() => _inner.ackAlert(alertId));

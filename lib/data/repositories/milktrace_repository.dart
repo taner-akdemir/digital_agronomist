@@ -16,6 +16,7 @@ import 'package:milktrace/data/models/session_milking.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_update.dart';
+import 'package:milktrace/data/models/team_member.dart';
 import 'package:milktrace/data/models/thresholds.dart';
 import 'package:milktrace/data/models/unmatched_tag_row.dart';
 import 'package:milktrace/data/models/vacuum.dart';
@@ -211,6 +212,30 @@ abstract interface class MilkTraceRepository {
   /// hata mesajı kullanıcıya gösterilir: "yanlış API anahtarı" gibi bir
   /// cevabı görmeden ayar düzeltilemez.
   Future<void> testNotificationChannel(String id);
+
+  /// İşletmenin kullanıcıları (backend ADR 0076, `GET /team`). YALNIZCA
+  /// işletme sahibi; backend diğer rollere 403 döner.
+  Future<List<TeamMember>> teamMembers();
+
+  /// Sağımcı ya da izleyici ekler. `password` boşsa kişiye e-postayla davet
+  /// gider (posta kapalıysa 503 ve "geçici bir parola girin").
+  Future<TeamAddResult> addTeamMember({
+    required String email,
+    required String fullName,
+    required String role,
+    String? password,
+  });
+
+  /// Ad, rol ve durum (active | suspended). Askıdaki kullanıcı giremez.
+  Future<TeamMember> updateTeamMember(
+    String id, {
+    required String fullName,
+    required String role,
+    required String status,
+  });
+
+  /// Kalıcı silme: yazdığı notlar "Silinmiş kullanıcı" olarak kalır.
+  Future<void> deleteTeamMember(String id);
 
   /// Uyarıyı okundu işaretler (§8.5 POST /alerts/{id}/ack).
   ///
