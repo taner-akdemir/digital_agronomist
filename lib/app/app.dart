@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,9 +30,25 @@ class MilkTraceApp extends ConsumerWidget {
 
       // Oturum kapalıyken gelen dokunuş yok sayılır: yönlendirme yine
       // giriş ekranına düşerdi ama kullanıcı bir an korumalı ekranı görürdü.
-      if (!ref.read(authProvider).isSignedIn) return;
+      final auth = ref.read(authProvider);
+      if (!auth.isSignedIn) return;
 
-      router.go(tap.route);
+      // Başka işletmenin bildirimi (backend ADR 0085): önce o işletmeye
+      // geç, sonra aç — yoksa hayvan başka işletmede "bulunamadı" derdi.
+      final other = tap.tenantToSwitch(auth.user);
+      if (other == null) {
+        router.go(tap.route);
+        return;
+      }
+      unawaited(() async {
+        try {
+          await ref.read(authProvider.notifier).switchTenant(other);
+        } catch (_) {
+          // Geçilemediyse (ağ, üyelik kalktı) yine açılır; ekran kendi
+          // hatasını gösterir.
+        }
+        router.go(tap.route);
+      }());
     });
 
     return MaterialApp.router(

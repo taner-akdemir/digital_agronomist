@@ -1,9 +1,16 @@
+import 'package:milktrace/data/models/auth_user.dart';
+
 /// Kullanıcıya gösterilen ve dokunulduğunda bir yere götüren push bildirimi.
 ///
 /// Firebase tiplerinden BAĞIMSIZDIR: yönlendirme kuralını Firebase olmadan
 /// test edebilmek için. Gerçek `RemoteMessage` bu sınıfa çevrilir.
 class PushMessage {
-  const PushMessage({this.title, this.body, required this.route});
+  const PushMessage({
+    this.title,
+    this.body,
+    required this.route,
+    this.tenantId,
+  });
 
   /// Metinler BACKEND'DEN gelir ve olduğu gibi gösterilir (§16): hangi
   /// kuralın tetiklendiğini `notification` servisi biliyor, uygulama kendi
@@ -13,6 +20,19 @@ class PushMessage {
 
   /// Dokunulduğunda gidilecek yol.
   final String route;
+
+  /// Uyarının işletmesi (backend ADR 0085): birden çok çiftliğe üye kişi
+  /// başka işletmenin bildirimine dokununca önce o işletmeye geçilir.
+  final String? tenantId;
+
+  /// Dokunuşta geçilmesi gereken işletme; gerekmiyorsa null. Kişi o
+  /// işletmenin üyesi değilse (eski bildirim, çıkarılmış) geçilmez, yol
+  /// yine açılır.
+  String? tenantToSwitch(AuthUser? user) {
+    final t = tenantId;
+    if (t == null || user == null || t == user.tenantId) return null;
+    return user.tenants.any((m) => m.id == t) ? t : null;
+  }
 
   /// Uyarı listesi — bildirimin hangi hayvana ait olduğu anlaşılamazsa.
   static const String alertsRoute = '/alerts';
@@ -34,6 +54,7 @@ class PushMessage {
       title: title,
       body: body,
       route: animalId == null ? alertsRoute : '/history/animal/$animalId',
+      tenantId: _string(data['tenantId']),
     );
   }
 

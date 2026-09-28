@@ -428,8 +428,11 @@ testler de `supportInfoProvider`'ı ezmeli, yoksa ağa çıkar).
 üyesi olabilir. `AuthUser.tenants` girebildiği işletmeler; `role`/`tenantId` seçili
 olanınki. Birden çoksa hesap kartında "İşletme değiştir" → `Auth.switchTenant`
 (`POST /auth/switch`) → canlı sekme. Depo, önbellek kapsamı ve push kaydı oturumu
-izlediği için kendiliğinden yeni işletmeye geçer; push seçili işletmeyi izler.
+izlediği için kendiliğinden yeni işletmeye geçer.
 Kullanıcılar ekranında kayıtlı e-posta yeni hesap açmaz, işletmeye üye olarak eklenir.
+Bildirimler BÜTÜN işletmelerden gelir (backend ADR 0085): başlıkta çiftlik adı (yalnızca
+çok işletmelide), veride `tenantId`; dokununca `PushMessage.tenantToSwitch` gerekirse önce
+o işletmeye geçirir (app.dart), sonra açar.
 
 **İşlem kaydı** (`/settings/audit`, backend ADR 0082): hesap kartından YALNIZCA sahibe.
 Son 90 gün; eşik, hayvan, içe aktarma, buzağılama, eşleştirme kaldırma (silinen sağım),
