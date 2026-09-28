@@ -9,6 +9,7 @@ import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/domain/yield_class.dart';
+import 'package:milktrace/features/history/breeding_card.dart';
 import 'package:milktrace/features/history/history_providers.dart';
 import 'package:milktrace/features/history/treatments_card.dart';
 import 'package:milktrace/features/history/widgets/animal_status_chip.dart';
@@ -130,7 +131,8 @@ class _Body extends ConsumerWidget {
           ..invalidate(animalTrendProvider(animal.id))
           ..invalidate(animalHistoryProvider(animal.id))
           ..invalidate(animalNotesProvider(animal.id))
-          ..invalidate(animalTreatmentsProvider(animal.id));
+          ..invalidate(animalTreatmentsProvider(animal.id))
+          ..invalidate(animalBreedingProvider(animal.id));
         await ref.read(animalTrendProvider(animal.id).future);
       },
       child: ListView(
@@ -160,6 +162,9 @@ class _Body extends ConsumerWidget {
           const SizedBox(height: AppSpacing.md),
           // Tedavi ve arınma (backend ADR 0084): süren arınma kırmızı bant.
           TreatmentsCard(animal: animal),
+          const SizedBox(height: AppSpacing.md),
+          // Üreme (backend ADR 0088): durum, beklenen doğum, kuruya çıkarma.
+          BreedingCard(animal: animal),
           const SizedBox(height: AppSpacing.md),
           AsyncView(
             value: trend,

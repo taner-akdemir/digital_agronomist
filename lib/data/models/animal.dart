@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:milktrace/data/models/breeding.dart';
 import 'package:milktrace/domain/yield_class.dart';
 
 part 'animal.freezed.dart';
@@ -51,6 +52,10 @@ abstract class Animal with _$Animal {
     /// Arınma süresinin son günü (backend ADR 0084): o güne kadar sütü
     /// tanka katılmaz. Tedavi kaydından gelir; formdan GÖNDERİLMEZ.
     DateTime? withdrawalUntil,
+
+    /// Üreme durumu (backend ADR 0088); hiç kayıt yoksa null. Formdan
+    /// GÖNDERİLMEZ.
+    Pregnancy? pregnancy,
   }) = _Animal;
 
   const Animal._();

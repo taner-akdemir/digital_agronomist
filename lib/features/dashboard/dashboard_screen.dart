@@ -11,6 +11,8 @@ import 'package:milktrace/domain/yield_class.dart';
 import 'package:milktrace/features/alerts/alert_style.dart';
 import 'package:milktrace/features/alerts/alerts_providers.dart';
 import 'package:milktrace/features/dashboard/dashboard_providers.dart';
+import 'package:milktrace/features/dashboard/upcoming_card.dart';
+import 'package:milktrace/features/history/breeding_card.dart';
 import 'package:milktrace/features/history/history_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
@@ -34,7 +36,8 @@ class DashboardScreen extends ConsumerWidget {
       onRefresh: () async {
         ref
           ..invalidate(dashboardSummaryProvider)
-          ..invalidate(alertListProvider);
+          ..invalidate(alertListProvider)
+          ..invalidate(upcomingBreedingProvider);
         await ref.read(dashboardSummaryProvider.future);
       },
       child: AsyncView(
@@ -51,6 +54,7 @@ class DashboardScreen extends ConsumerWidget {
             _ClassCard(summary: s),
             const SizedBox(height: AppSpacing.md),
             const _AlertsCard(),
+            const UpcomingBreedingCard(),
           ],
         ),
       ),

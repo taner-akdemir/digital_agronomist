@@ -7,6 +7,7 @@ import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/audit_entry.dart';
+import 'package:milktrace/data/models/breeding.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
@@ -58,6 +59,26 @@ abstract interface class MilkTraceRepository {
   /// Not ekler (POST /animals/{id}/notes). Bütün işletme rolleri yazar;
   /// yazar oturumdaki kullanıcıdır.
   Future<AnimalNote> addAnimalNote(String animalId, String note);
+
+  /// Üreme kayıtları, en yeni üstte (backend ADR 0088).
+  Future<List<BreedingEvent>> breedingEvents(String animalId);
+
+  /// Tohumlama (`kind: insemination`, [sire]) ya da gebelik kontrolü
+  /// (`pregnancy_check`, [result]: pregnant | open). Bütün roller yazar.
+  Future<BreedingEvent> addBreeding(
+    String animalId, {
+    required String kind,
+    required DateTime date,
+    String sire = '',
+    String? result,
+    String note = '',
+  });
+
+  /// Yanlış kaydı siler; yalnızca sahip (backend 403).
+  Future<void> deleteBreeding(String animalId, String eventId);
+
+  /// Önümüzdeki [days] gündeki doğum ve kuruya çıkarmalar.
+  Future<List<UpcomingBreeding>> upcomingBreeding({int days = 30});
 
   /// Tedaviler, en yeni arınma üstte (backend ADR 0084). Bütün roller okur.
   Future<List<Treatment>> treatments(String animalId);

@@ -11,6 +11,7 @@ import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/audit_entry.dart';
+import 'package:milktrace/data/models/breeding.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
@@ -176,9 +177,15 @@ class MockRepository implements MilkTraceRepository {
       for (final a in _savedAnimals.values)
         if (!base.any((b) => b.id == a.id)) a,
     ];
-    // Süren arınma (backend ADR 0084) hayvanın üstünde görünsün.
+    // Süren arınma (backend ADR 0084) ve üreme durumu (ADR 0088)
+    // hayvanın üstünde görünsün.
+    final species = await _list('species.json', Species.fromJson);
     return [
-      for (final a in out) a.copyWith(withdrawalUntil: _withdrawalOf(a.id)),
+      for (final a in out)
+        a.copyWith(
+          withdrawalUntil: _withdrawalOf(a.id),
+          pregnancy: _pregnancyOf(a, species),
+        ),
     ];
   });
 
@@ -213,6 +220,124 @@ class MockRepository implements MilkTraceRepository {
     }
     return best;
   }
+
+  /// Mock'ta üreme kayıtları bellekte (backend ADR 0088).
+  final Map<String, List<BreedingEvent>> _breeding = {};
+  int _breedingSeq = 0;
+
+  /// Sunucudaki kuralın aynısı (herd store.pregnancyOf).
+  Pregnancy? _pregnancyOf(Animal a, List<Species> species) {
+    final events = _breeding[a.id] ?? const <BreedingEvent>[];
+    if (events.isEmpty) return null;
+    DateTime? ins;
+    BreedingEvent? check;
+    for (final e in events) {
+      if (e.isInsemination) {
+        if (ins == null || e.eventDate.isAfter(ins)) ins = e.eventDate;
+      } else if (check == null || e.eventDate.isAfter(check.eventDate)) {
+        check = e;
+      }
+    }
+    final calving = a.lastCalvingDate;
+    if (ins != null && calving != null && !ins.isAfter(calving)) ins = null;
+    var status = 'open';
+    if (check != null &&
+        (ins == null || !check.eventDate.isBefore(ins)) &&
+        (calving == null || check.eventDate.isAfter(calving))) {
+      status = check.result ?? 'open';
+    } else if (ins != null) {
+      status = 'inseminated';
+    }
+    if (ins == null || status == 'open') {
+      return Pregnancy(status: status, lastInsemination: ins);
+    }
+    final code = species.where((s) => s.id == a.speciesId).firstOrNull?.code;
+    final days = switch (code) {
+      'goat' => 150,
+      'sheep' => 147,
+      _ => 283,
+    };
+    final expected = ins.add(Duration(days: days));
+    return Pregnancy(
+      status: status,
+      lastInsemination: ins,
+      expectedCalving: expected,
+      dryOffDate: expected.subtract(const Duration(days: 60)),
+    );
+  }
+
+  @override
+  Future<List<BreedingEvent>> breedingEvents(String animalId) =>
+      _delayed(() async => List.unmodifiable(_breeding[animalId] ?? const []));
+
+  @override
+  Future<BreedingEvent> addBreeding(
+    String animalId, {
+    required String kind,
+    required DateTime date,
+    String sire = '',
+    String? result,
+    String note = '',
+  }) => _delayed(() async {
+    final e = BreedingEvent(
+      id: 'mock-breeding-${++_breedingSeq}',
+      animalId: animalId,
+      kind: kind,
+      eventDate: date,
+      sire: sire.trim(),
+      result: kind == 'pregnancy_check' ? result : null,
+      note: note.trim(),
+      authorName: 'Demo Çiftçi',
+    );
+    (_breeding[animalId] ??= []).insert(0, e);
+    return e;
+  });
+
+  @override
+  Future<void> deleteBreeding(String animalId, String eventId) => _delayed(
+    () async => _breeding[animalId]?.removeWhere((e) => e.id == eventId),
+  );
+
+  @override
+  Future<List<UpcomingBreeding>> upcomingBreeding({int days = 30}) =>
+      _delayed(() async {
+        final today = DateTime(_clock.year, _clock.month, _clock.day);
+        final from = today.subtract(const Duration(days: 14));
+        final to = today.add(Duration(days: days));
+        bool inWindow(DateTime? d) =>
+            d != null && !d.isBefore(from) && !d.isAfter(to);
+        final out = <UpcomingBreeding>[];
+        for (final a in await animals()) {
+          final p = a.pregnancy;
+          if (p == null || p.status == 'open') continue;
+          if (a.isMilking && inWindow(p.dryOffDate)) {
+            out.add(
+              UpcomingBreeding(
+                animalId: a.id,
+                earTag: a.earTag,
+                name: a.name,
+                event: 'dry_off',
+                date: p.dryOffDate!,
+                status: p.status,
+              ),
+            );
+          }
+          if (inWindow(p.expectedCalving)) {
+            out.add(
+              UpcomingBreeding(
+                animalId: a.id,
+                earTag: a.earTag,
+                name: a.name,
+                event: 'calving',
+                date: p.expectedCalving!,
+                status: p.status,
+              ),
+            );
+          }
+        }
+        out.sort((x, y) => x.date.compareTo(y.date));
+        return out;
+      });
 
   /// Mock'ta tedaviler bellekte (backend ADR 0084).
   final Map<String, List<Treatment>> _treatments = {};

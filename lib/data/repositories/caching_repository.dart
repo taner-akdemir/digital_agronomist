@@ -10,6 +10,7 @@ import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/audit_entry.dart';
+import 'package:milktrace/data/models/breeding.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
@@ -174,6 +175,43 @@ class CachingRepository implements MilkTraceRepository {
     'notes:$animalId',
     () => _inner.animalNotes(animalId),
     (j) => _list(j, AnimalNote.fromJson),
+  );
+
+  @override
+  Future<List<BreedingEvent>> breedingEvents(String animalId) => _read(
+    'breeding:$animalId',
+    () => _inner.breedingEvents(animalId),
+    (j) => _list(j, BreedingEvent.fromJson),
+  );
+
+  @override
+  Future<BreedingEvent> addBreeding(
+    String animalId, {
+    required String kind,
+    required DateTime date,
+    String sire = '',
+    String? result,
+    String note = '',
+  }) => _net(
+    () => _inner.addBreeding(
+      animalId,
+      kind: kind,
+      date: date,
+      sire: sire,
+      result: result,
+      note: note,
+    ),
+  );
+
+  @override
+  Future<void> deleteBreeding(String animalId, String eventId) =>
+      _net(() => _inner.deleteBreeding(animalId, eventId));
+
+  @override
+  Future<List<UpcomingBreeding>> upcomingBreeding({int days = 30}) => _read(
+    'upcoming:$days',
+    () => _inner.upcomingBreeding(days: days),
+    (j) => _list(j, UpcomingBreeding.fromJson),
   );
 
   @override

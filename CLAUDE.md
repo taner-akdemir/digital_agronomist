@@ -255,6 +255,12 @@ ADR 0057); detay onu simgeyle ayırır, form kaydedince notlar tazelenir.
 sahibine "Buzağıladı" düğmesi; tarih seçilir, onaylanır ve TEK istekte tarih, laktasyon +1,
 durum sağmal ve `calving` notu yazılır. Aynı tarih 409. Tarih yalnızca GÜN olarak gider.
 
+**Üreme** (`BreedingCard`, `/animals/{id}/breeding`, backend ADR 0088): tohumlama (boğa/sperma
+kodu) ve gebelik kontrolü (gebe/boş); BÜTÜN roller ekler, yanlış kaydı yalnızca sahip siler.
+Durum, beklenen doğum ve kuruya çıkarma `Animal.pregnancy`'de SUNUCUDAN gelir (türün
+`gestation_days` / `dry_period_days`); uygulama hesaplamaz — mock'taki `_pregnancyOf`
+yalnızca ayna. Panoda "Yaklaşanlar" (`GET /breeding/upcoming`, 30 gün) boşken çizilmez.
+
 Mock modda geçmiş **asset değil, üretilmiştir**: `MockLactation` §10'daki Wood laktasyon
 eğrisiyle deterministik seri üretir. 30 hayvan × 90 gün × 2 sağım elle tutulabilecek bir
 JSON değil. Bugünkü seviye hayvanın SINIFINA sabitlenir ki rozet ile grafik çelişmesin.
