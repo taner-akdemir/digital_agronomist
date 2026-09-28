@@ -438,6 +438,8 @@ Android ve iOS, ikisi de `com.algebran.milktrace.milktrace`.
   `AppDelegate` bildirim merkezinin temsilcisi (yoksa ön plandaki yerel bildirim yutulur).
   iOS'ta FCM jetonu APNs jetonundan türer: `FirebasePushGateway` önce APNs jetonunu ~5 sn
   bekler, gelmezse `null` döner (`getToken` aksi hâlde `apns-token-not-set` atıyordu).
+  **Karar (28.09.2026): pilotta iOS push KAPALI** — Apple Developer üyeliği ve APNs
+  anahtarı yok; iPhone kullanan sağımcıya e-posta/SMS gider (pilot kontrol listesi §0).
   **Kalan (elle):** APNs anahtarını (.p8) Firebase → Proje ayarları → Cloud Messaging'e
   yükle; Xcode'da Signing & Capabilities → ekip seç (`DEVELOPMENT_TEAM` boş; Apple
   Developer Program üyeliği gerekli — ücretsiz hesap push yeteneğini imzalayamaz); gerçek
