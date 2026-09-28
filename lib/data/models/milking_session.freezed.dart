@@ -18,7 +18,8 @@ mixin _$MilkingSession {
 
  String get id; String get hallId;/// morning | evening | other. Beklenen verim hesabı oturum tipine göre
 /// ayrışır: sabah sağımı akşamdan düzenli olarak yüksektir (§6.3).
- String get type; DateTime? get startedAt; DateTime? get endedAt; String get status;
+ String get type; DateTime? get startedAt; DateTime? get endedAt; String get status;/// Oturumu sayaç akışıyla sistem açtı (backend ADR 0083).
+ bool get autoStarted;
 /// Create a copy of MilkingSession
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -32,20 +33,20 @@ $MilkingSessionCopyWith<MilkingSession> get copyWith => _$MilkingSessionCopyWith
 @override
 bool operator ==(Object other) {
   final _this = this as MilkingSession;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MilkingSession&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.hallId, _this.hallId) || other.hallId == _this.hallId)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.startedAt, _this.startedAt) || other.startedAt == _this.startedAt)&&(identical(other.endedAt, _this.endedAt) || other.endedAt == _this.endedAt)&&(identical(other.status, _this.status) || other.status == _this.status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MilkingSession&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.hallId, _this.hallId) || other.hallId == _this.hallId)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.startedAt, _this.startedAt) || other.startedAt == _this.startedAt)&&(identical(other.endedAt, _this.endedAt) || other.endedAt == _this.endedAt)&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.autoStarted, _this.autoStarted) || other.autoStarted == _this.autoStarted));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as MilkingSession;
-  return Object.hash(runtimeType,_this.id,_this.hallId,_this.type,_this.startedAt,_this.endedAt,_this.status);
+  return Object.hash(runtimeType,_this.id,_this.hallId,_this.type,_this.startedAt,_this.endedAt,_this.status,_this.autoStarted);
 }
 
 @override
 String toString() {
   final _this = this as MilkingSession;
-  return 'MilkingSession(id: ${_this.id}, hallId: ${_this.hallId}, type: ${_this.type}, startedAt: ${_this.startedAt}, endedAt: ${_this.endedAt}, status: ${_this.status})';
+  return 'MilkingSession(id: ${_this.id}, hallId: ${_this.hallId}, type: ${_this.type}, startedAt: ${_this.startedAt}, endedAt: ${_this.endedAt}, status: ${_this.status}, autoStarted: ${_this.autoStarted})';
 }
 
 
@@ -56,7 +57,7 @@ abstract mixin class $MilkingSessionCopyWith<$Res>  {
   factory $MilkingSessionCopyWith(MilkingSession value, $Res Function(MilkingSession) _then) = _$MilkingSessionCopyWithImpl;
 @useResult
 $Res call({
- String id, String hallId, String type, DateTime? startedAt, DateTime? endedAt, String status
+ String id, String hallId, String type, DateTime? startedAt, DateTime? endedAt, String status, bool autoStarted
 });
 
 
@@ -73,7 +74,7 @@ class _$MilkingSessionCopyWithImpl<$Res>
 
 /// Create a copy of MilkingSession
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? hallId = null,Object? type = null,Object? startedAt = freezed,Object? endedAt = freezed,Object? status = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? hallId = null,Object? type = null,Object? startedAt = freezed,Object? endedAt = freezed,Object? status = null,Object? autoStarted = null,}) {
   return _then(MilkingSession(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,hallId: null == hallId ? _self.hallId : hallId // ignore: cast_nullable_to_non_nullable
@@ -81,7 +82,8 @@ as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non
 as String,startedAt: freezed == startedAt ? _self.startedAt : startedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,endedAt: freezed == endedAt ? _self.endedAt : endedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as String,
+as String,autoStarted: null == autoStarted ? _self.autoStarted : autoStarted // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
@@ -166,10 +168,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String hallId,  String type,  DateTime? startedAt,  DateTime? endedAt,  String status)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String hallId,  String type,  DateTime? startedAt,  DateTime? endedAt,  String status,  bool autoStarted)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MilkingSession() when $default != null:
-return $default(_that.id,_that.hallId,_that.type,_that.startedAt,_that.endedAt,_that.status);case _:
+return $default(_that.id,_that.hallId,_that.type,_that.startedAt,_that.endedAt,_that.status,_that.autoStarted);case _:
   return orElse();
 
 }
@@ -187,10 +189,10 @@ return $default(_that.id,_that.hallId,_that.type,_that.startedAt,_that.endedAt,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String hallId,  String type,  DateTime? startedAt,  DateTime? endedAt,  String status)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String hallId,  String type,  DateTime? startedAt,  DateTime? endedAt,  String status,  bool autoStarted)  $default,) {final _that = this;
 switch (_that) {
 case _MilkingSession():
-return $default(_that.id,_that.hallId,_that.type,_that.startedAt,_that.endedAt,_that.status);case _:
+return $default(_that.id,_that.hallId,_that.type,_that.startedAt,_that.endedAt,_that.status,_that.autoStarted);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -207,10 +209,10 @@ return $default(_that.id,_that.hallId,_that.type,_that.startedAt,_that.endedAt,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String hallId,  String type,  DateTime? startedAt,  DateTime? endedAt,  String status)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String hallId,  String type,  DateTime? startedAt,  DateTime? endedAt,  String status,  bool autoStarted)?  $default,) {final _that = this;
 switch (_that) {
 case _MilkingSession() when $default != null:
-return $default(_that.id,_that.hallId,_that.type,_that.startedAt,_that.endedAt,_that.status);case _:
+return $default(_that.id,_that.hallId,_that.type,_that.startedAt,_that.endedAt,_that.status,_that.autoStarted);case _:
   return null;
 
 }
@@ -222,7 +224,7 @@ return $default(_that.id,_that.hallId,_that.type,_that.startedAt,_that.endedAt,_
 @JsonSerializable()
 
 class _MilkingSession implements MilkingSession {
-  const _MilkingSession({required this.id, required this.hallId, this.type = 'morning', this.startedAt, this.endedAt, this.status = 'active'});
+  const _MilkingSession({required this.id, required this.hallId, this.type = 'morning', this.startedAt, this.endedAt, this.status = 'active', this.autoStarted = false});
   factory _MilkingSession.fromJson(Map<String, dynamic> json) => _$MilkingSessionFromJson(json);
 
 @override final  String id;
@@ -233,6 +235,8 @@ class _MilkingSession implements MilkingSession {
 @override final  DateTime? startedAt;
 @override final  DateTime? endedAt;
 @override@JsonKey() final  String status;
+/// Oturumu sayaç akışıyla sistem açtı (backend ADR 0083).
+@override@JsonKey() final  bool autoStarted;
 
 /// Create a copy of MilkingSession
 /// with the given fields replaced by the non-null parameter values.
@@ -247,18 +251,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _MilkingSession&&(identical(other.id, id) || other.id == id)&&(identical(other.hallId, hallId) || other.hallId == hallId)&&(identical(other.type, type) || other.type == type)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.endedAt, endedAt) || other.endedAt == endedAt)&&(identical(other.status, status) || other.status == status));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _MilkingSession&&(identical(other.id, id) || other.id == id)&&(identical(other.hallId, hallId) || other.hallId == hallId)&&(identical(other.type, type) || other.type == type)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.endedAt, endedAt) || other.endedAt == endedAt)&&(identical(other.status, status) || other.status == status)&&(identical(other.autoStarted, autoStarted) || other.autoStarted == autoStarted));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,hallId,type,startedAt,endedAt,status);
+    return Object.hash(runtimeType,id,hallId,type,startedAt,endedAt,status,autoStarted);
 }
 
 @override
 String toString() {
-    return 'MilkingSession(id: $id, hallId: $hallId, type: $type, startedAt: $startedAt, endedAt: $endedAt, status: $status)';
+    return 'MilkingSession(id: $id, hallId: $hallId, type: $type, startedAt: $startedAt, endedAt: $endedAt, status: $status, autoStarted: $autoStarted)';
 }
 
 
@@ -269,7 +273,7 @@ abstract mixin class _$MilkingSessionCopyWith<$Res> implements $MilkingSessionCo
   factory _$MilkingSessionCopyWith(_MilkingSession value, $Res Function(_MilkingSession) _then) = __$MilkingSessionCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String hallId, String type, DateTime? startedAt, DateTime? endedAt, String status
+ String id, String hallId, String type, DateTime? startedAt, DateTime? endedAt, String status, bool autoStarted
 });
 
 
@@ -286,7 +290,7 @@ class __$MilkingSessionCopyWithImpl<$Res>
 
 /// Create a copy of MilkingSession
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? hallId = null,Object? type = null,Object? startedAt = freezed,Object? endedAt = freezed,Object? status = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? hallId = null,Object? type = null,Object? startedAt = freezed,Object? endedAt = freezed,Object? status = null,Object? autoStarted = null,}) {
   return _then(_MilkingSession(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,hallId: null == hallId ? _self.hallId : hallId // ignore: cast_nullable_to_non_nullable
@@ -294,7 +298,8 @@ as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non
 as String,startedAt: freezed == startedAt ? _self.startedAt : startedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,endedAt: freezed == endedAt ? _self.endedAt : endedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as String,
+as String,autoStarted: null == autoStarted ? _self.autoStarted : autoStarted // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

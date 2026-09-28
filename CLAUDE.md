@@ -440,6 +440,12 @@ kullanıcı ve kanal değişiklikleri — kim, ne zaman, ne. Olay kodu → Türk
 noktaya takılması kurulum ekibinin işi, panelden. Sahip görür; yanlış takılan sayaç
 veriyi başka noktaya yazar. Cihazlar sekmesine düzenleme ekleme.
 
+**Oturum kendiliğinden açılır/kapanır** (backend ADR 0083): açık oturumu olmayan bölgede
+sayaç akış bildirince backend oturumu açar (tür saate göre), 45 dk akışsız kalınca kapatır.
+Canlı ekran açık oturumu zaten listeden seçtiği için değişiklik gerekmedi; "Sağım başlat"
+ve "Bitir" durur (açıkken başlatma 409). `MilkingSession.autoStarted` geçmişte
+"otomatik açıldı" diye yazılır.
+
 **Asgari sürüm** (backend ADR 0080): üç Dio'nun hepsi `X-App-Platform` ve `X-App-Build`
 (versionCode, `AppBuild.load()` main'de) gönderir; gateway asgarinin altına 426 döner,
 `AppBuildInterceptor` `UpgradeGate`'i açar ve router her ekranı `/update`'e ("Güncelleme

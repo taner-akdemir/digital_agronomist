@@ -18,6 +18,7 @@ _MilkingSession _$MilkingSessionFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['endedAt'] as String),
       status: json['status'] as String? ?? 'active',
+      autoStarted: json['autoStarted'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$MilkingSessionToJson(_MilkingSession instance) =>
@@ -28,6 +29,7 @@ Map<String, dynamic> _$MilkingSessionToJson(_MilkingSession instance) =>
       'startedAt': instance.startedAt?.toIso8601String(),
       'endedAt': instance.endedAt?.toIso8601String(),
       'status': instance.status,
+      'autoStarted': instance.autoStarted,
     };
 
 _LiveSession _$LiveSessionFromJson(Map<String, dynamic> json) => _LiveSession(

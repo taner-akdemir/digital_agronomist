@@ -17,6 +17,9 @@ abstract class MilkingSession with _$MilkingSession {
     DateTime? startedAt,
     DateTime? endedAt,
     @Default('active') String status,
+
+    /// Oturumu sayaç akışıyla sistem açtı (backend ADR 0083).
+    @Default(false) bool autoStarted,
   }) = _MilkingSession;
 
   factory MilkingSession.fromJson(Map<String, dynamic> json) =>

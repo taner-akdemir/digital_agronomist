@@ -432,7 +432,10 @@ class _SessionTile extends StatelessWidget {
                   started == null
                       ? 'Başlangıç bilinmiyor'
                       : '${Fmt.dayMonth(started)} · ${Fmt.time(started)}'
-                            '${ended == null ? '' : ' – ${Fmt.time(ended)}'}',
+                            '${ended == null ? '' : ' – ${Fmt.time(ended)}'}'
+                            // Sistem açtıysa söylenir: "kim başlattı?"
+                            // sorusunun cevabı (backend ADR 0083).
+                            '${session.autoStarted ? ' · otomatik açıldı' : ''}',
                   style: const TextStyle(
                     fontSize: 12,
                     color: AppColors.onSurfaceMuted,
