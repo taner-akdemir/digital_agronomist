@@ -66,6 +66,9 @@ _SpoutAnimal _$SpoutAnimalFromJson(Map<String, dynamic> json) => _SpoutAnimal(
   earTag: json['earTag'] as String,
   species: json['species'] as String?,
   name: json['name'] as String?,
+  withdrawalUntil: json['withdrawalUntil'] == null
+      ? null
+      : DateTime.parse(json['withdrawalUntil'] as String),
 );
 
 Map<String, dynamic> _$SpoutAnimalToJson(_SpoutAnimal instance) =>
@@ -74,6 +77,7 @@ Map<String, dynamic> _$SpoutAnimalToJson(_SpoutAnimal instance) =>
       'earTag': instance.earTag,
       'species': instance.species,
       'name': instance.name,
+      'withdrawalUntil': instance.withdrawalUntil?.toIso8601String(),
     };
 
 _UnmatchedTag _$UnmatchedTagFromJson(Map<String, dynamic> json) =>

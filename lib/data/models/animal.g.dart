@@ -31,6 +31,9 @@ _Animal _$AnimalFromJson(Map<String, dynamic> json) => _Animal(
   yieldClassAt: json['yieldClassAt'] == null
       ? null
       : DateTime.parse(json['yieldClassAt'] as String),
+  withdrawalUntil: json['withdrawalUntil'] == null
+      ? null
+      : DateTime.parse(json['withdrawalUntil'] as String),
 );
 
 Map<String, dynamic> _$AnimalToJson(_Animal instance) => <String, dynamic>{
@@ -46,6 +49,7 @@ Map<String, dynamic> _$AnimalToJson(_Animal instance) => <String, dynamic>{
   'status': instance.status,
   'yieldClass': _$YieldClassEnumMap[instance.yieldClass]!,
   'yieldClassAt': instance.yieldClassAt?.toIso8601String(),
+  'withdrawalUntil': instance.withdrawalUntil?.toIso8601String(),
 };
 
 const _$YieldClassEnumMap = {

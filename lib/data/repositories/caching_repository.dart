@@ -22,6 +22,7 @@ import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_update.dart';
 import 'package:milktrace/data/models/team_member.dart';
 import 'package:milktrace/data/models/thresholds.dart';
+import 'package:milktrace/data/models/treatment.dart';
 import 'package:milktrace/data/models/unmatched_tag_row.dart';
 import 'package:milktrace/data/models/vacuum.dart';
 import 'package:milktrace/data/repositories/milktrace_repository.dart';
@@ -174,6 +175,34 @@ class CachingRepository implements MilkTraceRepository {
     () => _inner.animalNotes(animalId),
     (j) => _list(j, AnimalNote.fromJson),
   );
+
+  @override
+  Future<List<Treatment>> treatments(String animalId) => _read(
+    'treatments:$animalId',
+    () => _inner.treatments(animalId),
+    (j) => _list(j, Treatment.fromJson),
+  );
+
+  @override
+  Future<Treatment> addTreatment(
+    String animalId, {
+    required String drug,
+    required DateTime startedOn,
+    required DateTime withdrawalUntil,
+    String note = '',
+  }) => _net(
+    () => _inner.addTreatment(
+      animalId,
+      drug: drug,
+      startedOn: startedOn,
+      withdrawalUntil: withdrawalUntil,
+      note: note,
+    ),
+  );
+
+  @override
+  Future<void> deleteTreatment(String animalId, String treatmentId) =>
+      _net(() => _inner.deleteTreatment(animalId, treatmentId));
 
   @override
   Future<LiveSession> liveSession({required String hallId}) => _read(

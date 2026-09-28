@@ -440,6 +440,13 @@ kullanıcı ve kanal değişiklikleri — kim, ne zaman, ne. Olay kodu → Türk
 noktaya takılması kurulum ekibinin işi, panelden. Sahip görür; yanlış takılan sayaç
 veriyi başka noktaya yazar. Cihazlar sekmesine düzenleme ekleme.
 
+**Tedavi ve arınma** (backend ADR 0084): hayvan detayında "Tedavi ve arınma" kartı
+(`TreatmentsCard`); BÜTÜN roller ekler (veteriner), yanlış kaydı yalnızca sahip siler.
+`Animal.withdrawalUntil` / `SpoutAnimal.withdrawalUntil` = sütün ayrılacağı son gün; canlı
+kartta küpe satırının YERİNE kırmızı "Sütü ayır · arınma 30 Eyl" (tanınmayan küpe
+önceliklidir, yükseklik aynı — testle kilitli), seçicide sağda "Sütü ayır". Sağım yine
+kaydedilir; backend "ayrılan süt" olarak işaretler.
+
 **Oturum kendiliğinden açılır/kapanır** (backend ADR 0083): açık oturumu olmayan bölgede
 sayaç akış bildirince backend oturumu açar (tür saate göre), 45 dk akışsız kalınca kapatır.
 Canlı ekran açık oturumu zaten listeden seçtiği için değişiklik gerekmedi; "Sağım başlat"

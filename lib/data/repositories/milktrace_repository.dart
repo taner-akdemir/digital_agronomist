@@ -19,6 +19,7 @@ import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_update.dart';
 import 'package:milktrace/data/models/team_member.dart';
 import 'package:milktrace/data/models/thresholds.dart';
+import 'package:milktrace/data/models/treatment.dart';
 import 'package:milktrace/data/models/unmatched_tag_row.dart';
 import 'package:milktrace/data/models/vacuum.dart';
 
@@ -57,6 +58,22 @@ abstract interface class MilkTraceRepository {
   /// Not ekler (POST /animals/{id}/notes). Bütün işletme rolleri yazar;
   /// yazar oturumdaki kullanıcıdır.
   Future<AnimalNote> addAnimalNote(String animalId, String note);
+
+  /// Tedaviler, en yeni arınma üstte (backend ADR 0084). Bütün roller okur.
+  Future<List<Treatment>> treatments(String animalId);
+
+  /// Tedavi ekler; BÜTÜN roller yazar (tedaviyi çoğunlukla veteriner girer).
+  /// Tarihler GÜN olarak gider.
+  Future<Treatment> addTreatment(
+    String animalId, {
+    required String drug,
+    required DateTime startedOn,
+    required DateTime withdrawalUntil,
+    String note = '',
+  });
+
+  /// Yanlış girilen kaydı siler; yalnızca işletme sahibi (backend 403).
+  Future<void> deleteTreatment(String animalId, String treatmentId);
 
   /// Hayvan başına günlük verim raporu, .xlsx (GET /reports/yield, backend
   /// ADR 0064). Dönem verilmezse son 30 gün. Bütün roller indirir.

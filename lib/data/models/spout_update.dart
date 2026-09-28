@@ -58,6 +58,10 @@ abstract class SpoutAnimal with _$SpoutAnimal {
     required String earTag,
     String? species,
     String? name,
+
+    /// Arınma süresinin son günü (backend ADR 0084). Doluysa bu hayvanın
+    /// sütü tanka KATILMAZ; kart "Sütü ayır" der.
+    DateTime? withdrawalUntil,
   }) = _SpoutAnimal;
 
   factory SpoutAnimal.fromJson(Map<String, dynamic> json) =>

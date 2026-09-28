@@ -23,6 +23,7 @@ import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_update.dart';
 import 'package:milktrace/data/models/team_member.dart';
 import 'package:milktrace/data/models/thresholds.dart';
+import 'package:milktrace/data/models/treatment.dart';
 import 'package:milktrace/data/models/unmatched_tag_row.dart';
 import 'package:milktrace/data/models/vacuum.dart';
 import 'package:milktrace/data/repositories/milktrace_repository.dart';
@@ -175,7 +176,10 @@ class MockRepository implements MilkTraceRepository {
       for (final a in _savedAnimals.values)
         if (!base.any((b) => b.id == a.id)) a,
     ];
-    return out;
+    // Süren arınma (backend ADR 0084) hayvanın üstünde görünsün.
+    return [
+      for (final a in out) a.copyWith(withdrawalUntil: _withdrawalOf(a.id)),
+    ];
   });
 
   /// Mock'ta yazılan notlar (hayvan → notlar, en yeni başta).
@@ -197,6 +201,61 @@ class MockRepository implements MilkTraceRepository {
         );
         (_notes[animalId] ??= []).insert(0, n);
         return n;
+      });
+
+  DateTime? _withdrawalOf(String animalId) {
+    DateTime? best;
+    for (final t in _treatments[animalId] ?? const <Treatment>[]) {
+      if (t.activeOn(_clock) &&
+          (best == null || t.withdrawalUntil.isAfter(best))) {
+        best = t.withdrawalUntil;
+      }
+    }
+    return best;
+  }
+
+  /// Mock'ta tedaviler bellekte (backend ADR 0084).
+  final Map<String, List<Treatment>> _treatments = {};
+  int _treatmentSeq = 0;
+
+  @override
+  Future<List<Treatment>> treatments(String animalId) => _delayed(
+    () async => List.unmodifiable(_treatments[animalId] ?? const []),
+  );
+
+  @override
+  Future<Treatment> addTreatment(
+    String animalId, {
+    required String drug,
+    required DateTime startedOn,
+    required DateTime withdrawalUntil,
+    String note = '',
+  }) => _delayed(() async {
+    if (withdrawalUntil.isBefore(startedOn)) {
+      throw const ApiException(
+        code: 'VALIDATION',
+        message: 'arınma bitişi başlangıçtan önce olamaz',
+        status: 422,
+      );
+    }
+    final t = Treatment(
+      id: 'mock-treatment-${++_treatmentSeq}',
+      animalId: animalId,
+      drug: drug.trim(),
+      startedOn: startedOn,
+      withdrawalUntil: withdrawalUntil,
+      note: note.trim(),
+      authorName: 'Demo Çiftçi',
+      createdAt: _clock.toUtc(),
+    );
+    (_treatments[animalId] ??= []).insert(0, t);
+    return t;
+  });
+
+  @override
+  Future<void> deleteTreatment(String animalId, String treatmentId) =>
+      _delayed(() async {
+        _treatments[animalId]?.removeWhere((t) => t.id == treatmentId);
       });
 
   /// Mock'ta rapor üretici YOK: .xlsx backend'de yazılıyor (ADR 0064).

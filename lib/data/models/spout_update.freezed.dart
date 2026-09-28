@@ -385,7 +385,9 @@ $UnmatchedTagCopyWith<$Res>? get unmatchedTag {
 /// @nodoc
 mixin _$SpoutAnimal {
 
- String get id; String get earTag; String? get species; String? get name;
+ String get id; String get earTag; String? get species; String? get name;/// Arınma süresinin son günü (backend ADR 0084). Doluysa bu hayvanın
+/// sütü tanka KATILMAZ; kart "Sütü ayır" der.
+ DateTime? get withdrawalUntil;
 /// Create a copy of SpoutAnimal
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -399,20 +401,20 @@ $SpoutAnimalCopyWith<SpoutAnimal> get copyWith => _$SpoutAnimalCopyWithImpl<Spou
 @override
 bool operator ==(Object other) {
   final _this = this as SpoutAnimal;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SpoutAnimal&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.earTag, _this.earTag) || other.earTag == _this.earTag)&&(identical(other.species, _this.species) || other.species == _this.species)&&(identical(other.name, _this.name) || other.name == _this.name));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SpoutAnimal&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.earTag, _this.earTag) || other.earTag == _this.earTag)&&(identical(other.species, _this.species) || other.species == _this.species)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.withdrawalUntil, _this.withdrawalUntil) || other.withdrawalUntil == _this.withdrawalUntil));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as SpoutAnimal;
-  return Object.hash(runtimeType,_this.id,_this.earTag,_this.species,_this.name);
+  return Object.hash(runtimeType,_this.id,_this.earTag,_this.species,_this.name,_this.withdrawalUntil);
 }
 
 @override
 String toString() {
   final _this = this as SpoutAnimal;
-  return 'SpoutAnimal(id: ${_this.id}, earTag: ${_this.earTag}, species: ${_this.species}, name: ${_this.name})';
+  return 'SpoutAnimal(id: ${_this.id}, earTag: ${_this.earTag}, species: ${_this.species}, name: ${_this.name}, withdrawalUntil: ${_this.withdrawalUntil})';
 }
 
 
@@ -423,7 +425,7 @@ abstract mixin class $SpoutAnimalCopyWith<$Res>  {
   factory $SpoutAnimalCopyWith(SpoutAnimal value, $Res Function(SpoutAnimal) _then) = _$SpoutAnimalCopyWithImpl;
 @useResult
 $Res call({
- String id, String earTag, String? species, String? name
+ String id, String earTag, String? species, String? name, DateTime? withdrawalUntil
 });
 
 
@@ -440,13 +442,14 @@ class _$SpoutAnimalCopyWithImpl<$Res>
 
 /// Create a copy of SpoutAnimal
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? earTag = null,Object? species = freezed,Object? name = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? earTag = null,Object? species = freezed,Object? name = freezed,Object? withdrawalUntil = freezed,}) {
   return _then(SpoutAnimal(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,earTag: null == earTag ? _self.earTag : earTag // ignore: cast_nullable_to_non_nullable
 as String,species: freezed == species ? _self.species : species // ignore: cast_nullable_to_non_nullable
 as String?,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,withdrawalUntil: freezed == withdrawalUntil ? _self.withdrawalUntil : withdrawalUntil // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 
@@ -531,10 +534,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String earTag,  String? species,  String? name)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String earTag,  String? species,  String? name,  DateTime? withdrawalUntil)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SpoutAnimal() when $default != null:
-return $default(_that.id,_that.earTag,_that.species,_that.name);case _:
+return $default(_that.id,_that.earTag,_that.species,_that.name,_that.withdrawalUntil);case _:
   return orElse();
 
 }
@@ -552,10 +555,10 @@ return $default(_that.id,_that.earTag,_that.species,_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String earTag,  String? species,  String? name)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String earTag,  String? species,  String? name,  DateTime? withdrawalUntil)  $default,) {final _that = this;
 switch (_that) {
 case _SpoutAnimal():
-return $default(_that.id,_that.earTag,_that.species,_that.name);case _:
+return $default(_that.id,_that.earTag,_that.species,_that.name,_that.withdrawalUntil);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -572,10 +575,10 @@ return $default(_that.id,_that.earTag,_that.species,_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String earTag,  String? species,  String? name)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String earTag,  String? species,  String? name,  DateTime? withdrawalUntil)?  $default,) {final _that = this;
 switch (_that) {
 case _SpoutAnimal() when $default != null:
-return $default(_that.id,_that.earTag,_that.species,_that.name);case _:
+return $default(_that.id,_that.earTag,_that.species,_that.name,_that.withdrawalUntil);case _:
   return null;
 
 }
@@ -587,13 +590,16 @@ return $default(_that.id,_that.earTag,_that.species,_that.name);case _:
 @JsonSerializable()
 
 class _SpoutAnimal implements SpoutAnimal {
-  const _SpoutAnimal({required this.id, required this.earTag, this.species, this.name});
+  const _SpoutAnimal({required this.id, required this.earTag, this.species, this.name, this.withdrawalUntil});
   factory _SpoutAnimal.fromJson(Map<String, dynamic> json) => _$SpoutAnimalFromJson(json);
 
 @override final  String id;
 @override final  String earTag;
 @override final  String? species;
 @override final  String? name;
+/// Arınma süresinin son günü (backend ADR 0084). Doluysa bu hayvanın
+/// sütü tanka KATILMAZ; kart "Sütü ayır" der.
+@override final  DateTime? withdrawalUntil;
 
 /// Create a copy of SpoutAnimal
 /// with the given fields replaced by the non-null parameter values.
@@ -608,18 +614,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SpoutAnimal&&(identical(other.id, id) || other.id == id)&&(identical(other.earTag, earTag) || other.earTag == earTag)&&(identical(other.species, species) || other.species == species)&&(identical(other.name, name) || other.name == name));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SpoutAnimal&&(identical(other.id, id) || other.id == id)&&(identical(other.earTag, earTag) || other.earTag == earTag)&&(identical(other.species, species) || other.species == species)&&(identical(other.name, name) || other.name == name)&&(identical(other.withdrawalUntil, withdrawalUntil) || other.withdrawalUntil == withdrawalUntil));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,earTag,species,name);
+    return Object.hash(runtimeType,id,earTag,species,name,withdrawalUntil);
 }
 
 @override
 String toString() {
-    return 'SpoutAnimal(id: $id, earTag: $earTag, species: $species, name: $name)';
+    return 'SpoutAnimal(id: $id, earTag: $earTag, species: $species, name: $name, withdrawalUntil: $withdrawalUntil)';
 }
 
 
@@ -630,7 +636,7 @@ abstract mixin class _$SpoutAnimalCopyWith<$Res> implements $SpoutAnimalCopyWith
   factory _$SpoutAnimalCopyWith(_SpoutAnimal value, $Res Function(_SpoutAnimal) _then) = __$SpoutAnimalCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String earTag, String? species, String? name
+ String id, String earTag, String? species, String? name, DateTime? withdrawalUntil
 });
 
 
@@ -647,13 +653,14 @@ class __$SpoutAnimalCopyWithImpl<$Res>
 
 /// Create a copy of SpoutAnimal
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? earTag = null,Object? species = freezed,Object? name = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? earTag = null,Object? species = freezed,Object? name = freezed,Object? withdrawalUntil = freezed,}) {
   return _then(_SpoutAnimal(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,earTag: null == earTag ? _self.earTag : earTag // ignore: cast_nullable_to_non_nullable
 as String,species: freezed == species ? _self.species : species // ignore: cast_nullable_to_non_nullable
 as String?,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,withdrawalUntil: freezed == withdrawalUntil ? _self.withdrawalUntil : withdrawalUntil // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 

@@ -82,6 +82,27 @@ class LiveInfoCard extends StatelessWidget {
                 ),
               ],
             )
+          // Arınmadaki hayvan (backend ADR 0084): sütü tanka katılmamalı.
+          // Küpe satırının yerine geçer; sağımcı bunu sağım BAŞINDA görmeli.
+          else if (animal?.withdrawalUntil case final until?)
+            Row(
+              children: [
+                const Icon(Icons.block, size: 13, color: AppColors.flowRed),
+                const SizedBox(width: AppSpacing.xs),
+                Expanded(
+                  child: Text(
+                    'Sütü ayır · arınma ${Fmt.dayMonth(until)}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.flowRed,
+                    ),
+                  ),
+                ),
+              ],
+            )
           else if (animal?.name != null)
             Text(
               animal!.earTag,

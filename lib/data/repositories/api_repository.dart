@@ -22,6 +22,7 @@ import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_update.dart';
 import 'package:milktrace/data/models/team_member.dart';
 import 'package:milktrace/data/models/thresholds.dart';
+import 'package:milktrace/data/models/treatment.dart';
 import 'package:milktrace/data/models/unmatched_tag_row.dart';
 import 'package:milktrace/data/models/vacuum.dart';
 import 'package:milktrace/data/repositories/milktrace_repository.dart';
@@ -146,6 +147,41 @@ class ApiRepository implements MilkTraceRepository {
     await _dio.get<dynamic>('/animals/$animalId/notes'),
     AnimalNote.fromJson,
   );
+
+  @override
+  Future<List<Treatment>> treatments(String animalId) async => _listOf(
+    await _dio.get<dynamic>('/animals/$animalId/treatments'),
+    Treatment.fromJson,
+  );
+
+  @override
+  Future<Treatment> addTreatment(
+    String animalId, {
+    required String drug,
+    required DateTime startedOn,
+    required DateTime withdrawalUntil,
+    String note = '',
+  }) async {
+    String day(DateTime d) =>
+        '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+    return Treatment.fromJson(
+      _dataOf(
+        await _dio.post<dynamic>(
+          '/animals/$animalId/treatments',
+          data: {
+            'drug': drug,
+            'startedOn': day(startedOn),
+            'withdrawalUntil': day(withdrawalUntil),
+            'note': note,
+          },
+        ),
+      ),
+    );
+  }
+
+  @override
+  Future<void> deleteTreatment(String animalId, String treatmentId) =>
+      _dio.delete<dynamic>('/animals/$animalId/treatments/$treatmentId');
 
   @override
   Future<AnimalNote> addAnimalNote(String animalId, String note) async =>

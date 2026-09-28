@@ -47,6 +47,10 @@ abstract class Animal with _$Animal {
     /// tarihi bilinmiyor. Formdan GÖNDERİLMEZ (gövdeyi `animalBody` kuruyor);
     /// toJson'da durur ki çevrimdışı önbellek tarihi kaybetmesin.
     DateTime? yieldClassAt,
+
+    /// Arınma süresinin son günü (backend ADR 0084): o güne kadar sütü
+    /// tanka katılmaz. Tedavi kaydından gelir; formdan GÖNDERİLMEZ.
+    DateTime? withdrawalUntil,
   }) = _Animal;
 
   const Animal._();

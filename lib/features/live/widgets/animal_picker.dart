@@ -239,8 +239,22 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
       itemBuilder: (_, i) {
         final a = matches[i];
         final taken = widget.alreadyAssigned.contains(a.id);
+        final until = a.withdrawalUntil;
         return ListTile(
           title: Text(a.name ?? a.earTag),
+          // Arınmadaki hayvan SEÇİLEBİLİR (sağılır, süt ölçülür) ama sağımcı
+          // sütü ayırması gerektiğini bağlamadan önce görmeli (ADR 0084).
+          trailing: until == null
+              ? null
+              : Text(
+                  'Sütü ayır\n${Fmt.dayMonth(until)}',
+                  textAlign: TextAlign.end,
+                  style: const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.flowRed,
+                  ),
+                ),
           subtitle: Text(
             [
               a.earTag,
