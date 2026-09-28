@@ -57,8 +57,9 @@ String sourceLabel(String source) => switch (source) {
 String sourceHint(String source) => switch (source) {
   'ops' => 'Sayaç kutusu sustu, veri kaybı gibi sistem sorunları',
   'summary' =>
-    'Sağım bitince tek mesaj: toplam süt, düşük verim ve düşük debi '
-        'olan hayvanlar',
+    'Sağım bitince tek mesaj (toplam süt, düşük verim ve düşük debi '
+        'olan hayvanlar) ve Pazartesi sabahı haftalık özet (e-postada '
+        'Excel raporu ekli)',
   'herd' => 'Düşük debi olan her hayvan için ayrı mesaj (kalabalık olabilir)',
   _ => '',
 };
