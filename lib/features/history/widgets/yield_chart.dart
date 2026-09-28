@@ -13,7 +13,16 @@ import 'package:milktrace/data/models/animal_trend.dart';
 /// nokta başına ~4 piksel düşer ve tek tek okunamaz. Okunan çizgi kalın olan,
 /// yani ortalamadır; günlük seri onun ne kadar oynadığını gösterir.
 class YieldChart extends StatelessWidget {
-  const YieldChart({super.key, required this.daily});
+  const YieldChart({
+    super.key,
+    required this.daily,
+    this.factor = 1,
+    this.unit = 'L',
+  });
+
+  /// Litreyi birime çeviren çarpan ve birim adı (backend ADR 0086).
+  final double factor;
+  final String unit;
 
   /// Eskiden yeniye sıralı günlük seri.
   final List<AnimalDailyStat> daily;
@@ -35,9 +44,9 @@ class YieldChart extends StatelessWidget {
     final dailySpots = <FlSpot>[];
     final maSpots = <FlSpot>[];
     for (var i = 0; i < daily.length; i++) {
-      dailySpots.add(FlSpot(i.toDouble(), daily[i].totalMl / 1000));
+      dailySpots.add(FlSpot(i.toDouble(), daily[i].totalMl / 1000 * factor));
       final ma = daily[i].ma7Ml;
-      if (ma != null) maSpots.add(FlSpot(i.toDouble(), ma / 1000));
+      if (ma != null) maSpots.add(FlSpot(i.toDouble(), ma / 1000 * factor));
     }
 
     final maxY = dailySpots.map((s) => s.y).reduce((a, b) => a > b ? a : b);
@@ -126,9 +135,9 @@ class YieldChart extends StatelessWidget {
                     for (final s in spots)
                       LineTooltipItem(
                         s.barIndex == 1
-                            ? '7 gün ort. ${s.y.toStringAsFixed(1)} L'
+                            ? '7 gün ort. ${s.y.toStringAsFixed(1)} $unit'
                             : '${Fmt.dayMonth(daily[s.x.round()].date)}  '
-                                  '${s.y.toStringAsFixed(1)} L',
+                                  '${s.y.toStringAsFixed(1)} $unit',
                         const TextStyle(color: Colors.white, fontSize: 11),
                       ),
                   ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/format.dart';
+import 'package:milktrace/core/volume.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout_update.dart';
@@ -422,6 +423,7 @@ Future<ReplaceChoice?> askReplace(
   BuildContext context, {
   required SpoutAnimal previous,
   required int volumeMl,
+  VolumeFormat volume = VolumeFormat.litre,
 }) {
   final who = previous.name == null
       ? previous.earTag
@@ -431,7 +433,7 @@ Future<ReplaceChoice?> askReplace(
     builder: (context) => AlertDialog(
       title: const Text('Önceki hayvan sağıldı mı?'),
       content: Text(
-        '$who için bu noktada ${Fmt.litres(volumeMl)} L ölçüldü.\n\n'
+        '$who için bu noktada ${volume.amount(volumeMl, species: previous.species)} ölçüldü.\n\n'
         'Sağıldıysa ölçüm ona yazılır. Eşleştirme yanlışsa ölçüm silinir.',
       ),
       actions: [

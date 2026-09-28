@@ -139,6 +139,7 @@ class _FormState extends ConsumerState<_Form> {
       'noMilk': TextEditingController(text: '${t.noMilkMl}'),
       'noMilkCount': TextEditingController(text: '${t.noMilkMilkings}'),
       'fresh': TextEditingController(text: '${t.freshLactationDays}'),
+      'density': TextEditingController(text: _num(t.milkDensity)),
     };
   }
 
@@ -238,6 +239,13 @@ class _FormState extends ConsumerState<_Form> {
               _field('fresh', 'Taze laktasyon', 'gün'),
             ],
           ),
+          _Group(
+            title: 'Süt yoğunluğu',
+            hint:
+                'İşletme miktarları kilogram gösteriyorsa litre bu katsayıyla '
+                'çevrilir (1 L inek sütü ≈ 1,03 kg). Eşikler yine litre girilir.',
+            children: [_field('density', 'Yoğunluk', 'kg/L')],
+          ),
           const SizedBox(height: AppSpacing.lg),
           FilledButton(
             onPressed: _canEdit && !_saving ? _save : null,
@@ -290,6 +298,7 @@ class _FormState extends ConsumerState<_Form> {
       'decline' when v > 90 => 'En çok 90 olabilir',
       'noMilkCount' when v > 20 => 'En çok 20 olabilir',
       'fresh' when v > 150 => 'En çok 150 olabilir',
+      'density' when v < 0.9 || v > 1.2 => '0,90–1,20 arasında olmalı',
       'decline' ||
       'noMilk' ||
       'noMilkCount' when v != v.roundToDouble() => 'Tam sayı girin',
@@ -324,6 +333,7 @@ class _FormState extends ConsumerState<_Form> {
       noMilkMl: _value('noMilk')!.round(),
       noMilkMilkings: _value('noMilkCount')!.round(),
       freshLactationDays: _value('fresh')!.round(),
+      milkDensity: _value('density')!,
     );
 
     try {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/api_exception.dart';
-import 'package:milktrace/core/format.dart';
+import 'package:milktrace/core/volume.dart';
 import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/data/models/spout.dart';
@@ -419,7 +419,11 @@ class _Grid extends ConsumerWidget {
             // adım olurdu. Hayvanı olan karta dokunmak da eşleştirmeyi
             // değiştirmeye izin verir — yanlış hayvan bağlanabilir.
             onTap: () => _assign(context, ref, u, title, assigned),
-            child: LiveInfoCard(update: u, title: title),
+            child: LiveInfoCard(
+              update: u,
+              title: title,
+              volume: ref.watch(volumeFormatProvider),
+            ),
           );
         }),
       ),
@@ -471,6 +475,7 @@ class _Grid extends ConsumerWidget {
             context,
             previous: previous,
             volumeMl: update.volumeMl,
+            volume: ref.read(volumeFormatProvider),
           );
           if (choice == null || !context.mounted) return;
           discard = choice == ReplaceChoice.mistaken;
@@ -488,7 +493,14 @@ class _Grid extends ConsumerWidget {
       case ClearAnimal():
         // Geri alınamaz: ölçülen süt silinir. Kaza dokunuşunu ayırmak
         // için sorulur ve kaybolacak miktar yazılır.
-        if (!await _confirmClear(context, update) || !context.mounted) return;
+        if (!await _confirmClear(
+              context,
+              update,
+              ref.read(volumeFormatProvider),
+            ) ||
+            !context.mounted) {
+          return;
+        }
         await _guard(
           context,
           ref,
@@ -497,7 +509,11 @@ class _Grid extends ConsumerWidget {
     }
   }
 
-  Future<bool> _confirmClear(BuildContext context, SpoutUpdate u) async {
+  Future<bool> _confirmClear(
+    BuildContext context,
+    SpoutUpdate u,
+    VolumeFormat volume,
+  ) async {
     // Hayvanın adı cümleye ek almadan yazılır: Türkçe iyelik eki ("-ın",
     // "-in", "-un"…) ada göre değişiyor ve yanlış ek, doğru bilginin
     // üstüne göze batan bir hata koyardı.
@@ -511,7 +527,7 @@ class _Grid extends ConsumerWidget {
             if (a != null)
               a.name == null ? a.earTag : '${a.name} · ${a.earTag}',
             u.volumeMl > 0
-                ? 'Bu sağımdaki ölçüm (${Fmt.litres(u.volumeMl)} L) silinecek '
+                ? 'Bu sağımdaki ölçüm (${volume.amount(u.volumeMl, species: a?.species)}) silinecek '
                       've hiçbir hayvana yazılmayacak.'
                 : 'Bu sağım silinecek.',
           ].join('\n'),

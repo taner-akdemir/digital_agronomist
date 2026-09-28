@@ -141,6 +141,16 @@ class Auth extends _$Auth {
     state = AuthState(status: AuthStatus.signedIn, user: result.user);
   }
 
+  /// Süt birimi değişti (backend ADR 0086): oturumdaki kullanıcıya işlenir,
+  /// böylece bütün ekranlar yeni birimle çizilir.
+  Future<void> applyVolumeUnit(String unit) async {
+    final user = state.user;
+    if (user == null) return;
+    final next = user.copyWith(volumeUnit: unit);
+    if (Env.apiMode != ApiMode.mock) await _session.store.writeUser(next);
+    state = state.copyWith(user: next);
+  }
+
   Future<void> signOut() async {
     if (Env.apiMode == ApiMode.mock) return;
 

@@ -443,6 +443,12 @@ kullanıcı ve kanal değişiklikleri — kim, ne zaman, ne. Olay kodu → Türk
 noktaya takılması kurulum ekibinin işi, panelden. Sahip görür; yanlış takılan sayaç
 veriyi başka noktaya yazar. Cihazlar sekmesine düzenleme ekleme.
 
+**Süt birimi** (backend ADR 0086): içeride her şey mL (§3), API aynı. İşletme L ya da kg
+seçer (hesap kartı, yalnızca sahip; `AuthUser.volumeUnit`). Miktar gösteren HER yer
+`volumeFormatProvider` (`VolumeFormat.amount(ml, species:)`) kullanır — `Fmt.litres`
+yeni kodda KULLANILMAZ. kg = L × türün yoğunluğu (`Thresholds.milkDensity`, eşik
+ekranında; tür bilinmiyorsa 1,03). Eşikler (beklenen, günlük sınırlar) yine litre girilir.
+
 **Tedavi ve arınma** (backend ADR 0084): hayvan detayında "Tedavi ve arınma" kartı
 (`TreatmentsCard`); BÜTÜN roller ekler (veteriner), yanlış kaydı yalnızca sahip siler.
 `Animal.withdrawalUntil` / `SpoutAnimal.withdrawalUntil` = sütün ayrılacağı son gün; canlı

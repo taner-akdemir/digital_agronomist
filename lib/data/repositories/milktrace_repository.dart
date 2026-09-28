@@ -231,6 +231,10 @@ abstract interface class MilkTraceRepository {
   /// cevabı görmeden ayar düzeltilemez.
   Future<void> testNotificationChannel(String id);
 
+  /// İşletmenin süt birimi: "L" ya da "kg" (backend ADR 0086); yalnızca
+  /// sahip (backend 403).
+  Future<void> setVolumeUnit(String unit);
+
   /// İşlem kaydı, son 90 gün, en yeni üstte (backend ADR 0082, `GET /audit`).
   /// YALNIZCA işletme sahibi; backend diğer rollere 403 döner.
   Future<List<AuditEntry>> auditLog();

@@ -53,6 +53,10 @@ abstract class Thresholds with _$Thresholds {
     /// Buzağılamadan sonra "düşüşte" ve "kuruya çıkarma adayı" verilmeyen
     /// gün sayısı (backend ADR 0051, 0059).
     @Default(30) int freshLactationDays,
+
+    /// Süt yoğunluğu, kg/L (backend ADR 0086): işletme kg seçtiyse
+    /// gösterimde mL → kg bu katsayıyla.
+    @Default(1.03) double milkDensity,
   }) = _Thresholds;
 
   factory Thresholds.fromJson(Map<String, dynamic> json) =>

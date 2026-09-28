@@ -179,3 +179,55 @@ final class AnimalsProvider
 }
 
 String _$animalsHash() => r'1cb5caa6be6ae261d57b524eabc7a35faaeb2dd2';
+
+/// Süt miktarı biçimi: işletmenin birimi ve türlerin yoğunluğu (backend
+/// ADR 0086). Eşik ya da tür listesi okunamazsa birim yine uygulanır,
+/// yoğunluk varsayılana (1,03) düşer.
+
+@ProviderFor(volumeFormat)
+final volumeFormatProvider = VolumeFormatProvider._();
+
+/// Süt miktarı biçimi: işletmenin birimi ve türlerin yoğunluğu (backend
+/// ADR 0086). Eşik ya da tür listesi okunamazsa birim yine uygulanır,
+/// yoğunluk varsayılana (1,03) düşer.
+
+final class VolumeFormatProvider
+    extends $FunctionalProvider<VolumeFormat, VolumeFormat, VolumeFormat>
+    with $Provider<VolumeFormat> {
+  /// Süt miktarı biçimi: işletmenin birimi ve türlerin yoğunluğu (backend
+  /// ADR 0086). Eşik ya da tür listesi okunamazsa birim yine uygulanır,
+  /// yoğunluk varsayılana (1,03) düşer.
+  VolumeFormatProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'volumeFormatProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$volumeFormatHash();
+
+  @$internal
+  @override
+  $ProviderElement<VolumeFormat> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  VolumeFormat create(Ref ref) {
+    return volumeFormat(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(VolumeFormat value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<VolumeFormat>(value),
+    );
+  }
+}
+
+String _$volumeFormatHash() => r'512e0f2bbccccba3ed1476f4d43f13f471480a17';

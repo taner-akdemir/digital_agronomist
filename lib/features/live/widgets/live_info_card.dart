@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/format.dart';
+import 'package:milktrace/core/volume.dart';
 import 'package:milktrace/data/models/spout_update.dart';
 import 'package:milktrace/domain/flow_color.dart';
 import 'package:milktrace/widgets/milk_palette.dart';
@@ -12,9 +13,17 @@ import 'package:milktrace/widgets/milk_palette.dart';
 /// tekrarlıyordu. Artık renk bir kez çözülür ve kartın her parçası aynı
 /// karardan beslenir.
 class LiveInfoCard extends StatelessWidget {
-  const LiveInfoCard({super.key, required this.update, required this.title});
+  const LiveInfoCard({
+    super.key,
+    required this.update,
+    required this.title,
+    this.volume = VolumeFormat.litre,
+  });
 
   final SpoutUpdate update;
+
+  /// Miktarların birimi (backend ADR 0086).
+  final VolumeFormat volume;
 
   /// "Ünite A-1 · Nokta 3" gibi.
   final String title;
@@ -116,8 +125,14 @@ class LiveInfoCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.sm),
           _progress(palette),
           const SizedBox(height: AppSpacing.sm),
-          _amountRow('Şu an', '${Fmt.litres(update.volumeMl)} L'),
-          _amountRow('Hedef', '${Fmt.litres(update.expectedMl)} L'),
+          _amountRow(
+            'Şu an',
+            volume.amount(update.volumeMl, species: animal?.species),
+          ),
+          _amountRow(
+            'Hedef',
+            volume.amount(update.expectedMl, species: animal?.species),
+          ),
           if (update.flowColor == MilkColor.red) ...[
             const SizedBox(height: AppSpacing.sm),
             // Ölçülen şey BASINÇ DEĞİL DEBİ. Eski metin "Düşük Basınç"

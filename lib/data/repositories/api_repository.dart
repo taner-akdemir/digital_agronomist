@@ -550,6 +550,10 @@ class ApiRepository implements MilkTraceRepository {
       _dio.post<dynamic>('/notification-channels/$id/test');
 
   @override
+  Future<void> setVolumeUnit(String unit) =>
+      _dio.put<dynamic>('/tenant/settings', data: {'volumeUnit': unit});
+
+  @override
   Future<List<AuditEntry>> auditLog() async =>
       _listOf(await _dio.get<dynamic>('/audit'), AuditEntry.fromJson);
 

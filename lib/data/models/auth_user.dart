@@ -20,6 +20,9 @@ abstract class AuthUser with _$AuthUser {
     /// Girebildiği işletmeler (backend ADR 0081); `role` ve `tenantId`
     /// seçili olanınki. Birden çoksa hesap kartı "İşletme değiştir" sunar.
     @Default(<TenantRef>[]) List<TenantRef> tenants,
+
+    /// Seçili işletmenin süt birimi: "L" ya da "kg" (backend ADR 0086).
+    @Default('L') String volumeUnit,
   }) = _AuthUser;
 
   const AuthUser._();

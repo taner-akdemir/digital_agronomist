@@ -24,6 +24,7 @@ _Thresholds _$ThresholdsFromJson(Map<String, dynamic> json) => _Thresholds(
   noMilkMl: (json['noMilkMl'] as num?)?.toInt() ?? 100,
   noMilkMilkings: (json['noMilkMilkings'] as num?)?.toInt() ?? 4,
   freshLactationDays: (json['freshLactationDays'] as num?)?.toInt() ?? 30,
+  milkDensity: (json['milkDensity'] as num?)?.toDouble() ?? 1.03,
 );
 
 Map<String, dynamic> _$ThresholdsToJson(_Thresholds instance) =>
@@ -45,4 +46,5 @@ Map<String, dynamic> _$ThresholdsToJson(_Thresholds instance) =>
       'noMilkMl': instance.noMilkMl,
       'noMilkMilkings': instance.noMilkMilkings,
       'freshLactationDays': instance.freshLactationDays,
+      'milkDensity': instance.milkDensity,
     };

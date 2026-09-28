@@ -385,6 +385,10 @@ class CachingRepository implements MilkTraceRepository {
       _net(() => _inner.testNotificationChannel(id));
 
   @override
+  Future<void> setVolumeUnit(String unit) =>
+      _net(() => _inner.setVolumeUnit(unit));
+
+  @override
   Future<List<AuditEntry>> auditLog() =>
       _read('audit', _inner.auditLog, (j) => _list(j, AuditEntry.fromJson));
 

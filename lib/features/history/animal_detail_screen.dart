@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/core/format.dart';
+import 'package:milktrace/core/volume.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
@@ -163,13 +164,21 @@ class _Body extends ConsumerWidget {
           AsyncView(
             value: trend,
             errorMessage: 'Trend alınamadı',
-            builder: (t) => _TrendCard(trend: t),
+            builder: (t) => _TrendCard(
+              trend: t,
+              volume: ref.watch(volumeFormatProvider),
+              species: animal.speciesId,
+            ),
           ),
           const SizedBox(height: AppSpacing.md),
           AsyncView(
             value: history,
             errorMessage: 'Sağım geçmişi alınamadı',
-            builder: (h) => _HistoryCard(milkings: h),
+            builder: (h) => _HistoryCard(
+              milkings: h,
+              volume: ref.watch(volumeFormatProvider),
+              species: animal.speciesId,
+            ),
           ),
         ],
       ),
@@ -452,21 +461,28 @@ class _FrozenClass extends StatelessWidget {
 }
 
 class _TrendCard extends StatelessWidget {
-  const _TrendCard({required this.trend});
+  const _TrendCard({required this.trend, required this.volume, this.species});
 
   final AnimalTrend trend;
+
+  /// Miktar birimi ve hayvanın türü (yoğunluk için, backend ADR 0086).
+  final VolumeFormat volume;
+  final String? species;
 
   @override
   Widget build(BuildContext context) {
     // Eğim GÜNLÜK mL; 30 günlük değişim olarak göstermek daha okunur —
     // "günde -142 mL" sahada hiçbir şey ifade etmiyor.
-    final monthly = trend.trendSlope * 30 / 1000;
+    final monthly = volume.value(
+      (trend.trendSlope * 30).round(),
+      species: species,
+    );
 
     // Küçük dalgalanma RENKLENDİRİLMEZ. Her negatif eğime kırmızı vermek,
     // laktasyonun doğal inişindeki sağlıklı bir hayvanı da kırmızı
     // gösteriyordu — §6.2'nin ısınma/bitiş bastırmalarıyla aynı gerekçe:
     // yanlış alarm, rengi anlamsızlaştırır.
-    final base = trend.ma30Ml / 1000;
+    final base = volume.value(trend.ma30Ml, species: species);
     final notable = base > 0 && (monthly.abs() / base) >= 0.10;
 
     return _Card(
@@ -480,11 +496,15 @@ class _TrendCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.md),
           Row(
             children: [
-              _Stat('7 gün ort.', '${Fmt.litres(trend.ma7Ml)} L'),
-              _Stat('30 gün ort.', '${Fmt.litres(trend.ma30Ml)} L'),
+              _Stat('7 gün ort.', volume.amount(trend.ma7Ml, species: species)),
+              _Stat(
+                '30 gün ort.',
+                volume.amount(trend.ma30Ml, species: species),
+              ),
               _Stat(
                 '30 günlük eğilim',
-                '${monthly >= 0 ? '+' : ''}${monthly.toStringAsFixed(1)} L',
+                '${monthly >= 0 ? '+' : ''}${monthly.toStringAsFixed(1)} '
+                    '${volume.label}',
                 color: !notable
                     ? null
                     : monthly < 0
@@ -494,7 +514,11 @@ class _TrendCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.lg),
-          YieldChart(daily: trend.daily),
+          YieldChart(
+            daily: trend.daily,
+            factor: volume.value(1000, species: species),
+            unit: volume.label,
+          ),
         ],
       ),
     );
@@ -502,10 +526,18 @@ class _TrendCard extends StatelessWidget {
 }
 
 class _HistoryCard extends StatelessWidget {
-  const _HistoryCard({required this.milkings});
+  const _HistoryCard({
+    required this.milkings,
+    required this.volume,
+    this.species,
+  });
 
   /// Yeniden eskiye sıralı.
   final List<AnimalMilking> milkings;
+
+  /// Miktar birimi ve hayvanın türü (backend ADR 0086).
+  final VolumeFormat volume;
+  final String? species;
 
   /// Ekranda gösterilen sağım sayısı.
   ///
@@ -535,7 +567,8 @@ class _HistoryCard extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
           const SizedBox(height: AppSpacing.sm),
-          for (final m in shown) _MilkingRow(milking: m),
+          for (final m in shown)
+            _MilkingRow(milking: m, volume: volume, species: species),
           if (milkings.length > _limit) ...[
             const SizedBox(height: AppSpacing.sm),
             Text(
@@ -553,7 +586,14 @@ class _HistoryCard extends StatelessWidget {
 }
 
 class _MilkingRow extends StatelessWidget {
-  const _MilkingRow({required this.milking});
+  const _MilkingRow({
+    required this.milking,
+    required this.volume,
+    this.species,
+  });
+
+  final VolumeFormat volume;
+  final String? species;
 
   final AnimalMilking milking;
 
@@ -585,7 +625,7 @@ class _MilkingRow extends StatelessWidget {
             ),
           ),
           Text(
-            '${Fmt.litres(milking.volumeMl)} L',
+            volume.amount(milking.volumeMl, species: species),
             style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
           ),
           const SizedBox(width: AppSpacing.sm),

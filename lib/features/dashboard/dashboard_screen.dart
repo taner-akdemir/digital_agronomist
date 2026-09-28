@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/format.dart';
+import 'package:milktrace/core/volume.dart';
 import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
 import 'package:milktrace/data/models/species.dart';
@@ -43,7 +44,7 @@ class DashboardScreen extends ConsumerWidget {
         builder: (s) => ListView(
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
-            _TodayCard(summary: s),
+            _TodayCard(summary: s, volume: ref.watch(volumeFormatProvider)),
             const SizedBox(height: AppSpacing.md),
             _SpeciesCard(summary: s),
             const SizedBox(height: AppSpacing.md),
@@ -58,9 +59,23 @@ class DashboardScreen extends ConsumerWidget {
 }
 
 class _TodayCard extends StatelessWidget {
-  const _TodayCard({required this.summary});
+  const _TodayCard({required this.summary, required this.volume});
 
   final DashboardSummary summary;
+  final VolumeFormat volume;
+
+  /// Günün toplamı işletmenin biriminde; kg'da tür bazında dönüştürülüp
+  /// toplanır (her türün yoğunluğu ayrı, backend ADR 0086).
+  String get _total {
+    if (!volume.isKg || summary.bySpecies.isEmpty) {
+      return volume.number(summary.totalMl);
+    }
+    final sum = summary.bySpecies.fold<double>(
+      0,
+      (acc, r) => acc + volume.value(r.totalMl, species: r.speciesId),
+    );
+    return sum.toStringAsFixed(1);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +124,7 @@ class _TodayCard extends StatelessWidget {
             textBaseline: TextBaseline.alphabetic,
             children: [
               Text(
-                Fmt.litres(summary.totalMl),
+                _total,
                 style: const TextStyle(
                   fontSize: 34,
                   fontWeight: FontWeight.bold,
@@ -117,9 +132,12 @@ class _TodayCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.xs),
-              const Text(
-                'L',
-                style: TextStyle(fontSize: 15, color: AppColors.onSurfaceMuted),
+              Text(
+                volume.label,
+                style: const TextStyle(
+                  fontSize: 15,
+                  color: AppColors.onSurfaceMuted,
+                ),
               ),
             ],
           ),
@@ -175,6 +193,7 @@ class _SpeciesCard extends ConsumerWidget {
             _SpeciesRow(
               label: nameById[row.speciesId] ?? 'Tür',
               row: row,
+              volume: ref.watch(volumeFormatProvider),
               ratio: max == 0 ? 0 : row.totalMl / max,
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -190,9 +209,11 @@ class _SpeciesRow extends StatelessWidget {
     required this.label,
     required this.row,
     required this.ratio,
+    required this.volume,
   });
 
   final String label;
+  final VolumeFormat volume;
   final SpeciesTotal row;
   final double ratio;
 
@@ -210,7 +231,7 @@ class _SpeciesRow extends StatelessWidget {
               ),
             ),
             Text(
-              '${Fmt.litres(row.totalMl)} L',
+              volume.amount(row.totalMl, species: row.speciesId),
               style: const TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,

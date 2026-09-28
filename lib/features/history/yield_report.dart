@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/data/repositories/milktrace_repository.dart';
+import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:share_plus/share_plus.dart';
@@ -104,10 +105,14 @@ class _ReportSheetState extends ConsumerState<_ReportSheet> {
                 ),
               ),
               const SizedBox(height: AppSpacing.xs),
-              const Text(
-                'Hayvan başına günlük verim (litre), Excel dosyası. '
-                'Veterinere ya da danışmana gönderebilirsiniz.',
-                style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
+              Text(
+                'Hayvan başına günlük verim '
+                '(${ref.watch(volumeFormatProvider).isKg ? 'kilogram' : 'litre'}), '
+                'Excel dosyası. Veterinere ya da danışmana gönderebilirsiniz.',
+                style: const TextStyle(
+                  fontSize: 13,
+                  color: AppColors.onSurfaceMuted,
+                ),
               ),
               const SizedBox(height: AppSpacing.sm),
               for (final d in reportPeriods)

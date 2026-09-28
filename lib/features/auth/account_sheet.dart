@@ -96,6 +96,11 @@ class _AccountSheet extends ConsumerWidget {
                 const SizedBox(height: AppSpacing.lg),
                 const _ModeBadge(),
               ],
+              // Süt birimi (backend ADR 0086): sahip seçer, herkes görür.
+              if (user != null && user.role == 'tenant_owner') ...[
+                const SizedBox(height: AppSpacing.md),
+                _UnitRow(unit: user.volumeUnit),
+              ],
               // Birden çok işletmenin üyesi (veteriner, danışman; backend
               // ADR 0081) işletmeler arasında geçer.
               if ((user?.tenants.length ?? 0) > 1) ...[
@@ -372,6 +377,49 @@ Future<void> _pickTenant(
         content: Text(userMessage(e) ?? 'İşletme değiştirilemedi: $e'),
         backgroundColor: AppColors.flowRed,
       ),
+    );
+  }
+}
+
+/// Süt birimi seçimi: Litre / Kilogram (backend ADR 0086).
+class _UnitRow extends ConsumerWidget {
+  const _UnitRow({required this.unit});
+
+  final String unit;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Row(
+      children: [
+        const Expanded(
+          child: Text(
+            'Süt birimi',
+            style: TextStyle(fontWeight: FontWeight.w600),
+          ),
+        ),
+        SegmentedButton<String>(
+          segments: const [
+            ButtonSegment(value: 'L', label: Text('Litre')),
+            ButtonSegment(value: 'kg', label: Text('Kilogram')),
+          ],
+          selected: {unit},
+          onSelectionChanged: (s) async {
+            final next = s.first;
+            final messenger = ScaffoldMessenger.of(context);
+            try {
+              await ref.read(repositoryProvider).setVolumeUnit(next);
+              await ref.read(authProvider.notifier).applyVolumeUnit(next);
+            } catch (e) {
+              messenger.showSnackBar(
+                SnackBar(
+                  content: Text(userMessage(e) ?? 'Kaydedilemedi: $e'),
+                  backgroundColor: AppColors.flowRed,
+                ),
+              );
+            }
+          },
+        ),
+      ],
     );
   }
 }

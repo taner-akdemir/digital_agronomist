@@ -732,6 +732,10 @@ class MockRepository implements MilkTraceRepository {
     _channelSecrets.remove(id);
   });
 
+  /// Demo modda birim yalnızca uygulamada tutulur (Auth.applyVolumeUnit).
+  @override
+  Future<void> setVolumeUnit(String unit) => _delayed(() async {});
+
   /// İşlem kaydı: demo için birkaç tipik olay (backend ADR 0082).
   @override
   Future<List<AuditEntry>> auditLog() => _delayed(
