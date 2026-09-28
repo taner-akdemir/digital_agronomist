@@ -57,6 +57,10 @@ abstract class Thresholds with _$Thresholds {
     /// Süt yoğunluğu, kg/L (backend ADR 0086): işletme kg seçtiyse
     /// gösterimde mL → kg bu katsayıyla.
     @Default(1.03) double milkDensity,
+
+    /// Sağım iletkenliği hayvanın 7 günlük ortalamasının bu yüzde kadar
+    /// üstündeyse "mastitis şüphesi" (backend ADR 0087).
+    @Default(15) int conductivityRisePct,
   }) = _Thresholds;
 
   factory Thresholds.fromJson(Map<String, dynamic> json) =>

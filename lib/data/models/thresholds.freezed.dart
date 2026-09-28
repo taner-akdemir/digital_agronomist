@@ -33,7 +33,9 @@ mixin _$Thresholds {
 /// gün sayısı (backend ADR 0051, 0059).
  int get freshLactationDays;/// Süt yoğunluğu, kg/L (backend ADR 0086): işletme kg seçtiyse
 /// gösterimde mL → kg bu katsayıyla.
- double get milkDensity;
+ double get milkDensity;/// Sağım iletkenliği hayvanın 7 günlük ortalamasının bu yüzde kadar
+/// üstündeyse "mastitis şüphesi" (backend ADR 0087).
+ int get conductivityRisePct;
 /// Create a copy of Thresholds
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -47,20 +49,20 @@ $ThresholdsCopyWith<Thresholds> get copyWith => _$ThresholdsCopyWithImpl<Thresho
 @override
 bool operator ==(Object other) {
   final _this = this as Thresholds;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Thresholds&&(identical(other.speciesId, _this.speciesId) || other.speciesId == _this.speciesId)&&(identical(other.flowLow, _this.flowLow) || other.flowLow == _this.flowLow)&&(identical(other.flowHigh, _this.flowHigh) || other.flowHigh == _this.flowHigh)&&(identical(other.yieldGreenPct, _this.yieldGreenPct) || other.yieldGreenPct == _this.yieldGreenPct)&&(identical(other.yieldRedPct, _this.yieldRedPct) || other.yieldRedPct == _this.yieldRedPct)&&(identical(other.rampUpSec, _this.rampUpSec) || other.rampUpSec == _this.rampUpSec)&&(identical(other.alertHoldSec, _this.alertHoldSec) || other.alertHoldSec == _this.alertHoldSec)&&(identical(other.endFlowThreshold, _this.endFlowThreshold) || other.endFlowThreshold == _this.endFlowThreshold)&&(identical(other.endGraceSec, _this.endGraceSec) || other.endGraceSec == _this.endGraceSec)&&(identical(other.dryOffDailyMl, _this.dryOffDailyMl) || other.dryOffDailyMl == _this.dryOffDailyMl)&&(identical(other.highYieldDailyMl, _this.highYieldDailyMl) || other.highYieldDailyMl == _this.highYieldDailyMl)&&(identical(other.expectedPerMilkingMl, _this.expectedPerMilkingMl) || other.expectedPerMilkingMl == _this.expectedPerMilkingMl)&&(identical(other.tenantScoped, _this.tenantScoped) || other.tenantScoped == _this.tenantScoped)&&(identical(other.declinePct, _this.declinePct) || other.declinePct == _this.declinePct)&&(identical(other.noMilkMl, _this.noMilkMl) || other.noMilkMl == _this.noMilkMl)&&(identical(other.noMilkMilkings, _this.noMilkMilkings) || other.noMilkMilkings == _this.noMilkMilkings)&&(identical(other.freshLactationDays, _this.freshLactationDays) || other.freshLactationDays == _this.freshLactationDays)&&(identical(other.milkDensity, _this.milkDensity) || other.milkDensity == _this.milkDensity));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Thresholds&&(identical(other.speciesId, _this.speciesId) || other.speciesId == _this.speciesId)&&(identical(other.flowLow, _this.flowLow) || other.flowLow == _this.flowLow)&&(identical(other.flowHigh, _this.flowHigh) || other.flowHigh == _this.flowHigh)&&(identical(other.yieldGreenPct, _this.yieldGreenPct) || other.yieldGreenPct == _this.yieldGreenPct)&&(identical(other.yieldRedPct, _this.yieldRedPct) || other.yieldRedPct == _this.yieldRedPct)&&(identical(other.rampUpSec, _this.rampUpSec) || other.rampUpSec == _this.rampUpSec)&&(identical(other.alertHoldSec, _this.alertHoldSec) || other.alertHoldSec == _this.alertHoldSec)&&(identical(other.endFlowThreshold, _this.endFlowThreshold) || other.endFlowThreshold == _this.endFlowThreshold)&&(identical(other.endGraceSec, _this.endGraceSec) || other.endGraceSec == _this.endGraceSec)&&(identical(other.dryOffDailyMl, _this.dryOffDailyMl) || other.dryOffDailyMl == _this.dryOffDailyMl)&&(identical(other.highYieldDailyMl, _this.highYieldDailyMl) || other.highYieldDailyMl == _this.highYieldDailyMl)&&(identical(other.expectedPerMilkingMl, _this.expectedPerMilkingMl) || other.expectedPerMilkingMl == _this.expectedPerMilkingMl)&&(identical(other.tenantScoped, _this.tenantScoped) || other.tenantScoped == _this.tenantScoped)&&(identical(other.declinePct, _this.declinePct) || other.declinePct == _this.declinePct)&&(identical(other.noMilkMl, _this.noMilkMl) || other.noMilkMl == _this.noMilkMl)&&(identical(other.noMilkMilkings, _this.noMilkMilkings) || other.noMilkMilkings == _this.noMilkMilkings)&&(identical(other.freshLactationDays, _this.freshLactationDays) || other.freshLactationDays == _this.freshLactationDays)&&(identical(other.milkDensity, _this.milkDensity) || other.milkDensity == _this.milkDensity)&&(identical(other.conductivityRisePct, _this.conductivityRisePct) || other.conductivityRisePct == _this.conductivityRisePct));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as Thresholds;
-  return Object.hash(runtimeType,_this.speciesId,_this.flowLow,_this.flowHigh,_this.yieldGreenPct,_this.yieldRedPct,_this.rampUpSec,_this.alertHoldSec,_this.endFlowThreshold,_this.endGraceSec,_this.dryOffDailyMl,_this.highYieldDailyMl,_this.expectedPerMilkingMl,_this.tenantScoped,_this.declinePct,_this.noMilkMl,_this.noMilkMilkings,_this.freshLactationDays,_this.milkDensity);
+  return Object.hashAll([runtimeType,_this.speciesId,_this.flowLow,_this.flowHigh,_this.yieldGreenPct,_this.yieldRedPct,_this.rampUpSec,_this.alertHoldSec,_this.endFlowThreshold,_this.endGraceSec,_this.dryOffDailyMl,_this.highYieldDailyMl,_this.expectedPerMilkingMl,_this.tenantScoped,_this.declinePct,_this.noMilkMl,_this.noMilkMilkings,_this.freshLactationDays,_this.milkDensity,_this.conductivityRisePct]);
 }
 
 @override
 String toString() {
   final _this = this as Thresholds;
-  return 'Thresholds(speciesId: ${_this.speciesId}, flowLow: ${_this.flowLow}, flowHigh: ${_this.flowHigh}, yieldGreenPct: ${_this.yieldGreenPct}, yieldRedPct: ${_this.yieldRedPct}, rampUpSec: ${_this.rampUpSec}, alertHoldSec: ${_this.alertHoldSec}, endFlowThreshold: ${_this.endFlowThreshold}, endGraceSec: ${_this.endGraceSec}, dryOffDailyMl: ${_this.dryOffDailyMl}, highYieldDailyMl: ${_this.highYieldDailyMl}, expectedPerMilkingMl: ${_this.expectedPerMilkingMl}, tenantScoped: ${_this.tenantScoped}, declinePct: ${_this.declinePct}, noMilkMl: ${_this.noMilkMl}, noMilkMilkings: ${_this.noMilkMilkings}, freshLactationDays: ${_this.freshLactationDays}, milkDensity: ${_this.milkDensity})';
+  return 'Thresholds(speciesId: ${_this.speciesId}, flowLow: ${_this.flowLow}, flowHigh: ${_this.flowHigh}, yieldGreenPct: ${_this.yieldGreenPct}, yieldRedPct: ${_this.yieldRedPct}, rampUpSec: ${_this.rampUpSec}, alertHoldSec: ${_this.alertHoldSec}, endFlowThreshold: ${_this.endFlowThreshold}, endGraceSec: ${_this.endGraceSec}, dryOffDailyMl: ${_this.dryOffDailyMl}, highYieldDailyMl: ${_this.highYieldDailyMl}, expectedPerMilkingMl: ${_this.expectedPerMilkingMl}, tenantScoped: ${_this.tenantScoped}, declinePct: ${_this.declinePct}, noMilkMl: ${_this.noMilkMl}, noMilkMilkings: ${_this.noMilkMilkings}, freshLactationDays: ${_this.freshLactationDays}, milkDensity: ${_this.milkDensity}, conductivityRisePct: ${_this.conductivityRisePct})';
 }
 
 
@@ -71,7 +73,7 @@ abstract mixin class $ThresholdsCopyWith<$Res>  {
   factory $ThresholdsCopyWith(Thresholds value, $Res Function(Thresholds) _then) = _$ThresholdsCopyWithImpl;
 @useResult
 $Res call({
- String speciesId, double flowLow, double flowHigh, double yieldGreenPct, double yieldRedPct, int rampUpSec, int alertHoldSec, double endFlowThreshold, int endGraceSec, int dryOffDailyMl, int highYieldDailyMl, int expectedPerMilkingMl, bool tenantScoped, int declinePct, int noMilkMl, int noMilkMilkings, int freshLactationDays, double milkDensity
+ String speciesId, double flowLow, double flowHigh, double yieldGreenPct, double yieldRedPct, int rampUpSec, int alertHoldSec, double endFlowThreshold, int endGraceSec, int dryOffDailyMl, int highYieldDailyMl, int expectedPerMilkingMl, bool tenantScoped, int declinePct, int noMilkMl, int noMilkMilkings, int freshLactationDays, double milkDensity, int conductivityRisePct
 });
 
 
@@ -88,7 +90,7 @@ class _$ThresholdsCopyWithImpl<$Res>
 
 /// Create a copy of Thresholds
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? speciesId = null,Object? flowLow = null,Object? flowHigh = null,Object? yieldGreenPct = null,Object? yieldRedPct = null,Object? rampUpSec = null,Object? alertHoldSec = null,Object? endFlowThreshold = null,Object? endGraceSec = null,Object? dryOffDailyMl = null,Object? highYieldDailyMl = null,Object? expectedPerMilkingMl = null,Object? tenantScoped = null,Object? declinePct = null,Object? noMilkMl = null,Object? noMilkMilkings = null,Object? freshLactationDays = null,Object? milkDensity = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? speciesId = null,Object? flowLow = null,Object? flowHigh = null,Object? yieldGreenPct = null,Object? yieldRedPct = null,Object? rampUpSec = null,Object? alertHoldSec = null,Object? endFlowThreshold = null,Object? endGraceSec = null,Object? dryOffDailyMl = null,Object? highYieldDailyMl = null,Object? expectedPerMilkingMl = null,Object? tenantScoped = null,Object? declinePct = null,Object? noMilkMl = null,Object? noMilkMilkings = null,Object? freshLactationDays = null,Object? milkDensity = null,Object? conductivityRisePct = null,}) {
   return _then(Thresholds(
 speciesId: null == speciesId ? _self.speciesId : speciesId // ignore: cast_nullable_to_non_nullable
 as String,flowLow: null == flowLow ? _self.flowLow : flowLow // ignore: cast_nullable_to_non_nullable
@@ -108,7 +110,8 @@ as int,noMilkMl: null == noMilkMl ? _self.noMilkMl : noMilkMl // ignore: cast_nu
 as int,noMilkMilkings: null == noMilkMilkings ? _self.noMilkMilkings : noMilkMilkings // ignore: cast_nullable_to_non_nullable
 as int,freshLactationDays: null == freshLactationDays ? _self.freshLactationDays : freshLactationDays // ignore: cast_nullable_to_non_nullable
 as int,milkDensity: null == milkDensity ? _self.milkDensity : milkDensity // ignore: cast_nullable_to_non_nullable
-as double,
+as double,conductivityRisePct: null == conductivityRisePct ? _self.conductivityRisePct : conductivityRisePct // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 
@@ -193,10 +196,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String speciesId,  double flowLow,  double flowHigh,  double yieldGreenPct,  double yieldRedPct,  int rampUpSec,  int alertHoldSec,  double endFlowThreshold,  int endGraceSec,  int dryOffDailyMl,  int highYieldDailyMl,  int expectedPerMilkingMl,  bool tenantScoped,  int declinePct,  int noMilkMl,  int noMilkMilkings,  int freshLactationDays,  double milkDensity)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String speciesId,  double flowLow,  double flowHigh,  double yieldGreenPct,  double yieldRedPct,  int rampUpSec,  int alertHoldSec,  double endFlowThreshold,  int endGraceSec,  int dryOffDailyMl,  int highYieldDailyMl,  int expectedPerMilkingMl,  bool tenantScoped,  int declinePct,  int noMilkMl,  int noMilkMilkings,  int freshLactationDays,  double milkDensity,  int conductivityRisePct)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Thresholds() when $default != null:
-return $default(_that.speciesId,_that.flowLow,_that.flowHigh,_that.yieldGreenPct,_that.yieldRedPct,_that.rampUpSec,_that.alertHoldSec,_that.endFlowThreshold,_that.endGraceSec,_that.dryOffDailyMl,_that.highYieldDailyMl,_that.expectedPerMilkingMl,_that.tenantScoped,_that.declinePct,_that.noMilkMl,_that.noMilkMilkings,_that.freshLactationDays,_that.milkDensity);case _:
+return $default(_that.speciesId,_that.flowLow,_that.flowHigh,_that.yieldGreenPct,_that.yieldRedPct,_that.rampUpSec,_that.alertHoldSec,_that.endFlowThreshold,_that.endGraceSec,_that.dryOffDailyMl,_that.highYieldDailyMl,_that.expectedPerMilkingMl,_that.tenantScoped,_that.declinePct,_that.noMilkMl,_that.noMilkMilkings,_that.freshLactationDays,_that.milkDensity,_that.conductivityRisePct);case _:
   return orElse();
 
 }
@@ -214,10 +217,10 @@ return $default(_that.speciesId,_that.flowLow,_that.flowHigh,_that.yieldGreenPct
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String speciesId,  double flowLow,  double flowHigh,  double yieldGreenPct,  double yieldRedPct,  int rampUpSec,  int alertHoldSec,  double endFlowThreshold,  int endGraceSec,  int dryOffDailyMl,  int highYieldDailyMl,  int expectedPerMilkingMl,  bool tenantScoped,  int declinePct,  int noMilkMl,  int noMilkMilkings,  int freshLactationDays,  double milkDensity)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String speciesId,  double flowLow,  double flowHigh,  double yieldGreenPct,  double yieldRedPct,  int rampUpSec,  int alertHoldSec,  double endFlowThreshold,  int endGraceSec,  int dryOffDailyMl,  int highYieldDailyMl,  int expectedPerMilkingMl,  bool tenantScoped,  int declinePct,  int noMilkMl,  int noMilkMilkings,  int freshLactationDays,  double milkDensity,  int conductivityRisePct)  $default,) {final _that = this;
 switch (_that) {
 case _Thresholds():
-return $default(_that.speciesId,_that.flowLow,_that.flowHigh,_that.yieldGreenPct,_that.yieldRedPct,_that.rampUpSec,_that.alertHoldSec,_that.endFlowThreshold,_that.endGraceSec,_that.dryOffDailyMl,_that.highYieldDailyMl,_that.expectedPerMilkingMl,_that.tenantScoped,_that.declinePct,_that.noMilkMl,_that.noMilkMilkings,_that.freshLactationDays,_that.milkDensity);case _:
+return $default(_that.speciesId,_that.flowLow,_that.flowHigh,_that.yieldGreenPct,_that.yieldRedPct,_that.rampUpSec,_that.alertHoldSec,_that.endFlowThreshold,_that.endGraceSec,_that.dryOffDailyMl,_that.highYieldDailyMl,_that.expectedPerMilkingMl,_that.tenantScoped,_that.declinePct,_that.noMilkMl,_that.noMilkMilkings,_that.freshLactationDays,_that.milkDensity,_that.conductivityRisePct);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -234,10 +237,10 @@ return $default(_that.speciesId,_that.flowLow,_that.flowHigh,_that.yieldGreenPct
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String speciesId,  double flowLow,  double flowHigh,  double yieldGreenPct,  double yieldRedPct,  int rampUpSec,  int alertHoldSec,  double endFlowThreshold,  int endGraceSec,  int dryOffDailyMl,  int highYieldDailyMl,  int expectedPerMilkingMl,  bool tenantScoped,  int declinePct,  int noMilkMl,  int noMilkMilkings,  int freshLactationDays,  double milkDensity)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String speciesId,  double flowLow,  double flowHigh,  double yieldGreenPct,  double yieldRedPct,  int rampUpSec,  int alertHoldSec,  double endFlowThreshold,  int endGraceSec,  int dryOffDailyMl,  int highYieldDailyMl,  int expectedPerMilkingMl,  bool tenantScoped,  int declinePct,  int noMilkMl,  int noMilkMilkings,  int freshLactationDays,  double milkDensity,  int conductivityRisePct)?  $default,) {final _that = this;
 switch (_that) {
 case _Thresholds() when $default != null:
-return $default(_that.speciesId,_that.flowLow,_that.flowHigh,_that.yieldGreenPct,_that.yieldRedPct,_that.rampUpSec,_that.alertHoldSec,_that.endFlowThreshold,_that.endGraceSec,_that.dryOffDailyMl,_that.highYieldDailyMl,_that.expectedPerMilkingMl,_that.tenantScoped,_that.declinePct,_that.noMilkMl,_that.noMilkMilkings,_that.freshLactationDays,_that.milkDensity);case _:
+return $default(_that.speciesId,_that.flowLow,_that.flowHigh,_that.yieldGreenPct,_that.yieldRedPct,_that.rampUpSec,_that.alertHoldSec,_that.endFlowThreshold,_that.endGraceSec,_that.dryOffDailyMl,_that.highYieldDailyMl,_that.expectedPerMilkingMl,_that.tenantScoped,_that.declinePct,_that.noMilkMl,_that.noMilkMilkings,_that.freshLactationDays,_that.milkDensity,_that.conductivityRisePct);case _:
   return null;
 
 }
@@ -249,7 +252,7 @@ return $default(_that.speciesId,_that.flowLow,_that.flowHigh,_that.yieldGreenPct
 @JsonSerializable()
 
 class _Thresholds implements Thresholds {
-  const _Thresholds({required this.speciesId, required this.flowLow, required this.flowHigh, this.yieldGreenPct = 90, this.yieldRedPct = 60, this.rampUpSec = 60, this.alertHoldSec = 30, this.endFlowThreshold = 0.2, this.endGraceSec = 10, this.dryOffDailyMl = 0, this.highYieldDailyMl = 0, this.expectedPerMilkingMl = 0, this.tenantScoped = false, this.declinePct = 20, this.noMilkMl = 100, this.noMilkMilkings = 4, this.freshLactationDays = 30, this.milkDensity = 1.03});
+  const _Thresholds({required this.speciesId, required this.flowLow, required this.flowHigh, this.yieldGreenPct = 90, this.yieldRedPct = 60, this.rampUpSec = 60, this.alertHoldSec = 30, this.endFlowThreshold = 0.2, this.endGraceSec = 10, this.dryOffDailyMl = 0, this.highYieldDailyMl = 0, this.expectedPerMilkingMl = 0, this.tenantScoped = false, this.declinePct = 20, this.noMilkMl = 100, this.noMilkMilkings = 4, this.freshLactationDays = 30, this.milkDensity = 1.03, this.conductivityRisePct = 15});
   factory _Thresholds.fromJson(Map<String, dynamic> json) => _$ThresholdsFromJson(json);
 
 @override final  String speciesId;
@@ -287,6 +290,9 @@ class _Thresholds implements Thresholds {
 /// Süt yoğunluğu, kg/L (backend ADR 0086): işletme kg seçtiyse
 /// gösterimde mL → kg bu katsayıyla.
 @override@JsonKey() final  double milkDensity;
+/// Sağım iletkenliği hayvanın 7 günlük ortalamasının bu yüzde kadar
+/// üstündeyse "mastitis şüphesi" (backend ADR 0087).
+@override@JsonKey() final  int conductivityRisePct;
 
 /// Create a copy of Thresholds
 /// with the given fields replaced by the non-null parameter values.
@@ -301,18 +307,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Thresholds&&(identical(other.speciesId, speciesId) || other.speciesId == speciesId)&&(identical(other.flowLow, flowLow) || other.flowLow == flowLow)&&(identical(other.flowHigh, flowHigh) || other.flowHigh == flowHigh)&&(identical(other.yieldGreenPct, yieldGreenPct) || other.yieldGreenPct == yieldGreenPct)&&(identical(other.yieldRedPct, yieldRedPct) || other.yieldRedPct == yieldRedPct)&&(identical(other.rampUpSec, rampUpSec) || other.rampUpSec == rampUpSec)&&(identical(other.alertHoldSec, alertHoldSec) || other.alertHoldSec == alertHoldSec)&&(identical(other.endFlowThreshold, endFlowThreshold) || other.endFlowThreshold == endFlowThreshold)&&(identical(other.endGraceSec, endGraceSec) || other.endGraceSec == endGraceSec)&&(identical(other.dryOffDailyMl, dryOffDailyMl) || other.dryOffDailyMl == dryOffDailyMl)&&(identical(other.highYieldDailyMl, highYieldDailyMl) || other.highYieldDailyMl == highYieldDailyMl)&&(identical(other.expectedPerMilkingMl, expectedPerMilkingMl) || other.expectedPerMilkingMl == expectedPerMilkingMl)&&(identical(other.tenantScoped, tenantScoped) || other.tenantScoped == tenantScoped)&&(identical(other.declinePct, declinePct) || other.declinePct == declinePct)&&(identical(other.noMilkMl, noMilkMl) || other.noMilkMl == noMilkMl)&&(identical(other.noMilkMilkings, noMilkMilkings) || other.noMilkMilkings == noMilkMilkings)&&(identical(other.freshLactationDays, freshLactationDays) || other.freshLactationDays == freshLactationDays)&&(identical(other.milkDensity, milkDensity) || other.milkDensity == milkDensity));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Thresholds&&(identical(other.speciesId, speciesId) || other.speciesId == speciesId)&&(identical(other.flowLow, flowLow) || other.flowLow == flowLow)&&(identical(other.flowHigh, flowHigh) || other.flowHigh == flowHigh)&&(identical(other.yieldGreenPct, yieldGreenPct) || other.yieldGreenPct == yieldGreenPct)&&(identical(other.yieldRedPct, yieldRedPct) || other.yieldRedPct == yieldRedPct)&&(identical(other.rampUpSec, rampUpSec) || other.rampUpSec == rampUpSec)&&(identical(other.alertHoldSec, alertHoldSec) || other.alertHoldSec == alertHoldSec)&&(identical(other.endFlowThreshold, endFlowThreshold) || other.endFlowThreshold == endFlowThreshold)&&(identical(other.endGraceSec, endGraceSec) || other.endGraceSec == endGraceSec)&&(identical(other.dryOffDailyMl, dryOffDailyMl) || other.dryOffDailyMl == dryOffDailyMl)&&(identical(other.highYieldDailyMl, highYieldDailyMl) || other.highYieldDailyMl == highYieldDailyMl)&&(identical(other.expectedPerMilkingMl, expectedPerMilkingMl) || other.expectedPerMilkingMl == expectedPerMilkingMl)&&(identical(other.tenantScoped, tenantScoped) || other.tenantScoped == tenantScoped)&&(identical(other.declinePct, declinePct) || other.declinePct == declinePct)&&(identical(other.noMilkMl, noMilkMl) || other.noMilkMl == noMilkMl)&&(identical(other.noMilkMilkings, noMilkMilkings) || other.noMilkMilkings == noMilkMilkings)&&(identical(other.freshLactationDays, freshLactationDays) || other.freshLactationDays == freshLactationDays)&&(identical(other.milkDensity, milkDensity) || other.milkDensity == milkDensity)&&(identical(other.conductivityRisePct, conductivityRisePct) || other.conductivityRisePct == conductivityRisePct));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,speciesId,flowLow,flowHigh,yieldGreenPct,yieldRedPct,rampUpSec,alertHoldSec,endFlowThreshold,endGraceSec,dryOffDailyMl,highYieldDailyMl,expectedPerMilkingMl,tenantScoped,declinePct,noMilkMl,noMilkMilkings,freshLactationDays,milkDensity);
+    return Object.hashAll([runtimeType,speciesId,flowLow,flowHigh,yieldGreenPct,yieldRedPct,rampUpSec,alertHoldSec,endFlowThreshold,endGraceSec,dryOffDailyMl,highYieldDailyMl,expectedPerMilkingMl,tenantScoped,declinePct,noMilkMl,noMilkMilkings,freshLactationDays,milkDensity,conductivityRisePct]);
 }
 
 @override
 String toString() {
-    return 'Thresholds(speciesId: $speciesId, flowLow: $flowLow, flowHigh: $flowHigh, yieldGreenPct: $yieldGreenPct, yieldRedPct: $yieldRedPct, rampUpSec: $rampUpSec, alertHoldSec: $alertHoldSec, endFlowThreshold: $endFlowThreshold, endGraceSec: $endGraceSec, dryOffDailyMl: $dryOffDailyMl, highYieldDailyMl: $highYieldDailyMl, expectedPerMilkingMl: $expectedPerMilkingMl, tenantScoped: $tenantScoped, declinePct: $declinePct, noMilkMl: $noMilkMl, noMilkMilkings: $noMilkMilkings, freshLactationDays: $freshLactationDays, milkDensity: $milkDensity)';
+    return 'Thresholds(speciesId: $speciesId, flowLow: $flowLow, flowHigh: $flowHigh, yieldGreenPct: $yieldGreenPct, yieldRedPct: $yieldRedPct, rampUpSec: $rampUpSec, alertHoldSec: $alertHoldSec, endFlowThreshold: $endFlowThreshold, endGraceSec: $endGraceSec, dryOffDailyMl: $dryOffDailyMl, highYieldDailyMl: $highYieldDailyMl, expectedPerMilkingMl: $expectedPerMilkingMl, tenantScoped: $tenantScoped, declinePct: $declinePct, noMilkMl: $noMilkMl, noMilkMilkings: $noMilkMilkings, freshLactationDays: $freshLactationDays, milkDensity: $milkDensity, conductivityRisePct: $conductivityRisePct)';
 }
 
 
@@ -323,7 +329,7 @@ abstract mixin class _$ThresholdsCopyWith<$Res> implements $ThresholdsCopyWith<$
   factory _$ThresholdsCopyWith(_Thresholds value, $Res Function(_Thresholds) _then) = __$ThresholdsCopyWithImpl;
 @override @useResult
 $Res call({
- String speciesId, double flowLow, double flowHigh, double yieldGreenPct, double yieldRedPct, int rampUpSec, int alertHoldSec, double endFlowThreshold, int endGraceSec, int dryOffDailyMl, int highYieldDailyMl, int expectedPerMilkingMl, bool tenantScoped, int declinePct, int noMilkMl, int noMilkMilkings, int freshLactationDays, double milkDensity
+ String speciesId, double flowLow, double flowHigh, double yieldGreenPct, double yieldRedPct, int rampUpSec, int alertHoldSec, double endFlowThreshold, int endGraceSec, int dryOffDailyMl, int highYieldDailyMl, int expectedPerMilkingMl, bool tenantScoped, int declinePct, int noMilkMl, int noMilkMilkings, int freshLactationDays, double milkDensity, int conductivityRisePct
 });
 
 
@@ -340,7 +346,7 @@ class __$ThresholdsCopyWithImpl<$Res>
 
 /// Create a copy of Thresholds
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? speciesId = null,Object? flowLow = null,Object? flowHigh = null,Object? yieldGreenPct = null,Object? yieldRedPct = null,Object? rampUpSec = null,Object? alertHoldSec = null,Object? endFlowThreshold = null,Object? endGraceSec = null,Object? dryOffDailyMl = null,Object? highYieldDailyMl = null,Object? expectedPerMilkingMl = null,Object? tenantScoped = null,Object? declinePct = null,Object? noMilkMl = null,Object? noMilkMilkings = null,Object? freshLactationDays = null,Object? milkDensity = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? speciesId = null,Object? flowLow = null,Object? flowHigh = null,Object? yieldGreenPct = null,Object? yieldRedPct = null,Object? rampUpSec = null,Object? alertHoldSec = null,Object? endFlowThreshold = null,Object? endGraceSec = null,Object? dryOffDailyMl = null,Object? highYieldDailyMl = null,Object? expectedPerMilkingMl = null,Object? tenantScoped = null,Object? declinePct = null,Object? noMilkMl = null,Object? noMilkMilkings = null,Object? freshLactationDays = null,Object? milkDensity = null,Object? conductivityRisePct = null,}) {
   return _then(_Thresholds(
 speciesId: null == speciesId ? _self.speciesId : speciesId // ignore: cast_nullable_to_non_nullable
 as String,flowLow: null == flowLow ? _self.flowLow : flowLow // ignore: cast_nullable_to_non_nullable
@@ -360,7 +366,8 @@ as int,noMilkMl: null == noMilkMl ? _self.noMilkMl : noMilkMl // ignore: cast_nu
 as int,noMilkMilkings: null == noMilkMilkings ? _self.noMilkMilkings : noMilkMilkings // ignore: cast_nullable_to_non_nullable
 as int,freshLactationDays: null == freshLactationDays ? _self.freshLactationDays : freshLactationDays // ignore: cast_nullable_to_non_nullable
 as int,milkDensity: null == milkDensity ? _self.milkDensity : milkDensity // ignore: cast_nullable_to_non_nullable
-as double,
+as double,conductivityRisePct: null == conductivityRisePct ? _self.conductivityRisePct : conductivityRisePct // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 

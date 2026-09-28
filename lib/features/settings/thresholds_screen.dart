@@ -140,6 +140,7 @@ class _FormState extends ConsumerState<_Form> {
       'noMilkCount': TextEditingController(text: '${t.noMilkMilkings}'),
       'fresh': TextEditingController(text: '${t.freshLactationDays}'),
       'density': TextEditingController(text: _num(t.milkDensity)),
+      'conductivity': TextEditingController(text: '${t.conductivityRisePct}'),
     };
   }
 
@@ -240,6 +241,14 @@ class _FormState extends ConsumerState<_Form> {
             ],
           ),
           _Group(
+            title: 'Mastitis şüphesi',
+            hint:
+                'Sayaç iletkenlik ölçüyorsa: sağımın iletkenliği hayvanın '
+                'kendi 7 günlük ortalamasının bu oran kadar üstündeyse uyarı. '
+                'Teşhis değildir; veteriner kontrolü için işarettir.',
+            children: [_field('conductivity', 'İletkenlik artışı', '%')],
+          ),
+          _Group(
             title: 'Süt yoğunluğu',
             hint:
                 'İşletme miktarları kilogram gösteriyorsa litre bu katsayıyla '
@@ -299,7 +308,9 @@ class _FormState extends ConsumerState<_Form> {
       'noMilkCount' when v > 20 => 'En çok 20 olabilir',
       'fresh' when v > 150 => 'En çok 150 olabilir',
       'density' when v < 0.9 || v > 1.2 => '0,90–1,20 arasında olmalı',
+      'conductivity' when v < 5 || v > 100 => '5–100 arasında olmalı',
       'decline' ||
+      'conductivity' ||
       'noMilk' ||
       'noMilkCount' when v != v.roundToDouble() => 'Tam sayı girin',
       // Beklenen sağım hacmine eşit bir "boş sağım" sınırı normal sağılan
@@ -334,6 +345,7 @@ class _FormState extends ConsumerState<_Form> {
       noMilkMilkings: _value('noMilkCount')!.round(),
       freshLactationDays: _value('fresh')!.round(),
       milkDensity: _value('density')!,
+      conductivityRisePct: _value('conductivity')!.round(),
     );
 
     try {

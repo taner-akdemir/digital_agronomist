@@ -29,6 +29,8 @@ abstract final class AlertStyle {
     'dry_off' => Icons.event_available_outlined,
     'device_offline' => Icons.sensors_off_outlined,
     'device_error' => Icons.error_outline,
+    // Mastitis şüphesi (backend ADR 0087): iletkenlik yükseldi.
+    'high_conductivity' => Icons.health_and_safety_outlined,
     _ => Icons.notifications_none_outlined,
   };
 }
