@@ -402,6 +402,14 @@ tarafı `~/GolandProjects/milktrace` ADR 0028; uçlar `/notification-channels`,
   sağlayıcı tanımlarından ÜRETİLDİ, elle düzenlenmez. Backend'e sağlayıcı eklenince
   yeniden üretilmeli.
 
+**Parolamı unuttum** (backend ADR 0074): giriş ekranında; pencere e-postayı
+`POST /auth/password-reset`'e gönderir ve sunucunun metnini olduğu gibi gösterir (kayıtlı
+olsun olmasın aynı metin). Bağlantı telefonun TARAYICISINDA açılır (panelin herkese açık
+`/admin/parola-sifirla` sayfası); yeni parola orada belirlenir, uygulamada ikinci form
+YOK. Posta kapalıysa 503 mesajı gösterilir. Sağlayıcı `passwordResetRequesterProvider`
+(testte sahtesi). Askıdaki/kapalı işletmenin kullanıcısı giremez (ADR 0072): giriş ve
+yenileme 403 ve sunucunun mesajı.
+
 **Hata mesajları:** `ApiRepository` DioException fırlatır; `ApiException`'a çeviri
 yalnızca giriş ucundaydı. Bu yüzden ekranlar gerçek API'de backend'in Türkçe mesajı
 yerine "DioException…" gösteriyordu. `userMessage(error)` (core/api_exception.dart)

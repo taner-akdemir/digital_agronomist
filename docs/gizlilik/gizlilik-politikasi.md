@@ -60,7 +60,7 @@ gerektiği kadar:
 |---|---|---|
 | netcup GmbH | sunucu barındırma (tüm veriler) | Almanya |
 | Google (Firebase Cloud Messaging) | bildirim iletimi (bildirim jetonu, bildirim metni) | ABD / AB |
-| Twilio SendGrid | işletmenin seçtiği e-posta bildirimleri | ABD |
+| Twilio SendGrid | işletmenin seçtiği e-posta bildirimleri ve parola sıfırlama e-postası (e-posta adresi, ad) | ABD |
 | NetGSM / İleti Merkezi | işletmenin seçtiği SMS bildirimleri | Türkiye |
 | [DOLDUR: işletmenin seçtiği diğer kanallar — Slack, Teams, webhook, sesli arama] | bildirim | [DOLDUR] |
 

@@ -162,6 +162,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             )
                           : const Text('Giriş yap'),
                     ),
+                    const SizedBox(height: AppSpacing.sm),
+                    TextButton(
+                      onPressed: _busy
+                          ? null
+                          : () => showDialog<void>(
+                              context: context,
+                              builder: (_) => _ForgotPasswordDialog(
+                                initialEmail: _email.text.trim(),
+                              ),
+                            ),
+                      child: const Text('Parolamı unuttum'),
+                    ),
                   ],
                 ),
               ),
@@ -203,6 +215,112 @@ class _ErrorBanner extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// "Parolamı unuttum" (backend ADR 0074): e-postaya tek kullanımlık bağlantı.
+/// Bağlantı telefonun tarayıcısında açılır, yeni parola orada belirlenir;
+/// uygulama yalnızca isteği gönderir ve sunucunun metnini gösterir.
+class _ForgotPasswordDialog extends ConsumerStatefulWidget {
+  const _ForgotPasswordDialog({required this.initialEmail});
+
+  final String initialEmail;
+
+  @override
+  ConsumerState<_ForgotPasswordDialog> createState() =>
+      _ForgotPasswordDialogState();
+}
+
+class _ForgotPasswordDialogState extends ConsumerState<_ForgotPasswordDialog> {
+  final _formKey = GlobalKey<FormState>();
+  late final _email = TextEditingController(text: widget.initialEmail);
+
+  bool _busy = false;
+  String? _error;
+  String? _done;
+
+  @override
+  void dispose() {
+    _email.dispose();
+    super.dispose();
+  }
+
+  Future<void> _send() async {
+    if (_busy) return;
+    if (!(_formKey.currentState?.validate() ?? false)) return;
+    setState(() {
+      _busy = true;
+      _error = null;
+    });
+    try {
+      final msg = await ref.read(passwordResetRequesterProvider)(
+        _email.text.trim(),
+      );
+      if (mounted) setState(() => _done = msg);
+    } on ApiException catch (e) {
+      if (mounted) setState(() => _error = e.message);
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final done = _done;
+    return AlertDialog(
+      title: const Text('Parolamı unuttum'),
+      content: done != null
+          ? Text(done)
+          : Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Text(
+                    'E-posta adresinize yeni parola belirleme bağlantısı '
+                    'gönderelim.',
+                  ),
+                  const SizedBox(height: AppSpacing.lg),
+                  TextFormField(
+                    controller: _email,
+                    enabled: !_busy,
+                    autofocus: widget.initialEmail.isEmpty,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(
+                      labelText: 'E-posta',
+                      border: OutlineInputBorder(borderRadius: AppRadius.mdAll),
+                    ),
+                    validator: (v) => EmailValidator.validate(v?.trim() ?? '')
+                        ? null
+                        : 'Geçerli bir e-posta girin.',
+                    onFieldSubmitted: (_) => _send(),
+                  ),
+                  if (_error != null) ...[
+                    const SizedBox(height: AppSpacing.md),
+                    _ErrorBanner(message: _error!),
+                  ],
+                ],
+              ),
+            ),
+      actions: done != null
+          ? [
+              FilledButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Tamam'),
+              ),
+            ]
+          : [
+              TextButton(
+                onPressed: _busy ? null : () => Navigator.of(context).pop(),
+                child: const Text('Vazgeç'),
+              ),
+              FilledButton(
+                onPressed: _busy ? null : _send,
+                child: const Text('Bağlantı gönder'),
+              ),
+            ],
     );
   }
 }

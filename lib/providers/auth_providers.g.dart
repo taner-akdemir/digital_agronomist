@@ -57,6 +57,63 @@ final class AuthSessionProvider
 
 String _$authSessionHash() => r'8a8f4df87d54fbc465bcedd5fd3c50a8eb8fb042';
 
+/// "Parolamı unuttum" isteği (backend ADR 0074). Ayrı sağlayıcı: giriş
+/// ekranının testi ağa çıkmadan sahtesini koyabilsin.
+
+@ProviderFor(passwordResetRequester)
+final passwordResetRequesterProvider = PasswordResetRequesterProvider._();
+
+/// "Parolamı unuttum" isteği (backend ADR 0074). Ayrı sağlayıcı: giriş
+/// ekranının testi ağa çıkmadan sahtesini koyabilsin.
+
+final class PasswordResetRequesterProvider
+    extends
+        $FunctionalProvider<
+          Future<String> Function(String email),
+          Future<String> Function(String email),
+          Future<String> Function(String email)
+        >
+    with $Provider<Future<String> Function(String email)> {
+  /// "Parolamı unuttum" isteği (backend ADR 0074). Ayrı sağlayıcı: giriş
+  /// ekranının testi ağa çıkmadan sahtesini koyabilsin.
+  PasswordResetRequesterProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'passwordResetRequesterProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$passwordResetRequesterHash();
+
+  @$internal
+  @override
+  $ProviderElement<Future<String> Function(String email)> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  Future<String> Function(String email) create(Ref ref) {
+    return passwordResetRequester(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Future<String> Function(String email) value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride:
+          $SyncValueProvider<Future<String> Function(String email)>(value),
+    );
+  }
+}
+
+String _$passwordResetRequesterHash() =>
+    r'5c2811edc967cfb3c4d47a7b2396c8b16de92066';
+
 /// Oturum durumu.
 
 @ProviderFor(Auth)

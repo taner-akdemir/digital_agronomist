@@ -58,6 +58,19 @@ class AuthApi {
     }
   }
 
+  /// E-postaya parola sıfırlama bağlantısı ister (backend ADR 0074).
+  ///
+  /// Sunucu kayıtlı olsun olmasın aynı cevabı verir; dönen Türkçe metin
+  /// olduğu gibi gösterilir (§16). Posta kapalıysa 503 ApiException.
+  Future<String> requestPasswordReset(String email) => _call(() async {
+    final r = await _dio.post<dynamic>(
+      '/auth/password-reset',
+      data: {'email': email},
+    );
+    return ((r.data as Map<String, dynamic>)['msg'] as String?) ??
+        'Sıfırlama bağlantısı gönderildi.';
+  });
+
   Future<AuthUser> me(String accessToken) => _call(() async {
     final r = await _dio.get<dynamic>(
       '/me',

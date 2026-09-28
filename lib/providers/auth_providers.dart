@@ -19,6 +19,12 @@ AuthSession authSession(Ref ref) {
   return session;
 }
 
+/// "Parolamı unuttum" isteği (backend ADR 0074). Ayrı sağlayıcı: giriş
+/// ekranının testi ağa çıkmadan sahtesini koyabilsin.
+@riverpod
+Future<String> Function(String email) passwordResetRequester(Ref ref) =>
+    ref.watch(authSessionProvider).api.requestPasswordReset;
+
 /// Oturum durumu.
 @Riverpod(keepAlive: true)
 class Auth extends _$Auth {
