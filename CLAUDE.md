@@ -511,5 +511,8 @@ kaybolursa Play Console'dan sıfırlanabilir.
    test edenler listesine sağımcıların Google hesaplarını ekle, katılım bağlantısını gönder.
 
 İlk yüklemeden önce Console'un istediği "Uygulama içeriği" formları (veri güvenliği,
-hedef kitle, gizlilik politikası bağlantısı) doldurulur. Alan adı henüz yok: API adresi
+hedef kitle, gizlilik politikası bağlantısı) doldurulur. Taslaklar `docs/gizlilik/`:
+gizlilik politikası, KVKK aydınlatma metni ve veri güvenliği formu cevapları — koddan
+çıkarıldı, **hukuki kontrol ve `[DOLDUR]` yerleri** bekliyor. Yeni izin ya da SDK
+eklenirse üçü birlikte güncellenir. Alan adı henüz yok: API adresi
 alan adı alınınca `MT_API_BASE` ile verilir, kodda değişiklik gerekmez.
