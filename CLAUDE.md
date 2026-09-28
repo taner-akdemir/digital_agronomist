@@ -475,3 +475,41 @@ Doğrulama: hesap kartında **"Bu telefona test bildirimi"** → `POST /me/push-
   uyarının "geri geldi" duyurusu tepside "çevrimdışı"nın YERİNE geçer. Uygulama açıkken
   gösterilen yerel bildirimin kimliği de `alertId`'den türer (aynı davranış). Uyarı
   yüksek öncelikli ve sesli, çözülme duyurusu sessiz.
+
+## 8. Play Console — dahili test
+
+Karar (28.09.2026): pilot telefonlarına Play Console **dahili test** kanalıyla. Hesap var.
+
+**Yükleme anahtarı (bir kez, sen oluşturursun; parola kimseyle paylaşılmaz):**
+
+```
+mkdir -p ~/keystores
+keytool -genkey -v -keystore ~/keystores/milktrace-upload.jks \
+  -keyalg RSA -keysize 2048 -validity 10000 -alias upload
+```
+
+`android/key.properties` (repoya GİRMEZ, `.gitignore`'da):
+
+```
+storePassword=<parola>
+keyPassword=<parola>
+keyAlias=upload
+storeFile=/Users/<sen>/keystores/milktrace-upload.jks
+```
+
+`.jks` dosyasının ve parolanın **yedeğini** al. **Play App Signing** açık kalsın
+(varsayılan): uygulamayı Google'ın anahtarı imzalar, bu yalnızca YÜKLEME anahtarıdır —
+kaybolursa Play Console'dan sıfırlanabilir.
+
+**Sürüm:**
+
+1. `pubspec.yaml`'da `version: X.Y.Z+N` — N (versionCode) her yüklemede artmalı.
+2. `MT_API_BASE=https://api.<alan-adı>/api/v1 tool/release.sh` → analiz, test,
+   `build/app/outputs/bundle/release/app-release.aab`. Betik https olmayan adresi ve
+   anahtarsız (debug imzalı) derlemeyi reddeder.
+3. Play Console → uygulama → Test → **Dahili test** → Yeni sürüm → .aab'yi yükle;
+   test edenler listesine sağımcıların Google hesaplarını ekle, katılım bağlantısını gönder.
+
+İlk yüklemeden önce Console'un istediği "Uygulama içeriği" formları (veri güvenliği,
+hedef kitle, gizlilik politikası bağlantısı) doldurulur. Alan adı henüz yok: API adresi
+alan adı alınınca `MT_API_BASE` ile verilir, kodda değişiklik gerekmez.
