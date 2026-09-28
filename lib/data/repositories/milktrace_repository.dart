@@ -9,6 +9,7 @@ import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/audit_entry.dart';
 import 'package:milktrace/data/models/breeding.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
+import 'package:milktrace/data/models/delivery.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/hall.dart';
@@ -283,6 +284,25 @@ abstract interface class MilkTraceRepository {
 
   /// Kalıcı silme: yazdığı notlar "Silinmiş kullanıcı" olarak kalır.
   Future<void> deleteTeamMember(String id);
+
+  /// Tank teslimleri ve fark eşiği (backend ADR 0089, `GET /deliveries`).
+  Future<Deliveries> deliveries();
+
+  /// Tanker fişi: gün ve miktar (mL). Sahip ve operatör; aynı gün 409.
+  Future<Delivery> addDelivery({
+    required DateTime day,
+    required int volumeMl,
+    String note = '',
+  });
+
+  /// Yanlış teslimi siler; yalnızca sahip.
+  Future<void> deleteDelivery(String id);
+
+  /// Fark eşiği (%, 0–50); yalnızca sahip.
+  Future<void> setDeliveryTolerance(double pct);
+
+  /// Sağımcı özeti (backend ADR 0090, `GET /milkers`); yalnızca sahip.
+  Future<List<Milker>> milkers({int days = 7});
 
   /// Uyarıyı okundu işaretler (§8.5 POST /alerts/{id}/ack).
   ///

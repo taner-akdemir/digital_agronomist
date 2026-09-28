@@ -261,6 +261,18 @@ Durum, beklenen doğum ve kuruya çıkarma `Animal.pregnancy`'de SUNUCUDAN gelir
 `gestation_days` / `dry_period_days`); uygulama hesaplamaz — mock'taki `_pregnancyOf`
 yalnızca ayna. Panoda "Yaklaşanlar" (`GET /breeding/upcoming`, 30 gün) boşken çizilmez.
 
+**Tank teslimi** (`/deliveries`, backend ADR 0089): panoda "Tank teslimi" kartı (son teslim +
+"Teslim gir"; görüntüleyiciye yalnızca kayıt varsa). Tanker fişini sahip ve operatör girer,
+yanlışı yalnızca sahip siler, fark eşiğini (%) yalnızca sahip değiştirir. Karşılaştırmayı
+SUNUCU yapar (önceki teslimden bu yana, ayrılan süt hariç; ilk teslim karşılaştırılmaz);
+eşik aşılırsa `delivery_mismatch` uyarısı. kg girilirse varsayılan yoğunlukla (1,03) mL'ye
+çevrilir — tankın sütü karışık. Mock'ta karşılaştırma yok (fark uydurulmaz).
+
+**Sağımcılar** (`/settings/milkers`, backend ADR 0090): hesap kartından YALNIZCA sahibe.
+Sağımcı = oturumu açan / hayvanı bağlayan (ayrı seçim adımı yok). 7/30 gün; oturum, sağım,
+süt, ortalama süre, düşük debi payı. Metin oranın kişiyi puanlamadığını söyler.
+Süt fiyatı/gelir takibi YOK (karar 28.09.2026).
+
 Mock modda geçmiş **asset değil, üretilmiştir**: `MockLactation` §10'daki Wood laktasyon
 eğrisiyle deterministik seri üretir. 30 hayvan × 90 gün × 2 sağım elle tutulabilecek bir
 JSON değil. Bugünkü seviye hayvanın SINIFINA sabitlenir ki rozet ile grafik çelişmesin.

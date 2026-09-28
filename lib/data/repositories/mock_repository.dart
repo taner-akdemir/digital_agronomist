@@ -13,6 +13,7 @@ import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/audit_entry.dart';
 import 'package:milktrace/data/models/breeding.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
+import 'package:milktrace/data/models/delivery.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/hall.dart';
@@ -860,6 +861,69 @@ class MockRepository implements MilkTraceRepository {
   /// Demo modda birim yalnızca uygulamada tutulur (Auth.applyVolumeUnit).
   @override
   Future<void> setVolumeUnit(String unit) => _delayed(() async {});
+
+  /// Mock'ta teslimler bellekte. Sayaç toplamı üretilmiş geçmişten
+  /// çıkarılmıyor: karşılaştırma yok (`compared` false) — farkı uydurmak,
+  /// demoda gerçek sanılacak bir alarm göstermek olurdu.
+  final List<Delivery> _deliveries = [];
+  double _tolerance = 5;
+  int _deliverySeq = 0;
+
+  @override
+  Future<Deliveries> deliveries() => _delayed(
+    () async => Deliveries(
+      tolerancePct: _tolerance,
+      items: [..._deliveries]
+        ..sort((a, b) => b.deliveredOn.compareTo(a.deliveredOn)),
+    ),
+  );
+
+  @override
+  Future<Delivery> addDelivery({
+    required DateTime day,
+    required int volumeMl,
+    String note = '',
+  }) => _delayed(() async {
+    final d = DateTime(day.year, day.month, day.day);
+    if (_deliveries.any((e) => e.deliveredOn == d)) {
+      throw const ApiException(
+        code: 'CONFLICT',
+        message: 'bu güne teslim zaten girilmiş; yanlışsa silip yeniden girin',
+      );
+    }
+    final out = Delivery(
+      id: 'mock-delivery-${++_deliverySeq}',
+      deliveredOn: d,
+      volumeMl: volumeMl,
+      note: note.trim(),
+      authorName: 'Demo Çiftçi',
+    );
+    _deliveries.add(out);
+    return out;
+  });
+
+  @override
+  Future<void> deleteDelivery(String id) =>
+      _delayed(() async => _deliveries.removeWhere((e) => e.id == id));
+
+  @override
+  Future<void> setDeliveryTolerance(double pct) =>
+      _delayed(() async => _tolerance = pct);
+
+  @override
+  Future<List<Milker>> milkers({int days = 7}) => _delayed(
+    () async => [
+      Milker(
+        userId: 'demo',
+        name: 'Demo Çiftçi',
+        sessions: days * 2,
+        milkings: days * 2 * 24,
+        volumeMl: days * 2 * 24 * 9800,
+        avgDurationSec: 372,
+        lowFlowMilkings: days,
+      ),
+    ],
+  );
 
   /// İşlem kaydı: demo için birkaç tipik olay (backend ADR 0082).
   @override

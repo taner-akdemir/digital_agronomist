@@ -12,6 +12,7 @@ import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/audit_entry.dart';
 import 'package:milktrace/data/models/breeding.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
+import 'package:milktrace/data/models/delivery.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/hall.dart';
@@ -597,6 +598,51 @@ class ApiRepository implements MilkTraceRepository {
   @override
   Future<void> setVolumeUnit(String unit) =>
       _dio.put<dynamic>('/tenant/settings', data: {'volumeUnit': unit});
+
+  @override
+  Future<Deliveries> deliveries() async =>
+      Deliveries.fromJson(_dataOf(await _dio.get<dynamic>('/deliveries')));
+
+  @override
+  Future<Delivery> addDelivery({
+    required DateTime day,
+    required int volumeMl,
+    String note = '',
+  }) async => Delivery.fromJson(
+    _dataOf(
+      await _dio.post<dynamic>(
+        '/deliveries',
+        data: {
+          // Yalnızca GÜN: saat dilimi kaydırması olmasın.
+          'deliveredOn':
+              '${day.year.toString().padLeft(4, '0')}-'
+              '${day.month.toString().padLeft(2, '0')}-'
+              '${day.day.toString().padLeft(2, '0')}',
+          'volumeMl': volumeMl,
+          'note': note,
+        },
+      ),
+    ),
+  );
+
+  @override
+  Future<void> deleteDelivery(String id) async {
+    await _dio.delete<dynamic>('/deliveries/$id');
+  }
+
+  @override
+  Future<void> setDeliveryTolerance(double pct) async {
+    await _dio.put<dynamic>(
+      '/deliveries/settings',
+      data: {'tolerancePct': pct},
+    );
+  }
+
+  @override
+  Future<List<Milker>> milkers({int days = 7}) async => _listOf(
+    await _dio.get<dynamic>('/milkers', queryParameters: {'days': days}),
+    Milker.fromJson,
+  );
 
   @override
   Future<List<AuditEntry>> auditLog() async =>

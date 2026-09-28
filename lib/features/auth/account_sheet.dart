@@ -183,6 +183,25 @@ class _AccountSheet extends ConsumerWidget {
                     ),
                   ),
                 ),
+                // Sağımcılar (backend ADR 0090): yalnızca sahip.
+                const SizedBox(height: AppSpacing.sm),
+                OutlinedButton.icon(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    context.push('/settings/milkers');
+                  },
+                  icon: const Icon(Icons.badge_outlined),
+                  label: const Text('Sağımcılar'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.darkGreenColor,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppSpacing.lg,
+                    ),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadius.mdAll,
+                    ),
+                  ),
+                ),
                 // İşlem kaydı (backend ADR 0082): yalnızca sahip.
                 const SizedBox(height: AppSpacing.sm),
                 OutlinedButton.icon(

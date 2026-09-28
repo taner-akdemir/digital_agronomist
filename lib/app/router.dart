@@ -6,6 +6,7 @@ import 'package:milktrace/features/alerts/alerts_screen.dart';
 import 'package:milktrace/features/audit/audit_screen.dart';
 import 'package:milktrace/features/auth/login_screen.dart';
 import 'package:milktrace/features/dashboard/dashboard_screen.dart';
+import 'package:milktrace/features/deliveries/deliveries_screen.dart';
 import 'package:milktrace/features/devices/devices_screen.dart';
 import 'package:milktrace/features/history/animal_detail_screen.dart';
 import 'package:milktrace/features/history/animal_form_screen.dart';
@@ -18,6 +19,7 @@ import 'package:milktrace/features/settings/notification_channels_screen.dart';
 import 'package:milktrace/features/settings/thresholds_screen.dart';
 import 'package:milktrace/features/shell/scaffold_with_nav_bar.dart';
 import 'package:milktrace/features/splash/splash_screen.dart';
+import 'package:milktrace/features/team/milkers_screen.dart';
 import 'package:milktrace/features/team/team_screen.dart';
 import 'package:milktrace/features/update/update_required_screen.dart';
 import 'package:milktrace/providers/auth_providers.dart';
@@ -81,6 +83,13 @@ GoRouter router(Ref ref) {
       GoRoute(path: '/settings/team', builder: (_, _) => const TeamScreen()),
       // İşlem kaydı (backend ADR 0082): hesap kartından, yalnızca sahibe.
       GoRoute(path: '/settings/audit', builder: (_, _) => const AuditScreen()),
+      // Sağımcı özeti (backend ADR 0090): hesap kartından, yalnızca sahibe.
+      GoRoute(
+        path: '/settings/milkers',
+        builder: (_, _) => const MilkersScreen(),
+      ),
+      // Tank teslimleri (backend ADR 0089): panodaki karttan.
+      GoRoute(path: '/deliveries', builder: (_, _) => const DeliveriesScreen()),
       // Bildirim kanalları (backend ADR 0028): hesap kartından, yalnızca
       // işletme sahibine.
       GoRoute(

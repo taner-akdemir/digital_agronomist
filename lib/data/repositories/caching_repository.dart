@@ -12,6 +12,7 @@ import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/audit_entry.dart';
 import 'package:milktrace/data/models/breeding.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
+import 'package:milktrace/data/models/delivery.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/hall.dart';
@@ -425,6 +426,36 @@ class CachingRepository implements MilkTraceRepository {
   @override
   Future<void> setVolumeUnit(String unit) =>
       _net(() => _inner.setVolumeUnit(unit));
+
+  @override
+  Future<Deliveries> deliveries() => _read(
+    'deliveries',
+    _inner.deliveries,
+    (j) => Deliveries.fromJson(_map(j)),
+  );
+
+  @override
+  Future<Delivery> addDelivery({
+    required DateTime day,
+    required int volumeMl,
+    String note = '',
+  }) =>
+      _net(() => _inner.addDelivery(day: day, volumeMl: volumeMl, note: note));
+
+  @override
+  Future<void> deleteDelivery(String id) =>
+      _net(() => _inner.deleteDelivery(id));
+
+  @override
+  Future<void> setDeliveryTolerance(double pct) =>
+      _net(() => _inner.setDeliveryTolerance(pct));
+
+  @override
+  Future<List<Milker>> milkers({int days = 7}) => _read(
+    'milkers:$days',
+    () => _inner.milkers(days: days),
+    (j) => _list(j, Milker.fromJson),
+  );
 
   @override
   Future<List<AuditEntry>> auditLog() =>
