@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/api_exception.dart';
+import 'package:milktrace/features/support/support.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 
 /// Giriş ekranı (§8.5 POST /auth/login).
@@ -174,6 +175,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             ),
                       child: const Text('Parolamı unuttum'),
                     ),
+                    // Giremeyen kişi (askı, unutulan parola) de bize
+                    // ulaşabilsin (backend ADR 0077).
+                    const SizedBox(height: AppSpacing.lg),
+                    const SupportButtons(),
                   ],
                 ),
               ),

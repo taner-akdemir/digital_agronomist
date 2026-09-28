@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/features/auth/login_screen.dart';
+import 'package:milktrace/features/support/support.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 
 void main() {
@@ -14,6 +15,7 @@ void main() {
       ProviderScope(
         overrides: [
           passwordResetRequesterProvider.overrideWithValue(requester),
+          supportInfoProvider.overrideWith((ref) async => null),
         ],
         child: const MaterialApp(home: LoginScreen()),
       ),

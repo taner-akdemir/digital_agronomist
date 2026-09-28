@@ -12,6 +12,7 @@ import 'package:milktrace/data/repositories/mock_repository.dart';
 import 'package:milktrace/features/auth/account_sheet.dart';
 import 'package:milktrace/features/settings/notification_channel_form_screen.dart';
 import 'package:milktrace/features/settings/notification_channels_screen.dart';
+import 'package:milktrace/features/support/support.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 
@@ -65,6 +66,7 @@ Future<void> pumpApp(
     overrides: [
       repositoryProvider.overrideWith((ref) => repo as MilkTraceRepository),
       authProvider.overrideWith(() => _FakeAuth(role)),
+      supportInfoProvider.overrideWith((ref) async => null),
     ],
   );
   addTearDown(container.dispose);

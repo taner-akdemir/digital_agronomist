@@ -71,6 +71,15 @@ class AuthApi {
         'Sıfırlama bağlantısı gönderildi.';
   });
 
+  /// Destek numaraları (backend ADR 0077, kimlik doğrulamasız). Alan boşsa
+  /// o düğme gösterilmez.
+  Future<SupportInfo> support() => _call(() async {
+    final r = await _dio.get<dynamic>('/auth/support');
+    final d = _data(r);
+    String? nonEmpty(Object? v) => v is String && v.isNotEmpty ? v : null;
+    return (phone: nonEmpty(d['phone']), whatsapp: nonEmpty(d['whatsapp']));
+  });
+
   Future<AuthUser> me(String accessToken) => _call(() async {
     final r = await _dio.get<dynamic>(
       '/me',
@@ -79,3 +88,6 @@ class AuthApi {
     return AuthUser.fromJson(_data(r));
   });
 }
+
+/// Destek iletişimi; E.164 (+905…).
+typedef SupportInfo = ({String? phone, String? whatsapp});

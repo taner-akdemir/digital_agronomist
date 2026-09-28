@@ -417,6 +417,13 @@ askıya alır, siler (notları "Silinmiş kullanıcı" kalır). Sahipler listede
 sahip eklemek platformun işi. Önbelleklenmez (çevrimdışı eski listeden silme olmasın).
 Mock modda bellekte. Rol etiketleri `features/auth/role_labels.dart`.
 
+**Destek** (backend ADR 0077): giriş ekranında ve hesap kartında "WhatsApp" ve "Ara".
+Numara `GET /auth/support`'tan (kimlik doğrulamasız — giremeyen de ulaşsın), uygulamaya
+GÖMÜLMEZ. Numara yoksa ya da okunamazsa bölüm sessizce gizlenir. WhatsApp `wa.me` + hazır
+metin ve uygulama sürümü; WhatsApp yoksa tarayıcıda açılır. Sağlayıcılar
+`supportInfoProvider` / `supportLauncherProvider` (testte sahtesi — hesap kartını açan
+testler de `supportInfoProvider`'ı ezmeli, yoksa ağa çıkar).
+
 **Hata mesajları:** `ApiRepository` DioException fırlatır; `ApiException`'a çeviri
 yalnızca giriş ucundaydı. Bu yüzden ekranlar gerçek API'de backend'in Türkçe mesajı
 yerine "DioException…" gösteriyordu. `userMessage(error)` (core/api_exception.dart)

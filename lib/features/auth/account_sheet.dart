@@ -5,6 +5,7 @@ import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/core/env.dart';
 import 'package:milktrace/features/auth/role_labels.dart';
+import 'package:milktrace/features/support/support.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/push_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
@@ -175,6 +176,9 @@ class _AccountSheet extends ConsumerWidget {
                   ),
                 ),
               ),
+              // Destek (backend ADR 0077); numara yoksa hiç görünmez.
+              const SizedBox(height: AppSpacing.lg),
+              const SupportButtons(),
             ],
           ),
         ),
