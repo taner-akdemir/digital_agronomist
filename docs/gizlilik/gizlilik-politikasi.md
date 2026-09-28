@@ -76,8 +76,8 @@ ile yapılır.
 ## 6. Ne kadar saklıyoruz
 
 - Hesap ve işletme verileri: işletmenin hizmet sözleşmesi sürdükçe; sözleşme sona
-  erdikten **90 gün** sonra kendiliğinden silinir (bu sürede işletme verilerini dışa
-  aktarabilir). Faturalama için yalnızca işletmenin kullandığı sayaç-gün kayıtları,
+  erdikten **90 gün** sonra kendiliğinden silinir. Bu sürede işletme sahibinin talebiyle
+  işletmenin bütün verisi (hayvanlar, sağımlar, notlar, uyarılar) Excel dosyası olarak verilir. Faturalama için yalnızca işletmenin kullandığı sayaç-gün kayıtları,
   işletme adı anonimleştirilerek, vergi mevzuatının öngördüğü süre saklanır.
 - Veritabanı yedekleri: 14 gün; silinen veri en geç 14 gün sonra yedeklerden de çıkar.
 - Bildirim jetonu: çıkışta ya da jeton geçersizleşince silinir.
