@@ -424,6 +424,13 @@ metin ve uygulama sürümü; WhatsApp yoksa tarayıcıda açılır. Sağlayıcı
 `supportInfoProvider` / `supportLauncherProvider` (testte sahtesi — hesap kartını açan
 testler de `supportInfoProvider`'ı ezmeli, yoksa ağa çıkar).
 
+**Asgari sürüm** (backend ADR 0080): üç Dio'nun hepsi `X-App-Platform` ve `X-App-Build`
+(versionCode, `AppBuild.load()` main'de) gönderir; gateway asgarinin altına 426 döner,
+`AppBuildInterceptor` `UpgradeGate`'i açar ve router her ekranı `/update`'e ("Güncelleme
+gerekli", Play düğmesi + destek) çevirir; geri dönüş yok. Uyumsuz backend değişikliğinde
+önce yeni sürüm Play'e, sonra netcup'ta `MIN_APP_BUILD_ANDROID`. Bu yüzden versionCode
+(`pubspec.yaml` `+N`) her yüklemede ARTMALI (§8).
+
 **Hata mesajları:** `ApiRepository` DioException fırlatır; `ApiException`'a çeviri
 yalnızca giriş ucundaydı. Bu yüzden ekranlar gerçek API'de backend'in Türkçe mesajı
 yerine "DioException…" gösteriyordu. `userMessage(error)` (core/api_exception.dart)

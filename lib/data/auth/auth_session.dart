@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:milktrace/core/app_build.dart';
 import 'package:milktrace/data/auth/auth_api.dart';
 import 'package:milktrace/data/auth/auth_interceptor.dart';
 import 'package:milktrace/data/auth/token_store.dart';
@@ -33,9 +34,12 @@ class AuthSession {
       contentType: Headers.jsonContentType,
     );
 
-    final bare = Dio(options());
-    final retry = Dio(options());
-    final authed = Dio(options());
+    // Sürüm başlıkları ve 426 hepsinde (backend ADR 0080): eski uygulama
+    // giriş ekranında da "güncelleme gerekli"yi görmeli.
+    Dio dio() => Dio(options())..interceptors.add(AppBuildInterceptor());
+    final bare = dio();
+    final retry = dio();
+    final authed = dio();
 
     final tokenStore = store ?? TokenStore();
     final api = AuthApi(dio: bare);

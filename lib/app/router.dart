@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:milktrace/core/app_build.dart';
 import 'package:milktrace/data/models/auth_state.dart';
 import 'package:milktrace/features/alerts/alerts_screen.dart';
 import 'package:milktrace/features/auth/login_screen.dart';
@@ -17,6 +18,7 @@ import 'package:milktrace/features/settings/thresholds_screen.dart';
 import 'package:milktrace/features/shell/scaffold_with_nav_bar.dart';
 import 'package:milktrace/features/splash/splash_screen.dart';
 import 'package:milktrace/features/team/team_screen.dart';
+import 'package:milktrace/features/update/update_required_screen.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -40,10 +42,14 @@ GoRouter router(Ref ref) {
 
   return GoRouter(
     initialLocation: '/splash',
-    refreshListenable: authListenable,
+    refreshListenable: Listenable.merge([authListenable, UpgradeGate.required]),
     redirect: (context, state) {
       final auth = authListenable.value;
       final at = state.matchedLocation;
+
+      // Sunucu bu sürümü artık desteklemiyor (426, backend ADR 0080): her
+      // şeyin önünde. Oturum durumuna bakılmaz; giriş de yapılamıyor.
+      if (UpgradeGate.required.value) return at == '/update' ? null : '/update';
 
       // Token diskten okunurken KARAR VERME. Burada signedOut sayılsaydı
       // uygulama her açılışta giriş ekranını bir an gösterip içeri atlardı.
@@ -59,6 +65,7 @@ GoRouter router(Ref ref) {
     routes: [
       GoRoute(path: '/splash', builder: (_, _) => const SplashScreen()),
       GoRoute(path: '/login', builder: (_, _) => const LoginScreen()),
+      GoRoute(path: '/update', builder: (_, _) => const UpdateRequiredScreen()),
       // Kabuğun DIŞINDA: uyarı listesi bir sekmeye ait değil, her sekmeden
       // açılır ve tam ekran gelir.
       GoRoute(path: '/alerts', builder: (_, _) => const AlertsScreen()),
