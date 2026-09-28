@@ -431,6 +431,15 @@ olanınki. Birden çoksa hesap kartında "İşletme değiştir" → `Auth.switch
 izlediği için kendiliğinden yeni işletmeye geçer; push seçili işletmeyi izler.
 Kullanıcılar ekranında kayıtlı e-posta yeni hesap açmaz, işletmeye üye olarak eklenir.
 
+**İşlem kaydı** (`/settings/audit`, backend ADR 0082): hesap kartından YALNIZCA sahibe.
+Son 90 gün; eşik, hayvan, içe aktarma, buzağılama, eşleştirme kaldırma (silinen sağım),
+kullanıcı ve kanal değişiklikleri — kim, ne zaman, ne. Olay kodu → Türkçe
+`auditActionLabel`; tanınmayan kod ham. Kaydı backend yazar, uygulama yalnızca okur.
+
+**Tesis yapısı uygulamada DEĞİŞMEZ** (karar 28.09.2026): bölge/ünite/nokta ve sayacın
+noktaya takılması kurulum ekibinin işi, panelden. Sahip görür; yanlış takılan sayaç
+veriyi başka noktaya yazar. Cihazlar sekmesine düzenleme ekleme.
+
 **Asgari sürüm** (backend ADR 0080): üç Dio'nun hepsi `X-App-Platform` ve `X-App-Build`
 (versionCode, `AppBuild.load()` main'de) gönderir; gateway asgarinin altına 426 döner,
 `AppBuildInterceptor` `UpgradeGate`'i açar ve router her ekranı `/update`'e ("Güncelleme

@@ -9,6 +9,7 @@ import 'package:milktrace/data/models/animal_import.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
+import 'package:milktrace/data/models/audit_entry.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
@@ -353,6 +354,10 @@ class CachingRepository implements MilkTraceRepository {
   @override
   Future<void> testNotificationChannel(String id) =>
       _net(() => _inner.testNotificationChannel(id));
+
+  @override
+  Future<List<AuditEntry>> auditLog() =>
+      _read('audit', _inner.auditLog, (j) => _list(j, AuditEntry.fromJson));
 
   // Kullanıcı yönetimi önbelleklenmez: çevrimdışıyken eski bir listeden
   // birini silmeye kalkmak yanlış kişiyi hedefleyebilirdi.

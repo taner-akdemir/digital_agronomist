@@ -9,6 +9,7 @@ import 'package:milktrace/data/models/animal_import.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
+import 'package:milktrace/data/models/audit_entry.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
@@ -511,6 +512,10 @@ class ApiRepository implements MilkTraceRepository {
   @override
   Future<void> testNotificationChannel(String id) =>
       _dio.post<dynamic>('/notification-channels/$id/test');
+
+  @override
+  Future<List<AuditEntry>> auditLog() async =>
+      _listOf(await _dio.get<dynamic>('/audit'), AuditEntry.fromJson);
 
   @override
   Future<List<TeamMember>> teamMembers() async =>

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:milktrace/core/app_build.dart';
 import 'package:milktrace/data/models/auth_state.dart';
 import 'package:milktrace/features/alerts/alerts_screen.dart';
+import 'package:milktrace/features/audit/audit_screen.dart';
 import 'package:milktrace/features/auth/login_screen.dart';
 import 'package:milktrace/features/dashboard/dashboard_screen.dart';
 import 'package:milktrace/features/devices/devices_screen.dart';
@@ -78,6 +79,8 @@ GoRouter router(Ref ref) {
       // İşletmenin kullanıcıları (backend ADR 0076): hesap kartından,
       // yalnızca işletme sahibine.
       GoRoute(path: '/settings/team', builder: (_, _) => const TeamScreen()),
+      // İşlem kaydı (backend ADR 0082): hesap kartından, yalnızca sahibe.
+      GoRoute(path: '/settings/audit', builder: (_, _) => const AuditScreen()),
       // Bildirim kanalları (backend ADR 0028): hesap kartından, yalnızca
       // işletme sahibine.
       GoRoute(

@@ -10,6 +10,7 @@ import 'package:milktrace/data/models/animal_import.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
+import 'package:milktrace/data/models/audit_entry.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
@@ -671,6 +672,37 @@ class MockRepository implements MilkTraceRepository {
     (await _channelMap()).remove(id);
     _channelSecrets.remove(id);
   });
+
+  /// İşlem kaydı: demo için birkaç tipik olay (backend ADR 0082).
+  @override
+  Future<List<AuditEntry>> auditLog() => _delayed(
+    () async => [
+      AuditEntry(
+        id: 'a1',
+        at: _clock.subtract(const Duration(hours: 2)),
+        action: 'spout.unassign',
+        target: 'TR340000012',
+        detail: 'Eşleştirme kaldırıldı, açık sağım silindi (3.4 L)',
+        userName: 'Mehmet Yılmaz',
+      ),
+      AuditEntry(
+        id: 'a2',
+        at: _clock.subtract(const Duration(days: 1)),
+        action: 'animal.update',
+        target: 'TR340000008',
+        detail: 'Durum: Sağmal → Kuruda',
+        userName: 'Demo Çiftçi',
+      ),
+      AuditEntry(
+        id: 'a3',
+        at: _clock.subtract(const Duration(days: 3)),
+        action: 'thresholds.update',
+        target: 'İnek',
+        detail: 'Düşük debi 1 → 1.2',
+        userName: 'Demo Çiftçi',
+      ),
+    ],
+  );
 
   /// İşletmenin kullanıcıları BELLEKTE (backend ADR 0076): demo sahibi ve
   /// bir sağımcıyla başlar. Demo modda e-posta yok; parolasız ekleme de

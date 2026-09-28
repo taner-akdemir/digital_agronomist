@@ -178,6 +178,25 @@ class _AccountSheet extends ConsumerWidget {
                     ),
                   ),
                 ),
+                // İşlem kaydı (backend ADR 0082): yalnızca sahip.
+                const SizedBox(height: AppSpacing.sm),
+                OutlinedButton.icon(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    context.push('/settings/audit');
+                  },
+                  icon: const Icon(Icons.history),
+                  label: const Text('İşlem kaydı'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.darkGreenColor,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppSpacing.lg,
+                    ),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadius.mdAll,
+                    ),
+                  ),
+                ),
               ],
               const SizedBox(height: AppSpacing.sm),
               OutlinedButton.icon(

@@ -19,6 +19,7 @@
 | Kimlik / iletişim | ad soyad, e-posta | hesap, giriş, bildirim | (c) sözleşmenin kurulması/ifası |
 | Müşteri işlem | işletmedeki rol, hayvan notları ve yazarı | hizmetin sunulması | (c) sözleşmenin ifası |
 | İşlem güvenliği | parola özeti, oturum jetonları, user-agent, IP adresi (sunucu kayıtları) | güvenlik, kötüye kullanımın önlenmesi | (ç) hukuki yükümlülük, (f) meşru menfaat |
+| İşlem kaydı | işlemi yapan kullanıcı, işlem ve zamanı (90 gün) | işletme içi hesap verebilirlik | (f) meşru menfaat |
 | Cihaz | bildirim jetonu, platform | bildirim iletimi | (c) sözleşmenin ifası |
 | İletişim (alıcı) | bildirim kanalı e-posta/telefon | uyarıların iletilmesi | (c) sözleşmenin ifası; alıcı işletme dışındaysa [DOLDUR] |
 

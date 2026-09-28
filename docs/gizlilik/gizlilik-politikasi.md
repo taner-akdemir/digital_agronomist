@@ -38,6 +38,10 @@ yazar bilgisi dışında kişisel veri içermez.
 **Bildirim kanalı alıcıları:** işletme sahibinin uyarı almak için tanımladığı e-posta
 adresleri ve telefon numaraları.
 
+**İşlem kaydı:** işletmenin ayarlarını ve kayıtlarını değiştiren işlemlerde (eşik,
+hayvan kaydı, eşleştirme, kullanıcı, bildirim kanalı) işlemi kimin ve ne zaman yaptığı;
+işletme sahibi görür, **90 gün** saklanır.
+
 **Sunucu kayıtları:** güvenlik ve hata ayıklama için isteklerin zamanı, yolu, sonucu ve
 istek yapan IP adresi.
 
@@ -82,6 +86,7 @@ ile yapılır.
 - Veritabanı yedekleri: 14 gün; silinen veri en geç 14 gün sonra yedeklerden de çıkar.
 - Bildirim jetonu: çıkışta ya da jeton geçersizleşince silinir.
 - Sunucu kayıtları (IP adresi dahil): **30 gün**.
+- İşlem kaydı (kim, neyi, ne zaman değiştirdi): **90 gün**.
 
 ## 7. Telefonunuzda tutulanlar
 

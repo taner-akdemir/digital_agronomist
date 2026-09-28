@@ -6,6 +6,7 @@ import 'package:milktrace/data/models/animal_import.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
+import 'package:milktrace/data/models/audit_entry.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
@@ -212,6 +213,10 @@ abstract interface class MilkTraceRepository {
   /// hata mesajı kullanıcıya gösterilir: "yanlış API anahtarı" gibi bir
   /// cevabı görmeden ayar düzeltilemez.
   Future<void> testNotificationChannel(String id);
+
+  /// İşlem kaydı, son 90 gün, en yeni üstte (backend ADR 0082, `GET /audit`).
+  /// YALNIZCA işletme sahibi; backend diğer rollere 403 döner.
+  Future<List<AuditEntry>> auditLog();
 
   /// İşletmenin kullanıcıları (backend ADR 0076, `GET /team`). YALNIZCA
   /// işletme sahibi; backend diğer rollere 403 döner.
