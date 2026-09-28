@@ -75,11 +75,13 @@ ile yapılır.
 
 ## 6. Ne kadar saklıyoruz
 
-- Hesap ve işletme verileri: işletmenin hizmet sözleşmesi sürdükçe; sona erince
-  [DOLDUR: süre] içinde silinir.
-- Veritabanı yedekleri: 14 gün.
+- Hesap ve işletme verileri: işletmenin hizmet sözleşmesi sürdükçe; sözleşme sona
+  erdikten **90 gün** sonra kendiliğinden silinir (bu sürede işletme verilerini dışa
+  aktarabilir). Faturalama için yalnızca işletmenin kullandığı sayaç-gün kayıtları,
+  işletme adı anonimleştirilerek, vergi mevzuatının öngördüğü süre saklanır.
+- Veritabanı yedekleri: 14 gün; silinen veri en geç 14 gün sonra yedeklerden de çıkar.
 - Bildirim jetonu: çıkışta ya da jeton geçersizleşince silinir.
-- Sunucu kayıtları: [DOLDUR: süre].
+- Sunucu kayıtları (IP adresi dahil): **30 gün**.
 
 ## 7. Telefonunuzda tutulanlar
 

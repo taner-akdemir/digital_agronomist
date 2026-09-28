@@ -39,8 +39,10 @@ otomatik olarak toplanır.
 
 ## Saklama süresi
 
-Hizmet sözleşmesi süresince ve sonrasında [DOLDUR: süre]; yedekler 14 gün; sunucu
-kayıtları [DOLDUR: süre]. Süre sonunda silinir, yok edilir ya da anonimleştirilir.
+Hizmet sözleşmesi süresince ve sona ermesinden sonra 90 gün; ardından kendiliğinden
+silinir (faturalama kayıtları işletme adı anonimleştirilerek vergi mevzuatı süresince
+saklanır). Yedekler 14 gün, sunucu kayıtları (IP adresi dahil) 30 gün. Süre sonunda
+silinir, yok edilir ya da anonimleştirilir.
 
 ## Haklarınız (md. 11)
 
