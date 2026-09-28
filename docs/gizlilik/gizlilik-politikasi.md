@@ -93,7 +93,9 @@ görüntülenen veriler uygulamanın kendi deposunda. Çıkış yaptığınızda
 KVKK md. 11 uyarınca verilerinizin işlenip işlenmediğini öğrenme, bilgi isteme,
 düzeltilmesini ya da silinmesini isteme, itiraz etme ve zararın giderilmesini isteme
 haklarına sahipsiniz. Başvuru: [DOLDUR: e-posta]. Hesabınızın silinmesini işletmenizin
-yöneticisinden ya da bu adresten isteyebilirsiniz.
+yöneticisinden ya da bu adresten isteyebilirsiniz. Hesap silinince adınız, e-postanız,
+oturumlarınız ve bildirim jetonunuz kalıcı olarak silinir; yazdığınız hayvan notları
+işletmenin sürü kaydı olarak kalır ve yazarı "Silinmiş kullanıcı" görünür.
 
 ## 9. Çocuklar
 

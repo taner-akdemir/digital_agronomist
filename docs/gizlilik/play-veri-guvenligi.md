@@ -9,7 +9,7 @@
 |---|---|---|
 | Uygulama kullanıcı verisi topluyor ya da paylaşıyor mu? | **Evet** | hesap, bildirim jetonu |
 | Aktarımda şifreleniyor mu? | **Evet** (HTTPS/TLS) | sürüm paketi yalnızca https'e derleniyor (`tool/release.sh`), düz http'ye izin yok |
-| Kullanıcılar verilerinin silinmesini isteyebilir mi? | **Evet** | başvuru: [DOLDUR: e-posta]; hesabı işletme yöneticisi de kapatır |
+| Kullanıcılar verilerinin silinmesini isteyebilir mi? | **Evet** | başvuru: [DOLDUR: e-posta]; platform yöneticisi hesabı panelden kalıcı siler (backend ADR 0070) |
 | Hesap uygulama içinden oluşturuluyor mu? | **Hayır** | hesapları platform yöneticisi açar — Play'in "uygulama içi hesap silme" şartı uygulama içinde hesap oluşturmaya bağlı; yine de silme talebi bağlantısı verilmeli: [DOLDUR: URL] |
 
 ## Toplanan veri türleri

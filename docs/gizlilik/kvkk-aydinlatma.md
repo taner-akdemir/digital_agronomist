@@ -42,7 +42,8 @@ otomatik olarak toplanır.
 Hizmet sözleşmesi süresince ve sona ermesinden sonra 90 gün; ardından kendiliğinden
 silinir (faturalama kayıtları işletme adı anonimleştirilerek vergi mevzuatı süresince
 saklanır). Yedekler 14 gün, sunucu kayıtları (IP adresi dahil) 30 gün. Süre sonunda
-silinir, yok edilir ya da anonimleştirilir.
+silinir, yok edilir ya da anonimleştirilir. Sözleşme sürerken silme talebinde hesap
+kalıcı silinir; yazılan hayvan notları sürü kaydı olarak kalır, yazar adı kaldırılır.
 
 ## Haklarınız (md. 11)
 
