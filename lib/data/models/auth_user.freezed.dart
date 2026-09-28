@@ -16,7 +16,9 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AuthUser {
 
- String get id; String get email; String get fullName; String get role; String? get tenantId;
+ String get id; String get email; String get fullName; String get role; String? get tenantId;/// Girebildiği işletmeler (backend ADR 0081); `role` ve `tenantId`
+/// seçili olanınki. Birden çoksa hesap kartı "İşletme değiştir" sunar.
+ List<TenantRef> get tenants;
 /// Create a copy of AuthUser
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,20 +32,20 @@ $AuthUserCopyWith<AuthUser> get copyWith => _$AuthUserCopyWithImpl<AuthUser>(thi
 @override
 bool operator ==(Object other) {
   final _this = this as AuthUser;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthUser&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.email, _this.email) || other.email == _this.email)&&(identical(other.fullName, _this.fullName) || other.fullName == _this.fullName)&&(identical(other.role, _this.role) || other.role == _this.role)&&(identical(other.tenantId, _this.tenantId) || other.tenantId == _this.tenantId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthUser&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.email, _this.email) || other.email == _this.email)&&(identical(other.fullName, _this.fullName) || other.fullName == _this.fullName)&&(identical(other.role, _this.role) || other.role == _this.role)&&(identical(other.tenantId, _this.tenantId) || other.tenantId == _this.tenantId)&&const DeepCollectionEquality().equals(other.tenants, _this.tenants));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as AuthUser;
-  return Object.hash(runtimeType,_this.id,_this.email,_this.fullName,_this.role,_this.tenantId);
+  return Object.hash(runtimeType,_this.id,_this.email,_this.fullName,_this.role,_this.tenantId,const DeepCollectionEquality().hash(_this.tenants));
 }
 
 @override
 String toString() {
   final _this = this as AuthUser;
-  return 'AuthUser(id: ${_this.id}, email: ${_this.email}, fullName: ${_this.fullName}, role: ${_this.role}, tenantId: ${_this.tenantId})';
+  return 'AuthUser(id: ${_this.id}, email: ${_this.email}, fullName: ${_this.fullName}, role: ${_this.role}, tenantId: ${_this.tenantId}, tenants: ${_this.tenants})';
 }
 
 
@@ -54,7 +56,7 @@ abstract mixin class $AuthUserCopyWith<$Res>  {
   factory $AuthUserCopyWith(AuthUser value, $Res Function(AuthUser) _then) = _$AuthUserCopyWithImpl;
 @useResult
 $Res call({
- String id, String email, String fullName, String role, String? tenantId
+ String id, String email, String fullName, String role, String? tenantId, List<TenantRef> tenants
 });
 
 
@@ -71,14 +73,15 @@ class _$AuthUserCopyWithImpl<$Res>
 
 /// Create a copy of AuthUser
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? email = null,Object? fullName = null,Object? role = null,Object? tenantId = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? email = null,Object? fullName = null,Object? role = null,Object? tenantId = freezed,Object? tenants = null,}) {
   return _then(AuthUser(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,fullName: null == fullName ? _self.fullName : fullName // ignore: cast_nullable_to_non_nullable
 as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
 as String,tenantId: freezed == tenantId ? _self.tenantId : tenantId // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,tenants: null == tenants ? _self.tenants : tenants // ignore: cast_nullable_to_non_nullable
+as List<TenantRef>,
   ));
 }
 
@@ -163,10 +166,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String email,  String fullName,  String role,  String? tenantId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String email,  String fullName,  String role,  String? tenantId,  List<TenantRef> tenants)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AuthUser() when $default != null:
-return $default(_that.id,_that.email,_that.fullName,_that.role,_that.tenantId);case _:
+return $default(_that.id,_that.email,_that.fullName,_that.role,_that.tenantId,_that.tenants);case _:
   return orElse();
 
 }
@@ -184,10 +187,10 @@ return $default(_that.id,_that.email,_that.fullName,_that.role,_that.tenantId);c
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String email,  String fullName,  String role,  String? tenantId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String email,  String fullName,  String role,  String? tenantId,  List<TenantRef> tenants)  $default,) {final _that = this;
 switch (_that) {
 case _AuthUser():
-return $default(_that.id,_that.email,_that.fullName,_that.role,_that.tenantId);case _:
+return $default(_that.id,_that.email,_that.fullName,_that.role,_that.tenantId,_that.tenants);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -204,10 +207,10 @@ return $default(_that.id,_that.email,_that.fullName,_that.role,_that.tenantId);c
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String email,  String fullName,  String role,  String? tenantId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String email,  String fullName,  String role,  String? tenantId,  List<TenantRef> tenants)?  $default,) {final _that = this;
 switch (_that) {
 case _AuthUser() when $default != null:
-return $default(_that.id,_that.email,_that.fullName,_that.role,_that.tenantId);case _:
+return $default(_that.id,_that.email,_that.fullName,_that.role,_that.tenantId,_that.tenants);case _:
   return null;
 
 }
@@ -218,8 +221,8 @@ return $default(_that.id,_that.email,_that.fullName,_that.role,_that.tenantId);c
 /// @nodoc
 @JsonSerializable()
 
-class _AuthUser implements AuthUser {
-  const _AuthUser({required this.id, required this.email, required this.fullName, required this.role, this.tenantId});
+class _AuthUser extends AuthUser {
+  const _AuthUser({required this.id, required this.email, required this.fullName, required this.role, this.tenantId,  List<TenantRef> tenants = const <TenantRef>[]}): _tenants = tenants,super._();
   factory _AuthUser.fromJson(Map<String, dynamic> json) => _$AuthUserFromJson(json);
 
 @override final  String id;
@@ -227,6 +230,17 @@ class _AuthUser implements AuthUser {
 @override final  String fullName;
 @override final  String role;
 @override final  String? tenantId;
+/// Girebildiği işletmeler (backend ADR 0081); `role` ve `tenantId`
+/// seçili olanınki. Birden çoksa hesap kartı "İşletme değiştir" sunar.
+ final  List<TenantRef> _tenants;
+/// Girebildiği işletmeler (backend ADR 0081); `role` ve `tenantId`
+/// seçili olanınki. Birden çoksa hesap kartı "İşletme değiştir" sunar.
+@override@JsonKey() List<TenantRef> get tenants {
+  if (_tenants is EqualUnmodifiableListView) return _tenants;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_tenants);
+}
+
 
 /// Create a copy of AuthUser
 /// with the given fields replaced by the non-null parameter values.
@@ -241,18 +255,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthUser&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.role, role) || other.role == role)&&(identical(other.tenantId, tenantId) || other.tenantId == tenantId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthUser&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.role, role) || other.role == role)&&(identical(other.tenantId, tenantId) || other.tenantId == tenantId)&&const DeepCollectionEquality().equals(other.tenants, _tenants));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,email,fullName,role,tenantId);
+    return Object.hash(runtimeType,id,email,fullName,role,tenantId,const DeepCollectionEquality().hash(_tenants));
 }
 
 @override
 String toString() {
-    return 'AuthUser(id: $id, email: $email, fullName: $fullName, role: $role, tenantId: $tenantId)';
+    return 'AuthUser(id: $id, email: $email, fullName: $fullName, role: $role, tenantId: $tenantId, tenants: $tenants)';
 }
 
 
@@ -263,7 +277,7 @@ abstract mixin class _$AuthUserCopyWith<$Res> implements $AuthUserCopyWith<$Res>
   factory _$AuthUserCopyWith(_AuthUser value, $Res Function(_AuthUser) _then) = __$AuthUserCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String email, String fullName, String role, String? tenantId
+ String id, String email, String fullName, String role, String? tenantId, List<TenantRef> tenants
 });
 
 
@@ -280,14 +294,291 @@ class __$AuthUserCopyWithImpl<$Res>
 
 /// Create a copy of AuthUser
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? email = null,Object? fullName = null,Object? role = null,Object? tenantId = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? email = null,Object? fullName = null,Object? role = null,Object? tenantId = freezed,Object? tenants = null,}) {
   return _then(_AuthUser(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,fullName: null == fullName ? _self.fullName : fullName // ignore: cast_nullable_to_non_nullable
 as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
 as String,tenantId: freezed == tenantId ? _self.tenantId : tenantId // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,tenants: null == tenants ? _self._tenants : tenants // ignore: cast_nullable_to_non_nullable
+as List<TenantRef>,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$TenantRef {
+
+ String get id; String get name; String get role;
+/// Create a copy of TenantRef
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$TenantRefCopyWith<TenantRef> get copyWith => _$TenantRefCopyWithImpl<TenantRef>(this as TenantRef, _$identity);
+
+  /// Serializes this TenantRef to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  final _this = this as TenantRef;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TenantRef&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.role, _this.role) || other.role == _this.role));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode {
+  final _this = this as TenantRef;
+  return Object.hash(runtimeType,_this.id,_this.name,_this.role);
+}
+
+@override
+String toString() {
+  final _this = this as TenantRef;
+  return 'TenantRef(id: ${_this.id}, name: ${_this.name}, role: ${_this.role})';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $TenantRefCopyWith<$Res>  {
+  factory $TenantRefCopyWith(TenantRef value, $Res Function(TenantRef) _then) = _$TenantRefCopyWithImpl;
+@useResult
+$Res call({
+ String id, String name, String role
+});
+
+
+
+
+}
+/// @nodoc
+class _$TenantRefCopyWithImpl<$Res>
+    implements $TenantRefCopyWith<$Res> {
+  _$TenantRefCopyWithImpl(this._self, this._then);
+
+  final TenantRef _self;
+  final $Res Function(TenantRef) _then;
+
+/// Create a copy of TenantRef
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? role = null,}) {
+  return _then(TenantRef(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [TenantRef].
+extension TenantRefPatterns on TenantRef {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _TenantRef value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _TenantRef() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _TenantRef value)  $default,){
+final _that = this;
+switch (_that) {
+case _TenantRef():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _TenantRef value)?  $default,){
+final _that = this;
+switch (_that) {
+case _TenantRef() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String role)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _TenantRef() when $default != null:
+return $default(_that.id,_that.name,_that.role);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String role)  $default,) {final _that = this;
+switch (_that) {
+case _TenantRef():
+return $default(_that.id,_that.name,_that.role);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String role)?  $default,) {final _that = this;
+switch (_that) {
+case _TenantRef() when $default != null:
+return $default(_that.id,_that.name,_that.role);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _TenantRef implements TenantRef {
+  const _TenantRef({required this.id, required this.name, required this.role});
+  factory _TenantRef.fromJson(Map<String, dynamic> json) => _$TenantRefFromJson(json);
+
+@override final  String id;
+@override final  String name;
+@override final  String role;
+
+/// Create a copy of TenantRef
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$TenantRefCopyWith<_TenantRef> get copyWith => __$TenantRefCopyWithImpl<_TenantRef>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$TenantRefToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _TenantRef&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.role, role) || other.role == role));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode {
+    return Object.hash(runtimeType,id,name,role);
+}
+
+@override
+String toString() {
+    return 'TenantRef(id: $id, name: $name, role: $role)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$TenantRefCopyWith<$Res> implements $TenantRefCopyWith<$Res> {
+  factory _$TenantRefCopyWith(_TenantRef value, $Res Function(_TenantRef) _then) = __$TenantRefCopyWithImpl;
+@override @useResult
+$Res call({
+ String id, String name, String role
+});
+
+
+
+
+}
+/// @nodoc
+class __$TenantRefCopyWithImpl<$Res>
+    implements _$TenantRefCopyWith<$Res> {
+  __$TenantRefCopyWithImpl(this._self, this._then);
+
+  final _TenantRef _self;
+  final $Res Function(_TenantRef) _then;
+
+/// Create a copy of TenantRef
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? role = null,}) {
+  return _then(_TenantRef(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 

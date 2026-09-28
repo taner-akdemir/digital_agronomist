@@ -424,6 +424,13 @@ metin ve uygulama sürümü; WhatsApp yoksa tarayıcıda açılır. Sağlayıcı
 `supportInfoProvider` / `supportLauncherProvider` (testte sahtesi — hesap kartını açan
 testler de `supportInfoProvider`'ı ezmeli, yoksa ağa çıkar).
 
+**Tek hesap, çok işletme** (backend ADR 0081): veteriner/danışman birden çok çiftliğin
+üyesi olabilir. `AuthUser.tenants` girebildiği işletmeler; `role`/`tenantId` seçili
+olanınki. Birden çoksa hesap kartında "İşletme değiştir" → `Auth.switchTenant`
+(`POST /auth/switch`) → canlı sekme. Depo, önbellek kapsamı ve push kaydı oturumu
+izlediği için kendiliğinden yeni işletmeye geçer; push seçili işletmeyi izler.
+Kullanıcılar ekranında kayıtlı e-posta yeni hesap açmaz, işletmeye üye olarak eklenir.
+
 **Asgari sürüm** (backend ADR 0080): üç Dio'nun hepsi `X-App-Platform` ve `X-App-Build`
 (versionCode, `AppBuild.load()` main'de) gönderir; gateway asgarinin altına 426 döner,
 `AppBuildInterceptor` `UpgradeGate`'i açar ve router her ekranı `/update`'e ("Güncelleme

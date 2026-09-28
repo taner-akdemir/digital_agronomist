@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/core/env.dart';
+import 'package:milktrace/data/models/auth_user.dart';
 import 'package:milktrace/features/auth/role_labels.dart';
 import 'package:milktrace/features/support/support.dart';
 import 'package:milktrace/providers/auth_providers.dart';
@@ -76,7 +77,10 @@ class _AccountSheet extends ConsumerWidget {
                           // Rol GÖRÜNÜR olmalı: eşik ayarlarının neden salt
                           // okunur açıldığının cevabı burada.
                           Text(
-                            roleLabel(user.role),
+                            [
+                              roleLabel(user.role),
+                              ?user.tenantName,
+                            ].join(' · '),
                             style: const TextStyle(
                               fontSize: 12,
                               color: AppColors.lightGreyColor,
@@ -91,6 +95,25 @@ class _AccountSheet extends ConsumerWidget {
               if (Env.apiMode == ApiMode.mock) ...[
                 const SizedBox(height: AppSpacing.lg),
                 const _ModeBadge(),
+              ],
+              // Birden çok işletmenin üyesi (veteriner, danışman; backend
+              // ADR 0081) işletmeler arasında geçer.
+              if ((user?.tenants.length ?? 0) > 1) ...[
+                const SizedBox(height: AppSpacing.md),
+                OutlinedButton.icon(
+                  onPressed: () => _pickTenant(context, ref, user!),
+                  icon: const Icon(Icons.swap_horiz),
+                  label: const Text('İşletme değiştir'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.darkGreenColor,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppSpacing.lg,
+                    ),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadius.mdAll,
+                    ),
+                  ),
+                ),
               ],
               const SizedBox(height: AppSpacing.lg),
               const _PushRow(),
@@ -268,6 +291,69 @@ class _PushRowState extends ConsumerState<_PushRow> {
       ),
       _ => const SizedBox.shrink(),
     };
+  }
+}
+
+/// İşletme seçimi; seçilince oturum o işletmeye geçer ve canlı sekmeye
+/// dönülür (açık ekranlar eski işletmenin verisiyle kalmasın).
+Future<void> _pickTenant(
+  BuildContext context,
+  WidgetRef ref,
+  AuthUser user,
+) async {
+  final picked = await showDialog<String>(
+    context: context,
+    builder: (context) => SimpleDialog(
+      title: const Text('İşletme seçin'),
+      children: [
+        for (final t in user.tenants)
+          SimpleDialogOption(
+            onPressed: () => Navigator.of(context).pop(t.id),
+            child: Row(
+              children: [
+                Icon(
+                  t.id == user.tenantId
+                      ? Icons.radio_button_checked
+                      : Icons.radio_button_unchecked,
+                  color: AppColors.darkGreenColor,
+                  size: 20,
+                ),
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(t.name),
+                      Text(
+                        roleLabel(t.role),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: AppColors.onSurfaceMuted,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+      ],
+    ),
+  );
+  if (picked == null || picked == user.tenantId || !context.mounted) return;
+  final messenger = ScaffoldMessenger.of(context);
+  final router = GoRouter.of(context);
+  Navigator.of(context).pop();
+  try {
+    await ref.read(authProvider.notifier).switchTenant(picked);
+    router.go('/live');
+  } catch (e) {
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text(userMessage(e) ?? 'İşletme değiştirilemedi: $e'),
+        backgroundColor: AppColors.flowRed,
+      ),
+    );
   }
 }
 

@@ -116,6 +116,31 @@ class Auth extends _$Auth {
     state = AuthState(status: AuthStatus.signedIn, user: result.user);
   }
 
+  /// Üyesi olunan başka işletmeye geçer (backend ADR 0081). Veri
+  /// sağlayıcıları (depo, önbellek kapsamı, push kaydı) kullanıcının
+  /// işletmesini izliyor; state değişince kendileri yeniden kurulur.
+  /// Hata ApiException olarak yukarı atılır.
+  Future<void> switchTenant(String tenantId) async {
+    final tokens = await _session.store.readTokens();
+    if (tokens == null) {
+      state = AuthState.signedOut;
+      return;
+    }
+    final result = await _session.api.switchTenant(
+      accessToken: _session.interceptor.accessToken ?? tokens.accessToken,
+      refreshToken: tokens.refreshToken,
+      tenantId: tenantId,
+    );
+    await _session.adopt(
+      AuthTokens(
+        accessToken: result.accessToken,
+        refreshToken: result.refreshToken,
+      ),
+    );
+    await _session.store.writeUser(result.user);
+    state = AuthState(status: AuthStatus.signedIn, user: result.user);
+  }
+
   Future<void> signOut() async {
     if (Env.apiMode == ApiMode.mock) return;
 

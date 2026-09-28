@@ -34,6 +34,21 @@ class AuthApi {
     return LoginResult.fromJson(_data(r));
   });
 
+  /// Üyesi olunan başka işletmeye geçer (backend ADR 0081): o işletmenin
+  /// rolüyle yeni oturum; bırakılan yenileme anahtarı sunucuda iptal edilir.
+  Future<LoginResult> switchTenant({
+    required String accessToken,
+    required String refreshToken,
+    required String tenantId,
+  }) => _call(() async {
+    final r = await _dio.post<dynamic>(
+      '/auth/switch',
+      data: {'tenantId': tenantId, 'refreshToken': refreshToken},
+      options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
+    );
+    return LoginResult.fromJson(_data(r));
+  });
+
   Future<AuthTokens> refresh(String refreshToken) => _call(() async {
     final r = await _dio.post<dynamic>(
       '/auth/refresh',

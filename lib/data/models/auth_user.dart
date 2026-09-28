@@ -16,10 +16,37 @@ abstract class AuthUser with _$AuthUser {
     required String fullName,
     required String role,
     String? tenantId,
+
+    /// Girebildiği işletmeler (backend ADR 0081); `role` ve `tenantId`
+    /// seçili olanınki. Birden çoksa hesap kartı "İşletme değiştir" sunar.
+    @Default(<TenantRef>[]) List<TenantRef> tenants,
   }) = _AuthUser;
+
+  const AuthUser._();
+
+  /// Seçili işletmenin adı; listede yoksa null.
+  String? get tenantName {
+    for (final t in tenants) {
+      if (t.id == tenantId) return t.name;
+    }
+    return null;
+  }
 
   factory AuthUser.fromJson(Map<String, dynamic> json) =>
       _$AuthUserFromJson(json);
+}
+
+/// Üyesi olunan işletme.
+@freezed
+abstract class TenantRef with _$TenantRef {
+  const factory TenantRef({
+    required String id,
+    required String name,
+    required String role,
+  }) = _TenantRef;
+
+  factory TenantRef.fromJson(Map<String, dynamic> json) =>
+      _$TenantRefFromJson(json);
 }
 
 /// Erişim + yenileme token çifti.

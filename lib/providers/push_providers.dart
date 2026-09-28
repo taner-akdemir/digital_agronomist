@@ -50,6 +50,9 @@ class PushRegistration extends _$PushRegistration {
   @override
   Future<PushStatus> build() async {
     final gateway = ref.watch(pushGatewayProvider);
+    // Oturumun TAMAMI izlenir: işletme değişince de (backend ADR 0081)
+    // yeniden kurulur ve jeton yeni işletmeye yazılır — bildirimler seçili
+    // işletmeyi izler.
     final signedIn = ref.watch(authProvider).isSignedIn;
 
     if (!signedIn) {
