@@ -532,6 +532,19 @@ açık gelir; ayrıntıda son ve sonraki kalibrasyon ("kayıt yok" = hatırlatma
 Sunucu işletmeye `calibration_due` uyarısı açar, kalibre edilince çözülür. Uygulamada
 kalibrasyon GİRİLMEZ (tesis yapısı gibi kurulum ekibinin işi).
 
+**Hesap silme** (backend ADR 0098; Play şartı): hesap kartının altında "Hesabımı sil"
+(mock modda yok) → parola onayı → `DELETE /me` → yerel çıkış. Tek sahip silemez (409,
+sunucunun mesajı, pencere açık kalır). Web karşılığı panelin `/admin/hesap-sil` sayfası
+— Play Console'daki silme bağlantısı.
+
+**Sağım saatleri** (`/settings/schedule`, backend ADR 0099): hesap kartından yalnızca
+sahibe; sabah/akşam saati (kapalı olabilir) ve gecikme payı. Sunucu saatten sonra oturumu
+açılmamış bölge için `milking_missed` uyarısı açar; oturum açılınca çözülür.
+
+**Çökme raporu** (backend ADR 0100): `CrashReporting.init()` main'de; Firebase
+Crashlytics, debug'da kapalı, Firebase yoksa sessizce atlanır. Rapora kullanıcı/işletme
+bilgisi EKLENMEZ (`setUserIdentifier` çağırma). Gizlilik belgeleri buna göre.
+
 **Hata mesajları:** `ApiRepository` DioException fırlatır; `ApiException`'a çeviri
 yalnızca giriş ucundaydı. Bu yüzden ekranlar gerçek API'de backend'in Türkçe mesajı
 yerine "DioException…" gösteriyordu. `userMessage(error)` (core/api_exception.dart)

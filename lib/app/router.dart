@@ -16,6 +16,7 @@ import 'package:milktrace/features/history/history_screen.dart';
 import 'package:milktrace/features/history/unmatched_tags_screen.dart';
 import 'package:milktrace/features/kiosk/kiosk_screen.dart';
 import 'package:milktrace/features/live/live_board_screen.dart';
+import 'package:milktrace/features/settings/milking_schedule_screen.dart';
 import 'package:milktrace/features/settings/notification_channel_form_screen.dart';
 import 'package:milktrace/features/settings/notification_channels_screen.dart';
 import 'package:milktrace/features/settings/thresholds_screen.dart';
@@ -96,6 +97,11 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/settings/milkers',
         builder: (_, _) => const MilkersScreen(),
+      ),
+      // Sağım saatleri (backend ADR 0099): hesap kartından, yalnızca sahibe.
+      GoRoute(
+        path: '/settings/schedule',
+        builder: (_, _) => const MilkingScheduleScreen(),
       ),
       // Tank teslimleri (backend ADR 0089): panodaki karttan.
       GoRoute(path: '/deliveries', builder: (_, _) => const DeliveriesScreen()),

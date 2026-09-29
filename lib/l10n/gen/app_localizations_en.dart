@@ -21,6 +21,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountMilkers => 'Milkers';
 
   @override
+  String get accountMilkingSchedule => 'Milking times';
+
+  @override
   String get accountMockMode => 'You are working with demo data (mock mode).';
 
   @override
@@ -1017,6 +1020,22 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get deleteAccountBody =>
+      'Your account and sessions are deleted permanently; this cannot be undone. The farm\'s milking and animal records stay with the farm, and your notes appear as \"Deleted user\". If you are the only owner of a farm, contact support first.';
+
+  @override
+  String get deleteAccountConfirm => 'Delete permanently';
+
+  @override
+  String get deleteAccountPassword => 'Your password';
+
+  @override
+  String get deleteAccountPasswordRequired => 'Enter your password to confirm.';
+
+  @override
+  String get deleteAccountTitle => 'Delete my account';
+
+  @override
   String deliveriesAmountLabel(Object unit) {
     return 'Delivered ($unit)';
   }
@@ -1871,6 +1890,36 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get roleViewerHint =>
       'Vet, consultant: views and writes notes, cannot change anything.';
+
+  @override
+  String get scheduleChangeTime => 'Change time';
+
+  @override
+  String get scheduleEvening => 'Evening milking';
+
+  @override
+  String get scheduleGrace => 'Grace period';
+
+  @override
+  String scheduleGraceMinutes(Object n) {
+    return '$n min';
+  }
+
+  @override
+  String get scheduleIntro =>
+      'If a milking area has no session this long after the set time, an alert is sent (areas used in the last two weeks). No alert if a meter opened the session automatically.';
+
+  @override
+  String get scheduleMorning => 'Morning milking';
+
+  @override
+  String get scheduleOff => 'Off';
+
+  @override
+  String get scheduleSaved => 'Milking times saved';
+
+  @override
+  String get scheduleTitle => 'Milking times';
 
   @override
   String get sessionSummaryLoadFailed => 'Could not load the session summary';

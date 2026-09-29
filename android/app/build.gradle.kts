@@ -7,6 +7,8 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
     // Firebase: android/app/google-services.json OLMADAN derleme kırılır.
     id("com.google.gms.google-services")
+    // Çökme raporu (backend ADR 0100).
+    id("com.google.firebase.crashlytics")
 }
 
 // Play yükleme anahtarı (CLAUDE.md §8). android/key.properties repoya GİRMEZ

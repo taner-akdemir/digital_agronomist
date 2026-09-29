@@ -4,6 +4,7 @@
   "accountDefaultName": "Kullanıcı",
   "accountMilkUnit": "Süt birimi",
   "accountMilkers": "Sağımcılar",
+  "accountMilkingSchedule": "Sağım saatleri",
   "accountMockMode": "Demo verisiyle çalışıyorsunuz (mock mod).",
   "accountNotificationChannels": "Bildirim kanalları",
   "accountPickFarm": "İşletme seçin",
@@ -527,6 +528,11 @@
       "n": {}
     }
   },
+  "deleteAccountBody": "Hesabınız ve oturumlarınız kalıcı olarak silinir; geri alınamaz. İşletmenin sağım ve hayvan kayıtları işletmede kalır, notlarınız \"Silinmiş kullanıcı\" adıyla görünür. Bir işletmenin tek sahibiyseniz önce destekle iletişime geçin.",
+  "deleteAccountConfirm": "Kalıcı olarak sil",
+  "deleteAccountPassword": "Parolanız",
+  "deleteAccountPasswordRequired": "Onay için parolanızı girin.",
+  "deleteAccountTitle": "Hesabımı sil",
   "deliveriesAmountLabel": "Teslim edilen ({unit})",
   "@deliveriesAmountLabel": {
     "placeholders": {
@@ -1058,6 +1064,20 @@
   "rolePlatformAdmin": "Platform yöneticisi",
   "roleViewer": "Görüntüleyici",
   "roleViewerHint": "Veteriner, danışman: görür ve not yazar, değiştiremez.",
+  "scheduleChangeTime": "Saati değiştir",
+  "scheduleEvening": "Akşam sağımı",
+  "scheduleGrace": "Gecikme payı",
+  "scheduleGraceMinutes": "{n} dk",
+  "@scheduleGraceMinutes": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "scheduleIntro": "Saatten gecikme payı kadar sonra oturumu açılmamış bölge için uyarı gelir (son iki haftada kullanılan bölgeler). Sayaç akışla oturumu kendisi açtıysa uyarı gitmez.",
+  "scheduleMorning": "Sabah sağımı",
+  "scheduleOff": "Kapalı",
+  "scheduleSaved": "Sağım saatleri kaydedildi",
+  "scheduleTitle": "Sağım saatleri",
   "sessionSummaryLoadFailed": "Oturum özeti alınamadı",
   "sessionSummaryLowFlow": "Düşük debi: {n}",
   "@sessionSummaryLowFlow": {

@@ -14,6 +14,7 @@ import 'package:milktrace/data/models/delivery.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/hall.dart';
+import 'package:milktrace/data/models/milking_schedule.dart';
 import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
 import 'package:milktrace/data/models/session_milking.dart';
@@ -287,6 +288,14 @@ abstract interface class MilkTraceRepository {
 
   /// Kalıcı silme: yazdığı notlar "Silinmiş kullanıcı" olarak kalır.
   Future<void> deleteTeamMember(String id);
+
+  /// Sağım saatleri (backend ADR 0099); okuma herkes, yazma sahip.
+  Future<MilkingSchedule> milkingSchedule();
+  Future<MilkingSchedule> setMilkingSchedule(MilkingSchedule schedule);
+
+  /// Kişinin KENDİ hesabını siler (backend ADR 0098); parola onayıyla.
+  /// Tek sahip silemez (409, sunucunun mesajı).
+  Future<void> deleteMyAccount(String password);
 
   /// Oturum özeti (backend ADR 0094): düşük verim, düşük debi, sağılmayan.
   Future<SessionSummary> sessionSummary(String sessionId);

@@ -35,6 +35,8 @@ abstract final class AlertStyle {
     'delivery_mismatch' => Icons.local_shipping_outlined,
     // Kalibrasyon zamanı (backend ADR 0097).
     'calibration_due' => Icons.build_circle_outlined,
+    // Sağım başlamadı (backend ADR 0099).
+    'milking_missed' => Icons.alarm_off,
     _ => Icons.notifications_none_outlined,
   };
 }

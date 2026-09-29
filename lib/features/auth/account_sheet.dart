@@ -5,6 +5,7 @@ import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/core/env.dart';
 import 'package:milktrace/data/models/auth_user.dart';
+import 'package:milktrace/features/auth/delete_account.dart';
 import 'package:milktrace/features/auth/role_labels.dart';
 import 'package:milktrace/features/support/support.dart';
 import 'package:milktrace/l10n/l10n.dart';
@@ -209,6 +210,25 @@ class _AccountSheet extends ConsumerWidget {
                     ),
                   ),
                 ),
+                // Sağım saatleri (backend ADR 0099): yalnızca sahip.
+                const SizedBox(height: AppSpacing.sm),
+                OutlinedButton.icon(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    context.push('/settings/schedule');
+                  },
+                  icon: const Icon(Icons.alarm),
+                  label: Text(l10n.accountMilkingSchedule),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.darkGreenColor,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppSpacing.lg,
+                    ),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadius.mdAll,
+                    ),
+                  ),
+                ),
                 // İşlem kaydı (backend ADR 0082): yalnızca sahip.
                 const SizedBox(height: AppSpacing.sm),
                 OutlinedButton.icon(
@@ -252,6 +272,19 @@ class _AccountSheet extends ConsumerWidget {
               // Destek (backend ADR 0077); numara yoksa hiç görünmez.
               const SizedBox(height: AppSpacing.lg),
               const SupportButtons(),
+              // Hesap silme (backend ADR 0098; Play şartı). Mock modda
+              // silinecek hesap yok.
+              if (Env.apiMode != ApiMode.mock)
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    showDeleteAccount(context);
+                  },
+                  style: TextButton.styleFrom(
+                    foregroundColor: AppColors.darkRedColor,
+                  ),
+                  child: Text(l10n.deleteAccountTitle),
+                ),
             ],
           ),
         ),

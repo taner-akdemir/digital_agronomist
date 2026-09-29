@@ -24,6 +24,8 @@ plugins {
     // Firebase (push): google-services.json'dan kaynakları üretir
     // (CLAUDE.md §7, backend ADR 0048).
     id("com.google.gms.google-services") version "4.4.2" apply false
+    // Çökme raporu (backend ADR 0100): yerel çökme sembolleri.
+    id("com.google.firebase.crashlytics") version "3.0.2" apply false
 }
 
 include(":app")

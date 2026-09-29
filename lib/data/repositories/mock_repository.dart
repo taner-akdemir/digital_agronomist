@@ -18,6 +18,7 @@ import 'package:milktrace/data/models/delivery.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/hall.dart';
+import 'package:milktrace/data/models/milking_schedule.dart';
 import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
 import 'package:milktrace/data/models/session_milking.dart';
@@ -866,6 +867,19 @@ class MockRepository implements MilkTraceRepository {
   /// Demo modda birim yalnızca uygulamada tutulur (Auth.applyVolumeUnit).
   @override
   Future<void> setVolumeUnit(String unit) => _delayed(() async {});
+
+  MilkingSchedule _schedule = const MilkingSchedule();
+
+  @override
+  Future<MilkingSchedule> milkingSchedule() => _delayed(() async => _schedule);
+
+  @override
+  Future<MilkingSchedule> setMilkingSchedule(MilkingSchedule schedule) =>
+      _delayed(() async => _schedule = schedule);
+
+  /// Demo modda silinecek hesap yok (kimlik sunucusu yok).
+  @override
+  Future<void> deleteMyAccount(String password) => _delayed(() async {});
 
   /// Mock'ta oturum özeti: sağım kaydı üretilmiş geçmişte tutulmadığı
   /// için sağmal hayvanlardan sabit bir örnek (ADR 0094).

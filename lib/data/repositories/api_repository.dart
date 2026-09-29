@@ -17,6 +17,7 @@ import 'package:milktrace/data/models/delivery.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/hall.dart';
+import 'package:milktrace/data/models/milking_schedule.dart';
 import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
 import 'package:milktrace/data/models/session_milking.dart';
@@ -603,6 +604,24 @@ class ApiRepository implements MilkTraceRepository {
   @override
   Future<void> setVolumeUnit(String unit) =>
       _dio.put<dynamic>('/tenant/settings', data: {'volumeUnit': unit});
+
+  @override
+  Future<MilkingSchedule> milkingSchedule() async => MilkingSchedule.fromJson(
+    _dataOf(await _dio.get<dynamic>('/milking-schedule')),
+  );
+
+  @override
+  Future<MilkingSchedule> setMilkingSchedule(MilkingSchedule schedule) async =>
+      MilkingSchedule.fromJson(
+        _dataOf(
+          await _dio.put<dynamic>('/milking-schedule', data: schedule.toJson()),
+        ),
+      );
+
+  @override
+  Future<void> deleteMyAccount(String password) async {
+    await _dio.delete<dynamic>('/me', data: {'password': password});
+  }
 
   @override
   Future<SessionSummary> sessionSummary(String sessionId) async =>

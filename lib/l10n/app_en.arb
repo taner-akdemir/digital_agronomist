@@ -4,6 +4,7 @@
   "accountDefaultName": "User",
   "accountMilkUnit": "Milk unit",
   "accountMilkers": "Milkers",
+  "accountMilkingSchedule": "Milking times",
   "accountMockMode": "You are working with demo data (mock mode).",
   "accountNotificationChannels": "Notification channels",
   "accountPickFarm": "Choose a farm",
@@ -455,6 +456,11 @@
       "n": {}
     }
   },
+  "deleteAccountBody": "Your account and sessions are deleted permanently; this cannot be undone. The farm's milking and animal records stay with the farm, and your notes appear as \"Deleted user\". If you are the only owner of a farm, contact support first.",
+  "deleteAccountConfirm": "Delete permanently",
+  "deleteAccountPassword": "Your password",
+  "deleteAccountPasswordRequired": "Enter your password to confirm.",
+  "deleteAccountTitle": "Delete my account",
   "deliveriesAmountLabel": "Delivered ({unit})",
   "@deliveriesAmountLabel": {
     "placeholders": {
@@ -916,6 +922,15 @@
   "rolePlatformAdmin": "Platform administrator",
   "roleViewer": "Viewer",
   "roleViewerHint": "Vet, consultant: views and writes notes, cannot change anything.",
+  "scheduleChangeTime": "Change time",
+  "scheduleEvening": "Evening milking",
+  "scheduleGrace": "Grace period",
+  "scheduleGraceMinutes": "{n} min",
+  "scheduleIntro": "If a milking area has no session this long after the set time, an alert is sent (areas used in the last two weeks). No alert if a meter opened the session automatically.",
+  "scheduleMorning": "Morning milking",
+  "scheduleOff": "Off",
+  "scheduleSaved": "Milking times saved",
+  "scheduleTitle": "Milking times",
   "sessionSummaryLoadFailed": "Could not load the session summary",
   "sessionSummaryLowFlow": "Low flow rate: {n}",
   "sessionSummaryLowYield": "Low yield: {n}",

@@ -3,5 +3,25 @@
   "speciesGoat": "Keçi",
   "speciesSheep": "Koyun",
   "coreResetLinkSentFallback": "Sıfırlama bağlantısı gönderildi.",
-  "coreMemberAddedFallback": "Kullanıcı eklendi."
+  "coreMemberAddedFallback": "Kullanıcı eklendi.",
+  "accountMilkingSchedule": "Sağım saatleri",
+  "scheduleTitle": "Sağım saatleri",
+  "scheduleIntro": "Saatten gecikme payı kadar sonra oturumu açılmamış bölge için uyarı gelir (son iki haftada kullanılan bölgeler). Sayaç akışla oturumu kendisi açtıysa uyarı gitmez.",
+  "scheduleMorning": "Sabah sağımı",
+  "scheduleEvening": "Akşam sağımı",
+  "scheduleOff": "Kapalı",
+  "scheduleChangeTime": "Saati değiştir",
+  "scheduleGrace": "Gecikme payı",
+  "scheduleGraceMinutes": "{n} dk",
+  "scheduleSaved": "Sağım saatleri kaydedildi",
+  "deleteAccountTitle": "Hesabımı sil",
+  "deleteAccountBody": "Hesabınız ve oturumlarınız kalıcı olarak silinir; geri alınamaz. İşletmenin sağım ve hayvan kayıtları işletmede kalır, notlarınız \"Silinmiş kullanıcı\" adıyla görünür. Bir işletmenin tek sahibiyseniz önce destekle iletişime geçin.",
+  "deleteAccountPassword": "Parolanız",
+  "deleteAccountPasswordRequired": "Onay için parolanızı girin.",
+  "deleteAccountConfirm": "Kalıcı olarak sil",
+  "@scheduleGraceMinutes": {
+    "placeholders": {
+      "n": {}
+    }
+  }
 }

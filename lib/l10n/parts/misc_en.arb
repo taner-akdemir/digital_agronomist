@@ -3,5 +3,20 @@
   "speciesGoat": "Goat",
   "speciesSheep": "Sheep",
   "coreResetLinkSentFallback": "Reset link sent.",
-  "coreMemberAddedFallback": "User added."
+  "coreMemberAddedFallback": "User added.",
+  "accountMilkingSchedule": "Milking times",
+  "scheduleTitle": "Milking times",
+  "scheduleIntro": "If a milking area has no session this long after the set time, an alert is sent (areas used in the last two weeks). No alert if a meter opened the session automatically.",
+  "scheduleMorning": "Morning milking",
+  "scheduleEvening": "Evening milking",
+  "scheduleOff": "Off",
+  "scheduleChangeTime": "Change time",
+  "scheduleGrace": "Grace period",
+  "scheduleGraceMinutes": "{n} min",
+  "scheduleSaved": "Milking times saved",
+  "deleteAccountTitle": "Delete my account",
+  "deleteAccountBody": "Your account and sessions are deleted permanently; this cannot be undone. The farm's milking and animal records stay with the farm, and your notes appear as \"Deleted user\". If you are the only owner of a farm, contact support first.",
+  "deleteAccountPassword": "Your password",
+  "deleteAccountPasswordRequired": "Enter your password to confirm.",
+  "deleteAccountConfirm": "Delete permanently"
 }

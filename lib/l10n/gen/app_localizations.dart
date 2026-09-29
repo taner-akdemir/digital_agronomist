@@ -122,6 +122,12 @@ abstract class AppLocalizations {
   /// **'Sağımcılar'**
   String get accountMilkers;
 
+  /// No description provided for @accountMilkingSchedule.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sağım saatleri'**
+  String get accountMilkingSchedule;
+
   /// No description provided for @accountMockMode.
   ///
   /// In tr, this message translates to:
@@ -1820,6 +1826,36 @@ abstract class AppLocalizations {
   /// **'Verim sınıfları · {n} hayvan'**
   String dashboardYieldClasses(Object n);
 
+  /// No description provided for @deleteAccountBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesabınız ve oturumlarınız kalıcı olarak silinir; geri alınamaz. İşletmenin sağım ve hayvan kayıtları işletmede kalır, notlarınız \"Silinmiş kullanıcı\" adıyla görünür. Bir işletmenin tek sahibiyseniz önce destekle iletişime geçin.'**
+  String get deleteAccountBody;
+
+  /// No description provided for @deleteAccountConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kalıcı olarak sil'**
+  String get deleteAccountConfirm;
+
+  /// No description provided for @deleteAccountPassword.
+  ///
+  /// In tr, this message translates to:
+  /// **'Parolanız'**
+  String get deleteAccountPassword;
+
+  /// No description provided for @deleteAccountPasswordRequired.
+  ///
+  /// In tr, this message translates to:
+  /// **'Onay için parolanızı girin.'**
+  String get deleteAccountPasswordRequired;
+
+  /// No description provided for @deleteAccountTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesabımı sil'**
+  String get deleteAccountTitle;
+
   /// No description provided for @deliveriesAmountLabel.
   ///
   /// In tr, this message translates to:
@@ -3228,6 +3264,60 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Veteriner, danışman: görür ve not yazar, değiştiremez.'**
   String get roleViewerHint;
+
+  /// No description provided for @scheduleChangeTime.
+  ///
+  /// In tr, this message translates to:
+  /// **'Saati değiştir'**
+  String get scheduleChangeTime;
+
+  /// No description provided for @scheduleEvening.
+  ///
+  /// In tr, this message translates to:
+  /// **'Akşam sağımı'**
+  String get scheduleEvening;
+
+  /// No description provided for @scheduleGrace.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gecikme payı'**
+  String get scheduleGrace;
+
+  /// No description provided for @scheduleGraceMinutes.
+  ///
+  /// In tr, this message translates to:
+  /// **'{n} dk'**
+  String scheduleGraceMinutes(Object n);
+
+  /// No description provided for @scheduleIntro.
+  ///
+  /// In tr, this message translates to:
+  /// **'Saatten gecikme payı kadar sonra oturumu açılmamış bölge için uyarı gelir (son iki haftada kullanılan bölgeler). Sayaç akışla oturumu kendisi açtıysa uyarı gitmez.'**
+  String get scheduleIntro;
+
+  /// No description provided for @scheduleMorning.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sabah sağımı'**
+  String get scheduleMorning;
+
+  /// No description provided for @scheduleOff.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kapalı'**
+  String get scheduleOff;
+
+  /// No description provided for @scheduleSaved.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sağım saatleri kaydedildi'**
+  String get scheduleSaved;
+
+  /// No description provided for @scheduleTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sağım saatleri'**
+  String get scheduleTitle;
 
   /// No description provided for @sessionSummaryLoadFailed.
   ///

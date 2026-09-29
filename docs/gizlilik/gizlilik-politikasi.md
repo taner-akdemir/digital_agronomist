@@ -30,6 +30,11 @@ işletim sisteminin güvenli deposunda tutulur.
 **Bildirim bilgileri:** bildirim alabilmeniz için telefonunuzun bildirim jetonu
 (Firebase Cloud Messaging) ve platformu (Android/iOS). Çıkış yaptığınızda silinir.
 
+**Uygulama hata raporları:** uygulama çöktüğünde ya da beklenmedik bir hata olduğunda
+hatanın teknik ayrıntısı (yığın izi), cihaz modeli, işletim sistemi ve uygulama sürümü
+Firebase Crashlytics'e gönderilir. Rapora adınız, e-postanız, işletmeniz ya da hayvan
+bilgisi eklenmez; amaç hataları bulup düzeltmektir.
+
 **İşletme verileri:** işletmenin girdiği hayvan kayıtları (küpe numarası, adı, ırkı, doğum
 ve buzağılama tarihleri, RFID), sağım ölçümleri, uyarılar ve hayvan notları. Notlarda
 notu yazan kullanıcının adı görünür. Bu veriler hayvanlara ve işletmeye aittir; notlar ve
@@ -64,6 +69,7 @@ gerektiği kadar:
 |---|---|---|
 | netcup GmbH | sunucu barındırma (tüm veriler) | Almanya |
 | Google (Firebase Cloud Messaging) | bildirim iletimi (bildirim jetonu, bildirim metni) | ABD / AB |
+| Google (Firebase Crashlytics) | uygulama hata raporları (yığın izi, cihaz modeli, sürüm) | ABD / AB |
 | Twilio SendGrid | işletmenin seçtiği e-posta bildirimleri ve parola sıfırlama e-postası (e-posta adresi, ad) | ABD |
 | NetGSM / İleti Merkezi | işletmenin seçtiği SMS bildirimleri | Türkiye |
 | [DOLDUR: işletmenin seçtiği diğer kanallar — Slack, Teams, webhook, sesli arama] | bildirim | [DOLDUR] |
@@ -83,7 +89,9 @@ ile yapılır.
   erdikten **90 gün** sonra kendiliğinden silinir. Bu sürede işletme sahibinin talebiyle
   işletmenin bütün verisi (hayvanlar, sağımlar, notlar, uyarılar) Excel dosyası olarak verilir. Faturalama için yalnızca işletmenin kullandığı sayaç-gün kayıtları,
   işletme adı anonimleştirilerek, vergi mevzuatının öngördüğü süre saklanır.
-- Veritabanı yedekleri: 14 gün; silinen veri en geç 14 gün sonra yedeklerden de çıkar.
+- Veritabanı yedekleri: 7 gün (sunucu dışı kopya kullanılıyorsa o kopya 14 gün); silinen
+  veri en geç bu süre sonunda yedeklerden de çıkar.
+- Uygulama hata raporları: Firebase Crashlytics'in saklama süresi (90 gün).
 - Bildirim jetonu: çıkışta ya da jeton geçersizleşince silinir.
 - Sunucu kayıtları (IP adresi dahil): **30 gün**.
 - İşlem kaydı (kim, neyi, ne zaman değiştirdi): **90 gün**.
@@ -97,8 +105,10 @@ görüntülenen veriler uygulamanın kendi deposunda. Çıkış yaptığınızda
 
 KVKK md. 11 uyarınca verilerinizin işlenip işlenmediğini öğrenme, bilgi isteme,
 düzeltilmesini ya da silinmesini isteme, itiraz etme ve zararın giderilmesini isteme
-haklarına sahipsiniz. Başvuru: [DOLDUR: e-posta]. Hesabınızın silinmesini işletmenizin
-yöneticisinden ya da bu adresten isteyebilirsiniz. Hesap silinince adınız, e-postanız,
+haklarına sahipsiniz. Başvuru: [DOLDUR: e-posta]. **Hesabınızı kendiniz silebilirsiniz:**
+uygulamada hesap kartı → "Hesabımı sil" ya da https://[DOLDUR: alan-adı]/admin/hesap-sil
+(parolanızla). Bir işletmenin tek sahibiyseniz işletme sahipsiz kalmasın diye önce bize
+başvurun. Hesap silinince adınız, e-postanız,
 oturumlarınız ve bildirim jetonunuz kalıcı olarak silinir; yazdığınız hayvan notları
 işletmenin sürü kaydı olarak kalır ve yazarı "Silinmiş kullanıcı" görünür.
 

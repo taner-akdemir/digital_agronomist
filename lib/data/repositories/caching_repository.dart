@@ -17,6 +17,7 @@ import 'package:milktrace/data/models/delivery.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/hall.dart';
+import 'package:milktrace/data/models/milking_schedule.dart';
 import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
 import 'package:milktrace/data/models/session_milking.dart';
@@ -428,6 +429,21 @@ class CachingRepository implements MilkTraceRepository {
   @override
   Future<void> setVolumeUnit(String unit) =>
       _net(() => _inner.setVolumeUnit(unit));
+
+  @override
+  Future<MilkingSchedule> milkingSchedule() => _read(
+    'milking-schedule',
+    _inner.milkingSchedule,
+    (j) => MilkingSchedule.fromJson(_map(j)),
+  );
+
+  @override
+  Future<MilkingSchedule> setMilkingSchedule(MilkingSchedule schedule) =>
+      _net(() => _inner.setMilkingSchedule(schedule));
+
+  @override
+  Future<void> deleteMyAccount(String password) =>
+      _net(() => _inner.deleteMyAccount(password));
 
   @override
   Future<SessionSummary> sessionSummary(String sessionId) => _read(

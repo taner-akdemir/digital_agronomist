@@ -21,6 +21,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get accountMilkers => 'Sağımcılar';
 
   @override
+  String get accountMilkingSchedule => 'Sağım saatleri';
+
+  @override
   String get accountMockMode => 'Demo verisiyle çalışıyorsunuz (mock mod).';
 
   @override
@@ -998,6 +1001,22 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String get deleteAccountBody =>
+      'Hesabınız ve oturumlarınız kalıcı olarak silinir; geri alınamaz. İşletmenin sağım ve hayvan kayıtları işletmede kalır, notlarınız \"Silinmiş kullanıcı\" adıyla görünür. Bir işletmenin tek sahibiyseniz önce destekle iletişime geçin.';
+
+  @override
+  String get deleteAccountConfirm => 'Kalıcı olarak sil';
+
+  @override
+  String get deleteAccountPassword => 'Parolanız';
+
+  @override
+  String get deleteAccountPasswordRequired => 'Onay için parolanızı girin.';
+
+  @override
+  String get deleteAccountTitle => 'Hesabımı sil';
+
+  @override
   String deliveriesAmountLabel(Object unit) {
     return 'Teslim edilen ($unit)';
   }
@@ -1847,6 +1866,36 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get roleViewerHint =>
       'Veteriner, danışman: görür ve not yazar, değiştiremez.';
+
+  @override
+  String get scheduleChangeTime => 'Saati değiştir';
+
+  @override
+  String get scheduleEvening => 'Akşam sağımı';
+
+  @override
+  String get scheduleGrace => 'Gecikme payı';
+
+  @override
+  String scheduleGraceMinutes(Object n) {
+    return '$n dk';
+  }
+
+  @override
+  String get scheduleIntro =>
+      'Saatten gecikme payı kadar sonra oturumu açılmamış bölge için uyarı gelir (son iki haftada kullanılan bölgeler). Sayaç akışla oturumu kendisi açtıysa uyarı gitmez.';
+
+  @override
+  String get scheduleMorning => 'Sabah sağımı';
+
+  @override
+  String get scheduleOff => 'Kapalı';
+
+  @override
+  String get scheduleSaved => 'Sağım saatleri kaydedildi';
+
+  @override
+  String get scheduleTitle => 'Sağım saatleri';
 
   @override
   String get sessionSummaryLoadFailed => 'Oturum özeti alınamadı';

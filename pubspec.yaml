@@ -55,6 +55,7 @@ dependencies:
   package_info_plus: ^10.2.1
   wakelock_plus: ^1.8.0
   intl: any
+  firebase_crashlytics: ^5.4.0
 
 dev_dependencies:
   flutter_test:

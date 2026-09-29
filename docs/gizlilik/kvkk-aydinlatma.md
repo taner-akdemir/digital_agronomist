@@ -21,6 +21,7 @@
 | İşlem güvenliği | parola özeti, oturum jetonları, user-agent, IP adresi (sunucu kayıtları) | güvenlik, kötüye kullanımın önlenmesi | (ç) hukuki yükümlülük, (f) meşru menfaat |
 | İşlem kaydı | işlemi yapan kullanıcı, işlem ve zamanı (90 gün) | işletme içi hesap verebilirlik | (f) meşru menfaat |
 | Cihaz | bildirim jetonu, platform | bildirim iletimi | (c) sözleşmenin ifası |
+| Uygulama hata raporu | yığın izi, cihaz modeli, işletim sistemi, uygulama sürümü (kişiyle ilişkilendirilmez) | hataların bulunup giderilmesi | (f) meşru menfaat |
 | İletişim (alıcı) | bildirim kanalı e-posta/telefon | uyarıların iletilmesi | (c) sözleşmenin ifası; alıcı işletme dışındaysa [DOLDUR] |
 
 ## Toplama yöntemi
@@ -34,7 +35,7 @@ otomatik olarak toplanır.
 - **Yurt içi:** SMS sağlayıcıları (NetGSM / İleti Merkezi) — işletmenin seçtiği SMS
   bildirimleri.
 - **Yurt dışı (md. 9):** netcup GmbH (Almanya, barındırma); Google LLC (Firebase Cloud
-  Messaging, bildirim); Twilio SendGrid (ABD, e-posta). Dayanak: [DOLDUR — açık rıza,
+  Messaging, bildirim; Firebase Crashlytics, uygulama hata raporları); Twilio SendGrid (ABD, e-posta). Dayanak: [DOLDUR — açık rıza,
   standart sözleşme ya da Kurul izni; 2024 değişikliği sonrası md. 9 usulü].
 - Yetkili kamu kurumlarına, hukuki yükümlülük hâlinde.
 
@@ -42,9 +43,9 @@ otomatik olarak toplanır.
 
 Hizmet sözleşmesi süresince ve sona ermesinden sonra 90 gün; ardından kendiliğinden
 silinir (faturalama kayıtları işletme adı anonimleştirilerek vergi mevzuatı süresince
-saklanır). Yedekler 14 gün, sunucu kayıtları (IP adresi dahil) 30 gün. Süre sonunda
-silinir, yok edilir ya da anonimleştirilir. Sözleşme sürerken silme talebinde hesap
-kalıcı silinir; yazılan hayvan notları sürü kaydı olarak kalır, yazar adı kaldırılır.
+saklanır). Yedekler 7 gün (sunucu dışı kopya 14 gün), sunucu kayıtları (IP adresi dahil) 30 gün. Süre sonunda
+silinir, yok edilir ya da anonimleştirilir. Sözleşme sürerken hesap uygulamadan ("Hesabımı
+sil") ya da https://[DOLDUR: alan-adı]/admin/hesap-sil adresinden kalıcı silinir; yazılan hayvan notları sürü kaydı olarak kalır, yazar adı kaldırılır.
 
 ## Haklarınız (md. 11)
 
