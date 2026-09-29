@@ -27,6 +27,7 @@ class AppPalette {
     required this.surface,
     required this.brandFill,
     required this.dangerFill,
+    required this.warningFill,
     required this.onFill,
   });
 
@@ -49,6 +50,7 @@ class AppPalette {
   final Color surface;
   final Color brandFill;
   final Color dangerFill;
+  final Color warningFill;
   final Color onFill;
 
   /// İlk prototipten birebir gelen palet (değiştirilmedi).
@@ -75,6 +77,7 @@ class AppPalette {
     surface: Colors.white,
     brandFill: Color.fromRGBO(31, 71, 50, 1),
     dangerFill: Color.fromRGBO(164, 44, 30, 1),
+    warningFill: Color.fromRGBO(140, 92, 10, 1),
     onFill: Colors.white,
   );
 
@@ -105,6 +108,7 @@ class AppPalette {
     surface: Color.fromRGBO(26, 31, 28, 1),
     brandFill: Color.fromRGBO(44, 118, 78, 1),
     dangerFill: Color.fromRGBO(176, 52, 38, 1),
+    warningFill: Color.fromRGBO(150, 100, 20, 1),
     onFill: Colors.white,
   );
 
@@ -194,6 +198,9 @@ abstract final class AppColors {
   // üstündeki yazı bu yüzden AYRI token'lardır.
   static Color get brandFill => _p.brandFill;
   static Color get dangerFill => _p.dangerFill;
+
+  /// Uyarı (amber) dolgusu: bildirim çubuğu gibi beyaz yazılı zeminler.
+  static Color get warningFill => _p.warningFill;
 
   /// [brandFill] ve [dangerFill] üzerindeki metin/ikon.
   static Color get onFill => _p.onFill;

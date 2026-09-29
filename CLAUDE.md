@@ -138,7 +138,7 @@ flutter run
   `Species.displayName`. Dil: hesap kartı ya da giriş ekranı → `appLanguageProvider`;
   yoksa cihaz dili (İngilizce cihaz → İngilizce, diğerleri Türkçe).
 - Tasarım dili korunur: açık arka plan, yeşil/koyu yeşil palet, Poppins, kart tabanlı görünüm.
-  Renk/boşluk/köşe değerleri `lib/app/theme/` içindeki token'lardan gelir, çağrı yerinde
+  Renk/boşluk/köşe değerleri `lib/app/theme.dart` içindeki token'lardan gelir, çağrı yerinde
   sabit yazılmaz.
 
 - **Marka/ikon:** kaynaklar `tool/brand/*.svg` (koyu yeşil zemin, beyaz süt damlası, içinde
@@ -531,7 +531,7 @@ izler. `AppColors` artık SABİT DEĞİL: getter'lar geçerli parlaklığın `Ap
 okur, kök (`app.dart`) `AppColors.brightness`'ı yazar ve MaterialApp'i parlaklıkla
 anahtarlar (değişince ağaç baştan kurulur). Bu yüzden renkler `const` içinde kullanılamaz ve
 widget'ta `Colors.white`/`Color(0x…)` YAZILMAZ — token'dan oku. Adlar açık temadaki ROLÜ
-taşır (`darkGreenColor` karanlıkta açık yeşil metin rengidir); dolgu için `brandFill` /
+taşır (`darkGreenColor` karanlıkta açık yeşil metin rengidir); dolgu için `brandFill` / `warningFill` /
 `dangerFill`, üstündeki yazı `onFill`. §6.2 renkleri anlamını korur, yalnızca koyu zeminde
 okunacak kadar açılır.
 

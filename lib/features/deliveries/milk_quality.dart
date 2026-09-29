@@ -110,7 +110,7 @@ class QualityInputs extends StatelessWidget {
       title: Text(l10n.qualityTitle, style: const TextStyle(fontSize: 14)),
       subtitle: Text(
         l10n.qualityOptional,
-        style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceMuted),
+        style: TextStyle(fontSize: 11, color: AppColors.onSurfaceMuted),
       ),
       children: [
         _field(controllers.fat, l10n.qualityFat),
@@ -143,12 +143,12 @@ class QualityLine extends StatelessWidget {
         children: [
           Text(
             qualityLine(delivery),
-            style: const TextStyle(fontSize: 12, color: AppColors.onSurface),
+            style: TextStyle(fontSize: 12, color: AppColors.onSurface),
           ),
           if (delivery.highScc)
             Text(
               l10n.qualityHighScc(sccLimitK),
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
                 color: AppColors.darkRedColor,
@@ -216,7 +216,7 @@ class QualityTrendCard extends StatelessWidget {
           if (spots.length < 2)
             Text(
               l10n.qualityTrendEmpty,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 12,
                 color: AppColors.onSurfaceMuted,
               ),
@@ -260,7 +260,7 @@ class QualityTrendCard extends StatelessWidget {
                         reservedSize: 40,
                         getTitlesWidget: (value, meta) => Text(
                           value == meta.max ? '' : value.toStringAsFixed(0),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 10,
                             color: AppColors.onSurfaceMuted,
                           ),

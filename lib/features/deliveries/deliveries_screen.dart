@@ -74,8 +74,8 @@ Future<bool> showAddDelivery(
               : l10n.deliveriesSaved,
         ),
         backgroundColor: d.mismatch || d.highScc
-            ? AppColors.darkAmberColor
-            : AppColors.darkGreenColor,
+            ? AppColors.warningFill
+            : AppColors.brandFill,
       ),
     );
     return true;
@@ -148,7 +148,7 @@ class DeliveriesScreen extends ConsumerWidget {
       messenger.showSnackBar(
         SnackBar(
           content: Text(l10n.qualitySccLimitRange),
-          backgroundColor: AppColors.flowRed,
+          backgroundColor: AppColors.dangerFill,
         ),
       );
       return;
@@ -162,7 +162,7 @@ class DeliveriesScreen extends ConsumerWidget {
       messenger.showSnackBar(
         SnackBar(
           content: Text(userMessage(e) ?? l10n.commonSaveFailed(e)),
-          backgroundColor: AppColors.flowRed,
+          backgroundColor: AppColors.dangerFill,
         ),
       );
     }
