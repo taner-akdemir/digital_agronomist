@@ -543,6 +543,20 @@ kartta küpe satırının YERİNE kırmızı "Sütü ayır · arınma 30 Eyl" (t
 önceliklidir, yükseklik aynı — testle kilitli), seçicide sağda "Sütü ayır". Sağım yine
 kaydedilir; backend "ayrılan süt" olarak işaretler.
 
+**Aşı takvimi** (backend ADR 0112): Geçmiş → Hayvanlar'da BÜTÜN rollere "Aşılar"
+(`/vaccinations`, kabuğun dışında). Plan = ad + tekrar aralığı (7–1095 gün) + isteğe bağlı
+tür ("Bütün türler" = null) + not; yalnızca sahip ekler/düzenler/siler (plan silinince
+kayıtları da gider). Plana dokununca zamanı gelenler (`GET /vaccinations/due`, 30 gün;
+kayıtsız ve en gecikmiş üstte, sunucu sıralar): seç / "Tümünü seç" → "Uygulandı olarak
+işaretle" (gün, varsayılan bugün, gelecek yok; not) → TEK `POST /vaccinations`, cevap yazılan
+sayı (planın türünde olmayan, satılmış hayvan ve aynı gün tekrarı sunucuda sessizce atlanır).
+BÜTÜN roller işaretler (veteriner), yanlış kaydı yalnızca sahip siler. Hiç kaydı olmayan
+hayvan ZAMANI GELMİŞ sayılır ("kayıt yok") — plan açılınca mevcut durum girilsin diye.
+Hayvan detayında `TreatmentsCard`'ın altında `VaccinationsCard`: plan başına "sonraki 3 Eki"
+/ "kayıt yok" / kırmızı "gecikti · …", satırda "Uygulandı", son 3 kayıt. Tarihler gün
+olarak (`vaccineDay`). Hatırlatma uyarısı `vaccination_due` SUNUCUDAN (6 saatte bir, plan
+başına tek uyarı); uygulama hesaplamaz. Mock'taki durum hesabı yalnızca ayna.
+
 **Oturum kendiliğinden açılır/kapanır** (backend ADR 0083): açık oturumu olmayan bölgede
 sayaç akış bildirince backend oturumu açar (tür saate göre), 45 dk akışsız kalınca kapatır.
 Canlı ekran açık oturumu zaten listeden seçtiği için değişiklik gerekmedi; "Sağım başlat"

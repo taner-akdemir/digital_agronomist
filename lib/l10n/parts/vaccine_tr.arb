@@ -1,0 +1,113 @@
+{
+  "historyVaccines": "Aşılar",
+  "vaccineTitle": "Aşı takvimi",
+  "vaccineIntro": "Şap, brusella, parazit gibi tekrarlayan uygulamalar. Sağmal ve kurudaki hayvanlar plana girer; hiç kaydı olmayan hayvanın zamanı gelmiş sayılır. Zamanı gelen hayvanlar için uyarı sunucudan gelir.",
+  "vaccineLoadFailed": "Aşı planları yüklenemedi",
+  "vaccineEmpty": "Henüz aşı planı yok.",
+  "vaccineEmptyOwner": "Henüz aşı planı yok. \"Plan ekle\" ile başlayın; ardından mevcut durumu girin.",
+  "vaccinePlanAdd": "Plan ekle",
+  "vaccinePlanEdit": "Planı düzenle",
+  "vaccinePlanName": "Ad (ör. Şap)",
+  "vaccinePlanNameRequired": "Plan adını girin.",
+  "vaccinePlanInterval": "Tekrar aralığı (gün)",
+  "vaccinePlanIntervalRange": "7 ile 1095 gün arasında olmalı.",
+  "vaccinePlanSpecies": "Tür",
+  "vaccineAllSpecies": "Bütün türler",
+  "vaccinePlanEvery": "{days} günde bir",
+  "@vaccinePlanEvery": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "vaccinePlanCounts": "{animals} hayvan · {dueSoon} zamanı yakın · {never} kayıt yok",
+  "@vaccinePlanCounts": {
+    "placeholders": {
+      "animals": {
+        "type": "int"
+      },
+      "dueSoon": {
+        "type": "int"
+      },
+      "never": {
+        "type": "int"
+      }
+    }
+  },
+  "vaccinePlanSaved": "Plan kaydedildi",
+  "vaccinePlanDeleteTitle": "{name} silinsin mi?",
+  "@vaccinePlanDeleteTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "vaccinePlanDeleteBody": "Plan ve bütün uygulama kayıtları silinir.",
+  "vaccineDueIntro": "Zamanı geçmiş, 30 gün içinde gelecek ya da hiç kaydı olmayan hayvanlar.",
+  "vaccineDueEmpty": "Zamanı gelen hayvan yok.",
+  "vaccineDueLoadFailed": "Zamanı gelenler yüklenemedi",
+  "vaccineNever": "kayıt yok",
+  "vaccineOverdue": "gecikti · {date}",
+  "@vaccineOverdue": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "vaccineDueOn": "zamanı {date}",
+  "@vaccineDueOn": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "vaccineNext": "sonraki {date}",
+  "@vaccineNext": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "vaccineLastGiven": "son {date}",
+  "@vaccineLastGiven": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "vaccineSelectAll": "Tümünü seç",
+  "vaccineSelectNone": "Seçimi kaldır",
+  "vaccineMarkSelected": "Uygulandı olarak işaretle ({count})",
+  "@vaccineMarkSelected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "vaccineMarkTitle": "Uygulandı olarak işaretle",
+  "vaccineMarkDate": "Uygulama günü: {date}",
+  "@vaccineMarkDate": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "vaccineMarkHelp": "Uygulama günü",
+  "vaccineMarked": "{count, plural, other{{count} hayvan işaretlendi}}",
+  "@vaccineMarked": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "vaccineMarkedNone": "Yeni kayıt yazılmadı: aynı gün zaten kayıtlı ya da hayvan plana girmiyor.",
+  "vaccineCardTitle": "Aşılar",
+  "vaccineCardEmpty": "Bu hayvanın girdiği aşı planı yok.",
+  "vaccineCardLoadFailed": "Aşılar yüklenemedi",
+  "vaccineGiven": "Uygulandı",
+  "vaccineRecent": "Son uygulamalar",
+  "vaccineDeleteTitle": "Aşı kaydı silinsin mi?",
+  "vaccineDeleteBody": "Yanlış girilen uygulama kaydı silinir.",
+  "auditVaccinePlanCreate": "Aşı planı eklendi",
+  "auditVaccinePlanUpdate": "Aşı planı değişti",
+  "auditVaccinePlanDelete": "Aşı planı silindi",
+  "auditVaccinationAdd": "Aşı uygulandı",
+  "auditVaccinationDelete": "Aşı kaydı silindi"
+}

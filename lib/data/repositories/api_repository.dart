@@ -32,6 +32,7 @@ import 'package:milktrace/data/models/thresholds.dart';
 import 'package:milktrace/data/models/treatment.dart';
 import 'package:milktrace/data/models/unmatched_tag_row.dart';
 import 'package:milktrace/data/models/user_session.dart';
+import 'package:milktrace/data/models/vaccination.dart';
 import 'package:milktrace/data/models/vacuum.dart';
 import 'package:milktrace/data/repositories/milktrace_repository.dart';
 import 'package:milktrace/l10n/l10n.dart';
@@ -235,6 +236,78 @@ class ApiRepository implements MilkTraceRepository {
   @override
   Future<void> deleteTreatment(String animalId, String treatmentId) =>
       _dio.delete<dynamic>('/animals/$animalId/treatments/$treatmentId');
+
+  @override
+  Future<List<VaccinePlan>> vaccinePlans() async =>
+      _listOf(await _dio.get<dynamic>('/vaccine-plans'), VaccinePlan.fromJson);
+
+  @override
+  Future<VaccinePlan> saveVaccinePlan({
+    String? id,
+    required String name,
+    required int intervalDays,
+    String? speciesId,
+    String note = '',
+  }) async {
+    final body = {
+      'name': name,
+      'intervalDays': intervalDays,
+      'speciesId': speciesId,
+      'note': note,
+    };
+    return VaccinePlan.fromJson(
+      _dataOf(
+        id == null
+            ? await _dio.post<dynamic>('/vaccine-plans', data: body)
+            : await _dio.put<dynamic>('/vaccine-plans/$id', data: body),
+      ),
+    );
+  }
+
+  @override
+  Future<void> deleteVaccinePlan(String id) =>
+      _dio.delete<dynamic>('/vaccine-plans/$id');
+
+  @override
+  Future<List<VaccinationDue>> dueVaccinations({int days = 30}) async =>
+      _listOf(
+        await _dio.get<dynamic>(
+          '/vaccinations/due',
+          queryParameters: {'days': days},
+        ),
+        VaccinationDue.fromJson,
+      );
+
+  @override
+  Future<AnimalVaccinations> animalVaccinations(String animalId) async =>
+      AnimalVaccinations.fromJson(
+        _dataOf(await _dio.get<dynamic>('/animals/$animalId/vaccinations')),
+      );
+
+  @override
+  Future<int> addVaccinations({
+    required String planId,
+    required List<String> animalIds,
+    required DateTime givenOn,
+    String note = '',
+  }) async {
+    final data = _dataOf(
+      await _dio.post<dynamic>(
+        '/vaccinations',
+        data: {
+          'planId': planId,
+          'animalIds': animalIds,
+          'givenOn': _dayText(givenOn),
+          'note': note,
+        },
+      ),
+    );
+    return (data['recorded'] as num?)?.toInt() ?? 0;
+  }
+
+  @override
+  Future<void> deleteVaccination(String id) =>
+      _dio.delete<dynamic>('/vaccinations/$id');
 
   @override
   Future<AnimalNote> addAnimalNote(String animalId, String note) async =>

@@ -14,6 +14,7 @@ import 'package:milktrace/features/history/animal_import_screen.dart';
 import 'package:milktrace/features/history/groups_screen.dart';
 import 'package:milktrace/features/history/history_screen.dart';
 import 'package:milktrace/features/history/unmatched_tags_screen.dart';
+import 'package:milktrace/features/history/vaccinations_screen.dart';
 import 'package:milktrace/features/kiosk/kiosk_screen.dart';
 import 'package:milktrace/features/live/live_board_screen.dart';
 import 'package:milktrace/features/settings/feedback_screen.dart';
@@ -129,6 +130,11 @@ GoRouter router(Ref ref) {
       ),
       // Tank teslimleri (backend ADR 0089): panodaki karttan.
       GoRoute(path: '/deliveries', builder: (_, _) => const DeliveriesScreen()),
+      // Aşı takvimi (backend ADR 0112): Geçmiş → Hayvanlar, bütün roller.
+      GoRoute(
+        path: '/vaccinations',
+        builder: (_, _) => const VaccinationsScreen(),
+      ),
       // Bildirim kanalları (backend ADR 0028): hesap kartından, yalnızca
       // işletme sahibine.
       GoRoute(

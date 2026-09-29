@@ -39,6 +39,8 @@ abstract final class AlertStyle {
     'milking_missed' => Icons.alarm_off,
     // Tank sütünde yüksek somatik hücre (backend ADR 0110).
     'high_scc' => Icons.science_outlined,
+    // Aşı zamanı geldi (backend ADR 0112).
+    'vaccination_due' => Icons.vaccines_outlined,
     _ => Icons.notifications_none_outlined,
   };
 }

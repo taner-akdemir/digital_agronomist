@@ -582,6 +582,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get auditTreatmentDelete => 'Treatment deleted';
 
   @override
+  String get auditVaccinationAdd => 'Vaccination given';
+
+  @override
+  String get auditVaccinationDelete => 'Vaccination record deleted';
+
+  @override
+  String get auditVaccinePlanCreate => 'Vaccination plan added';
+
+  @override
+  String get auditVaccinePlanDelete => 'Vaccination plan deleted';
+
+  @override
+  String get auditVaccinePlanUpdate => 'Vaccination plan changed';
+
+  @override
   String get breedingAddRecord => 'Add record';
 
   @override
@@ -1667,6 +1682,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get historyUnmatchedBannerHint =>
       'Read during milking; assign to an animal';
+
+  @override
+  String get historyVaccines => 'Vaccines';
 
   @override
   String get kioskExitBody =>
@@ -2821,6 +2839,160 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get updateTitle => 'Update required';
+
+  @override
+  String get vaccineAllSpecies => 'All species';
+
+  @override
+  String get vaccineCardEmpty => 'This animal is not in any vaccination plan.';
+
+  @override
+  String get vaccineCardLoadFailed => 'Could not load vaccinations';
+
+  @override
+  String get vaccineCardTitle => 'Vaccinations';
+
+  @override
+  String get vaccineDeleteBody => 'The wrongly entered record will be deleted.';
+
+  @override
+  String get vaccineDeleteTitle => 'Delete vaccination record?';
+
+  @override
+  String get vaccineDueEmpty => 'No animals are due.';
+
+  @override
+  String get vaccineDueIntro =>
+      'Animals that are overdue, due within 30 days or have no record.';
+
+  @override
+  String get vaccineDueLoadFailed => 'Could not load due animals';
+
+  @override
+  String vaccineDueOn(Object date) {
+    return 'due $date';
+  }
+
+  @override
+  String get vaccineEmpty => 'No vaccination plans yet.';
+
+  @override
+  String get vaccineEmptyOwner =>
+      'No vaccination plans yet. Start with \"Add plan\", then enter the current state.';
+
+  @override
+  String get vaccineGiven => 'Given';
+
+  @override
+  String get vaccineIntro =>
+      'Recurring treatments such as FMD, brucellosis or parasites. Lactating and dry animals are included; an animal with no record counts as due. Alerts for due animals come from the server.';
+
+  @override
+  String vaccineLastGiven(Object date) {
+    return 'last $date';
+  }
+
+  @override
+  String get vaccineLoadFailed => 'Could not load vaccination plans';
+
+  @override
+  String vaccineMarkDate(Object date) {
+    return 'Given on: $date';
+  }
+
+  @override
+  String get vaccineMarkHelp => 'Date given';
+
+  @override
+  String vaccineMarkSelected(int count) {
+    return 'Mark as given ($count)';
+  }
+
+  @override
+  String get vaccineMarkTitle => 'Mark as given';
+
+  @override
+  String vaccineMarked(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count animals marked',
+      one: '$count animal marked',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get vaccineMarkedNone =>
+      'No new record: already recorded that day or the animal is not in the plan.';
+
+  @override
+  String get vaccineNever => 'no record';
+
+  @override
+  String vaccineNext(Object date) {
+    return 'next $date';
+  }
+
+  @override
+  String vaccineOverdue(Object date) {
+    return 'overdue · $date';
+  }
+
+  @override
+  String get vaccinePlanAdd => 'Add plan';
+
+  @override
+  String vaccinePlanCounts(int animals, int dueSoon, int never) {
+    return '$animals animals · $dueSoon due soon · $never no record';
+  }
+
+  @override
+  String get vaccinePlanDeleteBody =>
+      'The plan and all its records will be deleted.';
+
+  @override
+  String vaccinePlanDeleteTitle(Object name) {
+    return 'Delete $name?';
+  }
+
+  @override
+  String get vaccinePlanEdit => 'Edit plan';
+
+  @override
+  String vaccinePlanEvery(int days) {
+    return 'every $days days';
+  }
+
+  @override
+  String get vaccinePlanInterval => 'Repeat every (days)';
+
+  @override
+  String get vaccinePlanIntervalRange => 'Must be between 7 and 1095 days.';
+
+  @override
+  String get vaccinePlanName => 'Name (e.g. FMD)';
+
+  @override
+  String get vaccinePlanNameRequired => 'Enter a plan name.';
+
+  @override
+  String get vaccinePlanSaved => 'Plan saved';
+
+  @override
+  String get vaccinePlanSpecies => 'Species';
+
+  @override
+  String get vaccineRecent => 'Recent';
+
+  @override
+  String get vaccineSelectAll => 'Select all';
+
+  @override
+  String get vaccineSelectNone => 'Clear selection';
+
+  @override
+  String get vaccineTitle => 'Vaccination schedule';
 
   @override
   String get widgetAccount => 'Account';

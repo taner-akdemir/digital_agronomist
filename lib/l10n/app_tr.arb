@@ -322,6 +322,11 @@
   "auditTitle": "İşlem kaydı",
   "auditTreatmentAdd": "Tedavi eklendi",
   "auditTreatmentDelete": "Tedavi silindi",
+  "auditVaccinationAdd": "Aşı uygulandı",
+  "auditVaccinationDelete": "Aşı kaydı silindi",
+  "auditVaccinePlanCreate": "Aşı planı eklendi",
+  "auditVaccinePlanDelete": "Aşı planı silindi",
+  "auditVaccinePlanUpdate": "Aşı planı değişti",
   "breedingAddRecord": "Kayıt ekle",
   "breedingAdded": "Üreme kaydı eklendi",
   "breedingDeleteBody": "Yalnızca yanlış girilen kaydı silin; durum ve tarihler yeniden hesaplanır.",
@@ -941,6 +946,7 @@
     }
   },
   "historyUnmatchedBannerHint": "Sağımda okundu; hayvanına atayın",
+  "historyVaccines": "Aşılar",
   "kioskExitBody": "Yeniden girmek için tablet hesabının e-postası ve parolası gerekir.",
   "kioskExitTitle": "Tabletten çıkılsın mı?",
   "kioskSignOut": "Çıkış",
@@ -1540,6 +1546,111 @@
   "updateBodyIos": "Milk Trace'in bu sürümü artık desteklenmiyor. Sağım kayıtlarının doğru tutulması için uygulamayı App Store'dan güncelleyin.",
   "updatePlayButton": "Google Play'de güncelle",
   "updateTitle": "Güncelleme gerekli",
+  "vaccineAllSpecies": "Bütün türler",
+  "vaccineCardEmpty": "Bu hayvanın girdiği aşı planı yok.",
+  "vaccineCardLoadFailed": "Aşılar yüklenemedi",
+  "vaccineCardTitle": "Aşılar",
+  "vaccineDeleteBody": "Yanlış girilen uygulama kaydı silinir.",
+  "vaccineDeleteTitle": "Aşı kaydı silinsin mi?",
+  "vaccineDueEmpty": "Zamanı gelen hayvan yok.",
+  "vaccineDueIntro": "Zamanı geçmiş, 30 gün içinde gelecek ya da hiç kaydı olmayan hayvanlar.",
+  "vaccineDueLoadFailed": "Zamanı gelenler yüklenemedi",
+  "vaccineDueOn": "zamanı {date}",
+  "@vaccineDueOn": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "vaccineEmpty": "Henüz aşı planı yok.",
+  "vaccineEmptyOwner": "Henüz aşı planı yok. \"Plan ekle\" ile başlayın; ardından mevcut durumu girin.",
+  "vaccineGiven": "Uygulandı",
+  "vaccineIntro": "Şap, brusella, parazit gibi tekrarlayan uygulamalar. Sağmal ve kurudaki hayvanlar plana girer; hiç kaydı olmayan hayvanın zamanı gelmiş sayılır. Zamanı gelen hayvanlar için uyarı sunucudan gelir.",
+  "vaccineLastGiven": "son {date}",
+  "@vaccineLastGiven": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "vaccineLoadFailed": "Aşı planları yüklenemedi",
+  "vaccineMarkDate": "Uygulama günü: {date}",
+  "@vaccineMarkDate": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "vaccineMarkHelp": "Uygulama günü",
+  "vaccineMarkSelected": "Uygulandı olarak işaretle ({count})",
+  "@vaccineMarkSelected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "vaccineMarkTitle": "Uygulandı olarak işaretle",
+  "vaccineMarked": "{count, plural, other{{count} hayvan işaretlendi}}",
+  "@vaccineMarked": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "vaccineMarkedNone": "Yeni kayıt yazılmadı: aynı gün zaten kayıtlı ya da hayvan plana girmiyor.",
+  "vaccineNever": "kayıt yok",
+  "vaccineNext": "sonraki {date}",
+  "@vaccineNext": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "vaccineOverdue": "gecikti · {date}",
+  "@vaccineOverdue": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "vaccinePlanAdd": "Plan ekle",
+  "vaccinePlanCounts": "{animals} hayvan · {dueSoon} zamanı yakın · {never} kayıt yok",
+  "@vaccinePlanCounts": {
+    "placeholders": {
+      "animals": {
+        "type": "int"
+      },
+      "dueSoon": {
+        "type": "int"
+      },
+      "never": {
+        "type": "int"
+      }
+    }
+  },
+  "vaccinePlanDeleteBody": "Plan ve bütün uygulama kayıtları silinir.",
+  "vaccinePlanDeleteTitle": "{name} silinsin mi?",
+  "@vaccinePlanDeleteTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "vaccinePlanEdit": "Planı düzenle",
+  "vaccinePlanEvery": "{days} günde bir",
+  "@vaccinePlanEvery": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "vaccinePlanInterval": "Tekrar aralığı (gün)",
+  "vaccinePlanIntervalRange": "7 ile 1095 gün arasında olmalı.",
+  "vaccinePlanName": "Ad (ör. Şap)",
+  "vaccinePlanNameRequired": "Plan adını girin.",
+  "vaccinePlanSaved": "Plan kaydedildi",
+  "vaccinePlanSpecies": "Tür",
+  "vaccineRecent": "Son uygulamalar",
+  "vaccineSelectAll": "Tümünü seç",
+  "vaccineSelectNone": "Seçimi kaldır",
+  "vaccineTitle": "Aşı takvimi",
   "widgetAccount": "Hesap",
   "widgetAlerts": "Uyarılar",
   "widgetOfflineBanner": "Çevrimdışı · son veri {when}. Değişiklikler bağlantı gelince yapılabilir.",

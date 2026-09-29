@@ -307,6 +307,11 @@
   "auditTitle": "Activity log",
   "auditTreatmentAdd": "Treatment added",
   "auditTreatmentDelete": "Treatment deleted",
+  "auditVaccinationAdd": "Vaccination given",
+  "auditVaccinationDelete": "Vaccination record deleted",
+  "auditVaccinePlanCreate": "Vaccination plan added",
+  "auditVaccinePlanDelete": "Vaccination plan deleted",
+  "auditVaccinePlanUpdate": "Vaccination plan changed",
   "breedingAddRecord": "Add record",
   "breedingAdded": "Breeding record added",
   "breedingDeleteBody": "Only delete a record entered by mistake; status and dates are recalculated.",
@@ -818,6 +823,7 @@
     }
   },
   "historyUnmatchedBannerHint": "Read during milking; assign to an animal",
+  "historyVaccines": "Vaccines",
   "kioskExitBody": "Signing back in requires the tablet account's email and password.",
   "kioskExitTitle": "Sign out of the tablet?",
   "kioskSignOut": "Sign out",
@@ -1325,6 +1331,111 @@
   "updateBodyIos": "This version of Milk Trace is no longer supported. Update the app from the App Store to keep milking records accurate.",
   "updatePlayButton": "Update on Google Play",
   "updateTitle": "Update required",
+  "vaccineAllSpecies": "All species",
+  "vaccineCardEmpty": "This animal is not in any vaccination plan.",
+  "vaccineCardLoadFailed": "Could not load vaccinations",
+  "vaccineCardTitle": "Vaccinations",
+  "vaccineDeleteBody": "The wrongly entered record will be deleted.",
+  "vaccineDeleteTitle": "Delete vaccination record?",
+  "vaccineDueEmpty": "No animals are due.",
+  "vaccineDueIntro": "Animals that are overdue, due within 30 days or have no record.",
+  "vaccineDueLoadFailed": "Could not load due animals",
+  "vaccineDueOn": "due {date}",
+  "@vaccineDueOn": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "vaccineEmpty": "No vaccination plans yet.",
+  "vaccineEmptyOwner": "No vaccination plans yet. Start with \"Add plan\", then enter the current state.",
+  "vaccineGiven": "Given",
+  "vaccineIntro": "Recurring treatments such as FMD, brucellosis or parasites. Lactating and dry animals are included; an animal with no record counts as due. Alerts for due animals come from the server.",
+  "vaccineLastGiven": "last {date}",
+  "@vaccineLastGiven": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "vaccineLoadFailed": "Could not load vaccination plans",
+  "vaccineMarkDate": "Given on: {date}",
+  "@vaccineMarkDate": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "vaccineMarkHelp": "Date given",
+  "vaccineMarkSelected": "Mark as given ({count})",
+  "@vaccineMarkSelected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "vaccineMarkTitle": "Mark as given",
+  "vaccineMarked": "{count, plural, one{{count} animal marked} other{{count} animals marked}}",
+  "@vaccineMarked": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "vaccineMarkedNone": "No new record: already recorded that day or the animal is not in the plan.",
+  "vaccineNever": "no record",
+  "vaccineNext": "next {date}",
+  "@vaccineNext": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "vaccineOverdue": "overdue · {date}",
+  "@vaccineOverdue": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "vaccinePlanAdd": "Add plan",
+  "vaccinePlanCounts": "{animals} animals · {dueSoon} due soon · {never} no record",
+  "@vaccinePlanCounts": {
+    "placeholders": {
+      "animals": {
+        "type": "int"
+      },
+      "dueSoon": {
+        "type": "int"
+      },
+      "never": {
+        "type": "int"
+      }
+    }
+  },
+  "vaccinePlanDeleteBody": "The plan and all its records will be deleted.",
+  "vaccinePlanDeleteTitle": "Delete {name}?",
+  "@vaccinePlanDeleteTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "vaccinePlanEdit": "Edit plan",
+  "vaccinePlanEvery": "every {days} days",
+  "@vaccinePlanEvery": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "vaccinePlanInterval": "Repeat every (days)",
+  "vaccinePlanIntervalRange": "Must be between 7 and 1095 days.",
+  "vaccinePlanName": "Name (e.g. FMD)",
+  "vaccinePlanNameRequired": "Enter a plan name.",
+  "vaccinePlanSaved": "Plan saved",
+  "vaccinePlanSpecies": "Species",
+  "vaccineRecent": "Recent",
+  "vaccineSelectAll": "Select all",
+  "vaccineSelectNone": "Clear selection",
+  "vaccineTitle": "Vaccination schedule",
   "widgetAccount": "Account",
   "widgetAlerts": "Alerts",
   "widgetOfflineBanner": "Offline · last data {when}. Changes can be made once the connection is back.",

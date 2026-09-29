@@ -80,6 +80,16 @@ class _AnimalsTab extends ConsumerWidget {
                   foregroundColor: AppColors.darkGreenColor,
                 ),
               ),
+              // Aşı takvimi (backend ADR 0112) BÜTÜN rollere: uygulamayı
+              // çoğunlukla veteriner girer.
+              TextButton.icon(
+                onPressed: () => context.push('/vaccinations'),
+                icon: const Icon(Icons.vaccines_outlined),
+                label: Text(l10n.historyVaccines),
+                style: TextButton.styleFrom(
+                  foregroundColor: AppColors.darkGreenColor,
+                ),
+              ),
               // Sürüyü ilk kez girerken tek tek eklemek yerine (ADR 0063).
               // Gruplar (ADR 0092): yönetim sahibin.
               if (isOwner)

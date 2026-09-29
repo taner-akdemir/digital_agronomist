@@ -33,6 +33,7 @@ import 'package:milktrace/data/models/thresholds.dart';
 import 'package:milktrace/data/models/treatment.dart';
 import 'package:milktrace/data/models/unmatched_tag_row.dart';
 import 'package:milktrace/data/models/user_session.dart';
+import 'package:milktrace/data/models/vaccination.dart';
 import 'package:milktrace/data/models/vacuum.dart';
 import 'package:milktrace/data/repositories/milktrace_repository.dart';
 import 'package:milktrace/data/repositories/mock_lactation.dart';
@@ -392,6 +393,227 @@ class MockRepository implements MilkTraceRepository {
       _delayed(() async {
         _treatments[animalId]?.removeWhere((t) => t.id == treatmentId);
       });
+
+  /// Mock'ta aşı planları ve uygulamalar bellekte (backend ADR 0112).
+  final List<VaccinePlan> _vaccinePlans = [];
+  final List<Vaccination> _vaccinations = [];
+  int _vaccineSeq = 0;
+
+  static ApiException _vaccineInvalid(String message) =>
+      ApiException(code: 'VALIDATION', message: message, status: 422);
+
+  static const _planNotFound = ApiException(
+    code: 'NOT_FOUND',
+    message: 'plan bulunamadı',
+    status: 404,
+  );
+
+  /// Sunucudaki `vaccination_status` görünümünün aynası: plan × sağmal ya
+  /// da kurudaki (planın türündeki) hayvan, son uygulama ve sonraki gün.
+  Future<List<VaccinationDue>> _vaccineStatus() async {
+    final all = await animals();
+    final out = <VaccinationDue>[];
+    for (final p in _vaccinePlans) {
+      for (final a in all) {
+        if (a.status != 'active' && a.status != 'dry') continue;
+        if (p.speciesId != null && p.speciesId != a.speciesId) continue;
+        DateTime? last;
+        for (final v in _vaccinations) {
+          if (v.planId == p.id &&
+              v.animalId == a.id &&
+              (last == null || v.givenOn.isAfter(last))) {
+            last = v.givenOn;
+          }
+        }
+        out.add(
+          VaccinationDue(
+            planId: p.id,
+            planName: p.name,
+            animalId: a.id,
+            earTag: a.earTag,
+            animalName: a.name ?? '',
+            lastGivenOn: last,
+            dueOn: last == null
+                ? null
+                : DateTime(last.year, last.month, last.day + p.intervalDays),
+          ),
+        );
+      }
+    }
+    // Kayıtsız üstte, sonra en gecikmiş (sunucudaki ORDER BY).
+    out.sort((x, y) {
+      final dx = x.dueOn;
+      final dy = y.dueOn;
+      if (dx == null && dy != null) return -1;
+      if (dx != null && dy == null) return 1;
+      if (dx != null && dy != null && dx != dy) return dx.compareTo(dy);
+      final n = x.planName.toLowerCase().compareTo(y.planName.toLowerCase());
+      return n != 0 ? n : x.earTag.compareTo(y.earTag);
+    });
+    return out;
+  }
+
+  bool _dueWithin(VaccinationDue d, int days) =>
+      d.dueOn == null ||
+      !vaccineDay(
+        d.dueOn!,
+      ).isAfter(DateTime(_now.year, _now.month, _now.day + days));
+
+  @override
+  Future<List<VaccinePlan>> vaccinePlans() => _delayed(() async {
+    final status = await _vaccineStatus();
+    return [
+      for (final p in _vaccinePlans)
+        p.copyWith(
+          animals: status.where((d) => d.planId == p.id).length,
+          dueSoon: status
+              .where((d) => d.planId == p.id && _dueWithin(d, 7))
+              .length,
+          never: status
+              .where((d) => d.planId == p.id && d.dueOn == null)
+              .length,
+        ),
+    ]..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+  });
+
+  @override
+  Future<VaccinePlan> saveVaccinePlan({
+    String? id,
+    required String name,
+    required int intervalDays,
+    String? speciesId,
+    String note = '',
+  }) => _delayed(() async {
+    final n = name.trim();
+    final t = note.trim();
+    if (n.isEmpty || n.runes.length > 80) {
+      throw _vaccineInvalid('plan adı 1 ile 80 karakter arasında olmalı');
+    }
+    if (intervalDays < 7 || intervalDays > 1095) {
+      throw _vaccineInvalid('tekrar aralığı 7 ile 1095 gün arasında olmalı');
+    }
+    if (t.runes.length > 500) {
+      throw _vaccineInvalid('not en çok 500 karakter olabilir');
+    }
+    if (_vaccinePlans.any(
+      (p) => p.id != id && p.name.toLowerCase() == n.toLowerCase(),
+    )) {
+      throw const ApiException(
+        code: 'CONFLICT',
+        message: 'bu adda bir plan zaten var',
+        status: 409,
+      );
+    }
+    final plan = VaccinePlan(
+      id: id ?? 'mock-plan-${++_vaccineSeq}',
+      name: n,
+      intervalDays: intervalDays,
+      speciesId: (speciesId ?? '').isEmpty ? null : speciesId,
+      note: t,
+    );
+    if (id == null) {
+      _vaccinePlans.add(plan);
+      return plan;
+    }
+    final i = _vaccinePlans.indexWhere((p) => p.id == id);
+    if (i < 0) throw _planNotFound;
+    _vaccinePlans[i] = plan;
+    for (var j = 0; j < _vaccinations.length; j++) {
+      if (_vaccinations[j].planId == id) {
+        _vaccinations[j] = _vaccinations[j].copyWith(planName: n);
+      }
+    }
+    return plan;
+  });
+
+  @override
+  Future<void> deleteVaccinePlan(String id) => _delayed(() async {
+    if (!_vaccinePlans.any((p) => p.id == id)) throw _planNotFound;
+    _vaccinePlans.removeWhere((p) => p.id == id);
+    _vaccinations.removeWhere((v) => v.planId == id);
+  });
+
+  @override
+  Future<List<VaccinationDue>> dueVaccinations({int days = 30}) => _delayed(
+    () async => [
+      for (final d in await _vaccineStatus())
+        if (_dueWithin(d, days)) d,
+    ],
+  );
+
+  @override
+  Future<AnimalVaccinations> animalVaccinations(String animalId) => _delayed(
+    () async {
+      final items = _vaccinations.where((v) => v.animalId == animalId).toList()
+        ..sort((a, b) {
+          final g = b.givenOn.compareTo(a.givenOn);
+          if (g != 0) return g;
+          return (b.createdAt ?? b.givenOn).compareTo(a.createdAt ?? a.givenOn);
+        });
+      return AnimalVaccinations(
+        items: items,
+        due: [
+          for (final d in await _vaccineStatus())
+            if (d.animalId == animalId) d,
+        ],
+      );
+    },
+  );
+
+  @override
+  Future<int> addVaccinations({
+    required String planId,
+    required List<String> animalIds,
+    required DateTime givenOn,
+    String note = '',
+  }) => _delayed(() async {
+    if (animalIds.isEmpty) {
+      throw _vaccineInvalid('en az bir hayvan seçilmeli');
+    }
+    if (note.trim().runes.length > 1000) {
+      throw _vaccineInvalid('not en çok 1000 karakter olabilir');
+    }
+    final day = vaccineDay(givenOn);
+    if (day.isAfter(_now)) {
+      throw _vaccineInvalid('uygulama tarihi gelecekte olamaz');
+    }
+    if (day.isBefore(DateTime(_now.year - 5, _now.month, _now.day))) {
+      throw _vaccineInvalid('uygulama tarihi beş yıldan eski olamaz');
+    }
+    final plan = _vaccinePlans.where((p) => p.id == planId).firstOrNull;
+    if (plan == null) throw _planNotFound;
+    final eligible = {
+      for (final d in await _vaccineStatus())
+        if (d.planId == planId) d.animalId,
+    };
+    var n = 0;
+    for (final id in animalIds.toSet()) {
+      if (!eligible.contains(id)) continue;
+      if (_vaccinations.any(
+        (v) => v.planId == planId && v.animalId == id && v.givenOn == day,
+      )) {
+        continue;
+      }
+      _vaccinations.add(
+        Vaccination(
+          id: 'mock-vaccination-${++_vaccineSeq}',
+          planId: planId,
+          planName: plan.name,
+          animalId: id,
+          givenOn: day,
+          note: note.trim(),
+          authorName: 'Demo Çiftçi',
+          createdAt: _clock.toUtc(),
+        ),
+      );
+      n++;
+    }
+    return n;
+  });
+
+  @override
+  Future<void> deleteVaccination(String id) =>
+      _delayed(() async => _vaccinations.removeWhere((v) => v.id == id));
 
   /// Mock'ta rapor üretici YOK: .xlsx backend'de yazılıyor (ADR 0064).
   @override

@@ -1070,6 +1070,36 @@ abstract class AppLocalizations {
   /// **'Tedavi silindi'**
   String get auditTreatmentDelete;
 
+  /// No description provided for @auditVaccinationAdd.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aşı uygulandı'**
+  String get auditVaccinationAdd;
+
+  /// No description provided for @auditVaccinationDelete.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aşı kaydı silindi'**
+  String get auditVaccinationDelete;
+
+  /// No description provided for @auditVaccinePlanCreate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aşı planı eklendi'**
+  String get auditVaccinePlanCreate;
+
+  /// No description provided for @auditVaccinePlanDelete.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aşı planı silindi'**
+  String get auditVaccinePlanDelete;
+
+  /// No description provided for @auditVaccinePlanUpdate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aşı planı değişti'**
+  String get auditVaccinePlanUpdate;
+
   /// No description provided for @breedingAddRecord.
   ///
   /// In tr, this message translates to:
@@ -2868,6 +2898,12 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Sağımda okundu; hayvanına atayın'**
   String get historyUnmatchedBannerHint;
+
+  /// No description provided for @historyVaccines.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aşılar'**
+  String get historyVaccines;
 
   /// No description provided for @kioskExitBody.
   ///
@@ -4829,6 +4865,252 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Güncelleme gerekli'**
   String get updateTitle;
+
+  /// No description provided for @vaccineAllSpecies.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bütün türler'**
+  String get vaccineAllSpecies;
+
+  /// No description provided for @vaccineCardEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu hayvanın girdiği aşı planı yok.'**
+  String get vaccineCardEmpty;
+
+  /// No description provided for @vaccineCardLoadFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aşılar yüklenemedi'**
+  String get vaccineCardLoadFailed;
+
+  /// No description provided for @vaccineCardTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aşılar'**
+  String get vaccineCardTitle;
+
+  /// No description provided for @vaccineDeleteBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yanlış girilen uygulama kaydı silinir.'**
+  String get vaccineDeleteBody;
+
+  /// No description provided for @vaccineDeleteTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aşı kaydı silinsin mi?'**
+  String get vaccineDeleteTitle;
+
+  /// No description provided for @vaccineDueEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Zamanı gelen hayvan yok.'**
+  String get vaccineDueEmpty;
+
+  /// No description provided for @vaccineDueIntro.
+  ///
+  /// In tr, this message translates to:
+  /// **'Zamanı geçmiş, 30 gün içinde gelecek ya da hiç kaydı olmayan hayvanlar.'**
+  String get vaccineDueIntro;
+
+  /// No description provided for @vaccineDueLoadFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Zamanı gelenler yüklenemedi'**
+  String get vaccineDueLoadFailed;
+
+  /// No description provided for @vaccineDueOn.
+  ///
+  /// In tr, this message translates to:
+  /// **'zamanı {date}'**
+  String vaccineDueOn(Object date);
+
+  /// No description provided for @vaccineEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz aşı planı yok.'**
+  String get vaccineEmpty;
+
+  /// No description provided for @vaccineEmptyOwner.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz aşı planı yok. \"Plan ekle\" ile başlayın; ardından mevcut durumu girin.'**
+  String get vaccineEmptyOwner;
+
+  /// No description provided for @vaccineGiven.
+  ///
+  /// In tr, this message translates to:
+  /// **'Uygulandı'**
+  String get vaccineGiven;
+
+  /// No description provided for @vaccineIntro.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şap, brusella, parazit gibi tekrarlayan uygulamalar. Sağmal ve kurudaki hayvanlar plana girer; hiç kaydı olmayan hayvanın zamanı gelmiş sayılır. Zamanı gelen hayvanlar için uyarı sunucudan gelir.'**
+  String get vaccineIntro;
+
+  /// No description provided for @vaccineLastGiven.
+  ///
+  /// In tr, this message translates to:
+  /// **'son {date}'**
+  String vaccineLastGiven(Object date);
+
+  /// No description provided for @vaccineLoadFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aşı planları yüklenemedi'**
+  String get vaccineLoadFailed;
+
+  /// No description provided for @vaccineMarkDate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Uygulama günü: {date}'**
+  String vaccineMarkDate(Object date);
+
+  /// No description provided for @vaccineMarkHelp.
+  ///
+  /// In tr, this message translates to:
+  /// **'Uygulama günü'**
+  String get vaccineMarkHelp;
+
+  /// No description provided for @vaccineMarkSelected.
+  ///
+  /// In tr, this message translates to:
+  /// **'Uygulandı olarak işaretle ({count})'**
+  String vaccineMarkSelected(int count);
+
+  /// No description provided for @vaccineMarkTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Uygulandı olarak işaretle'**
+  String get vaccineMarkTitle;
+
+  /// No description provided for @vaccineMarked.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count, plural, other{{count} hayvan işaretlendi}}'**
+  String vaccineMarked(int count);
+
+  /// No description provided for @vaccineMarkedNone.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni kayıt yazılmadı: aynı gün zaten kayıtlı ya da hayvan plana girmiyor.'**
+  String get vaccineMarkedNone;
+
+  /// No description provided for @vaccineNever.
+  ///
+  /// In tr, this message translates to:
+  /// **'kayıt yok'**
+  String get vaccineNever;
+
+  /// No description provided for @vaccineNext.
+  ///
+  /// In tr, this message translates to:
+  /// **'sonraki {date}'**
+  String vaccineNext(Object date);
+
+  /// No description provided for @vaccineOverdue.
+  ///
+  /// In tr, this message translates to:
+  /// **'gecikti · {date}'**
+  String vaccineOverdue(Object date);
+
+  /// No description provided for @vaccinePlanAdd.
+  ///
+  /// In tr, this message translates to:
+  /// **'Plan ekle'**
+  String get vaccinePlanAdd;
+
+  /// No description provided for @vaccinePlanCounts.
+  ///
+  /// In tr, this message translates to:
+  /// **'{animals} hayvan · {dueSoon} zamanı yakın · {never} kayıt yok'**
+  String vaccinePlanCounts(int animals, int dueSoon, int never);
+
+  /// No description provided for @vaccinePlanDeleteBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Plan ve bütün uygulama kayıtları silinir.'**
+  String get vaccinePlanDeleteBody;
+
+  /// No description provided for @vaccinePlanDeleteTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'{name} silinsin mi?'**
+  String vaccinePlanDeleteTitle(Object name);
+
+  /// No description provided for @vaccinePlanEdit.
+  ///
+  /// In tr, this message translates to:
+  /// **'Planı düzenle'**
+  String get vaccinePlanEdit;
+
+  /// No description provided for @vaccinePlanEvery.
+  ///
+  /// In tr, this message translates to:
+  /// **'{days} günde bir'**
+  String vaccinePlanEvery(int days);
+
+  /// No description provided for @vaccinePlanInterval.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tekrar aralığı (gün)'**
+  String get vaccinePlanInterval;
+
+  /// No description provided for @vaccinePlanIntervalRange.
+  ///
+  /// In tr, this message translates to:
+  /// **'7 ile 1095 gün arasında olmalı.'**
+  String get vaccinePlanIntervalRange;
+
+  /// No description provided for @vaccinePlanName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ad (ör. Şap)'**
+  String get vaccinePlanName;
+
+  /// No description provided for @vaccinePlanNameRequired.
+  ///
+  /// In tr, this message translates to:
+  /// **'Plan adını girin.'**
+  String get vaccinePlanNameRequired;
+
+  /// No description provided for @vaccinePlanSaved.
+  ///
+  /// In tr, this message translates to:
+  /// **'Plan kaydedildi'**
+  String get vaccinePlanSaved;
+
+  /// No description provided for @vaccinePlanSpecies.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tür'**
+  String get vaccinePlanSpecies;
+
+  /// No description provided for @vaccineRecent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Son uygulamalar'**
+  String get vaccineRecent;
+
+  /// No description provided for @vaccineSelectAll.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tümünü seç'**
+  String get vaccineSelectAll;
+
+  /// No description provided for @vaccineSelectNone.
+  ///
+  /// In tr, this message translates to:
+  /// **'Seçimi kaldır'**
+  String get vaccineSelectNone;
+
+  /// No description provided for @vaccineTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aşı takvimi'**
+  String get vaccineTitle;
 
   /// No description provided for @widgetAccount.
   ///

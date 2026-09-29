@@ -32,6 +32,7 @@ import 'package:milktrace/data/models/thresholds.dart';
 import 'package:milktrace/data/models/treatment.dart';
 import 'package:milktrace/data/models/unmatched_tag_row.dart';
 import 'package:milktrace/data/models/user_session.dart';
+import 'package:milktrace/data/models/vaccination.dart';
 import 'package:milktrace/data/models/vacuum.dart';
 import 'package:milktrace/data/repositories/milktrace_repository.dart';
 
@@ -248,6 +249,67 @@ class CachingRepository implements MilkTraceRepository {
   @override
   Future<void> deleteTreatment(String animalId, String treatmentId) =>
       _net(() => _inner.deleteTreatment(animalId, treatmentId));
+
+  @override
+  Future<List<VaccinePlan>> vaccinePlans() => _read(
+    'vaccinePlans',
+    _inner.vaccinePlans,
+    (j) => _list(j, VaccinePlan.fromJson),
+  );
+
+  @override
+  Future<VaccinePlan> saveVaccinePlan({
+    String? id,
+    required String name,
+    required int intervalDays,
+    String? speciesId,
+    String note = '',
+  }) => _net(
+    () => _inner.saveVaccinePlan(
+      id: id,
+      name: name,
+      intervalDays: intervalDays,
+      speciesId: speciesId,
+      note: note,
+    ),
+  );
+
+  @override
+  Future<void> deleteVaccinePlan(String id) =>
+      _net(() => _inner.deleteVaccinePlan(id));
+
+  @override
+  Future<List<VaccinationDue>> dueVaccinations({int days = 30}) => _read(
+    'vaccinationsDue:$days',
+    () => _inner.dueVaccinations(days: days),
+    (j) => _list(j, VaccinationDue.fromJson),
+  );
+
+  @override
+  Future<AnimalVaccinations> animalVaccinations(String animalId) => _read(
+    'vaccinations:$animalId',
+    () => _inner.animalVaccinations(animalId),
+    (j) => AnimalVaccinations.fromJson(_map(j)),
+  );
+
+  @override
+  Future<int> addVaccinations({
+    required String planId,
+    required List<String> animalIds,
+    required DateTime givenOn,
+    String note = '',
+  }) => _net(
+    () => _inner.addVaccinations(
+      planId: planId,
+      animalIds: animalIds,
+      givenOn: givenOn,
+      note: note,
+    ),
+  );
+
+  @override
+  Future<void> deleteVaccination(String id) =>
+      _net(() => _inner.deleteVaccination(id));
 
   @override
   Future<LiveSession> liveSession({required String hallId}) => _read(

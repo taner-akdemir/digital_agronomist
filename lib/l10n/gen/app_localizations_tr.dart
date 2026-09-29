@@ -580,6 +580,21 @@ class AppLocalizationsTr extends AppLocalizations {
   String get auditTreatmentDelete => 'Tedavi silindi';
 
   @override
+  String get auditVaccinationAdd => 'Aşı uygulandı';
+
+  @override
+  String get auditVaccinationDelete => 'Aşı kaydı silindi';
+
+  @override
+  String get auditVaccinePlanCreate => 'Aşı planı eklendi';
+
+  @override
+  String get auditVaccinePlanDelete => 'Aşı planı silindi';
+
+  @override
+  String get auditVaccinePlanUpdate => 'Aşı planı değişti';
+
+  @override
   String get breedingAddRecord => 'Kayıt ekle';
 
   @override
@@ -1643,6 +1658,9 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get historyUnmatchedBannerHint => 'Sağımda okundu; hayvanına atayın';
+
+  @override
+  String get historyVaccines => 'Aşılar';
 
   @override
   String get kioskExitBody =>
@@ -2783,6 +2801,159 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get updateTitle => 'Güncelleme gerekli';
+
+  @override
+  String get vaccineAllSpecies => 'Bütün türler';
+
+  @override
+  String get vaccineCardEmpty => 'Bu hayvanın girdiği aşı planı yok.';
+
+  @override
+  String get vaccineCardLoadFailed => 'Aşılar yüklenemedi';
+
+  @override
+  String get vaccineCardTitle => 'Aşılar';
+
+  @override
+  String get vaccineDeleteBody => 'Yanlış girilen uygulama kaydı silinir.';
+
+  @override
+  String get vaccineDeleteTitle => 'Aşı kaydı silinsin mi?';
+
+  @override
+  String get vaccineDueEmpty => 'Zamanı gelen hayvan yok.';
+
+  @override
+  String get vaccineDueIntro =>
+      'Zamanı geçmiş, 30 gün içinde gelecek ya da hiç kaydı olmayan hayvanlar.';
+
+  @override
+  String get vaccineDueLoadFailed => 'Zamanı gelenler yüklenemedi';
+
+  @override
+  String vaccineDueOn(Object date) {
+    return 'zamanı $date';
+  }
+
+  @override
+  String get vaccineEmpty => 'Henüz aşı planı yok.';
+
+  @override
+  String get vaccineEmptyOwner =>
+      'Henüz aşı planı yok. \"Plan ekle\" ile başlayın; ardından mevcut durumu girin.';
+
+  @override
+  String get vaccineGiven => 'Uygulandı';
+
+  @override
+  String get vaccineIntro =>
+      'Şap, brusella, parazit gibi tekrarlayan uygulamalar. Sağmal ve kurudaki hayvanlar plana girer; hiç kaydı olmayan hayvanın zamanı gelmiş sayılır. Zamanı gelen hayvanlar için uyarı sunucudan gelir.';
+
+  @override
+  String vaccineLastGiven(Object date) {
+    return 'son $date';
+  }
+
+  @override
+  String get vaccineLoadFailed => 'Aşı planları yüklenemedi';
+
+  @override
+  String vaccineMarkDate(Object date) {
+    return 'Uygulama günü: $date';
+  }
+
+  @override
+  String get vaccineMarkHelp => 'Uygulama günü';
+
+  @override
+  String vaccineMarkSelected(int count) {
+    return 'Uygulandı olarak işaretle ($count)';
+  }
+
+  @override
+  String get vaccineMarkTitle => 'Uygulandı olarak işaretle';
+
+  @override
+  String vaccineMarked(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count hayvan işaretlendi',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get vaccineMarkedNone =>
+      'Yeni kayıt yazılmadı: aynı gün zaten kayıtlı ya da hayvan plana girmiyor.';
+
+  @override
+  String get vaccineNever => 'kayıt yok';
+
+  @override
+  String vaccineNext(Object date) {
+    return 'sonraki $date';
+  }
+
+  @override
+  String vaccineOverdue(Object date) {
+    return 'gecikti · $date';
+  }
+
+  @override
+  String get vaccinePlanAdd => 'Plan ekle';
+
+  @override
+  String vaccinePlanCounts(int animals, int dueSoon, int never) {
+    return '$animals hayvan · $dueSoon zamanı yakın · $never kayıt yok';
+  }
+
+  @override
+  String get vaccinePlanDeleteBody =>
+      'Plan ve bütün uygulama kayıtları silinir.';
+
+  @override
+  String vaccinePlanDeleteTitle(Object name) {
+    return '$name silinsin mi?';
+  }
+
+  @override
+  String get vaccinePlanEdit => 'Planı düzenle';
+
+  @override
+  String vaccinePlanEvery(int days) {
+    return '$days günde bir';
+  }
+
+  @override
+  String get vaccinePlanInterval => 'Tekrar aralığı (gün)';
+
+  @override
+  String get vaccinePlanIntervalRange => '7 ile 1095 gün arasında olmalı.';
+
+  @override
+  String get vaccinePlanName => 'Ad (ör. Şap)';
+
+  @override
+  String get vaccinePlanNameRequired => 'Plan adını girin.';
+
+  @override
+  String get vaccinePlanSaved => 'Plan kaydedildi';
+
+  @override
+  String get vaccinePlanSpecies => 'Tür';
+
+  @override
+  String get vaccineRecent => 'Son uygulamalar';
+
+  @override
+  String get vaccineSelectAll => 'Tümünü seç';
+
+  @override
+  String get vaccineSelectNone => 'Seçimi kaldır';
+
+  @override
+  String get vaccineTitle => 'Aşı takvimi';
 
   @override
   String get widgetAccount => 'Hesap';

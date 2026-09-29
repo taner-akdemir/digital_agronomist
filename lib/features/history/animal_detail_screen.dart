@@ -12,6 +12,8 @@ import 'package:milktrace/domain/yield_class.dart';
 import 'package:milktrace/features/history/breeding_card.dart';
 import 'package:milktrace/features/history/history_providers.dart';
 import 'package:milktrace/features/history/treatments_card.dart';
+import 'package:milktrace/features/history/vaccinations_card.dart';
+import 'package:milktrace/features/history/vaccinations_screen.dart';
 import 'package:milktrace/features/history/widgets/animal_status_chip.dart';
 import 'package:milktrace/features/history/widgets/yield_chart.dart';
 import 'package:milktrace/features/history/widgets/yield_class_badge.dart';
@@ -133,6 +135,7 @@ class _Body extends ConsumerWidget {
           ..invalidate(animalHistoryProvider(animal.id))
           ..invalidate(animalNotesProvider(animal.id))
           ..invalidate(animalTreatmentsProvider(animal.id))
+          ..invalidate(animalVaccinationsProvider(animal.id))
           ..invalidate(animalBreedingProvider(animal.id));
         await ref.read(animalTrendProvider(animal.id).future);
       },
@@ -163,6 +166,9 @@ class _Body extends ConsumerWidget {
           const SizedBox(height: AppSpacing.md),
           // Tedavi ve arınma (backend ADR 0084): süren arınma kırmızı bant.
           TreatmentsCard(animal: animal),
+          const SizedBox(height: AppSpacing.md),
+          // Aşı takvimi (backend ADR 0112): planlardaki sıra ve kayıtlar.
+          VaccinationsCard(animal: animal),
           const SizedBox(height: AppSpacing.md),
           // Üreme (backend ADR 0088): durum, beklenen doğum, kuruya çıkarma.
           BreedingCard(animal: animal),

@@ -28,6 +28,7 @@ import 'package:milktrace/data/models/thresholds.dart';
 import 'package:milktrace/data/models/treatment.dart';
 import 'package:milktrace/data/models/unmatched_tag_row.dart';
 import 'package:milktrace/data/models/user_session.dart';
+import 'package:milktrace/data/models/vaccination.dart';
 import 'package:milktrace/data/models/vacuum.dart';
 
 /// İndirilen rapor dosyası: adı ve içeriği.
@@ -363,6 +364,44 @@ abstract interface class MilkTraceRepository {
   /// Fark eşiği (%, 0–50) ve somatik hücre sınırı (bin/mL, 50–2000; null
   /// ise sunucu eskisini korur); yalnızca sahip.
   Future<void> setDeliveryTolerance(double pct, {int? sccLimitK});
+
+  /// Aşı ve ilaç planları ve durumları (backend ADR 0112). Bütün roller
+  /// okur; plan yönetimi yalnızca sahibin (backend 403).
+  Future<List<VaccinePlan>> vaccinePlans();
+
+  /// Plan ekler ([id] null) ya da günceller. Ad işletmede tekil (409),
+  /// aralık 7–1095 gün (422). [speciesId] null: bütün türler.
+  Future<VaccinePlan> saveVaccinePlan({
+    String? id,
+    required String name,
+    required int intervalDays,
+    String? speciesId,
+    String note = '',
+  });
+
+  /// Planı ve uygulamalarını siler; yalnızca sahip.
+  Future<void> deleteVaccinePlan(String id);
+
+  /// Zamanı geçmiş, [days] gün içinde gelecek ya da hiç uygulanmamış
+  /// olanlar; kayıtsız ve en gecikmiş üstte.
+  Future<List<VaccinationDue>> dueVaccinations({int days = 30});
+
+  /// Hayvanın son uygulamaları ve planlardaki sırası.
+  Future<AnimalVaccinations> animalVaccinations(String animalId);
+
+  /// Planı hayvanlara [givenOn] günü uygulanmış yazar; BÜTÜN roller
+  /// (veteriner). Planın türünde olmayan ya da sağmal/kurudaki olmayan
+  /// hayvan sessizce atlanır, aynı gün ikinci kayıt yok sayılır. Yazılan
+  /// sayıyı döner. Tarih GÜN olarak gider.
+  Future<int> addVaccinations({
+    required String planId,
+    required List<String> animalIds,
+    required DateTime givenOn,
+    String note = '',
+  });
+
+  /// Yanlış kaydı siler; yalnızca sahip.
+  Future<void> deleteVaccination(String id);
 
   /// Sağımcı özeti (backend ADR 0090, `GET /milkers`); yalnızca sahip.
   Future<List<Milker>> milkers({int days = 7});

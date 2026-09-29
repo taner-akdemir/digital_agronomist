@@ -1,0 +1,113 @@
+{
+  "historyVaccines": "Vaccines",
+  "vaccineTitle": "Vaccination schedule",
+  "vaccineIntro": "Recurring treatments such as FMD, brucellosis or parasites. Lactating and dry animals are included; an animal with no record counts as due. Alerts for due animals come from the server.",
+  "vaccineLoadFailed": "Could not load vaccination plans",
+  "vaccineEmpty": "No vaccination plans yet.",
+  "vaccineEmptyOwner": "No vaccination plans yet. Start with \"Add plan\", then enter the current state.",
+  "vaccinePlanAdd": "Add plan",
+  "vaccinePlanEdit": "Edit plan",
+  "vaccinePlanName": "Name (e.g. FMD)",
+  "vaccinePlanNameRequired": "Enter a plan name.",
+  "vaccinePlanInterval": "Repeat every (days)",
+  "vaccinePlanIntervalRange": "Must be between 7 and 1095 days.",
+  "vaccinePlanSpecies": "Species",
+  "vaccineAllSpecies": "All species",
+  "vaccinePlanEvery": "every {days} days",
+  "@vaccinePlanEvery": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "vaccinePlanCounts": "{animals} animals · {dueSoon} due soon · {never} no record",
+  "@vaccinePlanCounts": {
+    "placeholders": {
+      "animals": {
+        "type": "int"
+      },
+      "dueSoon": {
+        "type": "int"
+      },
+      "never": {
+        "type": "int"
+      }
+    }
+  },
+  "vaccinePlanSaved": "Plan saved",
+  "vaccinePlanDeleteTitle": "Delete {name}?",
+  "@vaccinePlanDeleteTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "vaccinePlanDeleteBody": "The plan and all its records will be deleted.",
+  "vaccineDueIntro": "Animals that are overdue, due within 30 days or have no record.",
+  "vaccineDueEmpty": "No animals are due.",
+  "vaccineDueLoadFailed": "Could not load due animals",
+  "vaccineNever": "no record",
+  "vaccineOverdue": "overdue · {date}",
+  "@vaccineOverdue": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "vaccineDueOn": "due {date}",
+  "@vaccineDueOn": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "vaccineNext": "next {date}",
+  "@vaccineNext": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "vaccineLastGiven": "last {date}",
+  "@vaccineLastGiven": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "vaccineSelectAll": "Select all",
+  "vaccineSelectNone": "Clear selection",
+  "vaccineMarkSelected": "Mark as given ({count})",
+  "@vaccineMarkSelected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "vaccineMarkTitle": "Mark as given",
+  "vaccineMarkDate": "Given on: {date}",
+  "@vaccineMarkDate": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "vaccineMarkHelp": "Date given",
+  "vaccineMarked": "{count, plural, one{{count} animal marked} other{{count} animals marked}}",
+  "@vaccineMarked": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "vaccineMarkedNone": "No new record: already recorded that day or the animal is not in the plan.",
+  "vaccineCardTitle": "Vaccinations",
+  "vaccineCardEmpty": "This animal is not in any vaccination plan.",
+  "vaccineCardLoadFailed": "Could not load vaccinations",
+  "vaccineGiven": "Given",
+  "vaccineRecent": "Recent",
+  "vaccineDeleteTitle": "Delete vaccination record?",
+  "vaccineDeleteBody": "The wrongly entered record will be deleted.",
+  "auditVaccinePlanCreate": "Vaccination plan added",
+  "auditVaccinePlanUpdate": "Vaccination plan changed",
+  "auditVaccinePlanDelete": "Vaccination plan deleted",
+  "auditVaccinationAdd": "Vaccination given",
+  "auditVaccinationDelete": "Vaccination record deleted"
+}

@@ -128,7 +128,7 @@ void main() {
     // Uzun ekran: not kartı eklendikten sonra son sağımlar varsayılan
     // 800x600 yüzeyde görünür alanın dışında kalıyor ve liste onu hiç
     // çizmiyordu.
-    tester.view.physicalSize = const Size(1200, 4000);
+    tester.view.physicalSize = const Size(1200, 5000);
     addTearDown(tester.view.resetPhysicalSize);
     final animal = await animalOf(tester, YieldClass.high);
 
