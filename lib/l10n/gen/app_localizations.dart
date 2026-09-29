@@ -680,10 +680,16 @@ abstract class AppLocalizations {
   /// **'{n, plural, other{{n} hayvan eklendi}}'**
   String animalImportAdded(int n);
 
+  /// No description provided for @animalImportChange.
+  ///
+  /// In tr, this message translates to:
+  /// **'{field}: {from} → {to}'**
+  String animalImportChange(Object field, Object from, Object to);
+
   /// No description provided for @animalImportColumns.
   ///
   /// In tr, this message translates to:
-  /// **'Sütunlar: Küpe No (zorunlu) · Tür · Adı · Irkı · RFID · Doğum Tarihi · Son Buzağılama · Laktasyon · Durumu'**
+  /// **'Sütunlar: Küpe No (zorunlu) · Tür · Adı · Irkı · RFID · Doğum Tarihi · Son Buzağılama · Laktasyon · Durumu · Grup'**
   String get animalImportColumns;
 
   /// No description provided for @animalImportCountCreate.
@@ -704,6 +710,18 @@ abstract class AppLocalizations {
   /// **'{n} zaten kayıtlı'**
   String animalImportCountExists(Object n);
 
+  /// No description provided for @animalImportCountUnchanged.
+  ///
+  /// In tr, this message translates to:
+  /// **'{n} değişmeyecek'**
+  String animalImportCountUnchanged(Object n);
+
+  /// No description provided for @animalImportCountUpdate.
+  ///
+  /// In tr, this message translates to:
+  /// **'{n} güncellenecek'**
+  String animalImportCountUpdate(Object n);
+
   /// No description provided for @animalImportDefaultSpecies.
   ///
   /// In tr, this message translates to:
@@ -715,6 +733,54 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'İçe aktarılamadı: {error}'**
   String animalImportFailed(Object error);
+
+  /// No description provided for @animalImportFieldBirthDate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Doğum tarihi'**
+  String get animalImportFieldBirthDate;
+
+  /// No description provided for @animalImportFieldBreed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Irk'**
+  String get animalImportFieldBreed;
+
+  /// No description provided for @animalImportFieldCalvingDate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Son buzağılama'**
+  String get animalImportFieldCalvingDate;
+
+  /// No description provided for @animalImportFieldGroup.
+  ///
+  /// In tr, this message translates to:
+  /// **'Grup'**
+  String get animalImportFieldGroup;
+
+  /// No description provided for @animalImportFieldLactationNo.
+  ///
+  /// In tr, this message translates to:
+  /// **'Laktasyon'**
+  String get animalImportFieldLactationNo;
+
+  /// No description provided for @animalImportFieldName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ad'**
+  String get animalImportFieldName;
+
+  /// No description provided for @animalImportFieldRfid.
+  ///
+  /// In tr, this message translates to:
+  /// **'RFID'**
+  String get animalImportFieldRfid;
+
+  /// No description provided for @animalImportFieldStatus.
+  ///
+  /// In tr, this message translates to:
+  /// **'Durum'**
+  String get animalImportFieldStatus;
 
   /// No description provided for @animalImportIgnoredColumns.
   ///
@@ -728,11 +794,23 @@ abstract class AppLocalizations {
   /// **'Veterinerden, Birlik\'ten ya da Hayvan Bilgi Sistemi\'nden aldığınız listeyi yükleyin (Excel .xlsx ya da CSV). İlk satır sütun başlıkları olmalı; tarihler gün önde (03.04.2021).'**
   String get animalImportIntro;
 
+  /// No description provided for @animalImportNewGroups.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oluşturulacak gruplar: {groups}'**
+  String animalImportNewGroups(Object groups);
+
   /// No description provided for @animalImportNothingToAdd.
   ///
   /// In tr, this message translates to:
   /// **'Eklenecek hayvan yok'**
   String get animalImportNothingToAdd;
+
+  /// No description provided for @animalImportNothingToSave.
+  ///
+  /// In tr, this message translates to:
+  /// **'Eklenecek ya da güncellenecek hayvan yok'**
+  String get animalImportNothingToSave;
 
   /// No description provided for @animalImportPickFile.
   ///
@@ -755,8 +833,20 @@ abstract class AppLocalizations {
   /// No description provided for @animalImportRules.
   ///
   /// In tr, this message translates to:
-  /// **'Küpesi zaten kayıtlı hayvanlar değiştirilmez. Hatalı satırlar atlanır; dosyayı düzeltip yeniden yüklemek güvenlidir.'**
+  /// **'Küpesi zaten kayıtlı hayvanlar, güncelleme açılmadıkça değiştirilmez. Hatalı satırlar atlanır; dosyayı düzeltip yeniden yüklemek güvenlidir.'**
   String get animalImportRules;
+
+  /// No description provided for @animalImportSaveN.
+  ///
+  /// In tr, this message translates to:
+  /// **'{added} ekle · {updated} güncelle'**
+  String animalImportSaveN(Object added, Object updated);
+
+  /// No description provided for @animalImportSaved.
+  ///
+  /// In tr, this message translates to:
+  /// **'{added} hayvan eklendi, {updated} güncellendi'**
+  String animalImportSaved(Object added, Object updated);
 
   /// No description provided for @animalImportSectionCreate.
   ///
@@ -776,6 +866,18 @@ abstract class AppLocalizations {
   /// **'Zaten kayıtlı (değiştirilmez)'**
   String get animalImportSectionExists;
 
+  /// No description provided for @animalImportSectionUnchanged.
+  ///
+  /// In tr, this message translates to:
+  /// **'Değişmeyecek'**
+  String get animalImportSectionUnchanged;
+
+  /// No description provided for @animalImportSectionUpdate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Güncellenecek'**
+  String get animalImportSectionUpdate;
+
   /// No description provided for @animalImportSectionWarnings.
   ///
   /// In tr, this message translates to:
@@ -793,6 +895,18 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Listeden içe aktar'**
   String get animalImportTitle;
+
+  /// No description provided for @animalImportUpdateHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yalnızca dosyadaki dolu hücreler yazılır; boş hücre kayıtlı bilgiyi silmez. Tür değişmez.'**
+  String get animalImportUpdateHint;
+
+  /// No description provided for @animalImportUpdateSwitch.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kayıtlı hayvanları güncelle'**
+  String get animalImportUpdateSwitch;
 
   /// No description provided for @auditAnimalCalving.
   ///

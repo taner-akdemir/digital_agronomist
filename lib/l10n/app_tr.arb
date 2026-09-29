@@ -193,7 +193,15 @@
       }
     }
   },
-  "animalImportColumns": "Sütunlar: Küpe No (zorunlu) · Tür · Adı · Irkı · RFID · Doğum Tarihi · Son Buzağılama · Laktasyon · Durumu",
+  "animalImportChange": "{field}: {from} → {to}",
+  "@animalImportChange": {
+    "placeholders": {
+      "field": {},
+      "from": {},
+      "to": {}
+    }
+  },
+  "animalImportColumns": "Sütunlar: Küpe No (zorunlu) · Tür · Adı · Irkı · RFID · Doğum Tarihi · Son Buzağılama · Laktasyon · Durumu · Grup",
   "animalImportCountCreate": "{n} eklenecek",
   "@animalImportCountCreate": {
     "placeholders": {
@@ -212,6 +220,18 @@
       "n": {}
     }
   },
+  "animalImportCountUnchanged": "{n} değişmeyecek",
+  "@animalImportCountUnchanged": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalImportCountUpdate": "{n} güncellenecek",
+  "@animalImportCountUpdate": {
+    "placeholders": {
+      "n": {}
+    }
+  },
   "animalImportDefaultSpecies": "Türü yazılmamış satırlar",
   "animalImportFailed": "İçe aktarılamadı: {error}",
   "@animalImportFailed": {
@@ -219,6 +239,14 @@
       "error": {}
     }
   },
+  "animalImportFieldBirthDate": "Doğum tarihi",
+  "animalImportFieldBreed": "Irk",
+  "animalImportFieldCalvingDate": "Son buzağılama",
+  "animalImportFieldGroup": "Grup",
+  "animalImportFieldLactationNo": "Laktasyon",
+  "animalImportFieldName": "Ad",
+  "animalImportFieldRfid": "RFID",
+  "animalImportFieldStatus": "Durum",
   "animalImportIgnoredColumns": "Alınmayan sütunlar: {columns}",
   "@animalImportIgnoredColumns": {
     "placeholders": {
@@ -226,7 +254,14 @@
     }
   },
   "animalImportIntro": "Veterinerden, Birlik'ten ya da Hayvan Bilgi Sistemi'nden aldığınız listeyi yükleyin (Excel .xlsx ya da CSV). İlk satır sütun başlıkları olmalı; tarihler gün önde (03.04.2021).",
+  "animalImportNewGroups": "Oluşturulacak gruplar: {groups}",
+  "@animalImportNewGroups": {
+    "placeholders": {
+      "groups": {}
+    }
+  },
   "animalImportNothingToAdd": "Eklenecek hayvan yok",
+  "animalImportNothingToSave": "Eklenecek ya da güncellenecek hayvan yok",
   "animalImportPickFile": "Dosya seç",
   "animalImportPickOtherFile": "Başka dosya seç",
   "animalImportReadFailed": "Dosya okunamadı: {error}",
@@ -235,13 +270,31 @@
       "error": {}
     }
   },
-  "animalImportRules": "Küpesi zaten kayıtlı hayvanlar değiştirilmez. Hatalı satırlar atlanır; dosyayı düzeltip yeniden yüklemek güvenlidir.",
+  "animalImportRules": "Küpesi zaten kayıtlı hayvanlar, güncelleme açılmadıkça değiştirilmez. Hatalı satırlar atlanır; dosyayı düzeltip yeniden yüklemek güvenlidir.",
+  "animalImportSaveN": "{added} ekle · {updated} güncelle",
+  "@animalImportSaveN": {
+    "placeholders": {
+      "added": {},
+      "updated": {}
+    }
+  },
+  "animalImportSaved": "{added} hayvan eklendi, {updated} güncellendi",
+  "@animalImportSaved": {
+    "placeholders": {
+      "added": {},
+      "updated": {}
+    }
+  },
   "animalImportSectionCreate": "Eklenecek",
   "animalImportSectionErrors": "Hatalı satırlar",
   "animalImportSectionExists": "Zaten kayıtlı (değiştirilmez)",
+  "animalImportSectionUnchanged": "Değişmeyecek",
+  "animalImportSectionUpdate": "Güncellenecek",
   "animalImportSectionWarnings": "Uyarılar",
   "animalImportSpeciesLoadFailed": "Türler yüklenemedi",
   "animalImportTitle": "Listeden içe aktar",
+  "animalImportUpdateHint": "Yalnızca dosyadaki dolu hücreler yazılır; boş hücre kayıtlı bilgiyi silmez. Tür değişmez.",
+  "animalImportUpdateSwitch": "Kayıtlı hayvanları güncelle",
   "auditAnimalCalving": "Buzağılama kaydedildi",
   "auditAnimalCreate": "Hayvan eklendi",
   "auditAnimalImport": "Listeden içe aktarma",

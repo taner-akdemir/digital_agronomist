@@ -178,7 +178,15 @@
       }
     }
   },
-  "animalImportColumns": "Columns (Turkish headers): Küpe No (ear tag, required) · Tür (species) · Adı (name) · Irkı (breed) · RFID · Doğum Tarihi (birth date) · Son Buzağılama (last calving) · Laktasyon (lactation) · Durumu (status)",
+  "animalImportChange": "{field}: {from} → {to}",
+  "@animalImportChange": {
+    "placeholders": {
+      "field": {},
+      "from": {},
+      "to": {}
+    }
+  },
+  "animalImportColumns": "Columns (Turkish headers): Küpe No (ear tag, required) · Tür (species) · Adı (name) · Irkı (breed) · RFID · Doğum Tarihi (birth date) · Son Buzağılama (last calving) · Laktasyon (lactation) · Durumu (status) · Grup (group)",
   "animalImportCountCreate": "{n} to add",
   "@animalImportCountCreate": {
     "placeholders": {
@@ -197,6 +205,18 @@
       "n": {}
     }
   },
+  "animalImportCountUnchanged": "{n} unchanged",
+  "@animalImportCountUnchanged": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalImportCountUpdate": "{n} to update",
+  "@animalImportCountUpdate": {
+    "placeholders": {
+      "n": {}
+    }
+  },
   "animalImportDefaultSpecies": "Rows without a species",
   "animalImportFailed": "Import failed: {error}",
   "@animalImportFailed": {
@@ -204,6 +224,14 @@
       "error": {}
     }
   },
+  "animalImportFieldBirthDate": "Birth date",
+  "animalImportFieldBreed": "Breed",
+  "animalImportFieldCalvingDate": "Last calving",
+  "animalImportFieldGroup": "Group",
+  "animalImportFieldLactationNo": "Lactation",
+  "animalImportFieldName": "Name",
+  "animalImportFieldRfid": "RFID",
+  "animalImportFieldStatus": "Status",
   "animalImportIgnoredColumns": "Ignored columns: {columns}",
   "@animalImportIgnoredColumns": {
     "placeholders": {
@@ -211,7 +239,14 @@
     }
   },
   "animalImportIntro": "Upload the list you got from your vet, the breeders' union or the national animal registry (Excel .xlsx or CSV). The first row must be column headers; dates day first (03.04.2021).",
+  "animalImportNewGroups": "Groups to create: {groups}",
+  "@animalImportNewGroups": {
+    "placeholders": {
+      "groups": {}
+    }
+  },
   "animalImportNothingToAdd": "No animals to add",
+  "animalImportNothingToSave": "No animals to add or update",
   "animalImportPickFile": "Choose file",
   "animalImportPickOtherFile": "Choose another file",
   "animalImportReadFailed": "Could not read file: {error}",
@@ -220,13 +255,31 @@
       "error": {}
     }
   },
-  "animalImportRules": "Animals whose ear tag is already registered are not changed. Invalid rows are skipped; it is safe to fix the file and upload it again.",
+  "animalImportRules": "Animals whose ear tag is already registered are not changed unless updating is turned on. Invalid rows are skipped; it is safe to fix the file and upload it again.",
+  "animalImportSaveN": "Add {added} · update {updated}",
+  "@animalImportSaveN": {
+    "placeholders": {
+      "added": {},
+      "updated": {}
+    }
+  },
+  "animalImportSaved": "{added} animals added, {updated} updated",
+  "@animalImportSaved": {
+    "placeholders": {
+      "added": {},
+      "updated": {}
+    }
+  },
   "animalImportSectionCreate": "To add",
   "animalImportSectionErrors": "Invalid rows",
   "animalImportSectionExists": "Already registered (not changed)",
+  "animalImportSectionUnchanged": "Unchanged",
+  "animalImportSectionUpdate": "To update",
   "animalImportSectionWarnings": "Warnings",
   "animalImportSpeciesLoadFailed": "Could not load species",
   "animalImportTitle": "Import from list",
+  "animalImportUpdateHint": "Only filled cells in the file are written; an empty cell never clears saved data. Species is not changed.",
+  "animalImportUpdateSwitch": "Update registered animals",
   "auditAnimalCalving": "Calving recorded",
   "auditAnimalCreate": "Animal added",
   "auditAnimalImport": "Import from list",

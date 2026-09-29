@@ -358,8 +358,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String animalImportChange(Object field, Object from, Object to) {
+    return '$field: $from → $to';
+  }
+
+  @override
   String get animalImportColumns =>
-      'Columns (Turkish headers): Küpe No (ear tag, required) · Tür (species) · Adı (name) · Irkı (breed) · RFID · Doğum Tarihi (birth date) · Son Buzağılama (last calving) · Laktasyon (lactation) · Durumu (status)';
+      'Columns (Turkish headers): Küpe No (ear tag, required) · Tür (species) · Adı (name) · Irkı (breed) · RFID · Doğum Tarihi (birth date) · Son Buzağılama (last calving) · Laktasyon (lactation) · Durumu (status) · Grup (group)';
 
   @override
   String animalImportCountCreate(Object n) {
@@ -377,12 +382,46 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String animalImportCountUnchanged(Object n) {
+    return '$n unchanged';
+  }
+
+  @override
+  String animalImportCountUpdate(Object n) {
+    return '$n to update';
+  }
+
+  @override
   String get animalImportDefaultSpecies => 'Rows without a species';
 
   @override
   String animalImportFailed(Object error) {
     return 'Import failed: $error';
   }
+
+  @override
+  String get animalImportFieldBirthDate => 'Birth date';
+
+  @override
+  String get animalImportFieldBreed => 'Breed';
+
+  @override
+  String get animalImportFieldCalvingDate => 'Last calving';
+
+  @override
+  String get animalImportFieldGroup => 'Group';
+
+  @override
+  String get animalImportFieldLactationNo => 'Lactation';
+
+  @override
+  String get animalImportFieldName => 'Name';
+
+  @override
+  String get animalImportFieldRfid => 'RFID';
+
+  @override
+  String get animalImportFieldStatus => 'Status';
 
   @override
   String animalImportIgnoredColumns(Object columns) {
@@ -394,7 +433,15 @@ class AppLocalizationsEn extends AppLocalizations {
       'Upload the list you got from your vet, the breeders\' union or the national animal registry (Excel .xlsx or CSV). The first row must be column headers; dates day first (03.04.2021).';
 
   @override
+  String animalImportNewGroups(Object groups) {
+    return 'Groups to create: $groups';
+  }
+
+  @override
   String get animalImportNothingToAdd => 'No animals to add';
+
+  @override
+  String get animalImportNothingToSave => 'No animals to add or update';
 
   @override
   String get animalImportPickFile => 'Choose file';
@@ -409,7 +456,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get animalImportRules =>
-      'Animals whose ear tag is already registered are not changed. Invalid rows are skipped; it is safe to fix the file and upload it again.';
+      'Animals whose ear tag is already registered are not changed unless updating is turned on. Invalid rows are skipped; it is safe to fix the file and upload it again.';
+
+  @override
+  String animalImportSaveN(Object added, Object updated) {
+    return 'Add $added · update $updated';
+  }
+
+  @override
+  String animalImportSaved(Object added, Object updated) {
+    return '$added animals added, $updated updated';
+  }
 
   @override
   String get animalImportSectionCreate => 'To add';
@@ -421,6 +478,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get animalImportSectionExists => 'Already registered (not changed)';
 
   @override
+  String get animalImportSectionUnchanged => 'Unchanged';
+
+  @override
+  String get animalImportSectionUpdate => 'To update';
+
+  @override
   String get animalImportSectionWarnings => 'Warnings';
 
   @override
@@ -428,6 +491,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get animalImportTitle => 'Import from list';
+
+  @override
+  String get animalImportUpdateHint =>
+      'Only filled cells in the file are written; an empty cell never clears saved data. Species is not changed.';
+
+  @override
+  String get animalImportUpdateSwitch => 'Update registered animals';
 
   @override
   String get auditAnimalCalving => 'Calving recorded';

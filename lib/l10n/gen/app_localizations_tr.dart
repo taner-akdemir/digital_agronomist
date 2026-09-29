@@ -355,8 +355,13 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String animalImportChange(Object field, Object from, Object to) {
+    return '$field: $from → $to';
+  }
+
+  @override
   String get animalImportColumns =>
-      'Sütunlar: Küpe No (zorunlu) · Tür · Adı · Irkı · RFID · Doğum Tarihi · Son Buzağılama · Laktasyon · Durumu';
+      'Sütunlar: Küpe No (zorunlu) · Tür · Adı · Irkı · RFID · Doğum Tarihi · Son Buzağılama · Laktasyon · Durumu · Grup';
 
   @override
   String animalImportCountCreate(Object n) {
@@ -374,12 +379,46 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String animalImportCountUnchanged(Object n) {
+    return '$n değişmeyecek';
+  }
+
+  @override
+  String animalImportCountUpdate(Object n) {
+    return '$n güncellenecek';
+  }
+
+  @override
   String get animalImportDefaultSpecies => 'Türü yazılmamış satırlar';
 
   @override
   String animalImportFailed(Object error) {
     return 'İçe aktarılamadı: $error';
   }
+
+  @override
+  String get animalImportFieldBirthDate => 'Doğum tarihi';
+
+  @override
+  String get animalImportFieldBreed => 'Irk';
+
+  @override
+  String get animalImportFieldCalvingDate => 'Son buzağılama';
+
+  @override
+  String get animalImportFieldGroup => 'Grup';
+
+  @override
+  String get animalImportFieldLactationNo => 'Laktasyon';
+
+  @override
+  String get animalImportFieldName => 'Ad';
+
+  @override
+  String get animalImportFieldRfid => 'RFID';
+
+  @override
+  String get animalImportFieldStatus => 'Durum';
 
   @override
   String animalImportIgnoredColumns(Object columns) {
@@ -391,7 +430,16 @@ class AppLocalizationsTr extends AppLocalizations {
       'Veterinerden, Birlik\'ten ya da Hayvan Bilgi Sistemi\'nden aldığınız listeyi yükleyin (Excel .xlsx ya da CSV). İlk satır sütun başlıkları olmalı; tarihler gün önde (03.04.2021).';
 
   @override
+  String animalImportNewGroups(Object groups) {
+    return 'Oluşturulacak gruplar: $groups';
+  }
+
+  @override
   String get animalImportNothingToAdd => 'Eklenecek hayvan yok';
+
+  @override
+  String get animalImportNothingToSave =>
+      'Eklenecek ya da güncellenecek hayvan yok';
 
   @override
   String get animalImportPickFile => 'Dosya seç';
@@ -406,7 +454,17 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get animalImportRules =>
-      'Küpesi zaten kayıtlı hayvanlar değiştirilmez. Hatalı satırlar atlanır; dosyayı düzeltip yeniden yüklemek güvenlidir.';
+      'Küpesi zaten kayıtlı hayvanlar, güncelleme açılmadıkça değiştirilmez. Hatalı satırlar atlanır; dosyayı düzeltip yeniden yüklemek güvenlidir.';
+
+  @override
+  String animalImportSaveN(Object added, Object updated) {
+    return '$added ekle · $updated güncelle';
+  }
+
+  @override
+  String animalImportSaved(Object added, Object updated) {
+    return '$added hayvan eklendi, $updated güncellendi';
+  }
 
   @override
   String get animalImportSectionCreate => 'Eklenecek';
@@ -418,6 +476,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get animalImportSectionExists => 'Zaten kayıtlı (değiştirilmez)';
 
   @override
+  String get animalImportSectionUnchanged => 'Değişmeyecek';
+
+  @override
+  String get animalImportSectionUpdate => 'Güncellenecek';
+
+  @override
   String get animalImportSectionWarnings => 'Uyarılar';
 
   @override
@@ -425,6 +489,13 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get animalImportTitle => 'Listeden içe aktar';
+
+  @override
+  String get animalImportUpdateHint =>
+      'Yalnızca dosyadaki dolu hücreler yazılır; boş hücre kayıtlı bilgiyi silmez. Tür değişmez.';
+
+  @override
+  String get animalImportUpdateSwitch => 'Kayıtlı hayvanları güncelle';
 
   @override
   String get auditAnimalCalving => 'Buzağılama kaydedildi';
