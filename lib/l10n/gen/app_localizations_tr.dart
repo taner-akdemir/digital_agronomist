@@ -15,6 +15,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get accountDefaultName => 'Kullanıcı';
 
   @override
+  String get accountFarmLocation => 'Tesis konumu';
+
+  @override
   String get accountMilkUnit => 'Süt birimi';
 
   @override
@@ -626,6 +629,36 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get breedingInsemination => 'Tohumlama';
+
+  @override
+  String breedingKpiDays(Object days) {
+    return '$days gün';
+  }
+
+  @override
+  String get breedingKpiDaysOpen => 'Buzağılamadan gebeliğe';
+
+  @override
+  String get breedingKpiFirstService => 'İlk tohumlamada gebelik';
+
+  @override
+  String get breedingKpiInterval => 'Buzağılama aralığı';
+
+  @override
+  String get breedingKpiNone => '—';
+
+  @override
+  String breedingKpiPct(Object pct) {
+    return '%$pct';
+  }
+
+  @override
+  String breedingKpiSample(int count) {
+    return '$count kayıt';
+  }
+
+  @override
+  String get breedingKpiTitle => 'Üreme · son 12 ay';
 
   @override
   String get breedingLoadFailed => 'Üreme kayıtları alınamadı';
@@ -1395,6 +1428,26 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get domainClassNormalExplanation =>
       'Verim beklenen aralıkta, eğim stabil.';
+
+  @override
+  String get farmLocationClear => 'Konumu sil';
+
+  @override
+  String get farmLocationCoordinates => 'Koordinat (enlem, boylam)';
+
+  @override
+  String get farmLocationIntro =>
+      'Isı stresi uyarısı için hava tahmini tesisin konumundan alınır. Google Haritalar\'da tesise uzun basın, üstte çıkan koordinatı (39.9208, 32.8541) buraya yapıştırın. Sunucu hava servisine yalnızca bu koordinatı gönderir.';
+
+  @override
+  String get farmLocationInvalid =>
+      'Enlem, boylam biçiminde girin (ör. 39.9208, 32.8541)';
+
+  @override
+  String get farmLocationSaved => 'Tesis konumu kaydedildi';
+
+  @override
+  String get farmLocationTitle => 'Tesis konumu';
 
   @override
   String farmsAlerts(int count) {
@@ -3056,6 +3109,9 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get yieldChartDaily => 'Günlük';
+
+  @override
+  String get yieldChartHeat => 'Isı stresi günü (THI ≥ 72)';
 
   @override
   String get yieldChartNotEnough => 'Grafik için yeterli geçmiş yok';

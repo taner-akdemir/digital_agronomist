@@ -1,0 +1,35 @@
+{
+  "breedingKpiTitle": "Üreme · son 12 ay",
+  "breedingKpiInterval": "Buzağılama aralığı",
+  "breedingKpiFirstService": "İlk tohumlamada gebelik",
+  "breedingKpiDaysOpen": "Buzağılamadan gebeliğe",
+  "breedingKpiDays": "{days} gün",
+  "@breedingKpiDays": {
+    "placeholders": {
+      "days": {}
+    }
+  },
+  "breedingKpiPct": "%{pct}",
+  "@breedingKpiPct": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "breedingKpiSample": "{count} kayıt",
+  "@breedingKpiSample": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "breedingKpiNone": "—",
+  "farmLocationTitle": "Tesis konumu",
+  "farmLocationIntro": "Isı stresi uyarısı için hava tahmini tesisin konumundan alınır. Google Haritalar'da tesise uzun basın, üstte çıkan koordinatı (39.9208, 32.8541) buraya yapıştırın. Sunucu hava servisine yalnızca bu koordinatı gönderir.",
+  "farmLocationCoordinates": "Koordinat (enlem, boylam)",
+  "farmLocationInvalid": "Enlem, boylam biçiminde girin (ör. 39.9208, 32.8541)",
+  "farmLocationSaved": "Tesis konumu kaydedildi",
+  "farmLocationClear": "Konumu sil",
+  "accountFarmLocation": "Tesis konumu",
+  "yieldChartHeat": "Isı stresi günü (THI ≥ 72)"
+}

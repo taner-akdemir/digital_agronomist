@@ -17,6 +17,7 @@ import 'package:milktrace/features/history/unmatched_tags_screen.dart';
 import 'package:milktrace/features/history/vaccinations_screen.dart';
 import 'package:milktrace/features/kiosk/kiosk_screen.dart';
 import 'package:milktrace/features/live/live_board_screen.dart';
+import 'package:milktrace/features/settings/farm_location_screen.dart';
 import 'package:milktrace/features/settings/farms_screen.dart';
 import 'package:milktrace/features/settings/feedback_screen.dart';
 import 'package:milktrace/features/settings/milking_schedule_screen.dart';
@@ -108,6 +109,11 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/settings/milkers',
         builder: (_, _) => const MilkersScreen(),
+      ),
+      // Tesis konumu (backend ADR 0119): hesap kartından, yalnızca sahibe.
+      GoRoute(
+        path: '/settings/farm-location',
+        builder: (_, _) => const FarmLocationScreen(),
       ),
       // Çiftliklerim (backend ADR 0116): hesap kartından, çok işletmeliye.
       GoRoute(path: '/settings/farms', builder: (_, _) => const FarmsScreen()),

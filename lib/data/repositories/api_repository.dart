@@ -115,6 +115,18 @@ class ApiRepository implements MilkTraceRepository {
   );
 
   @override
+  Future<void> setFarmLocation(
+    String farmId,
+    double? latitude,
+    double? longitude,
+  ) async {
+    await _dio.put<dynamic>(
+      '/farms/$farmId/location',
+      data: {'latitude': latitude, 'longitude': longitude},
+    );
+  }
+
+  @override
   Future<List<Farm>> farms() async =>
       _listOf(await _dio.get<dynamic>('/farms'), Farm.fromJson);
 

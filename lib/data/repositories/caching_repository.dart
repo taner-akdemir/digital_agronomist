@@ -151,6 +151,13 @@ class CachingRepository implements MilkTraceRepository {
   );
 
   @override
+  Future<void> setFarmLocation(
+    String farmId,
+    double? latitude,
+    double? longitude,
+  ) => _net(() => _inner.setFarmLocation(farmId, latitude, longitude));
+
+  @override
   Future<List<Farm>> farms() =>
       _read('farms', _inner.farms, (j) => _list(j, Farm.fromJson));
 

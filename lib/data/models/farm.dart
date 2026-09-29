@@ -12,6 +12,11 @@ abstract class Farm with _$Farm {
     String? tenantId,
     String? city,
     String? district,
+
+    /// Konum (backend ADR 0119): ısı stresi tahmininin girdisi; ikisi
+    /// birlikte dolu ya da boş.
+    double? latitude,
+    double? longitude,
   }) = _Farm;
 
   factory Farm.fromJson(Map<String, dynamic> json) => _$FarmFromJson(json);

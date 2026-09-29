@@ -16,7 +16,9 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Farm {
 
- String get id; String get name; String? get tenantId; String? get city; String? get district;
+ String get id; String get name; String? get tenantId; String? get city; String? get district;/// Konum (backend ADR 0119): ısı stresi tahmininin girdisi; ikisi
+/// birlikte dolu ya da boş.
+ double? get latitude; double? get longitude;
 /// Create a copy of Farm
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,20 +32,20 @@ $FarmCopyWith<Farm> get copyWith => _$FarmCopyWithImpl<Farm>(this as Farm, _$ide
 @override
 bool operator ==(Object other) {
   final _this = this as Farm;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Farm&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.tenantId, _this.tenantId) || other.tenantId == _this.tenantId)&&(identical(other.city, _this.city) || other.city == _this.city)&&(identical(other.district, _this.district) || other.district == _this.district));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Farm&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.tenantId, _this.tenantId) || other.tenantId == _this.tenantId)&&(identical(other.city, _this.city) || other.city == _this.city)&&(identical(other.district, _this.district) || other.district == _this.district)&&(identical(other.latitude, _this.latitude) || other.latitude == _this.latitude)&&(identical(other.longitude, _this.longitude) || other.longitude == _this.longitude));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as Farm;
-  return Object.hash(runtimeType,_this.id,_this.name,_this.tenantId,_this.city,_this.district);
+  return Object.hash(runtimeType,_this.id,_this.name,_this.tenantId,_this.city,_this.district,_this.latitude,_this.longitude);
 }
 
 @override
 String toString() {
   final _this = this as Farm;
-  return 'Farm(id: ${_this.id}, name: ${_this.name}, tenantId: ${_this.tenantId}, city: ${_this.city}, district: ${_this.district})';
+  return 'Farm(id: ${_this.id}, name: ${_this.name}, tenantId: ${_this.tenantId}, city: ${_this.city}, district: ${_this.district}, latitude: ${_this.latitude}, longitude: ${_this.longitude})';
 }
 
 
@@ -54,7 +56,7 @@ abstract mixin class $FarmCopyWith<$Res>  {
   factory $FarmCopyWith(Farm value, $Res Function(Farm) _then) = _$FarmCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String? tenantId, String? city, String? district
+ String id, String name, String? tenantId, String? city, String? district, double? latitude, double? longitude
 });
 
 
@@ -71,14 +73,16 @@ class _$FarmCopyWithImpl<$Res>
 
 /// Create a copy of Farm
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? tenantId = freezed,Object? city = freezed,Object? district = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? tenantId = freezed,Object? city = freezed,Object? district = freezed,Object? latitude = freezed,Object? longitude = freezed,}) {
   return _then(Farm(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,tenantId: freezed == tenantId ? _self.tenantId : tenantId // ignore: cast_nullable_to_non_nullable
 as String?,city: freezed == city ? _self.city : city // ignore: cast_nullable_to_non_nullable
 as String?,district: freezed == district ? _self.district : district // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,latitude: freezed == latitude ? _self.latitude : latitude // ignore: cast_nullable_to_non_nullable
+as double?,longitude: freezed == longitude ? _self.longitude : longitude // ignore: cast_nullable_to_non_nullable
+as double?,
   ));
 }
 
@@ -163,10 +167,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String? tenantId,  String? city,  String? district)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String? tenantId,  String? city,  String? district,  double? latitude,  double? longitude)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Farm() when $default != null:
-return $default(_that.id,_that.name,_that.tenantId,_that.city,_that.district);case _:
+return $default(_that.id,_that.name,_that.tenantId,_that.city,_that.district,_that.latitude,_that.longitude);case _:
   return orElse();
 
 }
@@ -184,10 +188,10 @@ return $default(_that.id,_that.name,_that.tenantId,_that.city,_that.district);ca
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String? tenantId,  String? city,  String? district)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String? tenantId,  String? city,  String? district,  double? latitude,  double? longitude)  $default,) {final _that = this;
 switch (_that) {
 case _Farm():
-return $default(_that.id,_that.name,_that.tenantId,_that.city,_that.district);case _:
+return $default(_that.id,_that.name,_that.tenantId,_that.city,_that.district,_that.latitude,_that.longitude);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -204,10 +208,10 @@ return $default(_that.id,_that.name,_that.tenantId,_that.city,_that.district);ca
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String? tenantId,  String? city,  String? district)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String? tenantId,  String? city,  String? district,  double? latitude,  double? longitude)?  $default,) {final _that = this;
 switch (_that) {
 case _Farm() when $default != null:
-return $default(_that.id,_that.name,_that.tenantId,_that.city,_that.district);case _:
+return $default(_that.id,_that.name,_that.tenantId,_that.city,_that.district,_that.latitude,_that.longitude);case _:
   return null;
 
 }
@@ -219,7 +223,7 @@ return $default(_that.id,_that.name,_that.tenantId,_that.city,_that.district);ca
 @JsonSerializable()
 
 class _Farm implements Farm {
-  const _Farm({required this.id, required this.name, this.tenantId, this.city, this.district});
+  const _Farm({required this.id, required this.name, this.tenantId, this.city, this.district, this.latitude, this.longitude});
   factory _Farm.fromJson(Map<String, dynamic> json) => _$FarmFromJson(json);
 
 @override final  String id;
@@ -227,6 +231,10 @@ class _Farm implements Farm {
 @override final  String? tenantId;
 @override final  String? city;
 @override final  String? district;
+/// Konum (backend ADR 0119): ısı stresi tahmininin girdisi; ikisi
+/// birlikte dolu ya da boş.
+@override final  double? latitude;
+@override final  double? longitude;
 
 /// Create a copy of Farm
 /// with the given fields replaced by the non-null parameter values.
@@ -241,18 +249,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Farm&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.tenantId, tenantId) || other.tenantId == tenantId)&&(identical(other.city, city) || other.city == city)&&(identical(other.district, district) || other.district == district));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Farm&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.tenantId, tenantId) || other.tenantId == tenantId)&&(identical(other.city, city) || other.city == city)&&(identical(other.district, district) || other.district == district)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,name,tenantId,city,district);
+    return Object.hash(runtimeType,id,name,tenantId,city,district,latitude,longitude);
 }
 
 @override
 String toString() {
-    return 'Farm(id: $id, name: $name, tenantId: $tenantId, city: $city, district: $district)';
+    return 'Farm(id: $id, name: $name, tenantId: $tenantId, city: $city, district: $district, latitude: $latitude, longitude: $longitude)';
 }
 
 
@@ -263,7 +271,7 @@ abstract mixin class _$FarmCopyWith<$Res> implements $FarmCopyWith<$Res> {
   factory _$FarmCopyWith(_Farm value, $Res Function(_Farm) _then) = __$FarmCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String? tenantId, String? city, String? district
+ String id, String name, String? tenantId, String? city, String? district, double? latitude, double? longitude
 });
 
 
@@ -280,14 +288,16 @@ class __$FarmCopyWithImpl<$Res>
 
 /// Create a copy of Farm
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? tenantId = freezed,Object? city = freezed,Object? district = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? tenantId = freezed,Object? city = freezed,Object? district = freezed,Object? latitude = freezed,Object? longitude = freezed,}) {
   return _then(_Farm(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,tenantId: freezed == tenantId ? _self.tenantId : tenantId // ignore: cast_nullable_to_non_nullable
 as String?,city: freezed == city ? _self.city : city // ignore: cast_nullable_to_non_nullable
 as String?,district: freezed == district ? _self.district : district // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,latitude: freezed == latitude ? _self.latitude : latitude // ignore: cast_nullable_to_non_nullable
+as double?,longitude: freezed == longitude ? _self.longitude : longitude // ignore: cast_nullable_to_non_nullable
+as double?,
   ));
 }
 

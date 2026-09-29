@@ -41,6 +41,11 @@ abstract final class AlertStyle {
     'high_scc' => Icons.science_outlined,
     // Nokta farklı hayvanlarda düşük debi ölçüyor (backend ADR 0113).
     'spout_low_flow' => Icons.plumbing,
+    // Kuruya çıkarma ve beklenen doğum (backend ADR 0118).
+    'dry_off_due' => Icons.event_available_outlined,
+    'calving_due' => Icons.child_friendly_outlined,
+    // Isı stresi (backend ADR 0119).
+    'heat_stress' => Icons.thermostat,
     // Aşı zamanı geldi (backend ADR 0112).
     'vaccination_due' => Icons.vaccines_outlined,
     _ => Icons.notifications_none_outlined,

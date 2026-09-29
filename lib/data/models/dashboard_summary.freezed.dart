@@ -24,7 +24,8 @@ mixin _$DashboardSummary {
  int get openAlerts; List<SpeciesTotal> get bySpecies;/// §6.4 sınıf dağılımı. Sayısı sıfır olan sınıflar da gelir ki ekran
 /// "bu sınıfta hiç yok" ile "bu sınıf hiç hesaplanmadı"yı ayırabilsin.
  List<YieldClassCount> get classDistribution;/// Grupların bugünkü toplamı (backend ADR 0092); grup yoksa boş.
- List<GroupTotal> get byGroup;
+ List<GroupTotal> get byGroup;/// Son 12 ayın üreme verimliliği (backend ADR 0120); örnek yoksa null.
+ BreedingKpi? get breeding;
 /// Create a copy of DashboardSummary
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -38,20 +39,20 @@ $DashboardSummaryCopyWith<DashboardSummary> get copyWith => _$DashboardSummaryCo
 @override
 bool operator ==(Object other) {
   final _this = this as DashboardSummary;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DashboardSummary&&(identical(other.date, _this.date) || other.date == _this.date)&&(identical(other.totalMl, _this.totalMl) || other.totalMl == _this.totalMl)&&(identical(other.milkingCount, _this.milkingCount) || other.milkingCount == _this.milkingCount)&&(identical(other.animalCount, _this.animalCount) || other.animalCount == _this.animalCount)&&(identical(other.activeSessions, _this.activeSessions) || other.activeSessions == _this.activeSessions)&&(identical(other.openAlerts, _this.openAlerts) || other.openAlerts == _this.openAlerts)&&const DeepCollectionEquality().equals(other.bySpecies, _this.bySpecies)&&const DeepCollectionEquality().equals(other.classDistribution, _this.classDistribution)&&const DeepCollectionEquality().equals(other.byGroup, _this.byGroup));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DashboardSummary&&(identical(other.date, _this.date) || other.date == _this.date)&&(identical(other.totalMl, _this.totalMl) || other.totalMl == _this.totalMl)&&(identical(other.milkingCount, _this.milkingCount) || other.milkingCount == _this.milkingCount)&&(identical(other.animalCount, _this.animalCount) || other.animalCount == _this.animalCount)&&(identical(other.activeSessions, _this.activeSessions) || other.activeSessions == _this.activeSessions)&&(identical(other.openAlerts, _this.openAlerts) || other.openAlerts == _this.openAlerts)&&const DeepCollectionEquality().equals(other.bySpecies, _this.bySpecies)&&const DeepCollectionEquality().equals(other.classDistribution, _this.classDistribution)&&const DeepCollectionEquality().equals(other.byGroup, _this.byGroup)&&(identical(other.breeding, _this.breeding) || other.breeding == _this.breeding));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as DashboardSummary;
-  return Object.hash(runtimeType,_this.date,_this.totalMl,_this.milkingCount,_this.animalCount,_this.activeSessions,_this.openAlerts,const DeepCollectionEquality().hash(_this.bySpecies),const DeepCollectionEquality().hash(_this.classDistribution),const DeepCollectionEquality().hash(_this.byGroup));
+  return Object.hash(runtimeType,_this.date,_this.totalMl,_this.milkingCount,_this.animalCount,_this.activeSessions,_this.openAlerts,const DeepCollectionEquality().hash(_this.bySpecies),const DeepCollectionEquality().hash(_this.classDistribution),const DeepCollectionEquality().hash(_this.byGroup),_this.breeding);
 }
 
 @override
 String toString() {
   final _this = this as DashboardSummary;
-  return 'DashboardSummary(date: ${_this.date}, totalMl: ${_this.totalMl}, milkingCount: ${_this.milkingCount}, animalCount: ${_this.animalCount}, activeSessions: ${_this.activeSessions}, openAlerts: ${_this.openAlerts}, bySpecies: ${_this.bySpecies}, classDistribution: ${_this.classDistribution}, byGroup: ${_this.byGroup})';
+  return 'DashboardSummary(date: ${_this.date}, totalMl: ${_this.totalMl}, milkingCount: ${_this.milkingCount}, animalCount: ${_this.animalCount}, activeSessions: ${_this.activeSessions}, openAlerts: ${_this.openAlerts}, bySpecies: ${_this.bySpecies}, classDistribution: ${_this.classDistribution}, byGroup: ${_this.byGroup}, breeding: ${_this.breeding})';
 }
 
 
@@ -62,11 +63,11 @@ abstract mixin class $DashboardSummaryCopyWith<$Res>  {
   factory $DashboardSummaryCopyWith(DashboardSummary value, $Res Function(DashboardSummary) _then) = _$DashboardSummaryCopyWithImpl;
 @useResult
 $Res call({
- DateTime? date, int totalMl, int milkingCount, int animalCount, int activeSessions, int openAlerts, List<SpeciesTotal> bySpecies, List<YieldClassCount> classDistribution, List<GroupTotal> byGroup
+ DateTime? date, int totalMl, int milkingCount, int animalCount, int activeSessions, int openAlerts, List<SpeciesTotal> bySpecies, List<YieldClassCount> classDistribution, List<GroupTotal> byGroup, BreedingKpi? breeding
 });
 
 
-
+$BreedingKpiCopyWith<$Res>? get breeding;
 
 }
 /// @nodoc
@@ -79,7 +80,7 @@ class _$DashboardSummaryCopyWithImpl<$Res>
 
 /// Create a copy of DashboardSummary
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? date = freezed,Object? totalMl = null,Object? milkingCount = null,Object? animalCount = null,Object? activeSessions = null,Object? openAlerts = null,Object? bySpecies = null,Object? classDistribution = null,Object? byGroup = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? date = freezed,Object? totalMl = null,Object? milkingCount = null,Object? animalCount = null,Object? activeSessions = null,Object? openAlerts = null,Object? bySpecies = null,Object? classDistribution = null,Object? byGroup = null,Object? breeding = freezed,}) {
   return _then(DashboardSummary(
 date: freezed == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as DateTime?,totalMl: null == totalMl ? _self.totalMl : totalMl // ignore: cast_nullable_to_non_nullable
@@ -90,10 +91,23 @@ as int,openAlerts: null == openAlerts ? _self.openAlerts : openAlerts // ignore:
 as int,bySpecies: null == bySpecies ? _self.bySpecies : bySpecies // ignore: cast_nullable_to_non_nullable
 as List<SpeciesTotal>,classDistribution: null == classDistribution ? _self.classDistribution : classDistribution // ignore: cast_nullable_to_non_nullable
 as List<YieldClassCount>,byGroup: null == byGroup ? _self.byGroup : byGroup // ignore: cast_nullable_to_non_nullable
-as List<GroupTotal>,
+as List<GroupTotal>,breeding: freezed == breeding ? _self.breeding : breeding // ignore: cast_nullable_to_non_nullable
+as BreedingKpi?,
   ));
 }
+/// Create a copy of DashboardSummary
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BreedingKpiCopyWith<$Res>? get breeding {
+    if (_self.breeding == null) {
+    return null;
+  }
 
+  return $BreedingKpiCopyWith<$Res>(_self.breeding!, (value) {
+    return _then(_self.copyWith(breeding: value));
+  });
+}
 }
 
 
@@ -175,10 +189,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DateTime? date,  int totalMl,  int milkingCount,  int animalCount,  int activeSessions,  int openAlerts,  List<SpeciesTotal> bySpecies,  List<YieldClassCount> classDistribution,  List<GroupTotal> byGroup)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DateTime? date,  int totalMl,  int milkingCount,  int animalCount,  int activeSessions,  int openAlerts,  List<SpeciesTotal> bySpecies,  List<YieldClassCount> classDistribution,  List<GroupTotal> byGroup,  BreedingKpi? breeding)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DashboardSummary() when $default != null:
-return $default(_that.date,_that.totalMl,_that.milkingCount,_that.animalCount,_that.activeSessions,_that.openAlerts,_that.bySpecies,_that.classDistribution,_that.byGroup);case _:
+return $default(_that.date,_that.totalMl,_that.milkingCount,_that.animalCount,_that.activeSessions,_that.openAlerts,_that.bySpecies,_that.classDistribution,_that.byGroup,_that.breeding);case _:
   return orElse();
 
 }
@@ -196,10 +210,10 @@ return $default(_that.date,_that.totalMl,_that.milkingCount,_that.animalCount,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DateTime? date,  int totalMl,  int milkingCount,  int animalCount,  int activeSessions,  int openAlerts,  List<SpeciesTotal> bySpecies,  List<YieldClassCount> classDistribution,  List<GroupTotal> byGroup)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DateTime? date,  int totalMl,  int milkingCount,  int animalCount,  int activeSessions,  int openAlerts,  List<SpeciesTotal> bySpecies,  List<YieldClassCount> classDistribution,  List<GroupTotal> byGroup,  BreedingKpi? breeding)  $default,) {final _that = this;
 switch (_that) {
 case _DashboardSummary():
-return $default(_that.date,_that.totalMl,_that.milkingCount,_that.animalCount,_that.activeSessions,_that.openAlerts,_that.bySpecies,_that.classDistribution,_that.byGroup);case _:
+return $default(_that.date,_that.totalMl,_that.milkingCount,_that.animalCount,_that.activeSessions,_that.openAlerts,_that.bySpecies,_that.classDistribution,_that.byGroup,_that.breeding);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -216,10 +230,10 @@ return $default(_that.date,_that.totalMl,_that.milkingCount,_that.animalCount,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DateTime? date,  int totalMl,  int milkingCount,  int animalCount,  int activeSessions,  int openAlerts,  List<SpeciesTotal> bySpecies,  List<YieldClassCount> classDistribution,  List<GroupTotal> byGroup)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DateTime? date,  int totalMl,  int milkingCount,  int animalCount,  int activeSessions,  int openAlerts,  List<SpeciesTotal> bySpecies,  List<YieldClassCount> classDistribution,  List<GroupTotal> byGroup,  BreedingKpi? breeding)?  $default,) {final _that = this;
 switch (_that) {
 case _DashboardSummary() when $default != null:
-return $default(_that.date,_that.totalMl,_that.milkingCount,_that.animalCount,_that.activeSessions,_that.openAlerts,_that.bySpecies,_that.classDistribution,_that.byGroup);case _:
+return $default(_that.date,_that.totalMl,_that.milkingCount,_that.animalCount,_that.activeSessions,_that.openAlerts,_that.bySpecies,_that.classDistribution,_that.byGroup,_that.breeding);case _:
   return null;
 
 }
@@ -231,7 +245,7 @@ return $default(_that.date,_that.totalMl,_that.milkingCount,_that.animalCount,_t
 @JsonSerializable()
 
 class _DashboardSummary implements DashboardSummary {
-  const _DashboardSummary({this.date, this.totalMl = 0, this.milkingCount = 0, this.animalCount = 0, this.activeSessions = 0, this.openAlerts = 0,  List<SpeciesTotal> bySpecies = const <SpeciesTotal>[],  List<YieldClassCount> classDistribution = const <YieldClassCount>[],  List<GroupTotal> byGroup = const <GroupTotal>[]}): _bySpecies = bySpecies,_classDistribution = classDistribution,_byGroup = byGroup;
+  const _DashboardSummary({this.date, this.totalMl = 0, this.milkingCount = 0, this.animalCount = 0, this.activeSessions = 0, this.openAlerts = 0,  List<SpeciesTotal> bySpecies = const <SpeciesTotal>[],  List<YieldClassCount> classDistribution = const <YieldClassCount>[],  List<GroupTotal> byGroup = const <GroupTotal>[], this.breeding}): _bySpecies = bySpecies,_classDistribution = classDistribution,_byGroup = byGroup;
   factory _DashboardSummary.fromJson(Map<String, dynamic> json) => _$DashboardSummaryFromJson(json);
 
 /// Özetin ait olduğu gün.
@@ -272,6 +286,8 @@ class _DashboardSummary implements DashboardSummary {
   return EqualUnmodifiableListView(_byGroup);
 }
 
+/// Son 12 ayın üreme verimliliği (backend ADR 0120); örnek yoksa null.
+@override final  BreedingKpi? breeding;
 
 /// Create a copy of DashboardSummary
 /// with the given fields replaced by the non-null parameter values.
@@ -286,18 +302,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _DashboardSummary&&(identical(other.date, date) || other.date == date)&&(identical(other.totalMl, totalMl) || other.totalMl == totalMl)&&(identical(other.milkingCount, milkingCount) || other.milkingCount == milkingCount)&&(identical(other.animalCount, animalCount) || other.animalCount == animalCount)&&(identical(other.activeSessions, activeSessions) || other.activeSessions == activeSessions)&&(identical(other.openAlerts, openAlerts) || other.openAlerts == openAlerts)&&const DeepCollectionEquality().equals(other.bySpecies, _bySpecies)&&const DeepCollectionEquality().equals(other.classDistribution, _classDistribution)&&const DeepCollectionEquality().equals(other.byGroup, _byGroup));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _DashboardSummary&&(identical(other.date, date) || other.date == date)&&(identical(other.totalMl, totalMl) || other.totalMl == totalMl)&&(identical(other.milkingCount, milkingCount) || other.milkingCount == milkingCount)&&(identical(other.animalCount, animalCount) || other.animalCount == animalCount)&&(identical(other.activeSessions, activeSessions) || other.activeSessions == activeSessions)&&(identical(other.openAlerts, openAlerts) || other.openAlerts == openAlerts)&&const DeepCollectionEquality().equals(other.bySpecies, _bySpecies)&&const DeepCollectionEquality().equals(other.classDistribution, _classDistribution)&&const DeepCollectionEquality().equals(other.byGroup, _byGroup)&&(identical(other.breeding, breeding) || other.breeding == breeding));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,date,totalMl,milkingCount,animalCount,activeSessions,openAlerts,const DeepCollectionEquality().hash(_bySpecies),const DeepCollectionEquality().hash(_classDistribution),const DeepCollectionEquality().hash(_byGroup));
+    return Object.hash(runtimeType,date,totalMl,milkingCount,animalCount,activeSessions,openAlerts,const DeepCollectionEquality().hash(_bySpecies),const DeepCollectionEquality().hash(_classDistribution),const DeepCollectionEquality().hash(_byGroup),breeding);
 }
 
 @override
 String toString() {
-    return 'DashboardSummary(date: $date, totalMl: $totalMl, milkingCount: $milkingCount, animalCount: $animalCount, activeSessions: $activeSessions, openAlerts: $openAlerts, bySpecies: $bySpecies, classDistribution: $classDistribution, byGroup: $byGroup)';
+    return 'DashboardSummary(date: $date, totalMl: $totalMl, milkingCount: $milkingCount, animalCount: $animalCount, activeSessions: $activeSessions, openAlerts: $openAlerts, bySpecies: $bySpecies, classDistribution: $classDistribution, byGroup: $byGroup, breeding: $breeding)';
 }
 
 
@@ -308,11 +324,11 @@ abstract mixin class _$DashboardSummaryCopyWith<$Res> implements $DashboardSumma
   factory _$DashboardSummaryCopyWith(_DashboardSummary value, $Res Function(_DashboardSummary) _then) = __$DashboardSummaryCopyWithImpl;
 @override @useResult
 $Res call({
- DateTime? date, int totalMl, int milkingCount, int animalCount, int activeSessions, int openAlerts, List<SpeciesTotal> bySpecies, List<YieldClassCount> classDistribution, List<GroupTotal> byGroup
+ DateTime? date, int totalMl, int milkingCount, int animalCount, int activeSessions, int openAlerts, List<SpeciesTotal> bySpecies, List<YieldClassCount> classDistribution, List<GroupTotal> byGroup, BreedingKpi? breeding
 });
 
 
-
+@override $BreedingKpiCopyWith<$Res>? get breeding;
 
 }
 /// @nodoc
@@ -325,7 +341,7 @@ class __$DashboardSummaryCopyWithImpl<$Res>
 
 /// Create a copy of DashboardSummary
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? date = freezed,Object? totalMl = null,Object? milkingCount = null,Object? animalCount = null,Object? activeSessions = null,Object? openAlerts = null,Object? bySpecies = null,Object? classDistribution = null,Object? byGroup = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? date = freezed,Object? totalMl = null,Object? milkingCount = null,Object? animalCount = null,Object? activeSessions = null,Object? openAlerts = null,Object? bySpecies = null,Object? classDistribution = null,Object? byGroup = null,Object? breeding = freezed,}) {
   return _then(_DashboardSummary(
 date: freezed == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as DateTime?,totalMl: null == totalMl ? _self.totalMl : totalMl // ignore: cast_nullable_to_non_nullable
@@ -336,11 +352,24 @@ as int,openAlerts: null == openAlerts ? _self.openAlerts : openAlerts // ignore:
 as int,bySpecies: null == bySpecies ? _self._bySpecies : bySpecies // ignore: cast_nullable_to_non_nullable
 as List<SpeciesTotal>,classDistribution: null == classDistribution ? _self._classDistribution : classDistribution // ignore: cast_nullable_to_non_nullable
 as List<YieldClassCount>,byGroup: null == byGroup ? _self._byGroup : byGroup // ignore: cast_nullable_to_non_nullable
-as List<GroupTotal>,
+as List<GroupTotal>,breeding: freezed == breeding ? _self.breeding : breeding // ignore: cast_nullable_to_non_nullable
+as BreedingKpi?,
   ));
 }
 
+/// Create a copy of DashboardSummary
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BreedingKpiCopyWith<$Res>? get breeding {
+    if (_self.breeding == null) {
+    return null;
+  }
 
+  return $BreedingKpiCopyWith<$Res>(_self.breeding!, (value) {
+    return _then(_self.copyWith(breeding: value));
+  });
+}
 }
 
 
@@ -1171,6 +1200,291 @@ as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non
 as String,animals: null == animals ? _self.animals : animals // ignore: cast_nullable_to_non_nullable
 as int,milked: null == milked ? _self.milked : milked // ignore: cast_nullable_to_non_nullable
 as int,totalMl: null == totalMl ? _self.totalMl : totalMl // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$BreedingKpi {
+
+ double? get calvingIntervalDays; int get calvingIntervals; double? get firstServicePct; int get firstServices; double? get daysOpen; int get daysOpenN;
+/// Create a copy of BreedingKpi
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$BreedingKpiCopyWith<BreedingKpi> get copyWith => _$BreedingKpiCopyWithImpl<BreedingKpi>(this as BreedingKpi, _$identity);
+
+  /// Serializes this BreedingKpi to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  final _this = this as BreedingKpi;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BreedingKpi&&(identical(other.calvingIntervalDays, _this.calvingIntervalDays) || other.calvingIntervalDays == _this.calvingIntervalDays)&&(identical(other.calvingIntervals, _this.calvingIntervals) || other.calvingIntervals == _this.calvingIntervals)&&(identical(other.firstServicePct, _this.firstServicePct) || other.firstServicePct == _this.firstServicePct)&&(identical(other.firstServices, _this.firstServices) || other.firstServices == _this.firstServices)&&(identical(other.daysOpen, _this.daysOpen) || other.daysOpen == _this.daysOpen)&&(identical(other.daysOpenN, _this.daysOpenN) || other.daysOpenN == _this.daysOpenN));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode {
+  final _this = this as BreedingKpi;
+  return Object.hash(runtimeType,_this.calvingIntervalDays,_this.calvingIntervals,_this.firstServicePct,_this.firstServices,_this.daysOpen,_this.daysOpenN);
+}
+
+@override
+String toString() {
+  final _this = this as BreedingKpi;
+  return 'BreedingKpi(calvingIntervalDays: ${_this.calvingIntervalDays}, calvingIntervals: ${_this.calvingIntervals}, firstServicePct: ${_this.firstServicePct}, firstServices: ${_this.firstServices}, daysOpen: ${_this.daysOpen}, daysOpenN: ${_this.daysOpenN})';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $BreedingKpiCopyWith<$Res>  {
+  factory $BreedingKpiCopyWith(BreedingKpi value, $Res Function(BreedingKpi) _then) = _$BreedingKpiCopyWithImpl;
+@useResult
+$Res call({
+ double? calvingIntervalDays, int calvingIntervals, double? firstServicePct, int firstServices, double? daysOpen, int daysOpenN
+});
+
+
+
+
+}
+/// @nodoc
+class _$BreedingKpiCopyWithImpl<$Res>
+    implements $BreedingKpiCopyWith<$Res> {
+  _$BreedingKpiCopyWithImpl(this._self, this._then);
+
+  final BreedingKpi _self;
+  final $Res Function(BreedingKpi) _then;
+
+/// Create a copy of BreedingKpi
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? calvingIntervalDays = freezed,Object? calvingIntervals = null,Object? firstServicePct = freezed,Object? firstServices = null,Object? daysOpen = freezed,Object? daysOpenN = null,}) {
+  return _then(BreedingKpi(
+calvingIntervalDays: freezed == calvingIntervalDays ? _self.calvingIntervalDays : calvingIntervalDays // ignore: cast_nullable_to_non_nullable
+as double?,calvingIntervals: null == calvingIntervals ? _self.calvingIntervals : calvingIntervals // ignore: cast_nullable_to_non_nullable
+as int,firstServicePct: freezed == firstServicePct ? _self.firstServicePct : firstServicePct // ignore: cast_nullable_to_non_nullable
+as double?,firstServices: null == firstServices ? _self.firstServices : firstServices // ignore: cast_nullable_to_non_nullable
+as int,daysOpen: freezed == daysOpen ? _self.daysOpen : daysOpen // ignore: cast_nullable_to_non_nullable
+as double?,daysOpenN: null == daysOpenN ? _self.daysOpenN : daysOpenN // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [BreedingKpi].
+extension BreedingKpiPatterns on BreedingKpi {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _BreedingKpi value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _BreedingKpi() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _BreedingKpi value)  $default,){
+final _that = this;
+switch (_that) {
+case _BreedingKpi():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _BreedingKpi value)?  $default,){
+final _that = this;
+switch (_that) {
+case _BreedingKpi() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( double? calvingIntervalDays,  int calvingIntervals,  double? firstServicePct,  int firstServices,  double? daysOpen,  int daysOpenN)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _BreedingKpi() when $default != null:
+return $default(_that.calvingIntervalDays,_that.calvingIntervals,_that.firstServicePct,_that.firstServices,_that.daysOpen,_that.daysOpenN);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( double? calvingIntervalDays,  int calvingIntervals,  double? firstServicePct,  int firstServices,  double? daysOpen,  int daysOpenN)  $default,) {final _that = this;
+switch (_that) {
+case _BreedingKpi():
+return $default(_that.calvingIntervalDays,_that.calvingIntervals,_that.firstServicePct,_that.firstServices,_that.daysOpen,_that.daysOpenN);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( double? calvingIntervalDays,  int calvingIntervals,  double? firstServicePct,  int firstServices,  double? daysOpen,  int daysOpenN)?  $default,) {final _that = this;
+switch (_that) {
+case _BreedingKpi() when $default != null:
+return $default(_that.calvingIntervalDays,_that.calvingIntervals,_that.firstServicePct,_that.firstServices,_that.daysOpen,_that.daysOpenN);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _BreedingKpi implements BreedingKpi {
+  const _BreedingKpi({this.calvingIntervalDays, this.calvingIntervals = 0, this.firstServicePct, this.firstServices = 0, this.daysOpen, this.daysOpenN = 0});
+  factory _BreedingKpi.fromJson(Map<String, dynamic> json) => _$BreedingKpiFromJson(json);
+
+@override final  double? calvingIntervalDays;
+@override@JsonKey() final  int calvingIntervals;
+@override final  double? firstServicePct;
+@override@JsonKey() final  int firstServices;
+@override final  double? daysOpen;
+@override@JsonKey() final  int daysOpenN;
+
+/// Create a copy of BreedingKpi
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$BreedingKpiCopyWith<_BreedingKpi> get copyWith => __$BreedingKpiCopyWithImpl<_BreedingKpi>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$BreedingKpiToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _BreedingKpi&&(identical(other.calvingIntervalDays, calvingIntervalDays) || other.calvingIntervalDays == calvingIntervalDays)&&(identical(other.calvingIntervals, calvingIntervals) || other.calvingIntervals == calvingIntervals)&&(identical(other.firstServicePct, firstServicePct) || other.firstServicePct == firstServicePct)&&(identical(other.firstServices, firstServices) || other.firstServices == firstServices)&&(identical(other.daysOpen, daysOpen) || other.daysOpen == daysOpen)&&(identical(other.daysOpenN, daysOpenN) || other.daysOpenN == daysOpenN));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode {
+    return Object.hash(runtimeType,calvingIntervalDays,calvingIntervals,firstServicePct,firstServices,daysOpen,daysOpenN);
+}
+
+@override
+String toString() {
+    return 'BreedingKpi(calvingIntervalDays: $calvingIntervalDays, calvingIntervals: $calvingIntervals, firstServicePct: $firstServicePct, firstServices: $firstServices, daysOpen: $daysOpen, daysOpenN: $daysOpenN)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$BreedingKpiCopyWith<$Res> implements $BreedingKpiCopyWith<$Res> {
+  factory _$BreedingKpiCopyWith(_BreedingKpi value, $Res Function(_BreedingKpi) _then) = __$BreedingKpiCopyWithImpl;
+@override @useResult
+$Res call({
+ double? calvingIntervalDays, int calvingIntervals, double? firstServicePct, int firstServices, double? daysOpen, int daysOpenN
+});
+
+
+
+
+}
+/// @nodoc
+class __$BreedingKpiCopyWithImpl<$Res>
+    implements _$BreedingKpiCopyWith<$Res> {
+  __$BreedingKpiCopyWithImpl(this._self, this._then);
+
+  final _BreedingKpi _self;
+  final $Res Function(_BreedingKpi) _then;
+
+/// Create a copy of BreedingKpi
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? calvingIntervalDays = freezed,Object? calvingIntervals = null,Object? firstServicePct = freezed,Object? firstServices = null,Object? daysOpen = freezed,Object? daysOpenN = null,}) {
+  return _then(_BreedingKpi(
+calvingIntervalDays: freezed == calvingIntervalDays ? _self.calvingIntervalDays : calvingIntervalDays // ignore: cast_nullable_to_non_nullable
+as double?,calvingIntervals: null == calvingIntervals ? _self.calvingIntervals : calvingIntervals // ignore: cast_nullable_to_non_nullable
+as int,firstServicePct: freezed == firstServicePct ? _self.firstServicePct : firstServicePct // ignore: cast_nullable_to_non_nullable
+as double?,firstServices: null == firstServices ? _self.firstServices : firstServices // ignore: cast_nullable_to_non_nullable
+as int,daysOpen: freezed == daysOpen ? _self.daysOpen : daysOpen // ignore: cast_nullable_to_non_nullable
+as double?,daysOpenN: null == daysOpenN ? _self.daysOpenN : daysOpenN // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }

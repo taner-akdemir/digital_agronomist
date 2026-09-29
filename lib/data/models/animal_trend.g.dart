@@ -54,6 +54,7 @@ _AnimalDailyStat _$AnimalDailyStatFromJson(Map<String, dynamic> json) =>
       milkingCount: (json['milkingCount'] as num?)?.toInt() ?? 0,
       ma7Ml: (json['ma7Ml'] as num?)?.toInt(),
       ma30Ml: (json['ma30Ml'] as num?)?.toInt(),
+      thi: (json['thi'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$AnimalDailyStatToJson(_AnimalDailyStat instance) =>
@@ -63,6 +64,7 @@ Map<String, dynamic> _$AnimalDailyStatToJson(_AnimalDailyStat instance) =>
       'milkingCount': instance.milkingCount,
       'ma7Ml': instance.ma7Ml,
       'ma30Ml': instance.ma30Ml,
+      'thi': instance.thi,
     };
 
 _Lactation305 _$Lactation305FromJson(Map<String, dynamic> json) =>

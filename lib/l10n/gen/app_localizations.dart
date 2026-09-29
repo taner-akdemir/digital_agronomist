@@ -110,6 +110,12 @@ abstract class AppLocalizations {
   /// **'Kullanıcı'**
   String get accountDefaultName;
 
+  /// No description provided for @accountFarmLocation.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tesis konumu'**
+  String get accountFarmLocation;
+
   /// No description provided for @accountMilkUnit.
   ///
   /// In tr, this message translates to:
@@ -1153,6 +1159,54 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Tohumlama'**
   String get breedingInsemination;
+
+  /// No description provided for @breedingKpiDays.
+  ///
+  /// In tr, this message translates to:
+  /// **'{days} gün'**
+  String breedingKpiDays(Object days);
+
+  /// No description provided for @breedingKpiDaysOpen.
+  ///
+  /// In tr, this message translates to:
+  /// **'Buzağılamadan gebeliğe'**
+  String get breedingKpiDaysOpen;
+
+  /// No description provided for @breedingKpiFirstService.
+  ///
+  /// In tr, this message translates to:
+  /// **'İlk tohumlamada gebelik'**
+  String get breedingKpiFirstService;
+
+  /// No description provided for @breedingKpiInterval.
+  ///
+  /// In tr, this message translates to:
+  /// **'Buzağılama aralığı'**
+  String get breedingKpiInterval;
+
+  /// No description provided for @breedingKpiNone.
+  ///
+  /// In tr, this message translates to:
+  /// **'—'**
+  String get breedingKpiNone;
+
+  /// No description provided for @breedingKpiPct.
+  ///
+  /// In tr, this message translates to:
+  /// **'%{pct}'**
+  String breedingKpiPct(Object pct);
+
+  /// No description provided for @breedingKpiSample.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} kayıt'**
+  String breedingKpiSample(int count);
+
+  /// No description provided for @breedingKpiTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Üreme · son 12 ay'**
+  String get breedingKpiTitle;
 
   /// No description provided for @breedingLoadFailed.
   ///
@@ -2472,6 +2526,42 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Verim beklenen aralıkta, eğim stabil.'**
   String get domainClassNormalExplanation;
+
+  /// No description provided for @farmLocationClear.
+  ///
+  /// In tr, this message translates to:
+  /// **'Konumu sil'**
+  String get farmLocationClear;
+
+  /// No description provided for @farmLocationCoordinates.
+  ///
+  /// In tr, this message translates to:
+  /// **'Koordinat (enlem, boylam)'**
+  String get farmLocationCoordinates;
+
+  /// No description provided for @farmLocationIntro.
+  ///
+  /// In tr, this message translates to:
+  /// **'Isı stresi uyarısı için hava tahmini tesisin konumundan alınır. Google Haritalar\'da tesise uzun basın, üstte çıkan koordinatı (39.9208, 32.8541) buraya yapıştırın. Sunucu hava servisine yalnızca bu koordinatı gönderir.'**
+  String get farmLocationIntro;
+
+  /// No description provided for @farmLocationInvalid.
+  ///
+  /// In tr, this message translates to:
+  /// **'Enlem, boylam biçiminde girin (ör. 39.9208, 32.8541)'**
+  String get farmLocationInvalid;
+
+  /// No description provided for @farmLocationSaved.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tesis konumu kaydedildi'**
+  String get farmLocationSaved;
+
+  /// No description provided for @farmLocationTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tesis konumu'**
+  String get farmLocationTitle;
 
   /// No description provided for @farmsAlerts.
   ///
@@ -5273,6 +5363,12 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Günlük'**
   String get yieldChartDaily;
+
+  /// No description provided for @yieldChartHeat.
+  ///
+  /// In tr, this message translates to:
+  /// **'Isı stresi günü (THI ≥ 72)'**
+  String get yieldChartHeat;
 
   /// No description provided for @yieldChartNotEnough.
   ///

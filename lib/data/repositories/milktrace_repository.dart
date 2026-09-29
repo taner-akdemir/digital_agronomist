@@ -139,6 +139,13 @@ abstract interface class MilkTraceRepository {
   Future<Thresholds> updateThresholds(Thresholds thresholds);
 
   Future<List<Farm>> farms();
+
+  /// Tesis konumu (backend ADR 0119); yalnızca sahip. İkisi null: sil.
+  Future<void> setFarmLocation(
+    String farmId,
+    double? latitude,
+    double? longitude,
+  );
   Future<List<Hall>> halls();
   Future<List<Vacuum>> vacuums({String? hallId});
   Future<List<Spout>> spouts({String? vacuumId});

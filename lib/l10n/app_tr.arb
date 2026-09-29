@@ -2,6 +2,7 @@
   "@@locale": "tr",
   "accountAuditLog": "İşlem kaydı",
   "accountDefaultName": "Kullanıcı",
+  "accountFarmLocation": "Tesis konumu",
   "accountMilkUnit": "Süt birimi",
   "accountMilkers": "Sağımcılar",
   "accountMilkingSchedule": "Sağım saatleri",
@@ -346,6 +347,31 @@
     }
   },
   "breedingInsemination": "Tohumlama",
+  "breedingKpiDays": "{days} gün",
+  "@breedingKpiDays": {
+    "placeholders": {
+      "days": {}
+    }
+  },
+  "breedingKpiDaysOpen": "Buzağılamadan gebeliğe",
+  "breedingKpiFirstService": "İlk tohumlamada gebelik",
+  "breedingKpiInterval": "Buzağılama aralığı",
+  "breedingKpiNone": "—",
+  "breedingKpiPct": "%{pct}",
+  "@breedingKpiPct": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "breedingKpiSample": "{count} kayıt",
+  "@breedingKpiSample": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "breedingKpiTitle": "Üreme · son 12 ay",
   "breedingLoadFailed": "Üreme kayıtları alınamadı",
   "breedingOpen": "Boş",
   "breedingPregnancyCheck": "Gebelik kontrolü",
@@ -786,6 +812,12 @@
   "domainClassNoMilkExplanation": "Son sağımlarda süt alınamadı. Değerlendirme gerekli.",
   "domainClassNormal": "Normal",
   "domainClassNormalExplanation": "Verim beklenen aralıkta, eğim stabil.",
+  "farmLocationClear": "Konumu sil",
+  "farmLocationCoordinates": "Koordinat (enlem, boylam)",
+  "farmLocationIntro": "Isı stresi uyarısı için hava tahmini tesisin konumundan alınır. Google Haritalar'da tesise uzun basın, üstte çıkan koordinatı (39.9208, 32.8541) buraya yapıştırın. Sunucu hava servisine yalnızca bu koordinatı gönderir.",
+  "farmLocationInvalid": "Enlem, boylam biçiminde girin (ör. 39.9208, 32.8541)",
+  "farmLocationSaved": "Tesis konumu kaydedildi",
+  "farmLocationTitle": "Tesis konumu",
   "farmsAlerts": "{count} okunmamış uyarı",
   "@farmsAlerts": {
     "placeholders": {
@@ -1735,6 +1767,7 @@
   },
   "yieldChartAvg7": "7 gün ort.",
   "yieldChartDaily": "Günlük",
+  "yieldChartHeat": "Isı stresi günü (THI ≥ 72)",
   "yieldChartNotEnough": "Grafik için yeterli geçmiş yok",
   "yieldReportDescription": "Hayvan başına günlük verim ({unit}), Excel dosyası. Veterinere ya da danışmana gönderebilirsiniz.",
   "@yieldReportDescription": {

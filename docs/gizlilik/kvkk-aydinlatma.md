@@ -38,6 +38,8 @@ otomatik olarak toplanır.
 - **Yurt dışı (md. 9):** netcup GmbH (Almanya, barındırma); Google LLC (Firebase Cloud
   Messaging, bildirim; Firebase Crashlytics, uygulama hata raporları); Twilio SendGrid (ABD, e-posta). Dayanak: [DOLDUR — açık rıza,
   standart sözleşme ya da Kurul izni; 2024 değişikliği sonrası md. 9 usulü].
+- Hava tahmini (Open-Meteo): ısı stresi uyarısı için yalnızca tesisin koordinatı
+  gönderilir; kişisel veri aktarılmaz (backend ADR 0119).
 - Yetkili kamu kurumlarına, hukuki yükümlülük hâlinde.
 
 ## Saklama süresi

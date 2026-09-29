@@ -2,6 +2,7 @@
   "@@locale": "en",
   "accountAuditLog": "Activity log",
   "accountDefaultName": "User",
+  "accountFarmLocation": "Farm location",
   "accountMilkUnit": "Milk unit",
   "accountMilkers": "Milkers",
   "accountMilkingSchedule": "Milking times",
@@ -331,6 +332,31 @@
     }
   },
   "breedingInsemination": "Insemination",
+  "breedingKpiDays": "{days} days",
+  "@breedingKpiDays": {
+    "placeholders": {
+      "days": {}
+    }
+  },
+  "breedingKpiDaysOpen": "Calving to conception",
+  "breedingKpiFirstService": "First-service conception",
+  "breedingKpiInterval": "Calving interval",
+  "breedingKpiNone": "—",
+  "breedingKpiPct": "{pct}%",
+  "@breedingKpiPct": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "breedingKpiSample": "{count} records",
+  "@breedingKpiSample": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "breedingKpiTitle": "Breeding · last 12 months",
   "breedingLoadFailed": "Could not load breeding records",
   "breedingOpen": "Open",
   "breedingPregnancyCheck": "Pregnancy check",
@@ -709,6 +735,12 @@
   "domainClassNoMilkExplanation": "No milk was obtained in recent milkings. Needs assessment.",
   "domainClassNormal": "Normal",
   "domainClassNormalExplanation": "Yield is in the expected range and the trend is stable.",
+  "farmLocationClear": "Remove location",
+  "farmLocationCoordinates": "Coordinate (latitude, longitude)",
+  "farmLocationIntro": "The heat stress alert uses the weather forecast for the farm's location. Long-press the farm in Google Maps and paste the coordinate shown at the top (39.9208, 32.8541) here. The server sends only this coordinate to the weather service.",
+  "farmLocationInvalid": "Enter as latitude, longitude (e.g. 39.9208, 32.8541)",
+  "farmLocationSaved": "Farm location saved",
+  "farmLocationTitle": "Farm location",
   "farmsAlerts": "{count} unread alerts",
   "@farmsAlerts": {
     "placeholders": {
@@ -1520,6 +1552,7 @@
   },
   "yieldChartAvg7": "7-day avg.",
   "yieldChartDaily": "Daily",
+  "yieldChartHeat": "Heat stress day (THI ≥ 72)",
   "yieldChartNotEnough": "Not enough history for a chart",
   "yieldReportDescription": "Daily yield per animal ({unit}), as an Excel file. You can send it to your vet or advisor.",
   "@yieldReportDescription": {

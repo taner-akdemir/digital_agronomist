@@ -24,6 +24,7 @@ class AppPalette {
     required this.darkAmberColor,
     required this.lightAmberColor,
     required this.chartContext,
+    required this.chartHeat,
     required this.surface,
     required this.brandFill,
     required this.dangerFill,
@@ -47,6 +48,10 @@ class AppPalette {
   final Color darkAmberColor;
   final Color lightAmberColor;
   final Color chartContext;
+
+  /// Verim grafiğinde ısı stresi günü işareti (backend ADR 0119). §6.2
+  /// durum renklerinden (yeşil/sarı/kırmızı) AYRI bir turuncu.
+  final Color chartHeat;
   final Color surface;
   final Color brandFill;
   final Color dangerFill;
@@ -74,6 +79,7 @@ class AppPalette {
     // kontrasttaydı ve 90 günlük ince çizgi silik kalıyordu; bu ton 3:1
     // eşiğini geçiyor.
     chartContext: Color.fromRGBO(120, 134, 126, 1),
+    chartHeat: Color.fromRGBO(217, 116, 43, 1),
     surface: Colors.white,
     brandFill: Color.fromRGBO(31, 71, 50, 1),
     dangerFill: Color.fromRGBO(164, 44, 30, 1),
@@ -105,6 +111,7 @@ class AppPalette {
     darkAmberColor: Color.fromRGBO(240, 188, 88, 1),
     lightAmberColor: Color.fromRGBO(64, 48, 18, 1),
     chartContext: Color.fromRGBO(150, 163, 156, 1),
+    chartHeat: Color.fromRGBO(240, 150, 90, 1),
     surface: Color.fromRGBO(26, 31, 28, 1),
     brandFill: Color.fromRGBO(44, 118, 78, 1),
     dangerFill: Color.fromRGBO(176, 52, 38, 1),
@@ -181,6 +188,7 @@ abstract final class AppColors {
   // yeşil), bağlam serisi (günlük toplam) nötr gridir.
   static Color get chartPrimary => darkGreenColor;
   static Color get chartContext => _p.chartContext;
+  static Color get chartHeat => _p.chartHeat;
   static Color get chartGrid => veryLightGreyColor;
 
   // --- yüzeyler ---

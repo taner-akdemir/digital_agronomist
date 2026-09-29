@@ -82,6 +82,7 @@ gerektiği kadar:
 | Google (Firebase Crashlytics) | uygulama hata raporları (yığın izi, cihaz modeli, sürüm) | ABD / AB |
 | Twilio SendGrid | işletmenin seçtiği e-posta bildirimleri ve parola sıfırlama e-postası (e-posta adresi, ad) | ABD |
 | NetGSM / İleti Merkezi | işletmenin seçtiği SMS bildirimleri | Türkiye |
+| Open-Meteo | ısı stresi uyarısı için hava tahmini — sunucumuz yalnızca işletme sahibinin girdiği tesis koordinatını gönderir; kişisel veri gönderilmez (backend ADR 0119) | [DOLDUR: Open-Meteo barındırma yeri, AB] |
 | [DOLDUR: işletmenin seçtiği diğer kanallar — Slack, Teams, webhook, sesli arama] | bildirim | [DOLDUR] |
 
 Aynı işletmenin kullanıcıları o işletmenin verilerini rollerine göre görür. Başka bir

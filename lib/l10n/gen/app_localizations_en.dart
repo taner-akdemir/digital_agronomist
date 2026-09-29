@@ -15,6 +15,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountDefaultName => 'User';
 
   @override
+  String get accountFarmLocation => 'Farm location';
+
+  @override
   String get accountMilkUnit => 'Milk unit';
 
   @override
@@ -628,6 +631,36 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get breedingInsemination => 'Insemination';
+
+  @override
+  String breedingKpiDays(Object days) {
+    return '$days days';
+  }
+
+  @override
+  String get breedingKpiDaysOpen => 'Calving to conception';
+
+  @override
+  String get breedingKpiFirstService => 'First-service conception';
+
+  @override
+  String get breedingKpiInterval => 'Calving interval';
+
+  @override
+  String get breedingKpiNone => '—';
+
+  @override
+  String breedingKpiPct(Object pct) {
+    return '$pct%';
+  }
+
+  @override
+  String breedingKpiSample(int count) {
+    return '$count records';
+  }
+
+  @override
+  String get breedingKpiTitle => 'Breeding · last 12 months';
 
   @override
   String get breedingLoadFailed => 'Could not load breeding records';
@@ -1414,6 +1447,26 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get domainClassNormalExplanation =>
       'Yield is in the expected range and the trend is stable.';
+
+  @override
+  String get farmLocationClear => 'Remove location';
+
+  @override
+  String get farmLocationCoordinates => 'Coordinate (latitude, longitude)';
+
+  @override
+  String get farmLocationIntro =>
+      'The heat stress alert uses the weather forecast for the farm\'s location. Long-press the farm in Google Maps and paste the coordinate shown at the top (39.9208, 32.8541) here. The server sends only this coordinate to the weather service.';
+
+  @override
+  String get farmLocationInvalid =>
+      'Enter as latitude, longitude (e.g. 39.9208, 32.8541)';
+
+  @override
+  String get farmLocationSaved => 'Farm location saved';
+
+  @override
+  String get farmLocationTitle => 'Farm location';
 
   @override
   String farmsAlerts(int count) {
@@ -3095,6 +3148,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get yieldChartDaily => 'Daily';
+
+  @override
+  String get yieldChartHeat => 'Heat stress day (THI ≥ 72)';
 
   @override
   String get yieldChartNotEnough => 'Not enough history for a chart';

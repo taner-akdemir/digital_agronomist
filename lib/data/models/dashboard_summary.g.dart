@@ -31,6 +31,9 @@ _DashboardSummary _$DashboardSummaryFromJson(Map<String, dynamic> json) =>
               ?.map((e) => GroupTotal.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const <GroupTotal>[],
+      breeding: json['breeding'] == null
+          ? null
+          : BreedingKpi.fromJson(json['breeding'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$DashboardSummaryToJson(_DashboardSummary instance) =>
@@ -44,6 +47,7 @@ Map<String, dynamic> _$DashboardSummaryToJson(_DashboardSummary instance) =>
       'bySpecies': instance.bySpecies,
       'classDistribution': instance.classDistribution,
       'byGroup': instance.byGroup,
+      'breeding': instance.breeding,
     };
 
 _SpeciesTotal _$SpeciesTotalFromJson(Map<String, dynamic> json) =>
@@ -99,4 +103,23 @@ Map<String, dynamic> _$GroupTotalToJson(_GroupTotal instance) =>
       'animals': instance.animals,
       'milked': instance.milked,
       'totalMl': instance.totalMl,
+    };
+
+_BreedingKpi _$BreedingKpiFromJson(Map<String, dynamic> json) => _BreedingKpi(
+  calvingIntervalDays: (json['calvingIntervalDays'] as num?)?.toDouble(),
+  calvingIntervals: (json['calvingIntervals'] as num?)?.toInt() ?? 0,
+  firstServicePct: (json['firstServicePct'] as num?)?.toDouble(),
+  firstServices: (json['firstServices'] as num?)?.toInt() ?? 0,
+  daysOpen: (json['daysOpen'] as num?)?.toDouble(),
+  daysOpenN: (json['daysOpenN'] as num?)?.toInt() ?? 0,
+);
+
+Map<String, dynamic> _$BreedingKpiToJson(_BreedingKpi instance) =>
+    <String, dynamic>{
+      'calvingIntervalDays': instance.calvingIntervalDays,
+      'calvingIntervals': instance.calvingIntervals,
+      'firstServicePct': instance.firstServicePct,
+      'firstServices': instance.firstServices,
+      'daysOpen': instance.daysOpen,
+      'daysOpenN': instance.daysOpenN,
     };

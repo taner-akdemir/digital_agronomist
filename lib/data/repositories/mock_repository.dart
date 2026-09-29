@@ -135,9 +135,39 @@ class MockRepository implements MilkTraceRepository {
         return thresholds;
       });
 
+  /// Mock'ta konum bellekte (ısı tahmini yok).
+  final Map<String, (double, double)?> _farmLocations = {};
+
   @override
-  Future<List<Farm>> farms() =>
-      _delayed(() => _list('farms.json', Farm.fromJson));
+  Future<void> setFarmLocation(
+    String farmId,
+    double? latitude,
+    double? longitude,
+  ) => _delayed(() async {
+    if ((latitude == null) != (longitude == null)) {
+      throw const ApiException(
+        code: 'VALIDATION',
+        message: 'enlem ve boylam birlikte girilmeli',
+        status: 422,
+      );
+    }
+    _farmLocations[farmId] = latitude == null ? null : (latitude, longitude!);
+  });
+
+  @override
+  Future<List<Farm>> farms() => _delayed(() async {
+    final list = await _list('farms.json', Farm.fromJson);
+    return [
+      for (final f in list)
+        if (_farmLocations.containsKey(f.id))
+          f.copyWith(
+            latitude: _farmLocations[f.id]?.$1,
+            longitude: _farmLocations[f.id]?.$2,
+          )
+        else
+          f,
+    ];
+  });
 
   @override
   Future<List<Hall>> halls() =>

@@ -314,6 +314,18 @@ birden çok işletmesi olana; her işletmenin bugünkü sütü, okunmamış uyar
 aşısı. Dokununca `switchTenant` → pano. Miktarlar seçili işletmenin biriminde gösterilir.
 İçe aktarmada "Anne Küpe" ve "Baba" sütunları (ADR 0117); önizlemede `dam`/`sire` değişikliği.
 
+**Üreme hatırlatması ve göstergeler** (backend ADR 0118, 0120): sunucu kuruya çıkarma ve
+beklenen doğumdan 7 gün önce hayvana bağlı `dry_off_due` / `calving_due` uyarısı açar
+(dokununca hayvan). Panoda "Üreme · son 12 ay" (`DashboardSummary.breeding`, örnek yoksa
+kart yok): buzağılama aralığı, ilk tohumlamada gebelik, buzağılamadan gebeliğe — her biri
+örnek sayısıyla; hesap SUNUCUDA.
+
+**Isı stresi** (backend ADR 0119): hesap kartında sahibe "Tesis konumu"
+(`/settings/farm-location`): koordinat elle, Google Haritalar'dan yapıştırılır
+(`parseCoordinate`); konum İZNİ yok, telefonun konumu okunmaz. Sunucu Open-Meteo'dan THI
+hesaplar, ≥ 72'de `heat_stress` uyarısı. Verim grafiğinde `AnimalDailyStat.thi ≥ 72` günler
+`AppColors.chartHeat` (turuncu; §6.2 renkleri değil) dikey şeritle ve lejantla işaretlenir.
+
 **Sağımcılar** (`/settings/milkers`, backend ADR 0090): hesap kartından YALNIZCA sahibe.
 Sağımcı = oturumu açan / hayvanı bağlayan (ayrı seçim adımı yok). 7/30 gün; oturum, sağım,
 süt, ortalama süre, düşük debi payı. Metin oranın kişiyi puanlamadığını söyler.

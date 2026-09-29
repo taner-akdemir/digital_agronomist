@@ -1,7 +1,9 @@
 # Play Console — "Veri güvenliği" formu cevapları (taslak)
 
 > Kodun 28.09.2026 hâlinden çıkarıldı; 29.09.2026'da Crashlytics, uygulama içi hesap
-> silme ve geri bildirim (backend ADR 0098, 0100, 0106) eklendi (AndroidManifest, pubspec, backend şemaları). Uygulama
+> silme ve geri bildirim (backend ADR 0098, 0100, 0106) eklendi (AndroidManifest, pubspec, backend şemaları).
+> Tesis konumu (ADR 0119): elle girilen koordinat, işletmenin verisi; konum İZNİ yok,
+> telefonun konumu okunmaz — "Konum" veri türü işaretlenmez. Uygulama
 > değişirse (yeni izin, yeni SDK) bu dosya ve form güncellenmeli.
 
 ## Genel

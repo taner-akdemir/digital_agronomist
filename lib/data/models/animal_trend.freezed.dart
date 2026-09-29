@@ -347,7 +347,9 @@ mixin _$AnimalDailyStat {
 
  DateTime get date; int get totalMl; int get milkingCount;/// O güne kadarki hareketli ortalamalar; serinin başında veri yetmediği
 /// için null olabilir.
- int? get ma7Ml; int? get ma30Ml;
+ int? get ma7Ml; int? get ma30Ml;/// O günün en yüksek sıcaklık-nem indeksi (backend ADR 0119); tahmin
+/// yoksa null. Grafik ≥ 72 günleri işaretler.
+ double? get thi;
 /// Create a copy of AnimalDailyStat
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -361,20 +363,20 @@ $AnimalDailyStatCopyWith<AnimalDailyStat> get copyWith => _$AnimalDailyStatCopyW
 @override
 bool operator ==(Object other) {
   final _this = this as AnimalDailyStat;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AnimalDailyStat&&(identical(other.date, _this.date) || other.date == _this.date)&&(identical(other.totalMl, _this.totalMl) || other.totalMl == _this.totalMl)&&(identical(other.milkingCount, _this.milkingCount) || other.milkingCount == _this.milkingCount)&&(identical(other.ma7Ml, _this.ma7Ml) || other.ma7Ml == _this.ma7Ml)&&(identical(other.ma30Ml, _this.ma30Ml) || other.ma30Ml == _this.ma30Ml));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AnimalDailyStat&&(identical(other.date, _this.date) || other.date == _this.date)&&(identical(other.totalMl, _this.totalMl) || other.totalMl == _this.totalMl)&&(identical(other.milkingCount, _this.milkingCount) || other.milkingCount == _this.milkingCount)&&(identical(other.ma7Ml, _this.ma7Ml) || other.ma7Ml == _this.ma7Ml)&&(identical(other.ma30Ml, _this.ma30Ml) || other.ma30Ml == _this.ma30Ml)&&(identical(other.thi, _this.thi) || other.thi == _this.thi));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as AnimalDailyStat;
-  return Object.hash(runtimeType,_this.date,_this.totalMl,_this.milkingCount,_this.ma7Ml,_this.ma30Ml);
+  return Object.hash(runtimeType,_this.date,_this.totalMl,_this.milkingCount,_this.ma7Ml,_this.ma30Ml,_this.thi);
 }
 
 @override
 String toString() {
   final _this = this as AnimalDailyStat;
-  return 'AnimalDailyStat(date: ${_this.date}, totalMl: ${_this.totalMl}, milkingCount: ${_this.milkingCount}, ma7Ml: ${_this.ma7Ml}, ma30Ml: ${_this.ma30Ml})';
+  return 'AnimalDailyStat(date: ${_this.date}, totalMl: ${_this.totalMl}, milkingCount: ${_this.milkingCount}, ma7Ml: ${_this.ma7Ml}, ma30Ml: ${_this.ma30Ml}, thi: ${_this.thi})';
 }
 
 
@@ -385,7 +387,7 @@ abstract mixin class $AnimalDailyStatCopyWith<$Res>  {
   factory $AnimalDailyStatCopyWith(AnimalDailyStat value, $Res Function(AnimalDailyStat) _then) = _$AnimalDailyStatCopyWithImpl;
 @useResult
 $Res call({
- DateTime date, int totalMl, int milkingCount, int? ma7Ml, int? ma30Ml
+ DateTime date, int totalMl, int milkingCount, int? ma7Ml, int? ma30Ml, double? thi
 });
 
 
@@ -402,14 +404,15 @@ class _$AnimalDailyStatCopyWithImpl<$Res>
 
 /// Create a copy of AnimalDailyStat
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? date = null,Object? totalMl = null,Object? milkingCount = null,Object? ma7Ml = freezed,Object? ma30Ml = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? date = null,Object? totalMl = null,Object? milkingCount = null,Object? ma7Ml = freezed,Object? ma30Ml = freezed,Object? thi = freezed,}) {
   return _then(AnimalDailyStat(
 date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as DateTime,totalMl: null == totalMl ? _self.totalMl : totalMl // ignore: cast_nullable_to_non_nullable
 as int,milkingCount: null == milkingCount ? _self.milkingCount : milkingCount // ignore: cast_nullable_to_non_nullable
 as int,ma7Ml: freezed == ma7Ml ? _self.ma7Ml : ma7Ml // ignore: cast_nullable_to_non_nullable
 as int?,ma30Ml: freezed == ma30Ml ? _self.ma30Ml : ma30Ml // ignore: cast_nullable_to_non_nullable
-as int?,
+as int?,thi: freezed == thi ? _self.thi : thi // ignore: cast_nullable_to_non_nullable
+as double?,
   ));
 }
 
@@ -494,10 +497,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DateTime date,  int totalMl,  int milkingCount,  int? ma7Ml,  int? ma30Ml)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DateTime date,  int totalMl,  int milkingCount,  int? ma7Ml,  int? ma30Ml,  double? thi)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AnimalDailyStat() when $default != null:
-return $default(_that.date,_that.totalMl,_that.milkingCount,_that.ma7Ml,_that.ma30Ml);case _:
+return $default(_that.date,_that.totalMl,_that.milkingCount,_that.ma7Ml,_that.ma30Ml,_that.thi);case _:
   return orElse();
 
 }
@@ -515,10 +518,10 @@ return $default(_that.date,_that.totalMl,_that.milkingCount,_that.ma7Ml,_that.ma
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DateTime date,  int totalMl,  int milkingCount,  int? ma7Ml,  int? ma30Ml)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DateTime date,  int totalMl,  int milkingCount,  int? ma7Ml,  int? ma30Ml,  double? thi)  $default,) {final _that = this;
 switch (_that) {
 case _AnimalDailyStat():
-return $default(_that.date,_that.totalMl,_that.milkingCount,_that.ma7Ml,_that.ma30Ml);case _:
+return $default(_that.date,_that.totalMl,_that.milkingCount,_that.ma7Ml,_that.ma30Ml,_that.thi);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -535,10 +538,10 @@ return $default(_that.date,_that.totalMl,_that.milkingCount,_that.ma7Ml,_that.ma
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DateTime date,  int totalMl,  int milkingCount,  int? ma7Ml,  int? ma30Ml)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DateTime date,  int totalMl,  int milkingCount,  int? ma7Ml,  int? ma30Ml,  double? thi)?  $default,) {final _that = this;
 switch (_that) {
 case _AnimalDailyStat() when $default != null:
-return $default(_that.date,_that.totalMl,_that.milkingCount,_that.ma7Ml,_that.ma30Ml);case _:
+return $default(_that.date,_that.totalMl,_that.milkingCount,_that.ma7Ml,_that.ma30Ml,_that.thi);case _:
   return null;
 
 }
@@ -550,7 +553,7 @@ return $default(_that.date,_that.totalMl,_that.milkingCount,_that.ma7Ml,_that.ma
 @JsonSerializable()
 
 class _AnimalDailyStat implements AnimalDailyStat {
-  const _AnimalDailyStat({required this.date, this.totalMl = 0, this.milkingCount = 0, this.ma7Ml, this.ma30Ml});
+  const _AnimalDailyStat({required this.date, this.totalMl = 0, this.milkingCount = 0, this.ma7Ml, this.ma30Ml, this.thi});
   factory _AnimalDailyStat.fromJson(Map<String, dynamic> json) => _$AnimalDailyStatFromJson(json);
 
 @override final  DateTime date;
@@ -560,6 +563,9 @@ class _AnimalDailyStat implements AnimalDailyStat {
 /// için null olabilir.
 @override final  int? ma7Ml;
 @override final  int? ma30Ml;
+/// O günün en yüksek sıcaklık-nem indeksi (backend ADR 0119); tahmin
+/// yoksa null. Grafik ≥ 72 günleri işaretler.
+@override final  double? thi;
 
 /// Create a copy of AnimalDailyStat
 /// with the given fields replaced by the non-null parameter values.
@@ -574,18 +580,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AnimalDailyStat&&(identical(other.date, date) || other.date == date)&&(identical(other.totalMl, totalMl) || other.totalMl == totalMl)&&(identical(other.milkingCount, milkingCount) || other.milkingCount == milkingCount)&&(identical(other.ma7Ml, ma7Ml) || other.ma7Ml == ma7Ml)&&(identical(other.ma30Ml, ma30Ml) || other.ma30Ml == ma30Ml));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AnimalDailyStat&&(identical(other.date, date) || other.date == date)&&(identical(other.totalMl, totalMl) || other.totalMl == totalMl)&&(identical(other.milkingCount, milkingCount) || other.milkingCount == milkingCount)&&(identical(other.ma7Ml, ma7Ml) || other.ma7Ml == ma7Ml)&&(identical(other.ma30Ml, ma30Ml) || other.ma30Ml == ma30Ml)&&(identical(other.thi, thi) || other.thi == thi));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,date,totalMl,milkingCount,ma7Ml,ma30Ml);
+    return Object.hash(runtimeType,date,totalMl,milkingCount,ma7Ml,ma30Ml,thi);
 }
 
 @override
 String toString() {
-    return 'AnimalDailyStat(date: $date, totalMl: $totalMl, milkingCount: $milkingCount, ma7Ml: $ma7Ml, ma30Ml: $ma30Ml)';
+    return 'AnimalDailyStat(date: $date, totalMl: $totalMl, milkingCount: $milkingCount, ma7Ml: $ma7Ml, ma30Ml: $ma30Ml, thi: $thi)';
 }
 
 
@@ -596,7 +602,7 @@ abstract mixin class _$AnimalDailyStatCopyWith<$Res> implements $AnimalDailyStat
   factory _$AnimalDailyStatCopyWith(_AnimalDailyStat value, $Res Function(_AnimalDailyStat) _then) = __$AnimalDailyStatCopyWithImpl;
 @override @useResult
 $Res call({
- DateTime date, int totalMl, int milkingCount, int? ma7Ml, int? ma30Ml
+ DateTime date, int totalMl, int milkingCount, int? ma7Ml, int? ma30Ml, double? thi
 });
 
 
@@ -613,14 +619,15 @@ class __$AnimalDailyStatCopyWithImpl<$Res>
 
 /// Create a copy of AnimalDailyStat
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? date = null,Object? totalMl = null,Object? milkingCount = null,Object? ma7Ml = freezed,Object? ma30Ml = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? date = null,Object? totalMl = null,Object? milkingCount = null,Object? ma7Ml = freezed,Object? ma30Ml = freezed,Object? thi = freezed,}) {
   return _then(_AnimalDailyStat(
 date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as DateTime,totalMl: null == totalMl ? _self.totalMl : totalMl // ignore: cast_nullable_to_non_nullable
 as int,milkingCount: null == milkingCount ? _self.milkingCount : milkingCount // ignore: cast_nullable_to_non_nullable
 as int,ma7Ml: freezed == ma7Ml ? _self.ma7Ml : ma7Ml // ignore: cast_nullable_to_non_nullable
 as int?,ma30Ml: freezed == ma30Ml ? _self.ma30Ml : ma30Ml // ignore: cast_nullable_to_non_nullable
-as int?,
+as int?,thi: freezed == thi ? _self.thi : thi // ignore: cast_nullable_to_non_nullable
+as double?,
   ));
 }
 

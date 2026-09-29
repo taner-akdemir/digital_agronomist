@@ -51,6 +51,11 @@ class YieldChart extends StatelessWidget {
     }
 
     final maxY = dailySpots.map((s) => s.y).reduce((a, b) => a > b ? a : b);
+    // Isı stresi günleri (backend ADR 0119): verim düşüşünün sebebi olabilir.
+    final heatDays = [
+      for (var i = 0; i < daily.length; i++)
+        if ((daily[i].thi ?? 0) >= 72) i,
+    ];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,6 +74,10 @@ class YieldChart extends StatelessWidget {
             ),
           ],
         ),
+        if (heatDays.isNotEmpty) ...[
+          const SizedBox(height: AppSpacing.xs),
+          _LegendItem(color: AppColors.chartHeat, label: l10n.yieldChartHeat),
+        ],
         const SizedBox(height: AppSpacing.sm),
         SizedBox(
           height: 180,
@@ -82,6 +91,16 @@ class YieldChart extends StatelessWidget {
                 _bar(dailySpots, AppColors.chartContext, 1.2),
                 _bar(maSpots, AppColors.chartPrimary, 2.5),
               ],
+              extraLinesData: ExtraLinesData(
+                verticalLines: [
+                  for (final i in heatDays)
+                    VerticalLine(
+                      x: i.toDouble(),
+                      color: AppColors.chartHeat.withValues(alpha: 0.35),
+                      strokeWidth: 3,
+                    ),
+                ],
+              ),
               gridData: FlGridData(
                 show: true,
                 // Dikey çizgi YOK: x ekseni gün ve 90 dikey çizgi grafiği

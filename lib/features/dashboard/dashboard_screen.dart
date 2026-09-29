@@ -63,6 +63,11 @@ class DashboardScreen extends ConsumerWidget {
                 volume: ref.watch(volumeFormatProvider),
               ),
             ],
+            // Üreme göstergeleri (backend ADR 0120); örnek yoksa yok.
+            if (s.breeding case final k?) ...[
+              const SizedBox(height: AppSpacing.md),
+              _BreedingKpiCard(kpi: k),
+            ],
             const SizedBox(height: AppSpacing.md),
             const _AlertsCard(),
             const DeliveryCard(),
@@ -580,4 +585,70 @@ class _Card extends StatelessWidget {
     ),
     child: child,
   );
+}
+
+/// Üreme verimliliği (backend ADR 0120): son 12 ayın sürü ortalamaları,
+/// her biri örnek sayısıyla — üç kayıtlık ortalama ile yüz kayıtlık aynı
+/// güveni taşımaz.
+class _BreedingKpiCard extends StatelessWidget {
+  const _BreedingKpiCard({required this.kpi});
+
+  final BreedingKpi kpi;
+
+  @override
+  Widget build(BuildContext context) {
+    Widget row(String label, String? value, int n) => Padding(
+      padding: const EdgeInsets.only(top: AppSpacing.xs),
+      child: Row(
+        children: [
+          Expanded(child: Text(label, style: const TextStyle(fontSize: 13))),
+          Text(
+            value ?? l10n.breedingKpiNone,
+            style: const TextStyle(fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(width: AppSpacing.sm),
+          SizedBox(
+            width: 72,
+            child: Text(
+              n > 0 ? l10n.breedingKpiSample(n) : '',
+              textAlign: TextAlign.right,
+              style: TextStyle(fontSize: 11, color: AppColors.onSurfaceMuted),
+            ),
+          ),
+        ],
+      ),
+    );
+    String? days(double? v) =>
+        v == null ? null : l10n.breedingKpiDays(v.toStringAsFixed(0));
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: AppRadius.mdAll,
+        border: Border.all(color: AppColors.border),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            l10n.breedingKpiTitle,
+            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+          ),
+          row(
+            l10n.breedingKpiInterval,
+            days(kpi.calvingIntervalDays),
+            kpi.calvingIntervals,
+          ),
+          row(
+            l10n.breedingKpiFirstService,
+            kpi.firstServicePct == null
+                ? null
+                : l10n.breedingKpiPct(kpi.firstServicePct!.toStringAsFixed(0)),
+            kpi.firstServices,
+          ),
+          row(l10n.breedingKpiDaysOpen, days(kpi.daysOpen), kpi.daysOpenN),
+        ],
+      ),
+    );
+  }
 }

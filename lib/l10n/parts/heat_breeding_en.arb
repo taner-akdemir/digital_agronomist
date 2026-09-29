@@ -1,0 +1,35 @@
+{
+  "breedingKpiTitle": "Breeding · last 12 months",
+  "breedingKpiInterval": "Calving interval",
+  "breedingKpiFirstService": "First-service conception",
+  "breedingKpiDaysOpen": "Calving to conception",
+  "breedingKpiDays": "{days} days",
+  "@breedingKpiDays": {
+    "placeholders": {
+      "days": {}
+    }
+  },
+  "breedingKpiPct": "{pct}%",
+  "@breedingKpiPct": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "breedingKpiSample": "{count} records",
+  "@breedingKpiSample": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "breedingKpiNone": "—",
+  "farmLocationTitle": "Farm location",
+  "farmLocationIntro": "The heat stress alert uses the weather forecast for the farm's location. Long-press the farm in Google Maps and paste the coordinate shown at the top (39.9208, 32.8541) here. The server sends only this coordinate to the weather service.",
+  "farmLocationCoordinates": "Coordinate (latitude, longitude)",
+  "farmLocationInvalid": "Enter as latitude, longitude (e.g. 39.9208, 32.8541)",
+  "farmLocationSaved": "Farm location saved",
+  "farmLocationClear": "Remove location",
+  "accountFarmLocation": "Farm location",
+  "yieldChartHeat": "Heat stress day (THI ≥ 72)"
+}

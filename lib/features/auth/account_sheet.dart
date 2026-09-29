@@ -249,6 +249,25 @@ class _AccountSheet extends ConsumerWidget {
                     ),
                   ),
                 ),
+                // Tesis konumu (backend ADR 0119): ısı stresi; yalnızca sahip.
+                const SizedBox(height: AppSpacing.sm),
+                OutlinedButton.icon(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    context.push('/settings/farm-location');
+                  },
+                  icon: const Icon(Icons.place_outlined),
+                  label: Text(l10n.accountFarmLocation),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.darkGreenColor,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppSpacing.lg,
+                    ),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadius.mdAll,
+                    ),
+                  ),
+                ),
                 // İşlem kaydı (backend ADR 0082): yalnızca sahip.
                 const SizedBox(height: AppSpacing.sm),
                 OutlinedButton.icon(

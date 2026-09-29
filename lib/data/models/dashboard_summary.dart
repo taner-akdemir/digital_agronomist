@@ -37,6 +37,9 @@ abstract class DashboardSummary with _$DashboardSummary {
 
     /// Grupların bugünkü toplamı (backend ADR 0092); grup yoksa boş.
     @Default(<GroupTotal>[]) List<GroupTotal> byGroup,
+
+    /// Son 12 ayın üreme verimliliği (backend ADR 0120); örnek yoksa null.
+    BreedingKpi? breeding,
   }) = _DashboardSummary;
 
   factory DashboardSummary.fromJson(Map<String, dynamic> json) =>
@@ -91,4 +94,21 @@ abstract class GroupTotal with _$GroupTotal {
 
   factory GroupTotal.fromJson(Map<String, dynamic> json) =>
       _$GroupTotalFromJson(json);
+}
+
+/// Üreme göstergeleri (backend ADR 0120). Her değer örnek sayısıyla; örnek
+/// yoksa değer null. Hesabı SUNUCU yapar.
+@freezed
+abstract class BreedingKpi with _$BreedingKpi {
+  const factory BreedingKpi({
+    double? calvingIntervalDays,
+    @Default(0) int calvingIntervals,
+    double? firstServicePct,
+    @Default(0) int firstServices,
+    double? daysOpen,
+    @Default(0) int daysOpenN,
+  }) = _BreedingKpi;
+
+  factory BreedingKpi.fromJson(Map<String, dynamic> json) =>
+      _$BreedingKpiFromJson(json);
 }

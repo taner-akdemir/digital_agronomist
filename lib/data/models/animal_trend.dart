@@ -49,6 +49,10 @@ abstract class AnimalDailyStat with _$AnimalDailyStat {
     /// için null olabilir.
     int? ma7Ml,
     int? ma30Ml,
+
+    /// O günün en yüksek sıcaklık-nem indeksi (backend ADR 0119); tahmin
+    /// yoksa null. Grafik ≥ 72 günleri işaretler.
+    double? thi,
   }) = _AnimalDailyStat;
 
   factory AnimalDailyStat.fromJson(Map<String, dynamic> json) =>
