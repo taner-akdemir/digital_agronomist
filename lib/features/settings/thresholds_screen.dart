@@ -6,6 +6,7 @@ import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/thresholds.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
@@ -27,14 +28,14 @@ class ThresholdsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          tooltip: 'Geri',
+          tooltip: l10n.commonBack,
           onPressed: () =>
               context.canPop() ? context.pop() : context.go('/live'),
           icon: const Icon(Icons.arrow_back),
         ),
-        title: const Text(
-          'Eşik ayarları',
-          style: TextStyle(
+        title: Text(
+          l10n.thresholdsTitle,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -43,10 +44,10 @@ class ThresholdsScreen extends ConsumerWidget {
       ),
       body: AsyncView(
         value: species,
-        errorMessage: 'Türler yüklenemedi',
+        errorMessage: l10n.thresholdsSpeciesLoadFailed,
         builder: (speciesList) => AsyncView(
           value: thresholds,
-          errorMessage: 'Eşikler yüklenemedi',
+          errorMessage: l10n.thresholdsLoadFailed,
           builder: (list) => _Tabs(species: speciesList, thresholds: list),
         ),
       ),
@@ -73,7 +74,7 @@ class _Tabs extends StatelessWidget {
     ];
 
     if (withThresholds.isEmpty) {
-      return const Center(child: Text('Tanımlı tür eşiği yok'));
+      return Center(child: Text(l10n.thresholdsNoSpecies));
     }
 
     return DefaultTabController(
@@ -178,82 +179,99 @@ class _FormState extends ConsumerState<_Form> {
             const SizedBox(height: AppSpacing.md),
           ],
           _Group(
-            title: 'Anlık debi bantları',
-            hint: 'Altında kırmızı, üstünde yeşil; arası sarı (§6.2).',
+            title: l10n.thresholdsFlowGroupTitle,
+            hint: l10n.thresholdsFlowGroupHint,
             children: [
-              _field('flowLow', 'Alt eşik', 'L/dk'),
-              _field('flowHigh', 'Üst eşik', 'L/dk'),
+              _field(
+                'flowLow',
+                l10n.thresholdsLowerLimit,
+                l10n.thresholdsUnitFlow,
+              ),
+              _field(
+                'flowHigh',
+                l10n.thresholdsUpperLimit,
+                l10n.thresholdsUnitFlow,
+              ),
             ],
           ),
           _Group(
-            title: 'Oturum verimi bantları',
-            hint:
-                'Alınan sütün beklenene oranı (§6.3). Geçmişi olmayan '
-                'hayvanda beklenen, sağım başına bu değerdir.',
+            title: l10n.thresholdsYieldGroupTitle,
+            hint: l10n.thresholdsYieldGroupHint,
             children: [
-              _field('yieldGreen', 'Yeşil eşiği', '%'),
-              _field('yieldRed', 'Kırmızı eşiği', '%'),
-              _field('expected', 'Sağım başına beklenen', 'L'),
+              _field('yieldGreen', l10n.thresholdsGreenLimit, '%'),
+              _field('yieldRed', l10n.thresholdsRedLimit, '%'),
+              _field('expected', l10n.thresholdsExpectedPerMilking, 'L'),
             ],
           ),
           _Group(
-            title: 'Yanlış alarm koruması',
-            hint:
-                'Sağımın ilk saniyelerinde kırmızı üretilmez; kırmızı '
-                'durum bu süre boyunca sürmeden uyarı gönderilmez (§6.2).',
+            title: l10n.thresholdsFalseAlarmGroupTitle,
+            hint: l10n.thresholdsFalseAlarmGroupHint,
             children: [
-              _field('rampUp', 'Isınma süresi', 'sn'),
-              _field('alertHold', 'Uyarı bekleme', 'sn'),
+              _field('rampUp', l10n.thresholdsRampUp, l10n.thresholdsUnitSec),
+              _field(
+                'alertHold',
+                l10n.thresholdsAlertHold,
+                l10n.thresholdsUnitSec,
+              ),
             ],
           ),
           _Group(
-            title: 'Sağım kapanışı',
-            hint:
-                'Debi bu değerin altında bu süre kalırsa hayvanın sağımı '
-                'kapanır (§6.1).',
+            title: l10n.thresholdsEndGroupTitle,
+            hint: l10n.thresholdsEndGroupHint,
             children: [
-              _field('endFlow', 'Bitiş debisi', 'L/dk'),
-              _field('endGrace', 'Bekleme', 'sn'),
+              _field(
+                'endFlow',
+                l10n.thresholdsEndFlow,
+                l10n.thresholdsUnitFlow,
+              ),
+              _field(
+                'endGrace',
+                l10n.thresholdsEndGrace,
+                l10n.thresholdsUnitSec,
+              ),
             ],
           ),
           _Group(
-            title: 'Sınıflandırma eşikleri',
-            hint:
-                '7 günlük ortalama alt eşiğin altındaysa kuruya aday, üst '
-                'eşiğin üstündeyse yüksek verimli (§6.4).',
+            title: l10n.thresholdsClassGroupTitle,
+            hint: l10n.thresholdsClassGroupHint,
             children: [
-              _field('dryOff', 'Kuruya çıkma alt eşiği', 'L/gün'),
-              _field('highYield', 'Yüksek verim üst eşiği', 'L/gün'),
+              _field(
+                'dryOff',
+                l10n.thresholdsDryOff,
+                l10n.thresholdsUnitPerDay,
+              ),
+              _field(
+                'highYield',
+                l10n.thresholdsHighYield,
+                l10n.thresholdsUnitPerDay,
+              ),
             ],
           ),
           _Group(
-            title: 'Sınıflandırma kuralları',
-            hint:
-                '7 günlük ortalama 30 günlükten bu oranda fazla düşükse '
-                'düşüşte. Son sağımların hepsi boş sağım sınırının '
-                'altındaysa süt vermiyor. Buzağılamadan sonraki taze '
-                'laktasyon günlerinde düşüşte ve kuruya aday denmez (§6.4).',
+            title: l10n.thresholdsRulesGroupTitle,
+            hint: l10n.thresholdsRulesGroupHint,
             children: [
-              _field('decline', 'Düşüş eşiği', '%'),
-              _field('noMilk', 'Boş sağım sınırı', 'mL'),
-              _field('noMilkCount', 'Bakılan son sağım', 'sağım'),
-              _field('fresh', 'Taze laktasyon', 'gün'),
+              _field('decline', l10n.thresholdsDecline, '%'),
+              _field('noMilk', l10n.thresholdsNoMilk, 'mL'),
+              _field(
+                'noMilkCount',
+                l10n.thresholdsNoMilkCount,
+                l10n.thresholdsUnitMilkings,
+              ),
+              _field('fresh', l10n.thresholdsFresh, l10n.thresholdsUnitDays),
             ],
           ),
           _Group(
-            title: 'Mastitis şüphesi',
-            hint:
-                'Sayaç iletkenlik ölçüyorsa: sağımın iletkenliği hayvanın '
-                'kendi 7 günlük ortalamasının bu oran kadar üstündeyse uyarı. '
-                'Teşhis değildir; veteriner kontrolü için işarettir.',
-            children: [_field('conductivity', 'İletkenlik artışı', '%')],
+            title: l10n.thresholdsMastitisGroupTitle,
+            hint: l10n.thresholdsMastitisGroupHint,
+            children: [
+              _field('conductivity', l10n.thresholdsConductivity, '%'),
+            ],
           ),
           _Group(
-            title: 'Süt yoğunluğu',
-            hint:
-                'İşletme miktarları kilogram gösteriyorsa litre bu katsayıyla '
-                'çevrilir (1 L inek sütü ≈ 1,03 kg). Eşikler yine litre girilir.',
-            children: [_field('density', 'Yoğunluk', 'kg/L')],
+            title: l10n.thresholdsDensityGroupTitle,
+            hint: l10n.thresholdsDensityGroupHint,
+            children: [_field('density', l10n.thresholdsDensity, 'kg/L')],
           ),
           const SizedBox(height: AppSpacing.lg),
           FilledButton(
@@ -265,7 +283,7 @@ class _FormState extends ConsumerState<_Form> {
                 borderRadius: AppRadius.mdAll,
               ),
             ),
-            child: Text(_saving ? 'Kaydediliyor…' : 'Kaydet'),
+            child: Text(_saving ? l10n.thresholdsSaving : l10n.commonSave),
           ),
         ],
       ),
@@ -286,39 +304,40 @@ class _FormState extends ConsumerState<_Form> {
   /// motoru hiçbir zaman sarı üretmez ve bant sessizce kaybolurdu.
   String? _validate(String key, String? raw) {
     final v = double.tryParse((raw ?? '').trim().replaceAll(',', '.'));
-    if (v == null) return 'Sayı girin';
-    if (v < 0) return 'Negatif olamaz';
-    if (v == 0 && key != 'endFlow') return 'Sıfır olamaz';
+    if (v == null) return l10n.thresholdsErrorNumber;
+    if (v < 0) return l10n.thresholdsErrorNegative;
+    if (v == 0 && key != 'endFlow') return l10n.thresholdsErrorZero;
 
     return switch (key) {
       'flowLow' when v >= (_value('flowHigh') ?? double.infinity) =>
-        'Üst eşikten küçük olmalı',
+        l10n.thresholdsErrorBelowUpper,
       'flowHigh' when v <= (_value('flowLow') ?? 0) =>
-        'Alt eşikten büyük olmalı',
+        l10n.thresholdsErrorAboveLower,
       'yieldRed' when v >= (_value('yieldGreen') ?? double.infinity) =>
-        'Yeşil eşiğinden küçük olmalı',
+        l10n.thresholdsErrorBelowGreen,
       'yieldGreen' when v <= (_value('yieldRed') ?? 0) =>
-        'Kırmızı eşiğinden büyük olmalı',
-      'yieldGreen' || 'yieldRed' when v > 100 => 'En çok 100 olabilir',
+        l10n.thresholdsErrorAboveRed,
+      'yieldGreen' || 'yieldRed' when v > 100 => l10n.thresholdsErrorMax(100),
       'dryOff' when v >= (_value('highYield') ?? double.infinity) =>
-        'Yüksek verim eşiğinden küçük olmalı',
+        l10n.thresholdsErrorBelowHighYield,
       'highYield' when v <= (_value('dryOff') ?? 0) =>
-        'Kuruya çıkma eşiğinden büyük olmalı',
-      'decline' when v > 90 => 'En çok 90 olabilir',
-      'noMilkCount' when v > 20 => 'En çok 20 olabilir',
-      'fresh' when v > 150 => 'En çok 150 olabilir',
-      'density' when v < 0.9 || v > 1.2 => '0,90–1,20 arasında olmalı',
-      'conductivity' when v < 5 || v > 100 => '5–100 arasında olmalı',
+        l10n.thresholdsErrorAboveDryOff,
+      'decline' when v > 90 => l10n.thresholdsErrorMax(90),
+      'noMilkCount' when v > 20 => l10n.thresholdsErrorMax(20),
+      'fresh' when v > 150 => l10n.thresholdsErrorMax(150),
+      'density' when v < 0.9 || v > 1.2 => l10n.thresholdsErrorDensityRange,
+      'conductivity' when v < 5 || v > 100 =>
+        l10n.thresholdsErrorConductivityRange,
       'decline' ||
       'conductivity' ||
       'noMilk' ||
-      'noMilkCount' when v != v.roundToDouble() => 'Tam sayı girin',
+      'noMilkCount' when v != v.roundToDouble() => l10n.thresholdsErrorInteger,
       // Beklenen sağım hacmine eşit bir "boş sağım" sınırı normal sağılan
       // her hayvanı "süt vermiyor" yapardı.
       'noMilk' when v >= (_value('expected') ?? double.infinity) * 1000 =>
-        'Sağım başına beklenenden küçük olmalı',
+        l10n.thresholdsErrorBelowExpected,
       'expected' when v * 1000 <= (_value('noMilk') ?? 0) =>
-        'Boş sağım sınırından büyük olmalı',
+        l10n.thresholdsErrorAboveNoMilk,
       _ => null,
     };
   }
@@ -353,10 +372,10 @@ class _FormState extends ConsumerState<_Form> {
       // Eşikler canlı ekranın renk aynasını da besliyor; liste
       // tazelenmezse ekran eski bantlarla çizmeye devam ederdi.
       ref.invalidate(thresholdsListProvider);
-      if (mounted) _toast('${widget.species.nameTr} eşikleri kaydedildi');
+      if (mounted) _toast(l10n.thresholdsSaved(widget.species.nameTr));
     } catch (e) {
       if (mounted) {
-        _toast(userMessage(e) ?? 'Kaydedilemedi: $e', error: true);
+        _toast(userMessage(e) ?? l10n.commonSaveFailed('$e'), error: true);
       }
     } finally {
       if (mounted) setState(() => _saving = false);
@@ -470,17 +489,19 @@ class _CalibrationNote extends StatelessWidget {
         color: AppColors.flowYellowSurface,
         borderRadius: AppRadius.smAll,
       ),
-      child: const Row(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.info_outline, size: 16, color: AppColors.darkAmberColor),
-          SizedBox(width: AppSpacing.sm),
+          const Icon(
+            Icons.info_outline,
+            size: 16,
+            color: AppColors.darkAmberColor,
+          ),
+          const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
-              'Varsayılanlar tahmini başlangıç değerleridir. Irk, laktasyon '
-              'dönemi ve işletmeye göre çok değişir; saha verisi ve ziraat '
-              'mühendisi/veteriner görüşüyle kalibre edilmelidir.',
-              style: TextStyle(
+              l10n.thresholdsCalibrationNote,
+              style: const TextStyle(
                 fontSize: 12,
                 color: AppColors.darkAmberColor,
                 height: 1.35,
@@ -498,14 +519,21 @@ class _ReadOnlyNote extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
       children: [
-        Icon(Icons.lock_outline, size: 14, color: AppColors.lightGreyColor),
-        SizedBox(width: AppSpacing.xs),
+        const Icon(
+          Icons.lock_outline,
+          size: 14,
+          color: AppColors.lightGreyColor,
+        ),
+        const SizedBox(width: AppSpacing.xs),
         Expanded(
           child: Text(
-            'Eşikleri yalnızca işletme sahibi değiştirebilir.',
-            style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
+            l10n.thresholdsReadOnly,
+            style: const TextStyle(
+              fontSize: 12,
+              color: AppColors.onSurfaceMuted,
+            ),
           ),
         ),
       ],

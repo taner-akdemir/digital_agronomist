@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:milktrace/l10n/l10n.dart';
 
 /// Bildirim kanalı kodlarının Türkçe karşılıkları.
 ///
@@ -7,12 +8,12 @@ import 'package:flutter/material.dart';
 /// değil ham kod gösterir (Cihazlar ekranındaki protocolLabel ile aynı kural).
 
 String channelKindLabel(String kind) => switch (kind) {
-  'email' => 'E-posta',
+  'email' => l10n.channelsKindEmail,
   'slack' => 'Slack',
   'teams' => 'Microsoft Teams',
   'webhook' => 'Webhook',
   'sms' => 'SMS',
-  'ivr' => 'Sesli arama',
+  'ivr' => l10n.channelsKindVoiceCall,
   _ => kind,
 };
 
@@ -40,27 +41,24 @@ String channelProviderLabel(String provider) => switch (provider) {
 };
 
 String severityLabel(String severity) => switch (severity) {
-  'info' => 'Bilgi',
-  'warning' => 'Uyarı',
-  'critical' => 'Kritik',
+  'info' => l10n.channelsSeverityInfo,
+  'warning' => l10n.channelsSeverityWarning,
+  'critical' => l10n.channelsSeverityCritical,
   _ => severity,
 };
 
 /// Kaynaklar: kanal hangi bildirimleri alır.
 String sourceLabel(String source) => switch (source) {
-  'ops' => 'Sistem alarmları',
-  'summary' => 'Sağım özeti',
-  'herd' => 'Her sürü uyarısı',
+  'ops' => l10n.channelsSourceOps,
+  'summary' => l10n.channelsSourceSummary,
+  'herd' => l10n.channelsSourceHerd,
   _ => source,
 };
 
 String sourceHint(String source) => switch (source) {
-  'ops' => 'Sayaç kutusu sustu, veri kaybı gibi sistem sorunları',
-  'summary' =>
-    'Sağım bitince tek mesaj (toplam süt, düşük verim ve düşük debi '
-        'olan hayvanlar) ve Pazartesi sabahı haftalık özet (e-postada '
-        'Excel raporu ekli)',
-  'herd' => 'Düşük debi olan her hayvan için ayrı mesaj (kalabalık olabilir)',
+  'ops' => l10n.channelsSourceOpsHint,
+  'summary' => l10n.channelsSourceSummaryHint,
+  'herd' => l10n.channelsSourceHerdHint,
   _ => '',
 };
 
@@ -73,47 +71,45 @@ const defaultChannelSources = ['ops', 'summary'];
 /// Ayar alanlarının etiketleri. Alan listesi backend'den gelir; burada
 /// olmayan alan adıyla gösterilir.
 String fieldLabel(String name) => switch (name) {
-  'host' => 'SMTP sunucusu',
+  'host' => l10n.channelsFieldHost,
   'port' => 'Port',
-  'username' => 'Kullanıcı adı',
-  'password' => 'Parola',
-  'from' => 'Gönderen',
-  'from_name' => 'Gönderen adı',
-  'tls' => 'Şifreleme (starttls, tls)',
-  'api_key' => 'API anahtarı',
-  'api_secret' => 'API sırrı',
-  'region' => 'Bölge',
-  'webhook_url' => 'Webhook adresi',
-  'url' => 'Adres (https)',
-  'secret' => 'İmza sırrı',
-  'bearer_token' => 'Bearer jetonu',
+  'username' => l10n.channelsFieldUsername,
+  'password' => l10n.channelsFieldPassword,
+  'from' => l10n.channelsFieldFrom,
+  'from_name' => l10n.channelsFieldFromName,
+  'tls' => l10n.channelsFieldTls,
+  'api_key' => l10n.channelsFieldApiKey,
+  'api_secret' => l10n.channelsFieldApiSecret,
+  'region' => l10n.channelsFieldRegion,
+  'webhook_url' => l10n.channelsFieldWebhookUrl,
+  'url' => l10n.channelsFieldUrl,
+  'secret' => l10n.channelsFieldSecret,
+  'bearer_token' => l10n.channelsFieldBearerToken,
   'account_sid' => 'Account SID',
   'auth_token' => 'Auth token',
   'messaging_service_sid' => 'Messaging Service SID',
-  'usercode' => 'Kullanıcı kodu',
-  'msgheader' => 'SMS başlığı',
+  'usercode' => l10n.channelsFieldUserCode,
+  'msgheader' => l10n.channelsFieldSmsHeader,
   'hash' => 'Hash',
-  'sender' => 'SMS başlığı',
-  'user' => 'Kullanıcı adı',
-  'originator' => 'SMS başlığı',
-  'voice' => 'Ses',
-  'language' => 'Dil',
-  'application_id' => 'Uygulama kimliği',
-  'private_key' => 'Özel anahtar (PEM)',
+  'sender' => l10n.channelsFieldSmsHeader,
+  'user' => l10n.channelsFieldUsername,
+  'originator' => l10n.channelsFieldSmsHeader,
+  'voice' => l10n.channelsFieldVoice,
+  'language' => l10n.channelsFieldLanguage,
+  'application_id' => l10n.channelsFieldApplicationId,
+  'private_key' => l10n.channelsFieldPrivateKey,
   _ => name,
 };
 
 /// Alanın altında gösterilen kısa ipucu; bilinmeyen alanda yok.
 String? fieldHint(String name) => switch (name) {
-  'from' => 'ornek@alanadi.com.tr',
-  'webhook_url' => 'Slack / Teams\'in verdiği gelen webhook adresi',
-  'url' => 'Bildirim JSON olarak bu adrese POST edilir',
-  'secret' => 'Verilirse istek HMAC ile imzalanır',
-  'msgheader' ||
-  'sender' ||
-  'originator' => 'Sağlayıcıda onaylı gönderici adı (en çok 11 karakter)',
-  'region' => 'Boş bırakılabilir (eu: AB veri yerleşimi)',
-  'tls' => 'Boş bırakılırsa starttls',
+  'from' => l10n.channelsHintFrom,
+  'webhook_url' => l10n.channelsHintWebhookUrl,
+  'url' => l10n.channelsHintUrl,
+  'secret' => l10n.channelsHintSecret,
+  'msgheader' || 'sender' || 'originator' => l10n.channelsHintSmsHeader,
+  'region' => l10n.channelsHintRegion,
+  'tls' => l10n.channelsHintTls,
   _ => null,
 };
 

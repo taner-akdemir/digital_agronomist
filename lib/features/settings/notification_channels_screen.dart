@@ -6,6 +6,7 @@ import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
 import 'package:milktrace/features/settings/channel_labels.dart';
 import 'package:milktrace/features/settings/notification_channels_providers.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
 
@@ -24,14 +25,14 @@ class NotificationChannelsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          tooltip: 'Geri',
+          tooltip: l10n.commonBack,
           onPressed: () =>
               context.canPop() ? context.pop() : context.go('/live'),
           icon: const Icon(Icons.arrow_back),
         ),
-        title: const Text(
-          'Bildirim kanalları',
-          style: TextStyle(
+        title: Text(
+          l10n.channelsTitle,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -43,13 +44,13 @@ class NotificationChannelsScreen extends ConsumerWidget {
         backgroundColor: AppColors.darkGreenColor,
         foregroundColor: Colors.white,
         icon: const Icon(Icons.add),
-        label: const Text('Kanal ekle'),
+        label: Text(l10n.channelsAdd),
       ),
       body: RefreshIndicator(
         onRefresh: () => ref.refresh(notificationChannelListProvider.future),
         child: AsyncView(
           value: channels,
-          errorMessage: 'Kanallar yüklenemedi',
+          errorMessage: l10n.channelsLoadFailed,
           builder: (list) => ListView(
             padding: const EdgeInsets.fromLTRB(
               AppSpacing.lg,
@@ -100,21 +101,19 @@ class _PushNote extends StatelessWidget {
         color: AppColors.flowGreenSurface,
         borderRadius: AppRadius.smAll,
       ),
-      child: const Row(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
+          const Icon(
             Icons.notifications_active_outlined,
             size: 16,
             color: AppColors.darkGreenColor,
           ),
-          SizedBox(width: AppSpacing.sm),
+          const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
-              'Uyarılar telefon bildirimi olarak her zaman gelir. Buradaki '
-              'kanallar ek olarak e-posta, Slack, SMS gibi yollarla da '
-              'gönderir.',
-              style: TextStyle(
+              l10n.channelsPushNote,
+              style: const TextStyle(
                 fontSize: 12,
                 color: AppColors.darkGreenColor,
                 height: 1.35,
@@ -132,25 +131,28 @@ class _EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: AppSpacing.xxl),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xxl),
       child: Column(
         children: [
-          Icon(
+          const Icon(
             Icons.notifications_none,
             size: 40,
             color: AppColors.lightGreyColor,
           ),
-          SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: AppSpacing.sm),
           Text(
-            'Henüz kanal yok',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            l10n.channelsEmptyTitle,
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: AppSpacing.xs),
+          const SizedBox(height: AppSpacing.xs),
           Text(
-            'E-posta ya da SMS ile de uyarı almak için kanal ekleyin.',
+            l10n.channelsEmptyBody,
             textAlign: TextAlign.center,
-            style: TextStyle(color: AppColors.onSurfaceMuted, fontSize: 13),
+            style: const TextStyle(
+              color: AppColors.onSurfaceMuted,
+              fontSize: 13,
+            ),
           ),
         ],
       ),
@@ -225,10 +227,14 @@ class _ChannelCard extends ConsumerWidget {
                     // da söylenir (Cihazlar ekranındaki kural).
                     Text(
                       c.enabled
-                          ? '${severityLabel(c.minSeverity)} ve üstü · '
-                                '${c.sources.map(sourceLabel).join(', ')}'
-                                '${c.effectiveDailyLimit > 0 ? ' · günde en çok ${c.effectiveDailyLimit}' : ''}'
-                          : 'Kapalı',
+                          ? l10n.channelsCardStatus(
+                                  severityLabel(c.minSeverity),
+                                  c.sources.map(sourceLabel).join(', '),
+                                ) +
+                                (c.effectiveDailyLimit > 0
+                                    ? ' · ${l10n.channelsCardDailyLimit(c.effectiveDailyLimit)}'
+                                    : '')
+                          : l10n.channelsOff,
                       style: TextStyle(
                         fontSize: 11,
                         color: c.enabled
@@ -283,7 +289,7 @@ class _ChannelCard extends ConsumerWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(userMessage(e) ?? 'Kaydedilemedi: $e'),
+            content: Text(userMessage(e) ?? l10n.commonSaveFailed('$e')),
             backgroundColor: AppColors.flowRed,
           ),
         );
@@ -306,7 +312,7 @@ class _ProviderPicker extends ConsumerWidget {
         height: MediaQuery.sizeOf(context).height * 0.7,
         child: AsyncView(
           value: providers,
-          errorMessage: 'Kanal türleri yüklenemedi',
+          errorMessage: l10n.channelsKindsLoadFailed,
           builder: (list) {
             // Türe göre gruplanır: çiftçi önce "SMS mi e-posta mı"yı seçer,
             // sağlayıcıyı sonra.
@@ -323,9 +329,12 @@ class _ProviderPicker extends ConsumerWidget {
             return ListView(
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
               children: [
-                const Text(
-                  'Kanal türü',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                Text(
+                  l10n.channelsKindPickerTitle,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 for (final kind in kinds) ...[

@@ -6,6 +6,7 @@ import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
 import 'package:milktrace/features/settings/channel_labels.dart';
 import 'package:milktrace/features/settings/notification_channels_providers.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
 
@@ -39,7 +40,7 @@ class NotificationChannelFormScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _isEdit ? 'Kanalı düzenle' : 'Yeni kanal',
+          _isEdit ? l10n.channelsEditTitle : l10n.channelsNewTitle,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
@@ -49,16 +50,16 @@ class NotificationChannelFormScreen extends ConsumerWidget {
       ),
       body: AsyncView(
         value: providers,
-        errorMessage: 'Kanal türleri yüklenemedi',
+        errorMessage: l10n.channelsKindsLoadFailed,
         builder: (specs) => AsyncView(
           value: channels,
-          errorMessage: 'Kanal yüklenemedi',
+          errorMessage: l10n.channelsChannelLoadFailed,
           builder: (list) {
             final existing = _isEdit
                 ? list.where((c) => c.id == channelId).firstOrNull
                 : null;
             if (_isEdit && existing == null) {
-              return const Center(child: Text('Kanal bulunamadı'));
+              return Center(child: Text(l10n.channelsNotFound));
             }
             final k = existing?.kind ?? kind;
             final p = existing?.provider ?? provider;
@@ -66,7 +67,7 @@ class NotificationChannelFormScreen extends ConsumerWidget {
                 .where((s) => s.kind == k && s.provider == p)
                 .firstOrNull;
             if (spec == null) {
-              return Center(child: Text('Bu kanal türü desteklenmiyor: $k/$p'));
+              return Center(child: Text(l10n.channelsUnsupported('$k', '$p')));
             }
             return _Form(spec: spec, existing: existing);
           },
@@ -173,17 +174,20 @@ class _FormState extends ConsumerState<_Form> {
           const SizedBox(height: AppSpacing.lg),
           _text(
             controller: _name,
-            label: 'Kanal adı',
+            label: l10n.channelsName,
             validator: (v) =>
-                (v ?? '').trim().isEmpty ? 'Kanal adı gerekli' : null,
+                (v ?? '').trim().isEmpty ? l10n.channelsNameRequired : null,
           ),
           if (spec.recipients != 'none') _recipientField(spec.recipients),
-          const _SectionTitle('Bağlantı ayarları'),
+          _SectionTitle(l10n.channelsConnectionSection),
           for (final f in spec.fields) _configField(f),
-          const _SectionTitle('Ne zaman gönderilsin'),
-          const Text(
-            'En düşük önem',
-            style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
+          _SectionTitle(l10n.channelsWhenSection),
+          Text(
+            l10n.channelsMinSeverity,
+            style: const TextStyle(
+              fontSize: 12,
+              color: AppColors.onSurfaceMuted,
+            ),
           ),
           const SizedBox(height: AppSpacing.xs),
           SegmentedButton<String>(
@@ -203,17 +207,17 @@ class _FormState extends ConsumerState<_Form> {
           const SizedBox(height: AppSpacing.lg),
           _text(
             controller: _dailyLimit,
-            label: 'Günlük sınır',
-            helper:
-                '${spec.defaultDailyLimit > 0 ? 'Boş bırakılırsa ${spec.defaultDailyLimit}. ' : 'Boş bırakılırsa sınırsız. '}'
-                'Sınırdan sonrakiler gönderilmez; sayaç gece yarısı sıfırlanır.',
+            label: l10n.channelsDailyLimit,
+            helper: spec.defaultDailyLimit > 0
+                ? l10n.channelsDailyLimitHelperDefault(spec.defaultDailyLimit)
+                : l10n.channelsDailyLimitHelperUnlimited,
             keyboard: TextInputType.number,
             validator: (v) {
               final t = (v ?? '').trim();
               if (t.isEmpty) return null;
               final n = int.tryParse(t);
               return n == null || n < 1 || n > 10000
-                  ? '1 ile 10000 arasında olmalı'
+                  ? l10n.channelsDailyLimitRange
                   : null;
             },
           ),
@@ -232,22 +236,22 @@ class _FormState extends ConsumerState<_Form> {
               ),
             ),
           if (_sources.isEmpty)
-            const Text(
-              'En az bir bildirim türü seçin',
-              style: TextStyle(color: AppColors.flowRed, fontSize: 12),
+            Text(
+              l10n.channelsSourceRequired,
+              style: const TextStyle(color: AppColors.flowRed, fontSize: 12),
             ),
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
             value: _sendResolved,
             activeThumbColor: AppColors.darkGreenColor,
-            title: const Text('Çözüldüğünde de bildir'),
+            title: Text(l10n.channelsSendResolved),
             onChanged: (v) => setState(() => _sendResolved = v),
           ),
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
             value: _enabled,
             activeThumbColor: AppColors.darkGreenColor,
-            title: const Text('Kanal açık'),
+            title: Text(l10n.channelsEnabled),
             onChanged: (v) => setState(() => _enabled = v),
           ),
           const SizedBox(height: AppSpacing.lg),
@@ -260,14 +264,14 @@ class _FormState extends ConsumerState<_Form> {
                 borderRadius: AppRadius.mdAll,
               ),
             ),
-            child: Text(_busy ? 'Kaydediliyor…' : 'Kaydet'),
+            child: Text(_busy ? l10n.channelsSaving : l10n.commonSave),
           ),
           if (_isEdit) ...[
             const SizedBox(height: AppSpacing.sm),
             OutlinedButton.icon(
               onPressed: _busy ? null : _sendTest,
               icon: const Icon(Icons.send_outlined),
-              label: const Text('Deneme bildirimi gönder'),
+              label: Text(l10n.channelsSendTest),
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppColors.darkGreenColor,
                 padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
@@ -280,7 +284,7 @@ class _FormState extends ConsumerState<_Form> {
             TextButton.icon(
               onPressed: _busy ? null : _delete,
               icon: const Icon(Icons.delete_outline),
-              label: const Text('Kanalı sil'),
+              label: Text(l10n.channelsDelete),
               style: TextButton.styleFrom(
                 foregroundColor: AppColors.darkRedColor,
               ),
@@ -295,23 +299,21 @@ class _FormState extends ConsumerState<_Form> {
     final phone = kind == 'phone';
     return _text(
       controller: _recipients,
-      label: phone ? 'Telefon numaraları' : 'E-posta adresleri',
-      helper: phone
-          ? 'Her satıra bir numara, ülke koduyla: +905xxxxxxxxx'
-          : 'Her satıra bir adres',
+      label: phone ? l10n.channelsPhoneNumbers : l10n.channelsEmailAddresses,
+      helper: phone ? l10n.channelsPhoneHelper : l10n.channelsEmailHelper,
       minLines: 2,
       maxLines: 5,
       keyboard: phone ? TextInputType.phone : TextInputType.emailAddress,
       validator: (_) {
         final list = _recipientList;
-        if (list.isEmpty) return 'En az bir alıcı gerekli';
-        if (list.length > 50) return 'En fazla 50 alıcı';
+        if (list.isEmpty) return l10n.channelsRecipientRequired;
+        if (list.length > 50) return l10n.channelsRecipientMax;
         for (final r in list) {
           final ok = phone ? _e164.hasMatch(r) : _email.hasMatch(r);
           if (!ok) {
             return phone
-                ? 'Uluslararası biçimde olmalı (+905…): $r'
-                : 'Geçersiz e-posta: $r';
+                ? l10n.channelsInvalidPhone(r)
+                : l10n.channelsInvalidEmail(r);
           }
         }
         return null;
@@ -324,10 +326,7 @@ class _FormState extends ConsumerState<_Form> {
     return _text(
       controller: _fields[f.name]!,
       label: fieldLabel(f.name) + (f.required ? ' *' : ''),
-      helper: f.secret && saved
-          ? 'Kayıtlı. Değiştirmek için yeni değeri yazın; boş bırakılırsa '
-                'korunur.'
-          : fieldHint(f.name),
+      helper: f.secret && saved ? l10n.channelsSecretSaved : fieldHint(f.name),
       // Adres sırrı (Slack/Teams/webhook URL'si) gizlenmez: yapıştırılan
       // uzun adres görülmeden doğrulanamaz. Sunucu sırrı zaten geri vermez.
       obscure: f.secret && !fieldMultiline(f.name) && !fieldUrl(f.name),
@@ -338,7 +337,7 @@ class _FormState extends ConsumerState<_Form> {
         final empty = (v ?? '').trim().isEmpty;
         // Kayıtlı sır boş bırakılabilir: güncelleme kısmi, eskisi korunur.
         if (f.required && empty && !(f.secret && saved)) {
-          return '${fieldLabel(f.name)} gerekli';
+          return l10n.channelsFieldRequired(fieldLabel(f.name));
         }
         return null;
       },
@@ -416,10 +415,10 @@ class _FormState extends ConsumerState<_Form> {
       }
       ref.invalidate(notificationChannelListProvider);
       if (!mounted) return;
-      _toast(_isEdit ? 'Kanal kaydedildi' : 'Kanal eklendi');
+      _toast(_isEdit ? l10n.channelsSaved : l10n.channelsAdded);
       context.pop();
     } catch (e) {
-      if (mounted) _toast(_message(e, 'Kaydedilemedi'), error: true);
+      if (mounted) _toast(_message(e, l10n.channelsSaveFailed), error: true);
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -431,9 +430,9 @@ class _FormState extends ConsumerState<_Form> {
     setState(() => _busy = true);
     try {
       await ref.read(repositoryProvider).testNotificationChannel(_existing!.id);
-      if (mounted) _toast('Deneme bildirimi gönderildi');
+      if (mounted) _toast(l10n.channelsTestSent);
     } catch (e) {
-      if (mounted) _toast(_message(e, 'Gönderilemedi'), error: true);
+      if (mounted) _toast(_message(e, l10n.channelsSendFailed), error: true);
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -443,22 +442,19 @@ class _FormState extends ConsumerState<_Form> {
     final ok = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Kanal silinsin mi?'),
-        content: Text(
-          '"${_existing!.name}" kanalına artık bildirim gitmeyecek. '
-          'Bu işlem geri alınamaz.',
-        ),
+        title: Text(l10n.channelsDeleteTitle),
+        content: Text(l10n.channelsDeleteBody(_existing!.name)),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Vazgeç'),
+            child: Text(l10n.commonCancel),
           ),
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(true),
             style: TextButton.styleFrom(
               foregroundColor: AppColors.darkRedColor,
             ),
-            child: const Text('Sil'),
+            child: Text(l10n.commonDelete),
           ),
         ],
       ),
@@ -471,10 +467,10 @@ class _FormState extends ConsumerState<_Form> {
           .deleteNotificationChannel(_existing!.id);
       ref.invalidate(notificationChannelListProvider);
       if (!mounted) return;
-      _toast('Kanal silindi');
+      _toast(l10n.channelsDeleted);
       context.pop();
     } catch (e) {
-      if (mounted) _toast(_message(e, 'Silinemedi'), error: true);
+      if (mounted) _toast(_message(e, l10n.channelsDeleteFailed), error: true);
     } finally {
       if (mounted) setState(() => _busy = false);
     }

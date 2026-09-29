@@ -1,0 +1,202 @@
+{
+  "thresholdsTitle": "Eşik ayarları",
+  "thresholdsSpeciesLoadFailed": "Türler yüklenemedi",
+  "thresholdsLoadFailed": "Eşikler yüklenemedi",
+  "thresholdsNoSpecies": "Tanımlı tür eşiği yok",
+  "thresholdsFlowGroupTitle": "Anlık debi bantları",
+  "thresholdsFlowGroupHint": "Altında kırmızı, üstünde yeşil; arası sarı (§6.2).",
+  "thresholdsLowerLimit": "Alt eşik",
+  "thresholdsUpperLimit": "Üst eşik",
+  "thresholdsUnitFlow": "L/dk",
+  "thresholdsUnitSec": "sn",
+  "thresholdsUnitPerDay": "L/gün",
+  "thresholdsUnitMilkings": "sağım",
+  "thresholdsUnitDays": "gün",
+  "thresholdsYieldGroupTitle": "Oturum verimi bantları",
+  "thresholdsYieldGroupHint": "Alınan sütün beklenene oranı (§6.3). Geçmişi olmayan hayvanda beklenen, sağım başına bu değerdir.",
+  "thresholdsGreenLimit": "Yeşil eşiği",
+  "thresholdsRedLimit": "Kırmızı eşiği",
+  "thresholdsExpectedPerMilking": "Sağım başına beklenen",
+  "thresholdsFalseAlarmGroupTitle": "Yanlış alarm koruması",
+  "thresholdsFalseAlarmGroupHint": "Sağımın ilk saniyelerinde kırmızı üretilmez; kırmızı durum bu süre boyunca sürmeden uyarı gönderilmez (§6.2).",
+  "thresholdsRampUp": "Isınma süresi",
+  "thresholdsAlertHold": "Uyarı bekleme",
+  "thresholdsEndGroupTitle": "Sağım kapanışı",
+  "thresholdsEndGroupHint": "Debi bu değerin altında bu süre kalırsa hayvanın sağımı kapanır (§6.1).",
+  "thresholdsEndFlow": "Bitiş debisi",
+  "thresholdsEndGrace": "Bekleme",
+  "thresholdsClassGroupTitle": "Sınıflandırma eşikleri",
+  "thresholdsClassGroupHint": "7 günlük ortalama alt eşiğin altındaysa kuruya aday, üst eşiğin üstündeyse yüksek verimli (§6.4).",
+  "thresholdsDryOff": "Kuruya çıkma alt eşiği",
+  "thresholdsHighYield": "Yüksek verim üst eşiği",
+  "thresholdsRulesGroupTitle": "Sınıflandırma kuralları",
+  "thresholdsRulesGroupHint": "7 günlük ortalama 30 günlükten bu oranda fazla düşükse düşüşte. Son sağımların hepsi boş sağım sınırının altındaysa süt vermiyor. Buzağılamadan sonraki taze laktasyon günlerinde düşüşte ve kuruya aday denmez (§6.4).",
+  "thresholdsDecline": "Düşüş eşiği",
+  "thresholdsNoMilk": "Boş sağım sınırı",
+  "thresholdsNoMilkCount": "Bakılan son sağım",
+  "thresholdsFresh": "Taze laktasyon",
+  "thresholdsMastitisGroupTitle": "Mastitis şüphesi",
+  "thresholdsMastitisGroupHint": "Sayaç iletkenlik ölçüyorsa: sağımın iletkenliği hayvanın kendi 7 günlük ortalamasının bu oran kadar üstündeyse uyarı. Teşhis değildir; veteriner kontrolü için işarettir.",
+  "thresholdsConductivity": "İletkenlik artışı",
+  "thresholdsDensityGroupTitle": "Süt yoğunluğu",
+  "thresholdsDensityGroupHint": "İşletme miktarları kilogram gösteriyorsa litre bu katsayıyla çevrilir (1 L inek sütü ≈ 1,03 kg). Eşikler yine litre girilir.",
+  "thresholdsDensity": "Yoğunluk",
+  "thresholdsSaving": "Kaydediliyor…",
+  "thresholdsErrorNumber": "Sayı girin",
+  "thresholdsErrorNegative": "Negatif olamaz",
+  "thresholdsErrorZero": "Sıfır olamaz",
+  "thresholdsErrorBelowUpper": "Üst eşikten küçük olmalı",
+  "thresholdsErrorAboveLower": "Alt eşikten büyük olmalı",
+  "thresholdsErrorBelowGreen": "Yeşil eşiğinden küçük olmalı",
+  "thresholdsErrorAboveRed": "Kırmızı eşiğinden büyük olmalı",
+  "thresholdsErrorMax": "En çok {max} olabilir",
+  "@thresholdsErrorMax": {
+    "placeholders": {
+      "max": {}
+    }
+  },
+  "thresholdsErrorBelowHighYield": "Yüksek verim eşiğinden küçük olmalı",
+  "thresholdsErrorAboveDryOff": "Kuruya çıkma eşiğinden büyük olmalı",
+  "thresholdsErrorDensityRange": "0,90–1,20 arasında olmalı",
+  "thresholdsErrorConductivityRange": "5–100 arasında olmalı",
+  "thresholdsErrorInteger": "Tam sayı girin",
+  "thresholdsErrorBelowExpected": "Sağım başına beklenenden küçük olmalı",
+  "thresholdsErrorAboveNoMilk": "Boş sağım sınırından büyük olmalı",
+  "thresholdsSaved": "{species} eşikleri kaydedildi",
+  "@thresholdsSaved": {
+    "placeholders": {
+      "species": {}
+    }
+  },
+  "thresholdsCalibrationNote": "Varsayılanlar tahmini başlangıç değerleridir. Irk, laktasyon dönemi ve işletmeye göre çok değişir; saha verisi ve ziraat mühendisi/veteriner görüşüyle kalibre edilmelidir.",
+  "thresholdsReadOnly": "Eşikleri yalnızca işletme sahibi değiştirebilir.",
+  "channelsTitle": "Bildirim kanalları",
+  "channelsAdd": "Kanal ekle",
+  "channelsLoadFailed": "Kanallar yüklenemedi",
+  "channelsPushNote": "Uyarılar telefon bildirimi olarak her zaman gelir. Buradaki kanallar ek olarak e-posta, Slack, SMS gibi yollarla da gönderir.",
+  "channelsEmptyTitle": "Henüz kanal yok",
+  "channelsEmptyBody": "E-posta ya da SMS ile de uyarı almak için kanal ekleyin.",
+  "channelsCardStatus": "{severity} ve üstü · {sources}",
+  "@channelsCardStatus": {
+    "placeholders": {
+      "severity": {},
+      "sources": {}
+    }
+  },
+  "channelsCardDailyLimit": "günde en çok {n}",
+  "@channelsCardDailyLimit": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "channelsOff": "Kapalı",
+  "channelsKindsLoadFailed": "Kanal türleri yüklenemedi",
+  "channelsKindPickerTitle": "Kanal türü",
+  "channelsEditTitle": "Kanalı düzenle",
+  "channelsNewTitle": "Yeni kanal",
+  "channelsChannelLoadFailed": "Kanal yüklenemedi",
+  "channelsNotFound": "Kanal bulunamadı",
+  "channelsUnsupported": "Bu kanal türü desteklenmiyor: {kind}/{provider}",
+  "@channelsUnsupported": {
+    "placeholders": {
+      "kind": {},
+      "provider": {}
+    }
+  },
+  "channelsName": "Kanal adı",
+  "channelsNameRequired": "Kanal adı gerekli",
+  "channelsConnectionSection": "Bağlantı ayarları",
+  "channelsWhenSection": "Ne zaman gönderilsin",
+  "channelsMinSeverity": "En düşük önem",
+  "channelsDailyLimit": "Günlük sınır",
+  "channelsDailyLimitHelperDefault": "Boş bırakılırsa {n}. Sınırdan sonrakiler gönderilmez; sayaç gece yarısı sıfırlanır.",
+  "@channelsDailyLimitHelperDefault": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "channelsDailyLimitHelperUnlimited": "Boş bırakılırsa sınırsız. Sınırdan sonrakiler gönderilmez; sayaç gece yarısı sıfırlanır.",
+  "channelsDailyLimitRange": "1 ile 10000 arasında olmalı",
+  "channelsSourceRequired": "En az bir bildirim türü seçin",
+  "channelsSendResolved": "Çözüldüğünde de bildir",
+  "channelsEnabled": "Kanal açık",
+  "channelsSaving": "Kaydediliyor…",
+  "channelsSendTest": "Deneme bildirimi gönder",
+  "channelsDelete": "Kanalı sil",
+  "channelsPhoneNumbers": "Telefon numaraları",
+  "channelsEmailAddresses": "E-posta adresleri",
+  "channelsPhoneHelper": "Her satıra bir numara, ülke koduyla: +905xxxxxxxxx",
+  "channelsEmailHelper": "Her satıra bir adres",
+  "channelsRecipientRequired": "En az bir alıcı gerekli",
+  "channelsRecipientMax": "En fazla 50 alıcı",
+  "channelsInvalidPhone": "Uluslararası biçimde olmalı (+905…): {value}",
+  "@channelsInvalidPhone": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "channelsInvalidEmail": "Geçersiz e-posta: {value}",
+  "@channelsInvalidEmail": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "channelsSecretSaved": "Kayıtlı. Değiştirmek için yeni değeri yazın; boş bırakılırsa korunur.",
+  "channelsFieldRequired": "{field} gerekli",
+  "@channelsFieldRequired": {
+    "placeholders": {
+      "field": {}
+    }
+  },
+  "channelsSaved": "Kanal kaydedildi",
+  "channelsAdded": "Kanal eklendi",
+  "channelsSaveFailed": "Kaydedilemedi",
+  "channelsTestSent": "Deneme bildirimi gönderildi",
+  "channelsSendFailed": "Gönderilemedi",
+  "channelsDeleteTitle": "Kanal silinsin mi?",
+  "channelsDeleteBody": "\"{name}\" kanalına artık bildirim gitmeyecek. Bu işlem geri alınamaz.",
+  "@channelsDeleteBody": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "channelsDeleted": "Kanal silindi",
+  "channelsDeleteFailed": "Silinemedi",
+  "channelsKindEmail": "E-posta",
+  "channelsKindVoiceCall": "Sesli arama",
+  "channelsSeverityInfo": "Bilgi",
+  "channelsSeverityWarning": "Uyarı",
+  "channelsSeverityCritical": "Kritik",
+  "channelsSourceOps": "Sistem alarmları",
+  "channelsSourceSummary": "Sağım özeti",
+  "channelsSourceHerd": "Her sürü uyarısı",
+  "channelsSourceOpsHint": "Sayaç kutusu sustu, veri kaybı gibi sistem sorunları",
+  "channelsSourceSummaryHint": "Sağım bitince tek mesaj (toplam süt, düşük verim ve düşük debi olan hayvanlar) ve Pazartesi sabahı haftalık özet (e-postada Excel raporu ekli)",
+  "channelsSourceHerdHint": "Düşük debi olan her hayvan için ayrı mesaj (kalabalık olabilir)",
+  "channelsFieldHost": "SMTP sunucusu",
+  "channelsFieldUsername": "Kullanıcı adı",
+  "channelsFieldPassword": "Parola",
+  "channelsFieldFrom": "Gönderen",
+  "channelsFieldFromName": "Gönderen adı",
+  "channelsFieldTls": "Şifreleme (starttls, tls)",
+  "channelsFieldApiKey": "API anahtarı",
+  "channelsFieldApiSecret": "API sırrı",
+  "channelsFieldRegion": "Bölge",
+  "channelsFieldWebhookUrl": "Webhook adresi",
+  "channelsFieldUrl": "Adres (https)",
+  "channelsFieldSecret": "İmza sırrı",
+  "channelsFieldBearerToken": "Bearer jetonu",
+  "channelsFieldUserCode": "Kullanıcı kodu",
+  "channelsFieldSmsHeader": "SMS başlığı",
+  "channelsFieldVoice": "Ses",
+  "channelsFieldLanguage": "Dil",
+  "channelsFieldApplicationId": "Uygulama kimliği",
+  "channelsFieldPrivateKey": "Özel anahtar (PEM)",
+  "channelsHintFrom": "ornek@alanadi.com.tr",
+  "channelsHintWebhookUrl": "Slack / Teams'in verdiği gelen webhook adresi",
+  "channelsHintUrl": "Bildirim JSON olarak bu adrese POST edilir",
+  "channelsHintSecret": "Verilirse istek HMAC ile imzalanır",
+  "channelsHintSmsHeader": "Sağlayıcıda onaylı gönderici adı (en çok 11 karakter)",
+  "channelsHintRegion": "Boş bırakılabilir (eu: AB veri yerleşimi)",
+  "channelsHintTls": "Boş bırakılırsa starttls"
+}
