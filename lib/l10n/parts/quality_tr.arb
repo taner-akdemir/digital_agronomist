@@ -8,15 +8,6 @@
   "qualityScc": "Somatik hücre (bin/mL)",
   "qualityBacteria": "Bakteri (bin/mL)",
   "qualityInvalid": "Geçerli bir sayı girin",
-  "qualitySummary": "Yağ %{fat} · Protein %{protein} · Hücre {scc} · Bakteri {bacteria}",
-  "@qualitySummary": {
-    "placeholders": {
-      "fat": {},
-      "protein": {},
-      "scc": {},
-      "bacteria": {}
-    }
-  },
   "qualityHighScc": "Somatik hücre sınırın üstünde ({limit} bin/mL)",
   "@qualityHighScc": {
     "placeholders": {
@@ -29,5 +20,29 @@
   "qualityTrendEmpty": "Grafik için en az iki analiz gerekli.",
   "qualitySccLimit": "Somatik hücre sınırı (bin/mL)",
   "qualitySccLimitHelper": "Aşılırsa uyarı gelir. Yaygın sınır 400.",
-  "qualitySccLimitRange": "50 ile 2000 arasında olmalı"
+  "qualitySccLimitRange": "50 ile 2000 arasında olmalı",
+  "qualityFatPart": "Yağ %{v}",
+  "qualityProteinPart": "Protein %{v}",
+  "qualitySccPart": "Hücre {v}",
+  "qualityBacteriaPart": "Bakteri {v}",
+  "@qualityFatPart": {
+    "placeholders": {
+      "v": {}
+    }
+  },
+  "@qualityProteinPart": {
+    "placeholders": {
+      "v": {}
+    }
+  },
+  "@qualitySccPart": {
+    "placeholders": {
+      "v": {}
+    }
+  },
+  "@qualityBacteriaPart": {
+    "placeholders": {
+      "v": {}
+    }
+  }
 }

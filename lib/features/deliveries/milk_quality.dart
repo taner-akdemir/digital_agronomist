@@ -16,17 +16,14 @@ bool hasQuality(Delivery d) =>
     d.sccK != null ||
     d.bacteriaK != null;
 
-/// "Yağ %3,8 · Protein %3,3 · Hücre 250 · Bakteri 40"; girilmeyen "—".
-String qualityLine(Delivery d) {
-  String pct(double? v) => v == null ? '—' : v.toStringAsFixed(2);
-  String k(int? v) => v == null ? '—' : '$v';
-  return l10n.qualitySummary(
-    pct(d.fatPct),
-    pct(d.proteinPct),
-    k(d.sccK),
-    k(d.bacteriaK),
-  );
-}
+/// "Yağ %3.80 · Protein %3.30 · Hücre 250 · Bakteri 40"; girilmeyen değer YAZILMAZ
+/// ("Protein —%" gibi yarım satır görünmesin).
+String qualityLine(Delivery d) => [
+  if (d.fatPct case final v?) l10n.qualityFatPart(v.toStringAsFixed(2)),
+  if (d.proteinPct case final v?) l10n.qualityProteinPart(v.toStringAsFixed(2)),
+  if (d.sccK case final v?) l10n.qualitySccPart('$v'),
+  if (d.bacteriaK case final v?) l10n.qualityBacteriaPart('$v'),
+].join(' · ');
 
 /// Girilen analiz; boş alan null.
 class QualityDraft {

@@ -2216,8 +2216,14 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String meterCheckResult(Object dev, Object n, Object avg) {
-    return 'Meter $dev% · average of last $n checks $avg%';
+  String meterCheckResult(Object dev, int n, Object avg) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'average of last $n checks',
+      one: 'average of the last check',
+    );
+    return 'Meter $dev% · $_temp0 $avg%';
   }
 
   @override
@@ -2375,7 +2381,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get qualityBacteria => 'Bacteria (thousand/mL)';
 
   @override
+  String qualityBacteriaPart(Object v) {
+    return 'Bacteria $v';
+  }
+
+  @override
   String get qualityFat => 'Fat (%)';
+
+  @override
+  String qualityFatPart(Object v) {
+    return 'Fat $v%';
+  }
 
   @override
   String qualityHighScc(int limit) {
@@ -2392,6 +2408,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get qualityProtein => 'Protein (%)';
 
   @override
+  String qualityProteinPart(Object v) {
+    return 'Protein $v%';
+  }
+
+  @override
   String get qualityScc => 'Somatic cells (thousand/mL)';
 
   @override
@@ -2405,13 +2426,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get qualitySccLimitRange => 'Must be between 50 and 2000';
 
   @override
-  String qualitySummary(
-    Object fat,
-    Object protein,
-    Object scc,
-    Object bacteria,
-  ) {
-    return 'Fat $fat% · Protein $protein% · Cells $scc · Bacteria $bacteria';
+  String qualitySccPart(Object v) {
+    return 'Cells $v';
   }
 
   @override

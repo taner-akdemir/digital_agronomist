@@ -19,7 +19,9 @@
   "@meterCheckResult": {
     "placeholders": {
       "dev": {},
-      "n": {},
+      "n": {
+        "type": "int"
+      },
       "avg": {}
     }
   },

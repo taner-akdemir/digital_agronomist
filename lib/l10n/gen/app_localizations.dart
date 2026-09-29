@@ -3821,7 +3821,7 @@ abstract class AppLocalizations {
   ///
   /// In tr, this message translates to:
   /// **'Sayaç %{dev} · son {n} kontrol ortalaması %{avg}'**
-  String meterCheckResult(Object dev, Object n, Object avg);
+  String meterCheckResult(Object dev, int n, Object avg);
 
   /// No description provided for @meterCheckRow.
   ///
@@ -4081,11 +4081,23 @@ abstract class AppLocalizations {
   /// **'Bakteri (bin/mL)'**
   String get qualityBacteria;
 
+  /// No description provided for @qualityBacteriaPart.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bakteri {v}'**
+  String qualityBacteriaPart(Object v);
+
   /// No description provided for @qualityFat.
   ///
   /// In tr, this message translates to:
   /// **'Yağ (%)'**
   String get qualityFat;
+
+  /// No description provided for @qualityFatPart.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yağ %{v}'**
+  String qualityFatPart(Object v);
 
   /// No description provided for @qualityHighScc.
   ///
@@ -4111,6 +4123,12 @@ abstract class AppLocalizations {
   /// **'Protein (%)'**
   String get qualityProtein;
 
+  /// No description provided for @qualityProteinPart.
+  ///
+  /// In tr, this message translates to:
+  /// **'Protein %{v}'**
+  String qualityProteinPart(Object v);
+
   /// No description provided for @qualityScc.
   ///
   /// In tr, this message translates to:
@@ -4135,16 +4153,11 @@ abstract class AppLocalizations {
   /// **'50 ile 2000 arasında olmalı'**
   String get qualitySccLimitRange;
 
-  /// No description provided for @qualitySummary.
+  /// No description provided for @qualitySccPart.
   ///
   /// In tr, this message translates to:
-  /// **'Yağ %{fat} · Protein %{protein} · Hücre {scc} · Bakteri {bacteria}'**
-  String qualitySummary(
-    Object fat,
-    Object protein,
-    Object scc,
-    Object bacteria,
-  );
+  /// **'Hücre {v}'**
+  String qualitySccPart(Object v);
 
   /// No description provided for @qualityTitle.
   ///

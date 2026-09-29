@@ -8,15 +8,6 @@
   "qualityScc": "Somatic cells (thousand/mL)",
   "qualityBacteria": "Bacteria (thousand/mL)",
   "qualityInvalid": "Enter a valid number",
-  "qualitySummary": "Fat {fat}% · Protein {protein}% · Cells {scc} · Bacteria {bacteria}",
-  "@qualitySummary": {
-    "placeholders": {
-      "fat": {},
-      "protein": {},
-      "scc": {},
-      "bacteria": {}
-    }
-  },
   "qualityHighScc": "Somatic cell count above the limit ({limit} thousand/mL)",
   "@qualityHighScc": {
     "placeholders": {
@@ -29,5 +20,29 @@
   "qualityTrendEmpty": "At least two analyses are needed for the chart.",
   "qualitySccLimit": "Somatic cell limit (thousand/mL)",
   "qualitySccLimitHelper": "An alert is sent above this. A common limit is 400.",
-  "qualitySccLimitRange": "Must be between 50 and 2000"
+  "qualitySccLimitRange": "Must be between 50 and 2000",
+  "qualityFatPart": "Fat {v}%",
+  "qualityProteinPart": "Protein {v}%",
+  "qualitySccPart": "Cells {v}",
+  "qualityBacteriaPart": "Bacteria {v}",
+  "@qualityFatPart": {
+    "placeholders": {
+      "v": {}
+    }
+  },
+  "@qualityProteinPart": {
+    "placeholders": {
+      "v": {}
+    }
+  },
+  "@qualitySccPart": {
+    "placeholders": {
+      "v": {}
+    }
+  },
+  "@qualityBacteriaPart": {
+    "placeholders": {
+      "v": {}
+    }
+  }
 }

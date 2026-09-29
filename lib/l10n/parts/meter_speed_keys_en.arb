@@ -15,11 +15,13 @@
     }
   },
   "meterCheckEnterAmount": "Enter the measured amount",
-  "meterCheckResult": "Meter {dev}% · average of last {n} checks {avg}%",
+  "meterCheckResult": "Meter {dev}% · {n, plural, =1{average of the last check} other{average of last {n} checks}} {avg}%",
   "@meterCheckResult": {
     "placeholders": {
       "dev": {},
-      "n": {},
+      "n": {
+        "type": "int"
+      },
       "avg": {}
     }
   },

@@ -1140,11 +1140,13 @@
       "metered": {}
     }
   },
-  "meterCheckResult": "Meter {dev}% · average of last {n} checks {avg}%",
+  "meterCheckResult": "Meter {dev}% · {n, plural, =1{average of the last check} other{average of last {n} checks}} {avg}%",
   "@meterCheckResult": {
     "placeholders": {
       "dev": {},
-      "n": {},
+      "n": {
+        "type": "int"
+      },
       "avg": {}
     }
   },
@@ -1220,7 +1222,19 @@
   "pushQuietChannelDescription": "Non-critical alerts during quiet hours; no sound.",
   "pushQuietChannelName": "Alerts during quiet hours",
   "qualityBacteria": "Bacteria (thousand/mL)",
+  "qualityBacteriaPart": "Bacteria {v}",
+  "@qualityBacteriaPart": {
+    "placeholders": {
+      "v": {}
+    }
+  },
   "qualityFat": "Fat (%)",
+  "qualityFatPart": "Fat {v}%",
+  "@qualityFatPart": {
+    "placeholders": {
+      "v": {}
+    }
+  },
   "qualityHighScc": "Somatic cell count above the limit ({limit} thousand/mL)",
   "@qualityHighScc": {
     "placeholders": {
@@ -1232,17 +1246,20 @@
   "qualityInvalid": "Enter a valid number",
   "qualityOptional": "Optional; enter if it is on the receipt.",
   "qualityProtein": "Protein (%)",
+  "qualityProteinPart": "Protein {v}%",
+  "@qualityProteinPart": {
+    "placeholders": {
+      "v": {}
+    }
+  },
   "qualityScc": "Somatic cells (thousand/mL)",
   "qualitySccLimit": "Somatic cell limit (thousand/mL)",
   "qualitySccLimitHelper": "An alert is sent above this. A common limit is 400.",
   "qualitySccLimitRange": "Must be between 50 and 2000",
-  "qualitySummary": "Fat {fat}% · Protein {protein}% · Cells {scc} · Bacteria {bacteria}",
-  "@qualitySummary": {
+  "qualitySccPart": "Cells {v}",
+  "@qualitySccPart": {
     "placeholders": {
-      "fat": {},
-      "protein": {},
-      "scc": {},
-      "bacteria": {}
+      "v": {}
     }
   },
   "qualityTitle": "Dairy analysis",

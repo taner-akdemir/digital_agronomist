@@ -2192,7 +2192,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String meterCheckResult(Object dev, Object n, Object avg) {
+  String meterCheckResult(Object dev, int n, Object avg) {
     return 'Sayaç %$dev · son $n kontrol ortalaması %$avg';
   }
 
@@ -2352,7 +2352,17 @@ class AppLocalizationsTr extends AppLocalizations {
   String get qualityBacteria => 'Bakteri (bin/mL)';
 
   @override
+  String qualityBacteriaPart(Object v) {
+    return 'Bakteri $v';
+  }
+
+  @override
   String get qualityFat => 'Yağ (%)';
+
+  @override
+  String qualityFatPart(Object v) {
+    return 'Yağ %$v';
+  }
 
   @override
   String qualityHighScc(int limit) {
@@ -2369,6 +2379,11 @@ class AppLocalizationsTr extends AppLocalizations {
   String get qualityProtein => 'Protein (%)';
 
   @override
+  String qualityProteinPart(Object v) {
+    return 'Protein %$v';
+  }
+
+  @override
   String get qualityScc => 'Somatik hücre (bin/mL)';
 
   @override
@@ -2381,13 +2396,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get qualitySccLimitRange => '50 ile 2000 arasında olmalı';
 
   @override
-  String qualitySummary(
-    Object fat,
-    Object protein,
-    Object scc,
-    Object bacteria,
-  ) {
-    return 'Yağ %$fat · Protein %$protein · Hücre $scc · Bakteri $bacteria';
+  String qualitySccPart(Object v) {
+    return 'Hücre $v';
   }
 
   @override

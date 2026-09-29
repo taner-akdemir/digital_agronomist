@@ -1267,7 +1267,9 @@
   "@meterCheckResult": {
     "placeholders": {
       "dev": {},
-      "n": {},
+      "n": {
+        "type": "int"
+      },
       "avg": {}
     }
   },
@@ -1367,7 +1369,19 @@
   "pushQuietChannelDescription": "Sessiz saatte gelen, kritik olmayan uyarılar; ses çıkarmaz.",
   "pushQuietChannelName": "Sessiz saatteki uyarılar",
   "qualityBacteria": "Bakteri (bin/mL)",
+  "qualityBacteriaPart": "Bakteri {v}",
+  "@qualityBacteriaPart": {
+    "placeholders": {
+      "v": {}
+    }
+  },
   "qualityFat": "Yağ (%)",
+  "qualityFatPart": "Yağ %{v}",
+  "@qualityFatPart": {
+    "placeholders": {
+      "v": {}
+    }
+  },
   "qualityHighScc": "Somatik hücre sınırın üstünde ({limit} bin/mL)",
   "@qualityHighScc": {
     "placeholders": {
@@ -1379,17 +1393,20 @@
   "qualityInvalid": "Geçerli bir sayı girin",
   "qualityOptional": "İsteğe bağlı; fişte yazıyorsa girin.",
   "qualityProtein": "Protein (%)",
+  "qualityProteinPart": "Protein %{v}",
+  "@qualityProteinPart": {
+    "placeholders": {
+      "v": {}
+    }
+  },
   "qualityScc": "Somatik hücre (bin/mL)",
   "qualitySccLimit": "Somatik hücre sınırı (bin/mL)",
   "qualitySccLimitHelper": "Aşılırsa uyarı gelir. Yaygın sınır 400.",
   "qualitySccLimitRange": "50 ile 2000 arasında olmalı",
-  "qualitySummary": "Yağ %{fat} · Protein %{protein} · Hücre {scc} · Bakteri {bacteria}",
-  "@qualitySummary": {
+  "qualitySccPart": "Hücre {v}",
+  "@qualitySccPart": {
     "placeholders": {
-      "fat": {},
-      "protein": {},
-      "scc": {},
-      "bacteria": {}
+      "v": {}
     }
   },
   "qualityTitle": "Mandıra analizi",

@@ -227,10 +227,7 @@ void main() {
       find.text('Somatik hücre sınırın üstünde (400 bin/mL)'),
       findsWidgets,
     );
-    expect(
-      find.text('Yağ %3.90 · Protein %— · Hücre 520 · Bakteri —'),
-      findsOneWidget,
-    );
+    expect(find.text('Yağ %3.90 · Hücre 520'), findsOneWidget);
     expect(find.byType(QualityTrendCard), findsOneWidget);
     expect(find.text('Grafik için en az iki analiz gerekli.'), findsNothing);
   });
