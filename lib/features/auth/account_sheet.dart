@@ -249,6 +249,23 @@ class _AccountSheet extends ConsumerWidget {
                   ),
                 ),
               ],
+              // Açık oturumlar (backend ADR 0105): bütün roller.
+              const SizedBox(height: AppSpacing.sm),
+              OutlinedButton.icon(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  context.push('/settings/sessions');
+                },
+                icon: const Icon(Icons.devices_outlined),
+                label: Text(l10n.accountSessions),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: AppColors.darkGreenColor,
+                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadius.mdAll,
+                  ),
+                ),
+              ),
               // İki adımlı doğrulama (backend ADR 0102): bütün roller; tablet
               // hesabının kartı yok.
               const SizedBox(height: AppSpacing.sm),

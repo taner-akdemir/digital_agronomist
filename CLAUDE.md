@@ -556,6 +556,12 @@ bitişi" (gün ya da süresiz). `updateTeamMember` TAM kayıt: `accessUntil` her
 taşınır — gönderilmezse süre kalkar (testle kilitli). Ertesi gün sunucu girişi keser,
 sahibe `access_ended` bildirimi gider (dokununca Kullanıcılar).
 
+**Oturumlar** (`/settings/sessions`, backend ADR 0105): hesap kartında bütün rollere;
+cihaz/tarayıcı, son kullanım, IP; tek tek ya da "Diğer bütün cihazlardan çık". Uygulama
+her istekte `User-Agent: MilkTrace/<sürüm> (<platform>)` gönderir (`AppBuild.headers`)
+ki listede tanınsın. Repo metotları `loginSessions`… (`sessions()` sağım oturumlarıdır).
+Önbelleklenmez. Yanlış parola sınırı (ADR 0104) sunucuda: 429 mesajı olduğu gibi gösterilir.
+
 **Çökme raporu** (backend ADR 0100): `CrashReporting.init()` main'de; Firebase
 Crashlytics, debug'da kapalı, Firebase yoksa sessizce atlanır. Rapora kullanıcı/işletme
 bilgisi EKLENMEZ (`setUserIdentifier` çağırma). Gizlilik belgeleri buna göre.

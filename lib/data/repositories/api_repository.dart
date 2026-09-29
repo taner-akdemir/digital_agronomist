@@ -29,6 +29,7 @@ import 'package:milktrace/data/models/team_member.dart';
 import 'package:milktrace/data/models/thresholds.dart';
 import 'package:milktrace/data/models/treatment.dart';
 import 'package:milktrace/data/models/unmatched_tag_row.dart';
+import 'package:milktrace/data/models/user_session.dart';
 import 'package:milktrace/data/models/vacuum.dart';
 import 'package:milktrace/data/repositories/milktrace_repository.dart';
 import 'package:milktrace/l10n/l10n.dart';
@@ -615,6 +616,23 @@ class ApiRepository implements MilkTraceRepository {
   @override
   Future<void> setVolumeUnit(String unit) =>
       _dio.put<dynamic>('/tenant/settings', data: {'volumeUnit': unit});
+
+  @override
+  Future<List<UserSession>> loginSessions() async =>
+      _listOf(await _dio.get<dynamic>('/me/sessions'), UserSession.fromJson);
+
+  @override
+  Future<void> revokeLoginSession(String id) async {
+    await _dio.delete<dynamic>('/me/sessions/$id');
+  }
+
+  @override
+  Future<int> revokeOtherLoginSessions() async =>
+      (_dataOf(
+                await _dio.post<dynamic>('/me/sessions/revoke-others'),
+              )['revoked']
+              as num)
+          .toInt();
 
   @override
   Future<bool> twoFactorEnabled() async =>

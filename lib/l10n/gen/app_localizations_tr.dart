@@ -37,6 +37,9 @@ class AppLocalizationsTr extends AppLocalizations {
       'Bu telefonda bildirim kapalı: izin verilmedi ya da bildirim servisi henüz bağlanmadı. Uyarılar bildirim merkezinde görünmeye devam eder.';
 
   @override
+  String get accountSessions => 'Oturumlar';
+
+  @override
   String get accountSignOut => 'Çıkış yap';
 
   @override
@@ -2017,6 +2020,39 @@ class AppLocalizationsTr extends AppLocalizations {
     );
     return '$_temp0 · $amount';
   }
+
+  @override
+  String get sessionsApp => 'Milk Trace uygulaması';
+
+  @override
+  String get sessionsAppAndroid => 'Milk Trace · Android';
+
+  @override
+  String get sessionsAppIos => 'Milk Trace · iPhone';
+
+  @override
+  String get sessionsBrowser => 'Tarayıcı (panel)';
+
+  @override
+  String get sessionsIntro =>
+      'Hesabınızın açık olduğu cihazlar. Tanımadığınız ya da kaybolan bir cihazı buradan kapatın; o cihaz en geç 15 dakika içinde çıkar.';
+
+  @override
+  String sessionsLastUsed(Object when) {
+    return 'son kullanım $when';
+  }
+
+  @override
+  String get sessionsSignOut => 'Bu oturumu kapat';
+
+  @override
+  String get sessionsSignOutOthers => 'Diğer bütün cihazlardan çık';
+
+  @override
+  String get sessionsThisDevice => 'bu cihaz';
+
+  @override
+  String get sessionsTitle => 'Oturumlar';
 
   @override
   String get shellTabDashboard => 'Dashboard';

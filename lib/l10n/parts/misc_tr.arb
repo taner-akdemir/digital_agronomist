@@ -55,5 +55,21 @@
     "placeholders": {
       "date": {}
     }
+  },
+  "accountSessions": "Oturumlar",
+  "sessionsTitle": "Oturumlar",
+  "sessionsIntro": "Hesabınızın açık olduğu cihazlar. Tanımadığınız ya da kaybolan bir cihazı buradan kapatın; o cihaz en geç 15 dakika içinde çıkar.",
+  "sessionsBrowser": "Tarayıcı (panel)",
+  "sessionsApp": "Milk Trace uygulaması",
+  "sessionsAppAndroid": "Milk Trace · Android",
+  "sessionsAppIos": "Milk Trace · iPhone",
+  "sessionsThisDevice": "bu cihaz",
+  "sessionsLastUsed": "son kullanım {when}",
+  "sessionsSignOut": "Bu oturumu kapat",
+  "sessionsSignOutOthers": "Diğer bütün cihazlardan çık",
+  "@sessionsLastUsed": {
+    "placeholders": {
+      "when": {}
+    }
   }
 }

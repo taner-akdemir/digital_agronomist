@@ -30,6 +30,7 @@ import 'package:milktrace/data/models/team_member.dart';
 import 'package:milktrace/data/models/thresholds.dart';
 import 'package:milktrace/data/models/treatment.dart';
 import 'package:milktrace/data/models/unmatched_tag_row.dart';
+import 'package:milktrace/data/models/user_session.dart';
 import 'package:milktrace/data/models/vacuum.dart';
 import 'package:milktrace/data/repositories/milktrace_repository.dart';
 import 'package:milktrace/data/repositories/mock_lactation.dart';
@@ -868,6 +869,40 @@ class MockRepository implements MilkTraceRepository {
   /// Demo modda birim yalnızca uygulamada tutulur (Auth.applyVolumeUnit).
   @override
   Future<void> setVolumeUnit(String unit) => _delayed(() async {});
+
+  /// Mock'ta iki oturum: bu telefon ve panel.
+  final List<UserSession> _sessions = [
+    UserSession(
+      id: 's1',
+      userAgent: 'MilkTrace/1.0.0 (android)',
+      current: true,
+      startedAt: DateTime.utc(2026, 9, 1),
+      lastUsedAt: DateTime.utc(2026, 9, 29, 6),
+    ),
+    UserSession(
+      id: 's2',
+      userAgent: 'Mozilla/5.0 (Macintosh) Chrome/140',
+      ip: '85.100.1.2',
+      startedAt: DateTime.utc(2026, 9, 20),
+      lastUsedAt: DateTime.utc(2026, 9, 28, 18),
+    ),
+  ];
+
+  @override
+  Future<List<UserSession>> loginSessions() =>
+      _delayed(() async => List.unmodifiable(_sessions));
+
+  @override
+  Future<void> revokeLoginSession(String id) => _delayed(
+    () async => _sessions.removeWhere((s) => s.id == id && !s.current),
+  );
+
+  @override
+  Future<int> revokeOtherLoginSessions() => _delayed(() async {
+    final n = _sessions.where((s) => !s.current).length;
+    _sessions.removeWhere((s) => !s.current);
+    return n;
+  });
 
   /// Mock'ta 2FA bellekte; kod "123456" geçer (demo).
   bool _twoFactor = false;

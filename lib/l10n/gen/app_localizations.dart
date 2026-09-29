@@ -152,6 +152,12 @@ abstract class AppLocalizations {
   /// **'Bu telefonda bildirim kapalı: izin verilmedi ya da bildirim servisi henüz bağlanmadı. Uyarılar bildirim merkezinde görünmeye devam eder.'**
   String get accountPushUnavailable;
 
+  /// No description provided for @accountSessions.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oturumlar'**
+  String get accountSessions;
+
   /// No description provided for @accountSignOut.
   ///
   /// In tr, this message translates to:
@@ -3504,6 +3510,66 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'{n, plural, other{{n} hayvan sağıldı}} · {amount}'**
   String sessionSummaryTotals(int n, Object amount);
+
+  /// No description provided for @sessionsApp.
+  ///
+  /// In tr, this message translates to:
+  /// **'Milk Trace uygulaması'**
+  String get sessionsApp;
+
+  /// No description provided for @sessionsAppAndroid.
+  ///
+  /// In tr, this message translates to:
+  /// **'Milk Trace · Android'**
+  String get sessionsAppAndroid;
+
+  /// No description provided for @sessionsAppIos.
+  ///
+  /// In tr, this message translates to:
+  /// **'Milk Trace · iPhone'**
+  String get sessionsAppIos;
+
+  /// No description provided for @sessionsBrowser.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tarayıcı (panel)'**
+  String get sessionsBrowser;
+
+  /// No description provided for @sessionsIntro.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesabınızın açık olduğu cihazlar. Tanımadığınız ya da kaybolan bir cihazı buradan kapatın; o cihaz en geç 15 dakika içinde çıkar.'**
+  String get sessionsIntro;
+
+  /// No description provided for @sessionsLastUsed.
+  ///
+  /// In tr, this message translates to:
+  /// **'son kullanım {when}'**
+  String sessionsLastUsed(Object when);
+
+  /// No description provided for @sessionsSignOut.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu oturumu kapat'**
+  String get sessionsSignOut;
+
+  /// No description provided for @sessionsSignOutOthers.
+  ///
+  /// In tr, this message translates to:
+  /// **'Diğer bütün cihazlardan çık'**
+  String get sessionsSignOutOthers;
+
+  /// No description provided for @sessionsThisDevice.
+  ///
+  /// In tr, this message translates to:
+  /// **'bu cihaz'**
+  String get sessionsThisDevice;
+
+  /// No description provided for @sessionsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Oturumlar'**
+  String get sessionsTitle;
 
   /// No description provided for @shellTabDashboard.
   ///

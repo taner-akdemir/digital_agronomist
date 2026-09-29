@@ -9,6 +9,7 @@
   "accountNotificationChannels": "Bildirim kanalları",
   "accountPickFarm": "İşletme seçin",
   "accountPushUnavailable": "Bu telefonda bildirim kapalı: izin verilmedi ya da bildirim servisi henüz bağlanmadı. Uyarılar bildirim merkezinde görünmeye devam eder.",
+  "accountSessions": "Oturumlar",
   "accountSignOut": "Çıkış yap",
   "accountSwitchFarm": "İşletme değiştir",
   "accountSwitchFarmFailed": "İşletme değiştirilemedi: {error}",
@@ -1166,6 +1167,21 @@
       "amount": {}
     }
   },
+  "sessionsApp": "Milk Trace uygulaması",
+  "sessionsAppAndroid": "Milk Trace · Android",
+  "sessionsAppIos": "Milk Trace · iPhone",
+  "sessionsBrowser": "Tarayıcı (panel)",
+  "sessionsIntro": "Hesabınızın açık olduğu cihazlar. Tanımadığınız ya da kaybolan bir cihazı buradan kapatın; o cihaz en geç 15 dakika içinde çıkar.",
+  "sessionsLastUsed": "son kullanım {when}",
+  "@sessionsLastUsed": {
+    "placeholders": {
+      "when": {}
+    }
+  },
+  "sessionsSignOut": "Bu oturumu kapat",
+  "sessionsSignOutOthers": "Diğer bütün cihazlardan çık",
+  "sessionsThisDevice": "bu cihaz",
+  "sessionsTitle": "Oturumlar",
   "shellTabDashboard": "Dashboard",
   "shellTabDevices": "Cihazlar",
   "shellTabHistory": "Geçmiş",

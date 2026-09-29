@@ -29,6 +29,7 @@ import 'package:milktrace/data/models/team_member.dart';
 import 'package:milktrace/data/models/thresholds.dart';
 import 'package:milktrace/data/models/treatment.dart';
 import 'package:milktrace/data/models/unmatched_tag_row.dart';
+import 'package:milktrace/data/models/user_session.dart';
 import 'package:milktrace/data/models/vacuum.dart';
 import 'package:milktrace/data/repositories/milktrace_repository.dart';
 
@@ -435,6 +436,18 @@ class CachingRepository implements MilkTraceRepository {
   @override
   Future<void> setVolumeUnit(String unit) =>
       _net(() => _inner.setVolumeUnit(unit));
+
+  // Oturumlar hesap güvenliği: önbelleklenmez.
+  @override
+  Future<List<UserSession>> loginSessions() => _net(_inner.loginSessions);
+
+  @override
+  Future<void> revokeLoginSession(String id) =>
+      _net(() => _inner.revokeLoginSession(id));
+
+  @override
+  Future<int> revokeOtherLoginSessions() =>
+      _net(_inner.revokeOtherLoginSessions);
 
   // 2FA hesap güvenliği: önbelleklenmez, çevrimdışı eski durum gösterilmez.
   @override

@@ -19,6 +19,7 @@ import 'package:milktrace/features/live/live_board_screen.dart';
 import 'package:milktrace/features/settings/milking_schedule_screen.dart';
 import 'package:milktrace/features/settings/notification_channel_form_screen.dart';
 import 'package:milktrace/features/settings/notification_channels_screen.dart';
+import 'package:milktrace/features/settings/sessions_screen.dart';
 import 'package:milktrace/features/settings/thresholds_screen.dart';
 import 'package:milktrace/features/settings/two_factor_screen.dart';
 import 'package:milktrace/features/shell/scaffold_with_nav_bar.dart';
@@ -98,6 +99,11 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/settings/milkers',
         builder: (_, _) => const MilkersScreen(),
+      ),
+      // Açık oturumlar (backend ADR 0105): hesap kartından.
+      GoRoute(
+        path: '/settings/sessions',
+        builder: (_, _) => const SessionsScreen(),
       ),
       // İki adımlı doğrulama (backend ADR 0102): hesap kartından.
       GoRoute(

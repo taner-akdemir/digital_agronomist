@@ -26,6 +26,7 @@ import 'package:milktrace/data/models/team_member.dart';
 import 'package:milktrace/data/models/thresholds.dart';
 import 'package:milktrace/data/models/treatment.dart';
 import 'package:milktrace/data/models/unmatched_tag_row.dart';
+import 'package:milktrace/data/models/user_session.dart';
 import 'package:milktrace/data/models/vacuum.dart';
 
 /// İndirilen rapor dosyası: adı ve içeriği.
@@ -292,6 +293,13 @@ abstract interface class MilkTraceRepository {
 
   /// Kalıcı silme: yazdığı notlar "Silinmiş kullanıcı" olarak kalır.
   Future<void> deleteTeamMember(String id);
+
+  /// Açık oturumlar (backend ADR 0105); bu cihaz `current`.
+  Future<List<UserSession>> loginSessions();
+  Future<void> revokeLoginSession(String id);
+
+  /// Bu cihaz dışındakileri kapatır; kapatılan sayısı.
+  Future<int> revokeOtherLoginSessions();
 
   /// İki adımlı doğrulama açık mı (backend ADR 0102).
   Future<bool> twoFactorEnabled();

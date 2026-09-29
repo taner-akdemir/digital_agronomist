@@ -23,8 +23,11 @@ işletme adına platform yöneticisi açar; uygulama içinden hesap oluşturulma
 **Hesap bilgileri:** ad soyad, e-posta adresi, işletmedeki rol (sahip, operatör,
 izleyici), hesap durumu. Parolanız yalnızca geri çevrilemez bir özet olarak saklanır.
 
-**Oturum bilgileri:** giriş yaptığınız cihazın oturum jetonları ve bu oturumu açan
-uygulamanın/tarayıcının kimlik bilgisi (user-agent). Oturum jetonları telefonunuzda
+**Oturum bilgileri:** giriş yaptığınız cihazın oturum jetonları, bu oturumu açan
+uygulamanın/tarayıcının kimlik bilgisi (user-agent) ve oturumun son kullanıldığı IP
+adresi — "Oturumlar" ekranında cihazlarınızı tanıyıp kapatabilmeniz için; oturum
+kapanınca ya da en geç 30 gün sonra geçersizleşir. Yanlış parola denemeleri e-posta ve IP
+adresinin geri çevrilemez özetiyle en çok bir gün sayılır (tahmin saldırılarına karşı). Oturum jetonları telefonunuzda
 işletim sisteminin güvenli deposunda tutulur.
 
 **Bildirim bilgileri:** bildirim alabilmeniz için telefonunuzun bildirim jetonu

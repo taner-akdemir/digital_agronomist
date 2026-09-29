@@ -14,10 +14,14 @@ abstract final class AppBuild {
   static String? platform;
   static int? build;
 
+  /// Sürüm adı ("1.2.0"); oturum listesinde cihazı tanıtan User-Agent'a girer.
+  static String? version;
+
   static Future<void> load() async {
     try {
       final p = await PackageInfo.fromPlatform();
       build = int.tryParse(p.buildNumber);
+      version = p.version;
       platform = Platform.isAndroid
           ? 'android'
           : Platform.isIOS
@@ -33,6 +37,10 @@ abstract final class AppBuild {
     if (build case final b?) 'X-App-Build': '$b',
     // Sunucu hata ve bilgi mesajlarını bu dilde döner (backend ADR 0093).
     'Accept-Language': l10nLanguage,
+    // Oturum listesinde "Milk Trace · Android" diye tanınsın (backend ADR
+    // 0105); Dio'nun varsayılanı "Dart/3 (dart:io)" hiçbir şey söylemiyordu.
+    if (platform case final p?)
+      'User-Agent': 'MilkTrace/${version ?? '?'} ($p)',
   };
 }
 

@@ -37,6 +37,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Notifications are off on this phone: permission was not granted or the notification service is not connected yet. Alerts still appear in the notification center.';
 
   @override
+  String get accountSessions => 'Sessions';
+
+  @override
   String get accountSignOut => 'Sign out';
 
   @override
@@ -2042,6 +2045,39 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0 · $amount';
   }
+
+  @override
+  String get sessionsApp => 'Milk Trace app';
+
+  @override
+  String get sessionsAppAndroid => 'Milk Trace · Android';
+
+  @override
+  String get sessionsAppIos => 'Milk Trace · iPhone';
+
+  @override
+  String get sessionsBrowser => 'Browser (panel)';
+
+  @override
+  String get sessionsIntro =>
+      'Devices where your account is signed in. Close a device you don\'t recognise or have lost; it is signed out within 15 minutes.';
+
+  @override
+  String sessionsLastUsed(Object when) {
+    return 'last used $when';
+  }
+
+  @override
+  String get sessionsSignOut => 'Close this session';
+
+  @override
+  String get sessionsSignOutOthers => 'Sign out of all other devices';
+
+  @override
+  String get sessionsThisDevice => 'this device';
+
+  @override
+  String get sessionsTitle => 'Sessions';
 
   @override
   String get shellTabDashboard => 'Dashboard';
