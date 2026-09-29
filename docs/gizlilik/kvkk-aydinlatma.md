@@ -48,7 +48,7 @@ Hizmet sözleşmesi süresince ve sona ermesinden sonra 90 gün; ardından kendi
 silinir (faturalama kayıtları işletme adı anonimleştirilerek vergi mevzuatı süresince
 saklanır). Yedekler 7 gün (sunucu dışı kopya 14 gün), sunucu kayıtları (IP adresi dahil) 30 gün, uygulama içi geri bildirim 1 yıl. Süre sonunda
 silinir, yok edilir ya da anonimleştirilir. Sözleşme sürerken hesap uygulamadan ("Hesabımı
-sil") ya da https://[DOLDUR: alan-adı]/admin/hesap-sil adresinden kalıcı silinir; yazılan hayvan notları sürü kaydı olarak kalır, yazar adı kaldırılır.
+sil") ya da https://api.milktrace.com.tr/admin/hesap-sil adresinden kalıcı silinir; yazılan hayvan notları sürü kaydı olarak kalır, yazar adı kaldırılır.
 
 ## Haklarınız (md. 11)
 

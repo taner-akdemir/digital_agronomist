@@ -2,7 +2,7 @@
 
 > **TASLAK (28.09.2026).** Koddaki gerçek veri akışından çıkarıldı; yayımlamadan önce
 > hukuki kontrolden geçmeli. `[DOLDUR]` işaretli yerler bilinmiyor. Play Console bu
-> metnin herkese açık bir adresini ister (alan adı alınınca `https://<alan-adı>/gizlilik`).
+> metnin herkese açık bir adresini ister (`https://milktrace.com.tr/gizlilik` — [DOLDUR: sayfa henüz yayında değil]).
 
 **Son güncelleme:** [DOLDUR]
 
@@ -119,7 +119,7 @@ görüntülenen veriler uygulamanın kendi deposunda. Çıkış yaptığınızda
 KVKK md. 11 uyarınca verilerinizin işlenip işlenmediğini öğrenme, bilgi isteme,
 düzeltilmesini ya da silinmesini isteme, itiraz etme ve zararın giderilmesini isteme
 haklarına sahipsiniz. Başvuru: [DOLDUR: e-posta]. **Hesabınızı kendiniz silebilirsiniz:**
-uygulamada hesap kartı → "Hesabımı sil" ya da https://[DOLDUR: alan-adı]/admin/hesap-sil
+uygulamada hesap kartı → "Hesabımı sil" ya da https://api.milktrace.com.tr/admin/hesap-sil
 (parolanızla). Bir işletmenin tek sahibiyseniz işletme sahipsiz kalmasın diye önce bize
 başvurun. Hesap silinince adınız, e-postanız,
 oturumlarınız ve bildirim jetonunuz kalıcı olarak silinir; yazdığınız hayvan notları

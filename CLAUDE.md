@@ -799,7 +799,7 @@ kaybolursa Play Console'dan sıfırlanabilir.
 **Sürüm:**
 
 1. `pubspec.yaml`'da `version: X.Y.Z+N` — N (versionCode) her yüklemede artmalı.
-2. `MT_API_BASE=https://api.<alan-adı>/api/v1 tool/release.sh` → analiz, test,
+2. `tool/release.sh` (API `https://api.milktrace.com.tr/api/v1`; başka ortam `MT_API_BASE=…`) → analiz, test,
    `build/app/outputs/bundle/release/app-release.aab`. Betik https olmayan adresi ve
    anahtarsız (debug imzalı) derlemeyi reddeder.
 3. Play Console → uygulama → Test → **Dahili test** → Yeni sürüm → .aab'yi yükle;
@@ -809,5 +809,5 @@ kaybolursa Play Console'dan sıfırlanabilir.
 hedef kitle, gizlilik politikası bağlantısı) doldurulur. Taslaklar `docs/gizlilik/`:
 gizlilik politikası, KVKK aydınlatma metni ve veri güvenliği formu cevapları — koddan
 çıkarıldı, **hukuki kontrol ve `[DOLDUR]` yerleri** bekliyor. Yeni izin ya da SDK
-eklenirse üçü birlikte güncellenir. Alan adı henüz yok: API adresi
-alan adı alınınca `MT_API_BASE` ile verilir, kodda değişiklik gerekmez.
+eklenirse üçü birlikte güncellenir. Alan adı **`milktrace.com.tr`** (29.09.2026): API ve panel `api.milktrace.com.tr`; hesap silme
+`https://api.milktrace.com.tr/admin/hesap-sil`.

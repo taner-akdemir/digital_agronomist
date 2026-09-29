@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Play Console dahili test kanalı için sürüm paketi (.aab) — CLAUDE.md §8.
 #
-#   MT_API_BASE=https://api.<alan-adı>/api/v1 tool/release.sh
+#   tool/release.sh    (API varsayılanı https://api.milktrace.com.tr/api/v1;
+#                       başka ortam için MT_API_BASE=... verilir)
 #
 # REDDEDER: anahtar yoksa (debug imzalı paketi Play kabul etmez) ve API adresi
 # https değilse (sürüm derlemesi düz http'ye izin vermez; varsayılan
@@ -10,7 +11,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-: "${MT_API_BASE:?MT_API_BASE gerekli, ör. https://api.example.com/api/v1}"
+MT_API_BASE=${MT_API_BASE:-https://api.milktrace.com.tr/api/v1}
 case "$MT_API_BASE" in
   https://*) ;;
   *) echo "MT_API_BASE https olmalı: $MT_API_BASE" >&2; exit 1 ;;

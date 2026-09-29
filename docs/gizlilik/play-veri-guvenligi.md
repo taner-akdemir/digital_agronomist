@@ -12,9 +12,9 @@
 |---|---|---|
 | Uygulama kullanıcı verisi topluyor ya da paylaşıyor mu? | **Evet** | hesap, bildirim jetonu |
 | Aktarımda şifreleniyor mu? | **Evet** (HTTPS/TLS) | sürüm paketi yalnızca https'e derleniyor (`tool/release.sh`), düz http'ye izin yok |
-| Kullanıcılar verilerinin silinmesini isteyebilir mi? | **Evet** | uygulama içi: hesap kartı → "Hesabımı sil" (parola onayı, backend ADR 0098); web: `https://[DOLDUR: alan-adı]/admin/hesap-sil` |
+| Kullanıcılar verilerinin silinmesini isteyebilir mi? | **Evet** | uygulama içi: hesap kartı → "Hesabımı sil" (parola onayı, backend ADR 0098); web: `https://api.milktrace.com.tr/admin/hesap-sil` |
 | Hesap uygulama içinden oluşturuluyor mu? | **Hayır** | hesapları işletme sahibi ya da platform açar; yine de uygulama içi silme ve web bağlantısı var |
-| Hesap silme bağlantısı (Play "Veri silme" bölümü) | `https://[DOLDUR: alan-adı]/admin/hesap-sil` | panelin herkese açık sayfası |
+| Hesap silme bağlantısı (Play "Veri silme" bölümü) | `https://api.milktrace.com.tr/admin/hesap-sil` | panelin herkese açık sayfası |
 
 ## Toplanan veri türleri
 
