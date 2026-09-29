@@ -5,6 +5,7 @@ import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/data/models/animal_group.dart';
 import 'package:milktrace/features/history/history_providers.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
@@ -19,8 +20,8 @@ class GroupsScreen extends ConsumerWidget {
   Future<String?> _askName(BuildContext context, {String initial = ''}) =>
       showTextPrompt(
         context,
-        title: initial.isEmpty ? 'Yeni grup' : 'Grubun adı',
-        label: 'Ad (ör. Padok 1, Yüksek verim)',
+        title: initial.isEmpty ? l10n.groupsNew : l10n.groupsRenameTitle,
+        label: l10n.groupsNameLabel,
         initial: initial,
         maxLength: 40,
       );
@@ -40,7 +41,7 @@ class GroupsScreen extends ConsumerWidget {
     } catch (e) {
       messenger.showSnackBar(
         SnackBar(
-          content: Text(userMessage(e) ?? 'Kaydedilemedi: $e'),
+          content: Text(userMessage(e) ?? l10n.commonSaveFailed('$e')),
           backgroundColor: AppColors.flowRed,
         ),
       );
@@ -81,17 +82,17 @@ class GroupsScreen extends ConsumerWidget {
     final ok = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('"${g.name}" silinsin mi?'),
-        content: const Text('Gruptaki hayvanlar silinmez, grupsuz kalır.'),
+        title: Text(l10n.groupsDeleteTitle(g.name)),
+        content: Text(l10n.groupsDeleteBody),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Vazgeç'),
+            child: Text(l10n.commonCancel),
           ),
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: AppColors.flowRed),
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Sil'),
+            child: Text(l10n.commonDelete),
           ),
         ],
       ),
@@ -110,14 +111,14 @@ class GroupsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          tooltip: 'Geri',
+          tooltip: l10n.commonBack,
           onPressed: () =>
               context.canPop() ? context.pop() : context.go('/history'),
           icon: const Icon(Icons.arrow_back),
         ),
-        title: const Text(
-          'Gruplar',
-          style: TextStyle(
+        title: Text(
+          l10n.groupsTitle,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -129,11 +130,11 @@ class GroupsScreen extends ConsumerWidget {
         backgroundColor: AppColors.darkGreenColor,
         foregroundColor: Colors.white,
         icon: const Icon(Icons.add),
-        label: const Text('Grup ekle'),
+        label: Text(l10n.groupsAdd),
       ),
       body: AsyncView(
         value: groups,
-        errorMessage: 'Gruplar yüklenemedi',
+        errorMessage: l10n.groupsLoadFailed,
         onRetry: () => ref.invalidate(animalGroupsProvider),
         builder: (list) => ListView(
           padding: const EdgeInsets.fromLTRB(
@@ -143,19 +144,21 @@ class GroupsScreen extends ConsumerWidget {
             96,
           ),
           children: [
-            const Text(
-              'Her hayvanın en çok bir grubu olur; hayvan gruba düzenleme '
-              'formundan atanır. Panoda grupların günlük toplamı görünür.',
-              style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
+            Text(
+              l10n.groupsIntro,
+              style: const TextStyle(
+                fontSize: 12,
+                color: AppColors.onSurfaceMuted,
+              ),
             ),
             const SizedBox(height: AppSpacing.md),
             if (list.isEmpty)
-              const Padding(
-                padding: EdgeInsets.all(AppSpacing.xl),
+              Padding(
+                padding: const EdgeInsets.all(AppSpacing.xl),
                 child: Text(
-                  'Henüz grup yok.',
+                  l10n.groupsEmpty,
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: AppColors.onSurfaceMuted),
+                  style: const TextStyle(color: AppColors.onSurfaceMuted),
                 ),
               ),
             for (final g in list)
@@ -163,10 +166,10 @@ class GroupsScreen extends ConsumerWidget {
                 margin: const EdgeInsets.only(bottom: AppSpacing.sm),
                 child: ListTile(
                   title: Text(g.name),
-                  subtitle: Text('${g.animals} sağmal hayvan'),
+                  subtitle: Text(l10n.groupsMilkingCount(g.animals)),
                   onTap: () => _rename(context, ref, g),
                   trailing: IconButton(
-                    tooltip: 'Grubu sil',
+                    tooltip: l10n.groupsDeleteTooltip,
                     icon: const Icon(Icons.delete_outline),
                     onPressed: () => _delete(context, ref, g),
                   ),

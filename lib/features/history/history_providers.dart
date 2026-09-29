@@ -6,6 +6,7 @@ import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/data/models/unmatched_tag_row.dart';
 import 'package:milktrace/domain/yield_class.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -41,7 +42,10 @@ Future<Map<String, String>> spoutLabels(Ref ref) async {
   final vacuums = {for (final v in await repo.vacuums()) v.id: v.name};
   return {
     for (final s in await repo.spouts())
-      s.id: '${vacuums[s.vacuumId] ?? 'Ünite'} · Nokta ${s.positionNo}',
+      s.id: l10n.historySpoutLabel(
+        vacuums[s.vacuumId] ?? l10n.historyUnknownVacuum,
+        s.positionNo,
+      ),
   };
 }
 

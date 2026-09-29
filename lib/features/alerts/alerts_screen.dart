@@ -6,6 +6,7 @@ import 'package:milktrace/core/format.dart';
 import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/features/alerts/alert_style.dart';
 import 'package:milktrace/features/alerts/alerts_providers.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/widgets/async_view.dart';
 import 'package:milktrace/widgets/milk_palette.dart';
 
@@ -23,14 +24,14 @@ class AlertsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          tooltip: 'Geri',
+          tooltip: l10n.commonBack,
           onPressed: () =>
               context.canPop() ? context.pop() : context.go('/live'),
           icon: const Icon(Icons.arrow_back),
         ),
-        title: const Text(
-          'Uyarılar',
-          style: TextStyle(
+        title: Text(
+          l10n.alertsTitle,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -44,7 +45,7 @@ class AlertsScreen extends ConsumerWidget {
         },
         child: AsyncView(
           value: alerts,
-          errorMessage: 'Uyarılar yüklenemedi',
+          errorMessage: l10n.alertsLoadFailed,
           onRetry: () => ref.invalidate(alertListProvider),
           builder: (list) => list.isEmpty
               ? const _Empty()
@@ -134,7 +135,10 @@ class _AlertCard extends ConsumerWidget {
                     ),
                     onPressed: () =>
                         ref.read(alertListProvider.notifier).ack(alert.id),
-                    child: const Text('Okundu', style: TextStyle(fontSize: 12)),
+                    child: Text(
+                      l10n.alertsMarkRead,
+                      style: const TextStyle(fontSize: 12),
+                    ),
                   )
                 else
                   const Padding(
@@ -164,10 +168,14 @@ String alertTimeLabel(Alert a) {
   // oradaydı, yalnızca hata bildirmeyi bıraktı.
   final resolved = a.resolvedAt;
   if (resolved != null) {
-    final verb = a.type == 'device_error' ? 'düzeldi' : 'geri geldi';
-    parts.add('$verb ${Fmt.time(resolved)}');
+    final time = Fmt.time(resolved);
+    parts.add(
+      a.type == 'device_error'
+          ? l10n.alertsRecoveredAt(time)
+          : l10n.alertsBackOnlineAt(time),
+    );
   }
-  if (a.isAcknowledged) parts.add('okundu');
+  if (a.isAcknowledged) parts.add(l10n.alertsAcknowledged);
   return parts.join(' · ');
 }
 
@@ -179,18 +187,18 @@ class _Empty extends StatelessWidget {
     // Kaydırılabilir kalmalı: RefreshIndicator boş listede de çalışsın.
     return ListView(
       padding: const EdgeInsets.all(AppSpacing.xxl),
-      children: const [
-        SizedBox(height: AppSpacing.xxl),
-        Icon(
+      children: [
+        const SizedBox(height: AppSpacing.xxl),
+        const Icon(
           Icons.notifications_none_outlined,
           size: 44,
           color: AppColors.lightGreyColor,
         ),
-        SizedBox(height: AppSpacing.md),
+        const SizedBox(height: AppSpacing.md),
         Text(
-          'Açık uyarı yok',
+          l10n.alertsEmpty,
           textAlign: TextAlign.center,
-          style: TextStyle(color: AppColors.onSurfaceMuted),
+          style: const TextStyle(color: AppColors.onSurfaceMuted),
         ),
       ],
     );

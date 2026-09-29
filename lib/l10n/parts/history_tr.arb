@@ -1,0 +1,223 @@
+{
+  "historyTabAnimals": "Hayvanlar",
+  "historyTabSessions": "Oturumlar",
+  "historyReport": "Rapor",
+  "historyGroups": "Gruplar",
+  "historyFromList": "Listeden",
+  "historyAddAnimal": "Hayvan ekle",
+  "historyAnimalsLoadFailed": "Hayvanlar yüklenemedi",
+  "historyNoAnimalsForFilter": "Bu filtreye uyan hayvan yok",
+  "historyUnmatchedBanner": "{n, plural, other{{n} tanınmayan küpe}}",
+  "@historyUnmatchedBanner": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "historyUnmatchedBannerHint": "Sağımda okundu; hayvanına atayın",
+  "historyFilterSpecies": "Tür",
+  "historyFilterGroup": "Grup",
+  "historyAnimalCount": "{count, plural, other{{count} hayvan}}",
+  "@historyAnimalCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "historyLactationNo": "{n}. laktasyon",
+  "@historyLactationNo": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "historySessionsLoadFailed": "Oturumlar yüklenemedi",
+  "historyNoSessions": "Kayıtlı sağım oturumu yok",
+  "historySessionTitle": "{hall} Bölgesi · {type} Sağımı",
+  "@historySessionTitle": {
+    "placeholders": {
+      "hall": {},
+      "type": {}
+    }
+  },
+  "historySessionStartUnknown": "Başlangıç bilinmiyor",
+  "historySessionAutoStarted": "otomatik açıldı",
+  "historySessionRunning": "Sürüyor",
+  "historySpoutLabel": "{vacuum} · Nokta {n}",
+  "@historySpoutLabel": {
+    "placeholders": {
+      "vacuum": {},
+      "n": {}
+    }
+  },
+  "historyUnknownVacuum": "Ünite",
+  "animalImportTitle": "Listeden içe aktar",
+  "animalImportSpeciesLoadFailed": "Türler yüklenemedi",
+  "animalImportReadFailed": "Dosya okunamadı: {error}",
+  "@animalImportReadFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "animalImportFailed": "İçe aktarılamadı: {error}",
+  "@animalImportFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "animalImportAdded": "{n, plural, other{{n} hayvan eklendi}}",
+  "@animalImportAdded": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "animalImportIntro": "Veterinerden, Birlik'ten ya da Hayvan Bilgi Sistemi'nden aldığınız listeyi yükleyin (Excel .xlsx ya da CSV). İlk satır sütun başlıkları olmalı; tarihler gün önde (03.04.2021).",
+  "animalImportColumns": "Sütunlar: Küpe No (zorunlu) · Tür · Adı · Irkı · RFID · Doğum Tarihi · Son Buzağılama · Laktasyon · Durumu",
+  "animalImportRules": "Küpesi zaten kayıtlı hayvanlar değiştirilmez. Hatalı satırlar atlanır; dosyayı düzeltip yeniden yüklemek güvenlidir.",
+  "animalImportDefaultSpecies": "Türü yazılmamış satırlar",
+  "animalImportPickFile": "Dosya seç",
+  "animalImportPickOtherFile": "Başka dosya seç",
+  "animalImportNothingToAdd": "Eklenecek hayvan yok",
+  "animalImportAddN": "{n} hayvanı ekle",
+  "@animalImportAddN": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalImportCountCreate": "{n} eklenecek",
+  "@animalImportCountCreate": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalImportCountExists": "{n} zaten kayıtlı",
+  "@animalImportCountExists": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalImportCountErrors": "{n} hatalı, atlanacak",
+  "@animalImportCountErrors": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalImportIgnoredColumns": "Alınmayan sütunlar: {columns}",
+  "@animalImportIgnoredColumns": {
+    "placeholders": {
+      "columns": {}
+    }
+  },
+  "animalImportSectionErrors": "Hatalı satırlar",
+  "animalImportSectionWarnings": "Uyarılar",
+  "animalImportSectionCreate": "Eklenecek",
+  "animalImportSectionExists": "Zaten kayıtlı (değiştirilmez)",
+  "unmatchedTitle": "Tanınmayan küpeler",
+  "unmatchedLoadFailed": "Küpeler yüklenemedi",
+  "unmatchedIntro": "Sağımda okunan ama hiçbir hayvana kayıtlı olmayan küpeler. Küpeyi hayvanına atayın; bir dahaki sağımda hayvan noktaya kendiliğinden eşleşir. Başka çiftliğin hayvanı ya da bozuk okumaysa yok sayın.",
+  "unmatchedEmpty": "Tanınmayan küpe yok",
+  "unmatchedLastSeenAt": "Son: {spout}",
+  "@unmatchedLastSeenAt": {
+    "placeholders": {
+      "spout": {}
+    }
+  },
+  "unmatchedUnknownSpout": "bilinmeyen nokta",
+  "unmatchedReadCount": "{n, plural, other{{n} okuma}}",
+  "@unmatchedReadCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "unmatchedIgnore": "Yok say",
+  "unmatchedAssign": "Hayvana ata",
+  "unmatchedReplaceTitle": "Küpe değiştirilsin mi?",
+  "unmatchedReplaceBody": "{animal} kaydındaki küpe {old}. Yerine {rfid} yazılacak; eski küpe artık tanınmaz.",
+  "@unmatchedReplaceBody": {
+    "placeholders": {
+      "animal": {},
+      "old": {},
+      "rfid": {}
+    }
+  },
+  "unmatchedReplace": "Değiştir",
+  "unmatchedAssigned": "Küpe {earTag} kaydına eklendi",
+  "@unmatchedAssigned": {
+    "placeholders": {
+      "earTag": {}
+    }
+  },
+  "unmatchedIgnoreTitle": "Küpe yok sayılsın mı?",
+  "unmatchedIgnoreBody": "{rfid} listeden kalkar ve yeniden okunsa da dönmez. Başka çiftliğin hayvanı ya da bozuk okuma için.",
+  "@unmatchedIgnoreBody": {
+    "placeholders": {
+      "rfid": {}
+    }
+  },
+  "unmatchedIgnoreFailed": "Yok sayılamadı: {error}",
+  "@unmatchedIgnoreFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "unmatchedChooseAnimal": "{rfid} · hayvan seç",
+  "@unmatchedChooseAnimal": {
+    "placeholders": {
+      "rfid": {}
+    }
+  },
+  "unmatchedSearchHint": "Küpe numarası veya ad",
+  "unmatchedNoTag": "küpesi yok",
+  "unmatchedTagValue": "küpe {rfid}",
+  "@unmatchedTagValue": {
+    "placeholders": {
+      "rfid": {}
+    }
+  },
+  "groupsNew": "Yeni grup",
+  "groupsRenameTitle": "Grubun adı",
+  "groupsNameLabel": "Ad (ör. Padok 1, Yüksek verim)",
+  "groupsDeleteTitle": "\"{name}\" silinsin mi?",
+  "@groupsDeleteTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "groupsDeleteBody": "Gruptaki hayvanlar silinmez, grupsuz kalır.",
+  "groupsTitle": "Gruplar",
+  "groupsAdd": "Grup ekle",
+  "groupsLoadFailed": "Gruplar yüklenemedi",
+  "groupsIntro": "Her hayvanın en çok bir grubu olur; hayvan gruba düzenleme formundan atanır. Panoda grupların günlük toplamı görünür.",
+  "groupsEmpty": "Henüz grup yok.",
+  "groupsMilkingCount": "{n, plural, other{{n} sağmal hayvan}}",
+  "@groupsMilkingCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "groupsDeleteTooltip": "Grubu sil",
+  "alertsTitle": "Uyarılar",
+  "alertsLoadFailed": "Uyarılar yüklenemedi",
+  "alertsMarkRead": "Okundu",
+  "alertsRecoveredAt": "düzeldi {time}",
+  "@alertsRecoveredAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "alertsBackOnlineAt": "geri geldi {time}",
+  "@alertsBackOnlineAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "alertsAcknowledged": "okundu",
+  "alertsEmpty": "Açık uyarı yok"
+}

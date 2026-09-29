@@ -6,6 +6,7 @@ import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/data/models/animal_import.dart';
 import 'package:milktrace/data/models/species.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
@@ -41,9 +42,9 @@ class AnimalImportScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Listeden içe aktar',
-          style: TextStyle(
+        title: Text(
+          l10n.animalImportTitle,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -52,7 +53,7 @@ class AnimalImportScreen extends ConsumerWidget {
       ),
       body: AsyncView(
         value: ref.watch(speciesListProvider),
-        errorMessage: 'Türler yüklenemedi',
+        errorMessage: l10n.animalImportSpeciesLoadFailed,
         onRetry: () => ref.invalidate(speciesListProvider),
         builder: (species) => _Import(species: species),
       ),
@@ -112,7 +113,9 @@ class _ImportState extends ConsumerState<_Import> {
       if (mounted) setState(() => _preview = r);
     } catch (e) {
       if (mounted) {
-        setState(() => _error = userMessage(e) ?? 'Dosya okunamadı: $e');
+        setState(
+          () => _error = userMessage(e) ?? l10n.animalImportReadFailed('$e'),
+        );
       }
     } finally {
       if (mounted) setState(() => _busy = false);
@@ -134,11 +137,13 @@ class _ImportState extends ConsumerState<_Import> {
       if (!mounted) return;
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('${r.create} hayvan eklendi')));
+      ).showSnackBar(SnackBar(content: Text(l10n.animalImportAdded(r.create))));
       context.pop();
     } catch (e) {
       if (mounted) {
-        setState(() => _error = userMessage(e) ?? 'İçe aktarılamadı: $e');
+        setState(
+          () => _error = userMessage(e) ?? l10n.animalImportFailed('$e'),
+        );
       }
     } finally {
       if (mounted) setState(() => _busy = false);
@@ -154,31 +159,38 @@ class _ImportState extends ConsumerState<_Import> {
           child: ListView(
             padding: const EdgeInsets.all(AppSpacing.lg),
             children: [
-              const Text(
-                'Veterinerden, Birlik\'ten ya da Hayvan Bilgi Sistemi\'nden '
-                'aldığınız listeyi yükleyin (Excel .xlsx ya da CSV). İlk satır '
-                'sütun başlıkları olmalı; tarihler gün önde (03.04.2021).',
-                style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
+              Text(
+                l10n.animalImportIntro,
+                style: const TextStyle(
+                  fontSize: 13,
+                  color: AppColors.onSurfaceMuted,
+                ),
               ),
               const SizedBox(height: AppSpacing.sm),
-              const Text(
-                'Sütunlar: Küpe No (zorunlu) · Tür · Adı · Irkı · RFID · '
-                'Doğum Tarihi · Son Buzağılama · Laktasyon · Durumu',
-                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+              Text(
+                l10n.animalImportColumns,
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               const SizedBox(height: AppSpacing.sm),
-              const Text(
-                'Küpesi zaten kayıtlı hayvanlar değiştirilmez. Hatalı satırlar '
-                'atlanır; dosyayı düzeltip yeniden yüklemek güvenlidir.',
-                style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
+              Text(
+                l10n.animalImportRules,
+                style: const TextStyle(
+                  fontSize: 13,
+                  color: AppColors.onSurfaceMuted,
+                ),
               ),
               const SizedBox(height: AppSpacing.lg),
               DropdownButtonFormField<String>(
                 initialValue: _speciesId,
-                decoration: const InputDecoration(
-                  labelText: 'Türü yazılmamış satırlar',
+                decoration: InputDecoration(
+                  labelText: l10n.animalImportDefaultSpecies,
                   isDense: true,
-                  border: OutlineInputBorder(borderRadius: AppRadius.smAll),
+                  border: const OutlineInputBorder(
+                    borderRadius: AppRadius.smAll,
+                  ),
                 ),
                 items: [
                   for (final s in widget.species)
@@ -196,7 +208,11 @@ class _ImportState extends ConsumerState<_Import> {
               OutlinedButton.icon(
                 onPressed: _busy ? null : _pick,
                 icon: const Icon(Icons.upload_file),
-                label: Text(_file == null ? 'Dosya seç' : 'Başka dosya seç'),
+                label: Text(
+                  _file == null
+                      ? l10n.animalImportPickFile
+                      : l10n.animalImportPickOtherFile,
+                ),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.darkGreenColor,
                 ),
@@ -243,8 +259,8 @@ class _ImportState extends ConsumerState<_Import> {
                   ),
                   child: Text(
                     p.create == 0
-                        ? 'Eklenecek hayvan yok'
-                        : '${p.create} hayvanı ekle',
+                        ? l10n.animalImportNothingToAdd
+                        : l10n.animalImportAddN(p.create),
                   ),
                 ),
               ),
@@ -267,35 +283,44 @@ class _ImportState extends ConsumerState<_Import> {
         spacing: AppSpacing.sm,
         runSpacing: AppSpacing.sm,
         children: [
-          _Count('${p.create} eklenecek', AppColors.lightGreenColor),
-          _Count('${p.exists} zaten kayıtlı', AppColors.veryLightGreyColor),
+          _Count(
+            l10n.animalImportCountCreate(p.create),
+            AppColors.lightGreenColor,
+          ),
+          _Count(
+            l10n.animalImportCountExists(p.exists),
+            AppColors.veryLightGreyColor,
+          ),
           if (p.errors > 0)
-            _Count('${p.errors} hatalı, atlanacak', AppColors.lightRedColor),
+            _Count(
+              l10n.animalImportCountErrors(p.errors),
+              AppColors.lightRedColor,
+            ),
         ],
       ),
       if (p.ignoredColumns.isNotEmpty) ...[
         const SizedBox(height: AppSpacing.sm),
         Text(
-          'Alınmayan sütunlar: ${p.ignoredColumns.join(', ')}',
+          l10n.animalImportIgnoredColumns(p.ignoredColumns.join(', ')),
           style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
         ),
       ],
       if (errors.isNotEmpty) ...[
-        const _Section('Hatalı satırlar'),
+        _Section(l10n.animalImportSectionErrors),
         for (final r in errors)
           _RowTile(r, detail: r.message, color: AppColors.redColor),
       ],
       if (warned.isNotEmpty) ...[
-        const _Section('Uyarılar'),
+        _Section(l10n.animalImportSectionWarnings),
         for (final r in warned)
           _RowTile(r, detail: r.warning, color: AppColors.darkAmberColor),
       ],
       if (create.isNotEmpty) ...[
-        const _Section('Eklenecek'),
+        _Section(l10n.animalImportSectionCreate),
         for (final r in create) _RowTile(r),
       ],
       if (exists.isNotEmpty) ...[
-        const _Section('Zaten kayıtlı (değiştirilmez)'),
+        _Section(l10n.animalImportSectionExists),
         for (final r in exists) _RowTile(r),
       ],
     ];

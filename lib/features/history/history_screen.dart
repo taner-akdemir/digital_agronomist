@@ -12,6 +12,7 @@ import 'package:milktrace/features/history/history_providers.dart';
 import 'package:milktrace/features/history/widgets/animal_status_chip.dart';
 import 'package:milktrace/features/history/widgets/yield_class_badge.dart';
 import 'package:milktrace/features/history/yield_report.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
@@ -25,7 +26,7 @@ class HistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const DefaultTabController(
+    return DefaultTabController(
       length: 2,
       child: Column(
         children: [
@@ -34,11 +35,11 @@ class HistoryScreen extends StatelessWidget {
             unselectedLabelColor: AppColors.onSurfaceMuted,
             indicatorColor: AppColors.darkGreenColor,
             tabs: [
-              Tab(text: 'Hayvanlar'),
-              Tab(text: 'Oturumlar'),
+              Tab(text: l10n.historyTabAnimals),
+              Tab(text: l10n.historyTabSessions),
             ],
           ),
-          Expanded(
+          const Expanded(
             child: TabBarView(children: [_AnimalsTab(), _SessionsTab()]),
           ),
         ],
@@ -73,7 +74,7 @@ class _AnimalsTab extends ConsumerWidget {
               TextButton.icon(
                 onPressed: () => showYieldReportSheet(context),
                 icon: const Icon(Icons.ios_share),
-                label: const Text('Rapor'),
+                label: Text(l10n.historyReport),
                 style: TextButton.styleFrom(
                   foregroundColor: AppColors.darkGreenColor,
                 ),
@@ -84,7 +85,7 @@ class _AnimalsTab extends ConsumerWidget {
                 TextButton.icon(
                   onPressed: () => context.push('/animals/groups'),
                   icon: const Icon(Icons.workspaces_outline),
-                  label: const Text('Gruplar'),
+                  label: Text(l10n.historyGroups),
                   style: TextButton.styleFrom(
                     foregroundColor: AppColors.darkGreenColor,
                   ),
@@ -93,7 +94,7 @@ class _AnimalsTab extends ConsumerWidget {
                 TextButton.icon(
                   onPressed: () => context.push('/animals/import'),
                   icon: const Icon(Icons.upload_file),
-                  label: const Text('Listeden'),
+                  label: Text(l10n.historyFromList),
                   style: TextButton.styleFrom(
                     foregroundColor: AppColors.darkGreenColor,
                   ),
@@ -102,7 +103,7 @@ class _AnimalsTab extends ConsumerWidget {
                 TextButton.icon(
                   onPressed: () => context.push('/animals/new'),
                   icon: const Icon(Icons.add),
-                  label: const Text('Hayvan ekle'),
+                  label: Text(l10n.historyAddAnimal),
                   style: TextButton.styleFrom(
                     foregroundColor: AppColors.darkGreenColor,
                   ),
@@ -116,10 +117,10 @@ class _AnimalsTab extends ConsumerWidget {
         Expanded(
           child: AsyncView(
             value: animals,
-            errorMessage: 'Hayvanlar yüklenemedi',
+            errorMessage: l10n.historyAnimalsLoadFailed,
             onRetry: () => ref.invalidate(animalsProvider),
             builder: (list) => list.isEmpty
-                ? const _Empty('Bu filtreye uyan hayvan yok')
+                ? _Empty(l10n.historyNoAnimalsForFilter)
                 : ListView.separated(
                     padding: const EdgeInsets.fromLTRB(
                       AppSpacing.lg,
@@ -161,13 +162,13 @@ class _UnmatchedTagsBanner extends ConsumerWidget {
         child: ListTile(
           leading: const Icon(Icons.nfc, color: AppColors.darkAmberColor),
           title: Text(
-            '$n tanınmayan küpe',
+            l10n.historyUnmatchedBanner(n),
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               color: AppColors.darkAmberColor,
             ),
           ),
-          subtitle: const Text('Sağımda okundu; hayvanına atayın'),
+          subtitle: Text(l10n.historyUnmatchedBannerHint),
           trailing: const Icon(Icons.chevron_right),
           onTap: () => context.push('/animals/unmatched-tags'),
         ),
@@ -254,11 +255,11 @@ class _ActiveFilter extends ConsumerWidget {
     final labels = [
       if (filter.speciesId case final id?)
         species.where((s) => s.id == id).map((s) => s.nameTr).firstOrNull ??
-            'Tür',
+            l10n.historyFilterSpecies,
       if (filter.yieldClass case final c?) c.label,
       if (filter.groupId case final id?)
         groups.where((g) => g.id == id).map((g) => g.name).firstOrNull ??
-            'Grup',
+            l10n.historyFilterGroup,
     ];
 
     return Padding(
@@ -278,7 +279,7 @@ class _ActiveFilter extends ConsumerWidget {
           const SizedBox(width: AppSpacing.xs),
           Expanded(
             child: Text(
-              '${labels.join(' · ')} · $count hayvan',
+              '${labels.join(' · ')} · ${l10n.historyAnimalCount(count)}',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
@@ -294,7 +295,7 @@ class _ActiveFilter extends ConsumerWidget {
             ),
             onPressed: () =>
                 ref.read(animalFilterStateProvider.notifier).clear(),
-            child: const Text('Temizle', style: TextStyle(fontSize: 12)),
+            child: Text(l10n.commonClear, style: const TextStyle(fontSize: 12)),
           ),
         ],
       ),
@@ -365,7 +366,7 @@ class _AnimalTile extends StatelessWidget {
                       // hayvanı TANIMLAYAN alandır, hep görünmeli (§4).
                       [
                         animal.name == null
-                            ? '${animal.breed ?? ''} · ${animal.lactationNo}. laktasyon'
+                            ? '${animal.breed ?? ''} · ${l10n.historyLactationNo(animal.lactationNo)}'
                             : animal.earTag,
                         ?animal.groupName,
                       ].join(' · '),
@@ -403,10 +404,10 @@ class _SessionsTab extends ConsumerWidget {
 
     return AsyncView(
       value: sessions,
-      errorMessage: 'Oturumlar yüklenemedi',
+      errorMessage: l10n.historySessionsLoadFailed,
       onRetry: () => ref.invalidate(pastSessionsProvider),
       builder: (list) => list.isEmpty
-          ? const _Empty('Kayıtlı sağım oturumu yok')
+          ? _Empty(l10n.historyNoSessions)
           : ListView.separated(
               padding: const EdgeInsets.all(AppSpacing.lg),
               itemCount: list.length,
@@ -453,8 +454,10 @@ class _SessionTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${hall?.name ?? '?'} Bölgesi · '
-                  '${Fmt.sessionType(session.type)} Sağımı',
+                  l10n.historySessionTitle(
+                    hall?.name ?? '?',
+                    Fmt.sessionType(session.type),
+                  ),
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
@@ -462,12 +465,12 @@ class _SessionTile extends StatelessWidget {
                 ),
                 Text(
                   started == null
-                      ? 'Başlangıç bilinmiyor'
+                      ? l10n.historySessionStartUnknown
                       : '${Fmt.dayMonth(started)} · ${Fmt.time(started)}'
                             '${ended == null ? '' : ' – ${Fmt.time(ended)}'}'
                             // Sistem açtıysa söylenir: "kim başlattı?"
                             // sorusunun cevabı (backend ADR 0083).
-                            '${session.autoStarted ? ' · otomatik açıldı' : ''}',
+                            '${session.autoStarted ? ' · ${l10n.historySessionAutoStarted}' : ''}',
                   style: const TextStyle(
                     fontSize: 12,
                     color: AppColors.onSurfaceMuted,
@@ -477,9 +480,9 @@ class _SessionTile extends StatelessWidget {
             ),
           ),
           if (active)
-            const Text(
-              'Sürüyor',
-              style: TextStyle(
+            Text(
+              l10n.historySessionRunning,
+              style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
                 color: AppColors.flowGreen,

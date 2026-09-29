@@ -1,0 +1,223 @@
+{
+  "historyTabAnimals": "Animals",
+  "historyTabSessions": "Sessions",
+  "historyReport": "Report",
+  "historyGroups": "Groups",
+  "historyFromList": "From list",
+  "historyAddAnimal": "Add animal",
+  "historyAnimalsLoadFailed": "Could not load animals",
+  "historyNoAnimalsForFilter": "No animals match this filter",
+  "historyUnmatchedBanner": "{n, plural, one{{n} unknown tag} other{{n} unknown tags}}",
+  "@historyUnmatchedBanner": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "historyUnmatchedBannerHint": "Read during milking; assign to an animal",
+  "historyFilterSpecies": "Species",
+  "historyFilterGroup": "Group",
+  "historyAnimalCount": "{count, plural, one{{count} animal} other{{count} animals}}",
+  "@historyAnimalCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "historyLactationNo": "lactation {n}",
+  "@historyLactationNo": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "historySessionsLoadFailed": "Could not load sessions",
+  "historyNoSessions": "No recorded milking sessions",
+  "historySessionTitle": "Area {hall} · {type} milking",
+  "@historySessionTitle": {
+    "placeholders": {
+      "hall": {},
+      "type": {}
+    }
+  },
+  "historySessionStartUnknown": "Start time unknown",
+  "historySessionAutoStarted": "auto-started",
+  "historySessionRunning": "In progress",
+  "historySpoutLabel": "{vacuum} · Milking point {n}",
+  "@historySpoutLabel": {
+    "placeholders": {
+      "vacuum": {},
+      "n": {}
+    }
+  },
+  "historyUnknownVacuum": "Unit",
+  "animalImportTitle": "Import from list",
+  "animalImportSpeciesLoadFailed": "Could not load species",
+  "animalImportReadFailed": "Could not read file: {error}",
+  "@animalImportReadFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "animalImportFailed": "Import failed: {error}",
+  "@animalImportFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "animalImportAdded": "{n, plural, one{{n} animal added} other{{n} animals added}}",
+  "@animalImportAdded": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "animalImportIntro": "Upload the list you got from your vet, the breeders' union or the national animal registry (Excel .xlsx or CSV). The first row must be column headers; dates day first (03.04.2021).",
+  "animalImportColumns": "Columns (Turkish headers): Küpe No (ear tag, required) · Tür (species) · Adı (name) · Irkı (breed) · RFID · Doğum Tarihi (birth date) · Son Buzağılama (last calving) · Laktasyon (lactation) · Durumu (status)",
+  "animalImportRules": "Animals whose ear tag is already registered are not changed. Invalid rows are skipped; it is safe to fix the file and upload it again.",
+  "animalImportDefaultSpecies": "Rows without a species",
+  "animalImportPickFile": "Choose file",
+  "animalImportPickOtherFile": "Choose another file",
+  "animalImportNothingToAdd": "No animals to add",
+  "animalImportAddN": "Add animals ({n})",
+  "@animalImportAddN": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalImportCountCreate": "{n} to add",
+  "@animalImportCountCreate": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalImportCountExists": "{n} already registered",
+  "@animalImportCountExists": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalImportCountErrors": "{n} invalid, will be skipped",
+  "@animalImportCountErrors": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalImportIgnoredColumns": "Ignored columns: {columns}",
+  "@animalImportIgnoredColumns": {
+    "placeholders": {
+      "columns": {}
+    }
+  },
+  "animalImportSectionErrors": "Invalid rows",
+  "animalImportSectionWarnings": "Warnings",
+  "animalImportSectionCreate": "To add",
+  "animalImportSectionExists": "Already registered (not changed)",
+  "unmatchedTitle": "Unknown tags",
+  "unmatchedLoadFailed": "Could not load tags",
+  "unmatchedIntro": "Tags read during milking that are not registered to any animal. Assign the tag to its animal; at the next milking the animal is matched to the milking point automatically. Ignore it if it belongs to another farm's animal or is a bad read.",
+  "unmatchedEmpty": "No unknown tags",
+  "unmatchedLastSeenAt": "Last: {spout}",
+  "@unmatchedLastSeenAt": {
+    "placeholders": {
+      "spout": {}
+    }
+  },
+  "unmatchedUnknownSpout": "unknown milking point",
+  "unmatchedReadCount": "{n, plural, one{{n} read} other{{n} reads}}",
+  "@unmatchedReadCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "unmatchedIgnore": "Ignore",
+  "unmatchedAssign": "Assign to animal",
+  "unmatchedReplaceTitle": "Replace the tag?",
+  "unmatchedReplaceBody": "{animal} currently has tag {old}. It will be replaced with {rfid}; the old tag will no longer be recognized.",
+  "@unmatchedReplaceBody": {
+    "placeholders": {
+      "animal": {},
+      "old": {},
+      "rfid": {}
+    }
+  },
+  "unmatchedReplace": "Replace",
+  "unmatchedAssigned": "Tag added to {earTag}",
+  "@unmatchedAssigned": {
+    "placeholders": {
+      "earTag": {}
+    }
+  },
+  "unmatchedIgnoreTitle": "Ignore the tag?",
+  "unmatchedIgnoreBody": "{rfid} is removed from the list and won't come back even if read again. For another farm's animal or a bad read.",
+  "@unmatchedIgnoreBody": {
+    "placeholders": {
+      "rfid": {}
+    }
+  },
+  "unmatchedIgnoreFailed": "Could not ignore: {error}",
+  "@unmatchedIgnoreFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "unmatchedChooseAnimal": "{rfid} · choose animal",
+  "@unmatchedChooseAnimal": {
+    "placeholders": {
+      "rfid": {}
+    }
+  },
+  "unmatchedSearchHint": "Ear tag number or name",
+  "unmatchedNoTag": "no tag",
+  "unmatchedTagValue": "tag {rfid}",
+  "@unmatchedTagValue": {
+    "placeholders": {
+      "rfid": {}
+    }
+  },
+  "groupsNew": "New group",
+  "groupsRenameTitle": "Group name",
+  "groupsNameLabel": "Name (e.g. Paddock 1, High yield)",
+  "groupsDeleteTitle": "Delete \"{name}\"?",
+  "@groupsDeleteTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "groupsDeleteBody": "Animals in the group are not deleted; they are left with no group.",
+  "groupsTitle": "Groups",
+  "groupsAdd": "Add group",
+  "groupsLoadFailed": "Could not load groups",
+  "groupsIntro": "Each animal belongs to at most one group; an animal is assigned to a group from the edit form. The dashboard shows each group's daily total.",
+  "groupsEmpty": "No groups yet.",
+  "groupsMilkingCount": "{n, plural, one{{n} lactating animal} other{{n} lactating animals}}",
+  "@groupsMilkingCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "groupsDeleteTooltip": "Delete group",
+  "alertsTitle": "Alerts",
+  "alertsLoadFailed": "Could not load alerts",
+  "alertsMarkRead": "Mark read",
+  "alertsRecoveredAt": "recovered {time}",
+  "@alertsRecoveredAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "alertsBackOnlineAt": "back online {time}",
+  "@alertsBackOnlineAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "alertsAcknowledged": "read",
+  "alertsEmpty": "No open alerts"
+}

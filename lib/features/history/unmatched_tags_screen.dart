@@ -6,6 +6,7 @@ import 'package:milktrace/core/format.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/unmatched_tag_row.dart';
 import 'package:milktrace/features/history/history_providers.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
@@ -27,9 +28,9 @@ class UnmatchedTagsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Tanınmayan küpeler',
-          style: TextStyle(
+        title: Text(
+          l10n.unmatchedTitle,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -38,22 +39,22 @@ class UnmatchedTagsScreen extends ConsumerWidget {
       ),
       body: AsyncView(
         value: tags,
-        errorMessage: 'Küpeler yüklenemedi',
+        errorMessage: l10n.unmatchedLoadFailed,
         builder: (list) => ListView(
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
-            const Text(
-              'Sağımda okunan ama hiçbir hayvana kayıtlı olmayan küpeler. '
-              'Küpeyi hayvanına atayın; bir dahaki sağımda hayvan noktaya '
-              'kendiliğinden eşleşir. Başka çiftliğin hayvanı ya da bozuk '
-              'okumaysa yok sayın.',
-              style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
+            Text(
+              l10n.unmatchedIntro,
+              style: const TextStyle(
+                fontSize: 13,
+                color: AppColors.onSurfaceMuted,
+              ),
             ),
             const SizedBox(height: AppSpacing.md),
             if (list.isEmpty)
-              const Padding(
-                padding: EdgeInsets.all(AppSpacing.xl),
-                child: Center(child: Text('Tanınmayan küpe yok')),
+              Padding(
+                padding: const EdgeInsets.all(AppSpacing.xl),
+                child: Center(child: Text(l10n.unmatchedEmpty)),
               ),
             for (final t in list)
               _TagTile(tag: t, spout: labels[t.lastSpoutId]),
@@ -99,9 +100,9 @@ class _TagTile extends ConsumerWidget {
             const SizedBox(height: AppSpacing.xs),
             Text(
               [
-                'Son: ${spout ?? 'bilinmeyen nokta'}',
+                l10n.unmatchedLastSeenAt(spout ?? l10n.unmatchedUnknownSpout),
                 '${Fmt.dayMonth(seen)} ${Fmt.time(seen)}',
-                '${tag.readCount} okuma',
+                l10n.unmatchedReadCount(tag.readCount),
               ].join(' · '),
               style: const TextStyle(
                 fontSize: 12,
@@ -114,7 +115,7 @@ class _TagTile extends ConsumerWidget {
               children: [
                 TextButton(
                   onPressed: () => _dismiss(context, ref),
-                  child: const Text('Yok say'),
+                  child: Text(l10n.unmatchedIgnore),
                 ),
                 const SizedBox(width: AppSpacing.sm),
                 FilledButton(
@@ -122,7 +123,7 @@ class _TagTile extends ConsumerWidget {
                   style: FilledButton.styleFrom(
                     backgroundColor: AppColors.darkGreenColor,
                   ),
-                  child: const Text('Hayvana ata'),
+                  child: Text(l10n.unmatchedAssign),
                 ),
               ],
             ),
@@ -149,19 +150,22 @@ class _TagTile extends ConsumerWidget {
       final ok = await showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Küpe değiştirilsin mi?'),
+          title: Text(l10n.unmatchedReplaceTitle),
           content: Text(
-            '${animal.name ?? animal.earTag} kaydındaki küpe $old. '
-            'Yerine ${tag.rfid} yazılacak; eski küpe artık tanınmaz.',
+            l10n.unmatchedReplaceBody(
+              animal.name ?? animal.earTag,
+              old,
+              tag.rfid,
+            ),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('Vazgeç'),
+              child: Text(l10n.commonCancel),
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('Değiştir'),
+              child: Text(l10n.unmatchedReplace),
             ),
           ],
         ),
@@ -178,14 +182,14 @@ class _TagTile extends ConsumerWidget {
         ..invalidate(unmatchedTagsProvider);
       messenger.showSnackBar(
         SnackBar(
-          content: Text('Küpe ${animal.earTag} kaydına eklendi'),
+          content: Text(l10n.unmatchedAssigned(animal.earTag)),
           backgroundColor: AppColors.darkGreenColor,
         ),
       );
     } catch (e) {
       messenger.showSnackBar(
         SnackBar(
-          content: Text(userMessage(e) ?? 'Kaydedilemedi: $e'),
+          content: Text(userMessage(e) ?? l10n.commonSaveFailed('$e')),
           backgroundColor: AppColors.flowRed,
         ),
       );
@@ -197,19 +201,16 @@ class _TagTile extends ConsumerWidget {
     final ok = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Küpe yok sayılsın mı?'),
-        content: Text(
-          '${tag.rfid} listeden kalkar ve yeniden okunsa da dönmez. Başka '
-          'çiftliğin hayvanı ya da bozuk okuma için.',
-        ),
+        title: Text(l10n.unmatchedIgnoreTitle),
+        content: Text(l10n.unmatchedIgnoreBody(tag.rfid)),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Vazgeç'),
+            child: Text(l10n.commonCancel),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Yok say'),
+            child: Text(l10n.unmatchedIgnore),
           ),
         ],
       ),
@@ -221,7 +222,7 @@ class _TagTile extends ConsumerWidget {
     } catch (e) {
       messenger.showSnackBar(
         SnackBar(
-          content: Text(userMessage(e) ?? 'Yok sayılamadı: $e'),
+          content: Text(userMessage(e) ?? l10n.unmatchedIgnoreFailed('$e')),
           backgroundColor: AppColors.flowRed,
         ),
       );
@@ -265,7 +266,7 @@ class _AnimalChooserState extends ConsumerState<_AnimalChooser> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${widget.rfid} · hayvan seç',
+                    l10n.unmatchedChooseAnimal(widget.rfid),
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -273,11 +274,13 @@ class _AnimalChooserState extends ConsumerState<_AnimalChooser> {
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   TextField(
-                    decoration: const InputDecoration(
-                      hintText: 'Küpe numarası veya ad',
-                      prefixIcon: Icon(Icons.search),
+                    decoration: InputDecoration(
+                      hintText: l10n.unmatchedSearchHint,
+                      prefixIcon: const Icon(Icons.search),
                       isDense: true,
-                      border: OutlineInputBorder(borderRadius: AppRadius.smAll),
+                      border: const OutlineInputBorder(
+                        borderRadius: AppRadius.smAll,
+                      ),
                     ),
                     onChanged: (v) => setState(() => _query = v.trim()),
                   ),
@@ -287,7 +290,7 @@ class _AnimalChooserState extends ConsumerState<_AnimalChooser> {
             Expanded(
               child: AsyncView(
                 value: animals,
-                errorMessage: 'Hayvanlar yüklenemedi',
+                errorMessage: l10n.historyAnimalsLoadFailed,
                 builder: (list) {
                   final q = _query.toLowerCase();
                   final matches =
@@ -313,7 +316,9 @@ class _AnimalChooserState extends ConsumerState<_AnimalChooser> {
                         subtitle: Text(
                           [
                             a.earTag,
-                            a.rfid == null ? 'küpesi yok' : 'küpe ${a.rfid}',
+                            a.rfid == null
+                                ? l10n.unmatchedNoTag
+                                : l10n.unmatchedTagValue(a.rfid!),
                             if (!a.isMilking) a.statusLabel,
                           ].join(' · '),
                         ),
