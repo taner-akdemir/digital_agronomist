@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/data/models/auth_user.dart';
+import 'package:milktrace/l10n/l10n.dart';
 
 /// Kimlik uçları (§8.5: /auth/login, /auth/refresh, /auth/logout, /me).
 ///
@@ -83,7 +84,7 @@ class AuthApi {
       data: {'email': email},
     );
     return ((r.data as Map<String, dynamic>)['msg'] as String?) ??
-        'Sıfırlama bağlantısı gönderildi.';
+        l10n.coreResetLinkSentFallback;
   });
 
   /// Destek numaraları (backend ADR 0077, kimlik doğrulamasız). Alan boşsa

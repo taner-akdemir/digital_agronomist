@@ -20,6 +20,7 @@ import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
 import 'package:milktrace/data/models/session_milking.dart';
+import 'package:milktrace/data/models/session_summary.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_update.dart';
@@ -604,6 +605,12 @@ class ApiRepository implements MilkTraceRepository {
       _dio.put<dynamic>('/tenant/settings', data: {'volumeUnit': unit});
 
   @override
+  Future<SessionSummary> sessionSummary(String sessionId) async =>
+      SessionSummary.fromJson(
+        _dataOf(await _dio.get<dynamic>('/sessions/$sessionId/summary')),
+      );
+
+  @override
   Future<List<AnimalGroup>> animalGroups() async =>
       _listOf(await _dio.get<dynamic>('/animal-groups'), AnimalGroup.fromJson);
 
@@ -700,7 +707,7 @@ class ApiRepository implements MilkTraceRepository {
       member: TeamMember.fromJson(_dataOf(r)),
       message:
           ((r.data as Map<String, dynamic>)['msg'] as String?) ??
-          'Kullanıcı eklendi.',
+          l10n.coreMemberAddedFallback,
     );
   }
 

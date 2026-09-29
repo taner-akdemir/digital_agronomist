@@ -1,5 +1,423 @@
 {
   "@@locale": "tr",
+  "accountAuditLog": "İşlem kaydı",
+  "accountDefaultName": "Kullanıcı",
+  "accountMilkUnit": "Süt birimi",
+  "accountMilkers": "Sağımcılar",
+  "accountMockMode": "Demo verisiyle çalışıyorsunuz (mock mod).",
+  "accountNotificationChannels": "Bildirim kanalları",
+  "accountPickFarm": "İşletme seçin",
+  "accountPushUnavailable": "Bu telefonda bildirim kapalı: izin verilmedi ya da bildirim servisi henüz bağlanmadı. Uyarılar bildirim merkezinde görünmeye devam eder.",
+  "accountSignOut": "Çıkış yap",
+  "accountSwitchFarm": "İşletme değiştir",
+  "accountSwitchFarmFailed": "İşletme değiştirilemedi: {error}",
+  "@accountSwitchFarmFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "accountTestPush": "Bu telefona test bildirimi",
+  "accountTestPushFailed": "Test bildirimi gönderilemedi: {error}",
+  "@accountTestPushFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "accountTestPushNone": "Test bildirimi hiçbir telefona ulaşmadı",
+  "accountTestPushSending": "Gönderiliyor…",
+  "accountTestPushSent": "Test bildirimi gönderildi ({count} telefon)",
+  "@accountTestPushSent": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "accountThresholds": "Eşik ayarları",
+  "accountUnitKilogram": "Kilogram",
+  "accountUnitLitre": "Litre",
+  "accountUsers": "Kullanıcılar",
+  "alertsAcknowledged": "okundu",
+  "alertsBackOnlineAt": "geri geldi {time}",
+  "@alertsBackOnlineAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "alertsEmpty": "Açık uyarı yok",
+  "alertsLoadFailed": "Uyarılar yüklenemedi",
+  "alertsMarkRead": "Okundu",
+  "alertsRecoveredAt": "düzeldi {time}",
+  "@alertsRecoveredAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "alertsTitle": "Uyarılar",
+  "animalDetailAddNote": "Not ekle",
+  "animalDetailAvg30": "30 gün ort.",
+  "animalDetailAvg7": "7 gün ort.",
+  "animalDetailBreed": "Irk",
+  "animalDetailCalved": "Buzağıladı",
+  "animalDetailCalvingAlreadyToday": "Bugün için buzağılama zaten kayıtlı",
+  "animalDetailCalvingConfirmTitle": "Buzağılama kaydedilsin mi?",
+  "animalDetailCalvingDate": "Buzağılama tarihi",
+  "animalDetailCalvingLactation": "Laktasyon {current} → {next}",
+  "@animalDetailCalvingLactation": {
+    "placeholders": {
+      "current": {},
+      "next": {}
+    }
+  },
+  "animalDetailCalvingSaved": "Buzağılama kaydedildi",
+  "animalDetailCalvingStatus": "Durum {status} → Sağmal",
+  "@animalDetailCalvingStatus": {
+    "placeholders": {
+      "status": {}
+    }
+  },
+  "animalDetailDaysInMilk": "Laktasyon günü",
+  "animalDetailDisclaimer": "Bu bir öneridir, teşhis değildir. Gebelik, laktasyon dönemi ve hastalık verimi düşürebilir; veteriner kontrolü gerekir.",
+  "animalDetailFreshLactation": "Taze laktasyon: ilk {days} günde \"düşüşte\" ve \"kuruya çıkarma adayı\" etiketi verilmez; verim henüz yükseliyor.",
+  "@animalDetailFreshLactation": {
+    "placeholders": {
+      "days": {}
+    }
+  },
+  "animalDetailFrozenClassNote": "Sağmal olmayan hayvan sınıflandırılmaz; bu etiket sağmalken yapılan son hesaptan kalmadır.",
+  "animalDetailGroup": "Grup",
+  "animalDetailHistoryFailed": "Sağım geçmişi alınamadı",
+  "animalDetailLactation": "Laktasyon",
+  "animalDetailLastCalving": "Son buzağılama",
+  "animalDetailLastClass": "Son sınıf: {label}",
+  "@animalDetailLastClass": {
+    "placeholders": {
+      "label": {}
+    }
+  },
+  "animalDetailLoadFailed": "Hayvan bilgisi yüklenemedi",
+  "animalDetailMoreNotes": "{n, plural, other{{n} not daha}}",
+  "@animalDetailMoreNotes": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "animalDetailNoMilkings": "Bu hayvana ait sağım kaydı yok",
+  "animalDetailNoNotes": "Henüz not yok. Veteriner kontrolü, gebelik ya da tedavi bilgisi sınıf etiketini yorumlamaya yardım eder.",
+  "animalDetailNotRegistered": "Bu hayvan kayıtlı değil",
+  "animalDetailNoteAddFailed": "Not eklenemedi: {error}",
+  "@animalDetailNoteAddFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "animalDetailNoteAdded": "Not eklendi",
+  "animalDetailNoteHint": "Örn. Son veteriner kontrolü: mastitis, tedavide.",
+  "animalDetailNotes": "Notlar",
+  "animalDetailNotesFailed": "Notlar alınamadı",
+  "animalDetailOrdinal": "{n}.",
+  "@animalDetailOrdinal": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalDetailRecentMilkings": "Son sağımlar",
+  "animalDetailShownOfTotal": "{total} sağımın ilk {limit} tanesi gösteriliyor",
+  "@animalDetailShownOfTotal": {
+    "placeholders": {
+      "total": {},
+      "limit": {}
+    }
+  },
+  "animalDetailStaleClass": "Sınıf {date} hesabından: gece hesabı yalnızca son 30 günde sağılan hayvanı yeniler.",
+  "@animalDetailStaleClass": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "animalDetailTitleFallback": "Hayvan",
+  "animalDetailTrend30": "30 günlük eğilim",
+  "animalDetailTrendFailed": "Trend alınamadı",
+  "animalDetailYieldTrend": "Verim trendi",
+  "animalFormAdded": "Hayvan eklendi",
+  "animalFormAnimalFailed": "Hayvan yüklenemedi",
+  "animalFormBirthDate": "Doğum tarihi",
+  "animalFormBreed": "Irk (isteğe bağlı)",
+  "animalFormClearDate": "{label} temizle",
+  "@animalFormClearDate": {
+    "placeholders": {
+      "label": {}
+    }
+  },
+  "animalFormEarTag": "Küpe numarası",
+  "animalFormEarTagHelper": "Hayvanı tanımlayan alan; işletmede tekil.",
+  "animalFormEarTagRequired": "Küpe numarası zorunlu",
+  "animalFormEditTitle": "Hayvanı düzenle",
+  "animalFormGroup": "Grup",
+  "animalFormLactationNo": "Laktasyon sırası",
+  "animalFormLastCalving": "Son buzağılama",
+  "animalFormName": "Ad (isteğe bağlı)",
+  "animalFormNewTitle": "Yeni hayvan",
+  "animalFormNoGroup": "Grupsuz",
+  "animalFormNotEntered": "Girilmedi",
+  "animalFormNotFound": "Hayvan bulunamadı",
+  "animalFormPickDate": "{label} seç",
+  "@animalFormPickDate": {
+    "placeholders": {
+      "label": {}
+    }
+  },
+  "animalFormRfid": "RFID (isteğe bağlı)",
+  "animalFormRfidHelper": "Küpedeki çipin numarası; sayaç okursa hayvan noktaya kendiliğinden eşleşir.",
+  "animalFormSaving": "Kaydediliyor…",
+  "animalFormSpecies": "Tür",
+  "animalFormSpeciesFailed": "Türler yüklenemedi",
+  "animalFormSpeciesRequired": "Tür seçin",
+  "animalFormStatus": "Durum",
+  "animalFormStatusHelper": "Yalnızca sağmal hayvan sağıma eşleştirilir ve sınıflandırılır.",
+  "animalFormUpdated": "Hayvan güncellendi",
+  "animalImportAddN": "{n} hayvanı ekle",
+  "@animalImportAddN": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalImportAdded": "{n, plural, other{{n} hayvan eklendi}}",
+  "@animalImportAdded": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "animalImportColumns": "Sütunlar: Küpe No (zorunlu) · Tür · Adı · Irkı · RFID · Doğum Tarihi · Son Buzağılama · Laktasyon · Durumu",
+  "animalImportCountCreate": "{n} eklenecek",
+  "@animalImportCountCreate": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalImportCountErrors": "{n} hatalı, atlanacak",
+  "@animalImportCountErrors": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalImportCountExists": "{n} zaten kayıtlı",
+  "@animalImportCountExists": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalImportDefaultSpecies": "Türü yazılmamış satırlar",
+  "animalImportFailed": "İçe aktarılamadı: {error}",
+  "@animalImportFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "animalImportIgnoredColumns": "Alınmayan sütunlar: {columns}",
+  "@animalImportIgnoredColumns": {
+    "placeholders": {
+      "columns": {}
+    }
+  },
+  "animalImportIntro": "Veterinerden, Birlik'ten ya da Hayvan Bilgi Sistemi'nden aldığınız listeyi yükleyin (Excel .xlsx ya da CSV). İlk satır sütun başlıkları olmalı; tarihler gün önde (03.04.2021).",
+  "animalImportNothingToAdd": "Eklenecek hayvan yok",
+  "animalImportPickFile": "Dosya seç",
+  "animalImportPickOtherFile": "Başka dosya seç",
+  "animalImportReadFailed": "Dosya okunamadı: {error}",
+  "@animalImportReadFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "animalImportRules": "Küpesi zaten kayıtlı hayvanlar değiştirilmez. Hatalı satırlar atlanır; dosyayı düzeltip yeniden yüklemek güvenlidir.",
+  "animalImportSectionCreate": "Eklenecek",
+  "animalImportSectionErrors": "Hatalı satırlar",
+  "animalImportSectionExists": "Zaten kayıtlı (değiştirilmez)",
+  "animalImportSectionWarnings": "Uyarılar",
+  "animalImportSpeciesLoadFailed": "Türler yüklenemedi",
+  "animalImportTitle": "Listeden içe aktar",
+  "auditAnimalCalving": "Buzağılama kaydedildi",
+  "auditAnimalCreate": "Hayvan eklendi",
+  "auditAnimalImport": "Listeden içe aktarma",
+  "auditAnimalUpdate": "Hayvan kaydı değişti",
+  "auditBreedingAdd": "Üreme kaydı eklendi",
+  "auditBreedingDelete": "Üreme kaydı silindi",
+  "auditChannelCreate": "Bildirim kanalı eklendi",
+  "auditChannelDelete": "Bildirim kanalı silindi",
+  "auditChannelUpdate": "Bildirim kanalı değişti",
+  "auditDeletedUser": "Silinmiş kullanıcı",
+  "auditDeliveryAdd": "Tank teslimi girildi",
+  "auditDeliveryDelete": "Tank teslimi silindi",
+  "auditEmpty": "Son 90 günde kayıtlı değişiklik yok.",
+  "auditIntro": "Son 90 gün: eşik, hayvan kaydı, eşleştirme, kullanıcı ve bildirim kanalı değişiklikleri.",
+  "auditLoadFailed": "İşlem kaydı yüklenemedi",
+  "auditSettingsUpdate": "İşletme ayarı değişti",
+  "auditSpoutUnassign": "Eşleştirme kaldırıldı",
+  "auditTagDismiss": "Tanınmayan küpe yok sayıldı",
+  "auditTeamAdd": "Kullanıcı eklendi",
+  "auditTeamRemove": "Kullanıcı çıkarıldı",
+  "auditTeamUpdate": "Kullanıcı değişti",
+  "auditThresholdsUpdate": "Eşikler değişti",
+  "auditTitle": "İşlem kaydı",
+  "auditTreatmentAdd": "Tedavi eklendi",
+  "auditTreatmentDelete": "Tedavi silindi",
+  "breedingAddRecord": "Kayıt ekle",
+  "breedingAdded": "Üreme kaydı eklendi",
+  "breedingDeleteBody": "Yalnızca yanlış girilen kaydı silin; durum ve tarihler yeniden hesaplanır.",
+  "breedingDeleteTitle": "Üreme kaydı silinsin mi?",
+  "breedingDialogTitle": "Üreme kaydı",
+  "breedingDryOff": "Önerilen kuruya çıkarma: {date}",
+  "@breedingDryOff": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "breedingEmpty": "Kayıt yok. Tohumlama ve gebelik kontrolünü girin: beklenen doğum ve kuruya çıkarma tarihi hesaplanır.",
+  "breedingExpectedCalving": "Beklenen doğum: {date}",
+  "@breedingExpectedCalving": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "breedingInsemination": "Tohumlama",
+  "breedingLoadFailed": "Üreme kayıtları alınamadı",
+  "breedingOpen": "Boş",
+  "breedingPregnancyCheck": "Gebelik kontrolü",
+  "breedingPregnant": "Gebe",
+  "breedingSireLabel": "Boğa/teke ya da sperma kodu (isteğe bağlı)",
+  "breedingTitle": "Üreme",
+  "channelsAdd": "Kanal ekle",
+  "channelsAdded": "Kanal eklendi",
+  "channelsCardDailyLimit": "günde en çok {n}",
+  "@channelsCardDailyLimit": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "channelsCardStatus": "{severity} ve üstü · {sources}",
+  "@channelsCardStatus": {
+    "placeholders": {
+      "severity": {},
+      "sources": {}
+    }
+  },
+  "channelsChannelLoadFailed": "Kanal yüklenemedi",
+  "channelsConnectionSection": "Bağlantı ayarları",
+  "channelsDailyLimit": "Günlük sınır",
+  "channelsDailyLimitHelperDefault": "Boş bırakılırsa {n}. Sınırdan sonrakiler gönderilmez; sayaç gece yarısı sıfırlanır.",
+  "@channelsDailyLimitHelperDefault": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "channelsDailyLimitHelperUnlimited": "Boş bırakılırsa sınırsız. Sınırdan sonrakiler gönderilmez; sayaç gece yarısı sıfırlanır.",
+  "channelsDailyLimitRange": "1 ile 10000 arasında olmalı",
+  "channelsDelete": "Kanalı sil",
+  "channelsDeleteBody": "\"{name}\" kanalına artık bildirim gitmeyecek. Bu işlem geri alınamaz.",
+  "@channelsDeleteBody": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "channelsDeleteFailed": "Silinemedi",
+  "channelsDeleteTitle": "Kanal silinsin mi?",
+  "channelsDeleted": "Kanal silindi",
+  "channelsEditTitle": "Kanalı düzenle",
+  "channelsEmailAddresses": "E-posta adresleri",
+  "channelsEmailHelper": "Her satıra bir adres",
+  "channelsEmptyBody": "E-posta ya da SMS ile de uyarı almak için kanal ekleyin.",
+  "channelsEmptyTitle": "Henüz kanal yok",
+  "channelsEnabled": "Kanal açık",
+  "channelsFieldApiKey": "API anahtarı",
+  "channelsFieldApiSecret": "API sırrı",
+  "channelsFieldApplicationId": "Uygulama kimliği",
+  "channelsFieldBearerToken": "Bearer jetonu",
+  "channelsFieldFrom": "Gönderen",
+  "channelsFieldFromName": "Gönderen adı",
+  "channelsFieldHost": "SMTP sunucusu",
+  "channelsFieldLanguage": "Dil",
+  "channelsFieldPassword": "Parola",
+  "channelsFieldPrivateKey": "Özel anahtar (PEM)",
+  "channelsFieldRegion": "Bölge",
+  "channelsFieldRequired": "{field} gerekli",
+  "@channelsFieldRequired": {
+    "placeholders": {
+      "field": {}
+    }
+  },
+  "channelsFieldSecret": "İmza sırrı",
+  "channelsFieldSmsHeader": "SMS başlığı",
+  "channelsFieldTls": "Şifreleme (starttls, tls)",
+  "channelsFieldUrl": "Adres (https)",
+  "channelsFieldUserCode": "Kullanıcı kodu",
+  "channelsFieldUsername": "Kullanıcı adı",
+  "channelsFieldVoice": "Ses",
+  "channelsFieldWebhookUrl": "Webhook adresi",
+  "channelsHintFrom": "ornek@alanadi.com.tr",
+  "channelsHintRegion": "Boş bırakılabilir (eu: AB veri yerleşimi)",
+  "channelsHintSecret": "Verilirse istek HMAC ile imzalanır",
+  "channelsHintSmsHeader": "Sağlayıcıda onaylı gönderici adı (en çok 11 karakter)",
+  "channelsHintTls": "Boş bırakılırsa starttls",
+  "channelsHintUrl": "Bildirim JSON olarak bu adrese POST edilir",
+  "channelsHintWebhookUrl": "Slack / Teams'in verdiği gelen webhook adresi",
+  "channelsInvalidEmail": "Geçersiz e-posta: {value}",
+  "@channelsInvalidEmail": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "channelsInvalidPhone": "Uluslararası biçimde olmalı (+905…): {value}",
+  "@channelsInvalidPhone": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "channelsKindEmail": "E-posta",
+  "channelsKindPickerTitle": "Kanal türü",
+  "channelsKindVoiceCall": "Sesli arama",
+  "channelsKindsLoadFailed": "Kanal türleri yüklenemedi",
+  "channelsLoadFailed": "Kanallar yüklenemedi",
+  "channelsMinSeverity": "En düşük önem",
+  "channelsName": "Kanal adı",
+  "channelsNameRequired": "Kanal adı gerekli",
+  "channelsNewTitle": "Yeni kanal",
+  "channelsNotFound": "Kanal bulunamadı",
+  "channelsOff": "Kapalı",
+  "channelsPhoneHelper": "Her satıra bir numara, ülke koduyla: +905xxxxxxxxx",
+  "channelsPhoneNumbers": "Telefon numaraları",
+  "channelsPushNote": "Uyarılar telefon bildirimi olarak her zaman gelir. Buradaki kanallar ek olarak e-posta, Slack, SMS gibi yollarla da gönderir.",
+  "channelsRecipientMax": "En fazla 50 alıcı",
+  "channelsRecipientRequired": "En az bir alıcı gerekli",
+  "channelsSaveFailed": "Kaydedilemedi",
+  "channelsSaved": "Kanal kaydedildi",
+  "channelsSaving": "Kaydediliyor…",
+  "channelsSecretSaved": "Kayıtlı. Değiştirmek için yeni değeri yazın; boş bırakılırsa korunur.",
+  "channelsSendFailed": "Gönderilemedi",
+  "channelsSendResolved": "Çözüldüğünde de bildir",
+  "channelsSendTest": "Deneme bildirimi gönder",
+  "channelsSeverityCritical": "Kritik",
+  "channelsSeverityInfo": "Bilgi",
+  "channelsSeverityWarning": "Uyarı",
+  "channelsSourceHerd": "Her sürü uyarısı",
+  "channelsSourceHerdHint": "Düşük debi olan her hayvan için ayrı mesaj (kalabalık olabilir)",
+  "channelsSourceOps": "Sistem alarmları",
+  "channelsSourceOpsHint": "Sayaç kutusu sustu, veri kaybı gibi sistem sorunları",
+  "channelsSourceRequired": "En az bir bildirim türü seçin",
+  "channelsSourceSummary": "Sağım özeti",
+  "channelsSourceSummaryHint": "Sağım bitince tek mesaj (toplam süt, düşük verim ve düşük debi olan hayvanlar) ve Pazartesi sabahı haftalık özet (e-postada Excel raporu ekli)",
+  "channelsTestSent": "Deneme bildirimi gönderildi",
+  "channelsTitle": "Bildirim kanalları",
+  "channelsUnsupported": "Bu kanal türü desteklenmiyor: {kind}/{provider}",
+  "@channelsUnsupported": {
+    "placeholders": {
+      "kind": {},
+      "provider": {}
+    }
+  },
+  "channelsWhenSection": "Ne zaman gönderilsin",
   "commonAdd": "Ekle",
   "commonAll": "Tümü",
   "commonBack": "Geri",
@@ -34,6 +452,255 @@
     }
   },
   "commonYes": "Evet",
+  "coreErrorBadCertificate": "Sunucu sertifikası doğrulanamadı.",
+  "coreErrorBadResponse": "Sunucu beklenmeyen bir yanıt verdi.",
+  "coreErrorCancelled": "İstek iptal edildi.",
+  "coreErrorConnection": "Sunucuya ulaşılamıyor. Bağlantınızı kontrol edin.",
+  "coreErrorTimeout": "Sunucu yanıt vermiyor. Bağlantınızı kontrol edin.",
+  "coreErrorTransform": "Sunucunun yanıtı işlenemedi.",
+  "coreErrorUnknown": "Beklenmeyen bir hata oluştu.",
+  "coreMemberAddedFallback": "Kullanıcı eklendi.",
+  "coreResetLinkSentFallback": "Sıfırlama bağlantısı gönderildi.",
+  "coreRouteNotFound": "Sayfa bulunamadı",
+  "coreRouteNotFoundBody": "Aradığınız sayfa bulunamadı:\n{uri}",
+  "@coreRouteNotFoundBody": {
+    "placeholders": {
+      "uri": {}
+    }
+  },
+  "dashboardActiveSessions": "{n} sağım sürüyor",
+  "@dashboardActiveSessions": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "dashboardBySpecies": "Tür bazında",
+  "dashboardGroupMilked": "{milked}/{animals} hayvan sağıldı",
+  "@dashboardGroupMilked": {
+    "placeholders": {
+      "milked": {},
+      "animals": {}
+    }
+  },
+  "dashboardGroupsToday": "Gruplar · bugün",
+  "dashboardLoadFailed": "Günün özeti alınamadı",
+  "dashboardMilkingsAnimals": "{milkings} sağım · {animals} hayvan",
+  "@dashboardMilkingsAnimals": {
+    "placeholders": {
+      "milkings": {},
+      "animals": {}
+    }
+  },
+  "dashboardMoreAlerts": "{n} uyarı daha",
+  "@dashboardMoreAlerts": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "dashboardNoMilkingToday": "Bugün henüz sağım yapılmadı",
+  "dashboardNoOpenAlerts": "Açık uyarı yok",
+  "dashboardOpenAlerts": "Açık uyarılar",
+  "dashboardPerAnimal": "hayvan başı {amount}",
+  "@dashboardPerAnimal": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "dashboardSpeciesAnimals": "{species} · {n} hayvan",
+  "@dashboardSpeciesAnimals": {
+    "placeholders": {
+      "species": {},
+      "n": {}
+    }
+  },
+  "dashboardSpeciesFallback": "Tür",
+  "dashboardTodayMilk": "Bugün toplanan süt",
+  "dashboardYieldClasses": "Verim sınıfları · {n} hayvan",
+  "@dashboardYieldClasses": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "deliveriesAmountLabel": "Teslim edilen ({unit})",
+  "@deliveriesAmountLabel": {
+    "placeholders": {
+      "unit": {}
+    }
+  },
+  "deliveriesCardHint": "Tanker fişini girin: sayaçların ölçtüğüyle karşılaştırılır, fark büyükse uyarı gelir.",
+  "deliveriesDay": "Gün: {date}",
+  "@deliveriesDay": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "deliveriesDeleteBody": "{date} · {amount}\nYalnızca yanlış girilen kaydı silin; doğrusunu yeniden girin.",
+  "@deliveriesDeleteBody": {
+    "placeholders": {
+      "date": {},
+      "amount": {}
+    }
+  },
+  "deliveriesDeleteTitle": "Teslim silinsin mi?",
+  "deliveriesDiffOver": "+%{pct} · sayaçlar fazla",
+  "@deliveriesDiffOver": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "deliveriesDiffUnder": "−%{pct} · sayaçlar eksik",
+  "@deliveriesDiffUnder": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "deliveriesEmpty": "Henüz teslim girilmedi. İlk teslim karşılaştırılmaz; fark ikinci teslimden itibaren hesaplanır.",
+  "deliveriesEnter": "Teslim gir",
+  "deliveriesEnterAmount": "Tanker fişindeki miktarı girin.",
+  "deliveriesExplainer": "Tanker fişi, önceki teslimden bu yana sayaçların ölçtüğüyle karşılaştırılır (ayrılan süt hariç). Fark %{pct} üstündeyse uyarı.",
+  "@deliveriesExplainer": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "deliveriesLoadFailed": "Teslimler yüklenemedi",
+  "deliveriesMetered": "Sayaçlar {span}{date}: {amount}{withheld}",
+  "@deliveriesMetered": {
+    "placeholders": {
+      "span": {},
+      "date": {},
+      "amount": {},
+      "withheld": {}
+    }
+  },
+  "deliveriesNotCompared": "Karşılaştırılmadı (önceki teslim ya da sayaç verisi yok)",
+  "deliveriesSaved": "Teslim kaydedildi",
+  "deliveriesSavedMismatch": "Teslim kaydedildi — sayaçlarla fark var: {diff}",
+  "@deliveriesSavedMismatch": {
+    "placeholders": {
+      "diff": {}
+    }
+  },
+  "deliveriesTankDelivery": "Tank teslimi",
+  "deliveriesTankerLine": "{date} · tanker {amount}",
+  "@deliveriesTankerLine": {
+    "placeholders": {
+      "date": {},
+      "amount": {}
+    }
+  },
+  "deliveriesTitle": "Tank teslimleri",
+  "deliveriesToleranceHelper": "Sayaçlar ile tanker bundan fazla ayrışırsa uyarı.",
+  "deliveriesToleranceLabel": "Uyarı için fark (%)",
+  "deliveriesToleranceTitle": "Fark eşiği",
+  "deliveriesWithheld": " (ayrılan {amount} hariç)",
+  "@deliveriesWithheld": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "devicesDetailCalibration": "Kalibrasyon katsayısı",
+  "devicesDetailFirmware": "Yazılım sürümü",
+  "devicesDetailLastError": "Son hata",
+  "devicesDetailLastSeen": "Son görülme",
+  "devicesDetailProfile": "Profil",
+  "devicesDetailProtocol": "Protokol",
+  "devicesEmptySpoutsCount": "{n} Sayaçsız nokta",
+  "@devicesEmptySpoutsCount": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "devicesErrorShort": "Hata {code} · {since}",
+  "@devicesErrorShort": {
+    "placeholders": {
+      "code": {},
+      "since": {}
+    }
+  },
+  "devicesFirmwareShort": "Yazılım {version}",
+  "@devicesFirmwareShort": {
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "devicesHallNoVacuums": "Bu bölgede tanımlı ünite yok",
+  "devicesHallTitle": "{name} Bölgesi",
+  "@devicesHallTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "devicesLoadFailed": "Cihazlar yüklenemedi",
+  "devicesNoProfile": "Profilsiz",
+  "devicesNoRecord": "Kayıt yok",
+  "devicesOfflineCount": "{n} Çevrimdışı",
+  "@devicesOfflineCount": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "devicesOnlineCount": "{n} Çevrimiçi",
+  "@devicesOnlineCount": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "devicesProfileUnassigned": "Atanmamış (karantinada)",
+  "devicesSimulated": "Simülatör cihazı",
+  "devicesSourcesLabel": "Kaynaklar:",
+  "devicesSpoutLabel": "Nokta {no}",
+  "@devicesSpoutLabel": {
+    "placeholders": {
+      "no": {}
+    }
+  },
+  "devicesStatusNoMeter": "Sayaç takılı değil",
+  "devicesStatusOffline": "Çevrimdışı",
+  "devicesStatusOnline": "Çevrimiçi",
+  "devicesStatusReportedError": "Hata bildirdi",
+  "devicesUnassignedHint": "Bir sağım noktasına bağlı değil.",
+  "devicesUnassignedTitle": "Takılı olmayan sayaçlar",
+  "devicesUnknown": "Bilinmiyor",
+  "devicesUnprofiledCount": "{n} Profilsiz sayaç",
+  "@devicesUnprofiledCount": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "devicesVacuumAllOnline": "{points} nokta · tümü çevrimiçi",
+  "@devicesVacuumAllOnline": {
+    "placeholders": {
+      "points": {}
+    }
+  },
+  "devicesVacuumProblems": "{points} nokta · {problems} ilgilenilmeli",
+  "@devicesVacuumProblems": {
+    "placeholders": {
+      "points": {},
+      "problems": {}
+    }
+  },
+  "devicesVacuumTitle": "Ünite {name}",
+  "@devicesVacuumTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "domainClassDeclining": "Düşüşte",
+  "domainClassDecliningExplanation": "Son 30 günde belirgin düşüş var. Gebelik, laktasyon dönemi veya hastalık olabilir; takip listesinde.",
+  "domainClassDryOffCandidate": "Kuruya Çıkma Adayı",
+  "domainClassDryOffCandidateExplanation": "Son 7 günün ortalaması tür alt eşiğinin altında. Kuruya çıkarma zamanı gelmiş olabilir.",
+  "domainClassHigh": "Yüksek Verimli",
+  "domainClassHighExplanation": "Son 7 günün ortalaması tür üst eşiğinin üzerinde. Bu hayvan sürünün en verimlileri arasında.",
+  "domainClassNoMilk": "Süt Vermiyor",
+  "domainClassNoMilkExplanation": "Son sağımlarda süt alınamadı. Değerlendirme gerekli.",
+  "domainClassNormal": "Normal",
+  "domainClassNormalExplanation": "Verim beklenen aralıkta, eğim stabil.",
   "fmtDaysAgo": "{n} gün önce",
   "@fmtDaysAgo": {
     "placeholders": {
@@ -100,8 +767,612 @@
   "fmtSessionEvening": "Akşam",
   "fmtSessionMorning": "Sabah",
   "fmtSessionOther": "Diğer",
+  "groupsAdd": "Grup ekle",
+  "groupsDeleteBody": "Gruptaki hayvanlar silinmez, grupsuz kalır.",
+  "groupsDeleteTitle": "\"{name}\" silinsin mi?",
+  "@groupsDeleteTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "groupsDeleteTooltip": "Grubu sil",
+  "groupsEmpty": "Henüz grup yok.",
+  "groupsIntro": "Her hayvanın en çok bir grubu olur; hayvan gruba düzenleme formundan atanır. Panoda grupların günlük toplamı görünür.",
+  "groupsLoadFailed": "Gruplar yüklenemedi",
+  "groupsMilkingCount": "{n, plural, other{{n} sağmal hayvan}}",
+  "@groupsMilkingCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "groupsNameLabel": "Ad (ör. Padok 1, Yüksek verim)",
+  "groupsNew": "Yeni grup",
+  "groupsRenameTitle": "Grubun adı",
+  "groupsTitle": "Gruplar",
+  "historyAddAnimal": "Hayvan ekle",
+  "historyAnimalCount": "{count, plural, other{{count} hayvan}}",
+  "@historyAnimalCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "historyAnimalsLoadFailed": "Hayvanlar yüklenemedi",
+  "historyFilterGroup": "Grup",
+  "historyFilterSpecies": "Tür",
+  "historyFromList": "Listeden",
+  "historyGroups": "Gruplar",
+  "historyLactationNo": "{n}. laktasyon",
+  "@historyLactationNo": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "historyNoAnimalsForFilter": "Bu filtreye uyan hayvan yok",
+  "historyNoSessions": "Kayıtlı sağım oturumu yok",
+  "historyReport": "Rapor",
+  "historySessionAutoStarted": "otomatik açıldı",
+  "historySessionRunning": "Sürüyor",
+  "historySessionStartUnknown": "Başlangıç bilinmiyor",
+  "historySessionTitle": "{hall} Bölgesi · {type} Sağımı",
+  "@historySessionTitle": {
+    "placeholders": {
+      "hall": {},
+      "type": {}
+    }
+  },
+  "historySessionsLoadFailed": "Oturumlar yüklenemedi",
+  "historySpoutLabel": "{vacuum} · Nokta {n}",
+  "@historySpoutLabel": {
+    "placeholders": {
+      "vacuum": {},
+      "n": {}
+    }
+  },
+  "historyTabAnimals": "Hayvanlar",
+  "historyTabSessions": "Oturumlar",
+  "historyUnknownVacuum": "Ünite",
+  "historyUnmatchedBanner": "{n, plural, other{{n} tanınmayan küpe}}",
+  "@historyUnmatchedBanner": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "historyUnmatchedBannerHint": "Sağımda okundu; hayvanına atayın",
+  "kioskExitBody": "Yeniden girmek için tablet hesabının e-postası ve parolası gerekir.",
+  "kioskExitTitle": "Tabletten çıkılsın mı?",
+  "kioskSignOut": "Çıkış",
+  "kioskTitle": "Milk Trace · Sağımhane",
   "languageAuto": "Cihaz dili",
   "languageEnglish": "English",
   "languageTitle": "Dil",
-  "languageTurkish": "Türkçe"
+  "languageTurkish": "Türkçe",
+  "liveActionFailed": "İşlem tamamlanamadı: {error}",
+  "@liveActionFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "liveActiveCount": "{n} Aktif",
+  "@liveActiveCount": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "liveClearBodyEmpty": "Bu sağım silinecek.",
+  "liveClearBodyMeasured": "Bu sağımdaki ölçüm ({amount}) silinecek ve hiçbir hayvana yazılmayacak.",
+  "@liveClearBodyMeasured": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "liveClearConfirm": "Kaldır",
+  "liveClearTitle": "Eşleştirme kaldırılsın mı?",
+  "liveDataFailed": "Canlı veri alınamadı",
+  "liveEndConfirm": "Bitir",
+  "liveEndDialogBody": "Açık kalan hayvan sağımları kapatılacak ve oturum özetleri hesaplanacak. Bu işlem geri alınamaz.",
+  "liveEndDialogTitle": "Sağımı bitir",
+  "liveEndMilking": "Sağımı Bitir",
+  "liveFlowRate": "Akış oranı",
+  "liveFlowUnit": "L/dk",
+  "liveHallName": "{name} Bölgesi",
+  "@liveHallName": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "liveHallsLoadFailed": "Bölgeler yüklenemedi",
+  "liveLowFlow": "Düşük Debi",
+  "liveNoHalls": "Tanımlı sağım bölgesi yok",
+  "liveNoOpenSession": "Bu bölgede açık sağım yok.\nBaşlatmak için yukarıdaki düğmeyi kullanın.",
+  "liveNoSpouts": "Bu bölgede sağım noktası bulunamadı",
+  "liveNoTarget": "Hedef tanımsız",
+  "liveNotAssigned": "Hayvan eşleştirilmedi",
+  "liveNow": "Şu an",
+  "livePassiveCount": "{n} Pasif",
+  "@livePassiveCount": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "livePickerClear": "Eşleştirmeyi kaldır",
+  "livePickerClearHint": "{animal} yanlış bağlandıysa",
+  "@livePickerClearHint": {
+    "placeholders": {
+      "animal": {}
+    }
+  },
+  "livePickerElsewhere": "başka noktada",
+  "livePickerLoadFailed": "Hayvanlar yüklenemedi",
+  "livePickerNoMatch": "Eşleşen hayvan yok",
+  "livePickerNotMilking": "{message}: listede yok. Yanlışlıkla girdiyse başlığı çıkarın; sağılacaksa önce hayvanın durumunu değiştirin.",
+  "@livePickerNotMilking": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "livePickerPrevHere": "önceki sağımda bu noktadaydı",
+  "livePickerPrevMilked": "önceki sağımda sağıldı",
+  "livePickerSearchHint": "Küpe numarası, ad veya RFID",
+  "livePickerTitle": "{spout} · hayvan seç",
+  "@livePickerTitle": {
+    "placeholders": {
+      "spout": {}
+    }
+  },
+  "livePickerUnknownTag": "{message}. Hayvanı aşağıdan seçin.",
+  "@livePickerUnknownTag": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "livePickerWithhold": "Sütü ayır\n{date}",
+  "@livePickerWithhold": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "liveRedAlertOff": "Kırmızı uyarısını kapat",
+  "liveRedAlertOn": "Kırmızı uyarısını aç",
+  "liveReplaceBody": "{who} için bu noktada {amount} ölçüldü.\n\nSağıldıysa ölçüm ona yazılır. Eşleştirme yanlışsa ölçüm silinir.",
+  "@liveReplaceBody": {
+    "placeholders": {
+      "who": {},
+      "amount": {}
+    }
+  },
+  "liveReplaceMilked": "Sağıldı",
+  "liveReplaceMistaken": "Yanlış eşleştirme",
+  "liveReplaceTitle": "Önceki hayvan sağıldı mı?",
+  "liveSessionTypeTitle": "Sağım tipi",
+  "liveSpout": "Nokta",
+  "liveSpoutTitle": "{unit} · Nokta {no}",
+  "@liveSpoutTitle": {
+    "placeholders": {
+      "unit": {},
+      "no": {}
+    }
+  },
+  "liveStartMilking": "Sağımı Başlat",
+  "liveTarget": "Hedef",
+  "liveTitle": "Canlı Veriler",
+  "liveUnitFallback": "Ünite",
+  "liveUnknownTag": "Tanınmayan küpe",
+  "liveWithholdUntil": "Sütü ayır · arınma {date}",
+  "@liveWithholdUntil": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "loginEmailInvalid": "Geçerli bir e-posta girin.",
+  "loginEmailLabel": "E-posta",
+  "loginEmailRequired": "E-posta girin.",
+  "loginForgotPassword": "Parolamı unuttum",
+  "loginHidePassword": "Parolayı gizle",
+  "loginPasswordLabel": "Parola",
+  "loginPasswordRequired": "Parola girin.",
+  "loginResetIntro": "E-posta adresinize yeni parola belirleme bağlantısı gönderelim.",
+  "loginResetSend": "Bağlantı gönder",
+  "loginShowPassword": "Parolayı göster",
+  "loginSubmit": "Giriş yap",
+  "loginTagline": "İşletmenizin sağım takibi",
+  "milkersDurationMinutesSeconds": "{m} dk {s} sn",
+  "@milkersDurationMinutesSeconds": {
+    "placeholders": {
+      "m": {},
+      "s": {}
+    }
+  },
+  "milkersDurationSeconds": "{s} sn",
+  "@milkersDurationSeconds": {
+    "placeholders": {
+      "s": {}
+    }
+  },
+  "milkersEmpty": "Bu dönemde sağım yok.",
+  "milkersLast30Days": "Son 30 gün",
+  "milkersLast7Days": "Son 7 gün",
+  "milkersLoadFailed": "Sağımcı özeti yüklenemedi",
+  "milkersNote": "Sağımcı, oturumu açan ya da hayvanı noktaya bağlayan kişidir. Düşük debi çoğu zaman hayvandan ya da başlıktan gelir; oran bakılacak yeri gösterir, kişiyi puanlamaz.",
+  "milkersStats": "Ortalama sağım {duration} · düşük debi %{pct}",
+  "@milkersStats": {
+    "placeholders": {
+      "duration": {},
+      "pct": {}
+    }
+  },
+  "milkersSummary": "{sessions} oturum · {milkings} sağım · {volume}",
+  "@milkersSummary": {
+    "placeholders": {
+      "sessions": {},
+      "milkings": {},
+      "volume": {}
+    }
+  },
+  "milkersTitle": "Sağımcılar",
+  "milkersUnknown": "Sağımcısı bilinmeyen",
+  "milkersUnknownHint": "RFID ile açılan ya da eşleştireni silinmiş sağımlar",
+  "modelAnimalStatusActive": "Sağmal",
+  "modelAnimalStatusDead": "Öldü",
+  "modelAnimalStatusDry": "Kuruda",
+  "modelAnimalStatusSlaughtered": "Kesildi",
+  "modelAnimalStatusSold": "Satıldı",
+  "modelBreedingInsemination": "Tohumlama",
+  "modelBreedingPregnancyCheck": "Gebelik kontrolü · {result}",
+  "@modelBreedingPregnancyCheck": {
+    "placeholders": {
+      "result": {}
+    }
+  },
+  "modelBreedingResultOpen": "boş",
+  "modelBreedingResultPregnant": "gebe",
+  "modelPregnancyInseminated": "Tohumlandı · kontrol bekliyor",
+  "modelPregnancyOpen": "Boş",
+  "modelPregnancyPregnant": "Gebe",
+  "modelProfileUndefined": "Profil tanımsız",
+  "modelProtocolUnknown": "Bilinmiyor",
+  "modelUpcomingCalving": "Beklenen doğum",
+  "modelUpcomingDryOff": "Kuruya çıkar",
+  "pushChannelDescription": "Düşük debi, düşük verim ve cihaz uyarıları.",
+  "pushChannelName": "Sağım uyarıları",
+  "roleOperator": "Operatör",
+  "roleOperatorHint": "Sağımı yürütür: oturum açar, hayvan eşleştirir.",
+  "roleOwner": "İşletme sahibi",
+  "rolePlatformAdmin": "Platform yöneticisi",
+  "roleViewer": "Görüntüleyici",
+  "roleViewerHint": "Veteriner, danışman: görür ve not yazar, değiştiremez.",
+  "sessionSummaryLoadFailed": "Oturum özeti alınamadı",
+  "sessionSummaryLowFlow": "Düşük debi: {n}",
+  "@sessionSummaryLowFlow": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "sessionSummaryLowYield": "Düşük verim: {n}",
+  "@sessionSummaryLowYield": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "sessionSummaryNoneNotMilked": "Sağmal hayvanların hepsi sağıldı.",
+  "sessionSummaryNotMilked": "Sağılmayan sağmal: {n}",
+  "@sessionSummaryNotMilked": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "sessionSummaryTitle": "Oturum özeti",
+  "sessionSummaryTotals": "{n, plural, other{{n} hayvan sağıldı}} · {amount}",
+  "@sessionSummaryTotals": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "amount": {}
+    }
+  },
+  "shellTabDashboard": "Dashboard",
+  "shellTabDevices": "Cihazlar",
+  "shellTabHistory": "Geçmiş",
+  "shellTabLive": "Canlı",
+  "speciesCow": "İnek",
+  "speciesGoat": "Keçi",
+  "speciesSheep": "Koyun",
+  "supportCall": "Ara",
+  "supportOpenFailed": "Açılamadı: {target}",
+  "@supportOpenFailed": {
+    "placeholders": {
+      "target": {}
+    }
+  },
+  "supportTitle": "Destek",
+  "supportWhatsAppText": "Merhaba, Milk Trace hakkında destek istiyorum.",
+  "supportWhatsAppVersion": " (Uygulama {version})",
+  "@supportWhatsAppVersion": {
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "teamActionFailed": "İşlem yapılamadı: {error}",
+  "@teamActionFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "teamActivate": "Etkinleştir",
+  "teamActivateHint": "Yeniden giriş yapabilir.",
+  "teamAddFailed": "Eklenemedi: {error}",
+  "@teamAddFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "teamAddUser": "Kullanıcı ekle",
+  "teamDeleteBody": "{name} kalıcı olarak silinecek; geri alınamaz. Yazdığı hayvan notları kalır, yazarı \"Silinmiş kullanıcı\" görünür.\n\nYalnızca erişimi kesmek için \"Askıya al\"ı kullanın.",
+  "@teamDeleteBody": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "teamDeleteTitle": "Kullanıcıyı sil",
+  "teamEmailInvalid": "Geçerli bir e-posta girin.",
+  "teamEmailLabel": "E-posta",
+  "teamFullNameLabel": "Ad soyad",
+  "teamFullNameRequired": "Ad soyad girin.",
+  "teamKiosk": "Sağımhane tableti",
+  "teamKioskHint": "Sağımhanedeki ortak tablet için: yalnızca canlı sağım açılır, ekran kararmaz. Tablete bu e-posta ve parolayla girilir.",
+  "teamLoadFailed": "Kullanıcılar yüklenemedi",
+  "teamMakeRole": "{role} yap",
+  "@teamMakeRole": {
+    "placeholders": {
+      "role": {}
+    }
+  },
+  "teamNote": "Operatör sağımı yürütür; görüntüleyici (veteriner, danışman) görür ve not yazar. İşletme sahibi eklemek için Milk Trace desteğine başvurun.",
+  "teamPasswordTooShort": "En az 8 karakter.",
+  "teamSuspend": "Askıya al",
+  "teamSuspendHint": "Giriş yapamaz; açık oturumu en geç 15 dakikada kapanır.",
+  "teamSuspended": "Askıda",
+  "teamTabletPassword": "Tablet parolası",
+  "teamTabletPasswordHelper": "Tablete bu parolayla girilir; en az 8 karakter.",
+  "teamTabletPasswordRequired": "Tablet için parola girin.",
+  "teamTempPassword": "Geçici parola (isteğe bağlı)",
+  "teamTempPasswordHelper": "Boş bırakırsanız e-postayla davet gider.",
+  "teamTitle": "Kullanıcılar",
+  "thresholdsAlertHold": "Uyarı bekleme",
+  "thresholdsCalibrationNote": "Varsayılanlar tahmini başlangıç değerleridir. Irk, laktasyon dönemi ve işletmeye göre çok değişir; saha verisi ve ziraat mühendisi/veteriner görüşüyle kalibre edilmelidir.",
+  "thresholdsClassGroupHint": "7 günlük ortalama alt eşiğin altındaysa kuruya aday, üst eşiğin üstündeyse yüksek verimli (§6.4).",
+  "thresholdsClassGroupTitle": "Sınıflandırma eşikleri",
+  "thresholdsConductivity": "İletkenlik artışı",
+  "thresholdsDecline": "Düşüş eşiği",
+  "thresholdsDensity": "Yoğunluk",
+  "thresholdsDensityGroupHint": "İşletme miktarları kilogram gösteriyorsa litre bu katsayıyla çevrilir (1 L inek sütü ≈ 1,03 kg). Eşikler yine litre girilir.",
+  "thresholdsDensityGroupTitle": "Süt yoğunluğu",
+  "thresholdsDryOff": "Kuruya çıkma alt eşiği",
+  "thresholdsEndFlow": "Bitiş debisi",
+  "thresholdsEndGrace": "Bekleme",
+  "thresholdsEndGroupHint": "Debi bu değerin altında bu süre kalırsa hayvanın sağımı kapanır (§6.1).",
+  "thresholdsEndGroupTitle": "Sağım kapanışı",
+  "thresholdsErrorAboveDryOff": "Kuruya çıkma eşiğinden büyük olmalı",
+  "thresholdsErrorAboveLower": "Alt eşikten büyük olmalı",
+  "thresholdsErrorAboveNoMilk": "Boş sağım sınırından büyük olmalı",
+  "thresholdsErrorAboveRed": "Kırmızı eşiğinden büyük olmalı",
+  "thresholdsErrorBelowExpected": "Sağım başına beklenenden küçük olmalı",
+  "thresholdsErrorBelowGreen": "Yeşil eşiğinden küçük olmalı",
+  "thresholdsErrorBelowHighYield": "Yüksek verim eşiğinden küçük olmalı",
+  "thresholdsErrorBelowUpper": "Üst eşikten küçük olmalı",
+  "thresholdsErrorConductivityRange": "5–100 arasında olmalı",
+  "thresholdsErrorDensityRange": "0,90–1,20 arasında olmalı",
+  "thresholdsErrorInteger": "Tam sayı girin",
+  "thresholdsErrorMax": "En çok {max} olabilir",
+  "@thresholdsErrorMax": {
+    "placeholders": {
+      "max": {}
+    }
+  },
+  "thresholdsErrorNegative": "Negatif olamaz",
+  "thresholdsErrorNumber": "Sayı girin",
+  "thresholdsErrorZero": "Sıfır olamaz",
+  "thresholdsExpectedPerMilking": "Sağım başına beklenen",
+  "thresholdsFalseAlarmGroupHint": "Sağımın ilk saniyelerinde kırmızı üretilmez; kırmızı durum bu süre boyunca sürmeden uyarı gönderilmez (§6.2).",
+  "thresholdsFalseAlarmGroupTitle": "Yanlış alarm koruması",
+  "thresholdsFlowGroupHint": "Altında kırmızı, üstünde yeşil; arası sarı (§6.2).",
+  "thresholdsFlowGroupTitle": "Anlık debi bantları",
+  "thresholdsFresh": "Taze laktasyon",
+  "thresholdsGreenLimit": "Yeşil eşiği",
+  "thresholdsHighYield": "Yüksek verim üst eşiği",
+  "thresholdsLoadFailed": "Eşikler yüklenemedi",
+  "thresholdsLowerLimit": "Alt eşik",
+  "thresholdsMastitisGroupHint": "Sayaç iletkenlik ölçüyorsa: sağımın iletkenliği hayvanın kendi 7 günlük ortalamasının bu oran kadar üstündeyse uyarı. Teşhis değildir; veteriner kontrolü için işarettir.",
+  "thresholdsMastitisGroupTitle": "Mastitis şüphesi",
+  "thresholdsNoMilk": "Boş sağım sınırı",
+  "thresholdsNoMilkCount": "Bakılan son sağım",
+  "thresholdsNoSpecies": "Tanımlı tür eşiği yok",
+  "thresholdsRampUp": "Isınma süresi",
+  "thresholdsReadOnly": "Eşikleri yalnızca işletme sahibi değiştirebilir.",
+  "thresholdsRedLimit": "Kırmızı eşiği",
+  "thresholdsRulesGroupHint": "7 günlük ortalama 30 günlükten bu oranda fazla düşükse düşüşte. Son sağımların hepsi boş sağım sınırının altındaysa süt vermiyor. Buzağılamadan sonraki taze laktasyon günlerinde düşüşte ve kuruya aday denmez (§6.4).",
+  "thresholdsRulesGroupTitle": "Sınıflandırma kuralları",
+  "thresholdsSaved": "{species} eşikleri kaydedildi",
+  "@thresholdsSaved": {
+    "placeholders": {
+      "species": {}
+    }
+  },
+  "thresholdsSaving": "Kaydediliyor…",
+  "thresholdsSpeciesLoadFailed": "Türler yüklenemedi",
+  "thresholdsTitle": "Eşik ayarları",
+  "thresholdsUnitDays": "gün",
+  "thresholdsUnitFlow": "L/dk",
+  "thresholdsUnitMilkings": "sağım",
+  "thresholdsUnitPerDay": "L/gün",
+  "thresholdsUnitSec": "sn",
+  "thresholdsUpperLimit": "Üst eşik",
+  "thresholdsYieldGroupHint": "Alınan sütün beklenene oranı (§6.3). Geçmişi olmayan hayvanda beklenen, sağım başına bu değerdir.",
+  "thresholdsYieldGroupTitle": "Oturum verimi bantları",
+  "treatmentAdd": "Tedavi ekle",
+  "treatmentDeleteBody": "Yalnızca yanlış girilen kaydı silin; silinen kayıt arınmayı da kaldırır.",
+  "treatmentDeleteTitle": "Tedavi kaydı silinsin mi?",
+  "treatmentDrug": "İlaç",
+  "treatmentDrugRequired": "İlaç adını girin.",
+  "treatmentEmpty": "Tedavi kaydı yok. Antibiyotik verilen hayvanın arınma süresini girin: süre boyunca canlı ekranda \"Sütü ayır\" uyarısı çıkar.",
+  "treatmentLoadFailed": "Tedaviler alınamadı",
+  "treatmentPlusDays": "{n, plural, other{+{n} gün}}",
+  "@treatmentPlusDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "treatmentRange": "{start} → arınma {until}",
+  "@treatmentRange": {
+    "placeholders": {
+      "start": {},
+      "until": {}
+    }
+  },
+  "treatmentSaveFailed": "Tedavi kaydedilemedi: {error}",
+  "@treatmentSaveFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "treatmentSaved": "Tedavi kaydedildi",
+  "treatmentStart": "Başlangıç: {date}",
+  "@treatmentStart": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "treatmentStartHelp": "Tedavi başlangıcı",
+  "treatmentTitle": "Tedavi ve arınma",
+  "treatmentUntil": "Arınma bitişi: {date}",
+  "@treatmentUntil": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "treatmentUntilHelp": "Sütün ayrılacağı son gün",
+  "treatmentWithdrawalBanner": "Arınmada: sütü {date} dahil tanka katmayın.",
+  "@treatmentWithdrawalBanner": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "unmatchedAssign": "Hayvana ata",
+  "unmatchedAssigned": "Küpe {earTag} kaydına eklendi",
+  "@unmatchedAssigned": {
+    "placeholders": {
+      "earTag": {}
+    }
+  },
+  "unmatchedChooseAnimal": "{rfid} · hayvan seç",
+  "@unmatchedChooseAnimal": {
+    "placeholders": {
+      "rfid": {}
+    }
+  },
+  "unmatchedEmpty": "Tanınmayan küpe yok",
+  "unmatchedIgnore": "Yok say",
+  "unmatchedIgnoreBody": "{rfid} listeden kalkar ve yeniden okunsa da dönmez. Başka çiftliğin hayvanı ya da bozuk okuma için.",
+  "@unmatchedIgnoreBody": {
+    "placeholders": {
+      "rfid": {}
+    }
+  },
+  "unmatchedIgnoreFailed": "Yok sayılamadı: {error}",
+  "@unmatchedIgnoreFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "unmatchedIgnoreTitle": "Küpe yok sayılsın mı?",
+  "unmatchedIntro": "Sağımda okunan ama hiçbir hayvana kayıtlı olmayan küpeler. Küpeyi hayvanına atayın; bir dahaki sağımda hayvan noktaya kendiliğinden eşleşir. Başka çiftliğin hayvanı ya da bozuk okumaysa yok sayın.",
+  "unmatchedLastSeenAt": "Son: {spout}",
+  "@unmatchedLastSeenAt": {
+    "placeholders": {
+      "spout": {}
+    }
+  },
+  "unmatchedLoadFailed": "Küpeler yüklenemedi",
+  "unmatchedNoTag": "küpesi yok",
+  "unmatchedReadCount": "{n, plural, other{{n} okuma}}",
+  "@unmatchedReadCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "unmatchedReplace": "Değiştir",
+  "unmatchedReplaceBody": "{animal} kaydındaki küpe {old}. Yerine {rfid} yazılacak; eski küpe artık tanınmaz.",
+  "@unmatchedReplaceBody": {
+    "placeholders": {
+      "animal": {},
+      "old": {},
+      "rfid": {}
+    }
+  },
+  "unmatchedReplaceTitle": "Küpe değiştirilsin mi?",
+  "unmatchedSearchHint": "Küpe numarası veya ad",
+  "unmatchedTagValue": "küpe {rfid}",
+  "@unmatchedTagValue": {
+    "placeholders": {
+      "rfid": {}
+    }
+  },
+  "unmatchedTitle": "Tanınmayan küpeler",
+  "unmatchedUnknownSpout": "bilinmeyen nokta",
+  "upcomingMore": "ve {n} hayvan daha",
+  "@upcomingMore": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "upcomingTitle": "Yaklaşanlar",
+  "updateBodyAndroid": "Milk Trace'in bu sürümü artık desteklenmiyor. Sağım kayıtlarının doğru tutulması için uygulamayı Google Play'den güncelleyin.",
+  "updateBodyIos": "Milk Trace'in bu sürümü artık desteklenmiyor. Sağım kayıtlarının doğru tutulması için uygulamayı App Store'dan güncelleyin.",
+  "updatePlayButton": "Google Play'de güncelle",
+  "updateTitle": "Güncelleme gerekli",
+  "widgetAccount": "Hesap",
+  "widgetAlerts": "Uyarılar",
+  "widgetOfflineBanner": "Çevrimdışı · son veri {when}. Değişiklikler bağlantı gelince yapılabilir.",
+  "@widgetOfflineBanner": {
+    "placeholders": {
+      "when": {}
+    }
+  },
+  "yieldChartAvg7": "7 gün ort.",
+  "yieldChartDaily": "Günlük",
+  "yieldChartNotEnough": "Grafik için yeterli geçmiş yok",
+  "yieldReportDescription": "Hayvan başına günlük verim ({unit}), Excel dosyası. Veterinere ya da danışmana gönderebilirsiniz.",
+  "@yieldReportDescription": {
+    "placeholders": {
+      "unit": {}
+    }
+  },
+  "yieldReportFailed": "Rapor alınamadı: {error}",
+  "@yieldReportFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "yieldReportKilogram": "kilogram",
+  "yieldReportLastDays": "Son {n} gün",
+  "@yieldReportLastDays": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "yieldReportLitre": "litre",
+  "yieldReportShareSubject": "Milk Trace verim raporu",
+  "yieldReportTitle": "Verim raporu"
 }

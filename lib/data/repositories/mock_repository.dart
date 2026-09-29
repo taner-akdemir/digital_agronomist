@@ -21,6 +21,7 @@ import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
 import 'package:milktrace/data/models/session_milking.dart';
+import 'package:milktrace/data/models/session_summary.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_update.dart';
@@ -865,6 +866,27 @@ class MockRepository implements MilkTraceRepository {
   /// Demo modda birim yalnızca uygulamada tutulur (Auth.applyVolumeUnit).
   @override
   Future<void> setVolumeUnit(String unit) => _delayed(() async {});
+
+  /// Mock'ta oturum özeti: sağım kaydı üretilmiş geçmişte tutulmadığı
+  /// için sağmal hayvanlardan sabit bir örnek (ADR 0094).
+  @override
+  Future<SessionSummary> sessionSummary(String sessionId) => _delayed(() async {
+    final milking = (await animals()).where((a) => a.isMilking).toList();
+    final skipped = milking.length > 3
+        ? milking.sublist(milking.length - 1)
+        : const <Animal>[];
+    return SessionSummary(
+      sessionId: sessionId,
+      hallName: 'A',
+      animals: milking.length - skipped.length,
+      volumeMl: (milking.length - skipped.length) * 9800,
+      expectedMl: (milking.length - skipped.length) * 11000,
+      notMilked: [
+        for (final a in skipped)
+          AnimalBrief(animalId: a.id, earTag: a.earTag, name: a.name ?? ''),
+      ],
+    );
+  });
 
   /// Mock'ta gruplar bellekte (ADR 0092).
   final Map<String, AnimalGroup> _groups = {};

@@ -202,7 +202,7 @@ class _FormState extends ConsumerState<_Form> {
             decoration: _decoration(l10n.animalFormSpecies),
             items: [
               for (final s in widget.species)
-                DropdownMenuItem(value: s.id, child: Text(s.nameTr)),
+                DropdownMenuItem(value: s.id, child: Text(s.displayName)),
             ],
             validator: (v) => v == null ? l10n.animalFormSpeciesRequired : null,
             onChanged: (v) => setState(() => _speciesId = v),

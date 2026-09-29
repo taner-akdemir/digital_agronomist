@@ -1,0 +1,9 @@
+{
+  "sessionSummaryTitle": "Session summary",
+  "sessionSummaryLoadFailed": "Could not load the session summary",
+  "sessionSummaryTotals": "{n, plural, =1{{n} animal milked} other{{n} animals milked}} · {amount}",
+  "sessionSummaryNotMilked": "Lactating, not milked: {n}",
+  "sessionSummaryNoneNotMilked": "All lactating animals were milked.",
+  "sessionSummaryLowYield": "Low yield: {n}",
+  "sessionSummaryLowFlow": "Low flow rate: {n}"
+}

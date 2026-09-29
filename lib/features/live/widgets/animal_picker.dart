@@ -99,7 +99,7 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
   Widget build(BuildContext context) {
     final animals = ref.watch(animalsProvider);
     final species = ref.watch(speciesListProvider).value ?? const <Species>[];
-    final speciesName = {for (final s in species) s.id: s.nameTr};
+    final speciesName = {for (final s in species) s.id: s.displayName};
 
     return Padding(
       // Klavye açılınca liste ezilmesin.

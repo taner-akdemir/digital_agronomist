@@ -9,6 +9,7 @@ import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/domain/yield_class.dart';
 import 'package:milktrace/features/history/history_providers.dart';
+import 'package:milktrace/features/history/session_summary_sheet.dart';
 import 'package:milktrace/features/history/widgets/animal_status_chip.dart';
 import 'package:milktrace/features/history/widgets/yield_class_badge.dart';
 import 'package:milktrace/features/history/yield_report.dart';
@@ -197,7 +198,7 @@ class _Filters extends ConsumerWidget {
         children: [
           for (final s in species)
             _Chip(
-              label: s.nameTr,
+              label: s.displayName,
               selected: filter.speciesId == s.id,
               onTap: () => notifier.toggleSpecies(s.id),
             ),
@@ -254,7 +255,10 @@ class _ActiveFilter extends ConsumerWidget {
     final species = ref.watch(speciesListProvider).value ?? const <Species>[];
     final labels = [
       if (filter.speciesId case final id?)
-        species.where((s) => s.id == id).map((s) => s.nameTr).firstOrNull ??
+        species
+                .where((s) => s.id == id)
+                .map((s) => s.displayName)
+                .firstOrNull ??
             l10n.historyFilterSpecies,
       if (filter.yieldClass case final c?) c.label,
       if (filter.groupId case final id?)
@@ -412,9 +416,15 @@ class _SessionsTab extends ConsumerWidget {
               padding: const EdgeInsets.all(AppSpacing.lg),
               itemCount: list.length,
               separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm),
-              itemBuilder: (_, i) => _SessionTile(
-                session: list[i],
-                hall: hallById[list[i].hallId],
+              // Bitmiş oturuma dokunmak özetini açar (backend ADR 0094).
+              itemBuilder: (context, i) => GestureDetector(
+                onTap: list[i].status == 'active'
+                    ? null
+                    : () => showSessionSummary(context, list[i].id),
+                child: _SessionTile(
+                  session: list[i],
+                  hall: hallById[list[i].hallId],
+                ),
               ),
             ),
     );

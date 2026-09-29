@@ -1,5 +1,366 @@
 {
   "@@locale": "en",
+  "accountAuditLog": "Activity log",
+  "accountDefaultName": "User",
+  "accountMilkUnit": "Milk unit",
+  "accountMilkers": "Milkers",
+  "accountMockMode": "You are working with demo data (mock mode).",
+  "accountNotificationChannels": "Notification channels",
+  "accountPickFarm": "Choose a farm",
+  "accountPushUnavailable": "Notifications are off on this phone: permission was not granted or the notification service is not connected yet. Alerts still appear in the notification center.",
+  "accountSignOut": "Sign out",
+  "accountSwitchFarm": "Switch farm",
+  "accountSwitchFarmFailed": "Could not switch farm: {error}",
+  "accountTestPush": "Send a test notification to this phone",
+  "accountTestPushFailed": "Could not send the test notification: {error}",
+  "accountTestPushNone": "The test notification did not reach any phone",
+  "accountTestPushSending": "Sending…",
+  "accountTestPushSent": "Test notification sent (phones: {count})",
+  "accountThresholds": "Threshold settings",
+  "accountUnitKilogram": "Kilogram",
+  "accountUnitLitre": "Litre",
+  "accountUsers": "Users",
+  "alertsAcknowledged": "read",
+  "alertsBackOnlineAt": "back online {time}",
+  "@alertsBackOnlineAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "alertsEmpty": "No open alerts",
+  "alertsLoadFailed": "Could not load alerts",
+  "alertsMarkRead": "Mark read",
+  "alertsRecoveredAt": "recovered {time}",
+  "@alertsRecoveredAt": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "alertsTitle": "Alerts",
+  "animalDetailAddNote": "Add note",
+  "animalDetailAvg30": "30-day avg.",
+  "animalDetailAvg7": "7-day avg.",
+  "animalDetailBreed": "Breed",
+  "animalDetailCalved": "Calved",
+  "animalDetailCalvingAlreadyToday": "A calving is already recorded for today",
+  "animalDetailCalvingConfirmTitle": "Record calving?",
+  "animalDetailCalvingDate": "Calving date",
+  "animalDetailCalvingLactation": "Lactation {current} → {next}",
+  "@animalDetailCalvingLactation": {
+    "placeholders": {
+      "current": {},
+      "next": {}
+    }
+  },
+  "animalDetailCalvingSaved": "Calving recorded",
+  "animalDetailCalvingStatus": "Status {status} → Lactating",
+  "@animalDetailCalvingStatus": {
+    "placeholders": {
+      "status": {}
+    }
+  },
+  "animalDetailDaysInMilk": "Days in milk",
+  "animalDetailDisclaimer": "This is a suggestion, not a diagnosis. Pregnancy, lactation stage and illness can lower yield; a vet check is needed.",
+  "animalDetailFreshLactation": "Fresh lactation: the \"declining\" and \"dry-off candidate\" labels are not given in the first {days} days; yield is still rising.",
+  "@animalDetailFreshLactation": {
+    "placeholders": {
+      "days": {}
+    }
+  },
+  "animalDetailFrozenClassNote": "Animals that are not lactating are not classified; this label is from the last calculation while it was lactating.",
+  "animalDetailGroup": "Group",
+  "animalDetailHistoryFailed": "Could not load milking history",
+  "animalDetailLactation": "Lactation",
+  "animalDetailLastCalving": "Last calving",
+  "animalDetailLastClass": "Last class: {label}",
+  "@animalDetailLastClass": {
+    "placeholders": {
+      "label": {}
+    }
+  },
+  "animalDetailLoadFailed": "Could not load animal details",
+  "animalDetailMoreNotes": "{n, plural, =1{{n} more note} other{{n} more notes}}",
+  "@animalDetailMoreNotes": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "animalDetailNoMilkings": "No milkings recorded for this animal",
+  "animalDetailNoNotes": "No notes yet. Vet checks, pregnancy or treatment details help interpret the class label.",
+  "animalDetailNotRegistered": "This animal is not registered",
+  "animalDetailNoteAddFailed": "Could not add note: {error}",
+  "@animalDetailNoteAddFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "animalDetailNoteAdded": "Note added",
+  "animalDetailNoteHint": "E.g. Last vet check: mastitis, under treatment.",
+  "animalDetailNotes": "Notes",
+  "animalDetailNotesFailed": "Could not load notes",
+  "animalDetailOrdinal": "{n}",
+  "@animalDetailOrdinal": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalDetailRecentMilkings": "Recent milkings",
+  "animalDetailShownOfTotal": "Showing the first {limit} of {total} milkings",
+  "@animalDetailShownOfTotal": {
+    "placeholders": {
+      "total": {},
+      "limit": {}
+    }
+  },
+  "animalDetailStaleClass": "Class from the {date} calculation: the nightly calculation only refreshes animals milked in the last 30 days.",
+  "@animalDetailStaleClass": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "animalDetailTitleFallback": "Animal",
+  "animalDetailTrend30": "30-day trend",
+  "animalDetailTrendFailed": "Could not load the trend",
+  "animalDetailYieldTrend": "Yield trend",
+  "animalFormAdded": "Animal added",
+  "animalFormAnimalFailed": "Could not load animal",
+  "animalFormBirthDate": "Birth date",
+  "animalFormBreed": "Breed (optional)",
+  "animalFormClearDate": "Clear {label}",
+  "@animalFormClearDate": {
+    "placeholders": {
+      "label": {}
+    }
+  },
+  "animalFormEarTag": "Ear tag number",
+  "animalFormEarTagHelper": "Identifies the animal; unique within the farm.",
+  "animalFormEarTagRequired": "Ear tag number is required",
+  "animalFormEditTitle": "Edit animal",
+  "animalFormGroup": "Group",
+  "animalFormLactationNo": "Lactation number",
+  "animalFormLastCalving": "Last calving",
+  "animalFormName": "Name (optional)",
+  "animalFormNewTitle": "New animal",
+  "animalFormNoGroup": "No group",
+  "animalFormNotEntered": "Not entered",
+  "animalFormNotFound": "Animal not found",
+  "animalFormPickDate": "Pick {label}",
+  "@animalFormPickDate": {
+    "placeholders": {
+      "label": {}
+    }
+  },
+  "animalFormRfid": "RFID (optional)",
+  "animalFormRfidHelper": "The number of the chip in the ear tag; if the meter reads it, the animal is matched to the milking point automatically.",
+  "animalFormSaving": "Saving…",
+  "animalFormSpecies": "Species",
+  "animalFormSpeciesFailed": "Could not load species",
+  "animalFormSpeciesRequired": "Select a species",
+  "animalFormStatus": "Status",
+  "animalFormStatusHelper": "Only lactating animals are matched to milkings and classified.",
+  "animalFormUpdated": "Animal updated",
+  "animalImportAddN": "Add animals ({n})",
+  "@animalImportAddN": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalImportAdded": "{n, plural, one{{n} animal added} other{{n} animals added}}",
+  "@animalImportAdded": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "animalImportColumns": "Columns (Turkish headers): Küpe No (ear tag, required) · Tür (species) · Adı (name) · Irkı (breed) · RFID · Doğum Tarihi (birth date) · Son Buzağılama (last calving) · Laktasyon (lactation) · Durumu (status)",
+  "animalImportCountCreate": "{n} to add",
+  "@animalImportCountCreate": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalImportCountErrors": "{n} invalid, will be skipped",
+  "@animalImportCountErrors": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalImportCountExists": "{n} already registered",
+  "@animalImportCountExists": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalImportDefaultSpecies": "Rows without a species",
+  "animalImportFailed": "Import failed: {error}",
+  "@animalImportFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "animalImportIgnoredColumns": "Ignored columns: {columns}",
+  "@animalImportIgnoredColumns": {
+    "placeholders": {
+      "columns": {}
+    }
+  },
+  "animalImportIntro": "Upload the list you got from your vet, the breeders' union or the national animal registry (Excel .xlsx or CSV). The first row must be column headers; dates day first (03.04.2021).",
+  "animalImportNothingToAdd": "No animals to add",
+  "animalImportPickFile": "Choose file",
+  "animalImportPickOtherFile": "Choose another file",
+  "animalImportReadFailed": "Could not read file: {error}",
+  "@animalImportReadFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "animalImportRules": "Animals whose ear tag is already registered are not changed. Invalid rows are skipped; it is safe to fix the file and upload it again.",
+  "animalImportSectionCreate": "To add",
+  "animalImportSectionErrors": "Invalid rows",
+  "animalImportSectionExists": "Already registered (not changed)",
+  "animalImportSectionWarnings": "Warnings",
+  "animalImportSpeciesLoadFailed": "Could not load species",
+  "animalImportTitle": "Import from list",
+  "auditAnimalCalving": "Calving recorded",
+  "auditAnimalCreate": "Animal added",
+  "auditAnimalImport": "Import from list",
+  "auditAnimalUpdate": "Animal record changed",
+  "auditBreedingAdd": "Breeding record added",
+  "auditBreedingDelete": "Breeding record deleted",
+  "auditChannelCreate": "Notification channel added",
+  "auditChannelDelete": "Notification channel deleted",
+  "auditChannelUpdate": "Notification channel changed",
+  "auditDeletedUser": "Deleted user",
+  "auditDeliveryAdd": "Tank delivery entered",
+  "auditDeliveryDelete": "Tank delivery deleted",
+  "auditEmpty": "No recorded changes in the last 90 days.",
+  "auditIntro": "Last 90 days: changes to thresholds, animal records, matching, users and notification channels.",
+  "auditLoadFailed": "Could not load the activity log",
+  "auditSettingsUpdate": "Farm setting changed",
+  "auditSpoutUnassign": "Matching removed",
+  "auditTagDismiss": "Unrecognized ear tag dismissed",
+  "auditTeamAdd": "User added",
+  "auditTeamRemove": "User removed",
+  "auditTeamUpdate": "User changed",
+  "auditThresholdsUpdate": "Thresholds changed",
+  "auditTitle": "Activity log",
+  "auditTreatmentAdd": "Treatment added",
+  "auditTreatmentDelete": "Treatment deleted",
+  "breedingAddRecord": "Add record",
+  "breedingAdded": "Breeding record added",
+  "breedingDeleteBody": "Only delete a record entered by mistake; status and dates are recalculated.",
+  "breedingDeleteTitle": "Delete breeding record?",
+  "breedingDialogTitle": "Breeding record",
+  "breedingDryOff": "Suggested dry-off: {date}",
+  "@breedingDryOff": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "breedingEmpty": "No records. Enter inseminations and pregnancy checks: the expected calving and dry-off dates are calculated.",
+  "breedingExpectedCalving": "Expected calving: {date}",
+  "@breedingExpectedCalving": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "breedingInsemination": "Insemination",
+  "breedingLoadFailed": "Could not load breeding records",
+  "breedingOpen": "Open",
+  "breedingPregnancyCheck": "Pregnancy check",
+  "breedingPregnant": "Pregnant",
+  "breedingSireLabel": "Bull/buck or semen code (optional)",
+  "breedingTitle": "Breeding",
+  "channelsAdd": "Add channel",
+  "channelsAdded": "Channel added",
+  "channelsCardDailyLimit": "at most {n} per day",
+  "channelsCardStatus": "{severity} and above · {sources}",
+  "channelsChannelLoadFailed": "Could not load channel",
+  "channelsConnectionSection": "Connection settings",
+  "channelsDailyLimit": "Daily limit",
+  "channelsDailyLimitHelperDefault": "If left empty, {n}. Messages beyond the limit are not sent; the counter resets at midnight.",
+  "channelsDailyLimitHelperUnlimited": "If left empty, unlimited. Messages beyond the limit are not sent; the counter resets at midnight.",
+  "channelsDailyLimitRange": "Must be between 1 and 10000",
+  "channelsDelete": "Delete channel",
+  "channelsDeleteBody": "Notifications will no longer be sent to \"{name}\". This cannot be undone.",
+  "channelsDeleteFailed": "Could not delete",
+  "channelsDeleteTitle": "Delete channel?",
+  "channelsDeleted": "Channel deleted",
+  "channelsEditTitle": "Edit channel",
+  "channelsEmailAddresses": "Email addresses",
+  "channelsEmailHelper": "One address per line",
+  "channelsEmptyBody": "Add a channel to also receive alerts by email or SMS.",
+  "channelsEmptyTitle": "No channels yet",
+  "channelsEnabled": "Channel enabled",
+  "channelsFieldApiKey": "API key",
+  "channelsFieldApiSecret": "API secret",
+  "channelsFieldApplicationId": "Application ID",
+  "channelsFieldBearerToken": "Bearer token",
+  "channelsFieldFrom": "Sender",
+  "channelsFieldFromName": "Sender name",
+  "channelsFieldHost": "SMTP server",
+  "channelsFieldLanguage": "Language",
+  "channelsFieldPassword": "Password",
+  "channelsFieldPrivateKey": "Private key (PEM)",
+  "channelsFieldRegion": "Region",
+  "channelsFieldRequired": "{field} is required",
+  "channelsFieldSecret": "Signing secret",
+  "channelsFieldSmsHeader": "SMS sender ID",
+  "channelsFieldTls": "Encryption (starttls, tls)",
+  "channelsFieldUrl": "URL (https)",
+  "channelsFieldUserCode": "User code",
+  "channelsFieldUsername": "Username",
+  "channelsFieldVoice": "Voice",
+  "channelsFieldWebhookUrl": "Webhook URL",
+  "channelsHintFrom": "name@example.com",
+  "channelsHintRegion": "Can be left empty (eu: EU data residency)",
+  "channelsHintSecret": "If given, the request is signed with HMAC",
+  "channelsHintSmsHeader": "Sender name approved by the provider (at most 11 characters)",
+  "channelsHintTls": "starttls if left empty",
+  "channelsHintUrl": "The notification is POSTed to this URL as JSON",
+  "channelsHintWebhookUrl": "The incoming webhook URL provided by Slack / Teams",
+  "channelsInvalidEmail": "Invalid email: {value}",
+  "channelsInvalidPhone": "Must be in international format (+905…): {value}",
+  "channelsKindEmail": "Email",
+  "channelsKindPickerTitle": "Channel type",
+  "channelsKindVoiceCall": "Voice call",
+  "channelsKindsLoadFailed": "Could not load channel types",
+  "channelsLoadFailed": "Could not load channels",
+  "channelsMinSeverity": "Minimum severity",
+  "channelsName": "Channel name",
+  "channelsNameRequired": "Channel name is required",
+  "channelsNewTitle": "New channel",
+  "channelsNotFound": "Channel not found",
+  "channelsOff": "Off",
+  "channelsPhoneHelper": "One number per line, with country code: +905xxxxxxxxx",
+  "channelsPhoneNumbers": "Phone numbers",
+  "channelsPushNote": "Alerts always arrive as phone notifications. The channels here also send them by email, Slack, SMS and similar.",
+  "channelsRecipientMax": "At most 50 recipients",
+  "channelsRecipientRequired": "At least one recipient is required",
+  "channelsSaveFailed": "Could not save",
+  "channelsSaved": "Channel saved",
+  "channelsSaving": "Saving…",
+  "channelsSecretSaved": "Saved. Type a new value to change it; if left empty it is kept.",
+  "channelsSendFailed": "Could not send",
+  "channelsSendResolved": "Also notify when resolved",
+  "channelsSendTest": "Send test notification",
+  "channelsSeverityCritical": "Critical",
+  "channelsSeverityInfo": "Info",
+  "channelsSeverityWarning": "Warning",
+  "channelsSourceHerd": "Every herd alert",
+  "channelsSourceHerdHint": "A separate message for each animal with low flow rate (can be noisy)",
+  "channelsSourceOps": "System alarms",
+  "channelsSourceOpsHint": "System problems such as a silent meter box or data loss",
+  "channelsSourceRequired": "Select at least one notification type",
+  "channelsSourceSummary": "Milking summary",
+  "channelsSourceSummaryHint": "A single message when milking ends (total milk, animals with low yield and low flow rate) and a weekly summary on Monday morning (Excel report attached in email)",
+  "channelsTestSent": "Test notification sent",
+  "channelsTitle": "Notification channels",
+  "channelsUnsupported": "This channel type is not supported: {kind}/{provider}",
+  "channelsWhenSection": "When to send",
   "commonAdd": "Add",
   "commonAll": "All",
   "commonBack": "Back",
@@ -19,6 +380,255 @@
   "commonSave": "Save",
   "commonSaveFailed": "Could not save: {error}",
   "commonYes": "Yes",
+  "coreErrorBadCertificate": "The server certificate could not be verified.",
+  "coreErrorBadResponse": "The server returned an unexpected response.",
+  "coreErrorCancelled": "The request was cancelled.",
+  "coreErrorConnection": "Can't reach the server. Check your connection.",
+  "coreErrorTimeout": "The server is not responding. Check your connection.",
+  "coreErrorTransform": "The server's response could not be processed.",
+  "coreErrorUnknown": "An unexpected error occurred.",
+  "coreMemberAddedFallback": "User added.",
+  "coreResetLinkSentFallback": "Reset link sent.",
+  "coreRouteNotFound": "Page not found",
+  "coreRouteNotFoundBody": "The page you're looking for wasn't found:\n{uri}",
+  "@coreRouteNotFoundBody": {
+    "placeholders": {
+      "uri": {}
+    }
+  },
+  "dashboardActiveSessions": "{n, plural, =1{{n} milking in progress} other{{n} milkings in progress}}",
+  "@dashboardActiveSessions": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "dashboardBySpecies": "By species",
+  "dashboardGroupMilked": "{milked}/{animals} animals milked",
+  "@dashboardGroupMilked": {
+    "placeholders": {
+      "milked": {},
+      "animals": {}
+    }
+  },
+  "dashboardGroupsToday": "Groups · today",
+  "dashboardLoadFailed": "Could not load today's summary",
+  "dashboardMilkingsAnimals": "{milkings} milkings · {animals} animals",
+  "@dashboardMilkingsAnimals": {
+    "placeholders": {
+      "milkings": {},
+      "animals": {}
+    }
+  },
+  "dashboardMoreAlerts": "{n, plural, =1{{n} more alert} other{{n} more alerts}}",
+  "@dashboardMoreAlerts": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "dashboardNoMilkingToday": "No milking yet today",
+  "dashboardNoOpenAlerts": "No open alerts",
+  "dashboardOpenAlerts": "Open alerts",
+  "dashboardPerAnimal": "per animal {amount}",
+  "@dashboardPerAnimal": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "dashboardSpeciesAnimals": "{species} · {n} animals",
+  "@dashboardSpeciesAnimals": {
+    "placeholders": {
+      "species": {},
+      "n": {}
+    }
+  },
+  "dashboardSpeciesFallback": "Species",
+  "dashboardTodayMilk": "Milk collected today",
+  "dashboardYieldClasses": "Yield classes · {n} animals",
+  "@dashboardYieldClasses": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "deliveriesAmountLabel": "Delivered ({unit})",
+  "@deliveriesAmountLabel": {
+    "placeholders": {
+      "unit": {}
+    }
+  },
+  "deliveriesCardHint": "Enter the tanker slip: it is compared with what the meters measured, and you get an alert if the difference is large.",
+  "deliveriesDay": "Day: {date}",
+  "@deliveriesDay": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "deliveriesDeleteBody": "{date} · {amount}\nOnly delete a wrongly entered record; then enter the correct one again.",
+  "@deliveriesDeleteBody": {
+    "placeholders": {
+      "date": {},
+      "amount": {}
+    }
+  },
+  "deliveriesDeleteTitle": "Delete delivery?",
+  "deliveriesDiffOver": "+{pct}% · meters over",
+  "@deliveriesDiffOver": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "deliveriesDiffUnder": "−{pct}% · meters under",
+  "@deliveriesDiffUnder": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "deliveriesEmpty": "No deliveries recorded yet. The first delivery is not compared; the difference is calculated from the second delivery on.",
+  "deliveriesEnter": "Record delivery",
+  "deliveriesEnterAmount": "Enter the amount on the tanker slip.",
+  "deliveriesExplainer": "The tanker slip is compared with what the meters measured since the previous delivery (excluding withheld milk). Alert if the difference is above {pct}%.",
+  "@deliveriesExplainer": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "deliveriesLoadFailed": "Could not load deliveries",
+  "deliveriesMetered": "Meters {span}{date}: {amount}{withheld}",
+  "@deliveriesMetered": {
+    "placeholders": {
+      "span": {},
+      "date": {},
+      "amount": {},
+      "withheld": {}
+    }
+  },
+  "deliveriesNotCompared": "Not compared (no previous delivery or meter data)",
+  "deliveriesSaved": "Delivery saved",
+  "deliveriesSavedMismatch": "Delivery saved — differs from the meters: {diff}",
+  "@deliveriesSavedMismatch": {
+    "placeholders": {
+      "diff": {}
+    }
+  },
+  "deliveriesTankDelivery": "Tank delivery",
+  "deliveriesTankerLine": "{date} · tanker {amount}",
+  "@deliveriesTankerLine": {
+    "placeholders": {
+      "date": {},
+      "amount": {}
+    }
+  },
+  "deliveriesTitle": "Tank deliveries",
+  "deliveriesToleranceHelper": "Alert if the meters and the tanker differ by more than this.",
+  "deliveriesToleranceLabel": "Difference for alert (%)",
+  "deliveriesToleranceTitle": "Difference threshold",
+  "deliveriesWithheld": " (excluding {amount} withheld milk)",
+  "@deliveriesWithheld": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "devicesDetailCalibration": "Calibration factor",
+  "devicesDetailFirmware": "Firmware version",
+  "devicesDetailLastError": "Last error",
+  "devicesDetailLastSeen": "Last seen",
+  "devicesDetailProfile": "Profile",
+  "devicesDetailProtocol": "Protocol",
+  "devicesEmptySpoutsCount": "{n} Points without meter",
+  "@devicesEmptySpoutsCount": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "devicesErrorShort": "Error {code} · {since}",
+  "@devicesErrorShort": {
+    "placeholders": {
+      "code": {},
+      "since": {}
+    }
+  },
+  "devicesFirmwareShort": "Firmware {version}",
+  "@devicesFirmwareShort": {
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "devicesHallNoVacuums": "No milking units defined in this area",
+  "devicesHallTitle": "Milking area {name}",
+  "@devicesHallTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "devicesLoadFailed": "Could not load devices",
+  "devicesNoProfile": "No profile",
+  "devicesNoRecord": "No record",
+  "devicesOfflineCount": "{n} Offline",
+  "@devicesOfflineCount": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "devicesOnlineCount": "{n} Online",
+  "@devicesOnlineCount": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "devicesProfileUnassigned": "Unassigned (quarantined)",
+  "devicesSimulated": "Simulator device",
+  "devicesSourcesLabel": "Sources:",
+  "devicesSpoutLabel": "Point {no}",
+  "@devicesSpoutLabel": {
+    "placeholders": {
+      "no": {}
+    }
+  },
+  "devicesStatusNoMeter": "No meter installed",
+  "devicesStatusOffline": "Offline",
+  "devicesStatusOnline": "Online",
+  "devicesStatusReportedError": "Reported an error",
+  "devicesUnassignedHint": "Not attached to a milking point.",
+  "devicesUnassignedTitle": "Meters not installed",
+  "devicesUnknown": "Unknown",
+  "devicesUnprofiledCount": "{n} Meters without profile",
+  "@devicesUnprofiledCount": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "devicesVacuumAllOnline": "{points} points · all online",
+  "@devicesVacuumAllOnline": {
+    "placeholders": {
+      "points": {}
+    }
+  },
+  "devicesVacuumProblems": "{points} points · {problems} need attention",
+  "@devicesVacuumProblems": {
+    "placeholders": {
+      "points": {},
+      "problems": {}
+    }
+  },
+  "devicesVacuumTitle": "Milking unit {name}",
+  "@devicesVacuumTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "domainClassDeclining": "Declining",
+  "domainClassDecliningExplanation": "Yield has dropped noticeably over the last 30 days. Pregnancy, lactation stage or illness may be the cause; it is on the watch list.",
+  "domainClassDryOffCandidate": "Dry-off candidate",
+  "domainClassDryOffCandidateExplanation": "The 7-day average is below the species' lower threshold. It may be time for dry-off.",
+  "domainClassHigh": "High yield",
+  "domainClassHighExplanation": "The 7-day average is above the species' upper threshold. This animal is among the highest-yielding in the herd.",
+  "domainClassNoMilk": "No milk",
+  "domainClassNoMilkExplanation": "No milk was obtained in recent milkings. Needs assessment.",
+  "domainClassNormal": "Normal",
+  "domainClassNormalExplanation": "Yield is in the expected range and the trend is stable.",
   "fmtDaysAgo": "{n} d ago",
   "fmtDaysShort": "{n} d",
   "fmtHoursAgo": "{n} h ago",
@@ -44,8 +654,535 @@
   "fmtSessionEvening": "Evening",
   "fmtSessionMorning": "Morning",
   "fmtSessionOther": "Other",
+  "groupsAdd": "Add group",
+  "groupsDeleteBody": "Animals in the group are not deleted; they are left with no group.",
+  "groupsDeleteTitle": "Delete \"{name}\"?",
+  "@groupsDeleteTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "groupsDeleteTooltip": "Delete group",
+  "groupsEmpty": "No groups yet.",
+  "groupsIntro": "Each animal belongs to at most one group; an animal is assigned to a group from the edit form. The dashboard shows each group's daily total.",
+  "groupsLoadFailed": "Could not load groups",
+  "groupsMilkingCount": "{n, plural, one{{n} lactating animal} other{{n} lactating animals}}",
+  "@groupsMilkingCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "groupsNameLabel": "Name (e.g. Paddock 1, High yield)",
+  "groupsNew": "New group",
+  "groupsRenameTitle": "Group name",
+  "groupsTitle": "Groups",
+  "historyAddAnimal": "Add animal",
+  "historyAnimalCount": "{count, plural, one{{count} animal} other{{count} animals}}",
+  "@historyAnimalCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "historyAnimalsLoadFailed": "Could not load animals",
+  "historyFilterGroup": "Group",
+  "historyFilterSpecies": "Species",
+  "historyFromList": "From list",
+  "historyGroups": "Groups",
+  "historyLactationNo": "lactation {n}",
+  "@historyLactationNo": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "historyNoAnimalsForFilter": "No animals match this filter",
+  "historyNoSessions": "No recorded milking sessions",
+  "historyReport": "Report",
+  "historySessionAutoStarted": "auto-started",
+  "historySessionRunning": "In progress",
+  "historySessionStartUnknown": "Start time unknown",
+  "historySessionTitle": "Area {hall} · {type} milking",
+  "@historySessionTitle": {
+    "placeholders": {
+      "hall": {},
+      "type": {}
+    }
+  },
+  "historySessionsLoadFailed": "Could not load sessions",
+  "historySpoutLabel": "{vacuum} · Milking point {n}",
+  "@historySpoutLabel": {
+    "placeholders": {
+      "vacuum": {},
+      "n": {}
+    }
+  },
+  "historyTabAnimals": "Animals",
+  "historyTabSessions": "Sessions",
+  "historyUnknownVacuum": "Unit",
+  "historyUnmatchedBanner": "{n, plural, one{{n} unknown tag} other{{n} unknown tags}}",
+  "@historyUnmatchedBanner": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "historyUnmatchedBannerHint": "Read during milking; assign to an animal",
+  "kioskExitBody": "Signing back in requires the tablet account's email and password.",
+  "kioskExitTitle": "Sign out of the tablet?",
+  "kioskSignOut": "Sign out",
+  "kioskTitle": "Milk Trace · Milking parlor",
   "languageAuto": "Device language",
   "languageEnglish": "English",
   "languageTitle": "Language",
-  "languageTurkish": "Türkçe"
+  "languageTurkish": "Türkçe",
+  "liveActionFailed": "Couldn't complete the action: {error}",
+  "@liveActionFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "liveActiveCount": "{n} Active",
+  "@liveActiveCount": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "liveClearBodyEmpty": "This milking will be deleted.",
+  "liveClearBodyMeasured": "The measurement from this milking ({amount}) will be deleted and not credited to any animal.",
+  "@liveClearBodyMeasured": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "liveClearConfirm": "Remove",
+  "liveClearTitle": "Remove assignment?",
+  "liveDataFailed": "Couldn't get live data",
+  "liveEndConfirm": "End",
+  "liveEndDialogBody": "Open animal milkings will be closed and session summaries calculated. This cannot be undone.",
+  "liveEndDialogTitle": "End milking",
+  "liveEndMilking": "End Milking",
+  "liveFlowRate": "Flow rate",
+  "liveFlowUnit": "L/min",
+  "liveHallName": "Area {name}",
+  "@liveHallName": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "liveHallsLoadFailed": "Couldn't load milking areas",
+  "liveLowFlow": "Low Flow",
+  "liveNoHalls": "No milking areas defined",
+  "liveNoOpenSession": "No open milking in this area.\nUse the button above to start one.",
+  "liveNoSpouts": "No milking points found in this area",
+  "liveNoTarget": "No target",
+  "liveNotAssigned": "No animal assigned",
+  "liveNow": "Now",
+  "livePassiveCount": "{n} Idle",
+  "@livePassiveCount": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "livePickerClear": "Remove assignment",
+  "livePickerClearHint": "If {animal} was assigned by mistake",
+  "@livePickerClearHint": {
+    "placeholders": {
+      "animal": {}
+    }
+  },
+  "livePickerElsewhere": "at another point",
+  "livePickerLoadFailed": "Couldn't load animals",
+  "livePickerNoMatch": "No matching animals",
+  "livePickerNotMilking": "{message}: not in the list. If it came in by mistake, remove the cluster; to milk it, change the animal's status first.",
+  "@livePickerNotMilking": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "livePickerPrevHere": "at this point in the previous milking",
+  "livePickerPrevMilked": "milked in the previous milking",
+  "livePickerSearchHint": "Ear tag, name or RFID",
+  "livePickerTitle": "{spout} · choose animal",
+  "@livePickerTitle": {
+    "placeholders": {
+      "spout": {}
+    }
+  },
+  "livePickerUnknownTag": "{message}. Choose the animal below.",
+  "@livePickerUnknownTag": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "livePickerWithhold": "Withhold milk\n{date}",
+  "@livePickerWithhold": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "liveRedAlertOff": "Turn off red alert",
+  "liveRedAlertOn": "Turn on red alert",
+  "liveReplaceBody": "{amount} was measured at this point for {who}.\n\nIf it was milked, the measurement is credited to it. If the assignment was wrong, the measurement is deleted.",
+  "@liveReplaceBody": {
+    "placeholders": {
+      "who": {},
+      "amount": {}
+    }
+  },
+  "liveReplaceMilked": "Milked",
+  "liveReplaceMistaken": "Wrong assignment",
+  "liveReplaceTitle": "Was the previous animal milked?",
+  "liveSessionTypeTitle": "Milking type",
+  "liveSpout": "Point",
+  "liveSpoutTitle": "{unit} · Point {no}",
+  "@liveSpoutTitle": {
+    "placeholders": {
+      "unit": {},
+      "no": {}
+    }
+  },
+  "liveStartMilking": "Start Milking",
+  "liveTarget": "Target",
+  "liveTitle": "Live data",
+  "liveUnitFallback": "Unit",
+  "liveUnknownTag": "Unknown tag",
+  "liveWithholdUntil": "Withhold milk · withdrawal {date}",
+  "@liveWithholdUntil": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "loginEmailInvalid": "Enter a valid email.",
+  "loginEmailLabel": "Email",
+  "loginEmailRequired": "Enter your email.",
+  "loginForgotPassword": "Forgot password",
+  "loginHidePassword": "Hide password",
+  "loginPasswordLabel": "Password",
+  "loginPasswordRequired": "Enter your password.",
+  "loginResetIntro": "We will send a link to set a new password to your email address.",
+  "loginResetSend": "Send link",
+  "loginShowPassword": "Show password",
+  "loginSubmit": "Sign in",
+  "loginTagline": "Milking tracking for your farm",
+  "milkersDurationMinutesSeconds": "{m} min {s} s",
+  "milkersDurationSeconds": "{s} s",
+  "milkersEmpty": "No milkings in this period.",
+  "milkersLast30Days": "Last 30 days",
+  "milkersLast7Days": "Last 7 days",
+  "milkersLoadFailed": "Could not load the milker summary",
+  "milkersNote": "The milker is the person who opened the session or matched the animal to the milking point. Low flow usually comes from the animal or the cluster; the rate shows where to look, it does not score the person.",
+  "milkersStats": "Average milking {duration} · low flow {pct}%",
+  "milkersSummary": "{sessions} sessions · {milkings} milkings · {volume}",
+  "milkersTitle": "Milkers",
+  "milkersUnknown": "Unknown milker",
+  "milkersUnknownHint": "Milkings opened via RFID or whose matcher was deleted",
+  "modelAnimalStatusActive": "Lactating",
+  "modelAnimalStatusDead": "Dead",
+  "modelAnimalStatusDry": "Dry",
+  "modelAnimalStatusSlaughtered": "Slaughtered",
+  "modelAnimalStatusSold": "Sold",
+  "modelBreedingInsemination": "Insemination",
+  "modelBreedingPregnancyCheck": "Pregnancy check · {result}",
+  "@modelBreedingPregnancyCheck": {
+    "placeholders": {
+      "result": {}
+    }
+  },
+  "modelBreedingResultOpen": "open",
+  "modelBreedingResultPregnant": "pregnant",
+  "modelPregnancyInseminated": "Inseminated · awaiting check",
+  "modelPregnancyOpen": "Open",
+  "modelPregnancyPregnant": "Pregnant",
+  "modelProfileUndefined": "No profile",
+  "modelProtocolUnknown": "Unknown",
+  "modelUpcomingCalving": "Expected calving",
+  "modelUpcomingDryOff": "Dry off",
+  "pushChannelDescription": "Low flow, low yield and device alerts.",
+  "pushChannelName": "Milking alerts",
+  "roleOperator": "Operator",
+  "roleOperatorHint": "Runs milking: opens sessions, matches animals.",
+  "roleOwner": "Owner",
+  "rolePlatformAdmin": "Platform administrator",
+  "roleViewer": "Viewer",
+  "roleViewerHint": "Vet, consultant: views and writes notes, cannot change anything.",
+  "sessionSummaryLoadFailed": "Could not load the session summary",
+  "sessionSummaryLowFlow": "Low flow rate: {n}",
+  "sessionSummaryLowYield": "Low yield: {n}",
+  "sessionSummaryNoneNotMilked": "All lactating animals were milked.",
+  "sessionSummaryNotMilked": "Lactating, not milked: {n}",
+  "sessionSummaryTitle": "Session summary",
+  "sessionSummaryTotals": "{n, plural, =1{{n} animal milked} other{{n} animals milked}} · {amount}",
+  "shellTabDashboard": "Dashboard",
+  "shellTabDevices": "Devices",
+  "shellTabHistory": "History",
+  "shellTabLive": "Live",
+  "speciesCow": "Cow",
+  "speciesGoat": "Goat",
+  "speciesSheep": "Sheep",
+  "supportCall": "Call",
+  "supportOpenFailed": "Couldn't open: {target}",
+  "@supportOpenFailed": {
+    "placeholders": {
+      "target": {}
+    }
+  },
+  "supportTitle": "Support",
+  "supportWhatsAppText": "Hello, I need support with Milk Trace.",
+  "supportWhatsAppVersion": " (App {version})",
+  "@supportWhatsAppVersion": {
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "teamActionFailed": "Action failed: {error}",
+  "teamActivate": "Activate",
+  "teamActivateHint": "Can sign in again.",
+  "teamAddFailed": "Could not add: {error}",
+  "teamAddUser": "Add user",
+  "teamDeleteBody": "{name} will be permanently deleted; this cannot be undone. Animal notes they wrote remain, with the author shown as \"Deleted user\".\n\nTo only revoke access, use \"Suspend\".",
+  "teamDeleteTitle": "Delete user",
+  "teamEmailInvalid": "Enter a valid email.",
+  "teamEmailLabel": "Email",
+  "teamFullNameLabel": "Full name",
+  "teamFullNameRequired": "Enter a full name.",
+  "teamKiosk": "Milking parlor tablet",
+  "teamKioskHint": "For the shared tablet in the milking parlor: only live milking opens and the screen stays on. Sign in on the tablet with this email and password.",
+  "teamLoadFailed": "Could not load users",
+  "teamMakeRole": "Make {role}",
+  "teamNote": "The operator runs milking; the viewer (vet, consultant) views and writes notes. To add a farm owner, contact Milk Trace support.",
+  "teamPasswordTooShort": "At least 8 characters.",
+  "teamSuspend": "Suspend",
+  "teamSuspendHint": "Cannot sign in; any open login ends within 15 minutes.",
+  "teamSuspended": "Suspended",
+  "teamTabletPassword": "Tablet password",
+  "teamTabletPasswordHelper": "Used to sign in on the tablet; at least 8 characters.",
+  "teamTabletPasswordRequired": "Enter a password for the tablet.",
+  "teamTempPassword": "Temporary password (optional)",
+  "teamTempPasswordHelper": "If left empty, an invitation is sent by email.",
+  "teamTitle": "Users",
+  "thresholdsAlertHold": "Alert delay",
+  "thresholdsCalibrationNote": "The defaults are estimated starting values. They vary greatly by breed, lactation stage and farm; they should be calibrated with field data and the advice of an agricultural engineer or veterinarian.",
+  "thresholdsClassGroupHint": "If the 7-day average is below the lower threshold the animal is a dry-off candidate; above the upper threshold it is high-yielding (§6.4).",
+  "thresholdsClassGroupTitle": "Classification thresholds",
+  "thresholdsConductivity": "Conductivity rise",
+  "thresholdsDecline": "Decline threshold",
+  "thresholdsDensity": "Density",
+  "thresholdsDensityGroupHint": "If the farm shows amounts in kilograms, litres are converted with this factor (1 L of cow milk ≈ 1.03 kg). Thresholds are still entered in litres.",
+  "thresholdsDensityGroupTitle": "Milk density",
+  "thresholdsDryOff": "Dry-off lower threshold",
+  "thresholdsEndFlow": "End flow rate",
+  "thresholdsEndGrace": "Wait",
+  "thresholdsEndGroupHint": "If the flow rate stays below this value for this long, the animal's milking ends (§6.1).",
+  "thresholdsEndGroupTitle": "Milking end",
+  "thresholdsErrorAboveDryOff": "Must be greater than the dry-off threshold",
+  "thresholdsErrorAboveLower": "Must be greater than the lower threshold",
+  "thresholdsErrorAboveNoMilk": "Must be greater than the empty milking limit",
+  "thresholdsErrorAboveRed": "Must be greater than the red threshold",
+  "thresholdsErrorBelowExpected": "Must be less than the expected amount per milking",
+  "thresholdsErrorBelowGreen": "Must be less than the green threshold",
+  "thresholdsErrorBelowHighYield": "Must be less than the high yield threshold",
+  "thresholdsErrorBelowUpper": "Must be less than the upper threshold",
+  "thresholdsErrorConductivityRange": "Must be between 5 and 100",
+  "thresholdsErrorDensityRange": "Must be between 0.90 and 1.20",
+  "thresholdsErrorInteger": "Enter a whole number",
+  "thresholdsErrorMax": "Can be at most {max}",
+  "thresholdsErrorNegative": "Cannot be negative",
+  "thresholdsErrorNumber": "Enter a number",
+  "thresholdsErrorZero": "Cannot be zero",
+  "thresholdsExpectedPerMilking": "Expected per milking",
+  "thresholdsFalseAlarmGroupHint": "No red is produced in the first seconds of milking; no alert is sent unless red persists for this long (§6.2).",
+  "thresholdsFalseAlarmGroupTitle": "False-alarm protection",
+  "thresholdsFlowGroupHint": "Red below, green above; yellow in between (§6.2).",
+  "thresholdsFlowGroupTitle": "Live flow rate bands",
+  "thresholdsFresh": "Fresh lactation",
+  "thresholdsGreenLimit": "Green threshold",
+  "thresholdsHighYield": "High yield upper threshold",
+  "thresholdsLoadFailed": "Could not load thresholds",
+  "thresholdsLowerLimit": "Lower threshold",
+  "thresholdsMastitisGroupHint": "If the meter measures conductivity: alert when a milking's conductivity is this much above the animal's own 7-day average. This is not a diagnosis; it is a signal for a veterinary check.",
+  "thresholdsMastitisGroupTitle": "Suspected mastitis",
+  "thresholdsNoMilk": "Empty milking limit",
+  "thresholdsNoMilkCount": "Recent milkings checked",
+  "thresholdsNoSpecies": "No species thresholds defined",
+  "thresholdsRampUp": "Warm-up time",
+  "thresholdsReadOnly": "Only the owner can change thresholds.",
+  "thresholdsRedLimit": "Red threshold",
+  "thresholdsRulesGroupHint": "Declining if the 7-day average is lower than the 30-day average by more than this rate. Not giving milk if all recent milkings are below the empty milking limit. During the fresh lactation days after calving, an animal is not marked declining or a dry-off candidate (§6.4).",
+  "thresholdsRulesGroupTitle": "Classification rules",
+  "thresholdsSaved": "{species} thresholds saved",
+  "thresholdsSaving": "Saving…",
+  "thresholdsSpeciesLoadFailed": "Could not load species",
+  "thresholdsTitle": "Threshold settings",
+  "thresholdsUnitDays": "days",
+  "thresholdsUnitFlow": "L/min",
+  "thresholdsUnitMilkings": "milkings",
+  "thresholdsUnitPerDay": "L/day",
+  "thresholdsUnitSec": "s",
+  "thresholdsUpperLimit": "Upper threshold",
+  "thresholdsYieldGroupHint": "Ratio of milk obtained to expected (§6.3). For an animal without history, the expected amount is this per-milking value.",
+  "thresholdsYieldGroupTitle": "Session yield bands",
+  "treatmentAdd": "Add treatment",
+  "treatmentDeleteBody": "Only delete a record entered by mistake; deleting it also removes the withdrawal.",
+  "treatmentDeleteTitle": "Delete treatment record?",
+  "treatmentDrug": "Drug",
+  "treatmentDrugRequired": "Enter the drug name.",
+  "treatmentEmpty": "No treatments. Enter the withdrawal period for an animal given antibiotics: a \"Withhold milk\" warning shows on the live screen during that period.",
+  "treatmentLoadFailed": "Could not load treatments",
+  "treatmentPlusDays": "{n, plural, =1{+{n} day} other{+{n} days}}",
+  "@treatmentPlusDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "treatmentRange": "{start} → withdrawal {until}",
+  "@treatmentRange": {
+    "placeholders": {
+      "start": {},
+      "until": {}
+    }
+  },
+  "treatmentSaveFailed": "Could not save treatment: {error}",
+  "@treatmentSaveFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "treatmentSaved": "Treatment saved",
+  "treatmentStart": "Start: {date}",
+  "@treatmentStart": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "treatmentStartHelp": "Treatment start",
+  "treatmentTitle": "Treatment and withdrawal",
+  "treatmentUntil": "Withdrawal ends: {date}",
+  "@treatmentUntil": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "treatmentUntilHelp": "Last day to withhold milk",
+  "treatmentWithdrawalBanner": "In withdrawal: keep the milk out of the tank through {date}.",
+  "@treatmentWithdrawalBanner": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "unmatchedAssign": "Assign to animal",
+  "unmatchedAssigned": "Tag added to {earTag}",
+  "@unmatchedAssigned": {
+    "placeholders": {
+      "earTag": {}
+    }
+  },
+  "unmatchedChooseAnimal": "{rfid} · choose animal",
+  "@unmatchedChooseAnimal": {
+    "placeholders": {
+      "rfid": {}
+    }
+  },
+  "unmatchedEmpty": "No unknown tags",
+  "unmatchedIgnore": "Ignore",
+  "unmatchedIgnoreBody": "{rfid} is removed from the list and won't come back even if read again. For another farm's animal or a bad read.",
+  "@unmatchedIgnoreBody": {
+    "placeholders": {
+      "rfid": {}
+    }
+  },
+  "unmatchedIgnoreFailed": "Could not ignore: {error}",
+  "@unmatchedIgnoreFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "unmatchedIgnoreTitle": "Ignore the tag?",
+  "unmatchedIntro": "Tags read during milking that are not registered to any animal. Assign the tag to its animal; at the next milking the animal is matched to the milking point automatically. Ignore it if it belongs to another farm's animal or is a bad read.",
+  "unmatchedLastSeenAt": "Last: {spout}",
+  "@unmatchedLastSeenAt": {
+    "placeholders": {
+      "spout": {}
+    }
+  },
+  "unmatchedLoadFailed": "Could not load tags",
+  "unmatchedNoTag": "no tag",
+  "unmatchedReadCount": "{n, plural, one{{n} read} other{{n} reads}}",
+  "@unmatchedReadCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "unmatchedReplace": "Replace",
+  "unmatchedReplaceBody": "{animal} currently has tag {old}. It will be replaced with {rfid}; the old tag will no longer be recognized.",
+  "@unmatchedReplaceBody": {
+    "placeholders": {
+      "animal": {},
+      "old": {},
+      "rfid": {}
+    }
+  },
+  "unmatchedReplaceTitle": "Replace the tag?",
+  "unmatchedSearchHint": "Ear tag number or name",
+  "unmatchedTagValue": "tag {rfid}",
+  "@unmatchedTagValue": {
+    "placeholders": {
+      "rfid": {}
+    }
+  },
+  "unmatchedTitle": "Unknown tags",
+  "unmatchedUnknownSpout": "unknown milking point",
+  "upcomingMore": "{n, plural, =1{{n} more animal} other{{n} more animals}}",
+  "@upcomingMore": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "upcomingTitle": "Upcoming",
+  "updateBodyAndroid": "This version of Milk Trace is no longer supported. Update the app from Google Play to keep milking records accurate.",
+  "updateBodyIos": "This version of Milk Trace is no longer supported. Update the app from the App Store to keep milking records accurate.",
+  "updatePlayButton": "Update on Google Play",
+  "updateTitle": "Update required",
+  "widgetAccount": "Account",
+  "widgetAlerts": "Alerts",
+  "widgetOfflineBanner": "Offline · last data {when}. Changes can be made once the connection is back.",
+  "@widgetOfflineBanner": {
+    "placeholders": {
+      "when": {}
+    }
+  },
+  "yieldChartAvg7": "7-day avg.",
+  "yieldChartDaily": "Daily",
+  "yieldChartNotEnough": "Not enough history for a chart",
+  "yieldReportDescription": "Daily yield per animal ({unit}), as an Excel file. You can send it to your vet or advisor.",
+  "@yieldReportDescription": {
+    "placeholders": {
+      "unit": {}
+    }
+  },
+  "yieldReportFailed": "Could not get report: {error}",
+  "@yieldReportFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "yieldReportKilogram": "kilograms",
+  "yieldReportLastDays": "Last {n} days",
+  "@yieldReportLastDays": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "yieldReportLitre": "litres",
+  "yieldReportShareSubject": "Milk Trace yield report",
+  "yieldReportTitle": "Yield report"
 }

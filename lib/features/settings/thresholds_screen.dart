@@ -85,7 +85,9 @@ class _Tabs extends StatelessWidget {
             labelColor: AppColors.darkGreenColor,
             unselectedLabelColor: AppColors.onSurfaceMuted,
             indicatorColor: AppColors.darkGreenColor,
-            tabs: [for (final e in withThresholds) Tab(text: e.species.nameTr)],
+            tabs: [
+              for (final e in withThresholds) Tab(text: e.species.displayName),
+            ],
           ),
           Expanded(
             child: TabBarView(
@@ -372,7 +374,7 @@ class _FormState extends ConsumerState<_Form> {
       // Eşikler canlı ekranın renk aynasını da besliyor; liste
       // tazelenmezse ekran eski bantlarla çizmeye devam ederdi.
       ref.invalidate(thresholdsListProvider);
-      if (mounted) _toast(l10n.thresholdsSaved(widget.species.nameTr));
+      if (mounted) _toast(l10n.thresholdsSaved(widget.species.displayName));
     } catch (e) {
       if (mounted) {
         _toast(userMessage(e) ?? l10n.commonSaveFailed('$e'), error: true);

@@ -1,0 +1,32 @@
+{
+  "sessionSummaryTitle": "Oturum özeti",
+  "sessionSummaryLoadFailed": "Oturum özeti alınamadı",
+  "sessionSummaryTotals": "{n, plural, other{{n} hayvan sağıldı}} · {amount}",
+  "sessionSummaryNotMilked": "Sağılmayan sağmal: {n}",
+  "sessionSummaryNoneNotMilked": "Sağmal hayvanların hepsi sağıldı.",
+  "sessionSummaryLowYield": "Düşük verim: {n}",
+  "sessionSummaryLowFlow": "Düşük debi: {n}",
+  "@sessionSummaryTotals": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "amount": {}
+    }
+  },
+  "@sessionSummaryNotMilked": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "@sessionSummaryLowYield": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "@sessionSummaryLowFlow": {
+    "placeholders": {
+      "n": {}
+    }
+  }
+}

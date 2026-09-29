@@ -63,4 +63,4 @@ final class ReportSharerProvider
   }
 }
 
-String _$reportSharerHash() => r'7883aa60f328571fbcf3aa52fa6997ab75dd75d6';
+String _$reportSharerHash() => r'28544867d5710cf9868f802a2a37791f71f48076';

@@ -14,7 +14,7 @@ uygulamasıdır.
 
 ## 1. Sözlük (§4)
 
-Kodda İngilizce, arayüzde Türkçe.
+Kodda İngilizce, arayüzde Türkçe ve İngilizce (backend ADR 0093; bkz. §5 "Metinler").
 
 | Kod | UI | Nedir |
 |---|---|---|
@@ -127,6 +127,16 @@ flutter run
   olmadan derlenebilmeli.
 - Model veya provider'a dokundun mu `build_runner` koş.
 - Commit: Conventional Commits (`feat(live): ...`, `fix(models): ...`).
+- **Metinler (backend ADR 0093):** arayüzde sabit metin YAZILMAZ. Her metin
+  `lib/l10n/parts/<bölüm>_tr.arb` VE `_en.arb`'da; kodda `l10n.anahtar` (global,
+  `package:milktrace/l10n/l10n.dart` — bağlamsız yerde de çalışır, testlerde
+  varsayılan Türkçe). Ekledikten sonra `dart run tool/l10n/merge.dart` (iki dilde
+  anahtar ve yer tutucu eşliğini denetler, `gen-l10n` koşar); `app_*.arb` ve
+  `lib/l10n/gen/` ÜRETİLİR, elle düzenlenmez ama commit edilir. Sunucudan gelen metin
+  (`userMessage`, uyarı, not, küpe mesajı) çevrilmez: sunucu `Accept-Language`'a göre
+  zaten çevirip gönderir. Veri (hayvan/bölge/grup adı) çevrilmez; tür adı
+  `Species.displayName`. Dil: hesap kartı ya da giriş ekranı → `appLanguageProvider`;
+  yoksa cihaz dili (İngilizce cihaz → İngilizce, diğerleri Türkçe).
 - Tasarım dili korunur: açık arka plan, yeşil/koyu yeşil palet, Poppins, kart tabanlı görünüm.
   Renk/boşluk/köşe değerleri `lib/app/theme/` içindeki token'lardan gelir, çağrı yerinde
   sabit yazılmaz.
@@ -284,6 +294,12 @@ kırmızıya GEÇİNCE titreşim + kısa sistem sesi, aynı sağım (nokta + hay
 açılışta zaten kırmızı olan çalmaz. Renk sunucunun — ısınma/bitiş bastırması orada, burada
 ikinci kural YOK. Canlı başlıktaki zil simgesiyle kapatılır; ayar cihazda
 (`settingsStoreProvider`, `live.redAlert`). Testte `redAlertSinkProvider` sahtesi.
+
+**Sağılmayan hayvanlar** (backend ADR 0094): Geçmiş → Oturumlar'da bitmiş oturuma
+dokununca `showSessionSummary` (`GET /sessions/{id}/summary`): toplam, sağmal olup
+sağılmayanlar (tek bölgede bütün sağmallar, çok bölgede bu bölgenin önceki oturumunda
+sağılanlar — sunucu hesaplar), düşük verim ve düşük debi. Ayrı uyarı yok; sağım özeti
+bildiriminde de aynı satır. Web erişimi YOK (karar 29.09.2026).
 
 **Hayvan grupları** (backend ADR 0092): hayvanın en çok BİR grubu (`Animal.groupId/
 groupName`). Geçmiş → Hayvanlar → "Gruplar" (yalnızca sahip) ekler/adlandırır/siler;

@@ -1,0 +1,7 @@
+{
+  "speciesCow": "Cow",
+  "speciesGoat": "Goat",
+  "speciesSheep": "Sheep",
+  "coreResetLinkSentFallback": "Reset link sent.",
+  "coreMemberAddedFallback": "User added."
+}

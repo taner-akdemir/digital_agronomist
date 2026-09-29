@@ -20,6 +20,7 @@ import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
 import 'package:milktrace/data/models/session_milking.dart';
+import 'package:milktrace/data/models/session_summary.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_update.dart';
@@ -427,6 +428,13 @@ class CachingRepository implements MilkTraceRepository {
   @override
   Future<void> setVolumeUnit(String unit) =>
       _net(() => _inner.setVolumeUnit(unit));
+
+  @override
+  Future<SessionSummary> sessionSummary(String sessionId) => _read(
+    'summary:$sessionId',
+    () => _inner.sessionSummary(sessionId),
+    (j) => SessionSummary.fromJson(_map(j)),
+  );
 
   @override
   Future<List<AnimalGroup>> animalGroups() => _read(

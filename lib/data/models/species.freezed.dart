@@ -18,7 +18,7 @@ mixin _$Species {
 
  String get id;/// Kanonik kod: cow | goat | sheep. Karşılaştırmalar BUNUNLA yapılır,
 /// Türkçe adla değil.
- String get code;/// Arayüzde gösterilen Türkçe ad.
+ String get code;/// Sunucunun verdiği Türkçe ad.
  String get nameTr;
 /// Create a copy of Species
 /// with the given fields replaced by the non-null parameter values.
@@ -219,15 +219,15 @@ return $default(_that.id,_that.code,_that.nameTr);case _:
 /// @nodoc
 @JsonSerializable()
 
-class _Species implements Species {
-  const _Species({required this.id, required this.code, required this.nameTr});
+class _Species extends Species {
+  const _Species({required this.id, required this.code, required this.nameTr}): super._();
   factory _Species.fromJson(Map<String, dynamic> json) => _$SpeciesFromJson(json);
 
 @override final  String id;
 /// Kanonik kod: cow | goat | sheep. Karşılaştırmalar BUNUNLA yapılır,
 /// Türkçe adla değil.
 @override final  String code;
-/// Arayüzde gösterilen Türkçe ad.
+/// Sunucunun verdiği Türkçe ad.
 @override final  String nameTr;
 
 /// Create a copy of Species

@@ -194,7 +194,7 @@ class _ImportState extends ConsumerState<_Import> {
                 ),
                 items: [
                   for (final s in widget.species)
-                    DropdownMenuItem(value: s.id, child: Text(s.nameTr)),
+                    DropdownMenuItem(value: s.id, child: Text(s.displayName)),
                 ],
                 onChanged: _busy
                     ? null

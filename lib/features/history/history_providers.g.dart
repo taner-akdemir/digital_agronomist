@@ -320,7 +320,7 @@ final class SpoutLabelsProvider
   }
 }
 
-String _$spoutLabelsHash() => r'70c3cdc158b7863c47c4680ccd8c0ac75a22543b';
+String _$spoutLabelsHash() => r'7e218573e31a8c0828401b6a66b3f7cacc4f752b';
 
 /// İşletmenin hayvan grupları (backend ADR 0092).
 

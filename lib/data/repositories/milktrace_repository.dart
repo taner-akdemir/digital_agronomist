@@ -17,6 +17,7 @@ import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
 import 'package:milktrace/data/models/session_milking.dart';
+import 'package:milktrace/data/models/session_summary.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_update.dart';
@@ -286,6 +287,9 @@ abstract interface class MilkTraceRepository {
 
   /// Kalıcı silme: yazdığı notlar "Silinmiş kullanıcı" olarak kalır.
   Future<void> deleteTeamMember(String id);
+
+  /// Oturum özeti (backend ADR 0094): düşük verim, düşük debi, sağılmayan.
+  Future<SessionSummary> sessionSummary(String sessionId);
 
   /// İşletmenin hayvan grupları (backend ADR 0092, `GET /animal-groups`).
   Future<List<AnimalGroup>> animalGroups();

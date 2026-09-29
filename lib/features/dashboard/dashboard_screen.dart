@@ -184,7 +184,7 @@ class _SpeciesCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final species = ref.watch(speciesListProvider).value ?? const <Species>[];
-    final nameById = {for (final s in species) s.id: s.nameTr};
+    final nameById = {for (final s in species) s.id: s.displayName};
 
     if (summary.bySpecies.isEmpty) {
       return _Card(

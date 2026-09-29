@@ -1,0 +1,7 @@
+{
+  "speciesCow": "İnek",
+  "speciesGoat": "Keçi",
+  "speciesSheep": "Koyun",
+  "coreResetLinkSentFallback": "Sıfırlama bağlantısı gönderildi.",
+  "coreMemberAddedFallback": "Kullanıcı eklendi."
+}
