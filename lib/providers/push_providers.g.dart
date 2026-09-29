@@ -112,7 +112,7 @@ final class PushRegistrationProvider
   PushRegistration create() => PushRegistration();
 }
 
-String _$pushRegistrationHash() => r'cc1cc972fa07d9d48b755fb79074ac3963c6b9af';
+String _$pushRegistrationHash() => r'28e3c7202fb10e90782b0ee3a442ea9963a99cd2';
 
 /// Jeton kaydını oturuma bağlar.
 ///

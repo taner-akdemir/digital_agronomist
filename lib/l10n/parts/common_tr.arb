@@ -1,0 +1,106 @@
+{
+  "commonCancel": "Vazgeç",
+  "commonSave": "Kaydet",
+  "commonDelete": "Sil",
+  "commonBack": "Geri",
+  "commonAll": "Tümü",
+  "commonClear": "Temizle",
+  "commonAdd": "Ekle",
+  "commonRetry": "Tekrar dene",
+  "commonClose": "Kapat",
+  "commonOk": "Tamam",
+  "commonYes": "Evet",
+  "commonNo": "Hayır",
+  "commonEdit": "Düzenle",
+  "commonNoteOptional": "Not (isteğe bağlı)",
+  "commonDeleteWrongRecord": "Yanlış kaydı sil",
+  "commonSaveFailed": "Kaydedilemedi: {error}",
+  "@commonSaveFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "commonDeleteFailed": "Silinemedi: {error}",
+  "@commonDeleteFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "commonLoadFailed": "Yüklenemedi",
+  "commonDateLabel": "Tarih: {date}",
+  "@commonDateLabel": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "fmtMonth1": "Oca",
+  "fmtMonth2": "Şub",
+  "fmtMonth3": "Mar",
+  "fmtMonth4": "Nis",
+  "fmtMonth5": "May",
+  "fmtMonth6": "Haz",
+  "fmtMonth7": "Tem",
+  "fmtMonth8": "Ağu",
+  "fmtMonth9": "Eyl",
+  "fmtMonth10": "Eki",
+  "fmtMonth11": "Kas",
+  "fmtMonth12": "Ara",
+  "fmtMinutes": "{n} dk",
+  "@fmtMinutes": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "fmtHoursMinutes": "{h} sa {m} dk",
+  "@fmtHoursMinutes": {
+    "placeholders": {
+      "h": {},
+      "m": {}
+    }
+  },
+  "fmtNowShort": "şimdi",
+  "fmtHoursShort": "{n} sa",
+  "@fmtHoursShort": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "fmtDaysShort": "{n} gün",
+  "@fmtDaysShort": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "fmtJustNow": "az önce",
+  "fmtMinutesAgo": "{n} dk önce",
+  "@fmtMinutesAgo": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "fmtHoursAgo": "{n} sa önce",
+  "@fmtHoursAgo": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "fmtDaysAgo": "{n} gün önce",
+  "@fmtDaysAgo": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "fmtSessionMorning": "Sabah",
+  "fmtSessionEvening": "Akşam",
+  "fmtSessionOther": "Diğer",
+  "fmtPercent": "%{value}",
+  "@fmtPercent": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "languageTitle": "Dil",
+  "languageAuto": "Cihaz dili",
+  "languageTurkish": "Türkçe",
+  "languageEnglish": "English"
+}

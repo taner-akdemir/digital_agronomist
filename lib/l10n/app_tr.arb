@@ -1,0 +1,107 @@
+{
+  "@@locale": "tr",
+  "commonAdd": "Ekle",
+  "commonAll": "Tümü",
+  "commonBack": "Geri",
+  "commonCancel": "Vazgeç",
+  "commonClear": "Temizle",
+  "commonClose": "Kapat",
+  "commonDateLabel": "Tarih: {date}",
+  "@commonDateLabel": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "commonDelete": "Sil",
+  "commonDeleteFailed": "Silinemedi: {error}",
+  "@commonDeleteFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "commonDeleteWrongRecord": "Yanlış kaydı sil",
+  "commonEdit": "Düzenle",
+  "commonLoadFailed": "Yüklenemedi",
+  "commonNo": "Hayır",
+  "commonNoteOptional": "Not (isteğe bağlı)",
+  "commonOk": "Tamam",
+  "commonRetry": "Tekrar dene",
+  "commonSave": "Kaydet",
+  "commonSaveFailed": "Kaydedilemedi: {error}",
+  "@commonSaveFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "commonYes": "Evet",
+  "fmtDaysAgo": "{n} gün önce",
+  "@fmtDaysAgo": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "fmtDaysShort": "{n} gün",
+  "@fmtDaysShort": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "fmtHoursAgo": "{n} sa önce",
+  "@fmtHoursAgo": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "fmtHoursMinutes": "{h} sa {m} dk",
+  "@fmtHoursMinutes": {
+    "placeholders": {
+      "h": {},
+      "m": {}
+    }
+  },
+  "fmtHoursShort": "{n} sa",
+  "@fmtHoursShort": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "fmtJustNow": "az önce",
+  "fmtMinutes": "{n} dk",
+  "@fmtMinutes": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "fmtMinutesAgo": "{n} dk önce",
+  "@fmtMinutesAgo": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "fmtMonth1": "Oca",
+  "fmtMonth10": "Eki",
+  "fmtMonth11": "Kas",
+  "fmtMonth12": "Ara",
+  "fmtMonth2": "Şub",
+  "fmtMonth3": "Mar",
+  "fmtMonth4": "Nis",
+  "fmtMonth5": "May",
+  "fmtMonth6": "Haz",
+  "fmtMonth7": "Tem",
+  "fmtMonth8": "Ağu",
+  "fmtMonth9": "Eyl",
+  "fmtNowShort": "şimdi",
+  "fmtPercent": "%{value}",
+  "@fmtPercent": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "fmtSessionEvening": "Akşam",
+  "fmtSessionMorning": "Sabah",
+  "fmtSessionOther": "Diğer",
+  "languageAuto": "Cihaz dili",
+  "languageEnglish": "English",
+  "languageTitle": "Dil",
+  "languageTurkish": "Türkçe"
+}

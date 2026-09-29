@@ -8,6 +8,7 @@ import 'package:milktrace/data/push/push_gateway.dart';
 import 'package:milktrace/data/push/push_message.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
+import 'package:milktrace/providers/settings_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'push_providers.g.dart';
@@ -54,6 +55,9 @@ class PushRegistration extends _$PushRegistration {
     // yeniden kurulur ve jeton yeni işletmeye yazılır — bildirimler seçili
     // işletmeyi izler.
     final signedIn = ref.watch(authProvider).isSignedIn;
+    // Dil değişince jeton yeni dille yeniden yazılır: bildirim metni
+    // sunucuda o dilde seçiliyor (backend ADR 0093).
+    ref.watch(appLanguageProvider);
 
     if (!signedIn) {
       await _unregister(gateway);

@@ -29,6 +29,7 @@ import 'package:milktrace/data/models/treatment.dart';
 import 'package:milktrace/data/models/unmatched_tag_row.dart';
 import 'package:milktrace/data/models/vacuum.dart';
 import 'package:milktrace/data/repositories/milktrace_repository.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -539,7 +540,8 @@ class ApiRepository implements MilkTraceRepository {
     required String platform,
   }) => _dio.post<dynamic>(
     '/me/push-tokens',
-    data: {'token': token, 'platform': platform},
+    // Dil: bildirim metni bu dilde gider (backend ADR 0093).
+    data: {'token': token, 'platform': platform, 'locale': l10nLanguage},
   );
 
   @override

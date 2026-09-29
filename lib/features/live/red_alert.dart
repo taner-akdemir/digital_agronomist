@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:milktrace/data/models/spout_update.dart';
 import 'package:milktrace/domain/flow_color.dart';
 import 'package:milktrace/features/live/live_providers.dart';
+import 'package:milktrace/providers/settings_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 part 'red_alert.g.dart';
 
@@ -14,27 +14,6 @@ part 'red_alert.g.dart';
 ///
 /// Renk sunucunundur (§6.2): ısınma ve bitiş bastırması orada uygulanmış
 /// olarak gelir, burada ikinci bir kural yok.
-
-/// Ayarın cihazdaki deposu; testte sahtesi konur.
-abstract interface class BoolStore {
-  Future<bool?> read(String key);
-  Future<void> write(String key, bool value);
-}
-
-class _PrefsBoolStore implements BoolStore {
-  SharedPreferencesAsync? _prefs;
-
-  SharedPreferencesAsync get _p => _prefs ??= SharedPreferencesAsync();
-
-  @override
-  Future<bool?> read(String key) => _p.getBool(key);
-
-  @override
-  Future<void> write(String key, bool value) => _p.setBool(key, value);
-}
-
-@Riverpod(keepAlive: true)
-BoolStore settingsStore(Ref ref) => _PrefsBoolStore();
 
 /// Uyarının çalınması; testte sahtesi konur.
 @Riverpod(keepAlive: true)
@@ -56,7 +35,7 @@ class RedAlertEnabled extends _$RedAlertEnabled {
 
   Future<void> _load() async {
     try {
-      final v = await ref.read(settingsStoreProvider).read(_key);
+      final v = await ref.read(settingsStoreProvider).readBool(_key);
       if (v != null) state = v;
     } on Object {
       // Depo okunamazsa varsayılan (açık) kalır.
@@ -66,7 +45,7 @@ class RedAlertEnabled extends _$RedAlertEnabled {
   Future<void> set(bool value) async {
     state = value;
     try {
-      await ref.read(settingsStoreProvider).write(_key, value);
+      await ref.read(settingsStoreProvider).writeBool(_key, value);
     } on Object {
       // Kaydedilemese de bu oturumda geçerli.
     }

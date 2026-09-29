@@ -1,23 +1,24 @@
-/// Sayı ve tarih biçimlendirme.
+import 'package:milktrace/l10n/l10n.dart';
+
+/// Sayı ve tarih biçimlendirme; metinler seçili dilde (backend ADR 0093).
 ///
-/// `intl` paketi YOK: uygulamanın tek dili Türkçe (§4) ve ihtiyaç duyulan
-/// biçimler bir avuç. Paket eklemek, 30 satırlık iş için ~1 MB yerelleştirme
-/// verisi taşımak olurdu.
+/// Biçimler bir avuç ve elle yazılı: `intl`'in tarih biçimleyicisi burada
+/// kullanılmıyor, ay adları ARB'den geliyor.
 abstract final class Fmt {
-  static const _months = [
-    'Oca',
-    'Şub',
-    'Mar',
-    'Nis',
-    'May',
-    'Haz',
-    'Tem',
-    'Ağu',
-    'Eyl',
-    'Eki',
-    'Kas',
-    'Ara',
-  ];
+  static String _month(int m) => switch (m) {
+    1 => l10n.fmtMonth1,
+    2 => l10n.fmtMonth2,
+    3 => l10n.fmtMonth3,
+    4 => l10n.fmtMonth4,
+    5 => l10n.fmtMonth5,
+    6 => l10n.fmtMonth6,
+    7 => l10n.fmtMonth7,
+    8 => l10n.fmtMonth8,
+    9 => l10n.fmtMonth9,
+    10 => l10n.fmtMonth10,
+    11 => l10n.fmtMonth11,
+    _ => l10n.fmtMonth12,
+  };
 
   /// mL → "10.4" (L).
   ///
@@ -32,7 +33,7 @@ abstract final class Fmt {
   /// saat dilimini kullanır — saha cihazları Türkiye'de.
   static String dayMonth(DateTime t) {
     final l = t.toLocal();
-    return '${l.day} ${_months[l.month - 1]}';
+    return '${l.day} ${_month(l.month)}';
   }
 
   /// "22 Eyl 2026".
@@ -48,19 +49,19 @@ abstract final class Fmt {
 
   /// "1 sa 15 dk" / "6 dk".
   static String duration(Duration d) {
-    if (d.inMinutes < 60) return '${d.inMinutes} dk';
-    return '${d.inHours} sa ${d.inMinutes % 60} dk';
+    if (d.inMinutes < 60) return l10n.fmtMinutes(d.inMinutes);
+    return l10n.fmtHoursMinutes(d.inHours, d.inMinutes % 60);
   }
 
-  /// Oturum tipinin Türkçe adı (§8.4: morning | evening | other).
+  /// Oturum tipinin adı (§8.4: morning | evening | other).
   static String sessionType(String type) => switch (type) {
-    'morning' => 'Sabah',
-    'evening' => 'Akşam',
-    _ => 'Diğer',
+    'morning' => l10n.fmtSessionMorning,
+    'evening' => l10n.fmtSessionEvening,
+    _ => l10n.fmtSessionOther,
   };
 
   /// "%86" — yüzde KIRPILMAZ, hayvan beklenenin üstünde süt verebilir.
-  static String percent(double pct) => '%${pct.toStringAsFixed(0)}';
+  static String percent(double pct) => l10n.fmtPercent(pct.toStringAsFixed(0));
 
   /// "az önce" / "12 dk önce" / "3 sa önce" / "2 gün önce".
   ///
@@ -70,17 +71,17 @@ abstract final class Fmt {
   /// "24 dk" / "3 sa" / "2 gün" — since'in "önce"siz, dar hâli.
   static String sinceShort(DateTime t, {DateTime? now}) {
     final d = (now ?? DateTime.now()).difference(t);
-    if (d.isNegative || d.inMinutes < 1) return 'şimdi';
-    if (d.inMinutes < 60) return '${d.inMinutes} dk';
-    if (d.inHours < 24) return '${d.inHours} sa';
-    return '${d.inDays} gün';
+    if (d.isNegative || d.inMinutes < 1) return l10n.fmtNowShort;
+    if (d.inMinutes < 60) return l10n.fmtMinutes(d.inMinutes);
+    if (d.inHours < 24) return l10n.fmtHoursShort(d.inHours);
+    return l10n.fmtDaysShort(d.inDays);
   }
 
   static String since(DateTime t, {DateTime? now}) {
     final d = (now ?? DateTime.now()).difference(t);
-    if (d.isNegative || d.inSeconds < 60) return 'az önce';
-    if (d.inMinutes < 60) return '${d.inMinutes} dk önce';
-    if (d.inHours < 24) return '${d.inHours} sa önce';
-    return '${d.inDays} gün önce';
+    if (d.isNegative || d.inSeconds < 60) return l10n.fmtJustNow;
+    if (d.inMinutes < 60) return l10n.fmtMinutesAgo(d.inMinutes);
+    if (d.inHours < 24) return l10n.fmtHoursAgo(d.inHours);
+    return l10n.fmtDaysAgo(d.inDays);
   }
 }

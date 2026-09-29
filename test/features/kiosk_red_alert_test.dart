@@ -17,6 +17,7 @@ import 'package:milktrace/features/kiosk/kiosk_screen.dart';
 import 'package:milktrace/features/live/red_alert.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
+import 'package:milktrace/providers/settings_providers.dart';
 
 Future<String> _disk(String p) async => File(p).readAsStringSync();
 
@@ -36,14 +37,21 @@ class _Board extends MockRepository {
       first = await super.liveSession(hallId: hallId);
 }
 
-class _MemStore implements BoolStore {
-  final values = <String, bool>{};
+class _MemStore implements SettingsStore {
+  final values = <String, Object?>{};
 
   @override
-  Future<bool?> read(String key) async => values[key];
+  Future<bool?> readBool(String key) async => values[key] as bool?;
 
   @override
-  Future<void> write(String key, bool value) async => values[key] = value;
+  Future<void> writeBool(String key, bool value) async => values[key] = value;
+
+  @override
+  Future<String?> readString(String key) async => values[key] as String?;
+
+  @override
+  Future<void> writeString(String key, String? value) async =>
+      values[key] = value;
 }
 
 class _Auth extends Auth {

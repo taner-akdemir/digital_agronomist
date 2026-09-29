@@ -8,59 +8,32 @@ part of 'red_alert.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-
-@ProviderFor(settingsStore)
-final settingsStoreProvider = SettingsStoreProvider._();
-
-final class SettingsStoreProvider
-    extends $FunctionalProvider<BoolStore, BoolStore, BoolStore>
-    with $Provider<BoolStore> {
-  SettingsStoreProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'settingsStoreProvider',
-        isAutoDispose: false,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$settingsStoreHash();
-
-  @$internal
-  @override
-  $ProviderElement<BoolStore> $createElement($ProviderPointer pointer) =>
-      $ProviderElement(pointer);
-
-  @override
-  BoolStore create(Ref ref) {
-    return settingsStore(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(BoolStore value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<BoolStore>(value),
-    );
-  }
-}
-
-String _$settingsStoreHash() => r'a3ff63bac36d46e8f92b47c306a8180e10d3fbc5';
-
+/// Canlı ekranda kırmızı uyarısı (backend ADR 0091): bir nokta KIRMIZIYA
+/// geçince titreşim + kısa ses, aynı sağım için bir kez.
+///
+/// Renk sunucunundur (§6.2): ısınma ve bitiş bastırması orada uygulanmış
+/// olarak gelir, burada ikinci bir kural yok.
 /// Uyarının çalınması; testte sahtesi konur.
 
 @ProviderFor(redAlertSink)
 final redAlertSinkProvider = RedAlertSinkProvider._();
 
+/// Canlı ekranda kırmızı uyarısı (backend ADR 0091): bir nokta KIRMIZIYA
+/// geçince titreşim + kısa ses, aynı sağım için bir kez.
+///
+/// Renk sunucunundur (§6.2): ısınma ve bitiş bastırması orada uygulanmış
+/// olarak gelir, burada ikinci bir kural yok.
 /// Uyarının çalınması; testte sahtesi konur.
 
 final class RedAlertSinkProvider
     extends
         $FunctionalProvider<void Function(), void Function(), void Function()>
     with $Provider<void Function()> {
+  /// Canlı ekranda kırmızı uyarısı (backend ADR 0091): bir nokta KIRMIZIYA
+  /// geçince titreşim + kısa ses, aynı sağım için bir kez.
+  ///
+  /// Renk sunucunundur (§6.2): ısınma ve bitiş bastırması orada uygulanmış
+  /// olarak gelir, burada ikinci bir kural yok.
   /// Uyarının çalınması; testte sahtesi konur.
   RedAlertSinkProvider._()
     : super(
@@ -133,7 +106,7 @@ final class RedAlertEnabledProvider
   }
 }
 
-String _$redAlertEnabledHash() => r'ba19146c723cf19e7c7d60e24a570e419d7a7772';
+String _$redAlertEnabledHash() => r'8f37eda1590f1b46a83b307a2beda268a1f78a28';
 
 /// Uyarı açık mı; cihazda saklanır, varsayılan açık.
 

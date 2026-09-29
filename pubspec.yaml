@@ -54,6 +54,7 @@ dependencies:
   url_launcher: ^6.3.2
   package_info_plus: ^10.2.1
   wakelock_plus: ^1.8.0
+  intl: any
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +69,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  # Arayüz metinleri ARB'den (lib/l10n, backend ADR 0093); `flutter gen-l10n`.
+  generate: true
   assets:
     - assets/data/
     # Uygulama içi damla işareti; üretim: tool/brand/generate.sh.

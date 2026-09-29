@@ -2,6 +2,7 @@ import 'dart:io' show Platform;
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 /// Uygulamanın platformu ve yapı numarası (Play versionCode); her istekte
@@ -30,6 +31,8 @@ abstract final class AppBuild {
   static Map<String, String> get headers => {
     'X-App-Platform': ?platform,
     if (build case final b?) 'X-App-Build': '$b',
+    // Sunucu hata ve bilgi mesajlarını bu dilde döner (backend ADR 0093).
+    'Accept-Language': l10nLanguage,
   };
 }
 

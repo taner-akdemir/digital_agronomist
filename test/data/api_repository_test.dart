@@ -592,7 +592,7 @@ void main() {
     final req = r.adapter.requests.single;
     expect(req.path, '/me/push-tokens');
     expect(req.method, 'POST');
-    expect(req.data, {'token': 'tok-1', 'platform': 'android'});
+    expect(req.data, {'token': 'tok-1', 'platform': 'android', 'locale': 'tr'});
   });
 
   // Test bildirimi (backend ADR 0048): kabul edilen telefon sayısı döner.
