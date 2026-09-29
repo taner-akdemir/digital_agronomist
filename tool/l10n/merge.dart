@@ -57,7 +57,9 @@ void main(List<String> args) {
   for (final k in keys('en').difference(keys('tr'))) {
     errors.add('"$k" Türkçede yok');
   }
-  final ph = RegExp(r'\{(\w+)');
+  // Yer tutucu: harfle başlayan ad, ardından "}" ya da "," (ICU çoğulu).
+  // "=1{1 animal}" ya da "one{Add…}" gibi dal metinleri sayılmaz.
+  final ph = RegExp(r'\{([A-Za-z_]\w*)\s*[},]');
   for (final k in keys('tr').intersection(keys('en'))) {
     Set<String> of(String lang) =>
         ph.allMatches('${merged[lang]![k]}').map((m) => m.group(1)!).toSet();
@@ -90,6 +92,8 @@ void main(List<String> args) {
   stdout.writeln('${keys('tr').length} metin birleştirildi');
 
   if (args.contains('--no-gen')) return;
+  // gen-l10n çevrilmemiş metin raporunu build/'e yazıyor; temiz klonda yok.
+  Directory('build').createSync(recursive: true);
   final r = Process.runSync('flutter', ['gen-l10n'], runInShell: true);
   stdout.write(r.stdout);
   stderr.write(r.stderr);
