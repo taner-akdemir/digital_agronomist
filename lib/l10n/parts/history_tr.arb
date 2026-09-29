@@ -75,8 +75,8 @@
     }
   },
   "animalImportIntro": "Veterinerden, Birlik'ten ya da Hayvan Bilgi Sistemi'nden aldığınız listeyi yükleyin (Excel .xlsx ya da CSV). İlk satır sütun başlıkları olmalı; tarihler gün önde (03.04.2021).",
-  "animalImportColumns": "Sütunlar: Küpe No (zorunlu) · Tür · Adı · Irkı · RFID · Doğum Tarihi · Son Buzağılama · Laktasyon · Durumu",
-  "animalImportRules": "Küpesi zaten kayıtlı hayvanlar değiştirilmez. Hatalı satırlar atlanır; dosyayı düzeltip yeniden yüklemek güvenlidir.",
+  "animalImportColumns": "Sütunlar: Küpe No (zorunlu) · Tür · Adı · Irkı · RFID · Doğum Tarihi · Son Buzağılama · Laktasyon · Durumu · Grup",
+  "animalImportRules": "Küpesi zaten kayıtlı hayvanlar, güncelleme açılmadıkça değiştirilmez. Hatalı satırlar atlanır; dosyayı düzeltip yeniden yüklemek güvenlidir.",
   "animalImportDefaultSpecies": "Türü yazılmamış satırlar",
   "animalImportPickFile": "Dosya seç",
   "animalImportPickOtherFile": "Başka dosya seç",
@@ -115,6 +115,59 @@
   "animalImportSectionWarnings": "Uyarılar",
   "animalImportSectionCreate": "Eklenecek",
   "animalImportSectionExists": "Zaten kayıtlı (değiştirilmez)",
+  "animalImportUpdateSwitch": "Kayıtlı hayvanları güncelle",
+  "animalImportUpdateHint": "Yalnızca dosyadaki dolu hücreler yazılır; boş hücre kayıtlı bilgiyi silmez. Tür değişmez.",
+  "animalImportCountUpdate": "{n} güncellenecek",
+  "@animalImportCountUpdate": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalImportCountUnchanged": "{n} değişmeyecek",
+  "@animalImportCountUnchanged": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalImportNewGroups": "Oluşturulacak gruplar: {groups}",
+  "@animalImportNewGroups": {
+    "placeholders": {
+      "groups": {}
+    }
+  },
+  "animalImportSectionUpdate": "Güncellenecek",
+  "animalImportSectionUnchanged": "Değişmeyecek",
+  "animalImportNothingToSave": "Eklenecek ya da güncellenecek hayvan yok",
+  "animalImportSaveN": "{added} ekle · {updated} güncelle",
+  "@animalImportSaveN": {
+    "placeholders": {
+      "added": {},
+      "updated": {}
+    }
+  },
+  "animalImportSaved": "{added} hayvan eklendi, {updated} güncellendi",
+  "@animalImportSaved": {
+    "placeholders": {
+      "added": {},
+      "updated": {}
+    }
+  },
+  "animalImportChange": "{field}: {from} → {to}",
+  "@animalImportChange": {
+    "placeholders": {
+      "field": {},
+      "from": {},
+      "to": {}
+    }
+  },
+  "animalImportFieldName": "Ad",
+  "animalImportFieldBreed": "Irk",
+  "animalImportFieldRfid": "RFID",
+  "animalImportFieldStatus": "Durum",
+  "animalImportFieldBirthDate": "Doğum tarihi",
+  "animalImportFieldCalvingDate": "Son buzağılama",
+  "animalImportFieldLactationNo": "Laktasyon",
+  "animalImportFieldGroup": "Grup",
   "unmatchedTitle": "Tanınmayan küpeler",
   "unmatchedLoadFailed": "Küpeler yüklenemedi",
   "unmatchedIntro": "Sağımda okunan ama hiçbir hayvana kayıtlı olmayan küpeler. Küpeyi hayvanına atayın; bir dahaki sağımda hayvan noktaya kendiliğinden eşleşir. Başka çiftliğin hayvanı ya da bozuk okumaysa yok sayın.",

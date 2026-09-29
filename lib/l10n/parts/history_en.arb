@@ -75,8 +75,8 @@
     }
   },
   "animalImportIntro": "Upload the list you got from your vet, the breeders' union or the national animal registry (Excel .xlsx or CSV). The first row must be column headers; dates day first (03.04.2021).",
-  "animalImportColumns": "Columns (Turkish headers): Küpe No (ear tag, required) · Tür (species) · Adı (name) · Irkı (breed) · RFID · Doğum Tarihi (birth date) · Son Buzağılama (last calving) · Laktasyon (lactation) · Durumu (status)",
-  "animalImportRules": "Animals whose ear tag is already registered are not changed. Invalid rows are skipped; it is safe to fix the file and upload it again.",
+  "animalImportColumns": "Columns (Turkish headers): Küpe No (ear tag, required) · Tür (species) · Adı (name) · Irkı (breed) · RFID · Doğum Tarihi (birth date) · Son Buzağılama (last calving) · Laktasyon (lactation) · Durumu (status) · Grup (group)",
+  "animalImportRules": "Animals whose ear tag is already registered are not changed unless updating is turned on. Invalid rows are skipped; it is safe to fix the file and upload it again.",
   "animalImportDefaultSpecies": "Rows without a species",
   "animalImportPickFile": "Choose file",
   "animalImportPickOtherFile": "Choose another file",
@@ -115,6 +115,59 @@
   "animalImportSectionWarnings": "Warnings",
   "animalImportSectionCreate": "To add",
   "animalImportSectionExists": "Already registered (not changed)",
+  "animalImportUpdateSwitch": "Update registered animals",
+  "animalImportUpdateHint": "Only filled cells in the file are written; an empty cell never clears saved data. Species is not changed.",
+  "animalImportCountUpdate": "{n} to update",
+  "@animalImportCountUpdate": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalImportCountUnchanged": "{n} unchanged",
+  "@animalImportCountUnchanged": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalImportNewGroups": "Groups to create: {groups}",
+  "@animalImportNewGroups": {
+    "placeholders": {
+      "groups": {}
+    }
+  },
+  "animalImportSectionUpdate": "To update",
+  "animalImportSectionUnchanged": "Unchanged",
+  "animalImportNothingToSave": "No animals to add or update",
+  "animalImportSaveN": "Add {added} · update {updated}",
+  "@animalImportSaveN": {
+    "placeholders": {
+      "added": {},
+      "updated": {}
+    }
+  },
+  "animalImportSaved": "{added} animals added, {updated} updated",
+  "@animalImportSaved": {
+    "placeholders": {
+      "added": {},
+      "updated": {}
+    }
+  },
+  "animalImportChange": "{field}: {from} → {to}",
+  "@animalImportChange": {
+    "placeholders": {
+      "field": {},
+      "from": {},
+      "to": {}
+    }
+  },
+  "animalImportFieldName": "Name",
+  "animalImportFieldBreed": "Breed",
+  "animalImportFieldRfid": "RFID",
+  "animalImportFieldStatus": "Status",
+  "animalImportFieldBirthDate": "Birth date",
+  "animalImportFieldCalvingDate": "Last calving",
+  "animalImportFieldLactationNo": "Lactation",
+  "animalImportFieldGroup": "Group",
   "unmatchedTitle": "Unknown tags",
   "unmatchedLoadFailed": "Could not load tags",
   "unmatchedIntro": "Tags read during milking that are not registered to any animal. Assign the tag to its animal; at the next milking the animal is matched to the milking point automatically. Ignore it if it belongs to another farm's animal or is a bad read.",

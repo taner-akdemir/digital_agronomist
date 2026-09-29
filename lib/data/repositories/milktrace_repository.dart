@@ -107,12 +107,14 @@ abstract interface class MilkTraceRepository {
   /// Hayvan listesini dosyadan içe aktarır (POST /animals/import, backend
   /// ADR 0063). Dosya CSV ya da .xlsx; olduğu gibi gönderilir, okuyan
   /// backend'dir. [dryRun] önizlemedir, hiçbir şey yazılmaz. [speciesId],
-  /// türü yazılmamış satırların türü. Kayıtlı küpe güncellenmez, hatalı
-  /// satır atlanır.
+  /// türü yazılmamış satırların türü. Kayıtlı küpe varsayılan olarak
+  /// güncellenmez; [update] ile yalnızca dosyadaki dolu hücreler yazılır
+  /// (backend ADR 0101). Hatalı satır atlanır.
   Future<AnimalImportReport> importAnimals(
     List<int> file, {
     String? speciesId,
     required bool dryRun,
+    bool update = false,
   });
 
   /// Buzağılamayı kaydeder (POST /animals/{id}/calving, backend ADR 0060):

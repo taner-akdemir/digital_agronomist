@@ -332,8 +332,14 @@ class CachingRepository implements MilkTraceRepository {
     List<int> file, {
     String? speciesId,
     required bool dryRun,
+    bool update = false,
   }) => _net(
-    () => _inner.importAnimals(file, speciesId: speciesId, dryRun: dryRun),
+    () => _inner.importAnimals(
+      file,
+      speciesId: speciesId,
+      dryRun: dryRun,
+      update: update,
+    ),
   );
 
   @override

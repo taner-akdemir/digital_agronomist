@@ -241,8 +241,12 @@ yarısı.
 sahibine "Listeden". Dosya (CSV/.xlsx) `file_picker` ile seçilir ve OLDUĞU GİBİ gönderilir —
 okuyan backend (Türkçe sütunlar, gün önde tarih, Windows-1254); uygulamada ikinci okuyucu
 yazma. Önce `dryRun` önizleme (eklenecek/kayıtlı/hatalı, alınmayan sütunlar), sonra onay.
-Kayıtlı küpe güncellenmez. Mock modda yok (501). Seçici `importFilePickerProvider`; testte
-sahtesi konur.
+Kayıtlı küpe varsayılan olarak güncellenmez; "Kayıtlı hayvanları güncelle" anahtarı
+(backend ADR 0101) önizlemeyi ve onayı `update=true` ile yeniler: yalnızca dolu hücreler
+yazılır (boş hücre silmez, tür değişmez), satırda "Ad: Sarıkız → Sarı" gibi alan farkları
+(`AnimalImportChange`, değerler ham — tarih/durum ekranda biçimlenir), sayılar eklenecek /
+güncellenecek / değişmeyecek / hatalı, `newGroups` ("Grup" sütunu olmayan grubu açar).
+Mock modda yok (501). Seçici `importFilePickerProvider`; testte sahtesi konur.
 
 **Verim raporu** (`yieldReport`, `GET /reports/yield`, backend ADR 0064): Geçmiş → Hayvanlar'da
 BÜTÜN rollere "Rapor" (okuru veteriner). Son 7/30/90 gün; .xlsx backend'de üretilir, uygulama

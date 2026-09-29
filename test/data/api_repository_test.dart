@@ -961,6 +961,52 @@ void main() {
     expect(rep.ignoredColumns, ['Anne']);
   });
 
+  test(
+    'içe aktarmada güncelleme update=true gönderir, farkları okur',
+    () async {
+      final r = rig(
+        (o) async => okEnvelope({
+          'dryRun': true,
+          'updateExisting': true,
+          'total': 2,
+          'update': 1,
+          'unchanged': 1,
+          'newGroups': ['Padok 1'],
+          'ignoredColumns': <String>[],
+          'rows': [
+            {
+              'line': 2,
+              'earTag': 'TR1',
+              'outcome': 'update',
+              'changes': [
+                {'field': 'name', 'from': 'Sarıkız', 'to': 'Sarı'},
+                {'field': 'group', 'from': '', 'to': 'Padok 1'},
+              ],
+            },
+            {'line': 3, 'earTag': 'TR2', 'outcome': 'unchanged'},
+          ],
+        }),
+      );
+      final rep = await r.repo.importAnimals(
+        [1, 2, 3],
+        dryRun: true,
+        update: true,
+      );
+      expect(r.adapter.requests.single.queryParameters, {
+        'dryRun': 'true',
+        'update': 'true',
+      });
+      expect(rep.updateExisting, isTrue);
+      expect(rep.update, 1);
+      expect(rep.unchanged, 1);
+      expect(rep.toWrite, 1);
+      expect(rep.newGroups, ['Padok 1']);
+      expect(rep.rows.first.changes.first.from, 'Sarıkız');
+      expect(rep.rows.first.changes.last.from, '');
+      expect(rep.rows.last.changes, isEmpty);
+    },
+  );
+
   test('oturumun sağımları okunur', () async {
     final r = rig(
       (o) async => okEnvelope2([

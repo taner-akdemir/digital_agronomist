@@ -272,13 +272,19 @@ class ApiRepository implements MilkTraceRepository {
     List<int> file, {
     String? speciesId,
     required bool dryRun,
+    bool update = false,
   }) async => AnimalImportReport.fromJson(
     _dataOf(
       await _dio.post<dynamic>(
         '/animals/import',
         // Ham dosya: backend biçimi (CSV/.xlsx) içeriğinden anlar.
         data: Uint8List.fromList(file),
-        queryParameters: {'dryRun': '$dryRun', 'speciesId': ?speciesId},
+        queryParameters: {
+          'dryRun': '$dryRun',
+          'speciesId': ?speciesId,
+          // Yalnızca açıkken: kapalı varsayılan backend'de de kapalı.
+          if (update) 'update': 'true',
+        },
         options: Options(contentType: 'application/octet-stream'),
       ),
     ),

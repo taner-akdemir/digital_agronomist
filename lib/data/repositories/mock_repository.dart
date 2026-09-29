@@ -407,6 +407,7 @@ class MockRepository implements MilkTraceRepository {
     List<int> file, {
     String? speciesId,
     required bool dryRun,
+    bool update = false,
   }) => _delayed(
     () async => throw const ApiException(
       code: 'NOT_SUPPORTED',
