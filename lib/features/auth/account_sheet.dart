@@ -249,6 +249,23 @@ class _AccountSheet extends ConsumerWidget {
                   ),
                 ),
               ],
+              // Sessiz saat (backend ADR 0107): bütün roller, kişiye ait.
+              const SizedBox(height: AppSpacing.sm),
+              OutlinedButton.icon(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  context.push('/settings/quiet-hours');
+                },
+                icon: const Icon(Icons.bedtime_outlined),
+                label: Text(l10n.accountQuietHours),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: AppColors.darkGreenColor,
+                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadius.mdAll,
+                  ),
+                ),
+              ),
               // Açık oturumlar (backend ADR 0105): bütün roller.
               const SizedBox(height: AppSpacing.sm),
               OutlinedButton.icon(

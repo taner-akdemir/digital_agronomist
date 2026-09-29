@@ -49,6 +49,10 @@ abstract class NotificationChannel with _$NotificationChannel {
 
     /// Kanalın dili: "tr" | "en" (backend ADR 0095).
     @Default('tr') String language,
+
+    /// Okunmayan kritik uyarı kaç dakika sonra bu SMS/arama kanalına da
+    /// gider; 0 kapalı (backend ADR 0108).
+    @Default(15) int escalationMinutes,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _NotificationChannel;
@@ -108,6 +112,7 @@ class NotificationChannelDraft {
     required this.sources,
     this.dailyLimit = 0,
     this.language,
+    this.escalationMinutes,
   });
 
   final String name;
@@ -126,6 +131,10 @@ class NotificationChannelDraft {
   /// "tr" | "en"; null ise gövdeye konmaz (güncellemede eski değer kalır).
   final String? language;
 
+  /// 0–240, 0 kapalı; null ise gövdeye konmaz (güncellemede eski değer
+  /// kalır). Yalnızca SMS/arama kanalında anlamlı (backend ADR 0108).
+  final int? escalationMinutes;
+
   Map<String, dynamic> toJson() => {
     'name': name,
     'kind': kind,
@@ -138,5 +147,6 @@ class NotificationChannelDraft {
     'sources': sources,
     'dailyLimit': dailyLimit,
     'language': ?language,
+    'escalationMinutes': ?escalationMinutes,
   };
 }

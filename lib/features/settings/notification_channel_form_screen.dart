@@ -93,6 +93,9 @@ class _FormState extends ConsumerState<_Form> {
   late final TextEditingController _recipients;
   late final Map<String, TextEditingController> _fields;
   late final TextEditingController _dailyLimit;
+  late final TextEditingController _escalation;
+
+  bool get _escalates => widget.spec.kind == 'sms' || widget.spec.kind == 'ivr';
   late String _minSeverity;
   late bool _sendResolved;
   late bool _enabled;
@@ -127,6 +130,9 @@ class _FormState extends ConsumerState<_Form> {
     // Boş: türün varsayılanı. Ayarlanmış değer gösterilir, varsayılan
     // ipucunda.
     _dailyLimit = TextEditingController(text: e?.dailyLimit?.toString() ?? '');
+    _escalation = TextEditingController(
+      text: (e?.escalationMinutes ?? 15).toString(),
+    );
     _language = e?.language ?? 'tr';
   }
 
@@ -138,6 +144,7 @@ class _FormState extends ConsumerState<_Form> {
     _name.dispose();
     _recipients.dispose();
     _dailyLimit.dispose();
+    _escalation.dispose();
     for (final c in _fields.values) {
       c.dispose();
     }
@@ -225,6 +232,22 @@ class _FormState extends ConsumerState<_Form> {
                   : null;
             },
           ),
+          // Eskalasyon yalnızca SMS/arama kanalında (backend ADR 0108).
+          if (_escalates) ...[
+            const SizedBox(height: AppSpacing.lg),
+            _text(
+              controller: _escalation,
+              label: l10n.channelsEscalation,
+              helper: l10n.channelsEscalationHelper,
+              keyboard: TextInputType.number,
+              validator: (v) {
+                final n = int.tryParse((v ?? '').trim());
+                return n == null || n < 0 || n > 240
+                    ? l10n.channelsEscalationRange
+                    : null;
+              },
+            ),
+          ],
           const SizedBox(height: AppSpacing.lg),
           DropdownButtonFormField<String>(
             initialValue: _language,
@@ -420,6 +443,9 @@ class _FormState extends ConsumerState<_Form> {
       // 0: türün varsayılanı (güncellemede de varsayılana döner).
       dailyLimit: int.tryParse(_dailyLimit.text.trim()) ?? 0,
       language: _language,
+      escalationMinutes: _escalates
+          ? int.tryParse(_escalation.text.trim())
+          : null,
     );
   }
 

@@ -178,6 +178,9 @@ void main() {
       reason: 'SMS varsayılan sınırı ipucunda',
     );
     await tester.enterText(field('Günlük sınır'), '0');
+    // Eskalasyon SMS'te görünür, varsayılan 15 dk (backend ADR 0108).
+    expect(find.widgetWithText(TextFormField, '15'), findsOneWidget);
+    await tester.enterText(field('Eskalasyon (dk)'), '300');
     await tester.tap(find.text('Kaydet'));
     await tester.pumpAndSettle();
     expect(
@@ -187,6 +190,8 @@ void main() {
     );
 
     expect(find.text('1 ile 10000 arasında olmalı'), findsOneWidget);
+    expect(find.text('0 ile 240 arasında olmalı'), findsOneWidget);
+    await tester.enterText(field('Eskalasyon (dk)'), '30');
     await tester.enterText(field('Telefon numaraları'), '+905321112233');
     await tester.enterText(field('Günlük sınır'), '10');
     await tester.tap(find.text('Kaydet'));
@@ -201,6 +206,7 @@ void main() {
     expect(sms.minSeverity, 'critical');
     expect(sms.dailyLimit, 10);
     expect(sms.effectiveDailyLimit, 10);
+    expect(sms.escalationMinutes, 30);
     expect(
       sms.sources,
       ['ops', 'summary'],
@@ -249,6 +255,11 @@ void main() {
     expect(field('Adres (https) *').obscureText, isFalse);
     expect(field('Adres (https) *').keyboardType, TextInputType.url);
     expect(field('İmza sırrı').obscureText, isTrue);
+    expect(
+      find.text('Eskalasyon (dk)'),
+      findsNothing,
+      reason: 'eskalasyon yalnızca SMS/arama kanalında',
+    );
   });
 
   // Listedeki aç/kapa tam gövde gönderir; sınır eklenmezse 0 gidip
@@ -269,6 +280,7 @@ void main() {
           sources: ['ops'],
           dailyLimit: 7,
           language: 'en',
+          escalationMinutes: 45,
         ),
       ),
     );
@@ -285,5 +297,6 @@ void main() {
     expect(sent.enabled, isFalse);
     expect(sent.dailyLimit, 7);
     expect(sent.language, 'en', reason: 'kanal dili de korunur (ADR 0095)');
+    expect(sent.escalationMinutes, 45, reason: 'eskalasyon da (ADR 0108)');
   });
 }

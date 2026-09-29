@@ -20,6 +20,7 @@ import 'package:milktrace/features/settings/feedback_screen.dart';
 import 'package:milktrace/features/settings/milking_schedule_screen.dart';
 import 'package:milktrace/features/settings/notification_channel_form_screen.dart';
 import 'package:milktrace/features/settings/notification_channels_screen.dart';
+import 'package:milktrace/features/settings/quiet_hours_screen.dart';
 import 'package:milktrace/features/settings/sessions_screen.dart';
 import 'package:milktrace/features/settings/thresholds_screen.dart';
 import 'package:milktrace/features/settings/two_factor_screen.dart';
@@ -115,6 +116,11 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/settings/2fa',
         builder: (_, _) => const TwoFactorScreen(),
+      ),
+      // Sessiz saat (backend ADR 0107): hesap kartından, bütün roller.
+      GoRoute(
+        path: '/settings/quiet-hours',
+        builder: (_, _) => const QuietHoursScreen(),
       ),
       // Sağım saatleri (backend ADR 0099): hesap kartından, yalnızca sahibe.
       GoRoute(

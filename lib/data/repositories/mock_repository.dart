@@ -22,6 +22,7 @@ import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/milking_schedule.dart';
 import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
+import 'package:milktrace/data/models/quiet_hours.dart';
 import 'package:milktrace/data/models/session_milking.dart';
 import 'package:milktrace/data/models/session_summary.dart';
 import 'package:milktrace/data/models/species.dart';
@@ -941,6 +942,23 @@ class MockRepository implements MilkTraceRepository {
   }) => _delayed(() async => _twoFactor = false);
 
   MilkingSchedule _schedule = const MilkingSchedule();
+  QuietHours _quiet = const QuietHours();
+
+  @override
+  Future<QuietHours> quietHours() => _delayed(() async => _quiet);
+
+  /// Backend ile aynı: açıkken başlangıç ve bitiş aynı olamaz.
+  @override
+  Future<QuietHours> setQuietHours(QuietHours quiet) => _delayed(() async {
+    if (quiet.enabled && quiet.startMinute == quiet.endMinute) {
+      throw const ApiException(
+        code: 'VALIDATION',
+        message: 'sessiz saatin başlangıcı ve bitişi aynı olamaz',
+        status: 422,
+      );
+    }
+    return _quiet = quiet;
+  });
 
   @override
   Future<MilkingSchedule> milkingSchedule() => _delayed(() async => _schedule);
@@ -1271,6 +1289,14 @@ class MockRepository implements MilkTraceRepository {
         status: 422,
       );
     }
+    final esc = draft.escalationMinutes;
+    if (esc != null && (esc < 0 || esc > 240)) {
+      throw const ApiException(
+        code: 'VALIDATION',
+        message: 'eskalasyon süresi 0 ile 240 dakika arasında olmalı',
+        status: 422,
+      );
+    }
     final limit = draft.dailyLimit == 0 ? null : draft.dailyLimit;
     final secretNames = {
       for (final f in spec.fields)
@@ -1296,6 +1322,7 @@ class MockRepository implements MilkTraceRepository {
       effectiveDailyLimit: limit ?? spec.defaultDailyLimit,
       // Dil verilmezse eskisi kalır (backend ADR 0095).
       language: draft.language ?? base.language,
+      escalationMinutes: draft.escalationMinutes ?? base.escalationMinutes,
       updatedAt: _clock,
     );
   }

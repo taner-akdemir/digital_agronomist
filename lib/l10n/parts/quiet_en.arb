@@ -1,0 +1,15 @@
+{
+  "accountQuietHours": "Quiet hours",
+  "quietTitle": "Quiet hours",
+  "quietIntro": "During these hours alerts don't make your phone ring; the notification still arrives and stays in the alert list. Critical alerts (e.g. meter offline) always ring. This setting is only for you.",
+  "quietEnabled": "Quiet hours on",
+  "quietStart": "Start",
+  "quietEnd": "End",
+  "quietSameTime": "Start and end cannot be the same.",
+  "quietSaved": "Quiet hours saved",
+  "pushQuietChannelName": "Alerts during quiet hours",
+  "pushQuietChannelDescription": "Non-critical alerts during quiet hours; no sound.",
+  "channelsEscalation": "Escalation (min)",
+  "channelsEscalationHelper": "If a critical alert (e.g. meter offline) stays unread this many minutes, it is also sent to this channel. 0: off.",
+  "channelsEscalationRange": "Must be between 0 and 240"
+}

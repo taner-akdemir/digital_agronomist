@@ -459,6 +459,14 @@ tarafı `~/GolandProjects/milktrace` ADR 0028; uçlar `/notification-channels`,
   sağlayıcı tanımlarından ÜRETİLDİ, elle düzenlenmez. Backend'e sağlayıcı eklenince
   yeniden üretilmeli.
 
+**Sessiz saat** (`/settings/quiet-hours`, backend ADR 0107): hesap kartından BÜTÜN rollere,
+kişiye ait (`GET/PUT /me/quiet-hours`, dakika; başlangıç > bitiş gece yarısını aşar). Bu
+saatlerde backend kritik OLMAYAN push'u `milktrace_quiet` kanalına (düşük önem, sessiz)
+gönderir ve veride `quiet: "1"` koyar; uygulama açıkken yerel bildirim de o kanala düşer.
+Kritik ve `device_offline` her zaman çalar. **Eskalasyon** (ADR 0108): SMS/arama kanalı
+formunda "Eskalasyon (dk)" (0–240, varsayılan 15, 0 kapalı) — okunmayan kritik uyarı süre
+dolunca o kanala da gider. Listedeki aç/kapa gövdesi `escalationMinutes`'ı da taşır.
+
 **Parolamı unuttum** (backend ADR 0074): giriş ekranında; pencere e-postayı
 `POST /auth/password-reset`'e gönderir ve sunucunun metnini olduğu gibi gösterir (kayıtlı
 olsun olmasın aynı metin). Bağlantı telefonun TARAYICISINDA açılır (panelin herkese açık

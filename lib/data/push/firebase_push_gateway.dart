@@ -42,6 +42,18 @@ class FirebasePushGateway implements PushGateway {
     importance: Importance.high,
   );
 
+  /// Sessiz saat kanalı (backend ADR 0107): backend sessiz saatte kritik
+  /// olmayan uyarıyı bu kimlikle gönderir (`fcm.QuietChannelID`); düşük
+  /// önem = tepsiye düşer, ses çıkarmaz.
+  static AndroidNotificationChannel get _quietChannel =>
+      AndroidNotificationChannel(
+        'milktrace_quiet',
+        l10n.pushQuietChannelName,
+        description: l10n.pushQuietChannelDescription,
+        importance: Importance.low,
+        playSound: false,
+      );
+
   @override
   Stream<PushMessage> get taps => _taps.stream;
 
@@ -121,17 +133,21 @@ class FirebasePushGateway implements PushGateway {
       },
     );
 
-    await _local
+    final android = _local
         .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin
-        >()
-        ?.createNotificationChannel(_channel);
+        >();
+    await android?.createNotificationChannel(_channel);
+    await android?.createNotificationChannel(_quietChannel);
   }
 
   Future<void> _showForeground(RemoteMessage message) async {
     final notification = message.notification;
     if (notification == null) return;
 
+    // Sessiz saatte (backend ADR 0107) uygulama açıkken de çalmasın.
+    final quiet = message.data['quiet'] == '1';
+    final channel = quiet ? _quietChannel : _channel;
     await _local.show(
       // Kimlik UYARIDAN türetilir: aynı uyarının "geri geldi" duyurusu,
       // uygulama açıkken de tepsideki "çevrimdışı" bildiriminin yerine
@@ -141,16 +157,17 @@ class FirebasePushGateway implements PushGateway {
       body: notification.body,
       notificationDetails: NotificationDetails(
         android: AndroidNotificationDetails(
-          _channel.id,
-          _channel.name,
-          channelDescription: _channel.description,
-          importance: Importance.high,
-          priority: Priority.high,
+          channel.id,
+          channel.name,
+          channelDescription: channel.description,
+          importance: quiet ? Importance.low : Importance.high,
+          priority: quiet ? Priority.low : Priority.high,
+          playSound: !quiet,
           // Tepside simgenin ve uygulama adının rengi (manifestteki
           // notification_accent ile aynı).
           color: AppColors.darkGreenColor,
         ),
-        iOS: const DarwinNotificationDetails(),
+        iOS: DarwinNotificationDetails(presentSound: !quiet),
       ),
       payload: jsonEncode(message.data),
     );

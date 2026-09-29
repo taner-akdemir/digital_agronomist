@@ -21,6 +21,7 @@ import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/milking_schedule.dart';
 import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
+import 'package:milktrace/data/models/quiet_hours.dart';
 import 'package:milktrace/data/models/session_milking.dart';
 import 'package:milktrace/data/models/session_summary.dart';
 import 'package:milktrace/data/models/species.dart';
@@ -467,6 +468,17 @@ class CachingRepository implements MilkTraceRepository {
     required String password,
     required String code,
   }) => _net(() => _inner.twoFactorDisable(password: password, code: code));
+
+  @override
+  Future<QuietHours> quietHours() => _read(
+    'quiet-hours',
+    _inner.quietHours,
+    (j) => QuietHours.fromJson(_map(j)),
+  );
+
+  @override
+  Future<QuietHours> setQuietHours(QuietHours quiet) =>
+      _net(() => _inner.setQuietHours(quiet));
 
   @override
   Future<MilkingSchedule> milkingSchedule() => _read(

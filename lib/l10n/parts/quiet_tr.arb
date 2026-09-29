@@ -1,0 +1,15 @@
+{
+  "accountQuietHours": "Sessiz saat",
+  "quietTitle": "Sessiz saat",
+  "quietIntro": "Bu saatlerde uyarılar telefonunuzu çaldırmaz; bildirim yine gelir ve uyarı listesinde durur. Kritik uyarılar (ör. sayaç çevrimdışı) her zaman çalar. Ayar yalnızca sizin içindir.",
+  "quietEnabled": "Sessiz saat açık",
+  "quietStart": "Başlangıç",
+  "quietEnd": "Bitiş",
+  "quietSameTime": "Başlangıç ve bitiş aynı olamaz.",
+  "quietSaved": "Sessiz saat kaydedildi",
+  "pushQuietChannelName": "Sessiz saatteki uyarılar",
+  "pushQuietChannelDescription": "Sessiz saatte gelen, kritik olmayan uyarılar; ses çıkarmaz.",
+  "channelsEscalation": "Eskalasyon (dk)",
+  "channelsEscalationHelper": "Kritik uyarı (ör. sayaç çevrimdışı) bu kadar dakika okunmazsa bu kanala da gider. 0: kapalı.",
+  "channelsEscalationRange": "0 ile 240 arasında olmalı"
+}

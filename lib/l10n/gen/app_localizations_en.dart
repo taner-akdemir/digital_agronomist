@@ -37,6 +37,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Notifications are off on this phone: permission was not granted or the notification service is not connected yet. Alerts still appear in the notification center.';
 
   @override
+  String get accountQuietHours => 'Quiet hours';
+
+  @override
   String get accountSessions => 'Sessions';
 
   @override
@@ -701,6 +704,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get channelsEnabled => 'Channel enabled';
+
+  @override
+  String get channelsEscalation => 'Escalation (min)';
+
+  @override
+  String get channelsEscalationHelper =>
+      'If a critical alert (e.g. meter offline) stays unread this many minutes, it is also sent to this channel. 0: off.';
+
+  @override
+  String get channelsEscalationRange => 'Must be between 0 and 240';
 
   @override
   String get channelsFieldApiKey => 'API key';
@@ -1999,6 +2012,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pushChannelName => 'Milking alerts';
+
+  @override
+  String get pushQuietChannelDescription =>
+      'Non-critical alerts during quiet hours; no sound.';
+
+  @override
+  String get pushQuietChannelName => 'Alerts during quiet hours';
+
+  @override
+  String get quietEnabled => 'Quiet hours on';
+
+  @override
+  String get quietEnd => 'End';
+
+  @override
+  String get quietIntro =>
+      'During these hours alerts don\'t make your phone ring; the notification still arrives and stays in the alert list. Critical alerts (e.g. meter offline) always ring. This setting is only for you.';
+
+  @override
+  String get quietSameTime => 'Start and end cannot be the same.';
+
+  @override
+  String get quietSaved => 'Quiet hours saved';
+
+  @override
+  String get quietStart => 'Start';
+
+  @override
+  String get quietTitle => 'Quiet hours';
 
   @override
   String get roleOperator => 'Operator';

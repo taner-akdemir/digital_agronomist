@@ -37,6 +37,9 @@ class AppLocalizationsTr extends AppLocalizations {
       'Bu telefonda bildirim kapalı: izin verilmedi ya da bildirim servisi henüz bağlanmadı. Uyarılar bildirim merkezinde görünmeye devam eder.';
 
   @override
+  String get accountQuietHours => 'Sessiz saat';
+
+  @override
   String get accountSessions => 'Oturumlar';
 
   @override
@@ -699,6 +702,16 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get channelsEnabled => 'Kanal açık';
+
+  @override
+  String get channelsEscalation => 'Eskalasyon (dk)';
+
+  @override
+  String get channelsEscalationHelper =>
+      'Kritik uyarı (ör. sayaç çevrimdışı) bu kadar dakika okunmazsa bu kanala da gider. 0: kapalı.';
+
+  @override
+  String get channelsEscalationRange => '0 ile 240 arasında olmalı';
 
   @override
   String get channelsFieldApiKey => 'API anahtarı';
@@ -1976,6 +1989,35 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get pushChannelName => 'Sağım uyarıları';
+
+  @override
+  String get pushQuietChannelDescription =>
+      'Sessiz saatte gelen, kritik olmayan uyarılar; ses çıkarmaz.';
+
+  @override
+  String get pushQuietChannelName => 'Sessiz saatteki uyarılar';
+
+  @override
+  String get quietEnabled => 'Sessiz saat açık';
+
+  @override
+  String get quietEnd => 'Bitiş';
+
+  @override
+  String get quietIntro =>
+      'Bu saatlerde uyarılar telefonunuzu çaldırmaz; bildirim yine gelir ve uyarı listesinde durur. Kritik uyarılar (ör. sayaç çevrimdışı) her zaman çalar. Ayar yalnızca sizin içindir.';
+
+  @override
+  String get quietSameTime => 'Başlangıç ve bitiş aynı olamaz.';
+
+  @override
+  String get quietSaved => 'Sessiz saat kaydedildi';
+
+  @override
+  String get quietStart => 'Başlangıç';
+
+  @override
+  String get quietTitle => 'Sessiz saat';
 
   @override
   String get roleOperator => 'Operatör';

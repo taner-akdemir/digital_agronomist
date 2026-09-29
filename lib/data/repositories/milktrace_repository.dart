@@ -17,6 +17,7 @@ import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/milking_schedule.dart';
 import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
+import 'package:milktrace/data/models/quiet_hours.dart';
 import 'package:milktrace/data/models/session_milking.dart';
 import 'package:milktrace/data/models/session_summary.dart';
 import 'package:milktrace/data/models/species.dart';
@@ -316,6 +317,10 @@ abstract interface class MilkTraceRepository {
     required String password,
     required String code,
   });
+
+  /// Kişinin sessiz saati (backend ADR 0107); bütün roller, kendisi için.
+  Future<QuietHours> quietHours();
+  Future<QuietHours> setQuietHours(QuietHours quiet);
 
   /// Sağım saatleri (backend ADR 0099); okuma herkes, yazma sahip.
   Future<MilkingSchedule> milkingSchedule();

@@ -284,6 +284,7 @@ class _ChannelCard extends ConsumerWidget {
               // varsayılana dönerdi.
               dailyLimit: c.dailyLimit ?? 0,
               language: c.language,
+              escalationMinutes: c.escalationMinutes,
             ),
           );
     } catch (e) {

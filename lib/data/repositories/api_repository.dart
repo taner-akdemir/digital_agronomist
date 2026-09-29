@@ -21,6 +21,7 @@ import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/milking_schedule.dart';
 import 'package:milktrace/data/models/milking_session.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
+import 'package:milktrace/data/models/quiet_hours.dart';
 import 'package:milktrace/data/models/session_milking.dart';
 import 'package:milktrace/data/models/session_summary.dart';
 import 'package:milktrace/data/models/species.dart';
@@ -683,6 +684,18 @@ class ApiRepository implements MilkTraceRepository {
       data: {'password': password, 'code': code},
     );
   }
+
+  @override
+  Future<QuietHours> quietHours() async =>
+      QuietHours.fromJson(_dataOf(await _dio.get<dynamic>('/me/quiet-hours')));
+
+  @override
+  Future<QuietHours> setQuietHours(QuietHours quiet) async =>
+      QuietHours.fromJson(
+        _dataOf(
+          await _dio.put<dynamic>('/me/quiet-hours', data: quiet.toJson()),
+        ),
+      );
 
   @override
   Future<MilkingSchedule> milkingSchedule() async => MilkingSchedule.fromJson(

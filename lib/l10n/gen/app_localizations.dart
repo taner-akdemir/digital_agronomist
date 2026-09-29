@@ -152,6 +152,12 @@ abstract class AppLocalizations {
   /// **'Bu telefonda bildirim kapalı: izin verilmedi ya da bildirim servisi henüz bağlanmadı. Uyarılar bildirim merkezinde görünmeye devam eder.'**
   String get accountPushUnavailable;
 
+  /// No description provided for @accountQuietHours.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sessiz saat'**
+  String get accountQuietHours;
+
   /// No description provided for @accountSessions.
   ///
   /// In tr, this message translates to:
@@ -1279,6 +1285,24 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Kanal açık'**
   String get channelsEnabled;
+
+  /// No description provided for @channelsEscalation.
+  ///
+  /// In tr, this message translates to:
+  /// **'Eskalasyon (dk)'**
+  String get channelsEscalation;
+
+  /// No description provided for @channelsEscalationHelper.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kritik uyarı (ör. sayaç çevrimdışı) bu kadar dakika okunmazsa bu kanala da gider. 0: kapalı.'**
+  String get channelsEscalationHelper;
+
+  /// No description provided for @channelsEscalationRange.
+  ///
+  /// In tr, this message translates to:
+  /// **'0 ile 240 arasında olmalı'**
+  String get channelsEscalationRange;
 
   /// No description provided for @channelsFieldApiKey.
   ///
@@ -3450,6 +3474,60 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Sağım uyarıları'**
   String get pushChannelName;
+
+  /// No description provided for @pushQuietChannelDescription.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sessiz saatte gelen, kritik olmayan uyarılar; ses çıkarmaz.'**
+  String get pushQuietChannelDescription;
+
+  /// No description provided for @pushQuietChannelName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sessiz saatteki uyarılar'**
+  String get pushQuietChannelName;
+
+  /// No description provided for @quietEnabled.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sessiz saat açık'**
+  String get quietEnabled;
+
+  /// No description provided for @quietEnd.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bitiş'**
+  String get quietEnd;
+
+  /// No description provided for @quietIntro.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu saatlerde uyarılar telefonunuzu çaldırmaz; bildirim yine gelir ve uyarı listesinde durur. Kritik uyarılar (ör. sayaç çevrimdışı) her zaman çalar. Ayar yalnızca sizin içindir.'**
+  String get quietIntro;
+
+  /// No description provided for @quietSameTime.
+  ///
+  /// In tr, this message translates to:
+  /// **'Başlangıç ve bitiş aynı olamaz.'**
+  String get quietSameTime;
+
+  /// No description provided for @quietSaved.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sessiz saat kaydedildi'**
+  String get quietSaved;
+
+  /// No description provided for @quietStart.
+  ///
+  /// In tr, this message translates to:
+  /// **'Başlangıç'**
+  String get quietStart;
+
+  /// No description provided for @quietTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sessiz saat'**
+  String get quietTitle;
 
   /// No description provided for @roleOperator.
   ///
