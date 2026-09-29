@@ -15,6 +15,7 @@
 | Kullanıcılar verilerinin silinmesini isteyebilir mi? | **Evet** | uygulama içi: hesap kartı → "Hesabımı sil" (parola onayı, backend ADR 0098); web: `https://api.milktrace.com.tr/admin/hesap-sil` |
 | Hesap uygulama içinden oluşturuluyor mu? | **Hayır** | hesapları işletme sahibi ya da platform açar; yine de uygulama içi silme ve web bağlantısı var |
 | Hesap silme bağlantısı (Play "Veri silme" bölümü) | `https://api.milktrace.com.tr/admin/hesap-sil` | panelin herkese açık sayfası |
+| Gizlilik politikası bağlantısı ("Uygulama içeriği") | `https://api.milktrace.com.tr/admin/gizlilik` | panel `LegalPage`; KVKK metni `/admin/kvkk` |
 
 ## Toplanan veri türleri
 

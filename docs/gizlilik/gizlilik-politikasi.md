@@ -2,7 +2,9 @@
 
 > **TASLAK (28.09.2026).** Koddaki gerçek veri akışından çıkarıldı; yayımlamadan önce
 > hukuki kontrolden geçmeli. `[DOLDUR]` işaretli yerler bilinmiyor. Play Console bu
-> metnin herkese açık bir adresini ister (`https://milktrace.com.tr/gizlilik` — [DOLDUR: sayfa henüz yayında değil]).
+> metnin herkese açık bir adresini ister (`https://api.milktrace.com.tr/admin/gizlilik`; KVKK metni `/admin/kvkk`). Panel
+> bu dosyayı KOPYALAYARAK yayımlar: burada değiştirince panelde `scripts/sync-legal.sh`
+> koşulur. `>` alıntı blokları (bu not) yayımlanmaz.
 
 **Son güncelleme:** [DOLDUR]
 

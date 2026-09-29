@@ -810,4 +810,6 @@ hedef kitle, gizlilik politikası bağlantısı) doldurulur. Taslaklar `docs/giz
 gizlilik politikası, KVKK aydınlatma metni ve veri güvenliği formu cevapları — koddan
 çıkarıldı, **hukuki kontrol ve `[DOLDUR]` yerleri** bekliyor. Yeni izin ya da SDK
 eklenirse üçü birlikte güncellenir. Alan adı **`milktrace.com.tr`** (29.09.2026): API ve panel `api.milktrace.com.tr`; hesap silme
-`https://api.milktrace.com.tr/admin/hesap-sil`.
+`https://api.milktrace.com.tr/admin/hesap-sil`. Gizlilik politikası ve KVKK metni panelde herkese
+açık: `/admin/gizlilik`, `/admin/kvkk` — panel bu dosyaları kopyalar; burada değiştirince
+panelde `scripts/sync-legal.sh` koş. `>` alıntılar (taslak notları) yayımlanmaz.
