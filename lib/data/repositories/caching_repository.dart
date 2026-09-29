@@ -17,6 +17,7 @@ import 'package:milktrace/data/models/dashboard_summary.dart';
 import 'package:milktrace/data/models/delivery.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
+import 'package:milktrace/data/models/farm_summary.dart';
 import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/milking_schedule.dart';
 import 'package:milktrace/data/models/milking_session.dart';
@@ -505,6 +506,10 @@ class CachingRepository implements MilkTraceRepository {
   // Oturumlar hesap güvenliği: önbelleklenmez.
   @override
   Future<List<UserSession>> loginSessions() => _net(_inner.loginSessions);
+
+  @override
+  Future<List<FarmSummary>> myFarms() =>
+      _read('my-farms', _inner.myFarms, (j) => _list(j, FarmSummary.fromJson));
 
   @override
   Future<void> revokeLoginSession(String id) =>

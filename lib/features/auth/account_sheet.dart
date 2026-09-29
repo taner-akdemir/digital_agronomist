@@ -128,6 +128,25 @@ class _AccountSheet extends ConsumerWidget {
                     ),
                   ),
                 ),
+                // Çiftliklerim (backend ADR 0116): bütün işletmelerin özeti.
+                const SizedBox(height: AppSpacing.sm),
+                OutlinedButton.icon(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    context.push('/settings/farms');
+                  },
+                  icon: const Icon(Icons.dashboard_customize_outlined),
+                  label: Text(l10n.farmsTitle),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.darkGreenColor,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppSpacing.lg,
+                    ),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadius.mdAll,
+                    ),
+                  ),
+                ),
               ],
               const SizedBox(height: AppSpacing.lg),
               const _PushRow(),

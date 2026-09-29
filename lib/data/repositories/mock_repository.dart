@@ -18,6 +18,7 @@ import 'package:milktrace/data/models/dashboard_summary.dart';
 import 'package:milktrace/data/models/delivery.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
+import 'package:milktrace/data/models/farm_summary.dart';
 import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/milking_schedule.dart';
 import 'package:milktrace/data/models/milking_session.dart';
@@ -1112,6 +1113,17 @@ class MockRepository implements MilkTraceRepository {
       lastUsedAt: DateTime.utc(2026, 9, 28, 18),
     ),
   ];
+
+  @override
+  Future<List<FarmSummary>> myFarms() => _delayed(
+    () async => const [
+      FarmSummary(
+        tenantId: 'demo',
+        name: 'Demo Çiftliği',
+        role: 'tenant_owner',
+      ),
+    ],
+  );
 
   @override
   Future<List<UserSession>> loginSessions() =>

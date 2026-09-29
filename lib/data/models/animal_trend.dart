@@ -27,6 +27,10 @@ abstract class AnimalTrend with _$AnimalTrend {
 
     /// Günlük seri — grafiğin veri kaynağı. Eskiden yeniye sıralı.
     @Default(<AnimalDailyStat>[]) List<AnimalDailyStat> daily,
+
+    /// Bu laktasyonun 305 gün değerleri (backend ADR 0115); buzağılama
+    /// kaydı yoksa null.
+    Lactation305? lactation,
   }) = _AnimalTrend;
 
   factory AnimalTrend.fromJson(Map<String, dynamic> json) =>
@@ -49,4 +53,21 @@ abstract class AnimalDailyStat with _$AnimalDailyStat {
 
   factory AnimalDailyStat.fromJson(Map<String, dynamic> json) =>
       _$AnimalDailyStatFromJson(json);
+}
+
+/// 305 günlük laktasyon verimi (backend ADR 0115): ölçülen ve tahmin.
+/// Tahmini SUNUCU yapar (Wood eğrisi); `projected305Ml` null ise yapılamadı
+/// (30 günden kısa, eğriye uymuyor ya da hayvan sağmal değil).
+@freezed
+abstract class Lactation305 with _$Lactation305 {
+  const factory Lactation305({
+    required DateTime calvingDate,
+    @Default(0) int daysInMilk,
+    @Default(0) int actualMl,
+    int? projected305Ml,
+    @Default(false) bool complete,
+  }) = _Lactation305;
+
+  factory Lactation305.fromJson(Map<String, dynamic> json) =>
+      _$Lactation305FromJson(json);
 }

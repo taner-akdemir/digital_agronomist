@@ -1,0 +1,55 @@
+{
+  "lactationTitle": "This lactation · 305 days",
+  "lactationActual": "Measured: {amount} (day {days})",
+  "@lactationActual": {
+    "placeholders": {
+      "amount": {},
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "lactationProjected": "305-day projection: {amount}",
+  "@lactationProjected": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "lactationComplete": "305 days completed: {amount}",
+  "@lactationComplete": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "lactationNoProjection": "A projection needs at least 30 days of data and a lactating animal.",
+  "lactationHint": "Projected from the animal's own curve (Wood); unmeasured days count as zero.",
+  "farmsTitle": "My farms",
+  "farmsIntro": "Today's summary for every farm you belong to. Tap to switch to it.",
+  "farmsLine": "Today {amount} · {animals} animals",
+  "@farmsLine": {
+    "placeholders": {
+      "amount": {},
+      "animals": {
+        "type": "int"
+      }
+    }
+  },
+  "farmsAlerts": "{count} unread alerts",
+  "@farmsAlerts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "farmsVaccines": "{count} vaccinations due",
+  "@farmsVaccines": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "farmsCurrent": "You are in this farm now",
+  "farmsLoadFailed": "Farms could not be loaded"
+}

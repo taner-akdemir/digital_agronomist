@@ -1397,6 +1397,34 @@ class AppLocalizationsTr extends AppLocalizations {
       'Verim beklenen aralıkta, eğim stabil.';
 
   @override
+  String farmsAlerts(int count) {
+    return '$count okunmamış uyarı';
+  }
+
+  @override
+  String get farmsCurrent => 'Şu an bu işletmedesiniz';
+
+  @override
+  String get farmsIntro =>
+      'Üye olduğunuz bütün işletmelerin bugünkü özeti. Dokununca o işletmeye geçer.';
+
+  @override
+  String farmsLine(Object amount, int animals) {
+    return 'Bugün $amount · $animals hayvan';
+  }
+
+  @override
+  String get farmsLoadFailed => 'Çiftlikler yüklenemedi';
+
+  @override
+  String get farmsTitle => 'Çiftliklerim';
+
+  @override
+  String farmsVaccines(int count) {
+    return '$count aşı zamanı';
+  }
+
+  @override
   String get feedbackAddScreenshot => 'Ekran görüntüsü ekle';
 
   @override
@@ -1674,6 +1702,32 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get kioskTitle => 'Milk Trace · Sağımhane';
+
+  @override
+  String lactationActual(Object amount, int days) {
+    return 'Ölçülen: $amount ($days. gün)';
+  }
+
+  @override
+  String lactationComplete(Object amount) {
+    return '305 gün tamamlandı: $amount';
+  }
+
+  @override
+  String get lactationHint =>
+      'Tahmin hayvanın kendi eğrisinden (Wood); ölçülmeyen günler sıfır sayılır.';
+
+  @override
+  String get lactationNoProjection =>
+      'Tahmin en az 30 günlük veriyle ve sağmal hayvanda yapılır.';
+
+  @override
+  String lactationProjected(Object amount) {
+    return '305 gün tahmini: $amount';
+  }
+
+  @override
+  String get lactationTitle => 'Bu laktasyon · 305 gün';
 
   @override
   String get languageAuto => 'Cihaz dili';

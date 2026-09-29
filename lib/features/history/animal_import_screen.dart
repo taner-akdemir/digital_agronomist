@@ -410,6 +410,8 @@ String changeLabel(AnimalImportChange c) {
     'lastCalvingDate' => l10n.animalImportFieldCalvingDate,
     'lactationNo' => l10n.animalImportFieldLactationNo,
     'group' => l10n.animalImportFieldGroup,
+    'dam' => l10n.lineageDam,
+    'sire' => l10n.lineageSire,
     _ => c.field,
   };
   String value(String v) {

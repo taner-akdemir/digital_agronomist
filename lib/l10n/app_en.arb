@@ -709,6 +709,35 @@
   "domainClassNoMilkExplanation": "No milk was obtained in recent milkings. Needs assessment.",
   "domainClassNormal": "Normal",
   "domainClassNormalExplanation": "Yield is in the expected range and the trend is stable.",
+  "farmsAlerts": "{count} unread alerts",
+  "@farmsAlerts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "farmsCurrent": "You are in this farm now",
+  "farmsIntro": "Today's summary for every farm you belong to. Tap to switch to it.",
+  "farmsLine": "Today {amount} · {animals} animals",
+  "@farmsLine": {
+    "placeholders": {
+      "amount": {},
+      "animals": {
+        "type": "int"
+      }
+    }
+  },
+  "farmsLoadFailed": "Farms could not be loaded",
+  "farmsTitle": "My farms",
+  "farmsVaccines": "{count} vaccinations due",
+  "@farmsVaccines": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "feedbackAddScreenshot": "Add screenshot",
   "feedbackIntro": "Describe a problem, suggestion or request. The app version and phone model are added automatically.",
   "feedbackMessageHint": "What happened, on which screen? What did you expect?",
@@ -828,6 +857,30 @@
   "kioskExitTitle": "Sign out of the tablet?",
   "kioskSignOut": "Sign out",
   "kioskTitle": "Milk Trace · Milking parlor",
+  "lactationActual": "Measured: {amount} (day {days})",
+  "@lactationActual": {
+    "placeholders": {
+      "amount": {},
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "lactationComplete": "305 days completed: {amount}",
+  "@lactationComplete": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "lactationHint": "Projected from the animal's own curve (Wood); unmeasured days count as zero.",
+  "lactationNoProjection": "A projection needs at least 30 days of data and a lactating animal.",
+  "lactationProjected": "305-day projection: {amount}",
+  "@lactationProjected": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "lactationTitle": "This lactation · 305 days",
   "languageAuto": "Device language",
   "languageEnglish": "English",
   "languageTitle": "Language",

@@ -176,10 +176,23 @@ class _Body extends ConsumerWidget {
           AsyncView(
             value: trend,
             errorMessage: l10n.animalDetailTrendFailed,
-            builder: (t) => _TrendCard(
-              trend: t,
-              volume: ref.watch(volumeFormatProvider),
-              species: animal.speciesId,
+            builder: (t) => Column(
+              children: [
+                _TrendCard(
+                  trend: t,
+                  volume: ref.watch(volumeFormatProvider),
+                  species: animal.speciesId,
+                ),
+                // 305 gün (backend ADR 0115); buzağılama kaydı yoksa yok.
+                if (t.lactation case final lac?) ...[
+                  const SizedBox(height: AppSpacing.md),
+                  _LactationCard(
+                    lactation: lac,
+                    volume: ref.watch(volumeFormatProvider),
+                    species: animal.speciesId,
+                  ),
+                ],
+              ],
             ),
           ),
           const SizedBox(height: AppSpacing.md),
@@ -484,6 +497,68 @@ class _FrozenClass extends StatelessWidget {
           style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
         ),
       ],
+    );
+  }
+}
+
+/// 305 günlük laktasyon verimi (backend ADR 0115): ölçülen ve tahmin.
+class _LactationCard extends StatelessWidget {
+  const _LactationCard({
+    required this.lactation,
+    required this.volume,
+    this.species,
+  });
+
+  final Lactation305 lactation;
+  final VolumeFormat volume;
+  final String? species;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = lactation;
+    String amount(int ml) => volume.amount(ml, species: species, digits: 0);
+    return _Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            l10n.lactationTitle,
+            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          if (l.complete)
+            Text(
+              l10n.lactationComplete(amount(l.actualMl)),
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            )
+          else ...[
+            Text(
+              l10n.lactationActual(
+                amount(l.actualMl),
+                l.daysInMilk.clamp(0, 305),
+              ),
+            ),
+            if (l.projected305Ml case final p?)
+              Text(
+                l10n.lactationProjected(amount(p)),
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.darkGreenColor,
+                ),
+              )
+            else
+              Text(
+                l10n.lactationNoProjection,
+                style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
+              ),
+          ],
+          const SizedBox(height: AppSpacing.xs),
+          Text(
+            l10n.lactationHint,
+            style: TextStyle(fontSize: 11, color: AppColors.onSurfaceMuted),
+          ),
+        ],
+      ),
     );
   }
 }

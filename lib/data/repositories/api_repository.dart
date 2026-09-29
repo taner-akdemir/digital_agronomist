@@ -17,6 +17,7 @@ import 'package:milktrace/data/models/dashboard_summary.dart';
 import 'package:milktrace/data/models/delivery.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
+import 'package:milktrace/data/models/farm_summary.dart';
 import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/milking_schedule.dart';
 import 'package:milktrace/data/models/milking_session.dart';
@@ -714,6 +715,10 @@ class ApiRepository implements MilkTraceRepository {
   @override
   Future<void> setVolumeUnit(String unit) =>
       _dio.put<dynamic>('/tenant/settings', data: {'volumeUnit': unit});
+
+  @override
+  Future<List<FarmSummary>> myFarms() async =>
+      _listOf(await _dio.get<dynamic>('/me/farms'), FarmSummary.fromJson);
 
   @override
   Future<List<UserSession>> loginSessions() async =>

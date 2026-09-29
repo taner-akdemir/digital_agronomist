@@ -786,6 +786,35 @@
   "domainClassNoMilkExplanation": "Son sağımlarda süt alınamadı. Değerlendirme gerekli.",
   "domainClassNormal": "Normal",
   "domainClassNormalExplanation": "Verim beklenen aralıkta, eğim stabil.",
+  "farmsAlerts": "{count} okunmamış uyarı",
+  "@farmsAlerts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "farmsCurrent": "Şu an bu işletmedesiniz",
+  "farmsIntro": "Üye olduğunuz bütün işletmelerin bugünkü özeti. Dokununca o işletmeye geçer.",
+  "farmsLine": "Bugün {amount} · {animals} hayvan",
+  "@farmsLine": {
+    "placeholders": {
+      "amount": {},
+      "animals": {
+        "type": "int"
+      }
+    }
+  },
+  "farmsLoadFailed": "Çiftlikler yüklenemedi",
+  "farmsTitle": "Çiftliklerim",
+  "farmsVaccines": "{count} aşı zamanı",
+  "@farmsVaccines": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "feedbackAddScreenshot": "Ekran görüntüsü ekle",
   "feedbackIntro": "Bir sorun, öneri ya da istek yazın. Uygulama sürümü ve telefon modeli kendiliğinden eklenir.",
   "feedbackMessageHint": "Ne oldu, hangi ekranda? Ne bekliyordunuz?",
@@ -951,6 +980,30 @@
   "kioskExitTitle": "Tabletten çıkılsın mı?",
   "kioskSignOut": "Çıkış",
   "kioskTitle": "Milk Trace · Sağımhane",
+  "lactationActual": "Ölçülen: {amount} ({days}. gün)",
+  "@lactationActual": {
+    "placeholders": {
+      "amount": {},
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "lactationComplete": "305 gün tamamlandı: {amount}",
+  "@lactationComplete": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "lactationHint": "Tahmin hayvanın kendi eğrisinden (Wood); ölçülmeyen günler sıfır sayılır.",
+  "lactationNoProjection": "Tahmin en az 30 günlük veriyle ve sağmal hayvanda yapılır.",
+  "lactationProjected": "305 gün tahmini: {amount}",
+  "@lactationProjected": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "lactationTitle": "Bu laktasyon · 305 gün",
   "languageAuto": "Cihaz dili",
   "languageEnglish": "English",
   "languageTitle": "Dil",

@@ -2473,6 +2473,48 @@ abstract class AppLocalizations {
   /// **'Verim beklenen aralıkta, eğim stabil.'**
   String get domainClassNormalExplanation;
 
+  /// No description provided for @farmsAlerts.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} okunmamış uyarı'**
+  String farmsAlerts(int count);
+
+  /// No description provided for @farmsCurrent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şu an bu işletmedesiniz'**
+  String get farmsCurrent;
+
+  /// No description provided for @farmsIntro.
+  ///
+  /// In tr, this message translates to:
+  /// **'Üye olduğunuz bütün işletmelerin bugünkü özeti. Dokununca o işletmeye geçer.'**
+  String get farmsIntro;
+
+  /// No description provided for @farmsLine.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün {amount} · {animals} hayvan'**
+  String farmsLine(Object amount, int animals);
+
+  /// No description provided for @farmsLoadFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çiftlikler yüklenemedi'**
+  String get farmsLoadFailed;
+
+  /// No description provided for @farmsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çiftliklerim'**
+  String get farmsTitle;
+
+  /// No description provided for @farmsVaccines.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} aşı zamanı'**
+  String farmsVaccines(int count);
+
   /// No description provided for @feedbackAddScreenshot.
   ///
   /// In tr, this message translates to:
@@ -2928,6 +2970,42 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Milk Trace · Sağımhane'**
   String get kioskTitle;
+
+  /// No description provided for @lactationActual.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ölçülen: {amount} ({days}. gün)'**
+  String lactationActual(Object amount, int days);
+
+  /// No description provided for @lactationComplete.
+  ///
+  /// In tr, this message translates to:
+  /// **'305 gün tamamlandı: {amount}'**
+  String lactationComplete(Object amount);
+
+  /// No description provided for @lactationHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tahmin hayvanın kendi eğrisinden (Wood); ölçülmeyen günler sıfır sayılır.'**
+  String get lactationHint;
+
+  /// No description provided for @lactationNoProjection.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tahmin en az 30 günlük veriyle ve sağmal hayvanda yapılır.'**
+  String get lactationNoProjection;
+
+  /// No description provided for @lactationProjected.
+  ///
+  /// In tr, this message translates to:
+  /// **'305 gün tahmini: {amount}'**
+  String lactationProjected(Object amount);
+
+  /// No description provided for @lactationTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu laktasyon · 305 gün'**
+  String get lactationTitle;
 
   /// No description provided for @languageAuto.
   ///

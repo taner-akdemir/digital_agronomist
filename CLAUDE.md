@@ -304,6 +304,16 @@ annenin türüyle gelir). Döngü ve başka işletmenin hayvanı sunucuda 422.
 Okunamazsa sessizce düşer (ağaç ondan bağımsız). Mock'ta yok. Sunucu ayrıca
 `spout_low_flow` uyarısı açar.
 
+**305 gün** (backend ADR 0115): `AnimalTrend.lactation` — ölçülen, 305 gün tahmini
+(SUNUCU, Wood eğrisi; null = 30 günden kısa, eğriye uymuyor ya da sağmal değil) ve
+`complete`. Hayvan detayında eğilim kartının altında; buzağılama kaydı yoksa kart yok.
+Mock'ta yok. Verim raporunda "305 gün tahmini" sütunu.
+
+**Çiftliklerim** (`/settings/farms`, backend ADR 0116, `GET /me/farms`): hesap kartında
+birden çok işletmesi olana; her işletmenin bugünkü sütü, okunmamış uyarısı, zamanı gelen
+aşısı. Dokununca `switchTenant` → pano. Miktarlar seçili işletmenin biriminde gösterilir.
+İçe aktarmada "Anne Küpe" ve "Baba" sütunları (ADR 0117); önizlemede `dam`/`sire` değişikliği.
+
 **Sağımcılar** (`/settings/milkers`, backend ADR 0090): hesap kartından YALNIZCA sahibe.
 Sağımcı = oturumu açan / hayvanı bağlayan (ayrı seçim adımı yok). 7/30 gün; oturum, sağım,
 süt, ortalama süre, düşük debi payı. Metin oranın kişiyi puanlamadığını söyler.

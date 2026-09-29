@@ -13,6 +13,7 @@ import 'package:milktrace/data/models/dashboard_summary.dart';
 import 'package:milktrace/data/models/delivery.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
+import 'package:milktrace/data/models/farm_summary.dart';
 import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/milking_schedule.dart';
 import 'package:milktrace/data/models/milking_session.dart';
@@ -299,6 +300,9 @@ abstract interface class MilkTraceRepository {
 
   /// Açık oturumlar (backend ADR 0105); bu cihaz `current`.
   Future<List<UserSession>> loginSessions();
+
+  /// Çiftliklerim (backend ADR 0116): kişinin bütün işletmelerinin özeti.
+  Future<List<FarmSummary>> myFarms();
   Future<void> revokeLoginSession(String id);
 
   /// Bu cihaz dışındakileri kapatır; kapatılan sayısı.

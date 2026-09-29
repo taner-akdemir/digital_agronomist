@@ -1,0 +1,55 @@
+{
+  "lactationTitle": "Bu laktasyon · 305 gün",
+  "lactationActual": "Ölçülen: {amount} ({days}. gün)",
+  "@lactationActual": {
+    "placeholders": {
+      "amount": {},
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "lactationProjected": "305 gün tahmini: {amount}",
+  "@lactationProjected": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "lactationComplete": "305 gün tamamlandı: {amount}",
+  "@lactationComplete": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "lactationNoProjection": "Tahmin en az 30 günlük veriyle ve sağmal hayvanda yapılır.",
+  "lactationHint": "Tahmin hayvanın kendi eğrisinden (Wood); ölçülmeyen günler sıfır sayılır.",
+  "farmsTitle": "Çiftliklerim",
+  "farmsIntro": "Üye olduğunuz bütün işletmelerin bugünkü özeti. Dokununca o işletmeye geçer.",
+  "farmsLine": "Bugün {amount} · {animals} hayvan",
+  "@farmsLine": {
+    "placeholders": {
+      "amount": {},
+      "animals": {
+        "type": "int"
+      }
+    }
+  },
+  "farmsAlerts": "{count} okunmamış uyarı",
+  "@farmsAlerts": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "farmsVaccines": "{count} aşı zamanı",
+  "@farmsVaccines": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "farmsCurrent": "Şu an bu işletmedesiniz",
+  "farmsLoadFailed": "Çiftlikler yüklenemedi"
+}

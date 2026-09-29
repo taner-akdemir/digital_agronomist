@@ -1416,6 +1416,34 @@ class AppLocalizationsEn extends AppLocalizations {
       'Yield is in the expected range and the trend is stable.';
 
   @override
+  String farmsAlerts(int count) {
+    return '$count unread alerts';
+  }
+
+  @override
+  String get farmsCurrent => 'You are in this farm now';
+
+  @override
+  String get farmsIntro =>
+      'Today\'s summary for every farm you belong to. Tap to switch to it.';
+
+  @override
+  String farmsLine(Object amount, int animals) {
+    return 'Today $amount · $animals animals';
+  }
+
+  @override
+  String get farmsLoadFailed => 'Farms could not be loaded';
+
+  @override
+  String get farmsTitle => 'My farms';
+
+  @override
+  String farmsVaccines(int count) {
+    return '$count vaccinations due';
+  }
+
+  @override
   String get feedbackAddScreenshot => 'Add screenshot';
 
   @override
@@ -1698,6 +1726,32 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get kioskTitle => 'Milk Trace · Milking parlor';
+
+  @override
+  String lactationActual(Object amount, int days) {
+    return 'Measured: $amount (day $days)';
+  }
+
+  @override
+  String lactationComplete(Object amount) {
+    return '305 days completed: $amount';
+  }
+
+  @override
+  String get lactationHint =>
+      'Projected from the animal\'s own curve (Wood); unmeasured days count as zero.';
+
+  @override
+  String get lactationNoProjection =>
+      'A projection needs at least 30 days of data and a lactating animal.';
+
+  @override
+  String lactationProjected(Object amount) {
+    return '305-day projection: $amount';
+  }
+
+  @override
+  String get lactationTitle => 'This lactation · 305 days';
 
   @override
   String get languageAuto => 'Device language';
