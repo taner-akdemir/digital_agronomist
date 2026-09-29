@@ -2407,6 +2407,78 @@ abstract class AppLocalizations {
   /// **'Verim beklenen aralıkta, eğim stabil.'**
   String get domainClassNormalExplanation;
 
+  /// No description provided for @feedbackAddScreenshot.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ekran görüntüsü ekle'**
+  String get feedbackAddScreenshot;
+
+  /// No description provided for @feedbackIntro.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bir sorun, öneri ya da istek yazın. Uygulama sürümü ve telefon modeli kendiliğinden eklenir.'**
+  String get feedbackIntro;
+
+  /// No description provided for @feedbackMessageHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ne oldu, hangi ekranda? Ne bekliyordunuz?'**
+  String get feedbackMessageHint;
+
+  /// No description provided for @feedbackMessageLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mesajınız'**
+  String get feedbackMessageLabel;
+
+  /// No description provided for @feedbackMessageRequired.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bir mesaj yazın.'**
+  String get feedbackMessageRequired;
+
+  /// No description provided for @feedbackRemoveScreenshot.
+  ///
+  /// In tr, this message translates to:
+  /// **'Görüntüyü kaldır'**
+  String get feedbackRemoveScreenshot;
+
+  /// No description provided for @feedbackScreenshotTooLarge.
+  ///
+  /// In tr, this message translates to:
+  /// **'Görüntü en çok 2 MB olabilir.'**
+  String get feedbackScreenshotTooLarge;
+
+  /// No description provided for @feedbackScreenshotType.
+  ///
+  /// In tr, this message translates to:
+  /// **'PNG, JPEG ya da WebP bir görüntü seçin.'**
+  String get feedbackScreenshotType;
+
+  /// No description provided for @feedbackSend.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gönder'**
+  String get feedbackSend;
+
+  /// No description provided for @feedbackSendFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gönderilemedi: {error}'**
+  String feedbackSendFailed(Object error);
+
+  /// No description provided for @feedbackSent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geri bildiriminiz alındı, teşekkürler.'**
+  String get feedbackSent;
+
+  /// No description provided for @feedbackTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geri bildirim'**
+  String get feedbackTitle;
+
   /// No description provided for @fmtDaysAgo.
   ///
   /// In tr, this message translates to:

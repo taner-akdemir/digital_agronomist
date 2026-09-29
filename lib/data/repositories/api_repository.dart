@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart' show Uint8List, visibleForTesting;
+import 'package:milktrace/core/app_build.dart';
 import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/animal_group.dart';
@@ -543,6 +544,26 @@ class ApiRepository implements MilkTraceRepository {
   @override
   Future<void> ackAlert(String alertId) =>
       _dio.post<dynamic>('/alerts/$alertId/ack');
+
+  @override
+  Future<void> sendFeedback({
+    required String message,
+    Uint8List? screenshot,
+    String? contentType,
+  }) async {
+    await _dio.post<dynamic>(
+      '/feedback',
+      data: {
+        'message': message,
+        ...AppBuild.feedbackInfo,
+        if (screenshot != null)
+          'screenshot': {
+            'contentType': contentType ?? 'image/png',
+            'data': base64Encode(screenshot),
+          },
+      },
+    );
+  }
 
   @override
   Future<DashboardSummary> dashboard() async =>

@@ -50,10 +50,17 @@ adresleri ve telefon numaraları.
 hayvan kaydı, eşleştirme, kullanıcı, bildirim kanalı) işlemi kimin ve ne zaman yaptığı;
 işletme sahibi görür, **90 gün** saklanır.
 
+**Geri bildirim:** uygulamadan gönderdiğiniz geri bildirimin metni, isteğe bağlı olarak
+seçtiğiniz ekran görüntüsü ve otomatik eklenen uygulama sürümü, platform, işletim sistemi
+sürümü ve cihaz modeli; kullanıcı kimliğiniz ve işletmenizle birlikte. Yalnızca Milk Trace
+destek ekibi (platform yöneticisi) görür; hataları gidermek ve uygulamayı geliştirmek için
+kullanılır, **1 yıl** saklanır.
+
 **Sunucu kayıtları:** güvenlik ve hata ayıklama için isteklerin zamanı, yolu, sonucu ve
 istek yapan IP adresi.
 
-**Toplamadıklarımız:** konum, rehber, fotoğraf, mikrofon; reklam kimliği; kullanım
+**Toplamadıklarımız:** konum, rehber, mikrofon; fotoğraf (geri bildirime kendi
+seçtiğiniz ekran görüntüsü dışında); reklam kimliği; kullanım
 analitiği ya da reklam amaçlı izleme. Uygulamada reklam yoktur.
 
 ## 3. Neden işliyoruz
@@ -98,6 +105,8 @@ ile yapılır.
 - Bildirim jetonu: çıkışta ya da jeton geçersizleşince silinir.
 - Sunucu kayıtları (IP adresi dahil): **30 gün**.
 - İşlem kaydı (kim, neyi, ne zaman değiştirdi): **90 gün**.
+- Geri bildirim (metin, ekran görüntüsü, cihaz bilgisi): **1 yıl**. Hesabınızı silerseniz
+  geri bildirim kalır ama sizinle ilişkisi kaldırılır.
 
 ## 7. Telefonunuzda tutulanlar
 

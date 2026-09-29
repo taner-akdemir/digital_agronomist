@@ -1381,6 +1381,46 @@ class AppLocalizationsEn extends AppLocalizations {
       'Yield is in the expected range and the trend is stable.';
 
   @override
+  String get feedbackAddScreenshot => 'Add screenshot';
+
+  @override
+  String get feedbackIntro =>
+      'Describe a problem, suggestion or request. The app version and phone model are added automatically.';
+
+  @override
+  String get feedbackMessageHint =>
+      'What happened, on which screen? What did you expect?';
+
+  @override
+  String get feedbackMessageLabel => 'Your message';
+
+  @override
+  String get feedbackMessageRequired => 'Please write a message.';
+
+  @override
+  String get feedbackRemoveScreenshot => 'Remove image';
+
+  @override
+  String get feedbackScreenshotTooLarge => 'The image can be at most 2 MB.';
+
+  @override
+  String get feedbackScreenshotType => 'Choose a PNG, JPEG or WebP image.';
+
+  @override
+  String get feedbackSend => 'Send';
+
+  @override
+  String feedbackSendFailed(Object error) {
+    return 'Could not send: $error';
+  }
+
+  @override
+  String get feedbackSent => 'Your feedback has been received, thank you.';
+
+  @override
+  String get feedbackTitle => 'Feedback';
+
+  @override
   String fmtDaysAgo(Object n) {
     return '$n d ago';
   }

@@ -2,6 +2,7 @@ import 'dart:io' show Platform;
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -14,8 +15,17 @@ abstract final class AppBuild {
   static String? platform;
   static int? build;
 
-  /// Sürüm adı ("1.2.0"); oturum listesinde cihazı tanıtan User-Agent'a girer.
+  /// Sürüm adı ("1.4.0"), işletim sistemi sürümü ve cihaz modeli: geri
+  /// bildirimde (backend ADR 0106); sürüm oturum listesindeki User-Agent'a da
+  /// girer (ADR 0105).
   static String? version;
+  static String? osVersion;
+  static String? device;
+
+  /// Cihaz bilgisi için yerel kanal (Android `MainActivity`). Eklenti
+  /// eklenmedi: iki alan için bir bağımlılık fazla. Kanal yoksa (iOS,
+  /// testler) Dart'ın verdiğiyle yetinilir.
+  static const _deviceChannel = MethodChannel('milktrace/device');
 
   static Future<void> load() async {
     try {
@@ -27,10 +37,26 @@ abstract final class AppBuild {
           : Platform.isIOS
           ? 'ios'
           : null;
+      osVersion = Platform.operatingSystemVersion;
     } on Object {
       // Sürüm okunamazsa zorlama da olmaz; uygulama çalışmaya devam eder.
     }
+    try {
+      final info = await _deviceChannel.invokeMapMethod<String, String>('info');
+      device = info?['model'];
+      osVersion = info?['osVersion'] ?? osVersion;
+    } on Object {
+      // Kanal yok: model boş kalır.
+    }
   }
+
+  /// Geri bildirime eklenen alanlar (`POST /feedback`).
+  static Map<String, String> get feedbackInfo => {
+    'appVersion': [?version, if (build case final b?) '($b)'].join(' '),
+    'platform': platform ?? Platform.operatingSystem,
+    'osVersion': osVersion ?? '',
+    'device': device ?? '',
+  };
 
   static Map<String, String> get headers => {
     'X-App-Platform': ?platform,

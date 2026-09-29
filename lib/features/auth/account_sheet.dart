@@ -292,6 +292,23 @@ class _AccountSheet extends ConsumerWidget {
                   ),
                 ),
               ),
+              // Geri bildirim (backend ADR 0106): bütün roller.
+              const SizedBox(height: AppSpacing.sm),
+              OutlinedButton.icon(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  context.push('/settings/feedback');
+                },
+                icon: const Icon(Icons.feedback_outlined),
+                label: Text(l10n.feedbackTitle),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: AppColors.darkGreenColor,
+                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadius.mdAll,
+                  ),
+                ),
+              ),
               const SizedBox(height: AppSpacing.sm),
               OutlinedButton.icon(
                 onPressed: Env.apiMode == ApiMode.mock

@@ -566,6 +566,14 @@ ki listede tanınsın. Repo metotları `loginSessions`… (`sessions()` sağım 
 Crashlytics, debug'da kapalı, Firebase yoksa sessizce atlanır. Rapora kullanıcı/işletme
 bilgisi EKLENMEZ (`setUserIdentifier` çağırma). Gizlilik belgeleri buna göre.
 
+**Geri bildirim** (`/settings/feedback`, backend ADR 0106): hesap kartında BÜTÜN rollere
+"Geri bildirim" (tablette kart yok). Metin zorunlu (≤ 4000), ekran görüntüsünü kullanıcı
+galeriden SEÇER (`feedbackImagePickerProvider`, testte sahtesi); tür içerikten
+(PNG/JPEG/WebP) ve ≤ 2 MB uygulamada da denetlenir. `sendFeedback` → `POST /feedback`;
+sürüm, platform, işletim sistemi ve cihaz modelini depo ekler (`AppBuild.feedbackInfo`;
+model Android'de `MainActivity`'deki `milktrace/device` kanalından — eklenti yok, iOS'ta
+boş). Önbelleklenmez, kuyruk yok. Panelde "Geri Bildirimler"; 1 yıl saklanır.
+
 **Hata mesajları:** `ApiRepository` DioException fırlatır; `ApiException`'a çeviri
 yalnızca giriş ucundaydı. Bu yüzden ekranlar gerçek API'de backend'in Türkçe mesajı
 yerine "DioException…" gösteriyordu. `userMessage(error)` (core/api_exception.dart)

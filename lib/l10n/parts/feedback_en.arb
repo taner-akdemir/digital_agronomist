@@ -1,0 +1,14 @@
+{
+  "feedbackTitle": "Feedback",
+  "feedbackIntro": "Describe a problem, suggestion or request. The app version and phone model are added automatically.",
+  "feedbackMessageLabel": "Your message",
+  "feedbackMessageHint": "What happened, on which screen? What did you expect?",
+  "feedbackMessageRequired": "Please write a message.",
+  "feedbackAddScreenshot": "Add screenshot",
+  "feedbackRemoveScreenshot": "Remove image",
+  "feedbackScreenshotTooLarge": "The image can be at most 2 MB.",
+  "feedbackScreenshotType": "Choose a PNG, JPEG or WebP image.",
+  "feedbackSend": "Send",
+  "feedbackSent": "Your feedback has been received, thank you.",
+  "feedbackSendFailed": "Could not send: {error}"
+}

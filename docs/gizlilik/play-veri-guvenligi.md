@@ -1,7 +1,7 @@
 # Play Console — "Veri güvenliği" formu cevapları (taslak)
 
-> Kodun 28.09.2026 hâlinden çıkarıldı; 29.09.2026'da Crashlytics ve uygulama içi hesap
-> silme (backend ADR 0098, 0100) eklendi (AndroidManifest, pubspec, backend şemaları). Uygulama
+> Kodun 28.09.2026 hâlinden çıkarıldı; 29.09.2026'da Crashlytics, uygulama içi hesap
+> silme ve geri bildirim (backend ADR 0098, 0100, 0106) eklendi (AndroidManifest, pubspec, backend şemaları). Uygulama
 > değişirse (yeni izin, yeni SDK) bu dosya ve form güncellenmeli.
 
 ## Genel
@@ -22,8 +22,9 @@
 | Kişisel bilgiler → E-posta adresi | Evet | Hayır | Hesap yönetimi, uygulama işlevi | Zorunlu |
 | Kişisel bilgiler → Kullanıcı kimlikleri | Evet (hesap kimliği) | Hayır | Hesap yönetimi | Zorunlu |
 | Cihaz veya diğer kimlikler | Evet (FCM jetonu) | Hayır | Uygulama işlevi (bildirim) | İsteğe bağlı (bildirim izni) |
-| Uygulama etkinliği → Diğer kullanıcı tarafından oluşturulan içerik | Evet (hayvan notları) | Hayır | Uygulama işlevi | İsteğe bağlı |
-| Konum, rehber, fotoğraf/video, ses, dosyalar, finans, sağlık, mesajlar, tarama geçmişi | **Hayır** | — | — | — |
+| Uygulama etkinliği → Diğer kullanıcı tarafından oluşturulan içerik | Evet (hayvan notları; geri bildirim metni, backend ADR 0106) | Hayır | Uygulama işlevi, uygulama geliştirme (geri bildirim) | İsteğe bağlı |
+| Fotoğraflar ve videolar → Fotoğraflar | Evet (isteğe bağlı: kullanıcının geri bildirime SEÇTİĞİ ekran görüntüsü; galeriye arka planda erişim yok) | Hayır | Uygulama geliştirme (destek) | İsteğe bağlı |
+| Konum, rehber, video, ses, dosyalar, finans, sağlık, mesajlar, tarama geçmişi | **Hayır** | — | — | — |
 | Uygulama bilgileri ve performansı → Kilitlenme günlükleri | **Evet** | Hayır | Analiz (hataların giderilmesi) | Zorunlu (sürüm derlemesinde otomatik) |
 | Uygulama bilgileri ve performansı → Diğer uygulama performansı verileri (tanılama) | **Evet** | Hayır | Analiz | Zorunlu |
 | Analytics / reklam | **Hayır** | — | Firebase Analytics YOK | — |
@@ -36,7 +37,10 @@ aktarım "paylaşım" sayılmaz.
 - İzinler yalnızca `INTERNET` ve `POST_NOTIFICATIONS`. Sağımhane tabletinde ekranı
   açık tutan `wakelock_plus` izin eklemiyor ve veri toplamıyor; canlı ekrandaki
   titreşim sistemin dokunsal geri bildirimi (`VIBRATE` izni yok).
-- Dosya seçici (hayvan listesi içe aktarma) ve paylaşım (verim raporu) kullanıcının
-  seçtiği dosyayla, istek anında; arka planda erişim yok.
+- Dosya seçici (hayvan listesi içe aktarma, geri bildirim ekran görüntüsü) ve paylaşım
+  (verim raporu) kullanıcının seçtiği dosyayla, istek anında; arka planda erişim yok.
+  Geri bildirim (hesap kartı → "Geri bildirim", backend ADR 0106): metin, isteğe bağlı
+  görüntü, uygulama sürümü, platform, işletim sistemi sürümü ve cihaz modeli; 1 yıl
+  saklanır, yalnızca platform yöneticisi görür.
 - Reklam kimliği kullanılmıyor → "Reklam kimliği" beyanında **Hayır**.
 - Hedef kitle: 18+, işletmeler.

@@ -361,4 +361,13 @@ abstract interface class MilkTraceRepository {
   /// Dönüş yok: güncel kaydı sunucudan tekrar okumak, iki kullanıcının aynı
   /// uyarıyı kapattığı durumda da doğru sonucu verir.
   Future<void> ackAlert(String alertId);
+
+  /// Uygulama içi geri bildirim (backend ADR 0106, `POST /feedback`): metin
+  /// ve isteğe bağlı ekran görüntüsü (PNG/JPEG/WebP, ≤ 2 MB). Sürüm,
+  /// platform ve cihaz bilgisini depo ekler. Bütün roller.
+  Future<void> sendFeedback({
+    required String message,
+    Uint8List? screenshot,
+    String? contentType,
+  });
 }

@@ -775,6 +775,23 @@
   "domainClassNoMilkExplanation": "Son sağımlarda süt alınamadı. Değerlendirme gerekli.",
   "domainClassNormal": "Normal",
   "domainClassNormalExplanation": "Verim beklenen aralıkta, eğim stabil.",
+  "feedbackAddScreenshot": "Ekran görüntüsü ekle",
+  "feedbackIntro": "Bir sorun, öneri ya da istek yazın. Uygulama sürümü ve telefon modeli kendiliğinden eklenir.",
+  "feedbackMessageHint": "Ne oldu, hangi ekranda? Ne bekliyordunuz?",
+  "feedbackMessageLabel": "Mesajınız",
+  "feedbackMessageRequired": "Bir mesaj yazın.",
+  "feedbackRemoveScreenshot": "Görüntüyü kaldır",
+  "feedbackScreenshotTooLarge": "Görüntü en çok 2 MB olabilir.",
+  "feedbackScreenshotType": "PNG, JPEG ya da WebP bir görüntü seçin.",
+  "feedbackSend": "Gönder",
+  "feedbackSendFailed": "Gönderilemedi: {error}",
+  "@feedbackSendFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "feedbackSent": "Geri bildiriminiz alındı, teşekkürler.",
+  "feedbackTitle": "Geri bildirim",
   "fmtDaysAgo": "{n} gün önce",
   "@fmtDaysAgo": {
     "placeholders": {

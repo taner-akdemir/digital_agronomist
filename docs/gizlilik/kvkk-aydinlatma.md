@@ -22,6 +22,7 @@
 | İşlem kaydı | işlemi yapan kullanıcı, işlem ve zamanı (90 gün) | işletme içi hesap verebilirlik | (f) meşru menfaat |
 | Cihaz | bildirim jetonu, platform | bildirim iletimi | (c) sözleşmenin ifası |
 | Uygulama hata raporu | yığın izi, cihaz modeli, işletim sistemi, uygulama sürümü (kişiyle ilişkilendirilmez) | hataların bulunup giderilmesi | (f) meşru menfaat |
+| Geri bildirim | kullanıcının yazdığı metin, isteğe bağlı seçtiği ekran görüntüsü, uygulama sürümü, platform, işletim sistemi sürümü, cihaz modeli, kullanıcı kimliği ve işletme (1 yıl) | destek, hataların giderilmesi, hizmetin geliştirilmesi | (f) meşru menfaat |
 | İletişim (alıcı) | bildirim kanalı e-posta/telefon | uyarıların iletilmesi | (c) sözleşmenin ifası; alıcı işletme dışındaysa [DOLDUR] |
 
 ## Toplama yöntemi
@@ -43,7 +44,7 @@ otomatik olarak toplanır.
 
 Hizmet sözleşmesi süresince ve sona ermesinden sonra 90 gün; ardından kendiliğinden
 silinir (faturalama kayıtları işletme adı anonimleştirilerek vergi mevzuatı süresince
-saklanır). Yedekler 7 gün (sunucu dışı kopya 14 gün), sunucu kayıtları (IP adresi dahil) 30 gün. Süre sonunda
+saklanır). Yedekler 7 gün (sunucu dışı kopya 14 gün), sunucu kayıtları (IP adresi dahil) 30 gün, uygulama içi geri bildirim 1 yıl. Süre sonunda
 silinir, yok edilir ya da anonimleştirilir. Sözleşme sürerken hesap uygulamadan ("Hesabımı
 sil") ya da https://[DOLDUR: alan-adı]/admin/hesap-sil adresinden kalıcı silinir; yazılan hayvan notları sürü kaydı olarak kalır, yazar adı kaldırılır.
 

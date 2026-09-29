@@ -1362,6 +1362,46 @@ class AppLocalizationsTr extends AppLocalizations {
       'Verim beklenen aralıkta, eğim stabil.';
 
   @override
+  String get feedbackAddScreenshot => 'Ekran görüntüsü ekle';
+
+  @override
+  String get feedbackIntro =>
+      'Bir sorun, öneri ya da istek yazın. Uygulama sürümü ve telefon modeli kendiliğinden eklenir.';
+
+  @override
+  String get feedbackMessageHint => 'Ne oldu, hangi ekranda? Ne bekliyordunuz?';
+
+  @override
+  String get feedbackMessageLabel => 'Mesajınız';
+
+  @override
+  String get feedbackMessageRequired => 'Bir mesaj yazın.';
+
+  @override
+  String get feedbackRemoveScreenshot => 'Görüntüyü kaldır';
+
+  @override
+  String get feedbackScreenshotTooLarge => 'Görüntü en çok 2 MB olabilir.';
+
+  @override
+  String get feedbackScreenshotType =>
+      'PNG, JPEG ya da WebP bir görüntü seçin.';
+
+  @override
+  String get feedbackSend => 'Gönder';
+
+  @override
+  String feedbackSendFailed(Object error) {
+    return 'Gönderilemedi: $error';
+  }
+
+  @override
+  String get feedbackSent => 'Geri bildiriminiz alındı, teşekkürler.';
+
+  @override
+  String get feedbackTitle => 'Geri bildirim';
+
+  @override
   String fmtDaysAgo(Object n) {
     return '$n gün önce';
   }

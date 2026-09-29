@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:milktrace/core/api_exception.dart';
@@ -588,4 +589,17 @@ class CachingRepository implements MilkTraceRepository {
 
   @override
   Future<void> ackAlert(String alertId) => _net(() => _inner.ackAlert(alertId));
+
+  @override
+  Future<void> sendFeedback({
+    required String message,
+    Uint8List? screenshot,
+    String? contentType,
+  }) => _net(
+    () => _inner.sendFeedback(
+      message: message,
+      screenshot: screenshot,
+      contentType: contentType,
+    ),
+  );
 }

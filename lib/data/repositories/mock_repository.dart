@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:milktrace/core/api_exception.dart';
@@ -1320,6 +1321,23 @@ class MockRepository implements MilkTraceRepository {
   @override
   Future<void> ackAlert(String alertId) =>
       _delayed(() async => _acks[alertId] = _clock);
+
+  /// Gönderilen geri bildirimler (backend ADR 0106); mock'ta bellekte.
+  final List<({String message, Uint8List? screenshot, String? contentType})>
+  sentFeedback = [];
+
+  @override
+  Future<void> sendFeedback({
+    required String message,
+    Uint8List? screenshot,
+    String? contentType,
+  }) => _delayed(
+    () async => sentFeedback.add((
+      message: message,
+      screenshot: screenshot,
+      contentType: contentType,
+    )),
+  );
 
   /// Günün özeti.
   ///
