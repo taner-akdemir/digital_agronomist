@@ -230,5 +230,15 @@
       "unit": {}
     }
   },
-  "deliveriesCardHint": "Tanker fişini girin: sayaçların ölçtüğüyle karşılaştırılır, fark büyükse uyarı gelir."
+  "deliveriesCardHint": "Tanker fişini girin: sayaçların ölçtüğüyle karşılaştırılır, fark büyükse uyarı gelir.",
+  "devicesStatusCalibrationDue": "Kalibrasyon zamanı",
+  "devicesDetailCalibratedAt": "Son kalibrasyon",
+  "devicesDetailCalibrationDue": "Sonraki kalibrasyon",
+  "devicesCalibrationNoRecord": "Kayıt yok (kurulum ekibi girer)",
+  "devicesCalibrationOverdue": "{date} — zamanı geldi, kurulum ekibini arayın",
+  "@devicesCalibrationOverdue": {
+    "placeholders": {
+      "date": {}
+    }
+  }
 }

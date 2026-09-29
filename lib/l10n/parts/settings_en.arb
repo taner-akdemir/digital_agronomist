@@ -146,5 +146,7 @@
   "channelsHintSecret": "If given, the request is signed with HMAC",
   "channelsHintSmsHeader": "Sender name approved by the provider (at most 11 characters)",
   "channelsHintRegion": "Can be left empty (eu: EU data residency)",
-  "channelsHintTls": "starttls if left empty"
+  "channelsHintTls": "starttls if left empty",
+  "channelsLanguage": "Notification language",
+  "channelsLanguageHelper": "Alerts, summaries and the weekly email go to this channel in this language."
 }

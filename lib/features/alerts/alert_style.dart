@@ -33,6 +33,8 @@ abstract final class AlertStyle {
     'high_conductivity' => Icons.health_and_safety_outlined,
     // Tank teslim farkı (backend ADR 0089): tanker ile sayaçlar tutmadı.
     'delivery_mismatch' => Icons.local_shipping_outlined,
+    // Kalibrasyon zamanı (backend ADR 0097).
+    'calibration_due' => Icons.build_circle_outlined,
     _ => Icons.notifications_none_outlined,
   };
 }

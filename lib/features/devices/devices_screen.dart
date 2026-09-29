@@ -197,7 +197,8 @@ class _VacuumCard extends StatelessWidget {
           (s) =>
               s.device == null ||
               s.device!.status != 'online' ||
-              s.device!.hasRecentError(now),
+              s.device!.hasRecentError(now) ||
+              s.device!.isCalibrationDue(now),
         )
         .length;
 
@@ -449,6 +450,20 @@ void _showDeviceSheet(BuildContext context, Device device) {
               l10n.devicesDetailCalibration,
               device.calibrationFactor.toStringAsFixed(3),
             ),
+            // Kalibrasyon günü (backend ADR 0097); kurulum ekibi girer.
+            _DetailRow(
+              l10n.devicesDetailCalibratedAt,
+              device.calibratedAt == null
+                  ? l10n.devicesCalibrationNoRecord
+                  : Fmt.dayMonthYear(device.calibratedAt!),
+            ),
+            if (device.calibrationDueAt case final due?)
+              _DetailRow(
+                l10n.devicesDetailCalibrationDue,
+                device.isCalibrationDue(DateTime.now())
+                    ? l10n.devicesCalibrationOverdue(Fmt.dayMonthYear(due))
+                    : Fmt.dayMonthYear(due),
+              ),
             _DetailRow(
               l10n.devicesDetailLastSeen,
               device.lastSeenAt == null
@@ -552,6 +567,11 @@ class _DeviceStatus {
       l10n.devicesStatusReportedError,
       MilkColor.yellow,
     ),
+    // Kalibrasyon zamanı (backend ADR 0097): bakım işareti, SARI.
+    'online' when device!.isCalibrationDue(DateTime.now()) => _DeviceStatus(
+      l10n.devicesStatusCalibrationDue,
+      MilkColor.yellow,
+    ),
     'online' => _DeviceStatus(l10n.devicesStatusOnline, MilkColor.green),
     'offline' => _DeviceStatus(l10n.devicesStatusOffline, MilkColor.red),
     _ => _DeviceStatus(l10n.devicesUnknown, MilkColor.grey),
@@ -571,6 +591,10 @@ class _DeviceStatus {
         err != null &&
         device!.hasRecentError(DateTime.now())) {
       return l10n.devicesErrorShort(err.code, Fmt.sinceShort(err.at));
+    }
+    if (device?.status == 'online' &&
+        device!.isCalibrationDue(DateTime.now())) {
+      return label;
     }
     final seen = device?.lastSeenAt;
     if (seen == null) return label;

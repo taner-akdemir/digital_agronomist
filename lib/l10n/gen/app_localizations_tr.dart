@@ -725,6 +725,13 @@ class AppLocalizationsTr extends AppLocalizations {
   String get channelsKindsLoadFailed => 'Kanal türleri yüklenemedi';
 
   @override
+  String get channelsLanguage => 'Bildirim dili';
+
+  @override
+  String get channelsLanguageHelper =>
+      'Bu kanala giden uyarı, özet ve haftalık e-posta bu dilde.';
+
+  @override
   String get channelsLoadFailed => 'Kanallar yüklenemedi';
 
   @override
@@ -1089,7 +1096,21 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String get devicesCalibrationNoRecord => 'Kayıt yok (kurulum ekibi girer)';
+
+  @override
+  String devicesCalibrationOverdue(Object date) {
+    return '$date — zamanı geldi, kurulum ekibini arayın';
+  }
+
+  @override
+  String get devicesDetailCalibratedAt => 'Son kalibrasyon';
+
+  @override
   String get devicesDetailCalibration => 'Kalibrasyon katsayısı';
+
+  @override
+  String get devicesDetailCalibrationDue => 'Sonraki kalibrasyon';
 
   @override
   String get devicesDetailFirmware => 'Yazılım sürümü';
@@ -1161,6 +1182,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String devicesSpoutLabel(Object no) {
     return 'Nokta $no';
   }
+
+  @override
+  String get devicesStatusCalibrationDue => 'Kalibrasyon zamanı';
 
   @override
   String get devicesStatusNoMeter => 'Sayaç takılı değil';

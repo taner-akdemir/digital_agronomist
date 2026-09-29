@@ -198,5 +198,7 @@
   "channelsHintSecret": "Verilirse istek HMAC ile imzalanır",
   "channelsHintSmsHeader": "Sağlayıcıda onaylı gönderici adı (en çok 11 karakter)",
   "channelsHintRegion": "Boş bırakılabilir (eu: AB veri yerleşimi)",
-  "channelsHintTls": "Boş bırakılırsa starttls"
+  "channelsHintTls": "Boş bırakılırsa starttls",
+  "channelsLanguage": "Bildirim dili",
+  "channelsLanguageHelper": "Bu kanala giden uyarı, özet ve haftalık e-posta bu dilde."
 }

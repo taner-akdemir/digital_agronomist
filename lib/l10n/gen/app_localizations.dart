@@ -1340,6 +1340,18 @@ abstract class AppLocalizations {
   /// **'Kanal türleri yüklenemedi'**
   String get channelsKindsLoadFailed;
 
+  /// No description provided for @channelsLanguage.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bildirim dili'**
+  String get channelsLanguage;
+
+  /// No description provided for @channelsLanguageHelper.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu kanala giden uyarı, özet ve haftalık e-posta bu dilde.'**
+  String get channelsLanguageHelper;
+
   /// No description provided for @channelsLoadFailed.
   ///
   /// In tr, this message translates to:
@@ -1951,11 +1963,35 @@ abstract class AppLocalizations {
   /// **' (ayrılan {amount} hariç)'**
   String deliveriesWithheld(Object amount);
 
+  /// No description provided for @devicesCalibrationNoRecord.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kayıt yok (kurulum ekibi girer)'**
+  String get devicesCalibrationNoRecord;
+
+  /// No description provided for @devicesCalibrationOverdue.
+  ///
+  /// In tr, this message translates to:
+  /// **'{date} — zamanı geldi, kurulum ekibini arayın'**
+  String devicesCalibrationOverdue(Object date);
+
+  /// No description provided for @devicesDetailCalibratedAt.
+  ///
+  /// In tr, this message translates to:
+  /// **'Son kalibrasyon'**
+  String get devicesDetailCalibratedAt;
+
   /// No description provided for @devicesDetailCalibration.
   ///
   /// In tr, this message translates to:
   /// **'Kalibrasyon katsayısı'**
   String get devicesDetailCalibration;
+
+  /// No description provided for @devicesDetailCalibrationDue.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sonraki kalibrasyon'**
+  String get devicesDetailCalibrationDue;
 
   /// No description provided for @devicesDetailFirmware.
   ///
@@ -2070,6 +2106,12 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Nokta {no}'**
   String devicesSpoutLabel(Object no);
+
+  /// No description provided for @devicesStatusCalibrationDue.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kalibrasyon zamanı'**
+  String get devicesStatusCalibrationDue;
 
   /// No description provided for @devicesStatusNoMeter.
   ///

@@ -46,6 +46,9 @@ abstract class NotificationChannel with _$NotificationChannel {
 
     /// Uygulanan sınır (ayarlı değer ya da varsayılan); 0 sınırsız.
     @Default(0) int effectiveDailyLimit,
+
+    /// Kanalın dili: "tr" | "en" (backend ADR 0095).
+    @Default('tr') String language,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _NotificationChannel;
@@ -104,6 +107,7 @@ class NotificationChannelDraft {
     required this.enabled,
     required this.sources,
     this.dailyLimit = 0,
+    this.language,
   });
 
   final String name;
@@ -119,6 +123,9 @@ class NotificationChannelDraft {
   /// 1–10000; 0 türün varsayılanına döner (güncellemede de).
   final int dailyLimit;
 
+  /// "tr" | "en"; null ise gövdeye konmaz (güncellemede eski değer kalır).
+  final String? language;
+
   Map<String, dynamic> toJson() => {
     'name': name,
     'kind': kind,
@@ -130,5 +137,6 @@ class NotificationChannelDraft {
     'enabled': enabled,
     'sources': sources,
     'dailyLimit': dailyLimit,
+    'language': ?language,
   };
 }

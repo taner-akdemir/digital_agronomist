@@ -379,6 +379,8 @@
   "channelsKindPickerTitle": "Kanal türü",
   "channelsKindVoiceCall": "Sesli arama",
   "channelsKindsLoadFailed": "Kanal türleri yüklenemedi",
+  "channelsLanguage": "Bildirim dili",
+  "channelsLanguageHelper": "Bu kanala giden uyarı, özet ve haftalık e-posta bu dilde.",
   "channelsLoadFailed": "Kanallar yüklenemedi",
   "channelsMinSeverity": "En düşük önem",
   "channelsName": "Kanal adı",
@@ -603,7 +605,16 @@
       "amount": {}
     }
   },
+  "devicesCalibrationNoRecord": "Kayıt yok (kurulum ekibi girer)",
+  "devicesCalibrationOverdue": "{date} — zamanı geldi, kurulum ekibini arayın",
+  "@devicesCalibrationOverdue": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "devicesDetailCalibratedAt": "Son kalibrasyon",
   "devicesDetailCalibration": "Kalibrasyon katsayısı",
+  "devicesDetailCalibrationDue": "Sonraki kalibrasyon",
   "devicesDetailFirmware": "Yazılım sürümü",
   "devicesDetailLastError": "Son hata",
   "devicesDetailLastSeen": "Son görülme",
@@ -659,6 +670,7 @@
       "no": {}
     }
   },
+  "devicesStatusCalibrationDue": "Kalibrasyon zamanı",
   "devicesStatusNoMeter": "Sayaç takılı değil",
   "devicesStatusOffline": "Çevrimdışı",
   "devicesStatusOnline": "Çevrimiçi",

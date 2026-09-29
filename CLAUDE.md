@@ -522,6 +522,16 @@ gerekli", Play düğmesi + destek) çevirir; geri dönüş yok. Uyumsuz backend 
 önce yeni sürüm Play'e, sonra netcup'ta `MIN_APP_BUILD_ANDROID`. Bu yüzden versionCode
 (`pubspec.yaml` `+N`) her yüklemede ARTMALI (§8).
 
+**Kanal dili** (backend ADR 0095): bildirim kanalı formunda "Bildirim dili" (Türkçe /
+English); sunucu teslimatta kanalın diline çevirir. Aç/kapa TAM gövdesi `language`'ı da
+taşır (testle kilitli) — yoksa sunucu eskisini korur ama tam gövde kuralı bozulur.
+
+**Kalibrasyon** (backend ADR 0097): `Device.calibratedAt` / `calibrationDueAt` (kurulum
+ekibi panelden girer). Zamanı gelen çevrimiçi sayaç SARI "Kalibrasyon zamanı", ünitesi
+açık gelir; ayrıntıda son ve sonraki kalibrasyon ("kayıt yok" = hatırlatma gitmez).
+Sunucu işletmeye `calibration_due` uyarısı açar, kalibre edilince çözülür. Uygulamada
+kalibrasyon GİRİLMEZ (tesis yapısı gibi kurulum ekibinin işi).
+
 **Hata mesajları:** `ApiRepository` DioException fırlatır; `ApiException`'a çeviri
 yalnızca giriş ucundaydı. Bu yüzden ekranlar gerçek API'de backend'in Türkçe mesajı
 yerine "DioException…" gösteriyordu. `userMessage(error)` (core/api_exception.dart)

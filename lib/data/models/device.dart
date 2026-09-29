@@ -27,6 +27,11 @@ abstract class Device with _$Device {
     @Default('unknown') String status,
     String? firmware,
     @Default(1.0) double calibrationFactor,
+
+    /// Son kalibrasyon ve bir sonraki gün (backend ADR 0097); tarih yoksa
+    /// hatırlatma da yok.
+    DateTime? calibratedAt,
+    DateTime? calibrationDueAt,
     DateTime? lastSeenAt,
     @Default(false) bool isSimulated,
 
@@ -44,6 +49,18 @@ abstract class Device with _$Device {
   bool hasRecentError(DateTime now) {
     final e = lastError;
     return e != null && now.difference(e.at) < recentErrorWindow;
+  }
+
+  /// Kalibrasyon zamanı geldi mi (gün bazında; sunucu da aynı kuralla
+  /// "Kalibrasyon zamanı" uyarısı açar).
+  bool isCalibrationDue(DateTime now) {
+    final due = calibrationDueAt;
+    if (due == null) return false;
+    return !DateTime(
+      now.year,
+      now.month,
+      now.day,
+    ).isBefore(DateTime(due.year, due.month, due.day));
   }
 
   factory Device.fromJson(Map<String, dynamic> json) => _$DeviceFromJson(json);

@@ -38,6 +38,7 @@ _NotificationChannel _$NotificationChannelFromJson(Map<String, dynamic> json) =>
           const <String>['ops', 'summary'],
       dailyLimit: (json['dailyLimit'] as num?)?.toInt(),
       effectiveDailyLimit: (json['effectiveDailyLimit'] as num?)?.toInt() ?? 0,
+      language: json['language'] as String? ?? 'tr',
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
@@ -63,6 +64,7 @@ Map<String, dynamic> _$NotificationChannelToJson(
   'sources': instance.sources,
   'dailyLimit': instance.dailyLimit,
   'effectiveDailyLimit': instance.effectiveDailyLimit,
+  'language': instance.language,
   'createdAt': instance.createdAt?.toIso8601String(),
   'updatedAt': instance.updatedAt?.toIso8601String(),
 };

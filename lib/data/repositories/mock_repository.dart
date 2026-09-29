@@ -1204,6 +1204,8 @@ class MockRepository implements MilkTraceRepository {
       sources: draft.sources,
       dailyLimit: limit,
       effectiveDailyLimit: limit ?? spec.defaultDailyLimit,
+      // Dil verilmezse eskisi kalır (backend ADR 0095).
+      language: draft.language ?? base.language,
       updatedAt: _clock,
     );
   }

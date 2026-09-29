@@ -328,6 +328,8 @@
   "channelsKindPickerTitle": "Channel type",
   "channelsKindVoiceCall": "Voice call",
   "channelsKindsLoadFailed": "Could not load channel types",
+  "channelsLanguage": "Notification language",
+  "channelsLanguageHelper": "Alerts, summaries and the weekly email go to this channel in this language.",
   "channelsLoadFailed": "Could not load channels",
   "channelsMinSeverity": "Minimum severity",
   "channelsName": "Channel name",
@@ -531,7 +533,11 @@
       "amount": {}
     }
   },
+  "devicesCalibrationNoRecord": "No record (entered by the installation team)",
+  "devicesCalibrationOverdue": "{date} — due now, call the installation team",
+  "devicesDetailCalibratedAt": "Last calibration",
   "devicesDetailCalibration": "Calibration factor",
+  "devicesDetailCalibrationDue": "Next calibration",
   "devicesDetailFirmware": "Firmware version",
   "devicesDetailLastError": "Last error",
   "devicesDetailLastSeen": "Last seen",
@@ -587,6 +593,7 @@
       "no": {}
     }
   },
+  "devicesStatusCalibrationDue": "Calibration due",
   "devicesStatusNoMeter": "No meter installed",
   "devicesStatusOffline": "Offline",
   "devicesStatusOnline": "Online",

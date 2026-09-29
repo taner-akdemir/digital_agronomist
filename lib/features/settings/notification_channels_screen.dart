@@ -283,6 +283,7 @@ class _ChannelCard extends ConsumerWidget {
               // Gövde tam: gönderilmezse 0 gider ve ayarlanmış sınır
               // varsayılana dönerdi.
               dailyLimit: c.dailyLimit ?? 0,
+              language: c.language,
             ),
           );
     } catch (e) {

@@ -127,7 +127,11 @@ class _FormState extends ConsumerState<_Form> {
     // Boş: türün varsayılanı. Ayarlanmış değer gösterilir, varsayılan
     // ipucunda.
     _dailyLimit = TextEditingController(text: e?.dailyLimit?.toString() ?? '');
+    _language = e?.language ?? 'tr';
   }
+
+  /// Kanalın dili (backend ADR 0095): bildirim metni bu dilde gider.
+  late String _language;
 
   @override
   void dispose() {
@@ -220,6 +224,23 @@ class _FormState extends ConsumerState<_Form> {
                   ? l10n.channelsDailyLimitRange
                   : null;
             },
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          DropdownButtonFormField<String>(
+            initialValue: _language,
+            decoration: InputDecoration(
+              labelText: l10n.channelsLanguage,
+              helperText: l10n.channelsLanguageHelper,
+              helperMaxLines: 2,
+              border: const OutlineInputBorder(borderRadius: AppRadius.mdAll),
+            ),
+            items: [
+              DropdownMenuItem(value: 'tr', child: Text(l10n.languageTurkish)),
+              DropdownMenuItem(value: 'en', child: Text(l10n.languageEnglish)),
+            ],
+            onChanged: _busy
+                ? null
+                : (v) => setState(() => _language = v ?? _language),
           ),
           for (final s in channelSources)
             CheckboxListTile(
@@ -398,6 +419,7 @@ class _FormState extends ConsumerState<_Form> {
       ],
       // 0: türün varsayılanı (güncellemede de varsayılana döner).
       dailyLimit: int.tryParse(_dailyLimit.text.trim()) ?? 0,
+      language: _language,
     );
   }
 

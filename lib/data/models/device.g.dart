@@ -16,6 +16,12 @@ _Device _$DeviceFromJson(Map<String, dynamic> json) => _Device(
   status: json['status'] as String? ?? 'unknown',
   firmware: json['firmware'] as String?,
   calibrationFactor: (json['calibrationFactor'] as num?)?.toDouble() ?? 1.0,
+  calibratedAt: json['calibratedAt'] == null
+      ? null
+      : DateTime.parse(json['calibratedAt'] as String),
+  calibrationDueAt: json['calibrationDueAt'] == null
+      ? null
+      : DateTime.parse(json['calibrationDueAt'] as String),
   lastSeenAt: json['lastSeenAt'] == null
       ? null
       : DateTime.parse(json['lastSeenAt'] as String),
@@ -33,6 +39,8 @@ Map<String, dynamic> _$DeviceToJson(_Device instance) => <String, dynamic>{
   'status': instance.status,
   'firmware': instance.firmware,
   'calibrationFactor': instance.calibrationFactor,
+  'calibratedAt': instance.calibratedAt?.toIso8601String(),
+  'calibrationDueAt': instance.calibrationDueAt?.toIso8601String(),
   'lastSeenAt': instance.lastSeenAt?.toIso8601String(),
   'isSimulated': instance.isSimulated,
   'lastError': instance.lastError,

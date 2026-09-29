@@ -230,5 +230,10 @@
       "unit": {}
     }
   },
-  "deliveriesCardHint": "Enter the tanker slip: it is compared with what the meters measured, and you get an alert if the difference is large."
+  "deliveriesCardHint": "Enter the tanker slip: it is compared with what the meters measured, and you get an alert if the difference is large.",
+  "devicesStatusCalibrationDue": "Calibration due",
+  "devicesDetailCalibratedAt": "Last calibration",
+  "devicesDetailCalibrationDue": "Next calibration",
+  "devicesCalibrationNoRecord": "No record (entered by the installation team)",
+  "devicesCalibrationOverdue": "{date} — due now, call the installation team"
 }

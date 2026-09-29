@@ -729,6 +729,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get channelsKindsLoadFailed => 'Could not load channel types';
 
   @override
+  String get channelsLanguage => 'Notification language';
+
+  @override
+  String get channelsLanguageHelper =>
+      'Alerts, summaries and the weekly email go to this channel in this language.';
+
+  @override
   String get channelsLoadFailed => 'Could not load channels';
 
   @override
@@ -1108,7 +1115,22 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get devicesCalibrationNoRecord =>
+      'No record (entered by the installation team)';
+
+  @override
+  String devicesCalibrationOverdue(Object date) {
+    return '$date — due now, call the installation team';
+  }
+
+  @override
+  String get devicesDetailCalibratedAt => 'Last calibration';
+
+  @override
   String get devicesDetailCalibration => 'Calibration factor';
+
+  @override
+  String get devicesDetailCalibrationDue => 'Next calibration';
 
   @override
   String get devicesDetailFirmware => 'Firmware version';
@@ -1180,6 +1202,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String devicesSpoutLabel(Object no) {
     return 'Point $no';
   }
+
+  @override
+  String get devicesStatusCalibrationDue => 'Calibration due';
 
   @override
   String get devicesStatusNoMeter => 'No meter installed';

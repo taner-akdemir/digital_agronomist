@@ -253,7 +253,7 @@ void main() {
 
   // Listedeki aç/kapa tam gövde gönderir; sınır eklenmezse 0 gidip
   // ayarlanmış sınırı varsayılana döndürürdü.
-  testWidgets('aç/kapa günlük sınırı korur', (tester) async {
+  testWidgets('aç/kapa günlük sınırı ve dili korur', (tester) async {
     await pumpApp(
       tester,
       seed: (r) => r.createNotificationChannel(
@@ -268,6 +268,7 @@ void main() {
           enabled: true,
           sources: ['ops'],
           dailyLimit: 7,
+          language: 'en',
         ),
       ),
     );
@@ -283,5 +284,6 @@ void main() {
     final sent = repo.updates.single;
     expect(sent.enabled, isFalse);
     expect(sent.dailyLimit, 7);
+    expect(sent.language, 'en', reason: 'kanal dili de korunur (ADR 0095)');
   });
 }
