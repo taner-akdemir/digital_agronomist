@@ -630,6 +630,21 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get breedingHeat => 'Heat';
+
+  @override
+  String breedingHeatExpected(Object from, Object to) {
+    return 'Heat expected: $from – $to';
+  }
+
+  @override
+  String get breedingHeatExpectedShort => 'Heat expected';
+
+  @override
+  String get breedingHeatHint =>
+      'Heat observed. If not inseminated, the next is expected on day 18–24; you will be reminded then.';
+
+  @override
   String get breedingInsemination => 'Insemination';
 
   @override
@@ -1447,6 +1462,44 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get domainClassNormalExplanation =>
       'Yield is in the expected range and the trend is stable.';
+
+  @override
+  String get exitReasonAccident => 'Accident';
+
+  @override
+  String get exitReasonAge => 'Old age';
+
+  @override
+  String get exitReasonDisease => 'Disease';
+
+  @override
+  String get exitReasonFeet => 'Feet/hooves';
+
+  @override
+  String get exitReasonFertility => 'Fertility problem';
+
+  @override
+  String get exitReasonLabel => 'Exit reason';
+
+  @override
+  String get exitReasonLowYield => 'Low yield';
+
+  @override
+  String get exitReasonMastitis => 'Mastitis';
+
+  @override
+  String get exitReasonOther => 'Other';
+
+  @override
+  String get exitReasonRequired => 'Select the exit reason';
+
+  @override
+  String get exitReasonUnknown => 'Not given';
+
+  @override
+  String exitsTitle(int count) {
+    return 'Herd exits · last 12 months ($count)';
+  }
 
   @override
   String get farmLocationClear => 'Remove location';

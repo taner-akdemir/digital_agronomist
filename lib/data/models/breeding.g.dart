@@ -17,6 +17,12 @@ _Pregnancy _$PregnancyFromJson(Map<String, dynamic> json) => _Pregnancy(
   dryOffDate: json['dryOffDate'] == null
       ? null
       : DateTime.parse(json['dryOffDate'] as String),
+  lastHeat: json['lastHeat'] == null
+      ? null
+      : DateTime.parse(json['lastHeat'] as String),
+  expectedHeat: json['expectedHeat'] == null
+      ? null
+      : DateTime.parse(json['expectedHeat'] as String),
 );
 
 Map<String, dynamic> _$PregnancyToJson(_Pregnancy instance) =>
@@ -25,6 +31,8 @@ Map<String, dynamic> _$PregnancyToJson(_Pregnancy instance) =>
       'lastInsemination': instance.lastInsemination?.toIso8601String(),
       'expectedCalving': instance.expectedCalving?.toIso8601String(),
       'dryOffDate': instance.dryOffDate?.toIso8601String(),
+      'lastHeat': instance.lastHeat?.toIso8601String(),
+      'expectedHeat': instance.expectedHeat?.toIso8601String(),
     };
 
 _BreedingEvent _$BreedingEventFromJson(Map<String, dynamic> json) =>

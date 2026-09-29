@@ -13,6 +13,10 @@ abstract class Pregnancy with _$Pregnancy {
     DateTime? lastInsemination,
     DateTime? expectedCalving,
     DateTime? dryOffDate,
+
+    /// Son kızgınlık ve beklenen sonraki (21. gün; 18–24) — backend ADR 0121.
+    DateTime? lastHeat,
+    DateTime? expectedHeat,
   }) = _Pregnancy;
 
   const Pregnancy._();
@@ -50,8 +54,13 @@ abstract class BreedingEvent with _$BreedingEvent {
 
   bool get isInsemination => kind == 'insemination';
 
-  /// "Tohumlama · Holstein 123" / "Gebelik kontrolü · gebe".
-  String get label => isInsemination
+  /// Kızgınlık gözlemi (backend ADR 0121).
+  bool get isHeat => kind == 'heat';
+
+  /// "Tohumlama · Holstein 123" / "Gebelik kontrolü · gebe" / "Kızgınlık".
+  String get label => isHeat
+      ? l10n.breedingHeat
+      : isInsemination
       ? [l10n.modelBreedingInsemination, if (sire.isNotEmpty) sire].join(' · ')
       : l10n.modelBreedingPregnancyCheck(
           result == 'pregnant'
@@ -79,8 +88,11 @@ abstract class UpcomingBreeding with _$UpcomingBreeding {
 
   const UpcomingBreeding._();
 
-  String get eventLabel =>
-      event == 'calving' ? l10n.modelUpcomingCalving : l10n.modelUpcomingDryOff;
+  String get eventLabel => switch (event) {
+    'calving' => l10n.modelUpcomingCalving,
+    'heat' => l10n.breedingHeatExpectedShort,
+    _ => l10n.modelUpcomingDryOff,
+  };
 
   factory UpcomingBreeding.fromJson(Map<String, dynamic> json) =>
       _$UpcomingBreedingFromJson(json);

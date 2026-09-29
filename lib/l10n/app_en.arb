@@ -331,6 +331,16 @@
       "date": {}
     }
   },
+  "breedingHeat": "Heat",
+  "breedingHeatExpected": "Heat expected: {from} – {to}",
+  "@breedingHeatExpected": {
+    "placeholders": {
+      "from": {},
+      "to": {}
+    }
+  },
+  "breedingHeatExpectedShort": "Heat expected",
+  "breedingHeatHint": "Heat observed. If not inseminated, the next is expected on day 18–24; you will be reminded then.",
   "breedingInsemination": "Insemination",
   "breedingKpiDays": "{days} days",
   "@breedingKpiDays": {
@@ -735,6 +745,25 @@
   "domainClassNoMilkExplanation": "No milk was obtained in recent milkings. Needs assessment.",
   "domainClassNormal": "Normal",
   "domainClassNormalExplanation": "Yield is in the expected range and the trend is stable.",
+  "exitReasonAccident": "Accident",
+  "exitReasonAge": "Old age",
+  "exitReasonDisease": "Disease",
+  "exitReasonFeet": "Feet/hooves",
+  "exitReasonFertility": "Fertility problem",
+  "exitReasonLabel": "Exit reason",
+  "exitReasonLowYield": "Low yield",
+  "exitReasonMastitis": "Mastitis",
+  "exitReasonOther": "Other",
+  "exitReasonRequired": "Select the exit reason",
+  "exitReasonUnknown": "Not given",
+  "exitsTitle": "Herd exits · last 12 months ({count})",
+  "@exitsTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "farmLocationClear": "Remove location",
   "farmLocationCoordinates": "Coordinate (latitude, longitude)",
   "farmLocationIntro": "The heat stress alert uses the weather forecast for the farm's location. Long-press the farm in Google Maps and paste the coordinate shown at the top (39.9208, 32.8541) here. The server sends only this coordinate to the weather service.",

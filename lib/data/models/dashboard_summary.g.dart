@@ -34,6 +34,11 @@ _DashboardSummary _$DashboardSummaryFromJson(Map<String, dynamic> json) =>
       breeding: json['breeding'] == null
           ? null
           : BreedingKpi.fromJson(json['breeding'] as Map<String, dynamic>),
+      exits:
+          (json['exits'] as List<dynamic>?)
+              ?.map((e) => ExitCount.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const <ExitCount>[],
     );
 
 Map<String, dynamic> _$DashboardSummaryToJson(_DashboardSummary instance) =>
@@ -48,6 +53,7 @@ Map<String, dynamic> _$DashboardSummaryToJson(_DashboardSummary instance) =>
       'classDistribution': instance.classDistribution,
       'byGroup': instance.byGroup,
       'breeding': instance.breeding,
+      'exits': instance.exits,
     };
 
 _SpeciesTotal _$SpeciesTotalFromJson(Map<String, dynamic> json) =>
@@ -123,3 +129,11 @@ Map<String, dynamic> _$BreedingKpiToJson(_BreedingKpi instance) =>
       'daysOpen': instance.daysOpen,
       'daysOpenN': instance.daysOpenN,
     };
+
+_ExitCount _$ExitCountFromJson(Map<String, dynamic> json) => _ExitCount(
+  reason: json['reason'] as String,
+  count: (json['count'] as num?)?.toInt() ?? 0,
+);
+
+Map<String, dynamic> _$ExitCountToJson(_ExitCount instance) =>
+    <String, dynamic>{'reason': instance.reason, 'count': instance.count};

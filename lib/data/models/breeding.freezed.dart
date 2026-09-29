@@ -17,7 +17,8 @@ T _$identity<T>(T value) => value;
 mixin _$Pregnancy {
 
 /// open | inseminated | pregnant. String: yeni durum ekranı düşürmesin.
- String get status; DateTime? get lastInsemination; DateTime? get expectedCalving; DateTime? get dryOffDate;
+ String get status; DateTime? get lastInsemination; DateTime? get expectedCalving; DateTime? get dryOffDate;/// Son kızgınlık ve beklenen sonraki (21. gün; 18–24) — backend ADR 0121.
+ DateTime? get lastHeat; DateTime? get expectedHeat;
 /// Create a copy of Pregnancy
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -31,20 +32,20 @@ $PregnancyCopyWith<Pregnancy> get copyWith => _$PregnancyCopyWithImpl<Pregnancy>
 @override
 bool operator ==(Object other) {
   final _this = this as Pregnancy;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Pregnancy&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.lastInsemination, _this.lastInsemination) || other.lastInsemination == _this.lastInsemination)&&(identical(other.expectedCalving, _this.expectedCalving) || other.expectedCalving == _this.expectedCalving)&&(identical(other.dryOffDate, _this.dryOffDate) || other.dryOffDate == _this.dryOffDate));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Pregnancy&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.lastInsemination, _this.lastInsemination) || other.lastInsemination == _this.lastInsemination)&&(identical(other.expectedCalving, _this.expectedCalving) || other.expectedCalving == _this.expectedCalving)&&(identical(other.dryOffDate, _this.dryOffDate) || other.dryOffDate == _this.dryOffDate)&&(identical(other.lastHeat, _this.lastHeat) || other.lastHeat == _this.lastHeat)&&(identical(other.expectedHeat, _this.expectedHeat) || other.expectedHeat == _this.expectedHeat));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as Pregnancy;
-  return Object.hash(runtimeType,_this.status,_this.lastInsemination,_this.expectedCalving,_this.dryOffDate);
+  return Object.hash(runtimeType,_this.status,_this.lastInsemination,_this.expectedCalving,_this.dryOffDate,_this.lastHeat,_this.expectedHeat);
 }
 
 @override
 String toString() {
   final _this = this as Pregnancy;
-  return 'Pregnancy(status: ${_this.status}, lastInsemination: ${_this.lastInsemination}, expectedCalving: ${_this.expectedCalving}, dryOffDate: ${_this.dryOffDate})';
+  return 'Pregnancy(status: ${_this.status}, lastInsemination: ${_this.lastInsemination}, expectedCalving: ${_this.expectedCalving}, dryOffDate: ${_this.dryOffDate}, lastHeat: ${_this.lastHeat}, expectedHeat: ${_this.expectedHeat})';
 }
 
 
@@ -55,7 +56,7 @@ abstract mixin class $PregnancyCopyWith<$Res>  {
   factory $PregnancyCopyWith(Pregnancy value, $Res Function(Pregnancy) _then) = _$PregnancyCopyWithImpl;
 @useResult
 $Res call({
- String status, DateTime? lastInsemination, DateTime? expectedCalving, DateTime? dryOffDate
+ String status, DateTime? lastInsemination, DateTime? expectedCalving, DateTime? dryOffDate, DateTime? lastHeat, DateTime? expectedHeat
 });
 
 
@@ -72,12 +73,14 @@ class _$PregnancyCopyWithImpl<$Res>
 
 /// Create a copy of Pregnancy
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? lastInsemination = freezed,Object? expectedCalving = freezed,Object? dryOffDate = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? status = null,Object? lastInsemination = freezed,Object? expectedCalving = freezed,Object? dryOffDate = freezed,Object? lastHeat = freezed,Object? expectedHeat = freezed,}) {
   return _then(Pregnancy(
 status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as String,lastInsemination: freezed == lastInsemination ? _self.lastInsemination : lastInsemination // ignore: cast_nullable_to_non_nullable
 as DateTime?,expectedCalving: freezed == expectedCalving ? _self.expectedCalving : expectedCalving // ignore: cast_nullable_to_non_nullable
 as DateTime?,dryOffDate: freezed == dryOffDate ? _self.dryOffDate : dryOffDate // ignore: cast_nullable_to_non_nullable
+as DateTime?,lastHeat: freezed == lastHeat ? _self.lastHeat : lastHeat // ignore: cast_nullable_to_non_nullable
+as DateTime?,expectedHeat: freezed == expectedHeat ? _self.expectedHeat : expectedHeat // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
 }
@@ -163,10 +166,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String status,  DateTime? lastInsemination,  DateTime? expectedCalving,  DateTime? dryOffDate)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String status,  DateTime? lastInsemination,  DateTime? expectedCalving,  DateTime? dryOffDate,  DateTime? lastHeat,  DateTime? expectedHeat)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Pregnancy() when $default != null:
-return $default(_that.status,_that.lastInsemination,_that.expectedCalving,_that.dryOffDate);case _:
+return $default(_that.status,_that.lastInsemination,_that.expectedCalving,_that.dryOffDate,_that.lastHeat,_that.expectedHeat);case _:
   return orElse();
 
 }
@@ -184,10 +187,10 @@ return $default(_that.status,_that.lastInsemination,_that.expectedCalving,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String status,  DateTime? lastInsemination,  DateTime? expectedCalving,  DateTime? dryOffDate)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String status,  DateTime? lastInsemination,  DateTime? expectedCalving,  DateTime? dryOffDate,  DateTime? lastHeat,  DateTime? expectedHeat)  $default,) {final _that = this;
 switch (_that) {
 case _Pregnancy():
-return $default(_that.status,_that.lastInsemination,_that.expectedCalving,_that.dryOffDate);case _:
+return $default(_that.status,_that.lastInsemination,_that.expectedCalving,_that.dryOffDate,_that.lastHeat,_that.expectedHeat);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -204,10 +207,10 @@ return $default(_that.status,_that.lastInsemination,_that.expectedCalving,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String status,  DateTime? lastInsemination,  DateTime? expectedCalving,  DateTime? dryOffDate)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String status,  DateTime? lastInsemination,  DateTime? expectedCalving,  DateTime? dryOffDate,  DateTime? lastHeat,  DateTime? expectedHeat)?  $default,) {final _that = this;
 switch (_that) {
 case _Pregnancy() when $default != null:
-return $default(_that.status,_that.lastInsemination,_that.expectedCalving,_that.dryOffDate);case _:
+return $default(_that.status,_that.lastInsemination,_that.expectedCalving,_that.dryOffDate,_that.lastHeat,_that.expectedHeat);case _:
   return null;
 
 }
@@ -219,7 +222,7 @@ return $default(_that.status,_that.lastInsemination,_that.expectedCalving,_that.
 @JsonSerializable()
 
 class _Pregnancy extends Pregnancy {
-  const _Pregnancy({required this.status, this.lastInsemination, this.expectedCalving, this.dryOffDate}): super._();
+  const _Pregnancy({required this.status, this.lastInsemination, this.expectedCalving, this.dryOffDate, this.lastHeat, this.expectedHeat}): super._();
   factory _Pregnancy.fromJson(Map<String, dynamic> json) => _$PregnancyFromJson(json);
 
 /// open | inseminated | pregnant. String: yeni durum ekranı düşürmesin.
@@ -227,6 +230,9 @@ class _Pregnancy extends Pregnancy {
 @override final  DateTime? lastInsemination;
 @override final  DateTime? expectedCalving;
 @override final  DateTime? dryOffDate;
+/// Son kızgınlık ve beklenen sonraki (21. gün; 18–24) — backend ADR 0121.
+@override final  DateTime? lastHeat;
+@override final  DateTime? expectedHeat;
 
 /// Create a copy of Pregnancy
 /// with the given fields replaced by the non-null parameter values.
@@ -241,18 +247,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Pregnancy&&(identical(other.status, status) || other.status == status)&&(identical(other.lastInsemination, lastInsemination) || other.lastInsemination == lastInsemination)&&(identical(other.expectedCalving, expectedCalving) || other.expectedCalving == expectedCalving)&&(identical(other.dryOffDate, dryOffDate) || other.dryOffDate == dryOffDate));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Pregnancy&&(identical(other.status, status) || other.status == status)&&(identical(other.lastInsemination, lastInsemination) || other.lastInsemination == lastInsemination)&&(identical(other.expectedCalving, expectedCalving) || other.expectedCalving == expectedCalving)&&(identical(other.dryOffDate, dryOffDate) || other.dryOffDate == dryOffDate)&&(identical(other.lastHeat, lastHeat) || other.lastHeat == lastHeat)&&(identical(other.expectedHeat, expectedHeat) || other.expectedHeat == expectedHeat));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,status,lastInsemination,expectedCalving,dryOffDate);
+    return Object.hash(runtimeType,status,lastInsemination,expectedCalving,dryOffDate,lastHeat,expectedHeat);
 }
 
 @override
 String toString() {
-    return 'Pregnancy(status: $status, lastInsemination: $lastInsemination, expectedCalving: $expectedCalving, dryOffDate: $dryOffDate)';
+    return 'Pregnancy(status: $status, lastInsemination: $lastInsemination, expectedCalving: $expectedCalving, dryOffDate: $dryOffDate, lastHeat: $lastHeat, expectedHeat: $expectedHeat)';
 }
 
 
@@ -263,7 +269,7 @@ abstract mixin class _$PregnancyCopyWith<$Res> implements $PregnancyCopyWith<$Re
   factory _$PregnancyCopyWith(_Pregnancy value, $Res Function(_Pregnancy) _then) = __$PregnancyCopyWithImpl;
 @override @useResult
 $Res call({
- String status, DateTime? lastInsemination, DateTime? expectedCalving, DateTime? dryOffDate
+ String status, DateTime? lastInsemination, DateTime? expectedCalving, DateTime? dryOffDate, DateTime? lastHeat, DateTime? expectedHeat
 });
 
 
@@ -280,12 +286,14 @@ class __$PregnancyCopyWithImpl<$Res>
 
 /// Create a copy of Pregnancy
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? lastInsemination = freezed,Object? expectedCalving = freezed,Object? dryOffDate = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? status = null,Object? lastInsemination = freezed,Object? expectedCalving = freezed,Object? dryOffDate = freezed,Object? lastHeat = freezed,Object? expectedHeat = freezed,}) {
   return _then(_Pregnancy(
 status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as String,lastInsemination: freezed == lastInsemination ? _self.lastInsemination : lastInsemination // ignore: cast_nullable_to_non_nullable
 as DateTime?,expectedCalving: freezed == expectedCalving ? _self.expectedCalving : expectedCalving // ignore: cast_nullable_to_non_nullable
 as DateTime?,dryOffDate: freezed == dryOffDate ? _self.dryOffDate : dryOffDate // ignore: cast_nullable_to_non_nullable
+as DateTime?,lastHeat: freezed == lastHeat ? _self.lastHeat : lastHeat // ignore: cast_nullable_to_non_nullable
+as DateTime?,expectedHeat: freezed == expectedHeat ? _self.expectedHeat : expectedHeat // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
 }

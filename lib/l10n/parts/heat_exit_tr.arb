@@ -1,0 +1,31 @@
+{
+  "breedingHeat": "Kızgınlık",
+  "breedingHeatHint": "Kızgınlık görüldü. Tohumlanmazsa bir sonraki 18–24. gün beklenir; o zaman hatırlatılır.",
+  "breedingHeatExpected": "Kızgınlık bekleniyor: {from} – {to}",
+  "@breedingHeatExpected": {
+    "placeholders": {
+      "from": {},
+      "to": {}
+    }
+  },
+  "breedingHeatExpectedShort": "Kızgınlık bekleniyor",
+  "exitReasonLabel": "Çıkış nedeni",
+  "exitReasonRequired": "Çıkış nedenini seçin",
+  "exitReasonLowYield": "Düşük verim",
+  "exitReasonMastitis": "Mastitis",
+  "exitReasonFertility": "Üreme sorunu",
+  "exitReasonFeet": "Ayak/tırnak",
+  "exitReasonAge": "Yaşlılık",
+  "exitReasonAccident": "Kaza",
+  "exitReasonDisease": "Hastalık",
+  "exitReasonOther": "Diğer",
+  "exitReasonUnknown": "Belirtilmedi",
+  "exitsTitle": "Sürüden çıkış · son 12 ay ({count})",
+  "@exitsTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
+}

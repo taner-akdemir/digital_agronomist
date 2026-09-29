@@ -346,6 +346,16 @@
       "date": {}
     }
   },
+  "breedingHeat": "Kızgınlık",
+  "breedingHeatExpected": "Kızgınlık bekleniyor: {from} – {to}",
+  "@breedingHeatExpected": {
+    "placeholders": {
+      "from": {},
+      "to": {}
+    }
+  },
+  "breedingHeatExpectedShort": "Kızgınlık bekleniyor",
+  "breedingHeatHint": "Kızgınlık görüldü. Tohumlanmazsa bir sonraki 18–24. gün beklenir; o zaman hatırlatılır.",
   "breedingInsemination": "Tohumlama",
   "breedingKpiDays": "{days} gün",
   "@breedingKpiDays": {
@@ -812,6 +822,25 @@
   "domainClassNoMilkExplanation": "Son sağımlarda süt alınamadı. Değerlendirme gerekli.",
   "domainClassNormal": "Normal",
   "domainClassNormalExplanation": "Verim beklenen aralıkta, eğim stabil.",
+  "exitReasonAccident": "Kaza",
+  "exitReasonAge": "Yaşlılık",
+  "exitReasonDisease": "Hastalık",
+  "exitReasonFeet": "Ayak/tırnak",
+  "exitReasonFertility": "Üreme sorunu",
+  "exitReasonLabel": "Çıkış nedeni",
+  "exitReasonLowYield": "Düşük verim",
+  "exitReasonMastitis": "Mastitis",
+  "exitReasonOther": "Diğer",
+  "exitReasonRequired": "Çıkış nedenini seçin",
+  "exitReasonUnknown": "Belirtilmedi",
+  "exitsTitle": "Sürüden çıkış · son 12 ay ({count})",
+  "@exitsTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "farmLocationClear": "Konumu sil",
   "farmLocationCoordinates": "Koordinat (enlem, boylam)",
   "farmLocationIntro": "Isı stresi uyarısı için hava tahmini tesisin konumundan alınır. Google Haritalar'da tesise uzun basın, üstte çıkan koordinatı (39.9208, 32.8541) buraya yapıştırın. Sunucu hava servisine yalnızca bu koordinatı gönderir.",

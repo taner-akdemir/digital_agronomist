@@ -44,6 +44,8 @@ abstract final class AlertStyle {
     // Kuruya çıkarma ve beklenen doğum (backend ADR 0118).
     'dry_off_due' => Icons.event_available_outlined,
     'calving_due' => Icons.child_friendly_outlined,
+    // Beklenen kızgınlık (backend ADR 0121).
+    'heat_expected' => Icons.favorite_border,
     // Isı stresi (backend ADR 0119).
     'heat_stress' => Icons.thermostat,
     // Aşı zamanı geldi (backend ADR 0112).

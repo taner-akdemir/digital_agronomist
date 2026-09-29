@@ -44,12 +44,11 @@ class UpcomingBreedingCard extends ConsumerWidget {
                 ListTile(
                   dense: true,
                   contentPadding: EdgeInsets.zero,
-                  leading: Icon(
-                    u.event == 'calving'
-                        ? Icons.child_friendly_outlined
-                        : Icons.pause_circle_outline,
-                    color: AppColors.darkGreenColor,
-                  ),
+                  leading: Icon(switch (u.event) {
+                    'calving' => Icons.child_friendly_outlined,
+                    'heat' => Icons.favorite_border,
+                    _ => Icons.pause_circle_outline,
+                  }, color: AppColors.darkGreenColor),
                   title: Text(
                     [
                       u.earTag,

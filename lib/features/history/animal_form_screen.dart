@@ -119,6 +119,9 @@ class _FormState extends ConsumerState<_Form> {
 
   /// Anne (backend ADR 0114); null = yok. PUT tam kayıt: her zaman gider.
   late String? _damId;
+
+  /// Çıkış nedeni (backend ADR 0122); çıkış durumunda sorulur.
+  late String? _exitReason;
   late String? _speciesId;
   late String _status;
 
@@ -146,6 +149,7 @@ class _FormState extends ConsumerState<_Form> {
     _status = a?.status ?? 'active';
     _groupId = a?.groupId;
     _damId = a?.damId ?? widget.damId;
+    _exitReason = a?.exitReason;
     _sire = TextEditingController(text: a?.sireCode ?? '');
     _birth = a?.birthDate ?? widget.birthDate;
     _calving = a?.lastCalvingDate;
@@ -188,6 +192,7 @@ class _FormState extends ConsumerState<_Form> {
       groupId: _groupId,
       damId: _damId,
       sireCode: _nullIfBlank(_sire.text),
+      exitReason: _exitReason,
     );
     try {
       final saved = await ref.read(repositoryProvider).saveAnimal(draft);
@@ -312,6 +317,22 @@ class _FormState extends ConsumerState<_Form> {
             ],
             onChanged: (v) => setState(() => _status = v ?? _status),
           ),
+          // Çıkış nedeni (ADR 0122): satıldı/kesildi/öldü seçilince zorunlu.
+          if (_status == 'sold' ||
+              _status == 'slaughtered' ||
+              _status == 'dead') ...[
+            _gap,
+            DropdownButtonFormField<String>(
+              initialValue: _exitReason,
+              decoration: _decoration(l10n.exitReasonLabel),
+              items: [
+                for (final r in exitReasons)
+                  DropdownMenuItem(value: r, child: Text(exitReasonLabel(r))),
+              ],
+              validator: (v) => v == null ? l10n.exitReasonRequired : null,
+              onChanged: (v) => setState(() => _exitReason = v),
+            ),
+          ],
           // Grup (ADR 0092): tanımlı grup yoksa alan çıkmaz; gruplar
           // Geçmiş → Hayvanlar → Gruplar'da açılır.
           if (ref.watch(animalGroupsProvider).value case final groups?

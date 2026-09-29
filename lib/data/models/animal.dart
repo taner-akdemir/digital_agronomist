@@ -71,6 +71,11 @@ abstract class Animal with _$Animal {
     String? damId,
     String? damEarTag,
     String? sireCode,
+
+    /// Sürüden çıkış nedeni (backend ADR 0122); yalnızca satıldı, kesildi,
+    /// öldü. Formdan gider; `exitedOn` sunucunun, yalnızca okunur.
+    String? exitReason,
+    DateTime? exitedOn,
   }) = _Animal;
 
   const Animal._();
@@ -99,6 +104,10 @@ abstract class Animal with _$Animal {
     return d < 0 ? null : d;
   }
 
+  /// Sürüden çıkmış mı (satıldı, kesildi, öldü).
+  bool get hasExited =>
+      status == 'sold' || status == 'slaughtered' || status == 'dead';
+
   /// Durumun Türkçe adı; tanınmayan kod olduğu gibi.
   String get statusLabel => switch (status) {
     'active' => l10n.modelAnimalStatusActive,
@@ -111,3 +120,29 @@ abstract class Animal with _$Animal {
 
   factory Animal.fromJson(Map<String, dynamic> json) => _$AnimalFromJson(json);
 }
+
+/// Sürüden çıkış nedenleri (backend ADR 0122), sırasıyla.
+const exitReasons = [
+  'low_yield',
+  'mastitis',
+  'fertility',
+  'feet',
+  'age',
+  'accident',
+  'disease',
+  'other',
+];
+
+/// Çıkış nedeninin adı; tanınmayan kod olduğu gibi, null "Belirtilmedi".
+String exitReasonLabel(String? code) => switch (code) {
+  'low_yield' => l10n.exitReasonLowYield,
+  'mastitis' => l10n.exitReasonMastitis,
+  'fertility' => l10n.exitReasonFertility,
+  'feet' => l10n.exitReasonFeet,
+  'age' => l10n.exitReasonAge,
+  'accident' => l10n.exitReasonAccident,
+  'disease' => l10n.exitReasonDisease,
+  'other' => l10n.exitReasonOther,
+  null || 'unknown' => l10n.exitReasonUnknown,
+  _ => code,
+};

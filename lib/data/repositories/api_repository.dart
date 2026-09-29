@@ -414,6 +414,9 @@ class ApiRepository implements MilkTraceRepository {
     'groupId': a.groupId,
     'damId': a.damId,
     'sireCode': a.sireCode,
+    // Çıkış nedeni (ADR 0122): yalnızca çıkış durumunda anlamlı; sunucu
+    // öteki durumlarda siler.
+    'exitReason': a.hasExited ? a.exitReason : null,
   };
 
   static String _dayText(DateTime d) =>

@@ -5,6 +5,7 @@ import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/format.dart';
 import 'package:milktrace/core/volume.dart';
 import 'package:milktrace/data/models/alert.dart';
+import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/domain/yield_class.dart';
@@ -67,6 +68,11 @@ class DashboardScreen extends ConsumerWidget {
             if (s.breeding case final k?) ...[
               const SizedBox(height: AppSpacing.md),
               _BreedingKpiCard(kpi: k),
+            ],
+            // Sürüden çıkış nedenleri (backend ADR 0122); çıkış yoksa yok.
+            if (s.exits.isNotEmpty) ...[
+              const SizedBox(height: AppSpacing.md),
+              _ExitsCard(exits: s.exits),
             ],
             const SizedBox(height: AppSpacing.md),
             const _AlertsCard(),
@@ -647,6 +653,49 @@ class _BreedingKpiCard extends StatelessWidget {
             kpi.firstServices,
           ),
           row(l10n.breedingKpiDaysOpen, days(kpi.daysOpen), kpi.daysOpenN),
+        ],
+      ),
+    );
+  }
+}
+
+/// Son 12 ayda sürüden çıkanlar nedene göre (backend ADR 0122): ayıklama
+/// kararlarının dökümü.
+class _ExitsCard extends StatelessWidget {
+  const _ExitsCard({required this.exits});
+
+  final List<ExitCount> exits;
+
+  @override
+  Widget build(BuildContext context) {
+    final total = exits.fold<int>(0, (a, e) => a + e.count);
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: AppRadius.mdAll,
+        border: Border.all(color: AppColors.border),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            l10n.exitsTitle(total),
+            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+          ),
+          for (final e in exits)
+            Padding(
+              padding: const EdgeInsets.only(top: AppSpacing.xs),
+              child: Row(
+                children: [
+                  Expanded(child: Text(exitReasonLabel(e.reason))),
+                  Text(
+                    '${e.count}',
+                    style: const TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );

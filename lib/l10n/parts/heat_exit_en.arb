@@ -1,0 +1,31 @@
+{
+  "breedingHeat": "Heat",
+  "breedingHeatHint": "Heat observed. If not inseminated, the next is expected on day 18–24; you will be reminded then.",
+  "breedingHeatExpected": "Heat expected: {from} – {to}",
+  "@breedingHeatExpected": {
+    "placeholders": {
+      "from": {},
+      "to": {}
+    }
+  },
+  "breedingHeatExpectedShort": "Heat expected",
+  "exitReasonLabel": "Exit reason",
+  "exitReasonRequired": "Select the exit reason",
+  "exitReasonLowYield": "Low yield",
+  "exitReasonMastitis": "Mastitis",
+  "exitReasonFertility": "Fertility problem",
+  "exitReasonFeet": "Feet/hooves",
+  "exitReasonAge": "Old age",
+  "exitReasonAccident": "Accident",
+  "exitReasonDisease": "Disease",
+  "exitReasonOther": "Other",
+  "exitReasonUnknown": "Not given",
+  "exitsTitle": "Herd exits · last 12 months ({count})",
+  "@exitsTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
+}

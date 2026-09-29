@@ -171,6 +171,14 @@ class BreedingCard extends ConsumerWidget {
               Text(l10n.breedingExpectedCalving(Fmt.dayMonthYear(c))),
             if (p.dryOffDate case final d?)
               Text(l10n.breedingDryOff(Fmt.dayMonthYear(d))),
+            // Beklenen kızgınlık penceresi (backend ADR 0121): 21 ± 3.
+            if (p.expectedHeat case final h?)
+              Text(
+                l10n.breedingHeatExpected(
+                  Fmt.dayMonth(h.subtract(const Duration(days: 3))),
+                  Fmt.dayMonth(h.add(const Duration(days: 3))),
+                ),
+              ),
             const SizedBox(height: AppSpacing.sm),
           ],
           AsyncView(
@@ -271,6 +279,7 @@ class _BreedingDialogState extends State<_BreedingDialog> {
                   value: 'pregnancy_check',
                   label: Text(l10n.breedingPregnancyCheck),
                 ),
+                ButtonSegment(value: 'heat', label: Text(l10n.breedingHeat)),
               ],
               selected: {_kind},
               onSelectionChanged: (s) => setState(() => _kind = s.first),
@@ -294,7 +303,12 @@ class _BreedingDialogState extends State<_BreedingDialog> {
               child: Text(l10n.commonDateLabel(Fmt.dayMonthYear(_date))),
             ),
             const SizedBox(height: AppSpacing.md),
-            if (_kind == 'insemination')
+            if (_kind == 'heat')
+              Text(
+                l10n.breedingHeatHint,
+                style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
+              )
+            else if (_kind == 'insemination')
               TextField(
                 controller: _sire,
                 decoration: InputDecoration(

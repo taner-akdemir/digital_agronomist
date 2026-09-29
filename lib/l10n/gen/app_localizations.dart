@@ -1154,6 +1154,30 @@ abstract class AppLocalizations {
   /// **'Beklenen doğum: {date}'**
   String breedingExpectedCalving(Object date);
 
+  /// No description provided for @breedingHeat.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kızgınlık'**
+  String get breedingHeat;
+
+  /// No description provided for @breedingHeatExpected.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kızgınlık bekleniyor: {from} – {to}'**
+  String breedingHeatExpected(Object from, Object to);
+
+  /// No description provided for @breedingHeatExpectedShort.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kızgınlık bekleniyor'**
+  String get breedingHeatExpectedShort;
+
+  /// No description provided for @breedingHeatHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kızgınlık görüldü. Tohumlanmazsa bir sonraki 18–24. gün beklenir; o zaman hatırlatılır.'**
+  String get breedingHeatHint;
+
   /// No description provided for @breedingInsemination.
   ///
   /// In tr, this message translates to:
@@ -2526,6 +2550,78 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Verim beklenen aralıkta, eğim stabil.'**
   String get domainClassNormalExplanation;
+
+  /// No description provided for @exitReasonAccident.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaza'**
+  String get exitReasonAccident;
+
+  /// No description provided for @exitReasonAge.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yaşlılık'**
+  String get exitReasonAge;
+
+  /// No description provided for @exitReasonDisease.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hastalık'**
+  String get exitReasonDisease;
+
+  /// No description provided for @exitReasonFeet.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ayak/tırnak'**
+  String get exitReasonFeet;
+
+  /// No description provided for @exitReasonFertility.
+  ///
+  /// In tr, this message translates to:
+  /// **'Üreme sorunu'**
+  String get exitReasonFertility;
+
+  /// No description provided for @exitReasonLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çıkış nedeni'**
+  String get exitReasonLabel;
+
+  /// No description provided for @exitReasonLowYield.
+  ///
+  /// In tr, this message translates to:
+  /// **'Düşük verim'**
+  String get exitReasonLowYield;
+
+  /// No description provided for @exitReasonMastitis.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mastitis'**
+  String get exitReasonMastitis;
+
+  /// No description provided for @exitReasonOther.
+  ///
+  /// In tr, this message translates to:
+  /// **'Diğer'**
+  String get exitReasonOther;
+
+  /// No description provided for @exitReasonRequired.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çıkış nedenini seçin'**
+  String get exitReasonRequired;
+
+  /// No description provided for @exitReasonUnknown.
+  ///
+  /// In tr, this message translates to:
+  /// **'Belirtilmedi'**
+  String get exitReasonUnknown;
+
+  /// No description provided for @exitsTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sürüden çıkış · son 12 ay ({count})'**
+  String exitsTitle(int count);
 
   /// No description provided for @farmLocationClear.
   ///

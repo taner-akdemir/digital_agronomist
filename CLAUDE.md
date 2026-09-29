@@ -326,6 +326,16 @@ kart yok): buzağılama aralığı, ilk tohumlamada gebelik, buzağılamadan geb
 hesaplar, ≥ 72'de `heat_stress` uyarısı. Verim grafiğinde `AnimalDailyStat.thi ≥ 72` günler
 `AppColors.chartHeat` (turuncu; §6.2 renkleri değil) dikey şeritle ve lejantla işaretlenir.
 
+**Kızgınlık** (backend ADR 0121): üreme kartında "Kızgınlık" kaydı (bütün roller);
+`Pregnancy.lastHeat/expectedHeat` SUNUCUDAN (21. gün, pencere 18–24; mock `_pregnancyOf`
+ayna). Kart pencereyi yazar; "Yaklaşanlar"da `heat` olayı; sunucu pencere boyunca
+`heat_expected` hatırlatması açar.
+
+**Çıkış nedeni** (backend ADR 0122): formda durum satıldı/kesildi/öldü olunca "Çıkış
+nedeni" zorunlu (`exitReasons`, `exitReasonLabel`); `animalBody` yalnızca çıkış
+durumunda gönderir. Detayda durum çipi "Satıldı · Düşük verim". Panoda son 12 ayın
+dağılımı (`DashboardSummary.exits`; `unknown` = "Belirtilmedi").
+
 **Sağımcılar** (`/settings/milkers`, backend ADR 0090): hesap kartından YALNIZCA sahibe.
 Sağımcı = oturumu açan / hayvanı bağlayan (ayrı seçim adımı yok). 7/30 gün; oturum, sağım,
 süt, ortalama süre, düşük debi payı. Metin oranın kişiyi puanlamadığını söyler.

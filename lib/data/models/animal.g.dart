@@ -42,6 +42,10 @@ _Animal _$AnimalFromJson(Map<String, dynamic> json) => _Animal(
   damId: json['damId'] as String?,
   damEarTag: json['damEarTag'] as String?,
   sireCode: json['sireCode'] as String?,
+  exitReason: json['exitReason'] as String?,
+  exitedOn: json['exitedOn'] == null
+      ? null
+      : DateTime.parse(json['exitedOn'] as String),
 );
 
 Map<String, dynamic> _$AnimalToJson(_Animal instance) => <String, dynamic>{
@@ -64,6 +68,8 @@ Map<String, dynamic> _$AnimalToJson(_Animal instance) => <String, dynamic>{
   'damId': instance.damId,
   'damEarTag': instance.damEarTag,
   'sireCode': instance.sireCode,
+  'exitReason': instance.exitReason,
+  'exitedOn': instance.exitedOn?.toIso8601String(),
 };
 
 const _$YieldClassEnumMap = {

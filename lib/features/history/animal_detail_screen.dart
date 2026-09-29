@@ -368,7 +368,12 @@ class _IdentityCard extends StatelessWidget {
               if (animal.isMilking)
                 YieldClassBadge(yieldClass: cls)
               else
-                AnimalStatusChip(label: animal.statusLabel),
+                AnimalStatusChip(
+                  // Çıkış nedeni (ADR 0122): "Satıldı · düşük verim".
+                  label: animal.hasExited && animal.exitReason != null
+                      ? '${animal.statusLabel} · ${exitReasonLabel(animal.exitReason)}'
+                      : animal.statusLabel,
+                ),
             ],
           ),
           const SizedBox(height: AppSpacing.sm),

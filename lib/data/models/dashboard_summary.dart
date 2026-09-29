@@ -40,6 +40,9 @@ abstract class DashboardSummary with _$DashboardSummary {
 
     /// Son 12 ayın üreme verimliliği (backend ADR 0120); örnek yoksa null.
     BreedingKpi? breeding,
+
+    /// Son 12 ayda sürüden çıkanlar nedene göre (backend ADR 0122).
+    @Default(<ExitCount>[]) List<ExitCount> exits,
   }) = _DashboardSummary;
 
   factory DashboardSummary.fromJson(Map<String, dynamic> json) =>
@@ -111,4 +114,14 @@ abstract class BreedingKpi with _$BreedingKpi {
 
   factory BreedingKpi.fromJson(Map<String, dynamic> json) =>
       _$BreedingKpiFromJson(json);
+}
+
+/// Bir çıkış nedeninin sayısı; neden girilmemişse `unknown`.
+@freezed
+abstract class ExitCount with _$ExitCount {
+  const factory ExitCount({required String reason, @Default(0) int count}) =
+      _ExitCount;
+
+  factory ExitCount.fromJson(Map<String, dynamic> json) =>
+      _$ExitCountFromJson(json);
 }

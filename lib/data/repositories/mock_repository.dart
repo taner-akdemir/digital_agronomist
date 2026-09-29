@@ -273,9 +273,12 @@ class MockRepository implements MilkTraceRepository {
     final events = _breeding[a.id] ?? const <BreedingEvent>[];
     if (events.isEmpty) return null;
     DateTime? ins;
+    DateTime? heat;
     BreedingEvent? check;
     for (final e in events) {
-      if (e.isInsemination) {
+      if (e.isHeat) {
+        if (heat == null || e.eventDate.isAfter(heat)) heat = e.eventDate;
+      } else if (e.isInsemination) {
         if (ins == null || e.eventDate.isAfter(ins)) ins = e.eventDate;
       } else if (check == null || e.eventDate.isAfter(check.eventDate)) {
         check = e;
@@ -283,6 +286,9 @@ class MockRepository implements MilkTraceRepository {
     }
     final calving = a.lastCalvingDate;
     if (ins != null && calving != null && !ins.isAfter(calving)) ins = null;
+    if (heat != null && calving != null && !heat.isAfter(calving)) heat = null;
+    // Yalnızca (eski döngü) kızgınlık da değilse: bilinmiyor.
+    if (ins == null && check == null && heat == null) return null;
     var status = 'open';
     if (check != null &&
         (ins == null || !check.eventDate.isBefore(ins)) &&
@@ -291,8 +297,20 @@ class MockRepository implements MilkTraceRepository {
     } else if (ins != null) {
       status = 'inseminated';
     }
+    // Beklenen kızgınlık (withHeat, ADR 0121).
+    final expectedHeat =
+        heat != null &&
+            (ins == null || ins.isBefore(heat)) &&
+            status != 'pregnant'
+        ? heat.add(const Duration(days: 21))
+        : null;
     if (ins == null || status == 'open') {
-      return Pregnancy(status: status, lastInsemination: ins);
+      return Pregnancy(
+        status: status,
+        lastInsemination: ins,
+        lastHeat: heat,
+        expectedHeat: expectedHeat,
+      );
     }
     final code = species.where((s) => s.id == a.speciesId).firstOrNull?.code;
     final days = switch (code) {
@@ -306,6 +324,8 @@ class MockRepository implements MilkTraceRepository {
       lastInsemination: ins,
       expectedCalving: expected,
       dryOffDate: expected.subtract(const Duration(days: 60)),
+      lastHeat: heat,
+      expectedHeat: expectedHeat,
     );
   }
 

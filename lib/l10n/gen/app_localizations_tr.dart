@@ -628,6 +628,21 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String get breedingHeat => 'Kızgınlık';
+
+  @override
+  String breedingHeatExpected(Object from, Object to) {
+    return 'Kızgınlık bekleniyor: $from – $to';
+  }
+
+  @override
+  String get breedingHeatExpectedShort => 'Kızgınlık bekleniyor';
+
+  @override
+  String get breedingHeatHint =>
+      'Kızgınlık görüldü. Tohumlanmazsa bir sonraki 18–24. gün beklenir; o zaman hatırlatılır.';
+
+  @override
   String get breedingInsemination => 'Tohumlama';
 
   @override
@@ -1428,6 +1443,44 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get domainClassNormalExplanation =>
       'Verim beklenen aralıkta, eğim stabil.';
+
+  @override
+  String get exitReasonAccident => 'Kaza';
+
+  @override
+  String get exitReasonAge => 'Yaşlılık';
+
+  @override
+  String get exitReasonDisease => 'Hastalık';
+
+  @override
+  String get exitReasonFeet => 'Ayak/tırnak';
+
+  @override
+  String get exitReasonFertility => 'Üreme sorunu';
+
+  @override
+  String get exitReasonLabel => 'Çıkış nedeni';
+
+  @override
+  String get exitReasonLowYield => 'Düşük verim';
+
+  @override
+  String get exitReasonMastitis => 'Mastitis';
+
+  @override
+  String get exitReasonOther => 'Diğer';
+
+  @override
+  String get exitReasonRequired => 'Çıkış nedenini seçin';
+
+  @override
+  String get exitReasonUnknown => 'Belirtilmedi';
+
+  @override
+  String exitsTitle(int count) {
+    return 'Sürüden çıkış · son 12 ay ($count)';
+  }
 
   @override
   String get farmLocationClear => 'Konumu sil';
