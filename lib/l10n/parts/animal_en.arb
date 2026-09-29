@@ -1,0 +1,226 @@
+{
+  "animalDetailTitleFallback": "Animal",
+  "animalDetailLoadFailed": "Could not load animal details",
+  "animalDetailNotRegistered": "This animal is not registered",
+  "animalDetailTrendFailed": "Could not load the trend",
+  "animalDetailHistoryFailed": "Could not load milking history",
+  "animalDetailCalved": "Calved",
+  "animalDetailCalvingAlreadyToday": "A calving is already recorded for today",
+  "animalDetailCalvingDate": "Calving date",
+  "animalDetailCalvingConfirmTitle": "Record calving?",
+  "animalDetailCalvingLactation": "Lactation {current} → {next}",
+  "@animalDetailCalvingLactation": {
+    "placeholders": {
+      "current": {},
+      "next": {}
+    }
+  },
+  "animalDetailCalvingStatus": "Status {status} → Lactating",
+  "@animalDetailCalvingStatus": {
+    "placeholders": {
+      "status": {}
+    }
+  },
+  "animalDetailCalvingSaved": "Calving recorded",
+  "animalDetailBreed": "Breed",
+  "animalDetailGroup": "Group",
+  "animalDetailLactation": "Lactation",
+  "animalDetailLastCalving": "Last calving",
+  "animalDetailDaysInMilk": "Days in milk",
+  "animalDetailOrdinal": "{n}",
+  "@animalDetailOrdinal": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalDetailFreshLactation": "Fresh lactation: the \"declining\" and \"dry-off candidate\" labels are not given in the first {days} days; yield is still rising.",
+  "@animalDetailFreshLactation": {
+    "placeholders": {
+      "days": {}
+    }
+  },
+  "animalDetailStaleClass": "Class from the {date} calculation: the nightly calculation only refreshes animals milked in the last 30 days.",
+  "@animalDetailStaleClass": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "animalDetailDisclaimer": "This is a suggestion, not a diagnosis. Pregnancy, lactation stage and illness can lower yield; a vet check is needed.",
+  "animalDetailLastClass": "Last class: {label}",
+  "@animalDetailLastClass": {
+    "placeholders": {
+      "label": {}
+    }
+  },
+  "animalDetailFrozenClassNote": "Animals that are not lactating are not classified; this label is from the last calculation while it was lactating.",
+  "animalDetailYieldTrend": "Yield trend",
+  "animalDetailAvg7": "7-day avg.",
+  "animalDetailAvg30": "30-day avg.",
+  "animalDetailTrend30": "30-day trend",
+  "animalDetailNoMilkings": "No milkings recorded for this animal",
+  "animalDetailRecentMilkings": "Recent milkings",
+  "animalDetailShownOfTotal": "Showing the first {limit} of {total} milkings",
+  "@animalDetailShownOfTotal": {
+    "placeholders": {
+      "total": {},
+      "limit": {}
+    }
+  },
+  "animalDetailNoteAdded": "Note added",
+  "animalDetailNoteAddFailed": "Could not add note: {error}",
+  "@animalDetailNoteAddFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "animalDetailNotes": "Notes",
+  "animalDetailAddNote": "Add note",
+  "animalDetailNotesFailed": "Could not load notes",
+  "animalDetailNoNotes": "No notes yet. Vet checks, pregnancy or treatment details help interpret the class label.",
+  "animalDetailMoreNotes": "{n, plural, =1{{n} more note} other{{n} more notes}}",
+  "@animalDetailMoreNotes": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "animalDetailNoteHint": "E.g. Last vet check: mastitis, under treatment.",
+  "animalFormEditTitle": "Edit animal",
+  "animalFormNewTitle": "New animal",
+  "animalFormSpeciesFailed": "Could not load species",
+  "animalFormAnimalFailed": "Could not load animal",
+  "animalFormNotFound": "Animal not found",
+  "animalFormAdded": "Animal added",
+  "animalFormUpdated": "Animal updated",
+  "animalFormEarTag": "Ear tag number",
+  "animalFormEarTagHelper": "Identifies the animal; unique within the farm.",
+  "animalFormEarTagRequired": "Ear tag number is required",
+  "animalFormSpecies": "Species",
+  "animalFormSpeciesRequired": "Select a species",
+  "animalFormName": "Name (optional)",
+  "animalFormBreed": "Breed (optional)",
+  "animalFormRfid": "RFID (optional)",
+  "animalFormRfidHelper": "The number of the chip in the ear tag; if the meter reads it, the animal is matched to the milking point automatically.",
+  "animalFormBirthDate": "Birth date",
+  "animalFormLastCalving": "Last calving",
+  "animalFormLactationNo": "Lactation number",
+  "animalFormStatus": "Status",
+  "animalFormStatusHelper": "Only lactating animals are matched to milkings and classified.",
+  "animalFormGroup": "Group",
+  "animalFormNoGroup": "No group",
+  "animalFormSaving": "Saving…",
+  "animalFormNotEntered": "Not entered",
+  "animalFormClearDate": "Clear {label}",
+  "@animalFormClearDate": {
+    "placeholders": {
+      "label": {}
+    }
+  },
+  "animalFormPickDate": "Pick {label}",
+  "@animalFormPickDate": {
+    "placeholders": {
+      "label": {}
+    }
+  },
+  "breedingAdded": "Breeding record added",
+  "breedingDeleteTitle": "Delete breeding record?",
+  "breedingDeleteBody": "Only delete a record entered by mistake; status and dates are recalculated.",
+  "breedingTitle": "Breeding",
+  "breedingAddRecord": "Add record",
+  "breedingExpectedCalving": "Expected calving: {date}",
+  "@breedingExpectedCalving": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "breedingDryOff": "Suggested dry-off: {date}",
+  "@breedingDryOff": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "breedingLoadFailed": "Could not load breeding records",
+  "breedingEmpty": "No records. Enter inseminations and pregnancy checks: the expected calving and dry-off dates are calculated.",
+  "breedingDialogTitle": "Breeding record",
+  "breedingInsemination": "Insemination",
+  "breedingPregnancyCheck": "Pregnancy check",
+  "breedingSireLabel": "Bull/buck or semen code (optional)",
+  "breedingPregnant": "Pregnant",
+  "breedingOpen": "Open",
+  "treatmentSaved": "Treatment saved",
+  "treatmentSaveFailed": "Could not save treatment: {error}",
+  "@treatmentSaveFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "treatmentDeleteTitle": "Delete treatment record?",
+  "treatmentDeleteBody": "Only delete a record entered by mistake; deleting it also removes the withdrawal.",
+  "treatmentTitle": "Treatment and withdrawal",
+  "treatmentAdd": "Add treatment",
+  "treatmentWithdrawalBanner": "In withdrawal: keep the milk out of the tank through {date}.",
+  "@treatmentWithdrawalBanner": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "treatmentLoadFailed": "Could not load treatments",
+  "treatmentEmpty": "No treatments. Enter the withdrawal period for an animal given antibiotics: a \"Withhold milk\" warning shows on the live screen during that period.",
+  "treatmentRange": "{start} → withdrawal {until}",
+  "@treatmentRange": {
+    "placeholders": {
+      "start": {},
+      "until": {}
+    }
+  },
+  "treatmentStartHelp": "Treatment start",
+  "treatmentUntilHelp": "Last day to withhold milk",
+  "treatmentDrug": "Drug",
+  "treatmentStart": "Start: {date}",
+  "@treatmentStart": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "treatmentUntil": "Withdrawal ends: {date}",
+  "@treatmentUntil": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "treatmentPlusDays": "{n, plural, =1{+{n} day} other{+{n} days}}",
+  "@treatmentPlusDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "treatmentDrugRequired": "Enter the drug name.",
+  "yieldReportShareSubject": "Milk Trace yield report",
+  "yieldReportFailed": "Could not get report: {error}",
+  "@yieldReportFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "yieldReportTitle": "Yield report",
+  "yieldReportDescription": "Daily yield per animal ({unit}), as an Excel file. You can send it to your vet or advisor.",
+  "@yieldReportDescription": {
+    "placeholders": {
+      "unit": {}
+    }
+  },
+  "yieldReportKilogram": "kilograms",
+  "yieldReportLitre": "litres",
+  "yieldReportLastDays": "Last {n} days",
+  "@yieldReportLastDays": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "yieldChartNotEnough": "Not enough history for a chart",
+  "yieldChartAvg7": "7-day avg.",
+  "yieldChartDaily": "Daily"
+}

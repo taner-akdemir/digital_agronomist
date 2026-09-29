@@ -5,6 +5,7 @@ import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/core/format.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/breeding.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
@@ -63,15 +64,15 @@ class BreedingCard extends ConsumerWidget {
           );
       _refresh(ref);
       messenger.showSnackBar(
-        const SnackBar(
-          content: Text('Üreme kaydı eklendi'),
+        SnackBar(
+          content: Text(l10n.breedingAdded),
           backgroundColor: AppColors.darkGreenColor,
         ),
       );
     } catch (e) {
       messenger.showSnackBar(
         SnackBar(
-          content: Text(userMessage(e) ?? 'Kaydedilemedi: $e'),
+          content: Text(userMessage(e) ?? l10n.commonSaveFailed(e)),
           backgroundColor: AppColors.flowRed,
         ),
       );
@@ -86,21 +87,20 @@ class BreedingCard extends ConsumerWidget {
     final ok = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Üreme kaydı silinsin mi?'),
+        title: Text(l10n.breedingDeleteTitle),
         content: Text(
           '${e.label} · ${Fmt.dayMonthYear(e.eventDate)}\n'
-          'Yalnızca yanlış girilen kaydı silin; durum ve tarihler yeniden '
-          'hesaplanır.',
+          '${l10n.breedingDeleteBody}',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Vazgeç'),
+            child: Text(l10n.commonCancel),
           ),
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: AppColors.flowRed),
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Sil'),
+            child: Text(l10n.commonDelete),
           ),
         ],
       ),
@@ -113,7 +113,7 @@ class BreedingCard extends ConsumerWidget {
     } catch (err) {
       messenger.showSnackBar(
         SnackBar(
-          content: Text(userMessage(err) ?? 'Silinemedi: $err'),
+          content: Text(userMessage(err) ?? l10n.commonDeleteFailed(err)),
           backgroundColor: AppColors.flowRed,
         ),
       );
@@ -138,16 +138,19 @@ class BreedingCard extends ConsumerWidget {
         children: [
           Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: Text(
-                  'Üreme',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  l10n.breedingTitle,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               TextButton.icon(
                 onPressed: () => _add(context, ref),
                 icon: const Icon(Icons.add, size: 18),
-                label: const Text('Kayıt ekle'),
+                label: Text(l10n.breedingAddRecord),
                 style: TextButton.styleFrom(
                   foregroundColor: AppColors.darkGreenColor,
                 ),
@@ -163,20 +166,19 @@ class BreedingCard extends ConsumerWidget {
               ),
             ),
             if (p.expectedCalving case final c?)
-              Text('Beklenen doğum: ${Fmt.dayMonthYear(c)}'),
+              Text(l10n.breedingExpectedCalving(Fmt.dayMonthYear(c))),
             if (p.dryOffDate case final d?)
-              Text('Önerilen kuruya çıkarma: ${Fmt.dayMonthYear(d)}'),
+              Text(l10n.breedingDryOff(Fmt.dayMonthYear(d))),
             const SizedBox(height: AppSpacing.sm),
           ],
           AsyncView(
             value: list,
-            errorMessage: 'Üreme kayıtları alınamadı',
+            errorMessage: l10n.breedingLoadFailed,
             builder: (items) {
               if (items.isEmpty) {
-                return const Text(
-                  'Kayıt yok. Tohumlama ve gebelik kontrolünü girin: beklenen '
-                  'doğum ve kuruya çıkarma tarihi hesaplanır.',
-                  style: TextStyle(
+                return Text(
+                  l10n.breedingEmpty,
+                  style: const TextStyle(
                     fontSize: 12,
                     color: AppColors.onSurfaceMuted,
                   ),
@@ -197,7 +199,7 @@ class BreedingCard extends ConsumerWidget {
                       ),
                       trailing: isOwner
                           ? IconButton(
-                              tooltip: 'Yanlış kaydı sil',
+                              tooltip: l10n.commonDeleteWrongRecord,
                               icon: const Icon(Icons.delete_outline),
                               onPressed: () => _delete(context, ref, e),
                             )
@@ -251,18 +253,21 @@ class _BreedingDialogState extends State<_BreedingDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Üreme kaydı'),
+      title: Text(l10n.breedingDialogTitle),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SegmentedButton<String>(
-              segments: const [
-                ButtonSegment(value: 'insemination', label: Text('Tohumlama')),
+              segments: [
+                ButtonSegment(
+                  value: 'insemination',
+                  label: Text(l10n.breedingInsemination),
+                ),
                 ButtonSegment(
                   value: 'pregnancy_check',
-                  label: Text('Gebelik kontrolü'),
+                  label: Text(l10n.breedingPregnancyCheck),
                 ),
               ],
               selected: {_kind},
@@ -284,22 +289,27 @@ class _BreedingDialogState extends State<_BreedingDialog> {
                 );
                 if (picked != null) setState(() => _date = picked);
               },
-              child: Text('Tarih: ${Fmt.dayMonthYear(_date)}'),
+              child: Text(l10n.commonDateLabel(Fmt.dayMonthYear(_date))),
             ),
             const SizedBox(height: AppSpacing.md),
             if (_kind == 'insemination')
               TextField(
                 controller: _sire,
-                decoration: const InputDecoration(
-                  labelText: 'Boğa/teke ya da sperma kodu (isteğe bağlı)',
-                  border: OutlineInputBorder(borderRadius: AppRadius.mdAll),
+                decoration: InputDecoration(
+                  labelText: l10n.breedingSireLabel,
+                  border: const OutlineInputBorder(
+                    borderRadius: AppRadius.mdAll,
+                  ),
                 ),
               )
             else
               SegmentedButton<String>(
-                segments: const [
-                  ButtonSegment(value: 'pregnant', label: Text('Gebe')),
-                  ButtonSegment(value: 'open', label: Text('Boş')),
+                segments: [
+                  ButtonSegment(
+                    value: 'pregnant',
+                    label: Text(l10n.breedingPregnant),
+                  ),
+                  ButtonSegment(value: 'open', label: Text(l10n.breedingOpen)),
                 ],
                 selected: {_result},
                 onSelectionChanged: (s) => setState(() => _result = s.first),
@@ -310,7 +320,7 @@ class _BreedingDialogState extends State<_BreedingDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Vazgeç'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(
@@ -321,7 +331,7 @@ class _BreedingDialogState extends State<_BreedingDialog> {
               _kind == 'pregnancy_check' ? _result : null,
             ),
           ),
-          child: const Text('Kaydet'),
+          child: Text(l10n.commonSave),
         ),
       ],
     );

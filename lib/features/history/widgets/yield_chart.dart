@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/format.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
+import 'package:milktrace/l10n/l10n.dart';
 
 /// Günlük verim ve 7 gün hareketli ortalaması (§15.1).
 ///
@@ -30,12 +31,15 @@ class YieldChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (daily.length < 2) {
-      return const SizedBox(
+      return SizedBox(
         height: 180,
         child: Center(
           child: Text(
-            'Grafik için yeterli geçmiş yok',
-            style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
+            l10n.yieldChartNotEnough,
+            style: const TextStyle(
+              fontSize: 12,
+              color: AppColors.onSurfaceMuted,
+            ),
           ),
         ),
       );
@@ -55,11 +59,17 @@ class YieldChart extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // İKİ SERİ VARSA LEJANT ŞART: kimlik yalnızca renge bırakılmaz.
-        const Row(
+        Row(
           children: [
-            _LegendItem(color: AppColors.chartPrimary, label: '7 gün ort.'),
-            SizedBox(width: AppSpacing.md),
-            _LegendItem(color: AppColors.chartContext, label: 'Günlük'),
+            _LegendItem(
+              color: AppColors.chartPrimary,
+              label: l10n.yieldChartAvg7,
+            ),
+            const SizedBox(width: AppSpacing.md),
+            _LegendItem(
+              color: AppColors.chartContext,
+              label: l10n.yieldChartDaily,
+            ),
           ],
         ),
         const SizedBox(height: AppSpacing.sm),
@@ -135,7 +145,7 @@ class YieldChart extends StatelessWidget {
                     for (final s in spots)
                       LineTooltipItem(
                         s.barIndex == 1
-                            ? '7 gün ort. ${s.y.toStringAsFixed(1)} $unit'
+                            ? '${l10n.yieldChartAvg7} ${s.y.toStringAsFixed(1)} $unit'
                             : '${Fmt.dayMonth(daily[s.x.round()].date)}  '
                                   '${s.y.toStringAsFixed(1)} $unit',
                         const TextStyle(color: Colors.white, fontSize: 11),

@@ -5,6 +5,7 @@ import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/core/format.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/treatment.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
@@ -53,15 +54,15 @@ class TreatmentsCard extends ConsumerWidget {
         // Hayvanın arınma günü değişti: liste, detay ve seçici görsün.
         ..invalidate(animalsProvider);
       messenger.showSnackBar(
-        const SnackBar(
-          content: Text('Tedavi kaydedildi'),
+        SnackBar(
+          content: Text(l10n.treatmentSaved),
           backgroundColor: AppColors.darkGreenColor,
         ),
       );
     } catch (e) {
       messenger.showSnackBar(
         SnackBar(
-          content: Text(userMessage(e) ?? 'Tedavi kaydedilemedi: $e'),
+          content: Text(userMessage(e) ?? l10n.treatmentSaveFailed(e)),
           backgroundColor: AppColors.flowRed,
         ),
       );
@@ -72,21 +73,20 @@ class TreatmentsCard extends ConsumerWidget {
     final ok = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Tedavi kaydı silinsin mi?'),
+        title: Text(l10n.treatmentDeleteTitle),
         content: Text(
           '${t.drug} · ${Fmt.dayMonthYear(t.startedOn)}\n'
-          'Yalnızca yanlış girilen kaydı silin; silinen kayıt arınmayı da '
-          'kaldırır.',
+          '${l10n.treatmentDeleteBody}',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Vazgeç'),
+            child: Text(l10n.commonCancel),
           ),
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: AppColors.flowRed),
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Sil'),
+            child: Text(l10n.commonDelete),
           ),
         ],
       ),
@@ -101,7 +101,7 @@ class TreatmentsCard extends ConsumerWidget {
     } catch (e) {
       messenger.showSnackBar(
         SnackBar(
-          content: Text(userMessage(e) ?? 'Silinemedi: $e'),
+          content: Text(userMessage(e) ?? l10n.commonDeleteFailed(e)),
           backgroundColor: AppColors.flowRed,
         ),
       );
@@ -126,16 +126,19 @@ class TreatmentsCard extends ConsumerWidget {
         children: [
           Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: Text(
-                  'Tedavi ve arınma',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  l10n.treatmentTitle,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               TextButton.icon(
                 onPressed: () => _add(context, ref),
                 icon: const Icon(Icons.add, size: 18),
-                label: const Text('Tedavi ekle'),
+                label: Text(l10n.treatmentAdd),
                 style: TextButton.styleFrom(
                   foregroundColor: AppColors.darkGreenColor,
                 ),
@@ -157,8 +160,7 @@ class TreatmentsCard extends ConsumerWidget {
                   const SizedBox(width: AppSpacing.sm),
                   Expanded(
                     child: Text(
-                      'Arınmada: sütü ${Fmt.dayMonthYear(until)} dahil '
-                      'tanka katmayın.',
+                      l10n.treatmentWithdrawalBanner(Fmt.dayMonthYear(until)),
                       style: const TextStyle(
                         color: AppColors.darkRedColor,
                         fontWeight: FontWeight.w600,
@@ -170,14 +172,12 @@ class TreatmentsCard extends ConsumerWidget {
             ),
           AsyncView(
             value: list,
-            errorMessage: 'Tedaviler alınamadı',
+            errorMessage: l10n.treatmentLoadFailed,
             builder: (items) {
               if (items.isEmpty) {
-                return const Text(
-                  'Tedavi kaydı yok. Antibiyotik verilen hayvanın arınma '
-                  'süresini girin: süre boyunca canlı ekranda "Sütü ayır" '
-                  'uyarısı çıkar.',
-                  style: TextStyle(
+                return Text(
+                  l10n.treatmentEmpty,
+                  style: const TextStyle(
                     fontSize: 12,
                     color: AppColors.onSurfaceMuted,
                   ),
@@ -192,15 +192,17 @@ class TreatmentsCard extends ConsumerWidget {
                       title: Text(t.drug),
                       subtitle: Text(
                         [
-                          '${Fmt.dayMonthYear(t.startedOn)} → arınma '
-                              '${Fmt.dayMonthYear(t.withdrawalUntil)}',
+                          l10n.treatmentRange(
+                            Fmt.dayMonthYear(t.startedOn),
+                            Fmt.dayMonthYear(t.withdrawalUntil),
+                          ),
                           if (t.note.isNotEmpty) t.note,
                           if ((t.authorName ?? '').isNotEmpty) t.authorName!,
                         ].join(' · '),
                       ),
                       trailing: isOwner
                           ? IconButton(
-                              tooltip: 'Yanlış kaydı sil',
+                              tooltip: l10n.commonDeleteWrongRecord,
                               icon: const Icon(Icons.delete_outline),
                               onPressed: () => _delete(context, ref, t),
                             )
@@ -259,7 +261,7 @@ class _TreatmentDialogState extends State<_TreatmentDialog> {
       initialDate: start ? _start : _until,
       firstDate: start ? today.subtract(const Duration(days: 60)) : _start,
       lastDate: start ? today : _start.add(const Duration(days: 365)),
-      helpText: start ? 'Tedavi başlangıcı' : 'Sütün ayrılacağı son gün',
+      helpText: start ? l10n.treatmentStartHelp : l10n.treatmentUntilHelp,
     );
     if (picked == null) return;
     setState(() {
@@ -276,7 +278,7 @@ class _TreatmentDialogState extends State<_TreatmentDialog> {
   Widget build(BuildContext context) {
     const border = OutlineInputBorder(borderRadius: AppRadius.mdAll);
     return AlertDialog(
-      title: const Text('Tedavi ekle'),
+      title: Text(l10n.treatmentAdd),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -284,27 +286,27 @@ class _TreatmentDialogState extends State<_TreatmentDialog> {
           children: [
             TextField(
               controller: _drug,
-              decoration: const InputDecoration(
-                labelText: 'İlaç',
+              decoration: InputDecoration(
+                labelText: l10n.treatmentDrug,
                 border: border,
               ),
             ),
             const SizedBox(height: AppSpacing.md),
             OutlinedButton(
               onPressed: () => _pick(start: true),
-              child: Text('Başlangıç: ${Fmt.dayMonthYear(_start)}'),
+              child: Text(l10n.treatmentStart(Fmt.dayMonthYear(_start))),
             ),
             const SizedBox(height: AppSpacing.sm),
             OutlinedButton(
               onPressed: () => _pick(start: false),
-              child: Text('Arınma bitişi: ${Fmt.dayMonthYear(_until)}'),
+              child: Text(l10n.treatmentUntil(Fmt.dayMonthYear(_until))),
             ),
             Wrap(
               spacing: AppSpacing.sm,
               children: [
                 for (final d in const [3, 5, 7])
                   ActionChip(
-                    label: Text('+$d gün'),
+                    label: Text(l10n.treatmentPlusDays(d)),
                     onPressed: () =>
                         setState(() => _until = _start.add(Duration(days: d))),
                   ),
@@ -313,8 +315,8 @@ class _TreatmentDialogState extends State<_TreatmentDialog> {
             const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: _note,
-              decoration: const InputDecoration(
-                labelText: 'Not (isteğe bağlı)',
+              decoration: InputDecoration(
+                labelText: l10n.commonNoteOptional,
                 border: border,
               ),
             ),
@@ -331,20 +333,20 @@ class _TreatmentDialogState extends State<_TreatmentDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Vazgeç'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           onPressed: () {
             final drug = _drug.text.trim();
             if (drug.isEmpty) {
-              setState(() => _error = 'İlaç adını girin.');
+              setState(() => _error = l10n.treatmentDrugRequired);
               return;
             }
             Navigator.of(
               context,
             ).pop(_Draft(drug, _start, _until, _note.text.trim()));
           },
-          child: const Text('Kaydet'),
+          child: Text(l10n.commonSave),
         ),
       ],
     );

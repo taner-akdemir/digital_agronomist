@@ -1,0 +1,226 @@
+{
+  "animalDetailTitleFallback": "Hayvan",
+  "animalDetailLoadFailed": "Hayvan bilgisi yüklenemedi",
+  "animalDetailNotRegistered": "Bu hayvan kayıtlı değil",
+  "animalDetailTrendFailed": "Trend alınamadı",
+  "animalDetailHistoryFailed": "Sağım geçmişi alınamadı",
+  "animalDetailCalved": "Buzağıladı",
+  "animalDetailCalvingAlreadyToday": "Bugün için buzağılama zaten kayıtlı",
+  "animalDetailCalvingDate": "Buzağılama tarihi",
+  "animalDetailCalvingConfirmTitle": "Buzağılama kaydedilsin mi?",
+  "animalDetailCalvingLactation": "Laktasyon {current} → {next}",
+  "@animalDetailCalvingLactation": {
+    "placeholders": {
+      "current": {},
+      "next": {}
+    }
+  },
+  "animalDetailCalvingStatus": "Durum {status} → Sağmal",
+  "@animalDetailCalvingStatus": {
+    "placeholders": {
+      "status": {}
+    }
+  },
+  "animalDetailCalvingSaved": "Buzağılama kaydedildi",
+  "animalDetailBreed": "Irk",
+  "animalDetailGroup": "Grup",
+  "animalDetailLactation": "Laktasyon",
+  "animalDetailLastCalving": "Son buzağılama",
+  "animalDetailDaysInMilk": "Laktasyon günü",
+  "animalDetailOrdinal": "{n}.",
+  "@animalDetailOrdinal": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "animalDetailFreshLactation": "Taze laktasyon: ilk {days} günde \"düşüşte\" ve \"kuruya çıkarma adayı\" etiketi verilmez; verim henüz yükseliyor.",
+  "@animalDetailFreshLactation": {
+    "placeholders": {
+      "days": {}
+    }
+  },
+  "animalDetailStaleClass": "Sınıf {date} hesabından: gece hesabı yalnızca son 30 günde sağılan hayvanı yeniler.",
+  "@animalDetailStaleClass": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "animalDetailDisclaimer": "Bu bir öneridir, teşhis değildir. Gebelik, laktasyon dönemi ve hastalık verimi düşürebilir; veteriner kontrolü gerekir.",
+  "animalDetailLastClass": "Son sınıf: {label}",
+  "@animalDetailLastClass": {
+    "placeholders": {
+      "label": {}
+    }
+  },
+  "animalDetailFrozenClassNote": "Sağmal olmayan hayvan sınıflandırılmaz; bu etiket sağmalken yapılan son hesaptan kalmadır.",
+  "animalDetailYieldTrend": "Verim trendi",
+  "animalDetailAvg7": "7 gün ort.",
+  "animalDetailAvg30": "30 gün ort.",
+  "animalDetailTrend30": "30 günlük eğilim",
+  "animalDetailNoMilkings": "Bu hayvana ait sağım kaydı yok",
+  "animalDetailRecentMilkings": "Son sağımlar",
+  "animalDetailShownOfTotal": "{total} sağımın ilk {limit} tanesi gösteriliyor",
+  "@animalDetailShownOfTotal": {
+    "placeholders": {
+      "total": {},
+      "limit": {}
+    }
+  },
+  "animalDetailNoteAdded": "Not eklendi",
+  "animalDetailNoteAddFailed": "Not eklenemedi: {error}",
+  "@animalDetailNoteAddFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "animalDetailNotes": "Notlar",
+  "animalDetailAddNote": "Not ekle",
+  "animalDetailNotesFailed": "Notlar alınamadı",
+  "animalDetailNoNotes": "Henüz not yok. Veteriner kontrolü, gebelik ya da tedavi bilgisi sınıf etiketini yorumlamaya yardım eder.",
+  "animalDetailMoreNotes": "{n, plural, other{{n} not daha}}",
+  "@animalDetailMoreNotes": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "animalDetailNoteHint": "Örn. Son veteriner kontrolü: mastitis, tedavide.",
+  "animalFormEditTitle": "Hayvanı düzenle",
+  "animalFormNewTitle": "Yeni hayvan",
+  "animalFormSpeciesFailed": "Türler yüklenemedi",
+  "animalFormAnimalFailed": "Hayvan yüklenemedi",
+  "animalFormNotFound": "Hayvan bulunamadı",
+  "animalFormAdded": "Hayvan eklendi",
+  "animalFormUpdated": "Hayvan güncellendi",
+  "animalFormEarTag": "Küpe numarası",
+  "animalFormEarTagHelper": "Hayvanı tanımlayan alan; işletmede tekil.",
+  "animalFormEarTagRequired": "Küpe numarası zorunlu",
+  "animalFormSpecies": "Tür",
+  "animalFormSpeciesRequired": "Tür seçin",
+  "animalFormName": "Ad (isteğe bağlı)",
+  "animalFormBreed": "Irk (isteğe bağlı)",
+  "animalFormRfid": "RFID (isteğe bağlı)",
+  "animalFormRfidHelper": "Küpedeki çipin numarası; sayaç okursa hayvan noktaya kendiliğinden eşleşir.",
+  "animalFormBirthDate": "Doğum tarihi",
+  "animalFormLastCalving": "Son buzağılama",
+  "animalFormLactationNo": "Laktasyon sırası",
+  "animalFormStatus": "Durum",
+  "animalFormStatusHelper": "Yalnızca sağmal hayvan sağıma eşleştirilir ve sınıflandırılır.",
+  "animalFormGroup": "Grup",
+  "animalFormNoGroup": "Grupsuz",
+  "animalFormSaving": "Kaydediliyor…",
+  "animalFormNotEntered": "Girilmedi",
+  "animalFormClearDate": "{label} temizle",
+  "@animalFormClearDate": {
+    "placeholders": {
+      "label": {}
+    }
+  },
+  "animalFormPickDate": "{label} seç",
+  "@animalFormPickDate": {
+    "placeholders": {
+      "label": {}
+    }
+  },
+  "breedingAdded": "Üreme kaydı eklendi",
+  "breedingDeleteTitle": "Üreme kaydı silinsin mi?",
+  "breedingDeleteBody": "Yalnızca yanlış girilen kaydı silin; durum ve tarihler yeniden hesaplanır.",
+  "breedingTitle": "Üreme",
+  "breedingAddRecord": "Kayıt ekle",
+  "breedingExpectedCalving": "Beklenen doğum: {date}",
+  "@breedingExpectedCalving": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "breedingDryOff": "Önerilen kuruya çıkarma: {date}",
+  "@breedingDryOff": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "breedingLoadFailed": "Üreme kayıtları alınamadı",
+  "breedingEmpty": "Kayıt yok. Tohumlama ve gebelik kontrolünü girin: beklenen doğum ve kuruya çıkarma tarihi hesaplanır.",
+  "breedingDialogTitle": "Üreme kaydı",
+  "breedingInsemination": "Tohumlama",
+  "breedingPregnancyCheck": "Gebelik kontrolü",
+  "breedingSireLabel": "Boğa/teke ya da sperma kodu (isteğe bağlı)",
+  "breedingPregnant": "Gebe",
+  "breedingOpen": "Boş",
+  "treatmentSaved": "Tedavi kaydedildi",
+  "treatmentSaveFailed": "Tedavi kaydedilemedi: {error}",
+  "@treatmentSaveFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "treatmentDeleteTitle": "Tedavi kaydı silinsin mi?",
+  "treatmentDeleteBody": "Yalnızca yanlış girilen kaydı silin; silinen kayıt arınmayı da kaldırır.",
+  "treatmentTitle": "Tedavi ve arınma",
+  "treatmentAdd": "Tedavi ekle",
+  "treatmentWithdrawalBanner": "Arınmada: sütü {date} dahil tanka katmayın.",
+  "@treatmentWithdrawalBanner": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "treatmentLoadFailed": "Tedaviler alınamadı",
+  "treatmentEmpty": "Tedavi kaydı yok. Antibiyotik verilen hayvanın arınma süresini girin: süre boyunca canlı ekranda \"Sütü ayır\" uyarısı çıkar.",
+  "treatmentRange": "{start} → arınma {until}",
+  "@treatmentRange": {
+    "placeholders": {
+      "start": {},
+      "until": {}
+    }
+  },
+  "treatmentStartHelp": "Tedavi başlangıcı",
+  "treatmentUntilHelp": "Sütün ayrılacağı son gün",
+  "treatmentDrug": "İlaç",
+  "treatmentStart": "Başlangıç: {date}",
+  "@treatmentStart": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "treatmentUntil": "Arınma bitişi: {date}",
+  "@treatmentUntil": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "treatmentPlusDays": "{n, plural, other{+{n} gün}}",
+  "@treatmentPlusDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "treatmentDrugRequired": "İlaç adını girin.",
+  "yieldReportShareSubject": "Milk Trace verim raporu",
+  "yieldReportFailed": "Rapor alınamadı: {error}",
+  "@yieldReportFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "yieldReportTitle": "Verim raporu",
+  "yieldReportDescription": "Hayvan başına günlük verim ({unit}), Excel dosyası. Veterinere ya da danışmana gönderebilirsiniz.",
+  "@yieldReportDescription": {
+    "placeholders": {
+      "unit": {}
+    }
+  },
+  "yieldReportKilogram": "kilogram",
+  "yieldReportLitre": "litre",
+  "yieldReportLastDays": "Son {n} gün",
+  "@yieldReportLastDays": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "yieldChartNotEnough": "Grafik için yeterli geçmiş yok",
+  "yieldChartAvg7": "7 gün ort.",
+  "yieldChartDaily": "Günlük"
+}

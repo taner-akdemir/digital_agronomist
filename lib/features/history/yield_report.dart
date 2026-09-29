@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/data/repositories/milktrace_repository.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -25,7 +26,7 @@ Future<void> Function(ReportFile) reportSharer(Ref ref) => (f) async {
         ),
       ],
       fileNameOverrides: [f.name],
-      subject: 'Milk Trace verim raporu',
+      subject: l10n.yieldReportShareSubject,
     ),
   );
 };
@@ -73,7 +74,7 @@ class _ReportSheetState extends ConsumerState<_ReportSheet> {
       if (mounted) Navigator.of(context).pop();
     } catch (e) {
       if (mounted) {
-        setState(() => _error = userMessage(e) ?? 'Rapor alınamadı: $e');
+        setState(() => _error = userMessage(e) ?? l10n.yieldReportFailed(e));
       }
     } finally {
       if (mounted) setState(() => _busyDays = null);
@@ -96,9 +97,9 @@ class _ReportSheetState extends ConsumerState<_ReportSheet> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text(
-                'Verim raporu',
-                style: TextStyle(
+              Text(
+                l10n.yieldReportTitle,
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                   color: AppColors.darkGreenColor,
@@ -106,9 +107,11 @@ class _ReportSheetState extends ConsumerState<_ReportSheet> {
               ),
               const SizedBox(height: AppSpacing.xs),
               Text(
-                'Hayvan başına günlük verim '
-                '(${ref.watch(volumeFormatProvider).isKg ? 'kilogram' : 'litre'}), '
-                'Excel dosyası. Veterinere ya da danışmana gönderebilirsiniz.',
+                l10n.yieldReportDescription(
+                  ref.watch(volumeFormatProvider).isKg
+                      ? l10n.yieldReportKilogram
+                      : l10n.yieldReportLitre,
+                ),
                 style: const TextStyle(
                   fontSize: 13,
                   color: AppColors.onSurfaceMuted,
@@ -124,7 +127,7 @@ class _ReportSheetState extends ConsumerState<_ReportSheet> {
                           child: CircularProgressIndicator(strokeWidth: 2),
                         )
                       : const Icon(Icons.table_view_outlined),
-                  title: Text('Son $d gün'),
+                  title: Text(l10n.yieldReportLastDays(d)),
                   enabled: _busyDays == null,
                   onTap: () => _run(d),
                 ),

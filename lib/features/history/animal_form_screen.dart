@@ -8,6 +8,7 @@ import 'package:milktrace/core/format.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/features/history/history_providers.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
@@ -35,7 +36,7 @@ class AnimalFormScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _isEdit ? 'Hayvanı düzenle' : 'Yeni hayvan',
+          _isEdit ? l10n.animalFormEditTitle : l10n.animalFormNewTitle,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
@@ -45,16 +46,16 @@ class AnimalFormScreen extends ConsumerWidget {
       ),
       body: AsyncView(
         value: species,
-        errorMessage: 'Türler yüklenemedi',
+        errorMessage: l10n.animalFormSpeciesFailed,
         builder: (speciesList) => AsyncView(
           value: animals,
-          errorMessage: 'Hayvan yüklenemedi',
+          errorMessage: l10n.animalFormAnimalFailed,
           builder: (list) {
             final existing = _isEdit
                 ? list.where((a) => a.id == animalId).firstOrNull
                 : null;
             if (_isEdit && existing == null) {
-              return const Center(child: Text('Hayvan bulunamadı'));
+              return Center(child: Text(l10n.animalFormNotFound));
             }
             return _Form(species: speciesList, existing: existing);
           },
@@ -153,12 +154,14 @@ class _FormState extends ConsumerState<_Form> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(base == null ? 'Hayvan eklendi' : 'Hayvan güncellendi'),
+          content: Text(
+            base == null ? l10n.animalFormAdded : l10n.animalFormUpdated,
+          ),
         ),
       );
       context.go('/history/animal/${saved.id}');
     } catch (e) {
-      setState(() => _error = userMessage(e) ?? 'Kaydedilemedi: $e');
+      setState(() => _error = userMessage(e) ?? l10n.commonSaveFailed(e));
     } finally {
       if (mounted) setState(() => _busy = false);
     }
@@ -188,37 +191,36 @@ class _FormState extends ConsumerState<_Form> {
         children: [
           _field(
             _earTag,
-            'Küpe numarası',
-            helper: 'Hayvanı tanımlayan alan; işletmede tekil.',
+            l10n.animalFormEarTag,
+            helper: l10n.animalFormEarTagHelper,
             validator: (v) =>
-                (v ?? '').trim().isEmpty ? 'Küpe numarası zorunlu' : null,
+                (v ?? '').trim().isEmpty ? l10n.animalFormEarTagRequired : null,
           ),
           _gap,
           DropdownButtonFormField<String>(
             initialValue: _speciesId,
-            decoration: _decoration('Tür'),
+            decoration: _decoration(l10n.animalFormSpecies),
             items: [
               for (final s in widget.species)
                 DropdownMenuItem(value: s.id, child: Text(s.nameTr)),
             ],
-            validator: (v) => v == null ? 'Tür seçin' : null,
+            validator: (v) => v == null ? l10n.animalFormSpeciesRequired : null,
             onChanged: (v) => setState(() => _speciesId = v),
           ),
           _gap,
-          _field(_name, 'Ad (isteğe bağlı)'),
+          _field(_name, l10n.animalFormName),
           _gap,
-          _field(_breed, 'Irk (isteğe bağlı)'),
+          _field(_breed, l10n.animalFormBreed),
           _gap,
           _field(
             _rfid,
-            'RFID (isteğe bağlı)',
-            helper:
-                'Küpedeki çipin numarası; sayaç okursa hayvan noktaya kendiliğinden eşleşir.',
+            l10n.animalFormRfid,
+            helper: l10n.animalFormRfidHelper,
             keyboard: TextInputType.number,
           ),
           _gap,
           _DateRow(
-            label: 'Doğum tarihi',
+            label: l10n.animalFormBirthDate,
             value: _birth,
             onPick: () => _pickDate(
               current: _birth,
@@ -227,7 +229,7 @@ class _FormState extends ConsumerState<_Form> {
             onClear: () => setState(() => _birth = null),
           ),
           _DateRow(
-            label: 'Son buzağılama',
+            label: l10n.animalFormLastCalving,
             value: _calving,
             onPick: () => _pickDate(
               current: _calving,
@@ -238,7 +240,7 @@ class _FormState extends ConsumerState<_Form> {
           _gap,
           _field(
             _lactation,
-            'Laktasyon sırası',
+            l10n.animalFormLactationNo,
             keyboard: TextInputType.number,
             formatters: [FilteringTextInputFormatter.digitsOnly],
           ),
@@ -246,9 +248,8 @@ class _FormState extends ConsumerState<_Form> {
           DropdownButtonFormField<String>(
             initialValue: _status,
             decoration: _decoration(
-              'Durum',
-              helper:
-                  'Yalnızca sağmal hayvan sağıma eşleştirilir ve sınıflandırılır.',
+              l10n.animalFormStatus,
+              helper: l10n.animalFormStatusHelper,
             ),
             items: [
               for (final s in _statuses)
@@ -275,9 +276,9 @@ class _FormState extends ConsumerState<_Form> {
               initialValue: groups.any((g) => g.id == _groupId)
                   ? _groupId
                   : null,
-              decoration: _decoration('Grup'),
+              decoration: _decoration(l10n.animalFormGroup),
               items: [
-                const DropdownMenuItem<String?>(child: Text('Grupsuz')),
+                DropdownMenuItem<String?>(child: Text(l10n.animalFormNoGroup)),
                 for (final g in groups)
                   DropdownMenuItem<String?>(value: g.id, child: Text(g.name)),
               ],
@@ -301,7 +302,7 @@ class _FormState extends ConsumerState<_Form> {
                 borderRadius: AppRadius.mdAll,
               ),
             ),
-            child: Text(_busy ? 'Kaydediliyor…' : 'Kaydet'),
+            child: Text(_busy ? l10n.animalFormSaving : l10n.commonSave),
           ),
         ],
       ),
@@ -357,18 +358,20 @@ class _DateRow extends StatelessWidget {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       title: Text(label),
-      subtitle: Text(v == null ? 'Girilmedi' : Fmt.dayMonthYear(v)),
+      subtitle: Text(
+        v == null ? l10n.animalFormNotEntered : Fmt.dayMonthYear(v),
+      ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           if (v != null)
             IconButton(
-              tooltip: '$label temizle',
+              tooltip: l10n.animalFormClearDate(label),
               onPressed: onClear,
               icon: const Icon(Icons.close),
             ),
           IconButton(
-            tooltip: '$label seç',
+            tooltip: l10n.animalFormPickDate(label),
             onPressed: onPick,
             icon: const Icon(Icons.calendar_today_outlined),
           ),

@@ -15,6 +15,7 @@ import 'package:milktrace/features/history/treatments_card.dart';
 import 'package:milktrace/features/history/widgets/animal_status_chip.dart';
 import 'package:milktrace/features/history/widgets/yield_chart.dart';
 import 'package:milktrace/features/history/widgets/yield_class_badge.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
@@ -45,17 +46,17 @@ class AnimalDetailScreen extends ConsumerWidget {
                   ?.where((a) => a.id == animalId)
                   .map((a) => a.name ?? a.earTag)
                   .firstOrNull ??
-              'Hayvan',
+              l10n.animalDetailTitleFallback,
         ),
         Expanded(
           child: AsyncView(
             value: animals,
-            errorMessage: 'Hayvan bilgisi yüklenemedi',
+            errorMessage: l10n.animalDetailLoadFailed,
             builder: (list) {
               final animal = list.where((a) => a.id == animalId).firstOrNull;
               if (animal == null) {
-                return const Center(
-                  child: ErrorView(message: 'Bu hayvan kayıtlı değil'),
+                return Center(
+                  child: ErrorView(message: l10n.animalDetailNotRegistered),
                 );
               }
               return _Body(animal: animal);
@@ -87,7 +88,7 @@ class _BackBar extends ConsumerWidget {
       child: Row(
         children: [
           IconButton(
-            tooltip: 'Geri',
+            tooltip: l10n.commonBack,
             onPressed: () => context.go('/history'),
             icon: const Icon(Icons.arrow_back),
           ),
@@ -105,7 +106,7 @@ class _BackBar extends ConsumerWidget {
           ),
           if (isOwner)
             IconButton(
-              tooltip: 'Düzenle',
+              tooltip: l10n.commonEdit,
               onPressed: () => context.push('/animals/$animalId/edit'),
               icon: const Icon(Icons.edit_outlined),
             ),
@@ -168,7 +169,7 @@ class _Body extends ConsumerWidget {
           const SizedBox(height: AppSpacing.md),
           AsyncView(
             value: trend,
-            errorMessage: 'Trend alınamadı',
+            errorMessage: l10n.animalDetailTrendFailed,
             builder: (t) => _TrendCard(
               trend: t,
               volume: ref.watch(volumeFormatProvider),
@@ -178,7 +179,7 @@ class _Body extends ConsumerWidget {
           const SizedBox(height: AppSpacing.md),
           AsyncView(
             value: history,
-            errorMessage: 'Sağım geçmişi alınamadı',
+            errorMessage: l10n.animalDetailHistoryFailed,
             builder: (h) => _HistoryCard(
               milkings: h,
               volume: ref.watch(volumeFormatProvider),
@@ -206,7 +207,7 @@ class _CalvingButton extends ConsumerWidget {
       child: TextButton.icon(
         onPressed: () => _record(context, ref),
         icon: const Icon(Icons.child_friendly_outlined),
-        label: const Text('Buzağıladı'),
+        label: Text(l10n.animalDetailCalved),
         style: TextButton.styleFrom(foregroundColor: AppColors.darkGreenColor),
       ),
     );
@@ -225,7 +226,7 @@ class _CalvingButton extends ConsumerWidget {
     }
     if (first.isAfter(today)) {
       messenger.showSnackBar(
-        const SnackBar(content: Text('Bugün için buzağılama zaten kayıtlı')),
+        SnackBar(content: Text(l10n.animalDetailCalvingAlreadyToday)),
       );
       return;
     }
@@ -234,32 +235,36 @@ class _CalvingButton extends ConsumerWidget {
       initialDate: today,
       firstDate: first,
       lastDate: today,
-      helpText: 'Buzağılama tarihi',
+      helpText: l10n.animalDetailCalvingDate,
     );
     if (date == null || !context.mounted) return;
 
     final ok = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Buzağılama kaydedilsin mi?'),
+        title: Text(l10n.animalDetailCalvingConfirmTitle),
         content: Text(
           [
             '${animal.name ?? animal.earTag} · ${Fmt.dayMonthYear(date)}',
-            'Laktasyon ${animal.lactationNo} → ${animal.lactationNo + 1}',
-            if (!animal.isMilking) 'Durum ${animal.statusLabel} → Sağmal',
+            l10n.animalDetailCalvingLactation(
+              animal.lactationNo,
+              animal.lactationNo + 1,
+            ),
+            if (!animal.isMilking)
+              l10n.animalDetailCalvingStatus(animal.statusLabel),
           ].join('\n'),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Vazgeç'),
+            child: Text(l10n.commonCancel),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
             style: FilledButton.styleFrom(
               backgroundColor: AppColors.darkGreenColor,
             ),
-            child: const Text('Kaydet'),
+            child: Text(l10n.commonSave),
           ),
         ],
       ),
@@ -273,15 +278,15 @@ class _CalvingButton extends ConsumerWidget {
         ..invalidate(animalNotesProvider(animal.id))
         ..invalidate(animalTrendProvider(animal.id));
       messenger.showSnackBar(
-        const SnackBar(
-          content: Text('Buzağılama kaydedildi'),
+        SnackBar(
+          content: Text(l10n.animalDetailCalvingSaved),
           backgroundColor: AppColors.darkGreenColor,
         ),
       );
     } catch (e) {
       messenger.showSnackBar(
         SnackBar(
-          content: Text(userMessage(e) ?? 'Kaydedilemedi: $e'),
+          content: Text(userMessage(e) ?? l10n.commonSaveFailed(e)),
           backgroundColor: AppColors.flowRed,
         ),
       );
@@ -340,17 +345,25 @@ class _IdentityCard extends StatelessWidget {
             spacing: AppSpacing.md,
             runSpacing: AppSpacing.xs,
             children: [
-              if (animal.breed != null) _Fact('Irk', animal.breed!),
-              if (animal.groupName != null) _Fact('Grup', animal.groupName!),
-              _Fact('Laktasyon', '${animal.lactationNo}.'),
+              if (animal.breed != null)
+                _Fact(l10n.animalDetailBreed, animal.breed!),
+              if (animal.groupName != null)
+                _Fact(l10n.animalDetailGroup, animal.groupName!),
+              _Fact(
+                l10n.animalDetailLactation,
+                l10n.animalDetailOrdinal(animal.lactationNo),
+              ),
               if (animal.lastCalvingDate != null)
                 _Fact(
-                  'Son buzağılama',
+                  l10n.animalDetailLastCalving,
                   Fmt.dayMonthYear(animal.lastCalvingDate!),
                 ),
               // Laktasyon günü yalnızca SAĞMAL hayvanda anlamlı.
               if (animal.isMilking && dim != null)
-                _Fact('Laktasyon günü', '$dim.'),
+                _Fact(
+                  l10n.animalDetailDaysInMilk,
+                  l10n.animalDetailOrdinal(dim),
+                ),
             ],
           ),
           if (animal.isMilking && dim != null && dim < freshDays) ...[
@@ -358,8 +371,7 @@ class _IdentityCard extends StatelessWidget {
             // Neden "düşüşte" ya da "kuruya aday" görünmediği: sınıf
             // etiketinin kendisi kadar açıklaması da ekranda (§6.4).
             Text(
-              'Taze laktasyon: ilk $freshDays günde "düşüşte" ve "kuruya '
-              'çıkarma adayı" etiketi verilmez; verim henüz yükseliyor.',
+              l10n.animalDetailFreshLactation(freshDays),
               style: const TextStyle(
                 fontSize: 12,
                 color: AppColors.onSurfaceMuted,
@@ -377,8 +389,7 @@ class _IdentityCard extends StatelessWidget {
             if (_stale(animal) case final at?) ...[
               const SizedBox(height: AppSpacing.xs),
               Text(
-                'Sınıf ${Fmt.dayMonthYear(at)} hesabından: gece hesabı '
-                'yalnızca son 30 günde sağılan hayvanı yeniler.',
+                l10n.animalDetailStaleClass(Fmt.dayMonthYear(at)),
                 style: const TextStyle(
                   fontSize: 12,
                   color: AppColors.onSurfaceMuted,
@@ -393,20 +404,19 @@ class _IdentityCard extends StatelessWidget {
             // §6.4'ün uyarısı ekranda DURMALI: sistem karar destek aracıdır,
             // kesim kararı vermez. Bu cümle olmadan rozet bir teşhis gibi
             // okunurdu.
-            const Row(
+            Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(
+                const Icon(
                   Icons.info_outline,
                   size: 14,
                   color: AppColors.lightGreyColor,
                 ),
-                SizedBox(width: AppSpacing.xs),
+                const SizedBox(width: AppSpacing.xs),
                 Expanded(
                   child: Text(
-                    'Bu bir öneridir, teşhis değildir. Gebelik, laktasyon dönemi '
-                    've hastalık verimi düşürebilir; veteriner kontrolü gerekir.',
-                    style: TextStyle(
+                    l10n.animalDetailDisclaimer,
+                    style: const TextStyle(
                       fontSize: 11,
                       color: AppColors.onSurfaceMuted,
                       height: 1.4,
@@ -451,15 +461,14 @@ class _FrozenClass extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Son sınıf: ${animal.yieldClass.label}'
+          '${l10n.animalDetailLastClass(animal.yieldClass.label)}'
           '${at == null ? '' : ' (${Fmt.dayMonthYear(at)})'}',
           style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
         ),
         const SizedBox(height: AppSpacing.xs),
-        const Text(
-          'Sağmal olmayan hayvan sınıflandırılmaz; bu etiket sağmalken '
-          'yapılan son hesaptan kalmadır.',
-          style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
+        Text(
+          l10n.animalDetailFrozenClassNote,
+          style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
         ),
       ],
     );
@@ -495,22 +504,25 @@ class _TrendCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Verim trendi',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          Text(
+            l10n.animalDetailYieldTrend,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
           const SizedBox(height: AppSpacing.md),
           Row(
             children: [
-              _Stat('7 gün ort.', volume.amount(trend.ma7Ml, species: species)),
               _Stat(
-                '30 gün ort.',
+                l10n.animalDetailAvg7,
+                volume.amount(trend.ma7Ml, species: species),
+              ),
+              _Stat(
+                l10n.animalDetailAvg30,
                 volume.amount(trend.ma30Ml, species: species),
               ),
               _Stat(
-                '30 günlük eğilim',
+                l10n.animalDetailTrend30,
                 '${monthly >= 0 ? '+' : ''}${monthly.toStringAsFixed(1)} '
-                    '${volume.label}',
+                '${volume.label}',
                 color: !notable
                     ? null
                     : monthly < 0
@@ -554,10 +566,10 @@ class _HistoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (milkings.isEmpty) {
-      return const _Card(
+      return _Card(
         child: Text(
-          'Bu hayvana ait sağım kaydı yok',
-          style: TextStyle(color: AppColors.onSurfaceMuted),
+          l10n.animalDetailNoMilkings,
+          style: const TextStyle(color: AppColors.onSurfaceMuted),
         ),
       );
     }
@@ -568,9 +580,9 @@ class _HistoryCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Son sağımlar',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          Text(
+            l10n.animalDetailRecentMilkings,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
           const SizedBox(height: AppSpacing.sm),
           for (final m in shown)
@@ -578,7 +590,7 @@ class _HistoryCard extends StatelessWidget {
           if (milkings.length > _limit) ...[
             const SizedBox(height: AppSpacing.sm),
             Text(
-              '${milkings.length} sağımın ilk $_limit tanesi gösteriliyor',
+              l10n.animalDetailShownOfTotal(milkings.length, _limit),
               style: const TextStyle(
                 fontSize: 11,
                 color: AppColors.onSurfaceMuted,
@@ -740,10 +752,14 @@ class _NotesCard extends ConsumerWidget {
     try {
       await ref.read(repositoryProvider).addAnimalNote(animalId, text);
       ref.invalidate(animalNotesProvider(animalId));
-      messenger.showSnackBar(const SnackBar(content: Text('Not eklendi')));
+      messenger.showSnackBar(
+        SnackBar(content: Text(l10n.animalDetailNoteAdded)),
+      );
     } catch (e) {
       messenger.showSnackBar(
-        SnackBar(content: Text(userMessage(e) ?? 'Not eklenemedi: $e')),
+        SnackBar(
+          content: Text(userMessage(e) ?? l10n.animalDetailNoteAddFailed(e)),
+        ),
       );
     }
   }
@@ -758,16 +774,19 @@ class _NotesCard extends ConsumerWidget {
         children: [
           Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: Text(
-                  'Notlar',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  l10n.animalDetailNotes,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               TextButton.icon(
                 onPressed: () => _add(context, ref),
                 icon: const Icon(Icons.add, size: 18),
-                label: const Text('Not ekle'),
+                label: Text(l10n.animalDetailAddNote),
                 style: TextButton.styleFrom(
                   foregroundColor: AppColors.darkGreenColor,
                 ),
@@ -776,13 +795,12 @@ class _NotesCard extends ConsumerWidget {
           ),
           AsyncView(
             value: notes,
-            errorMessage: 'Notlar alınamadı',
+            errorMessage: l10n.animalDetailNotesFailed,
             builder: (list) {
               if (list.isEmpty) {
-                return const Text(
-                  'Henüz not yok. Veteriner kontrolü, gebelik ya da tedavi '
-                  'bilgisi sınıf etiketini yorumlamaya yardım eder.',
-                  style: TextStyle(
+                return Text(
+                  l10n.animalDetailNoNotes,
+                  style: const TextStyle(
                     fontSize: 12,
                     color: AppColors.onSurfaceMuted,
                   ),
@@ -843,7 +861,7 @@ class _NotesCard extends ConsumerWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: AppSpacing.sm),
                       child: Text(
-                        '${list.length - _shown} not daha',
+                        l10n.animalDetailMoreNotes(list.length - _shown),
                         style: const TextStyle(
                           fontSize: 11,
                           color: AppColors.onSurfaceMuted,
@@ -879,29 +897,29 @@ class _NoteDialogState extends State<_NoteDialog> {
 
   @override
   Widget build(BuildContext context) => AlertDialog(
-    title: const Text('Not ekle'),
+    title: Text(l10n.animalDetailAddNote),
     content: TextField(
       controller: _text,
       autofocus: true,
       minLines: 3,
       maxLines: 6,
       maxLength: 1000,
-      decoration: const InputDecoration(
-        hintText: 'Örn. Son veteriner kontrolü: mastitis, tedavide.',
-        border: OutlineInputBorder(borderRadius: AppRadius.smAll),
+      decoration: InputDecoration(
+        hintText: l10n.animalDetailNoteHint,
+        border: const OutlineInputBorder(borderRadius: AppRadius.smAll),
       ),
     ),
     actions: [
       TextButton(
         onPressed: () => Navigator.of(context).pop(),
-        child: const Text('Vazgeç'),
+        child: Text(l10n.commonCancel),
       ),
       FilledButton(
         onPressed: () => Navigator.of(context).pop(_text.text),
         style: FilledButton.styleFrom(
           backgroundColor: AppColors.darkGreenColor,
         ),
-        child: const Text('Kaydet'),
+        child: Text(l10n.commonSave),
       ),
     ],
   );
