@@ -6,6 +6,7 @@ import 'package:milktrace/core/volume.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout_update.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
 
@@ -120,7 +121,7 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${widget.spoutLabel} · hayvan seç',
+                    l10n.livePickerTitle(widget.spoutLabel),
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -135,15 +136,15 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
                         Icons.link_off,
                         color: AppColors.redColor,
                       ),
-                      title: const Text(
-                        'Eşleştirmeyi kaldır',
-                        style: TextStyle(
+                      title: Text(
+                        l10n.livePickerClear,
+                        style: const TextStyle(
                           color: AppColors.redColor,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                       subtitle: Text(
-                        '${a.name ?? a.earTag} yanlış bağlandıysa',
+                        l10n.livePickerClearHint(a.name ?? a.earTag),
                       ),
                       onTap: () =>
                           Navigator.of(context).pop(const ClearAnimal()),
@@ -160,11 +161,13 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
                     // operatörün elindeki tek kesin bilgi o. Ad isteğe
                     // bağlı bir alan (§4) ve çoğu hayvanda yok.
                     keyboardType: TextInputType.text,
-                    decoration: const InputDecoration(
-                      hintText: 'Küpe numarası, ad veya RFID',
-                      prefixIcon: Icon(Icons.search),
+                    decoration: InputDecoration(
+                      hintText: l10n.livePickerSearchHint,
+                      prefixIcon: const Icon(Icons.search),
                       isDense: true,
-                      border: OutlineInputBorder(borderRadius: AppRadius.smAll),
+                      border: const OutlineInputBorder(
+                        borderRadius: AppRadius.smAll,
+                      ),
                     ),
                     onChanged: (v) => setState(() => _query = v.trim()),
                   ),
@@ -174,7 +177,7 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
             Expanded(
               child: AsyncView(
                 value: animals,
-                errorMessage: 'Hayvanlar yüklenemedi',
+                errorMessage: l10n.livePickerLoadFailed,
                 builder: (list) {
                   final chosen = _speciesTouched
                       ? _species
@@ -204,11 +207,13 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
                     return Column(
                       children: [
                         ?chips,
-                        const Expanded(
+                        Expanded(
                           child: Center(
                             child: Text(
-                              'Eşleşen hayvan yok',
-                              style: TextStyle(color: AppColors.onSurfaceMuted),
+                              l10n.livePickerNoMatch,
+                              style: const TextStyle(
+                                color: AppColors.onSurfaceMuted,
+                              ),
                             ),
                           ),
                         ),
@@ -248,7 +253,7 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
           trailing: until == null
               ? null
               : Text(
-                  'Sütü ayır\n${Fmt.dayMonth(until)}',
+                  l10n.livePickerWithhold(Fmt.dayMonth(until)),
                   textAlign: TextAlign.end,
                   style: const TextStyle(
                     fontSize: 11,
@@ -261,11 +266,11 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
               a.earTag,
               speciesName[a.speciesId] ?? '',
               if (taken)
-                'başka noktada'
+                l10n.livePickerElsewhere
               else if (_rank(a) == 0)
-                'önceki sağımda bu noktadaydı'
+                l10n.livePickerPrevHere
               else if (_rank(a) == 1)
-                'önceki sağımda sağıldı',
+                l10n.livePickerPrevMilked,
             ].where((s) => s.isNotEmpty).join(' · '),
           ),
           // Zaten eşleştirilmiş hayvan SEÇİLEMEZ: aynı hayvanı iki noktaya
@@ -357,10 +362,8 @@ class _UnmatchedNotice extends StatelessWidget {
               // listede küpe numarasıyla aranır; sağmal olmayan hayvan
               // listede YOK, önce durumu değiştirilmeli.
               tag.reason == 'not_milking'
-                  ? '${tag.message}: listede yok. Yanlışlıkla girdiyse '
-                        'başlığı çıkarın; sağılacaksa önce hayvanın '
-                        'durumunu değiştirin.'
-                  : '${tag.message}. Hayvanı aşağıdan seçin.',
+                  ? l10n.livePickerNotMilking(tag.message)
+                  : l10n.livePickerUnknownTag(tag.message),
               style: const TextStyle(
                 fontSize: 13,
                 color: AppColors.darkAmberColor,
@@ -399,7 +402,7 @@ class _SpeciesChips extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: AppSpacing.sm),
               child: ChoiceChip(
-                label: Text(id == null ? 'Tümü' : names[id] ?? id),
+                label: Text(id == null ? l10n.commonAll : names[id] ?? id),
                 selected: selected == id,
                 onSelected: (_) => onSelected(id),
               ),
@@ -431,27 +434,29 @@ Future<ReplaceChoice?> askReplace(
   return showDialog<ReplaceChoice>(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('Önceki hayvan sağıldı mı?'),
+      title: Text(l10n.liveReplaceTitle),
       content: Text(
-        '$who için bu noktada ${volume.amount(volumeMl, species: previous.species)} ölçüldü.\n\n'
-        'Sağıldıysa ölçüm ona yazılır. Eşleştirme yanlışsa ölçüm silinir.',
+        l10n.liveReplaceBody(
+          who,
+          volume.amount(volumeMl, species: previous.species),
+        ),
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Vazgeç'),
+          child: Text(l10n.commonCancel),
         ),
         TextButton(
           onPressed: () => Navigator.of(context).pop(ReplaceChoice.mistaken),
           style: TextButton.styleFrom(foregroundColor: AppColors.redColor),
-          child: const Text('Yanlış eşleştirme'),
+          child: Text(l10n.liveReplaceMistaken),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(ReplaceChoice.milked),
           style: FilledButton.styleFrom(
             backgroundColor: AppColors.darkGreenColor,
           ),
-          child: const Text('Sağıldı'),
+          child: Text(l10n.liveReplaceMilked),
         ),
       ],
     ),

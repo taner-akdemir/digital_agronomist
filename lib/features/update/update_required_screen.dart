@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/features/support/support.dart';
+import 'package:milktrace/l10n/l10n.dart';
 
 /// Play Store sayfası (paket kimliği CLAUDE.md §7).
 final playStoreUri = Uri.parse(
@@ -41,10 +42,10 @@ class UpdateRequiredScreen extends ConsumerWidget {
                       color: AppColors.darkGreenColor,
                     ),
                     const SizedBox(height: AppSpacing.lg),
-                    const Text(
-                      'Güncelleme gerekli',
+                    Text(
+                      l10n.updateTitle,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                         color: AppColors.darkGreenColor,
@@ -52,10 +53,7 @@ class UpdateRequiredScreen extends ConsumerWidget {
                     ),
                     const SizedBox(height: AppSpacing.md),
                     Text(
-                      'Milk Trace\'in bu sürümü artık desteklenmiyor. Sağım '
-                      'kayıtlarının doğru tutulması için uygulamayı '
-                      '${android ? 'Google Play\'den' : 'App Store\'dan'} '
-                      'güncelleyin.',
+                      android ? l10n.updateBodyAndroid : l10n.updateBodyIos,
                       textAlign: TextAlign.center,
                       style: const TextStyle(color: AppColors.onSurfaceMuted),
                     ),
@@ -74,7 +72,7 @@ class UpdateRequiredScreen extends ConsumerWidget {
                           ),
                         ),
                         icon: const Icon(Icons.shop),
-                        label: const Text('Google Play\'de güncelle'),
+                        label: Text(l10n.updatePlayButton),
                       ),
                     ],
                     const SizedBox(height: AppSpacing.xl),

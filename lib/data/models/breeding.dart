@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:milktrace/l10n/l10n.dart';
 
 part 'breeding.freezed.dart';
 part 'breeding.g.dart';
@@ -17,9 +18,9 @@ abstract class Pregnancy with _$Pregnancy {
   const Pregnancy._();
 
   String get statusLabel => switch (status) {
-    'pregnant' => 'Gebe',
-    'inseminated' => 'Tohumlandı · kontrol bekliyor',
-    'open' => 'Boş',
+    'pregnant' => l10n.modelPregnancyPregnant,
+    'inseminated' => l10n.modelPregnancyInseminated,
+    'open' => l10n.modelPregnancyOpen,
     _ => status,
   };
 
@@ -51,8 +52,12 @@ abstract class BreedingEvent with _$BreedingEvent {
 
   /// "Tohumlama · Holstein 123" / "Gebelik kontrolü · gebe".
   String get label => isInsemination
-      ? ['Tohumlama', if (sire.isNotEmpty) sire].join(' · ')
-      : 'Gebelik kontrolü · ${result == 'pregnant' ? 'gebe' : 'boş'}';
+      ? [l10n.modelBreedingInsemination, if (sire.isNotEmpty) sire].join(' · ')
+      : l10n.modelBreedingPregnancyCheck(
+          result == 'pregnant'
+              ? l10n.modelBreedingResultPregnant
+              : l10n.modelBreedingResultOpen,
+        );
 
   factory BreedingEvent.fromJson(Map<String, dynamic> json) =>
       _$BreedingEventFromJson(json);
@@ -75,7 +80,7 @@ abstract class UpcomingBreeding with _$UpcomingBreeding {
   const UpcomingBreeding._();
 
   String get eventLabel =>
-      event == 'calving' ? 'Beklenen doğum' : 'Kuruya çıkar';
+      event == 'calving' ? l10n.modelUpcomingCalving : l10n.modelUpcomingDryOff;
 
   factory UpcomingBreeding.fromJson(Map<String, dynamic> json) =>
       _$UpcomingBreedingFromJson(json);

@@ -24,6 +24,7 @@ import 'package:milktrace/features/splash/splash_screen.dart';
 import 'package:milktrace/features/team/milkers_screen.dart';
 import 'package:milktrace/features/team/team_screen.dart';
 import 'package:milktrace/features/update/update_required_screen.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -194,8 +195,8 @@ GoRouter router(Ref ref) {
       ),
     ],
     errorBuilder: (_, state) => Scaffold(
-      appBar: AppBar(title: const Text('Sayfa bulunamadı')),
-      body: Center(child: Text('Aradığınız sayfa bulunamadı:\n${state.uri}')),
+      appBar: AppBar(title: Text(l10n.coreRouteNotFound)),
+      body: Center(child: Text(l10n.coreRouteNotFoundBody('${state.uri}'))),
     ),
   );
 }

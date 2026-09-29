@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:milktrace/l10n/l10n.dart';
 
 /// Backend'in §16 hata zarfının Dart karşılığı.
 ///
@@ -40,18 +41,16 @@ class ApiException implements Exception {
     final message = switch (e.type) {
       DioExceptionType.connectionTimeout ||
       DioExceptionType.sendTimeout ||
-      DioExceptionType.receiveTimeout =>
-        'Sunucu yanıt vermiyor. Bağlantınızı kontrol edin.',
-      DioExceptionType.connectionError =>
-        'Sunucuya ulaşılamıyor. Bağlantınızı kontrol edin.',
-      DioExceptionType.badCertificate => 'Sunucu sertifikası doğrulanamadı.',
-      DioExceptionType.cancel => 'İstek iptal edildi.',
-      DioExceptionType.badResponse => 'Sunucu beklenmeyen bir yanıt verdi.',
+      DioExceptionType.receiveTimeout => l10n.coreErrorTimeout,
+      DioExceptionType.connectionError => l10n.coreErrorConnection,
+      DioExceptionType.badCertificate => l10n.coreErrorBadCertificate,
+      DioExceptionType.cancel => l10n.coreErrorCancelled,
+      DioExceptionType.badResponse => l10n.coreErrorBadResponse,
       // dio 5.11: yanıt geldi ama çözümlenmesi süre sınırını aştı. Sınır
       // koymuyoruz; sunucuya ulaşıldığı için ağ hatası da sayılmaz
       // (isNetworkError).
-      DioExceptionType.transformTimeout => 'Sunucunun yanıtı işlenemedi.',
-      DioExceptionType.unknown => 'Beklenmeyen bir hata oluştu.',
+      DioExceptionType.transformTimeout => l10n.coreErrorTransform,
+      DioExceptionType.unknown => l10n.coreErrorUnknown,
     };
 
     return ApiException(

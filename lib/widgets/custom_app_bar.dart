@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/features/alerts/alerts_providers.dart';
 import 'package:milktrace/features/auth/account_sheet.dart';
+import 'package:milktrace/l10n/l10n.dart';
 
 /// Uygulamanın üst çubuğu.
 class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
@@ -40,12 +41,12 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   List<Widget> _defaultActions(BuildContext context, WidgetRef ref) => [
     IconButton(
-      tooltip: 'Uyarılar',
+      tooltip: l10n.widgetAlerts,
       onPressed: () => context.push('/alerts'),
       icon: _BellWithBadge(count: ref.watch(openAlertCountProvider)),
     ),
     IconButton(
-      tooltip: 'Hesap',
+      tooltip: l10n.widgetAccount,
       onPressed: () => showAccountSheet(context),
       icon: const Icon(CupertinoIcons.person_circle),
     ),

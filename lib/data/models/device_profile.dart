@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:milktrace/l10n/l10n.dart';
 
 part 'device_profile.freezed.dart';
 part 'device_profile.g.dart';
@@ -52,13 +53,13 @@ abstract class DeviceProfile with _$DeviceProfile {
     'modbus-rtu' => 'Modbus RTU',
     'modbus-tcp' => 'Modbus TCP',
     'http' => 'HTTP',
-    '' => 'Bilinmiyor',
+    '' => l10n.modelProtocolUnknown,
     _ => protocol,
   };
 
   /// "ORNEK-URETICI MM-200 · v1"
   String get title {
     final name = [vendor, model].where((s) => s.isNotEmpty).join(' ');
-    return name.isEmpty ? 'Profil tanımsız' : '$name · v$version';
+    return name.isEmpty ? l10n.modelProfileUndefined : '$name · v$version';
   }
 }

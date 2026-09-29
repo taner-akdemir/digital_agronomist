@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:milktrace/app/theme.dart';
+import 'package:milktrace/l10n/l10n.dart';
 
 /// Tek alanlı giriş penceresi; girilen metni (kırpılmış) döner, vazgeçilirse
 /// null.
@@ -77,11 +78,11 @@ class _TextPromptDialogState extends State<_TextPromptDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Vazgeç'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(_ctrl.text.trim()),
-          child: const Text('Kaydet'),
+          child: Text(l10n.commonSave),
         ),
       ],
     );

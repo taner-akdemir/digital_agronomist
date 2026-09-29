@@ -4,6 +4,7 @@ import 'package:milktrace/core/format.dart';
 import 'package:milktrace/core/volume.dart';
 import 'package:milktrace/data/models/spout_update.dart';
 import 'package:milktrace/domain/flow_color.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/widgets/milk_palette.dart';
 
 /// Bir sağım noktasının canlı kartı (§6.2, §6.3).
@@ -51,8 +52,8 @@ class LiveInfoCard extends StatelessWidget {
             animal?.name ??
                 animal?.earTag ??
                 (unmatched != null
-                    ? 'Tanınmayan küpe'
-                    : 'Hayvan eşleştirilmedi'),
+                    ? l10n.liveUnknownTag
+                    : l10n.liveNotAssigned),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
@@ -100,7 +101,7 @@ class LiveInfoCard extends StatelessWidget {
                 const SizedBox(width: AppSpacing.xs),
                 Expanded(
                   child: Text(
-                    'Sütü ayır · arınma ${Fmt.dayMonth(until)}',
+                    l10n.liveWithholdUntil(Fmt.dayMonth(until)),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
@@ -126,11 +127,11 @@ class LiveInfoCard extends StatelessWidget {
           _progress(palette),
           const SizedBox(height: AppSpacing.sm),
           _amountRow(
-            'Şu an',
+            l10n.liveNow,
             volume.amount(update.volumeMl, species: animal?.species),
           ),
           _amountRow(
-            'Hedef',
+            l10n.liveTarget,
             volume.amount(update.expectedMl, species: animal?.species),
           ),
           if (update.flowColor == MilkColor.red) ...[
@@ -146,7 +147,7 @@ class LiveInfoCard extends StatelessWidget {
                 ),
                 const SizedBox(width: AppSpacing.xs),
                 Text(
-                  'Düşük Debi',
+                  l10n.liveLowFlow,
                   style: TextStyle(
                     color: palette.foreground,
                     fontSize: 13,
@@ -191,10 +192,13 @@ class LiveInfoCard extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        const Expanded(
+        Expanded(
           child: Text(
-            'Akış oranı',
-            style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
+            l10n.liveFlowRate,
+            style: const TextStyle(
+              fontSize: 13,
+              color: AppColors.onSurfaceMuted,
+            ),
           ),
         ),
         Text(
@@ -206,11 +210,14 @@ class LiveInfoCard extends StatelessWidget {
           ),
         ),
         const SizedBox(width: AppSpacing.xs),
-        const Padding(
-          padding: EdgeInsets.only(bottom: 2),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 2),
           child: Text(
-            'L/dk',
-            style: TextStyle(fontSize: 11, color: AppColors.onSurfaceMuted),
+            l10n.liveFlowUnit,
+            style: const TextStyle(
+              fontSize: 11,
+              color: AppColors.onSurfaceMuted,
+            ),
           ),
         ),
       ],
@@ -242,7 +249,7 @@ class LiveInfoCard extends StatelessWidget {
         const SizedBox(height: AppSpacing.xs),
         Text(
           update.expectedMl == 0
-              ? 'Hedef tanımsız'
+              ? l10n.liveNoTarget
               : Fmt.percent(update.yieldPct),
           style: const TextStyle(
             fontSize: 11,

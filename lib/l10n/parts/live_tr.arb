@@ -1,0 +1,119 @@
+{
+  "liveHallsLoadFailed": "Bölgeler yüklenemedi",
+  "liveNoHalls": "Tanımlı sağım bölgesi yok",
+  "liveDataFailed": "Canlı veri alınamadı",
+  "liveTitle": "Canlı Veriler",
+  "liveHallName": "{name} Bölgesi",
+  "@liveHallName": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "liveActiveCount": "{n} Aktif",
+  "@liveActiveCount": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "livePassiveCount": "{n} Pasif",
+  "@livePassiveCount": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "liveRedAlertOff": "Kırmızı uyarısını kapat",
+  "liveRedAlertOn": "Kırmızı uyarısını aç",
+  "liveEndMilking": "Sağımı Bitir",
+  "liveStartMilking": "Sağımı Başlat",
+  "liveEndDialogTitle": "Sağımı bitir",
+  "liveEndDialogBody": "Açık kalan hayvan sağımları kapatılacak ve oturum özetleri hesaplanacak. Bu işlem geri alınamaz.",
+  "liveEndConfirm": "Bitir",
+  "liveSessionTypeTitle": "Sağım tipi",
+  "liveActionFailed": "İşlem tamamlanamadı: {error}",
+  "@liveActionFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "liveNoOpenSession": "Bu bölgede açık sağım yok.\nBaşlatmak için yukarıdaki düğmeyi kullanın.",
+  "liveNoSpouts": "Bu bölgede sağım noktası bulunamadı",
+  "liveSpout": "Nokta",
+  "liveUnitFallback": "Ünite",
+  "liveSpoutTitle": "{unit} · Nokta {no}",
+  "@liveSpoutTitle": {
+    "placeholders": {
+      "unit": {},
+      "no": {}
+    }
+  },
+  "liveClearTitle": "Eşleştirme kaldırılsın mı?",
+  "liveClearBodyMeasured": "Bu sağımdaki ölçüm ({amount}) silinecek ve hiçbir hayvana yazılmayacak.",
+  "@liveClearBodyMeasured": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "liveClearBodyEmpty": "Bu sağım silinecek.",
+  "liveClearConfirm": "Kaldır",
+  "liveUnknownTag": "Tanınmayan küpe",
+  "liveNotAssigned": "Hayvan eşleştirilmedi",
+  "liveWithholdUntil": "Sütü ayır · arınma {date}",
+  "@liveWithholdUntil": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "liveNow": "Şu an",
+  "liveTarget": "Hedef",
+  "liveLowFlow": "Düşük Debi",
+  "liveFlowRate": "Akış oranı",
+  "liveFlowUnit": "L/dk",
+  "liveNoTarget": "Hedef tanımsız",
+  "livePickerTitle": "{spout} · hayvan seç",
+  "@livePickerTitle": {
+    "placeholders": {
+      "spout": {}
+    }
+  },
+  "livePickerClear": "Eşleştirmeyi kaldır",
+  "livePickerClearHint": "{animal} yanlış bağlandıysa",
+  "@livePickerClearHint": {
+    "placeholders": {
+      "animal": {}
+    }
+  },
+  "livePickerSearchHint": "Küpe numarası, ad veya RFID",
+  "livePickerLoadFailed": "Hayvanlar yüklenemedi",
+  "livePickerNoMatch": "Eşleşen hayvan yok",
+  "livePickerWithhold": "Sütü ayır\n{date}",
+  "@livePickerWithhold": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "livePickerElsewhere": "başka noktada",
+  "livePickerPrevHere": "önceki sağımda bu noktadaydı",
+  "livePickerPrevMilked": "önceki sağımda sağıldı",
+  "livePickerNotMilking": "{message}: listede yok. Yanlışlıkla girdiyse başlığı çıkarın; sağılacaksa önce hayvanın durumunu değiştirin.",
+  "@livePickerNotMilking": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "livePickerUnknownTag": "{message}. Hayvanı aşağıdan seçin.",
+  "@livePickerUnknownTag": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "liveReplaceTitle": "Önceki hayvan sağıldı mı?",
+  "liveReplaceBody": "{who} için bu noktada {amount} ölçüldü.\n\nSağıldıysa ölçüm ona yazılır. Eşleştirme yanlışsa ölçüm silinir.",
+  "@liveReplaceBody": {
+    "placeholders": {
+      "who": {},
+      "amount": {}
+    }
+  },
+  "liveReplaceMistaken": "Yanlış eşleştirme",
+  "liveReplaceMilked": "Sağıldı"
+}

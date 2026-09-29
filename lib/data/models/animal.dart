@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:milktrace/data/models/breeding.dart';
 import 'package:milktrace/domain/yield_class.dart';
+import 'package:milktrace/l10n/l10n.dart';
 
 part 'animal.freezed.dart';
 part 'animal.g.dart';
@@ -93,11 +94,11 @@ abstract class Animal with _$Animal {
 
   /// Durumun Türkçe adı; tanınmayan kod olduğu gibi.
   String get statusLabel => switch (status) {
-    'active' => 'Sağmal',
-    'dry' => 'Kuruda',
-    'sold' => 'Satıldı',
-    'slaughtered' => 'Kesildi',
-    'dead' => 'Öldü',
+    'active' => l10n.modelAnimalStatusActive,
+    'dry' => l10n.modelAnimalStatusDry,
+    'sold' => l10n.modelAnimalStatusSold,
+    'slaughtered' => l10n.modelAnimalStatusSlaughtered,
+    'dead' => l10n.modelAnimalStatusDead,
     _ => status,
   };
 

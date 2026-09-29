@@ -1,0 +1,84 @@
+{
+  "kioskExitTitle": "Tabletten çıkılsın mı?",
+  "kioskExitBody": "Yeniden girmek için tablet hesabının e-postası ve parolası gerekir.",
+  "kioskSignOut": "Çıkış",
+  "kioskTitle": "Milk Trace · Sağımhane",
+  "shellTabDashboard": "Dashboard",
+  "shellTabLive": "Canlı",
+  "shellTabHistory": "Geçmiş",
+  "shellTabDevices": "Cihazlar",
+  "updateTitle": "Güncelleme gerekli",
+  "updateBodyAndroid": "Milk Trace'in bu sürümü artık desteklenmiyor. Sağım kayıtlarının doğru tutulması için uygulamayı Google Play'den güncelleyin.",
+  "updateBodyIos": "Milk Trace'in bu sürümü artık desteklenmiyor. Sağım kayıtlarının doğru tutulması için uygulamayı App Store'dan güncelleyin.",
+  "updatePlayButton": "Google Play'de güncelle",
+  "supportWhatsAppText": "Merhaba, Milk Trace hakkında destek istiyorum.",
+  "supportWhatsAppVersion": " (Uygulama {version})",
+  "@supportWhatsAppVersion": {
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "supportOpenFailed": "Açılamadı: {target}",
+  "@supportOpenFailed": {
+    "placeholders": {
+      "target": {}
+    }
+  },
+  "supportTitle": "Destek",
+  "supportCall": "Ara",
+  "domainClassHigh": "Yüksek Verimli",
+  "domainClassNormal": "Normal",
+  "domainClassDeclining": "Düşüşte",
+  "domainClassDryOffCandidate": "Kuruya Çıkma Adayı",
+  "domainClassNoMilk": "Süt Vermiyor",
+  "domainClassHighExplanation": "Son 7 günün ortalaması tür üst eşiğinin üzerinde. Bu hayvan sürünün en verimlileri arasında.",
+  "domainClassNormalExplanation": "Verim beklenen aralıkta, eğim stabil.",
+  "domainClassDecliningExplanation": "Son 30 günde belirgin düşüş var. Gebelik, laktasyon dönemi veya hastalık olabilir; takip listesinde.",
+  "domainClassDryOffCandidateExplanation": "Son 7 günün ortalaması tür alt eşiğinin altında. Kuruya çıkarma zamanı gelmiş olabilir.",
+  "domainClassNoMilkExplanation": "Son sağımlarda süt alınamadı. Değerlendirme gerekli.",
+  "widgetAlerts": "Uyarılar",
+  "widgetAccount": "Hesap",
+  "widgetOfflineBanner": "Çevrimdışı · son veri {when}. Değişiklikler bağlantı gelince yapılabilir.",
+  "@widgetOfflineBanner": {
+    "placeholders": {
+      "when": {}
+    }
+  },
+  "modelPregnancyPregnant": "Gebe",
+  "modelPregnancyInseminated": "Tohumlandı · kontrol bekliyor",
+  "modelPregnancyOpen": "Boş",
+  "modelBreedingInsemination": "Tohumlama",
+  "modelBreedingPregnancyCheck": "Gebelik kontrolü · {result}",
+  "@modelBreedingPregnancyCheck": {
+    "placeholders": {
+      "result": {}
+    }
+  },
+  "modelBreedingResultPregnant": "gebe",
+  "modelBreedingResultOpen": "boş",
+  "modelUpcomingCalving": "Beklenen doğum",
+  "modelUpcomingDryOff": "Kuruya çıkar",
+  "modelProtocolUnknown": "Bilinmiyor",
+  "modelProfileUndefined": "Profil tanımsız",
+  "modelAnimalStatusActive": "Sağmal",
+  "modelAnimalStatusDry": "Kuruda",
+  "modelAnimalStatusSold": "Satıldı",
+  "modelAnimalStatusSlaughtered": "Kesildi",
+  "modelAnimalStatusDead": "Öldü",
+  "coreErrorTimeout": "Sunucu yanıt vermiyor. Bağlantınızı kontrol edin.",
+  "coreErrorConnection": "Sunucuya ulaşılamıyor. Bağlantınızı kontrol edin.",
+  "coreErrorBadCertificate": "Sunucu sertifikası doğrulanamadı.",
+  "coreErrorCancelled": "İstek iptal edildi.",
+  "coreErrorBadResponse": "Sunucu beklenmeyen bir yanıt verdi.",
+  "coreErrorTransform": "Sunucunun yanıtı işlenemedi.",
+  "coreErrorUnknown": "Beklenmeyen bir hata oluştu.",
+  "coreRouteNotFound": "Sayfa bulunamadı",
+  "coreRouteNotFoundBody": "Aradığınız sayfa bulunamadı:\n{uri}",
+  "@coreRouteNotFoundBody": {
+    "placeholders": {
+      "uri": {}
+    }
+  },
+  "pushChannelName": "Sağım uyarıları",
+  "pushChannelDescription": "Düşük debi, düşük verim ve cihaz uyarıları."
+}

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/features/live/live_board_screen.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/widgets/custom_app_bar.dart';
 import 'package:milktrace/widgets/offline_banner.dart';
@@ -45,20 +46,17 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     final ok = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Tabletten çıkılsın mı?'),
-        content: const Text(
-          'Yeniden girmek için tablet hesabının e-postası ve parolası '
-          'gerekir.',
-        ),
+        title: Text(l10n.kioskExitTitle),
+        content: Text(l10n.kioskExitBody),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Vazgeç'),
+            child: Text(l10n.commonCancel),
           ),
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: AppColors.flowRed),
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Çıkış'),
+            child: Text(l10n.kioskSignOut),
           ),
         ],
       ),
@@ -70,10 +68,10 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Milk Trace · Sağımhane',
+        title: l10n.kioskTitle,
         actions: [
           IconButton(
-            tooltip: 'Çıkış',
+            tooltip: l10n.kioskSignOut,
             onPressed: _signOut,
             icon: const Icon(Icons.logout, color: AppColors.darkGreenColor),
           ),

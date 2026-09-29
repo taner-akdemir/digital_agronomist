@@ -1,0 +1,84 @@
+{
+  "kioskExitTitle": "Sign out of the tablet?",
+  "kioskExitBody": "Signing back in requires the tablet account's email and password.",
+  "kioskSignOut": "Sign out",
+  "kioskTitle": "Milk Trace · Milking parlor",
+  "shellTabDashboard": "Dashboard",
+  "shellTabLive": "Live",
+  "shellTabHistory": "History",
+  "shellTabDevices": "Devices",
+  "updateTitle": "Update required",
+  "updateBodyAndroid": "This version of Milk Trace is no longer supported. Update the app from Google Play to keep milking records accurate.",
+  "updateBodyIos": "This version of Milk Trace is no longer supported. Update the app from the App Store to keep milking records accurate.",
+  "updatePlayButton": "Update on Google Play",
+  "supportWhatsAppText": "Hello, I need support with Milk Trace.",
+  "supportWhatsAppVersion": " (App {version})",
+  "@supportWhatsAppVersion": {
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "supportOpenFailed": "Couldn't open: {target}",
+  "@supportOpenFailed": {
+    "placeholders": {
+      "target": {}
+    }
+  },
+  "supportTitle": "Support",
+  "supportCall": "Call",
+  "domainClassHigh": "High yield",
+  "domainClassNormal": "Normal",
+  "domainClassDeclining": "Declining",
+  "domainClassDryOffCandidate": "Dry-off candidate",
+  "domainClassNoMilk": "No milk",
+  "domainClassHighExplanation": "The 7-day average is above the species' upper threshold. This animal is among the highest-yielding in the herd.",
+  "domainClassNormalExplanation": "Yield is in the expected range and the trend is stable.",
+  "domainClassDecliningExplanation": "Yield has dropped noticeably over the last 30 days. Pregnancy, lactation stage or illness may be the cause; it is on the watch list.",
+  "domainClassDryOffCandidateExplanation": "The 7-day average is below the species' lower threshold. It may be time for dry-off.",
+  "domainClassNoMilkExplanation": "No milk was obtained in recent milkings. Needs assessment.",
+  "widgetAlerts": "Alerts",
+  "widgetAccount": "Account",
+  "widgetOfflineBanner": "Offline · last data {when}. Changes can be made once the connection is back.",
+  "@widgetOfflineBanner": {
+    "placeholders": {
+      "when": {}
+    }
+  },
+  "modelPregnancyPregnant": "Pregnant",
+  "modelPregnancyInseminated": "Inseminated · awaiting check",
+  "modelPregnancyOpen": "Open",
+  "modelBreedingInsemination": "Insemination",
+  "modelBreedingPregnancyCheck": "Pregnancy check · {result}",
+  "@modelBreedingPregnancyCheck": {
+    "placeholders": {
+      "result": {}
+    }
+  },
+  "modelBreedingResultPregnant": "pregnant",
+  "modelBreedingResultOpen": "open",
+  "modelUpcomingCalving": "Expected calving",
+  "modelUpcomingDryOff": "Dry off",
+  "modelProtocolUnknown": "Unknown",
+  "modelProfileUndefined": "No profile",
+  "modelAnimalStatusActive": "Lactating",
+  "modelAnimalStatusDry": "Dry",
+  "modelAnimalStatusSold": "Sold",
+  "modelAnimalStatusSlaughtered": "Slaughtered",
+  "modelAnimalStatusDead": "Dead",
+  "coreErrorTimeout": "The server is not responding. Check your connection.",
+  "coreErrorConnection": "Can't reach the server. Check your connection.",
+  "coreErrorBadCertificate": "The server certificate could not be verified.",
+  "coreErrorCancelled": "The request was cancelled.",
+  "coreErrorBadResponse": "The server returned an unexpected response.",
+  "coreErrorTransform": "The server's response could not be processed.",
+  "coreErrorUnknown": "An unexpected error occurred.",
+  "coreRouteNotFound": "Page not found",
+  "coreRouteNotFoundBody": "The page you're looking for wasn't found:\n{uri}",
+  "@coreRouteNotFoundBody": {
+    "placeholders": {
+      "uri": {}
+    }
+  },
+  "pushChannelName": "Milking alerts",
+  "pushChannelDescription": "Low flow, low yield and device alerts."
+}

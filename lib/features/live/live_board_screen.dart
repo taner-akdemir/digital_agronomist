@@ -13,6 +13,7 @@ import 'package:milktrace/features/live/live_providers.dart';
 import 'package:milktrace/features/live/red_alert.dart';
 import 'package:milktrace/features/live/widgets/animal_picker.dart';
 import 'package:milktrace/features/live/widgets/live_info_card.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/widgets/error_view.dart';
 import 'package:milktrace/widgets/light_info.dart';
@@ -30,13 +31,12 @@ class LiveBoardScreen extends ConsumerWidget {
     return hall.when(
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (e, _) => ErrorView(
-        message: 'Bölgeler yüklenemedi',
+        message: l10n.liveHallsLoadFailed,
         error: e,
         onRetry: () => ref.invalidate(hallsProvider),
       ),
-      data: (h) => h == null
-          ? const Center(child: Text('Tanımlı sağım bölgesi yok'))
-          : _Board(hall: h),
+      data: (h) =>
+          h == null ? Center(child: Text(l10n.liveNoHalls)) : _Board(hall: h),
     );
   }
 }
@@ -77,7 +77,7 @@ class _Board extends ConsumerWidget {
               AsyncError(:final error) => SliverFillRemaining(
                 hasScrollBody: false,
                 child: ErrorView(
-                  message: 'Canlı veri alınamadı',
+                  message: l10n.liveDataFailed,
                   error: error,
                   onRetry: () => ref.invalidate(liveBoardProvider(hall.id)),
                 ),
@@ -121,9 +121,12 @@ class _Header extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Canlı Veriler',
-            style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
+          Text(
+            l10n.liveTitle,
+            style: const TextStyle(
+              fontSize: 13,
+              color: AppColors.onSurfaceMuted,
+            ),
           ),
           const SizedBox(height: AppSpacing.xs),
           Row(
@@ -142,7 +145,7 @@ class _Header extends ConsumerWidget {
                       for (final h in halls)
                         DropdownMenuItem(
                           value: h.id,
-                          child: Text('${h.name} Bölgesi'),
+                          child: Text(l10n.liveHallName(h.name)),
                         ),
                     ],
                     onChanged: (id) {
@@ -154,14 +157,20 @@ class _Header extends ConsumerWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.sm),
-              LightInfo(color: AppColors.flowGreen, label: '$active Aktif'),
+              LightInfo(
+                color: AppColors.flowGreen,
+                label: l10n.liveActiveCount(active),
+              ),
               const SizedBox(width: AppSpacing.sm),
-              LightInfo(color: AppColors.flowGrey, label: '$passive Pasif'),
+              LightInfo(
+                color: AppColors.flowGrey,
+                label: l10n.livePassiveCount(passive),
+              ),
               // Kırmızı uyarısı (backend ADR 0091): titreşim + kısa ses.
               IconButton(
                 tooltip: ref.watch(redAlertEnabledProvider)
-                    ? 'Kırmızı uyarısını kapat'
-                    : 'Kırmızı uyarısını aç',
+                    ? l10n.liveRedAlertOff
+                    : l10n.liveRedAlertOn,
                 onPressed: () => ref
                     .read(redAlertEnabledProvider.notifier)
                     .set(!ref.read(redAlertEnabledProvider)),
@@ -207,7 +216,7 @@ class _SessionControls extends ConsumerWidget {
               ? OutlinedButton.icon(
                   onPressed: busy ? null : () => _end(context, ref),
                   icon: const Icon(Icons.stop_circle_outlined, size: 18),
-                  label: const Text('Sağımı Bitir'),
+                  label: Text(l10n.liveEndMilking),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.darkRedColor,
                     shape: const RoundedRectangleBorder(
@@ -218,7 +227,7 @@ class _SessionControls extends ConsumerWidget {
               : FilledButton.icon(
                   onPressed: busy ? null : () => _start(context, ref),
                   icon: const Icon(Icons.play_arrow_rounded, size: 20),
-                  label: const Text('Sağımı Başlat'),
+                  label: Text(l10n.liveStartMilking),
                   style: FilledButton.styleFrom(
                     backgroundColor: AppColors.darkGreenColor,
                     shape: const RoundedRectangleBorder(
@@ -255,22 +264,19 @@ class _SessionControls extends ConsumerWidget {
     final ok = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Sağımı bitir'),
-        content: const Text(
-          'Açık kalan hayvan sağımları kapatılacak ve oturum özetleri '
-          'hesaplanacak. Bu işlem geri alınamaz.',
-        ),
+        title: Text(l10n.liveEndDialogTitle),
+        content: Text(l10n.liveEndDialogBody),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(false),
-            child: const Text('Vazgeç'),
+            child: Text(l10n.commonCancel),
           ),
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(true),
             style: TextButton.styleFrom(
               foregroundColor: AppColors.darkRedColor,
             ),
-            child: const Text('Bitir'),
+            child: Text(l10n.liveEndConfirm),
           ),
         ],
       ),
@@ -297,8 +303,8 @@ class _SessionTypeSheet extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Padding(
-            padding: EdgeInsets.fromLTRB(
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
               AppSpacing.xl,
               0,
               AppSpacing.xl,
@@ -307,17 +313,20 @@ class _SessionTypeSheet extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Sağım tipi',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                l10n.liveSessionTypeTitle,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
           // Beklenen verim oturum tipine göre ayrışıyor (§6.3): sabah sağımı
           // akşamdan düzenli olarak yüksek. Yanlış tip tüm renkleri kaydırır.
-          for (final e in const [
-            ('morning', 'Sabah', Icons.wb_sunny_outlined),
-            ('evening', 'Akşam', Icons.nightlight_outlined),
-            ('other', 'Diğer', Icons.schedule),
+          for (final e in [
+            ('morning', l10n.fmtSessionMorning, Icons.wb_sunny_outlined),
+            ('evening', l10n.fmtSessionEvening, Icons.nightlight_outlined),
+            ('other', l10n.fmtSessionOther, Icons.schedule),
           ])
             ListTile(
               leading: Icon(e.$3, color: AppColors.darkGreenColor),
@@ -352,7 +361,7 @@ Future<void> _guard(
 }
 
 String _message(Object error) =>
-    userMessage(error) ?? 'İşlem tamamlanamadı: $error';
+    userMessage(error) ?? l10n.liveActionFailed('$error');
 
 class _Grid extends ConsumerWidget {
   const _Grid({
@@ -375,15 +384,15 @@ class _Grid extends ConsumerWidget {
     final active = live.session.status == 'active';
 
     if (!active) {
-      return const SliverFillRemaining(
+      return SliverFillRemaining(
         hasScrollBody: false,
         child: Center(
           child: Padding(
-            padding: EdgeInsets.all(AppSpacing.xl),
+            padding: const EdgeInsets.all(AppSpacing.xl),
             child: Text(
-              'Bu bölgede açık sağım yok.\nBaşlatmak için yukarıdaki düğmeyi kullanın.',
+              l10n.liveNoOpenSession,
               textAlign: TextAlign.center,
-              style: TextStyle(color: AppColors.onSurfaceMuted),
+              style: const TextStyle(color: AppColors.onSurfaceMuted),
             ),
           ),
         ),
@@ -392,9 +401,9 @@ class _Grid extends ConsumerWidget {
 
     final updates = live.updates;
     if (updates.isEmpty) {
-      return const SliverFillRemaining(
+      return SliverFillRemaining(
         hasScrollBody: false,
-        child: Center(child: Text('Bu bölgede sağım noktası bulunamadı')),
+        child: Center(child: Text(l10n.liveNoSpouts)),
       );
     }
 
@@ -429,8 +438,11 @@ class _Grid extends ConsumerWidget {
           final spout = spoutById[u.spoutId];
           final vacuum = spout == null ? null : vacuumById[spout.vacuumId];
           final title = spout == null
-              ? 'Nokta'
-              : '${vacuum?.name ?? 'Ünite'} · Nokta ${spout.positionNo}';
+              ? l10n.liveSpout
+              : l10n.liveSpoutTitle(
+                  vacuum?.name ?? l10n.liveUnitFallback,
+                  '${spout.positionNo}',
+                );
 
           return GestureDetector(
             // EŞLEŞTİRME KARTA DOKUNARAK: sağım sırasında operatörün eli
@@ -540,26 +552,27 @@ class _Grid extends ConsumerWidget {
     final ok = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Eşleştirme kaldırılsın mı?'),
+        title: Text(l10n.liveClearTitle),
         content: Text(
           [
             if (a != null)
               a.name == null ? a.earTag : '${a.name} · ${a.earTag}',
             u.volumeMl > 0
-                ? 'Bu sağımdaki ölçüm (${volume.amount(u.volumeMl, species: a?.species)}) silinecek '
-                      've hiçbir hayvana yazılmayacak.'
-                : 'Bu sağım silinecek.',
+                ? l10n.liveClearBodyMeasured(
+                    volume.amount(u.volumeMl, species: a?.species),
+                  )
+                : l10n.liveClearBodyEmpty,
           ].join('\n'),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Vazgeç'),
+            child: Text(l10n.commonCancel),
           ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),
             style: TextButton.styleFrom(foregroundColor: AppColors.redColor),
-            child: const Text('Kaldır'),
+            child: Text(l10n.liveClearConfirm),
           ),
         ],
       ),

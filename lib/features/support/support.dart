@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/env.dart';
 import 'package:milktrace/data/auth/auth_api.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -45,8 +46,8 @@ Future<String> appVersion(Ref ref) async {
 Uri whatsAppUri(String e164, String version) =>
     Uri.https('wa.me', '/${e164.replaceAll('+', '')}', {
       'text':
-          'Merhaba, Milk Trace hakkında destek istiyorum.'
-          '${version.isEmpty ? '' : ' (Uygulama $version)'}',
+          l10n.supportWhatsAppText +
+          (version.isEmpty ? '' : l10n.supportWhatsAppVersion(version)),
     });
 
 /// "Destek" düğmeleri: WhatsApp'ta yaz, ara. Numara yoksa hiçbir şey.
@@ -64,7 +65,11 @@ class SupportButtons extends ConsumerWidget {
       final ok = await ref.read(supportLauncherProvider)(uri);
       if (!ok && context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Açılamadı: ${info.phone ?? info.whatsapp}')),
+          SnackBar(
+            content: Text(
+              l10n.supportOpenFailed('${info.phone ?? info.whatsapp}'),
+            ),
+          ),
         );
       }
     }
@@ -77,10 +82,10 @@ class SupportButtons extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Text(
-          'Destek',
+        Text(
+          l10n.supportTitle,
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
+          style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
         ),
         const SizedBox(height: AppSpacing.xs),
         Row(
@@ -104,7 +109,7 @@ class SupportButtons extends ConsumerWidget {
                   style: style,
                   onPressed: () => open(Uri(scheme: 'tel', path: phone)),
                   icon: const Icon(Icons.call_outlined),
-                  label: const Text('Ara'),
+                  label: Text(l10n.supportCall),
                 ),
               ),
           ],

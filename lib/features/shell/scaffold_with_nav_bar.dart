@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:milktrace/app/theme.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/widgets/custom_app_bar.dart';
 import 'package:milktrace/widgets/offline_banner.dart';
 
@@ -17,11 +18,11 @@ class ScaffoldWithNavBar extends StatelessWidget {
 
   final StatefulNavigationShell navigationShell;
 
-  static const _tabs = <_TabSpec>[
-    _TabSpec('Dashboard', Icons.dashboard_outlined, Icons.dashboard),
-    _TabSpec('Canlı', Icons.water_drop_outlined, Icons.water_drop),
-    _TabSpec('Geçmiş', Icons.history_outlined, Icons.history),
-    _TabSpec('Cihazlar', Icons.sensors_outlined, Icons.sensors),
+  static List<_TabSpec> get _tabs => [
+    _TabSpec(l10n.shellTabDashboard, Icons.dashboard_outlined, Icons.dashboard),
+    _TabSpec(l10n.shellTabLive, Icons.water_drop_outlined, Icons.water_drop),
+    _TabSpec(l10n.shellTabHistory, Icons.history_outlined, Icons.history),
+    _TabSpec(l10n.shellTabDevices, Icons.sensors_outlined, Icons.sensors),
   ];
 
   @override

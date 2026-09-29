@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/format.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/offline_providers.dart';
 
 /// Çevrimdışıyken ekranın üstündeki bant (§18/7).
@@ -40,8 +41,7 @@ class OfflineBanner extends ConsumerWidget {
             const SizedBox(width: AppSpacing.sm),
             Expanded(
               child: Text(
-                'Çevrimdışı · son veri $when. Değişiklikler bağlantı gelince '
-                'yapılabilir.',
+                l10n.widgetOfflineBanner(when),
                 style: const TextStyle(
                   fontSize: 12,
                   color: AppColors.darkAmberColor,

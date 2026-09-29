@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/api_exception.dart';
+import 'package:milktrace/l10n/l10n.dart';
 
 /// Yükleme hatası gösterimi.
 ///
@@ -50,7 +51,7 @@ class ErrorView extends StatelessWidget {
             OutlinedButton.icon(
               onPressed: retry,
               icon: const Icon(Icons.refresh),
-              label: const Text('Tekrar dene'),
+              label: Text(l10n.commonRetry),
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppColors.darkGreenColor,
               ),

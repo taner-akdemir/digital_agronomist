@@ -8,6 +8,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/data/push/push_gateway.dart';
 import 'package:milktrace/data/push/push_message.dart';
+import 'package:milktrace/l10n/l10n.dart';
 
 /// Gerçek FCM bağlantısı (§15.2).
 ///
@@ -34,10 +35,10 @@ class FirebasePushGateway implements PushGateway {
   /// `default_notification_channel_id` ile birebir aynı olmalı; farklı
   /// olsaydı uygulama kapalıyken gelen bildirim başka bir kanala düşer ve
   /// kullanıcının sessize aldığı kanal işe yaramazdı.
-  static const _channel = AndroidNotificationChannel(
+  static AndroidNotificationChannel get _channel => AndroidNotificationChannel(
     'milktrace_alerts',
-    'Sağım uyarıları',
-    description: 'Düşük debi, düşük verim ve cihaz uyarıları.',
+    l10n.pushChannelName,
+    description: l10n.pushChannelDescription,
     importance: Importance.high,
   );
 

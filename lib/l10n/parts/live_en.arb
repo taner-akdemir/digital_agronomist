@@ -1,0 +1,119 @@
+{
+  "liveHallsLoadFailed": "Couldn't load milking areas",
+  "liveNoHalls": "No milking areas defined",
+  "liveDataFailed": "Couldn't get live data",
+  "liveTitle": "Live data",
+  "liveHallName": "Area {name}",
+  "@liveHallName": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "liveActiveCount": "{n} Active",
+  "@liveActiveCount": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "livePassiveCount": "{n} Idle",
+  "@livePassiveCount": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "liveRedAlertOff": "Turn off red alert",
+  "liveRedAlertOn": "Turn on red alert",
+  "liveEndMilking": "End Milking",
+  "liveStartMilking": "Start Milking",
+  "liveEndDialogTitle": "End milking",
+  "liveEndDialogBody": "Open animal milkings will be closed and session summaries calculated. This cannot be undone.",
+  "liveEndConfirm": "End",
+  "liveSessionTypeTitle": "Milking type",
+  "liveActionFailed": "Couldn't complete the action: {error}",
+  "@liveActionFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "liveNoOpenSession": "No open milking in this area.\nUse the button above to start one.",
+  "liveNoSpouts": "No milking points found in this area",
+  "liveSpout": "Point",
+  "liveUnitFallback": "Unit",
+  "liveSpoutTitle": "{unit} · Point {no}",
+  "@liveSpoutTitle": {
+    "placeholders": {
+      "unit": {},
+      "no": {}
+    }
+  },
+  "liveClearTitle": "Remove assignment?",
+  "liveClearBodyMeasured": "The measurement from this milking ({amount}) will be deleted and not credited to any animal.",
+  "@liveClearBodyMeasured": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "liveClearBodyEmpty": "This milking will be deleted.",
+  "liveClearConfirm": "Remove",
+  "liveUnknownTag": "Unknown tag",
+  "liveNotAssigned": "No animal assigned",
+  "liveWithholdUntil": "Withhold milk · withdrawal {date}",
+  "@liveWithholdUntil": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "liveNow": "Now",
+  "liveTarget": "Target",
+  "liveLowFlow": "Low Flow",
+  "liveFlowRate": "Flow rate",
+  "liveFlowUnit": "L/min",
+  "liveNoTarget": "No target",
+  "livePickerTitle": "{spout} · choose animal",
+  "@livePickerTitle": {
+    "placeholders": {
+      "spout": {}
+    }
+  },
+  "livePickerClear": "Remove assignment",
+  "livePickerClearHint": "If {animal} was assigned by mistake",
+  "@livePickerClearHint": {
+    "placeholders": {
+      "animal": {}
+    }
+  },
+  "livePickerSearchHint": "Ear tag, name or RFID",
+  "livePickerLoadFailed": "Couldn't load animals",
+  "livePickerNoMatch": "No matching animals",
+  "livePickerWithhold": "Withhold milk\n{date}",
+  "@livePickerWithhold": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "livePickerElsewhere": "at another point",
+  "livePickerPrevHere": "at this point in the previous milking",
+  "livePickerPrevMilked": "milked in the previous milking",
+  "livePickerNotMilking": "{message}: not in the list. If it came in by mistake, remove the cluster; to milk it, change the animal's status first.",
+  "@livePickerNotMilking": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "livePickerUnknownTag": "{message}. Choose the animal below.",
+  "@livePickerUnknownTag": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "liveReplaceTitle": "Was the previous animal milked?",
+  "liveReplaceBody": "{amount} was measured at this point for {who}.\n\nIf it was milked, the measurement is credited to it. If the assignment was wrong, the measurement is deleted.",
+  "@liveReplaceBody": {
+    "placeholders": {
+      "who": {},
+      "amount": {}
+    }
+  },
+  "liveReplaceMistaken": "Wrong assignment",
+  "liveReplaceMilked": "Milked"
+}
