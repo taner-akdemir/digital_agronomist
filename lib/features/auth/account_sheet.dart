@@ -8,6 +8,7 @@ import 'package:milktrace/data/models/auth_user.dart';
 import 'package:milktrace/features/auth/delete_account.dart';
 import 'package:milktrace/features/auth/role_labels.dart';
 import 'package:milktrace/features/support/support.dart';
+import 'package:milktrace/features/whats_new/whats_new.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/push_providers.dart';
@@ -340,6 +341,23 @@ class _AccountSheet extends ConsumerWidget {
                       ? l10n.accountTwoFactorOn
                       : l10n.accountTwoFactor,
                 ),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: AppColors.darkGreenColor,
+                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadius.mdAll,
+                  ),
+                ),
+              ),
+              // Yenilikler (backend ADR 0123): bütün roller.
+              const SizedBox(height: AppSpacing.sm),
+              OutlinedButton.icon(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  showWhatsNew(context);
+                },
+                icon: const Icon(Icons.auto_awesome_outlined),
+                label: Text(l10n.whatsNewTitle),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.darkGreenColor,
                   padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),

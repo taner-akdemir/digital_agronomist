@@ -336,6 +336,13 @@ nedeni" zorunlu (`exitReasons`, `exitReasonLabel`); `animalBody` yalnızca çık
 durumunda gönderir. Detayda durum çipi "Satıldı · Düşük verim". Panoda son 12 ayın
 dağılımı (`DashboardSummary.exits`; `unknown` = "Belirtilmedi").
 
+**İlk kurulum ve Yenilikler** (backend ADR 0123, yalnızca mobil): panonun başında sahibe
+"Kuruluma başlayın" listesi (`SetupChecklistCard`): hayvanlar, sağım saatleri, bildirim
+kanalı, kullanıcı, tesis konumu — durum mevcut sağlayıcılardan (ayrı uç yok; okunamayan
+adım gizli), kapatma cihazda işletme başına (`setup.dismissed.<işletme>`). Yenilikler:
+`WhatsNewListener` kabukta; `whatsNewId` değişince bir kez, ilk kurulumda HİÇ; hesap
+kartında "Yenilikler". YENİ SÜRÜMDE `whatsNewId` ve `whatsNewItem*` ARB metinleri güncellenir.
+
 **Sağımcılar** (`/settings/milkers`, backend ADR 0090): hesap kartından YALNIZCA sahibe.
 Sağımcı = oturumu açan / hayvanı bağlayan (ayrı seçim adımı yok). 7/30 gün; oturum, sağım,
 süt, ortalama süre, düşük debi payı. Metin oranın kişiyi puanlamadığını söyler.

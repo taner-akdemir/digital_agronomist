@@ -1,0 +1,26 @@
+{
+  "setupTitle": "Get started ({done}/{total})",
+  "@setupTitle": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "setupDismiss": "Close the list",
+  "setupAnimals": "Add animals or import them from a list",
+  "setupSchedule": "Enter the milking times",
+  "setupChannel": "Add an e-mail or SMS notification channel",
+  "setupTeam": "Add milkers and the vet as users",
+  "setupLocation": "Enter the farm location for heat stress alerts",
+  "whatsNewTitle": "What's new",
+  "whatsNewOk": "OK",
+  "whatsNewItem1": "Quiet hours: non-critical alerts don't ring at night; unread critical alerts are repeated by SMS/call.",
+  "whatsNewItem2": "Vaccination schedule, heat tracking and dry-off/calving reminders.",
+  "whatsNewItem3": "305-day yield projection on the animal page; breeding indicators on the dashboard.",
+  "whatsNewItem4": "Heat stress alert: enter the farm location and hot days are marked on the chart.",
+  "whatsNewItem5": "Dark theme: Light / Dark / Device in the account sheet."
+}

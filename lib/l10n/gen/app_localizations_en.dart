@@ -2421,6 +2421,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sessionsTitle => 'Sessions';
 
   @override
+  String get setupAnimals => 'Add animals or import them from a list';
+
+  @override
+  String get setupChannel => 'Add an e-mail or SMS notification channel';
+
+  @override
+  String get setupDismiss => 'Close the list';
+
+  @override
+  String get setupLocation => 'Enter the farm location for heat stress alerts';
+
+  @override
+  String get setupSchedule => 'Enter the milking times';
+
+  @override
+  String get setupTeam => 'Add milkers and the vet as users';
+
+  @override
+  String setupTitle(int done, int total) {
+    return 'Get started ($done/$total)';
+  }
+
+  @override
   String get shellTabDashboard => 'Dashboard';
 
   @override
@@ -3184,6 +3207,32 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vaccineTitle => 'Vaccination schedule';
+
+  @override
+  String get whatsNewItem1 =>
+      'Quiet hours: non-critical alerts don\'t ring at night; unread critical alerts are repeated by SMS/call.';
+
+  @override
+  String get whatsNewItem2 =>
+      'Vaccination schedule, heat tracking and dry-off/calving reminders.';
+
+  @override
+  String get whatsNewItem3 =>
+      '305-day yield projection on the animal page; breeding indicators on the dashboard.';
+
+  @override
+  String get whatsNewItem4 =>
+      'Heat stress alert: enter the farm location and hot days are marked on the chart.';
+
+  @override
+  String get whatsNewItem5 =>
+      'Dark theme: Light / Dark / Device in the account sheet.';
+
+  @override
+  String get whatsNewOk => 'OK';
+
+  @override
+  String get whatsNewTitle => 'What\'s new';
 
   @override
   String get widgetAccount => 'Account';

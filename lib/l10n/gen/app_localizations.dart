@@ -4164,6 +4164,48 @@ abstract class AppLocalizations {
   /// **'Oturumlar'**
   String get sessionsTitle;
 
+  /// No description provided for @setupAnimals.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hayvanları ekleyin ya da listeden içe aktarın'**
+  String get setupAnimals;
+
+  /// No description provided for @setupChannel.
+  ///
+  /// In tr, this message translates to:
+  /// **'E-posta ya da SMS bildirim kanalı ekleyin'**
+  String get setupChannel;
+
+  /// No description provided for @setupDismiss.
+  ///
+  /// In tr, this message translates to:
+  /// **'Listeyi kapat'**
+  String get setupDismiss;
+
+  /// No description provided for @setupLocation.
+  ///
+  /// In tr, this message translates to:
+  /// **'Isı stresi uyarısı için tesis konumunu girin'**
+  String get setupLocation;
+
+  /// No description provided for @setupSchedule.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sağım saatlerini girin'**
+  String get setupSchedule;
+
+  /// No description provided for @setupTeam.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sağımcıları ve veterineri kullanıcı olarak ekleyin'**
+  String get setupTeam;
+
+  /// No description provided for @setupTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kuruluma başlayın ({done}/{total})'**
+  String setupTitle(int done, int total);
+
   /// No description provided for @shellTabDashboard.
   ///
   /// In tr, this message translates to:
@@ -5429,6 +5471,48 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Aşı takvimi'**
   String get vaccineTitle;
+
+  /// No description provided for @whatsNewItem1.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sessiz saat: gece kritik olmayan uyarılar çalmaz; okunmayan kritik uyarı SMS/aramayla tekrar edilir.'**
+  String get whatsNewItem1;
+
+  /// No description provided for @whatsNewItem2.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aşı takvimi, kızgınlık takibi ve kuruya çıkarma/doğum hatırlatmaları.'**
+  String get whatsNewItem2;
+
+  /// No description provided for @whatsNewItem3.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hayvan detayında 305 günlük verim tahmini; panoda üreme göstergeleri.'**
+  String get whatsNewItem3;
+
+  /// No description provided for @whatsNewItem4.
+  ///
+  /// In tr, this message translates to:
+  /// **'Isı stresi uyarısı: tesis konumunu girin, sıcak günler grafikte işaretlensin.'**
+  String get whatsNewItem4;
+
+  /// No description provided for @whatsNewItem5.
+  ///
+  /// In tr, this message translates to:
+  /// **'Karanlık tema: hesap kartından Açık / Karanlık / Cihaz.'**
+  String get whatsNewItem5;
+
+  /// No description provided for @whatsNewOk.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tamam'**
+  String get whatsNewOk;
+
+  /// No description provided for @whatsNewTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yenilikler'**
+  String get whatsNewTitle;
 
   /// No description provided for @widgetAccount.
   ///

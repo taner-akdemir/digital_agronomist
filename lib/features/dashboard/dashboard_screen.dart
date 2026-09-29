@@ -17,6 +17,7 @@ import 'package:milktrace/features/deliveries/deliveries_screen.dart';
 import 'package:milktrace/features/deliveries/delivery_card.dart';
 import 'package:milktrace/features/history/breeding_card.dart';
 import 'package:milktrace/features/history/history_providers.dart';
+import 'package:milktrace/features/onboarding/setup_checklist.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
@@ -52,6 +53,8 @@ class DashboardScreen extends ConsumerWidget {
         builder: (s) => ListView(
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
+            // İlk kurulum listesi (backend ADR 0123): yalnızca sahibe.
+            const SetupChecklistCard(),
             _TodayCard(summary: s, volume: ref.watch(volumeFormatProvider)),
             const SizedBox(height: AppSpacing.md),
             _SpeciesCard(summary: s),

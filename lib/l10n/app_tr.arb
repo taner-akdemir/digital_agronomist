@@ -1370,6 +1370,23 @@
   "sessionsSignOutOthers": "Diğer bütün cihazlardan çık",
   "sessionsThisDevice": "bu cihaz",
   "sessionsTitle": "Oturumlar",
+  "setupAnimals": "Hayvanları ekleyin ya da listeden içe aktarın",
+  "setupChannel": "E-posta ya da SMS bildirim kanalı ekleyin",
+  "setupDismiss": "Listeyi kapat",
+  "setupLocation": "Isı stresi uyarısı için tesis konumunu girin",
+  "setupSchedule": "Sağım saatlerini girin",
+  "setupTeam": "Sağımcıları ve veterineri kullanıcı olarak ekleyin",
+  "setupTitle": "Kuruluma başlayın ({done}/{total})",
+  "@setupTitle": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "shellTabDashboard": "Dashboard",
   "shellTabDevices": "Cihazlar",
   "shellTabHistory": "Geçmiş",
@@ -1786,6 +1803,13 @@
   "vaccineSelectAll": "Tümünü seç",
   "vaccineSelectNone": "Seçimi kaldır",
   "vaccineTitle": "Aşı takvimi",
+  "whatsNewItem1": "Sessiz saat: gece kritik olmayan uyarılar çalmaz; okunmayan kritik uyarı SMS/aramayla tekrar edilir.",
+  "whatsNewItem2": "Aşı takvimi, kızgınlık takibi ve kuruya çıkarma/doğum hatırlatmaları.",
+  "whatsNewItem3": "Hayvan detayında 305 günlük verim tahmini; panoda üreme göstergeleri.",
+  "whatsNewItem4": "Isı stresi uyarısı: tesis konumunu girin, sıcak günler grafikte işaretlensin.",
+  "whatsNewItem5": "Karanlık tema: hesap kartından Açık / Karanlık / Cihaz.",
+  "whatsNewOk": "Tamam",
+  "whatsNewTitle": "Yenilikler",
   "widgetAccount": "Hesap",
   "widgetAlerts": "Uyarılar",
   "widgetOfflineBanner": "Çevrimdışı · son veri {when}. Değişiklikler bağlantı gelince yapılabilir.",

@@ -1190,6 +1190,23 @@
   "sessionsSignOutOthers": "Sign out of all other devices",
   "sessionsThisDevice": "this device",
   "sessionsTitle": "Sessions",
+  "setupAnimals": "Add animals or import them from a list",
+  "setupChannel": "Add an e-mail or SMS notification channel",
+  "setupDismiss": "Close the list",
+  "setupLocation": "Enter the farm location for heat stress alerts",
+  "setupSchedule": "Enter the milking times",
+  "setupTeam": "Add milkers and the vet as users",
+  "setupTitle": "Get started ({done}/{total})",
+  "@setupTitle": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "shellTabDashboard": "Dashboard",
   "shellTabDevices": "Devices",
   "shellTabHistory": "History",
@@ -1571,6 +1588,13 @@
   "vaccineSelectAll": "Select all",
   "vaccineSelectNone": "Clear selection",
   "vaccineTitle": "Vaccination schedule",
+  "whatsNewItem1": "Quiet hours: non-critical alerts don't ring at night; unread critical alerts are repeated by SMS/call.",
+  "whatsNewItem2": "Vaccination schedule, heat tracking and dry-off/calving reminders.",
+  "whatsNewItem3": "305-day yield projection on the animal page; breeding indicators on the dashboard.",
+  "whatsNewItem4": "Heat stress alert: enter the farm location and hot days are marked on the chart.",
+  "whatsNewItem5": "Dark theme: Light / Dark / Device in the account sheet.",
+  "whatsNewOk": "OK",
+  "whatsNewTitle": "What's new",
   "widgetAccount": "Account",
   "widgetAlerts": "Alerts",
   "widgetOfflineBanner": "Offline · last data {when}. Changes can be made once the connection is back.",

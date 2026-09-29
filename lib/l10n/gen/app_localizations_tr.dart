@@ -2394,6 +2394,29 @@ class AppLocalizationsTr extends AppLocalizations {
   String get sessionsTitle => 'Oturumlar';
 
   @override
+  String get setupAnimals => 'Hayvanları ekleyin ya da listeden içe aktarın';
+
+  @override
+  String get setupChannel => 'E-posta ya da SMS bildirim kanalı ekleyin';
+
+  @override
+  String get setupDismiss => 'Listeyi kapat';
+
+  @override
+  String get setupLocation => 'Isı stresi uyarısı için tesis konumunu girin';
+
+  @override
+  String get setupSchedule => 'Sağım saatlerini girin';
+
+  @override
+  String get setupTeam => 'Sağımcıları ve veterineri kullanıcı olarak ekleyin';
+
+  @override
+  String setupTitle(int done, int total) {
+    return 'Kuruluma başlayın ($done/$total)';
+  }
+
+  @override
   String get shellTabDashboard => 'Dashboard';
 
   @override
@@ -3145,6 +3168,32 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get vaccineTitle => 'Aşı takvimi';
+
+  @override
+  String get whatsNewItem1 =>
+      'Sessiz saat: gece kritik olmayan uyarılar çalmaz; okunmayan kritik uyarı SMS/aramayla tekrar edilir.';
+
+  @override
+  String get whatsNewItem2 =>
+      'Aşı takvimi, kızgınlık takibi ve kuruya çıkarma/doğum hatırlatmaları.';
+
+  @override
+  String get whatsNewItem3 =>
+      'Hayvan detayında 305 günlük verim tahmini; panoda üreme göstergeleri.';
+
+  @override
+  String get whatsNewItem4 =>
+      'Isı stresi uyarısı: tesis konumunu girin, sıcak günler grafikte işaretlensin.';
+
+  @override
+  String get whatsNewItem5 =>
+      'Karanlık tema: hesap kartından Açık / Karanlık / Cihaz.';
+
+  @override
+  String get whatsNewOk => 'Tamam';
+
+  @override
+  String get whatsNewTitle => 'Yenilikler';
 
   @override
   String get widgetAccount => 'Hesap';

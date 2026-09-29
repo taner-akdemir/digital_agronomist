@@ -1,0 +1,26 @@
+{
+  "setupTitle": "Kuruluma başlayın ({done}/{total})",
+  "@setupTitle": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "setupDismiss": "Listeyi kapat",
+  "setupAnimals": "Hayvanları ekleyin ya da listeden içe aktarın",
+  "setupSchedule": "Sağım saatlerini girin",
+  "setupChannel": "E-posta ya da SMS bildirim kanalı ekleyin",
+  "setupTeam": "Sağımcıları ve veterineri kullanıcı olarak ekleyin",
+  "setupLocation": "Isı stresi uyarısı için tesis konumunu girin",
+  "whatsNewTitle": "Yenilikler",
+  "whatsNewOk": "Tamam",
+  "whatsNewItem1": "Sessiz saat: gece kritik olmayan uyarılar çalmaz; okunmayan kritik uyarı SMS/aramayla tekrar edilir.",
+  "whatsNewItem2": "Aşı takvimi, kızgınlık takibi ve kuruya çıkarma/doğum hatırlatmaları.",
+  "whatsNewItem3": "Hayvan detayında 305 günlük verim tahmini; panoda üreme göstergeleri.",
+  "whatsNewItem4": "Isı stresi uyarısı: tesis konumunu girin, sıcak günler grafikte işaretlensin.",
+  "whatsNewItem5": "Karanlık tema: hesap kartından Açık / Karanlık / Cihaz."
+}
