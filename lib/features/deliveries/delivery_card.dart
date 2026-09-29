@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/features/deliveries/deliveries_screen.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 
@@ -37,10 +38,10 @@ class DeliveryCard extends ConsumerWidget {
             children: [
               Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: Text(
-                      'Tank teslimi',
-                      style: TextStyle(
+                      l10n.deliveriesTankDelivery,
+                      style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
@@ -52,15 +53,17 @@ class DeliveryCard extends ConsumerWidget {
                         foregroundColor: AppColors.darkGreenColor,
                       ),
                       onPressed: () => context.push('/deliveries'),
-                      child: const Text('Tümü', style: TextStyle(fontSize: 12)),
+                      child: Text(
+                        l10n.commonAll,
+                        style: const TextStyle(fontSize: 12),
+                      ),
                     ),
                 ],
               ),
               if (items.isEmpty)
-                const Text(
-                  'Tanker fişini girin: sayaçların ölçtüğüyle karşılaştırılır, '
-                  'fark büyükse uyarı gelir.',
-                  style: TextStyle(
+                Text(
+                  l10n.deliveriesCardHint,
+                  style: const TextStyle(
                     fontSize: 12,
                     color: AppColors.onSurfaceMuted,
                   ),
@@ -76,7 +79,7 @@ class DeliveryCard extends ConsumerWidget {
                   child: TextButton.icon(
                     onPressed: () => showAddDelivery(context, ref),
                     icon: const Icon(Icons.add, size: 18),
-                    label: const Text('Teslim gir'),
+                    label: Text(l10n.deliveriesEnter),
                     style: TextButton.styleFrom(
                       foregroundColor: AppColors.darkGreenColor,
                     ),

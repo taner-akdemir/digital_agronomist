@@ -1,0 +1,234 @@
+{
+  "dashboardLoadFailed": "Could not load today's summary",
+  "dashboardTodayMilk": "Milk collected today",
+  "dashboardActiveSessions": "{n, plural, =1{{n} milking in progress} other{{n} milkings in progress}}",
+  "@dashboardActiveSessions": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "dashboardMilkingsAnimals": "{milkings} milkings · {animals} animals",
+  "@dashboardMilkingsAnimals": {
+    "placeholders": {
+      "milkings": {},
+      "animals": {}
+    }
+  },
+  "dashboardNoMilkingToday": "No milking yet today",
+  "dashboardBySpecies": "By species",
+  "dashboardSpeciesFallback": "Species",
+  "dashboardSpeciesAnimals": "{species} · {n} animals",
+  "@dashboardSpeciesAnimals": {
+    "placeholders": {
+      "species": {},
+      "n": {}
+    }
+  },
+  "dashboardYieldClasses": "Yield classes · {n} animals",
+  "@dashboardYieldClasses": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "dashboardGroupsToday": "Groups · today",
+  "dashboardGroupMilked": "{milked}/{animals} animals milked",
+  "@dashboardGroupMilked": {
+    "placeholders": {
+      "milked": {},
+      "animals": {}
+    }
+  },
+  "dashboardPerAnimal": "per animal {amount}",
+  "@dashboardPerAnimal": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "dashboardOpenAlerts": "Open alerts",
+  "dashboardNoOpenAlerts": "No open alerts",
+  "dashboardMoreAlerts": "{n, plural, =1{{n} more alert} other{{n} more alerts}}",
+  "@dashboardMoreAlerts": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "upcomingTitle": "Upcoming",
+  "upcomingMore": "{n, plural, =1{{n} more animal} other{{n} more animals}}",
+  "@upcomingMore": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "devicesLoadFailed": "Could not load devices",
+  "devicesOnlineCount": "{n} Online",
+  "@devicesOnlineCount": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "devicesOfflineCount": "{n} Offline",
+  "@devicesOfflineCount": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "devicesEmptySpoutsCount": "{n} Points without meter",
+  "@devicesEmptySpoutsCount": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "devicesUnprofiledCount": "{n} Meters without profile",
+  "@devicesUnprofiledCount": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "devicesSourcesLabel": "Sources:",
+  "devicesHallTitle": "Milking area {name}",
+  "@devicesHallTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "devicesHallNoVacuums": "No milking units defined in this area",
+  "devicesVacuumTitle": "Milking unit {name}",
+  "@devicesVacuumTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "devicesVacuumAllOnline": "{points} points · all online",
+  "@devicesVacuumAllOnline": {
+    "placeholders": {
+      "points": {}
+    }
+  },
+  "devicesVacuumProblems": "{points} points · {problems} need attention",
+  "@devicesVacuumProblems": {
+    "placeholders": {
+      "points": {},
+      "problems": {}
+    }
+  },
+  "devicesSpoutLabel": "Point {no}",
+  "@devicesSpoutLabel": {
+    "placeholders": {
+      "no": {}
+    }
+  },
+  "devicesNoProfile": "No profile",
+  "devicesUnassignedTitle": "Meters not installed",
+  "devicesUnassignedHint": "Not attached to a milking point.",
+  "devicesFirmwareShort": "Firmware {version}",
+  "@devicesFirmwareShort": {
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "devicesDetailProfile": "Profile",
+  "devicesProfileUnassigned": "Unassigned (quarantined)",
+  "devicesDetailProtocol": "Protocol",
+  "devicesUnknown": "Unknown",
+  "devicesDetailFirmware": "Firmware version",
+  "devicesDetailCalibration": "Calibration factor",
+  "devicesDetailLastSeen": "Last seen",
+  "devicesNoRecord": "No record",
+  "devicesDetailLastError": "Last error",
+  "devicesSimulated": "Simulator device",
+  "devicesStatusNoMeter": "No meter installed",
+  "devicesStatusReportedError": "Reported an error",
+  "devicesStatusOnline": "Online",
+  "devicesStatusOffline": "Offline",
+  "devicesErrorShort": "Error {code} · {since}",
+  "@devicesErrorShort": {
+    "placeholders": {
+      "code": {},
+      "since": {}
+    }
+  },
+  "deliveriesDiffOver": "+{pct}% · meters over",
+  "@deliveriesDiffOver": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "deliveriesDiffUnder": "−{pct}% · meters under",
+  "@deliveriesDiffUnder": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "deliveriesSavedMismatch": "Delivery saved — differs from the meters: {diff}",
+  "@deliveriesSavedMismatch": {
+    "placeholders": {
+      "diff": {}
+    }
+  },
+  "deliveriesSaved": "Delivery saved",
+  "deliveriesToleranceTitle": "Difference threshold",
+  "deliveriesToleranceLabel": "Difference for alert (%)",
+  "deliveriesToleranceHelper": "Alert if the meters and the tanker differ by more than this.",
+  "deliveriesDeleteTitle": "Delete delivery?",
+  "deliveriesDeleteBody": "{date} · {amount}\nOnly delete a wrongly entered record; then enter the correct one again.",
+  "@deliveriesDeleteBody": {
+    "placeholders": {
+      "date": {},
+      "amount": {}
+    }
+  },
+  "deliveriesTitle": "Tank deliveries",
+  "deliveriesEnter": "Record delivery",
+  "deliveriesLoadFailed": "Could not load deliveries",
+  "deliveriesExplainer": "The tanker slip is compared with what the meters measured since the previous delivery (excluding withheld milk). Alert if the difference is above {pct}%.",
+  "@deliveriesExplainer": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "deliveriesEmpty": "No deliveries recorded yet. The first delivery is not compared; the difference is calculated from the second delivery on.",
+  "deliveriesNotCompared": "Not compared (no previous delivery or meter data)",
+  "deliveriesMetered": "Meters {span}{date}: {amount}{withheld}",
+  "@deliveriesMetered": {
+    "placeholders": {
+      "span": {},
+      "date": {},
+      "amount": {},
+      "withheld": {}
+    }
+  },
+  "deliveriesWithheld": " (excluding {amount} withheld milk)",
+  "@deliveriesWithheld": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "deliveriesTankerLine": "{date} · tanker {amount}",
+  "@deliveriesTankerLine": {
+    "placeholders": {
+      "date": {},
+      "amount": {}
+    }
+  },
+  "deliveriesEnterAmount": "Enter the amount on the tanker slip.",
+  "deliveriesTankDelivery": "Tank delivery",
+  "deliveriesDay": "Day: {date}",
+  "@deliveriesDay": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "deliveriesAmountLabel": "Delivered ({unit})",
+  "@deliveriesAmountLabel": {
+    "placeholders": {
+      "unit": {}
+    }
+  },
+  "deliveriesCardHint": "Enter the tanker slip: it is compared with what the meters measured, and you get an alert if the difference is large."
+}

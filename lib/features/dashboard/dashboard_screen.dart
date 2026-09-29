@@ -16,6 +16,7 @@ import 'package:milktrace/features/deliveries/deliveries_screen.dart';
 import 'package:milktrace/features/deliveries/delivery_card.dart';
 import 'package:milktrace/features/history/breeding_card.dart';
 import 'package:milktrace/features/history/history_providers.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
 import 'package:milktrace/widgets/milk_palette.dart';
@@ -45,7 +46,7 @@ class DashboardScreen extends ConsumerWidget {
       },
       child: AsyncView(
         value: summary,
-        errorMessage: 'Günün özeti alınamadı',
+        errorMessage: l10n.dashboardLoadFailed,
         onRetry: () => ref.invalidate(dashboardSummaryProvider),
         builder: (s) => ListView(
           padding: const EdgeInsets.all(AppSpacing.lg),
@@ -100,10 +101,10 @@ class _TodayCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: Text(
-                  'Bugün toplanan süt',
-                  style: TextStyle(
+                  l10n.dashboardTodayMilk,
+                  style: const TextStyle(
                     fontSize: 13,
                     color: AppColors.onSurfaceMuted,
                   ),
@@ -122,7 +123,7 @@ class _TodayCard extends StatelessWidget {
                     ),
                     const SizedBox(width: AppSpacing.xs),
                     Text(
-                      '${summary.activeSessions} sağım sürüyor',
+                      l10n.dashboardActiveSessions(summary.activeSessions),
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
@@ -160,7 +161,10 @@ class _TodayCard extends StatelessWidget {
           Text(
             // "Günün özeti" tek bir sayıdan ibaret değil: kaç sağımdan ve
             // kaç hayvandan geldiği olmadan toplam yorumlanamaz.
-            '${summary.milkingCount} sağım · ${summary.animalCount} hayvan',
+            l10n.dashboardMilkingsAnimals(
+              summary.milkingCount,
+              summary.animalCount,
+            ),
             style: const TextStyle(
               fontSize: 12,
               color: AppColors.onSurfaceMuted,
@@ -183,10 +187,10 @@ class _SpeciesCard extends ConsumerWidget {
     final nameById = {for (final s in species) s.id: s.nameTr};
 
     if (summary.bySpecies.isEmpty) {
-      return const _Card(
+      return _Card(
         child: Text(
-          'Bugün henüz sağım yapılmadı',
-          style: TextStyle(color: AppColors.onSurfaceMuted),
+          l10n.dashboardNoMilkingToday,
+          style: const TextStyle(color: AppColors.onSurfaceMuted),
         ),
       );
     }
@@ -199,14 +203,14 @@ class _SpeciesCard extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Tür bazında',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          Text(
+            l10n.dashboardBySpecies,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
           const SizedBox(height: AppSpacing.md),
           for (final row in summary.bySpecies) ...[
             _SpeciesRow(
-              label: nameById[row.speciesId] ?? 'Tür',
+              label: nameById[row.speciesId] ?? l10n.dashboardSpeciesFallback,
               row: row,
               volume: ref.watch(volumeFormatProvider),
               ratio: max == 0 ? 0 : row.totalMl / max,
@@ -241,7 +245,7 @@ class _SpeciesRow extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                '$label · ${row.animalCount} hayvan',
+                l10n.dashboardSpeciesAnimals(label, row.animalCount),
                 style: const TextStyle(fontSize: 13),
               ),
             ),
@@ -292,7 +296,7 @@ class _ClassCard extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Verim sınıfları · $total hayvan',
+            l10n.dashboardYieldClasses(total),
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
           const SizedBox(height: AppSpacing.md),
@@ -333,9 +337,9 @@ class _GroupCard extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Gruplar · bugün',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          Text(
+            l10n.dashboardGroupsToday,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
           const SizedBox(height: AppSpacing.sm),
           for (final g in groups)
@@ -360,7 +364,7 @@ class _GroupCard extends ConsumerWidget {
                             style: const TextStyle(fontWeight: FontWeight.w600),
                           ),
                           Text(
-                            '${g.milked}/${g.animals} hayvan sağıldı',
+                            l10n.dashboardGroupMilked(g.milked, g.animals),
                             style: const TextStyle(
                               fontSize: 12,
                               color: AppColors.onSurfaceMuted,
@@ -378,7 +382,9 @@ class _GroupCard extends ConsumerWidget {
                         ),
                         if (g.milked > 0)
                           Text(
-                            'hayvan başı ${volume.amount(g.perAnimalMl)}',
+                            l10n.dashboardPerAnimal(
+                              volume.amount(g.perAnimalMl),
+                            ),
                             style: const TextStyle(
                               fontSize: 12,
                               color: AppColors.onSurfaceMuted,
@@ -483,10 +489,13 @@ class _AlertsCard extends ConsumerWidget {
         children: [
           Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: Text(
-                  'Açık uyarılar',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  l10n.dashboardOpenAlerts,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
                 ),
               ),
               if (open.isNotEmpty)
@@ -495,16 +504,22 @@ class _AlertsCard extends ConsumerWidget {
                     foregroundColor: AppColors.darkGreenColor,
                   ),
                   onPressed: () => context.push('/alerts'),
-                  child: const Text('Tümü', style: TextStyle(fontSize: 12)),
+                  child: Text(
+                    l10n.commonAll,
+                    style: const TextStyle(fontSize: 12),
+                  ),
                 ),
             ],
           ),
           if (open.isEmpty)
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: AppSpacing.sm),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
               child: Text(
-                'Açık uyarı yok',
-                style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
+                l10n.dashboardNoOpenAlerts,
+                style: const TextStyle(
+                  fontSize: 13,
+                  color: AppColors.onSurfaceMuted,
+                ),
               ),
             )
           else ...[
@@ -513,7 +528,7 @@ class _AlertsCard extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.only(top: AppSpacing.sm),
                 child: Text(
-                  '${open.length - _limit} uyarı daha',
+                  l10n.dashboardMoreAlerts(open.length - _limit),
                   style: const TextStyle(
                     fontSize: 11,
                     color: AppColors.onSurfaceMuted,

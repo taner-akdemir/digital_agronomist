@@ -6,6 +6,7 @@ import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/device_error.dart';
 import 'package:milktrace/domain/flow_color.dart';
 import 'package:milktrace/features/devices/devices_providers.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/widgets/async_view.dart';
 import 'package:milktrace/widgets/light_info.dart';
 import 'package:milktrace/widgets/milk_palette.dart';
@@ -30,7 +31,7 @@ class DevicesScreen extends ConsumerWidget {
       },
       child: AsyncView(
         value: tree,
-        errorMessage: 'Cihazlar yüklenemedi',
+        errorMessage: l10n.devicesLoadFailed,
         onRetry: () => ref.invalidate(deviceTreeProvider),
         builder: (t) => ListView(
           padding: const EdgeInsets.fromLTRB(
@@ -68,25 +69,25 @@ class _Summary extends StatelessWidget {
       children: [
         LightInfo(
           color: AppColors.flowGreen,
-          label: '${tree.online} Çevrimiçi',
+          label: l10n.devicesOnlineCount(tree.online),
         ),
         LightInfo(
           color: AppColors.flowRed,
-          label: '${tree.offline} Çevrimdışı',
+          label: l10n.devicesOfflineCount(tree.offline),
         ),
         // Sayaçsız nokta SAYILIR: sağım başladığında o noktadan hiç veri
         // gelmeyecek ve eksik ancak burada fark edilir.
         if (tree.emptySpouts > 0)
           LightInfo(
             color: AppColors.flowGrey,
-            label: '${tree.emptySpouts} Sayaçsız nokta',
+            label: l10n.devicesEmptySpoutsCount(tree.emptySpouts),
           ),
         // Profili olmayan sayaç KARANTİNADA bekliyor (§8.4) ve verisi
         // işlenmiyor; sessizce gizlense eksik verinin sebebi aranamazdı.
         if (tree.unprofiled > 0)
           LightInfo(
             color: AppColors.flowYellow,
-            label: '${tree.unprofiled} Profilsiz sayaç',
+            label: l10n.devicesUnprofiledCount(tree.unprofiled),
           ),
       ],
     );
@@ -113,9 +114,9 @@ class _Sources extends StatelessWidget {
         spacing: AppSpacing.md,
         runSpacing: AppSpacing.xs,
         children: [
-          const Text(
-            'Kaynaklar:',
-            style: TextStyle(
+          Text(
+            l10n.devicesSourcesLabel,
+            style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
               color: AppColors.onSurfaceMuted,
@@ -152,7 +153,7 @@ class _HallSection extends StatelessWidget {
             bottom: AppSpacing.sm,
           ),
           child: Text(
-            '${node.hall.name} Bölgesi',
+            l10n.devicesHallTitle(node.hall.name),
             style: const TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.bold,
@@ -161,10 +162,13 @@ class _HallSection extends StatelessWidget {
           ),
         ),
         if (node.vacuums.isEmpty)
-          const _Card(
+          _Card(
             child: Text(
-              'Bu bölgede tanımlı ünite yok',
-              style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
+              l10n.devicesHallNoVacuums,
+              style: const TextStyle(
+                fontSize: 13,
+                color: AppColors.onSurfaceMuted,
+              ),
             ),
           )
         else
@@ -213,13 +217,13 @@ class _VacuumCard extends StatelessWidget {
         tilePadding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
         childrenPadding: const EdgeInsets.only(bottom: AppSpacing.sm),
         title: Text(
-          'Ünite ${node.vacuum.name}',
+          l10n.devicesVacuumTitle(node.vacuum.name),
           style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
         ),
         subtitle: Text(
           problems == 0
-              ? '${node.spouts.length} nokta · tümü çevrimiçi'
-              : '${node.spouts.length} nokta · $problems ilgilenilmeli',
+              ? l10n.devicesVacuumAllOnline(node.spouts.length)
+              : l10n.devicesVacuumProblems(node.spouts.length, problems),
           style: TextStyle(
             fontSize: 12,
             color: problems == 0 ? AppColors.onSurfaceMuted : AppColors.flowRed,
@@ -269,7 +273,7 @@ class _SpoutRow extends StatelessWidget {
             SizedBox(
               width: 68,
               child: Text(
-                'Nokta ${node.spout.positionNo}',
+                l10n.devicesSpoutLabel(node.spout.positionNo),
                 style: const TextStyle(fontSize: 13),
               ),
             ),
@@ -306,7 +310,7 @@ class _SpoutRow extends StatelessWidget {
     if (device == null) return '—';
     if (!showProtocol) return device.serialNo;
 
-    final protocol = device.profile?.protocolLabel ?? 'Profilsiz';
+    final protocol = device.profile?.protocolLabel ?? l10n.devicesNoProfile;
     return '${device.serialNo} · $protocol';
   }
 }
@@ -322,17 +326,20 @@ class _UnassignedCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Takılı olmayan sayaçlar',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          Text(
+            l10n.devicesUnassignedTitle,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
           const SizedBox(height: AppSpacing.xs),
           // Bunlar ARIZA DEĞİL: dolapta bekleyen yedekler de buraya düşer.
           // Ayrı başlık altında olmaları, üstteki ağaçtaki eksikle
           // karıştırılmalarını önlüyor.
-          const Text(
-            'Bir sağım noktasına bağlı değil.',
-            style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
+          Text(
+            l10n.devicesUnassignedHint,
+            style: const TextStyle(
+              fontSize: 12,
+              color: AppColors.onSurfaceMuted,
+            ),
           ),
           const SizedBox(height: AppSpacing.sm),
           for (final d in devices)
@@ -355,7 +362,7 @@ class _UnassignedCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Yazılım ${d.firmware ?? '—'}',
+                      l10n.devicesFirmwareShort(d.firmware ?? '—'),
                       style: const TextStyle(
                         fontSize: 11,
                         color: AppColors.onSurfaceMuted,
@@ -427,43 +434,49 @@ void _showDeviceSheet(BuildContext context, Device device) {
             // Profil §16/1 gereği VERİdir: uygulama üretici adını gösterir,
             // hiçbir yerde ona göre davranmaz.
             _DetailRow(
-              'Profil',
-              device.profile?.title ?? 'Atanmamış (karantinada)',
+              l10n.devicesDetailProfile,
+              device.profile?.title ?? l10n.devicesProfileUnassigned,
             ),
             _DetailRow(
-              'Protokol',
-              device.profile?.protocolLabel ?? 'Bilinmiyor',
+              l10n.devicesDetailProtocol,
+              device.profile?.protocolLabel ?? l10n.devicesUnknown,
             ),
-            _DetailRow('Yazılım sürümü', device.firmware ?? 'Bilinmiyor'),
             _DetailRow(
-              'Kalibrasyon katsayısı',
+              l10n.devicesDetailFirmware,
+              device.firmware ?? l10n.devicesUnknown,
+            ),
+            _DetailRow(
+              l10n.devicesDetailCalibration,
               device.calibrationFactor.toStringAsFixed(3),
             ),
             _DetailRow(
-              'Son görülme',
+              l10n.devicesDetailLastSeen,
               device.lastSeenAt == null
-                  ? 'Kayıt yok'
+                  ? l10n.devicesNoRecord
                   : '${Fmt.since(device.lastSeenAt!)} '
                         '(${Fmt.dayMonth(device.lastSeenAt!)} '
                         '${Fmt.time(device.lastSeenAt!)})',
             ),
-            _DetailRow('Son hata', _lastErrorText(device.lastError)),
+            _DetailRow(
+              l10n.devicesDetailLastError,
+              _lastErrorText(device.lastError),
+            ),
             if (device.isSimulated)
               // Simülatör cihazı GÖRÜNÜR olmalı: demo verisini gerçek sanıp
               // sahada arayan olmasın (§10).
-              const Padding(
-                padding: EdgeInsets.only(top: AppSpacing.md),
+              Padding(
+                padding: const EdgeInsets.only(top: AppSpacing.md),
                 child: Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.science_outlined,
                       size: 14,
                       color: AppColors.lightGreyColor,
                     ),
-                    SizedBox(width: AppSpacing.xs),
+                    const SizedBox(width: AppSpacing.xs),
                     Text(
-                      'Simülatör cihazı',
-                      style: TextStyle(
+                      l10n.devicesSimulated,
+                      style: const TextStyle(
                         fontSize: 11,
                         color: AppColors.onSurfaceMuted,
                       ),
@@ -481,7 +494,7 @@ void _showDeviceSheet(BuildContext context, Device device) {
 /// Son hata satırı: "E17 · Akış sensörü arızası (3 sa önce, 24.09 14:48)".
 /// Açıklama profilin tablosundan gelir; yoksa kod ham kalır.
 String _lastErrorText(DeviceError? e) {
-  if (e == null) return 'Kayıt yok';
+  if (e == null) return l10n.devicesNoRecord;
   final what = e.description == null ? e.code : '${e.code} · ${e.description}';
   return '$what (${Fmt.since(e.at)}, '
       '${Fmt.dayMonth(e.at)} ${Fmt.time(e.at)})';
@@ -531,17 +544,17 @@ class _DeviceStatus {
 
   /// Cihaz yoksa nokta BOŞtur — "bilinmiyor" ile aynı şey değil.
   static _DeviceStatus of(Device? device) => switch (device?.status) {
-    null => const _DeviceStatus('Sayaç takılı değil', MilkColor.grey),
+    null => _DeviceStatus(l10n.devicesStatusNoMeter, MilkColor.grey),
     // Çevrimiçi ama son 24 saatte hata bildirdi: SARI, kırmızı değil.
     // Sayaç veri gönderiyor; arıza kodu ilgilenilmesi gereken bir işaret,
     // çevrimdışı kadar acil değil (backend ADR 0044).
-    'online' when device!.hasRecentError(DateTime.now()) => const _DeviceStatus(
-      'Hata bildirdi',
+    'online' when device!.hasRecentError(DateTime.now()) => _DeviceStatus(
+      l10n.devicesStatusReportedError,
       MilkColor.yellow,
     ),
-    'online' => const _DeviceStatus('Çevrimiçi', MilkColor.green),
-    'offline' => const _DeviceStatus('Çevrimdışı', MilkColor.red),
-    _ => const _DeviceStatus('Bilinmiyor', MilkColor.grey),
+    'online' => _DeviceStatus(l10n.devicesStatusOnline, MilkColor.green),
+    'offline' => _DeviceStatus(l10n.devicesStatusOffline, MilkColor.red),
+    _ => _DeviceStatus(l10n.devicesUnknown, MilkColor.grey),
   };
 
   /// Satır sonunda görünen metin.
@@ -557,7 +570,7 @@ class _DeviceStatus {
     if (device?.status == 'online' &&
         err != null &&
         device!.hasRecentError(DateTime.now())) {
-      return 'Hata ${err.code} · ${Fmt.sinceShort(err.at)}';
+      return l10n.devicesErrorShort(err.code, Fmt.sinceShort(err.at));
     }
     final seen = device?.lastSeenAt;
     if (seen == null) return label;

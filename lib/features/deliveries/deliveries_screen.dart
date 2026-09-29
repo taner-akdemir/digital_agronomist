@@ -7,6 +7,7 @@ import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/core/format.dart';
 import 'package:milktrace/core/volume.dart';
 import 'package:milktrace/data/models/delivery.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
@@ -24,7 +25,9 @@ Future<Deliveries> deliveries(Ref ref) =>
 /// "+%4.6 · sayaçlar fazla" / "−%2.1 · sayaçlar eksik".
 String diffLabel(Delivery d) {
   final pct = d.diffPct.abs().toStringAsFixed(1);
-  return d.diffPct >= 0 ? '+%$pct · sayaçlar fazla' : '−%$pct · sayaçlar eksik';
+  return d.diffPct >= 0
+      ? l10n.deliveriesDiffOver(pct)
+      : l10n.deliveriesDiffUnder(pct);
 }
 
 /// Teslim girebilir mi: sahip ve operatör (fişi tankerle karşılayan).
@@ -54,8 +57,8 @@ Future<bool> showAddDelivery(
       SnackBar(
         content: Text(
           d.mismatch
-              ? 'Teslim kaydedildi — sayaçlarla fark var: ${diffLabel(d)}'
-              : 'Teslim kaydedildi',
+              ? l10n.deliveriesSavedMismatch(diffLabel(d))
+              : l10n.deliveriesSaved,
         ),
         backgroundColor: d.mismatch
             ? AppColors.darkAmberColor
@@ -66,7 +69,7 @@ Future<bool> showAddDelivery(
   } catch (e) {
     messenger.showSnackBar(
       SnackBar(
-        content: Text(userMessage(e) ?? 'Kaydedilemedi: $e'),
+        content: Text(userMessage(e) ?? l10n.commonSaveFailed(e)),
         backgroundColor: AppColors.flowRed,
       ),
     );
@@ -89,9 +92,9 @@ class DeliveriesScreen extends ConsumerWidget {
   ) async {
     final raw = await showTextPrompt(
       context,
-      title: 'Fark eşiği',
-      label: 'Uyarı için fark (%)',
-      helper: 'Sayaçlar ile tanker bundan fazla ayrışırsa uyarı.',
+      title: l10n.deliveriesToleranceTitle,
+      label: l10n.deliveriesToleranceLabel,
+      helper: l10n.deliveriesToleranceHelper,
       initial: current.toStringAsFixed(1),
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
     );
@@ -104,7 +107,7 @@ class DeliveriesScreen extends ConsumerWidget {
     } catch (e) {
       messenger.showSnackBar(
         SnackBar(
-          content: Text(userMessage(e) ?? 'Kaydedilemedi: $e'),
+          content: Text(userMessage(e) ?? l10n.commonSaveFailed(e)),
           backgroundColor: AppColors.flowRed,
         ),
       );
@@ -116,20 +119,22 @@ class DeliveriesScreen extends ConsumerWidget {
     final ok = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Teslim silinsin mi?'),
+        title: Text(l10n.deliveriesDeleteTitle),
         content: Text(
-          '${Fmt.dayMonthYear(d.deliveredOn)} · ${volume.amount(d.volumeMl)}\n'
-          'Yalnızca yanlış girilen kaydı silin; doğrusunu yeniden girin.',
+          l10n.deliveriesDeleteBody(
+            Fmt.dayMonthYear(d.deliveredOn),
+            volume.amount(d.volumeMl),
+          ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Vazgeç'),
+            child: Text(l10n.commonCancel),
           ),
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: AppColors.flowRed),
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Sil'),
+            child: Text(l10n.commonDelete),
           ),
         ],
       ),
@@ -142,7 +147,7 @@ class DeliveriesScreen extends ConsumerWidget {
     } catch (e) {
       messenger.showSnackBar(
         SnackBar(
-          content: Text(userMessage(e) ?? 'Silinemedi: $e'),
+          content: Text(userMessage(e) ?? l10n.commonDeleteFailed(e)),
           backgroundColor: AppColors.flowRed,
         ),
       );
@@ -159,14 +164,14 @@ class DeliveriesScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          tooltip: 'Geri',
+          tooltip: l10n.commonBack,
           onPressed: () =>
               context.canPop() ? context.pop() : context.go('/dashboard'),
           icon: const Icon(Icons.arrow_back),
         ),
-        title: const Text(
-          'Tank teslimleri',
-          style: TextStyle(
+        title: Text(
+          l10n.deliveriesTitle,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -179,14 +184,14 @@ class DeliveriesScreen extends ConsumerWidget {
               backgroundColor: AppColors.darkGreenColor,
               foregroundColor: Colors.white,
               icon: const Icon(Icons.add),
-              label: const Text('Teslim gir'),
+              label: Text(l10n.deliveriesEnter),
             )
           : null,
       body: RefreshIndicator(
         onRefresh: () => ref.refresh(deliveriesProvider.future),
         child: AsyncView(
           value: list,
-          errorMessage: 'Teslimler yüklenemedi',
+          errorMessage: l10n.deliveriesLoadFailed,
           onRetry: () => ref.invalidate(deliveriesProvider),
           builder: (v) => ListView(
             padding: const EdgeInsets.fromLTRB(
@@ -200,9 +205,9 @@ class DeliveriesScreen extends ConsumerWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      'Tanker fişi, önceki teslimden bu yana sayaçların '
-                      'ölçtüğüyle karşılaştırılır (ayrılan süt hariç). Fark '
-                      '%${v.tolerancePct.toStringAsFixed(1)} üstündeyse uyarı.',
+                      l10n.deliveriesExplainer(
+                        v.tolerancePct.toStringAsFixed(1),
+                      ),
                       style: const TextStyle(
                         fontSize: 12,
                         color: AppColors.onSurfaceMuted,
@@ -211,7 +216,7 @@ class DeliveriesScreen extends ConsumerWidget {
                   ),
                   if (isOwner)
                     IconButton(
-                      tooltip: 'Fark eşiği',
+                      tooltip: l10n.deliveriesToleranceTitle,
                       icon: const Icon(Icons.tune),
                       onPressed: () => _tolerance(context, ref, v.tolerancePct),
                     ),
@@ -219,13 +224,12 @@ class DeliveriesScreen extends ConsumerWidget {
               ),
               const SizedBox(height: AppSpacing.md),
               if (v.items.isEmpty)
-                const Padding(
-                  padding: EdgeInsets.all(AppSpacing.xl),
+                Padding(
+                  padding: const EdgeInsets.all(AppSpacing.xl),
                   child: Text(
-                    'Henüz teslim girilmedi. İlk teslim karşılaştırılmaz; '
-                    'fark ikinci teslimden itibaren hesaplanır.',
+                    l10n.deliveriesEmpty,
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: AppColors.onSurfaceMuted),
+                    style: const TextStyle(color: AppColors.onSurfaceMuted),
                   ),
                 )
               else
@@ -261,16 +265,20 @@ class DeliveryTile extends StatelessWidget {
     final d = delivery;
     final String detail;
     if (!d.compared) {
-      detail = 'Karşılaştırılmadı (önceki teslim ya da sayaç verisi yok)';
+      detail = l10n.deliveriesNotCompared;
     } else {
       final from = d.periodFrom;
       final span = from == null || from == d.deliveredOn
           ? ''
           : '${Fmt.dayMonthYear(from)} – ';
-      detail =
-          'Sayaçlar $span${Fmt.dayMonthYear(d.deliveredOn)}: '
-          '${volume.amount(d.meteredMl)}'
-          '${d.withheldMl > 0 ? ' (ayrılan ${volume.amount(d.withheldMl)} hariç)' : ''}';
+      detail = l10n.deliveriesMetered(
+        span,
+        Fmt.dayMonthYear(d.deliveredOn),
+        volume.amount(d.meteredMl),
+        d.withheldMl > 0
+            ? l10n.deliveriesWithheld(volume.amount(d.withheldMl))
+            : '',
+      );
     }
     return Container(
       margin: const EdgeInsets.only(bottom: AppSpacing.sm),
@@ -289,8 +297,10 @@ class DeliveryTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${Fmt.dayMonthYear(d.deliveredOn)} · tanker '
-                  '${volume.amount(d.volumeMl)}',
+                  l10n.deliveriesTankerLine(
+                    Fmt.dayMonthYear(d.deliveredOn),
+                    volume.amount(d.volumeMl),
+                  ),
                   style: const TextStyle(fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: AppSpacing.xs),
@@ -331,7 +341,7 @@ class DeliveryTile extends StatelessWidget {
           ),
           if (onDelete != null)
             IconButton(
-              tooltip: 'Yanlış kaydı sil',
+              tooltip: l10n.commonDeleteWrongRecord,
               icon: const Icon(Icons.delete_outline),
               onPressed: onDelete,
             ),
@@ -382,7 +392,7 @@ class _DeliveryDialogState extends State<_DeliveryDialog> {
   void _save() {
     final v = double.tryParse(_amount.text.trim().replaceAll(',', '.'));
     if (v == null || v <= 0) {
-      setState(() => _error = 'Tanker fişindeki miktarı girin.');
+      setState(() => _error = l10n.deliveriesEnterAmount);
       return;
     }
     final litres = widget.volume.isKg ? v / VolumeFormat.defaultDensity : v;
@@ -395,7 +405,7 @@ class _DeliveryDialogState extends State<_DeliveryDialog> {
   Widget build(BuildContext context) {
     const border = OutlineInputBorder(borderRadius: AppRadius.mdAll);
     return AlertDialog(
-      title: const Text('Tank teslimi'),
+      title: Text(l10n.deliveriesTankDelivery),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -416,7 +426,7 @@ class _DeliveryDialogState extends State<_DeliveryDialog> {
                 );
                 if (picked != null) setState(() => _day = picked);
               },
-              child: Text('Gün: ${Fmt.dayMonthYear(_day)}'),
+              child: Text(l10n.deliveriesDay(Fmt.dayMonthYear(_day))),
             ),
             const SizedBox(height: AppSpacing.md),
             TextField(
@@ -428,15 +438,15 @@ class _DeliveryDialogState extends State<_DeliveryDialog> {
                 FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]')),
               ],
               decoration: InputDecoration(
-                labelText: 'Teslim edilen (${widget.volume.label})',
+                labelText: l10n.deliveriesAmountLabel(widget.volume.label),
                 border: border,
               ),
             ),
             const SizedBox(height: AppSpacing.md),
             TextField(
               controller: _note,
-              decoration: const InputDecoration(
-                labelText: 'Not (isteğe bağlı)',
+              decoration: InputDecoration(
+                labelText: l10n.commonNoteOptional,
                 border: border,
               ),
             ),
@@ -453,9 +463,9 @@ class _DeliveryDialogState extends State<_DeliveryDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Vazgeç'),
+          child: Text(l10n.commonCancel),
         ),
-        FilledButton(onPressed: _save, child: const Text('Kaydet')),
+        FilledButton(onPressed: _save, child: Text(l10n.commonSave)),
       ],
     );
   }

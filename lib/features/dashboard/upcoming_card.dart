@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/format.dart';
 import 'package:milktrace/features/history/breeding_card.dart';
+import 'package:milktrace/l10n/l10n.dart';
 
 /// Önümüzdeki 30 günün doğum ve kuruya çıkarmaları (backend ADR 0088).
 /// Boşken ya da okunamazsa HİÇ çizilmez: üreme kaydı tutmayan işletmenin
@@ -32,9 +33,12 @@ class UpcomingBreedingCard extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Yaklaşanlar',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              Text(
+                l10n.upcomingTitle,
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               for (final u in items.take(_shown))
                 ListTile(
@@ -58,7 +62,7 @@ class UpcomingBreedingCard extends ConsumerWidget {
                 ),
               if (items.length > _shown)
                 Text(
-                  've ${items.length - _shown} hayvan daha',
+                  l10n.upcomingMore(items.length - _shown),
                   style: const TextStyle(
                     fontSize: 12,
                     color: AppColors.onSurfaceMuted,

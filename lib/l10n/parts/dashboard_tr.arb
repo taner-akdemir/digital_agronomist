@@ -1,0 +1,234 @@
+{
+  "dashboardLoadFailed": "Günün özeti alınamadı",
+  "dashboardTodayMilk": "Bugün toplanan süt",
+  "dashboardActiveSessions": "{n} sağım sürüyor",
+  "@dashboardActiveSessions": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "dashboardMilkingsAnimals": "{milkings} sağım · {animals} hayvan",
+  "@dashboardMilkingsAnimals": {
+    "placeholders": {
+      "milkings": {},
+      "animals": {}
+    }
+  },
+  "dashboardNoMilkingToday": "Bugün henüz sağım yapılmadı",
+  "dashboardBySpecies": "Tür bazında",
+  "dashboardSpeciesFallback": "Tür",
+  "dashboardSpeciesAnimals": "{species} · {n} hayvan",
+  "@dashboardSpeciesAnimals": {
+    "placeholders": {
+      "species": {},
+      "n": {}
+    }
+  },
+  "dashboardYieldClasses": "Verim sınıfları · {n} hayvan",
+  "@dashboardYieldClasses": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "dashboardGroupsToday": "Gruplar · bugün",
+  "dashboardGroupMilked": "{milked}/{animals} hayvan sağıldı",
+  "@dashboardGroupMilked": {
+    "placeholders": {
+      "milked": {},
+      "animals": {}
+    }
+  },
+  "dashboardPerAnimal": "hayvan başı {amount}",
+  "@dashboardPerAnimal": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "dashboardOpenAlerts": "Açık uyarılar",
+  "dashboardNoOpenAlerts": "Açık uyarı yok",
+  "dashboardMoreAlerts": "{n} uyarı daha",
+  "@dashboardMoreAlerts": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "upcomingTitle": "Yaklaşanlar",
+  "upcomingMore": "ve {n} hayvan daha",
+  "@upcomingMore": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "devicesLoadFailed": "Cihazlar yüklenemedi",
+  "devicesOnlineCount": "{n} Çevrimiçi",
+  "@devicesOnlineCount": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "devicesOfflineCount": "{n} Çevrimdışı",
+  "@devicesOfflineCount": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "devicesEmptySpoutsCount": "{n} Sayaçsız nokta",
+  "@devicesEmptySpoutsCount": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "devicesUnprofiledCount": "{n} Profilsiz sayaç",
+  "@devicesUnprofiledCount": {
+    "placeholders": {
+      "n": {}
+    }
+  },
+  "devicesSourcesLabel": "Kaynaklar:",
+  "devicesHallTitle": "{name} Bölgesi",
+  "@devicesHallTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "devicesHallNoVacuums": "Bu bölgede tanımlı ünite yok",
+  "devicesVacuumTitle": "Ünite {name}",
+  "@devicesVacuumTitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "devicesVacuumAllOnline": "{points} nokta · tümü çevrimiçi",
+  "@devicesVacuumAllOnline": {
+    "placeholders": {
+      "points": {}
+    }
+  },
+  "devicesVacuumProblems": "{points} nokta · {problems} ilgilenilmeli",
+  "@devicesVacuumProblems": {
+    "placeholders": {
+      "points": {},
+      "problems": {}
+    }
+  },
+  "devicesSpoutLabel": "Nokta {no}",
+  "@devicesSpoutLabel": {
+    "placeholders": {
+      "no": {}
+    }
+  },
+  "devicesNoProfile": "Profilsiz",
+  "devicesUnassignedTitle": "Takılı olmayan sayaçlar",
+  "devicesUnassignedHint": "Bir sağım noktasına bağlı değil.",
+  "devicesFirmwareShort": "Yazılım {version}",
+  "@devicesFirmwareShort": {
+    "placeholders": {
+      "version": {}
+    }
+  },
+  "devicesDetailProfile": "Profil",
+  "devicesProfileUnassigned": "Atanmamış (karantinada)",
+  "devicesDetailProtocol": "Protokol",
+  "devicesUnknown": "Bilinmiyor",
+  "devicesDetailFirmware": "Yazılım sürümü",
+  "devicesDetailCalibration": "Kalibrasyon katsayısı",
+  "devicesDetailLastSeen": "Son görülme",
+  "devicesNoRecord": "Kayıt yok",
+  "devicesDetailLastError": "Son hata",
+  "devicesSimulated": "Simülatör cihazı",
+  "devicesStatusNoMeter": "Sayaç takılı değil",
+  "devicesStatusReportedError": "Hata bildirdi",
+  "devicesStatusOnline": "Çevrimiçi",
+  "devicesStatusOffline": "Çevrimdışı",
+  "devicesErrorShort": "Hata {code} · {since}",
+  "@devicesErrorShort": {
+    "placeholders": {
+      "code": {},
+      "since": {}
+    }
+  },
+  "deliveriesDiffOver": "+%{pct} · sayaçlar fazla",
+  "@deliveriesDiffOver": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "deliveriesDiffUnder": "−%{pct} · sayaçlar eksik",
+  "@deliveriesDiffUnder": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "deliveriesSavedMismatch": "Teslim kaydedildi — sayaçlarla fark var: {diff}",
+  "@deliveriesSavedMismatch": {
+    "placeholders": {
+      "diff": {}
+    }
+  },
+  "deliveriesSaved": "Teslim kaydedildi",
+  "deliveriesToleranceTitle": "Fark eşiği",
+  "deliveriesToleranceLabel": "Uyarı için fark (%)",
+  "deliveriesToleranceHelper": "Sayaçlar ile tanker bundan fazla ayrışırsa uyarı.",
+  "deliveriesDeleteTitle": "Teslim silinsin mi?",
+  "deliveriesDeleteBody": "{date} · {amount}\nYalnızca yanlış girilen kaydı silin; doğrusunu yeniden girin.",
+  "@deliveriesDeleteBody": {
+    "placeholders": {
+      "date": {},
+      "amount": {}
+    }
+  },
+  "deliveriesTitle": "Tank teslimleri",
+  "deliveriesEnter": "Teslim gir",
+  "deliveriesLoadFailed": "Teslimler yüklenemedi",
+  "deliveriesExplainer": "Tanker fişi, önceki teslimden bu yana sayaçların ölçtüğüyle karşılaştırılır (ayrılan süt hariç). Fark %{pct} üstündeyse uyarı.",
+  "@deliveriesExplainer": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "deliveriesEmpty": "Henüz teslim girilmedi. İlk teslim karşılaştırılmaz; fark ikinci teslimden itibaren hesaplanır.",
+  "deliveriesNotCompared": "Karşılaştırılmadı (önceki teslim ya da sayaç verisi yok)",
+  "deliveriesMetered": "Sayaçlar {span}{date}: {amount}{withheld}",
+  "@deliveriesMetered": {
+    "placeholders": {
+      "span": {},
+      "date": {},
+      "amount": {},
+      "withheld": {}
+    }
+  },
+  "deliveriesWithheld": " (ayrılan {amount} hariç)",
+  "@deliveriesWithheld": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "deliveriesTankerLine": "{date} · tanker {amount}",
+  "@deliveriesTankerLine": {
+    "placeholders": {
+      "date": {},
+      "amount": {}
+    }
+  },
+  "deliveriesEnterAmount": "Tanker fişindeki miktarı girin.",
+  "deliveriesTankDelivery": "Tank teslimi",
+  "deliveriesDay": "Gün: {date}",
+  "@deliveriesDay": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "deliveriesAmountLabel": "Teslim edilen ({unit})",
+  "@deliveriesAmountLabel": {
+    "placeholders": {
+      "unit": {}
+    }
+  },
+  "deliveriesCardHint": "Tanker fişini girin: sayaçların ölçtüğüyle karşılaştırılır, fark büyükse uyarı gelir."
+}
