@@ -1,0 +1,162 @@
+{
+  "roleOwner": "İşletme sahibi",
+  "roleOperator": "Operatör",
+  "roleViewer": "Görüntüleyici",
+  "rolePlatformAdmin": "Platform yöneticisi",
+  "roleOperatorHint": "Sağımı yürütür: oturum açar, hayvan eşleştirir.",
+  "roleViewerHint": "Veteriner, danışman: görür ve not yazar, değiştiremez.",
+  "loginTagline": "İşletmenizin sağım takibi",
+  "loginEmailLabel": "E-posta",
+  "loginEmailRequired": "E-posta girin.",
+  "loginEmailInvalid": "Geçerli bir e-posta girin.",
+  "loginPasswordLabel": "Parola",
+  "loginShowPassword": "Parolayı göster",
+  "loginHidePassword": "Parolayı gizle",
+  "loginPasswordRequired": "Parola girin.",
+  "loginSubmit": "Giriş yap",
+  "loginForgotPassword": "Parolamı unuttum",
+  "loginResetIntro": "E-posta adresinize yeni parola belirleme bağlantısı gönderelim.",
+  "loginResetSend": "Bağlantı gönder",
+  "accountDefaultName": "Kullanıcı",
+  "accountSwitchFarm": "İşletme değiştir",
+  "accountThresholds": "Eşik ayarları",
+  "accountNotificationChannels": "Bildirim kanalları",
+  "accountUsers": "Kullanıcılar",
+  "accountMilkers": "Sağımcılar",
+  "accountAuditLog": "İşlem kaydı",
+  "accountSignOut": "Çıkış yap",
+  "accountTestPushNone": "Test bildirimi hiçbir telefona ulaşmadı",
+  "accountTestPushSent": "Test bildirimi gönderildi ({count} telefon)",
+  "@accountTestPushSent": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "accountTestPushFailed": "Test bildirimi gönderilemedi: {error}",
+  "@accountTestPushFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "accountTestPushSending": "Gönderiliyor…",
+  "accountTestPush": "Bu telefona test bildirimi",
+  "accountPushUnavailable": "Bu telefonda bildirim kapalı: izin verilmedi ya da bildirim servisi henüz bağlanmadı. Uyarılar bildirim merkezinde görünmeye devam eder.",
+  "accountPickFarm": "İşletme seçin",
+  "accountSwitchFarmFailed": "İşletme değiştirilemedi: {error}",
+  "@accountSwitchFarmFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "accountMilkUnit": "Süt birimi",
+  "accountUnitLitre": "Litre",
+  "accountUnitKilogram": "Kilogram",
+  "accountMockMode": "Demo verisiyle çalışıyorsunuz (mock mod).",
+  "teamTitle": "Kullanıcılar",
+  "teamAddUser": "Kullanıcı ekle",
+  "teamLoadFailed": "Kullanıcılar yüklenemedi",
+  "teamActionFailed": "İşlem yapılamadı: {error}",
+  "@teamActionFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "teamNote": "Operatör sağımı yürütür; görüntüleyici (veteriner, danışman) görür ve not yazar. İşletme sahibi eklemek için Milk Trace desteğine başvurun.",
+  "teamKiosk": "Sağımhane tableti",
+  "teamSuspended": "Askıda",
+  "teamDeleteTitle": "Kullanıcıyı sil",
+  "teamDeleteBody": "{name} kalıcı olarak silinecek; geri alınamaz. Yazdığı hayvan notları kalır, yazarı \"Silinmiş kullanıcı\" görünür.\n\nYalnızca erişimi kesmek için \"Askıya al\"ı kullanın.",
+  "@teamDeleteBody": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "teamMakeRole": "{role} yap",
+  "@teamMakeRole": {
+    "placeholders": {
+      "role": {}
+    }
+  },
+  "teamActivate": "Etkinleştir",
+  "teamSuspend": "Askıya al",
+  "teamActivateHint": "Yeniden giriş yapabilir.",
+  "teamSuspendHint": "Giriş yapamaz; açık oturumu en geç 15 dakikada kapanır.",
+  "teamAddFailed": "Eklenemedi: {error}",
+  "@teamAddFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "teamFullNameLabel": "Ad soyad",
+  "teamFullNameRequired": "Ad soyad girin.",
+  "teamEmailLabel": "E-posta",
+  "teamEmailInvalid": "Geçerli bir e-posta girin.",
+  "teamKioskHint": "Sağımhanedeki ortak tablet için: yalnızca canlı sağım açılır, ekran kararmaz. Tablete bu e-posta ve parolayla girilir.",
+  "teamTabletPassword": "Tablet parolası",
+  "teamTempPassword": "Geçici parola (isteğe bağlı)",
+  "teamTabletPasswordHelper": "Tablete bu parolayla girilir; en az 8 karakter.",
+  "teamTempPasswordHelper": "Boş bırakırsanız e-postayla davet gider.",
+  "teamTabletPasswordRequired": "Tablet için parola girin.",
+  "teamPasswordTooShort": "En az 8 karakter.",
+  "milkersTitle": "Sağımcılar",
+  "milkersLast7Days": "Son 7 gün",
+  "milkersLast30Days": "Son 30 gün",
+  "milkersNote": "Sağımcı, oturumu açan ya da hayvanı noktaya bağlayan kişidir. Düşük debi çoğu zaman hayvandan ya da başlıktan gelir; oran bakılacak yeri gösterir, kişiyi puanlamaz.",
+  "milkersLoadFailed": "Sağımcı özeti yüklenemedi",
+  "milkersEmpty": "Bu dönemde sağım yok.",
+  "milkersUnknown": "Sağımcısı bilinmeyen",
+  "milkersUnknownHint": "RFID ile açılan ya da eşleştireni silinmiş sağımlar",
+  "milkersSummary": "{sessions} oturum · {milkings} sağım · {volume}",
+  "@milkersSummary": {
+    "placeholders": {
+      "sessions": {},
+      "milkings": {},
+      "volume": {}
+    }
+  },
+  "milkersStats": "Ortalama sağım {duration} · düşük debi %{pct}",
+  "@milkersStats": {
+    "placeholders": {
+      "duration": {},
+      "pct": {}
+    }
+  },
+  "milkersDurationSeconds": "{s} sn",
+  "@milkersDurationSeconds": {
+    "placeholders": {
+      "s": {}
+    }
+  },
+  "milkersDurationMinutesSeconds": "{m} dk {s} sn",
+  "@milkersDurationMinutesSeconds": {
+    "placeholders": {
+      "m": {},
+      "s": {}
+    }
+  },
+  "auditTitle": "İşlem kaydı",
+  "auditLoadFailed": "İşlem kaydı yüklenemedi",
+  "auditEmpty": "Son 90 günde kayıtlı değişiklik yok.",
+  "auditIntro": "Son 90 gün: eşik, hayvan kaydı, eşleştirme, kullanıcı ve bildirim kanalı değişiklikleri.",
+  "auditDeletedUser": "Silinmiş kullanıcı",
+  "auditAnimalCreate": "Hayvan eklendi",
+  "auditAnimalUpdate": "Hayvan kaydı değişti",
+  "auditAnimalImport": "Listeden içe aktarma",
+  "auditAnimalCalving": "Buzağılama kaydedildi",
+  "auditTreatmentAdd": "Tedavi eklendi",
+  "auditTreatmentDelete": "Tedavi silindi",
+  "auditBreedingAdd": "Üreme kaydı eklendi",
+  "auditBreedingDelete": "Üreme kaydı silindi",
+  "auditDeliveryAdd": "Tank teslimi girildi",
+  "auditDeliveryDelete": "Tank teslimi silindi",
+  "auditSettingsUpdate": "İşletme ayarı değişti",
+  "auditThresholdsUpdate": "Eşikler değişti",
+  "auditSpoutUnassign": "Eşleştirme kaldırıldı",
+  "auditTagDismiss": "Tanınmayan küpe yok sayıldı",
+  "auditTeamAdd": "Kullanıcı eklendi",
+  "auditTeamUpdate": "Kullanıcı değişti",
+  "auditTeamRemove": "Kullanıcı çıkarıldı",
+  "auditChannelCreate": "Bildirim kanalı eklendi",
+  "auditChannelUpdate": "Bildirim kanalı değişti",
+  "auditChannelDelete": "Bildirim kanalı silindi"
+}

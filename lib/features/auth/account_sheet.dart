@@ -7,9 +7,11 @@ import 'package:milktrace/core/env.dart';
 import 'package:milktrace/data/models/auth_user.dart';
 import 'package:milktrace/features/auth/role_labels.dart';
 import 'package:milktrace/features/support/support.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/push_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
+import 'package:milktrace/providers/settings_providers.dart';
 
 /// Hesap kartı: kim giriş yapmış, rolü ne, ayarlar ve çıkış.
 ///
@@ -30,6 +32,8 @@ class _AccountSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(authProvider).user;
+    // Dil değişince kart da yeni dille yeniden çizilsin.
+    ref.watch(appLanguageProvider);
 
     // KAYDIRILABİLİR: alt sayfa varsayılan olarak ekranın yarısı kadar;
     // küçük telefonda (ve yatayda) düğmeler taşıyordu.
@@ -61,7 +65,7 @@ class _AccountSheet extends ConsumerWidget {
                         Text(
                           user?.fullName.isNotEmpty == true
                               ? user!.fullName
-                              : 'Kullanıcı',
+                              : l10n.accountDefaultName,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
@@ -101,6 +105,9 @@ class _AccountSheet extends ConsumerWidget {
                 const SizedBox(height: AppSpacing.md),
                 _UnitRow(unit: user.volumeUnit),
               ],
+              // Dil (backend ADR 0093): cihazda saklanır, her rol seçer.
+              const SizedBox(height: AppSpacing.md),
+              const _LanguageRow(),
               // Birden çok işletmenin üyesi (veteriner, danışman; backend
               // ADR 0081) işletmeler arasında geçer.
               if ((user?.tenants.length ?? 0) > 1) ...[
@@ -108,7 +115,7 @@ class _AccountSheet extends ConsumerWidget {
                 OutlinedButton.icon(
                   onPressed: () => _pickTenant(context, ref, user!),
                   icon: const Icon(Icons.swap_horiz),
-                  label: const Text('İşletme değiştir'),
+                  label: Text(l10n.accountSwitchFarm),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.darkGreenColor,
                     padding: const EdgeInsets.symmetric(
@@ -131,7 +138,7 @@ class _AccountSheet extends ConsumerWidget {
                   context.push('/settings/thresholds');
                 },
                 icon: const Icon(Icons.tune),
-                label: const Text('Eşik ayarları'),
+                label: Text(l10n.accountThresholds),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.darkGreenColor,
                   padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
@@ -152,7 +159,7 @@ class _AccountSheet extends ConsumerWidget {
                     context.push('/settings/notifications');
                   },
                   icon: const Icon(Icons.notifications_active_outlined),
-                  label: const Text('Bildirim kanalları'),
+                  label: Text(l10n.accountNotificationChannels),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.darkGreenColor,
                     padding: const EdgeInsets.symmetric(
@@ -172,7 +179,7 @@ class _AccountSheet extends ConsumerWidget {
                     context.push('/settings/team');
                   },
                   icon: const Icon(Icons.group_outlined),
-                  label: const Text('Kullanıcılar'),
+                  label: Text(l10n.accountUsers),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.darkGreenColor,
                     padding: const EdgeInsets.symmetric(
@@ -191,7 +198,7 @@ class _AccountSheet extends ConsumerWidget {
                     context.push('/settings/milkers');
                   },
                   icon: const Icon(Icons.badge_outlined),
-                  label: const Text('Sağımcılar'),
+                  label: Text(l10n.accountMilkers),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.darkGreenColor,
                     padding: const EdgeInsets.symmetric(
@@ -210,7 +217,7 @@ class _AccountSheet extends ConsumerWidget {
                     context.push('/settings/audit');
                   },
                   icon: const Icon(Icons.history),
-                  label: const Text('İşlem kaydı'),
+                  label: Text(l10n.accountAuditLog),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.darkGreenColor,
                     padding: const EdgeInsets.symmetric(
@@ -233,7 +240,7 @@ class _AccountSheet extends ConsumerWidget {
                         await ref.read(authProvider.notifier).signOut();
                       },
                 icon: const Icon(Icons.logout),
-                label: const Text('Çıkış yap'),
+                label: Text(l10n.accountSignOut),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.darkRedColor,
                   padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
@@ -278,15 +285,15 @@ class _PushRowState extends ConsumerState<_PushRow> {
         SnackBar(
           content: Text(
             sent == 0
-                ? 'Test bildirimi hiçbir telefona ulaşmadı'
-                : 'Test bildirimi gönderildi ($sent telefon)',
+                ? l10n.accountTestPushNone
+                : l10n.accountTestPushSent(sent),
           ),
         ),
       );
     } catch (e) {
       messenger.showSnackBar(
         SnackBar(
-          content: Text(userMessage(e) ?? 'Test bildirimi gönderilemedi: $e'),
+          content: Text(userMessage(e) ?? l10n.accountTestPushFailed(e)),
         ),
       );
     } finally {
@@ -303,7 +310,9 @@ class _PushRowState extends ConsumerState<_PushRow> {
         child: OutlinedButton.icon(
           onPressed: _busy ? null : _send,
           icon: const Icon(Icons.phonelink_ring_outlined),
-          label: Text(_busy ? 'Gönderiliyor…' : 'Bu telefona test bildirimi'),
+          label: Text(
+            _busy ? l10n.accountTestPushSending : l10n.accountTestPush,
+          ),
           style: OutlinedButton.styleFrom(
             foregroundColor: AppColors.darkGreenColor,
             padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
@@ -311,22 +320,23 @@ class _PushRowState extends ConsumerState<_PushRow> {
           ),
         ),
       ),
-      PushStatus.unavailable => const Padding(
-        padding: EdgeInsets.only(bottom: AppSpacing.md),
+      PushStatus.unavailable => Padding(
+        padding: const EdgeInsets.only(bottom: AppSpacing.md),
         child: Row(
           children: [
-            Icon(
+            const Icon(
               Icons.notifications_off_outlined,
               size: 18,
               color: AppColors.onSurfaceMuted,
             ),
-            SizedBox(width: AppSpacing.sm),
+            const SizedBox(width: AppSpacing.sm),
             Expanded(
               child: Text(
-                'Bu telefonda bildirim kapalı: izin verilmedi ya da '
-                'bildirim servisi henüz bağlanmadı. Uyarılar bildirim '
-                'merkezinde görünmeye devam eder.',
-                style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
+                l10n.accountPushUnavailable,
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: AppColors.onSurfaceMuted,
+                ),
               ),
             ),
           ],
@@ -347,7 +357,7 @@ Future<void> _pickTenant(
   final picked = await showDialog<String>(
     context: context,
     builder: (context) => SimpleDialog(
-      title: const Text('İşletme seçin'),
+      title: Text(l10n.accountPickFarm),
       children: [
         for (final t in user.tenants)
           SimpleDialogOption(
@@ -393,7 +403,7 @@ Future<void> _pickTenant(
   } catch (e) {
     messenger.showSnackBar(
       SnackBar(
-        content: Text(userMessage(e) ?? 'İşletme değiştirilemedi: $e'),
+        content: Text(userMessage(e) ?? l10n.accountSwitchFarmFailed(e)),
         backgroundColor: AppColors.flowRed,
       ),
     );
@@ -410,16 +420,16 @@ class _UnitRow extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Row(
       children: [
-        const Expanded(
+        Expanded(
           child: Text(
-            'Süt birimi',
-            style: TextStyle(fontWeight: FontWeight.w600),
+            l10n.accountMilkUnit,
+            style: const TextStyle(fontWeight: FontWeight.w600),
           ),
         ),
         SegmentedButton<String>(
-          segments: const [
-            ButtonSegment(value: 'L', label: Text('Litre')),
-            ButtonSegment(value: 'kg', label: Text('Kilogram')),
+          segments: [
+            ButtonSegment(value: 'L', label: Text(l10n.accountUnitLitre)),
+            ButtonSegment(value: 'kg', label: Text(l10n.accountUnitKilogram)),
           ],
           selected: {unit},
           onSelectionChanged: (s) async {
@@ -431,11 +441,48 @@ class _UnitRow extends ConsumerWidget {
             } catch (e) {
               messenger.showSnackBar(
                 SnackBar(
-                  content: Text(userMessage(e) ?? 'Kaydedilemedi: $e'),
+                  content: Text(userMessage(e) ?? l10n.commonSaveFailed(e)),
                   backgroundColor: AppColors.flowRed,
                 ),
               );
             }
+          },
+        ),
+      ],
+    );
+  }
+}
+
+/// Uygulama dili (backend ADR 0093): cihaz dili, Türkçe ya da İngilizce.
+/// Seçim cihazda saklanır; başlık üstte, düğmeler tam genişlikte — üç
+/// bölüm başlıkla aynı satıra dar telefonda sığmıyor.
+class _LanguageRow extends ConsumerWidget {
+  const _LanguageRow();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final lang = ref.watch(appLanguageProvider);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          l10n.languageTitle,
+          style: const TextStyle(fontWeight: FontWeight.w600),
+        ),
+        const SizedBox(height: AppSpacing.xs),
+        SegmentedButton<String>(
+          showSelectedIcon: false,
+          segments: [
+            ButtonSegment(value: 'auto', label: Text(l10n.languageAuto)),
+            ButtonSegment(value: 'tr', label: Text(l10n.languageTurkish)),
+            ButtonSegment(value: 'en', label: Text(l10n.languageEnglish)),
+          ],
+          selected: {lang ?? 'auto'},
+          onSelectionChanged: (s) {
+            final next = s.first;
+            ref
+                .read(appLanguageProvider.notifier)
+                .set(next == 'auto' ? null : next);
           },
         ),
       ],
@@ -454,18 +501,21 @@ class _ModeBadge extends StatelessWidget {
         color: AppColors.flowYellowSurface,
         borderRadius: AppRadius.smAll,
       ),
-      child: const Row(
+      child: Row(
         children: [
-          Icon(
+          const Icon(
             Icons.science_outlined,
             size: 18,
             color: AppColors.darkAmberColor,
           ),
-          SizedBox(width: AppSpacing.sm),
+          const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
-              'Demo verisiyle çalışıyorsunuz (mock mod).',
-              style: TextStyle(color: AppColors.darkAmberColor, fontSize: 13),
+              l10n.accountMockMode,
+              style: const TextStyle(
+                color: AppColors.darkAmberColor,
+                fontSize: 13,
+              ),
             ),
           ),
         ],

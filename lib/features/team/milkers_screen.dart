@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/data/models/delivery.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
@@ -20,7 +21,9 @@ String durationLabel(int sec) {
   if (sec <= 0) return '—';
   final m = sec ~/ 60;
   final s = sec % 60;
-  return m == 0 ? '$s sn' : '$m dk $s sn';
+  return m == 0
+      ? l10n.milkersDurationSeconds(s)
+      : l10n.milkersDurationMinutesSeconds(m, s);
 }
 
 /// Kim sağdı: sağımcı başına oturum, sağım, süt, ortalama süre ve düşük
@@ -43,14 +46,14 @@ class _MilkersScreenState extends ConsumerState<MilkersScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          tooltip: 'Geri',
+          tooltip: l10n.commonBack,
           onPressed: () =>
               context.canPop() ? context.pop() : context.go('/live'),
           icon: const Icon(Icons.arrow_back),
         ),
-        title: const Text(
-          'Sağımcılar',
-          style: TextStyle(
+        title: Text(
+          l10n.milkersTitle,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -63,32 +66,33 @@ class _MilkersScreenState extends ConsumerState<MilkersScreen> {
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
             SegmentedButton<int>(
-              segments: const [
-                ButtonSegment(value: 7, label: Text('Son 7 gün')),
-                ButtonSegment(value: 30, label: Text('Son 30 gün')),
+              segments: [
+                ButtonSegment(value: 7, label: Text(l10n.milkersLast7Days)),
+                ButtonSegment(value: 30, label: Text(l10n.milkersLast30Days)),
               ],
               selected: {_days},
               onSelectionChanged: (s) => setState(() => _days = s.first),
             ),
             const SizedBox(height: AppSpacing.md),
-            const Text(
-              'Sağımcı, oturumu açan ya da hayvanı noktaya bağlayan kişidir. '
-              'Düşük debi çoğu zaman hayvandan ya da başlıktan gelir; oran '
-              'bakılacak yeri gösterir, kişiyi puanlamaz.',
-              style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
+            Text(
+              l10n.milkersNote,
+              style: const TextStyle(
+                fontSize: 12,
+                color: AppColors.onSurfaceMuted,
+              ),
             ),
             const SizedBox(height: AppSpacing.md),
             AsyncView(
               value: list,
-              errorMessage: 'Sağımcı özeti yüklenemedi',
+              errorMessage: l10n.milkersLoadFailed,
               onRetry: () => ref.invalidate(milkersProvider(_days)),
               builder: (rows) => rows.isEmpty
-                  ? const Padding(
-                      padding: EdgeInsets.all(AppSpacing.xl),
+                  ? Padding(
+                      padding: const EdgeInsets.all(AppSpacing.xl),
                       child: Text(
-                        'Bu dönemde sağım yok.',
+                        l10n.milkersEmpty,
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: AppColors.onSurfaceMuted),
+                        style: const TextStyle(color: AppColors.onSurfaceMuted),
                       ),
                     )
                   : Column(
@@ -110,28 +114,32 @@ class _MilkersScreenState extends ConsumerState<MilkersScreen> {
                                 Text(
                                   m.isKnown && m.name.isNotEmpty
                                       ? m.name
-                                      : 'Sağımcısı bilinmeyen',
+                                      : l10n.milkersUnknown,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
                                 if (!m.isKnown)
-                                  const Text(
-                                    'RFID ile açılan ya da eşleştireni '
-                                    'silinmiş sağımlar',
-                                    style: TextStyle(
+                                  Text(
+                                    l10n.milkersUnknownHint,
+                                    style: const TextStyle(
                                       fontSize: 11,
                                       color: AppColors.onSurfaceMuted,
                                     ),
                                   ),
                                 const SizedBox(height: AppSpacing.xs),
                                 Text(
-                                  '${m.sessions} oturum · ${m.milkings} sağım · '
-                                  '${volume.amount(m.volumeMl, digits: 0)}',
+                                  l10n.milkersSummary(
+                                    m.sessions,
+                                    m.milkings,
+                                    volume.amount(m.volumeMl, digits: 0),
+                                  ),
                                 ),
                                 Text(
-                                  'Ortalama sağım ${durationLabel(m.avgDurationSec)}'
-                                  ' · düşük debi %${m.lowFlowPct.toStringAsFixed(0)}',
+                                  l10n.milkersStats(
+                                    durationLabel(m.avgDurationSec),
+                                    m.lowFlowPct.toStringAsFixed(0),
+                                  ),
                                   style: const TextStyle(
                                     fontSize: 12,
                                     color: AppColors.onSurfaceMuted,

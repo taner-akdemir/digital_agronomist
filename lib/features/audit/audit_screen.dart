@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/format.dart';
 import 'package:milktrace/data/models/audit_entry.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -18,26 +19,26 @@ Future<List<AuditEntry>> auditLog(Ref ref) =>
 /// Olay kodunun Türkçesi; tanınmayan kod olduğu gibi (yeni olay eski
 /// uygulamayı bozmasın).
 String auditActionLabel(String action) => switch (action) {
-  'animal.create' => 'Hayvan eklendi',
-  'animal.update' => 'Hayvan kaydı değişti',
-  'animal.import' => 'Listeden içe aktarma',
-  'animal.calving' => 'Buzağılama kaydedildi',
-  'treatment.add' => 'Tedavi eklendi',
-  'treatment.delete' => 'Tedavi silindi',
-  'breeding.add' => 'Üreme kaydı eklendi',
-  'breeding.delete' => 'Üreme kaydı silindi',
-  'delivery.add' => 'Tank teslimi girildi',
-  'delivery.delete' => 'Tank teslimi silindi',
-  'settings.update' => 'İşletme ayarı değişti',
-  'thresholds.update' => 'Eşikler değişti',
-  'spout.unassign' => 'Eşleştirme kaldırıldı',
-  'tag.dismiss' => 'Tanınmayan küpe yok sayıldı',
-  'team.add' => 'Kullanıcı eklendi',
-  'team.update' => 'Kullanıcı değişti',
-  'team.remove' => 'Kullanıcı çıkarıldı',
-  'channel.create' => 'Bildirim kanalı eklendi',
-  'channel.update' => 'Bildirim kanalı değişti',
-  'channel.delete' => 'Bildirim kanalı silindi',
+  'animal.create' => l10n.auditAnimalCreate,
+  'animal.update' => l10n.auditAnimalUpdate,
+  'animal.import' => l10n.auditAnimalImport,
+  'animal.calving' => l10n.auditAnimalCalving,
+  'treatment.add' => l10n.auditTreatmentAdd,
+  'treatment.delete' => l10n.auditTreatmentDelete,
+  'breeding.add' => l10n.auditBreedingAdd,
+  'breeding.delete' => l10n.auditBreedingDelete,
+  'delivery.add' => l10n.auditDeliveryAdd,
+  'delivery.delete' => l10n.auditDeliveryDelete,
+  'settings.update' => l10n.auditSettingsUpdate,
+  'thresholds.update' => l10n.auditThresholdsUpdate,
+  'spout.unassign' => l10n.auditSpoutUnassign,
+  'tag.dismiss' => l10n.auditTagDismiss,
+  'team.add' => l10n.auditTeamAdd,
+  'team.update' => l10n.auditTeamUpdate,
+  'team.remove' => l10n.auditTeamRemove,
+  'channel.create' => l10n.auditChannelCreate,
+  'channel.update' => l10n.auditChannelUpdate,
+  'channel.delete' => l10n.auditChannelDelete,
   _ => action,
 };
 
@@ -64,14 +65,14 @@ class AuditScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          tooltip: 'Geri',
+          tooltip: l10n.commonBack,
           onPressed: () =>
               context.canPop() ? context.pop() : context.go('/live'),
           icon: const Icon(Icons.arrow_back),
         ),
-        title: const Text(
-          'İşlem kaydı',
-          style: TextStyle(
+        title: Text(
+          l10n.auditTitle,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -82,16 +83,16 @@ class AuditScreen extends ConsumerWidget {
         onRefresh: () => ref.refresh(auditLogProvider.future),
         child: AsyncView(
           value: log,
-          errorMessage: 'İşlem kaydı yüklenemedi',
+          errorMessage: l10n.auditLoadFailed,
           builder: (list) => list.isEmpty
               ? ListView(
-                  children: const [
+                  children: [
                     Padding(
-                      padding: EdgeInsets.all(AppSpacing.xxl),
+                      padding: const EdgeInsets.all(AppSpacing.xxl),
                       child: Text(
-                        'Son 90 günde kayıtlı değişiklik yok.',
+                        l10n.auditEmpty,
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: AppColors.onSurfaceMuted),
+                        style: const TextStyle(color: AppColors.onSurfaceMuted),
                       ),
                     ),
                   ],
@@ -103,12 +104,11 @@ class AuditScreen extends ConsumerWidget {
                       ? const SizedBox.shrink()
                       : const Divider(height: 1),
                   itemBuilder: (_, i) => i == 0
-                      ? const Padding(
-                          padding: EdgeInsets.only(bottom: AppSpacing.md),
+                      ? Padding(
+                          padding: const EdgeInsets.only(bottom: AppSpacing.md),
                           child: Text(
-                            'Son 90 gün: eşik, hayvan kaydı, eşleştirme, kullanıcı '
-                            've bildirim kanalı değişiklikleri.',
-                            style: TextStyle(
+                            l10n.auditIntro,
+                            style: const TextStyle(
                               fontSize: 12,
                               color: AppColors.onSurfaceMuted,
                             ),
@@ -131,7 +131,7 @@ class _Row extends StatelessWidget {
   Widget build(BuildContext context) {
     final e = entry;
     final who = e.userDeleted
-        ? 'Silinmiş kullanıcı'
+        ? l10n.auditDeletedUser
         : (e.userName?.isNotEmpty ?? false)
         ? e.userName!
         : '—';

@@ -6,9 +6,11 @@ import 'package:milktrace/data/models/auth_user.dart';
 import 'package:milktrace/data/repositories/milktrace_repository.dart';
 import 'package:milktrace/data/repositories/mock_repository.dart';
 import 'package:milktrace/features/auth/account_sheet.dart';
+import 'package:milktrace/features/support/support.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/push_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
+import 'package:milktrace/providers/settings_providers.dart';
 
 class _SignedIn extends Auth {
   @override
@@ -33,7 +35,29 @@ class _FixedPush extends PushRegistration {
   Future<PushStatus> build() async => _status;
 }
 
-Future<MockRepository> _open(WidgetTester tester, PushStatus status) async {
+/// Bellekteki ayar deposu: testte cihaz tercihlerine dokunulmaz.
+class _MemoryStore implements SettingsStore {
+  final values = <String, Object?>{};
+
+  @override
+  Future<bool?> readBool(String key) async => values[key] as bool?;
+
+  @override
+  Future<void> writeBool(String key, bool value) async => values[key] = value;
+
+  @override
+  Future<String?> readString(String key) async => values[key] as String?;
+
+  @override
+  Future<void> writeString(String key, String? value) async =>
+      values[key] = value;
+}
+
+Future<MockRepository> _open(
+  WidgetTester tester,
+  PushStatus status, {
+  _MemoryStore? store,
+}) async {
   final repo = MockRepository(latency: Duration.zero)..pushTokens.add('tok-1');
   await tester.pumpWidget(
     ProviderScope(
@@ -41,6 +65,8 @@ Future<MockRepository> _open(WidgetTester tester, PushStatus status) async {
         authProvider.overrideWith(_SignedIn.new),
         pushRegistrationProvider.overrideWith(() => _FixedPush(status)),
         repositoryProvider.overrideWith((ref) => repo as MilkTraceRepository),
+        supportInfoProvider.overrideWith((ref) async => null),
+        settingsStoreProvider.overrideWithValue(store ?? _MemoryStore()),
       ],
       child: MaterialApp(
         home: Scaffold(
@@ -78,5 +104,22 @@ void main() {
 
     expect(find.text('Bu telefona test bildirimi'), findsNothing);
     expect(find.textContaining('Bu telefonda bildirim kapalı'), findsOneWidget);
+  });
+
+  // Dil her role açık (backend ADR 0093); seçim sağlayıcıya ve cihaza yazılır.
+  testWidgets('dil seçimi İngilizceye geçirir', (tester) async {
+    final store = _MemoryStore();
+    await _open(tester, PushStatus.unavailable, store: store);
+
+    expect(find.text('Dil'), findsOneWidget);
+    expect(find.text('Cihaz dili'), findsOneWidget);
+    await tester.tap(find.text('English'));
+    await tester.pumpAndSettle();
+
+    final container = ProviderScope.containerOf(
+      tester.element(find.byType(MaterialApp)),
+    );
+    expect(container.read(appLanguageProvider), 'en');
+    expect(store.values['app.language'], 'en');
   });
 }

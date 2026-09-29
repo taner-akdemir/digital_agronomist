@@ -7,6 +7,7 @@ import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/data/models/team_member.dart';
 import 'package:milktrace/features/auth/role_labels.dart';
 import 'package:milktrace/features/team/team_providers.dart';
+import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
 
@@ -23,14 +24,14 @@ class TeamScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          tooltip: 'Geri',
+          tooltip: l10n.commonBack,
           onPressed: () =>
               context.canPop() ? context.pop() : context.go('/live'),
           icon: const Icon(Icons.arrow_back),
         ),
-        title: const Text(
-          'Kullanıcılar',
-          style: TextStyle(
+        title: Text(
+          l10n.teamTitle,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -42,13 +43,13 @@ class TeamScreen extends ConsumerWidget {
         backgroundColor: AppColors.darkGreenColor,
         foregroundColor: Colors.white,
         icon: const Icon(Icons.person_add_alt_1),
-        label: const Text('Kullanıcı ekle'),
+        label: Text(l10n.teamAddUser),
       ),
       body: RefreshIndicator(
         onRefresh: () => ref.refresh(teamListProvider.future),
         child: AsyncView(
           value: team,
-          errorMessage: 'Kullanıcılar yüklenemedi',
+          errorMessage: l10n.teamLoadFailed,
           builder: (list) => ListView(
             padding: const EdgeInsets.fromLTRB(
               AppSpacing.lg,
@@ -87,7 +88,7 @@ String _sentence(String s) =>
 void _showError(BuildContext context, Object e) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      content: Text(_sentence(userMessage(e) ?? 'İşlem yapılamadı: $e')),
+      content: Text(_sentence(userMessage(e) ?? l10n.teamActionFailed(e))),
       backgroundColor: AppColors.flowRed,
     ),
   );
@@ -104,17 +105,19 @@ class _Note extends StatelessWidget {
         color: AppColors.flowGreenSurface,
         borderRadius: AppRadius.smAll,
       ),
-      child: const Row(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.info_outline, size: 16, color: AppColors.darkGreenColor),
-          SizedBox(width: AppSpacing.sm),
+          const Icon(
+            Icons.info_outline,
+            size: 16,
+            color: AppColors.darkGreenColor,
+          ),
+          const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
-              'Operatör sağımı yürütür; görüntüleyici (veteriner, danışman) '
-              'görür ve not yazar. İşletme sahibi eklemek için Milk Trace '
-              'desteğine başvurun.',
-              style: TextStyle(
+              l10n.teamNote,
+              style: const TextStyle(
                 fontSize: 12,
                 color: AppColors.darkGreenColor,
                 height: 1.35,
@@ -176,7 +179,7 @@ class _MemberCard extends ConsumerWidget {
                     ),
                     Text(
                       [
-                        m.kiosk ? 'Sağımhane tableti' : roleLabel(m.role),
+                        m.kiosk ? l10n.teamKiosk : roleLabel(m.role),
                         if (m.fullName.isNotEmpty) m.email,
                       ].join(' · '),
                       style: const TextStyle(
@@ -197,9 +200,12 @@ class _MemberCard extends ConsumerWidget {
                     color: AppColors.flowYellowSurface,
                     borderRadius: AppRadius.smAll,
                   ),
-                  child: const Text(
-                    'Askıda',
-                    style: TextStyle(fontSize: 12, color: AppColors.flowYellow),
+                  child: Text(
+                    l10n.teamSuspended,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: AppColors.flowYellow,
+                    ),
                   ),
                 ),
               if (m.isManageable)
@@ -259,22 +265,19 @@ class _MemberCard extends ConsumerWidget {
     final ok = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Kullanıcıyı sil'),
+        title: Text(l10n.teamDeleteTitle),
         content: Text(
-          '${m.fullName.isEmpty ? m.email : m.fullName} kalıcı olarak '
-          'silinecek; geri alınamaz. Yazdığı hayvan notları kalır, yazarı '
-          '"Silinmiş kullanıcı" görünür.\n\nYalnızca erişimi kesmek için '
-          '"Askıya al"ı kullanın.',
+          l10n.teamDeleteBody(m.fullName.isEmpty ? m.email : m.fullName),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Vazgeç'),
+            child: Text(l10n.commonCancel),
           ),
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: AppColors.flowRed),
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Sil'),
+            child: Text(l10n.commonDelete),
           ),
         ],
       ),
@@ -303,7 +306,7 @@ class _ActionSheet extends StatelessWidget {
         children: [
           ListTile(
             leading: const Icon(Icons.swap_horiz),
-            title: Text('${roleLabel(other)} yap'),
+            title: Text(l10n.teamMakeRole(roleLabel(other))),
             subtitle: Text(roleHint(other)),
             onTap: () => pick(_Action.toggleRole),
           ),
@@ -313,19 +316,17 @@ class _ActionSheet extends StatelessWidget {
                   ? Icons.play_circle_outline
                   : Icons.pause_circle_outline,
             ),
-            title: Text(m.isSuspended ? 'Etkinleştir' : 'Askıya al'),
+            title: Text(m.isSuspended ? l10n.teamActivate : l10n.teamSuspend),
             subtitle: Text(
-              m.isSuspended
-                  ? 'Yeniden giriş yapabilir.'
-                  : 'Giriş yapamaz; açık oturumu en geç 15 dakikada kapanır.',
+              m.isSuspended ? l10n.teamActivateHint : l10n.teamSuspendHint,
             ),
             onTap: () => pick(_Action.toggleSuspend),
           ),
           ListTile(
             leading: const Icon(Icons.delete_outline, color: AppColors.flowRed),
-            title: const Text(
-              'Sil',
-              style: TextStyle(color: AppColors.flowRed),
+            title: Text(
+              l10n.commonDelete,
+              style: const TextStyle(color: AppColors.flowRed),
             ),
             onTap: () => pick(_Action.delete),
           ),
@@ -387,7 +388,9 @@ class _AddMemberDialogState extends ConsumerState<_AddMemberDialog> {
       if (mounted) Navigator.of(context).pop(r.message);
     } catch (e) {
       if (mounted) {
-        setState(() => _error = _sentence(userMessage(e) ?? 'Eklenemedi: $e'));
+        setState(
+          () => _error = _sentence(userMessage(e) ?? l10n.teamAddFailed(e)),
+        );
       }
     } finally {
       if (mounted) setState(() => _busy = false);
@@ -398,7 +401,7 @@ class _AddMemberDialogState extends ConsumerState<_AddMemberDialog> {
   Widget build(BuildContext context) {
     const border = OutlineInputBorder(borderRadius: AppRadius.mdAll);
     return AlertDialog(
-      title: const Text('Kullanıcı ekle'),
+      title: Text(l10n.teamAddUser),
       content: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -410,37 +413,33 @@ class _AddMemberDialogState extends ConsumerState<_AddMemberDialog> {
                 controller: _name,
                 enabled: !_busy,
                 textCapitalization: TextCapitalization.words,
-                decoration: const InputDecoration(
-                  labelText: 'Ad soyad',
+                decoration: InputDecoration(
+                  labelText: l10n.teamFullNameLabel,
                   border: border,
                 ),
                 validator: (v) =>
-                    (v ?? '').trim().isEmpty ? 'Ad soyad girin.' : null,
+                    (v ?? '').trim().isEmpty ? l10n.teamFullNameRequired : null,
               ),
               const SizedBox(height: AppSpacing.md),
               TextFormField(
                 controller: _email,
                 enabled: !_busy,
                 keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                  labelText: 'E-posta',
+                decoration: InputDecoration(
+                  labelText: l10n.teamEmailLabel,
                   border: border,
                 ),
                 validator: (v) => EmailValidator.validate((v ?? '').trim())
                     ? null
-                    : 'Geçerli bir e-posta girin.',
+                    : l10n.teamEmailInvalid,
               ),
               const SizedBox(height: AppSpacing.sm),
               SwitchListTile(
                 contentPadding: EdgeInsets.zero,
                 value: _kiosk,
                 onChanged: _busy ? null : (v) => setState(() => _kiosk = v),
-                title: const Text('Sağımhane tableti'),
-                subtitle: const Text(
-                  'Sağımhanedeki ortak tablet için: yalnızca canlı sağım '
-                  'açılır, ekran kararmaz. Tablete bu e-posta ve parolayla '
-                  'girilir.',
-                ),
+                title: Text(l10n.teamKiosk),
+                subtitle: Text(l10n.teamKioskHint),
               ),
               if (!_kiosk) ...[
                 const SizedBox(height: AppSpacing.md),
@@ -470,19 +469,21 @@ class _AddMemberDialogState extends ConsumerState<_AddMemberDialog> {
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: _kiosk
-                      ? 'Tablet parolası'
-                      : 'Geçici parola (isteğe bağlı)',
+                      ? l10n.teamTabletPassword
+                      : l10n.teamTempPassword,
                   helperText: _kiosk
-                      ? 'Tablete bu parolayla girilir; en az 8 karakter.'
-                      : 'Boş bırakırsanız e-postayla davet gider.',
+                      ? l10n.teamTabletPasswordHelper
+                      : l10n.teamTempPasswordHelper,
                   helperMaxLines: 2,
                   border: border,
                 ),
                 validator: (v) {
                   final p = v ?? '';
-                  if (_kiosk && p.isEmpty) return 'Tablet için parola girin.';
+                  if (_kiosk && p.isEmpty) {
+                    return l10n.teamTabletPasswordRequired;
+                  }
                   return p.isNotEmpty && p.length < 8
-                      ? 'En az 8 karakter.'
+                      ? l10n.teamPasswordTooShort
                       : null;
                 },
               ),
@@ -500,11 +501,11 @@ class _AddMemberDialogState extends ConsumerState<_AddMemberDialog> {
       actions: [
         TextButton(
           onPressed: _busy ? null : () => Navigator.of(context).pop(),
-          child: const Text('Vazgeç'),
+          child: Text(l10n.commonCancel),
         ),
         FilledButton(
           onPressed: _busy ? null : _save,
-          child: const Text('Ekle'),
+          child: Text(l10n.commonAdd),
         ),
       ],
     );
