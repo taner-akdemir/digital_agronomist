@@ -49,7 +49,7 @@ class AnimalImportScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(
           l10n.animalImportTitle,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -189,10 +189,7 @@ class _ImportState extends ConsumerState<_Import> {
             children: [
               Text(
                 l10n.animalImportIntro,
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: AppColors.onSurfaceMuted,
-                ),
+                style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
               ),
               const SizedBox(height: AppSpacing.sm),
               Text(
@@ -205,10 +202,7 @@ class _ImportState extends ConsumerState<_Import> {
               const SizedBox(height: AppSpacing.sm),
               Text(
                 l10n.animalImportRules,
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: AppColors.onSurfaceMuted,
-                ),
+                style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
               ),
               const SizedBox(height: AppSpacing.lg),
               DropdownButtonFormField<String>(
@@ -239,7 +233,7 @@ class _ImportState extends ConsumerState<_Import> {
                 title: Text(l10n.animalImportUpdateSwitch),
                 subtitle: Text(
                   l10n.animalImportUpdateHint,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     color: AppColors.onSurfaceMuted,
                   ),
@@ -269,7 +263,7 @@ class _ImportState extends ConsumerState<_Import> {
                 const SizedBox(height: AppSpacing.sm),
                 Text(
                   _file!.name,
-                  style: const TextStyle(color: AppColors.onSurfaceMuted),
+                  style: TextStyle(color: AppColors.onSurfaceMuted),
                 ),
               ],
               if (_busy) ...[
@@ -278,10 +272,7 @@ class _ImportState extends ConsumerState<_Import> {
               ],
               if (_error != null) ...[
                 const SizedBox(height: AppSpacing.md),
-                Text(
-                  _error!,
-                  style: const TextStyle(color: AppColors.darkRedColor),
-                ),
+                Text(_error!, style: TextStyle(color: AppColors.darkRedColor)),
               ],
               if (p != null) ..._report(p),
             ],
@@ -297,7 +288,7 @@ class _ImportState extends ConsumerState<_Import> {
                 child: FilledButton(
                   onPressed: _busy || p.toWrite == 0 ? null : _commit,
                   style: FilledButton.styleFrom(
-                    backgroundColor: AppColors.darkGreenColor,
+                    backgroundColor: AppColors.brandFill,
                     padding: const EdgeInsets.symmetric(
                       vertical: AppSpacing.lg,
                     ),
@@ -373,7 +364,7 @@ class _ImportState extends ConsumerState<_Import> {
         const SizedBox(height: AppSpacing.sm),
         Text(
           l10n.animalImportIgnoredColumns(p.ignoredColumns.join(', ')),
-          style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
+          style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
         ),
       ],
       if (errors.isNotEmpty) ...[
@@ -468,7 +459,7 @@ class _Section extends StatelessWidget {
     padding: const EdgeInsets.only(top: AppSpacing.lg, bottom: AppSpacing.xs),
     child: Text(
       title,
-      style: const TextStyle(
+      style: TextStyle(
         fontWeight: FontWeight.bold,
         color: AppColors.darkGreenColor,
       ),
@@ -492,7 +483,7 @@ class _RowTile extends StatelessWidget {
       contentPadding: EdgeInsets.zero,
       leading: Text(
         '${row.line}',
-        style: const TextStyle(color: AppColors.onSurfaceMuted),
+        style: TextStyle(color: AppColors.onSurfaceMuted),
       ),
       minLeadingWidth: AppSpacing.xl,
       title: Text(name == null ? tag : '$tag · $name'),

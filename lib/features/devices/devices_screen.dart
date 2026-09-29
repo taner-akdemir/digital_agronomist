@@ -116,7 +116,7 @@ class _Sources extends StatelessWidget {
         children: [
           Text(
             l10n.devicesSourcesLabel,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
               color: AppColors.onSurfaceMuted,
@@ -125,10 +125,7 @@ class _Sources extends StatelessWidget {
           for (final s in tree.sources)
             Text(
               '${s.profile.vendor} · ${s.profile.protocolLabel} · ${s.count}',
-              style: const TextStyle(
-                fontSize: 12,
-                color: AppColors.onSurfaceMuted,
-              ),
+              style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
             ),
         ],
       ),
@@ -154,7 +151,7 @@ class _HallSection extends StatelessWidget {
           ),
           child: Text(
             l10n.devicesHallTitle(node.hall.name),
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.bold,
               color: AppColors.darkGreenColor,
@@ -165,10 +162,7 @@ class _HallSection extends StatelessWidget {
           _Card(
             child: Text(
               l10n.devicesHallNoVacuums,
-              style: const TextStyle(
-                fontSize: 13,
-                color: AppColors.onSurfaceMuted,
-              ),
+              style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
             ),
           )
         else
@@ -283,10 +277,7 @@ class _SpoutRow extends StatelessWidget {
                 _serialLine(device),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: AppColors.onSurfaceMuted,
-                ),
+                style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
               ),
             ),
             ConstrainedBox(
@@ -337,10 +328,7 @@ class _UnassignedCard extends StatelessWidget {
           // karıştırılmalarını önlüyor.
           Text(
             l10n.devicesUnassignedHint,
-            style: const TextStyle(
-              fontSize: 12,
-              color: AppColors.onSurfaceMuted,
-            ),
+            style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
           ),
           const SizedBox(height: AppSpacing.sm),
           for (final d in devices)
@@ -350,7 +338,7 @@ class _UnassignedCard extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
                 child: Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.sensors_off_outlined,
                       size: 16,
                       color: AppColors.lightGreyColor,
@@ -364,7 +352,7 @@ class _UnassignedCard extends StatelessWidget {
                     ),
                     Text(
                       l10n.devicesFirmwareShort(d.firmware ?? '—'),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 11,
                         color: AppColors.onSurfaceMuted,
                       ),
@@ -483,7 +471,7 @@ void _showDeviceSheet(BuildContext context, Device device) {
                 padding: const EdgeInsets.only(top: AppSpacing.md),
                 child: Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.science_outlined,
                       size: 14,
                       color: AppColors.lightGreyColor,
@@ -491,7 +479,7 @@ void _showDeviceSheet(BuildContext context, Device device) {
                     const SizedBox(width: AppSpacing.xs),
                     Text(
                       l10n.devicesSimulated,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 11,
                         color: AppColors.onSurfaceMuted,
                       ),
@@ -532,10 +520,7 @@ class _DetailRow extends StatelessWidget {
             width: 150,
             child: Text(
               label,
-              style: const TextStyle(
-                fontSize: 13,
-                color: AppColors.onSurfaceMuted,
-              ),
+              style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
             ),
           ),
           Expanded(

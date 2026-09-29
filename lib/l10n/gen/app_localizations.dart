@@ -4080,6 +4080,30 @@ abstract class AppLocalizations {
   /// **'Kullanıcılar'**
   String get teamTitle;
 
+  /// No description provided for @themeDark.
+  ///
+  /// In tr, this message translates to:
+  /// **'Karanlık'**
+  String get themeDark;
+
+  /// No description provided for @themeLight.
+  ///
+  /// In tr, this message translates to:
+  /// **'Açık'**
+  String get themeLight;
+
+  /// No description provided for @themeSystem.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cihaz'**
+  String get themeSystem;
+
+  /// No description provided for @themeTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tema'**
+  String get themeTitle;
+
   /// No description provided for @thresholdsAlertHold.
   ///
   /// In tr, this message translates to:

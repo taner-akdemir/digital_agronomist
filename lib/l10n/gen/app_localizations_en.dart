@@ -2370,6 +2370,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get teamTitle => 'Users';
 
   @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeSystem => 'Device';
+
+  @override
+  String get themeTitle => 'Theme';
+
+  @override
   String get thresholdsAlertHold => 'Alert delay';
 
   @override

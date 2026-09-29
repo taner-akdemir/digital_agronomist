@@ -132,13 +132,10 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       dense: true,
-                      leading: const Icon(
-                        Icons.link_off,
-                        color: AppColors.redColor,
-                      ),
+                      leading: Icon(Icons.link_off, color: AppColors.redColor),
                       title: Text(
                         l10n.livePickerClear,
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: AppColors.redColor,
                           fontWeight: FontWeight.w600,
                         ),
@@ -211,9 +208,7 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
                           child: Center(
                             child: Text(
                               l10n.livePickerNoMatch,
-                              style: const TextStyle(
-                                color: AppColors.onSurfaceMuted,
-                              ),
+                              style: TextStyle(color: AppColors.onSurfaceMuted),
                             ),
                           ),
                         ),
@@ -255,7 +250,7 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
               : Text(
                   l10n.livePickerWithhold(Fmt.dayMonth(until)),
                   textAlign: TextAlign.end,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.bold,
                     color: AppColors.flowRed,
@@ -347,14 +342,14 @@ class _UnmatchedNotice extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(AppSpacing.sm),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppColors.lightAmberColor,
         borderRadius: AppRadius.smAll,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.nfc, size: 18, color: AppColors.darkAmberColor),
+          Icon(Icons.nfc, size: 18, color: AppColors.darkAmberColor),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
@@ -364,10 +359,7 @@ class _UnmatchedNotice extends StatelessWidget {
               tag.reason == 'not_milking'
                   ? l10n.livePickerNotMilking(tag.message)
                   : l10n.livePickerUnknownTag(tag.message),
-              style: const TextStyle(
-                fontSize: 13,
-                color: AppColors.darkAmberColor,
-              ),
+              style: TextStyle(fontSize: 13, color: AppColors.darkAmberColor),
             ),
           ),
         ],
@@ -453,9 +445,7 @@ Future<ReplaceChoice?> askReplace(
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(ReplaceChoice.milked),
-          style: FilledButton.styleFrom(
-            backgroundColor: AppColors.darkGreenColor,
-          ),
+          style: FilledButton.styleFrom(backgroundColor: AppColors.brandFill),
           child: Text(l10n.liveReplaceMilked),
         ),
       ],

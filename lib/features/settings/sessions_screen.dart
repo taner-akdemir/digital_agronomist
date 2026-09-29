@@ -34,7 +34,7 @@ class SessionsScreen extends ConsumerWidget {
       messenger.showSnackBar(
         SnackBar(
           content: Text(userMessage(e) ?? '$e'),
-          backgroundColor: AppColors.flowRed,
+          backgroundColor: AppColors.dangerFill,
         ),
       );
     } finally {
@@ -65,7 +65,7 @@ class SessionsScreen extends ConsumerWidget {
         ),
         title: Text(
           l10n.sessionsTitle,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -83,10 +83,7 @@ class SessionsScreen extends ConsumerWidget {
             children: [
               Text(
                 l10n.sessionsIntro,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: AppColors.onSurfaceMuted,
-                ),
+                style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
               ),
               const SizedBox(height: AppSpacing.md),
               for (final s in sessions)

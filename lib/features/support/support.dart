@@ -85,7 +85,7 @@ class SupportButtons extends ConsumerWidget {
         Text(
           l10n.supportTitle,
           textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
+          style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
         ),
         const SizedBox(height: AppSpacing.xs),
         Row(

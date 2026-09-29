@@ -24,7 +24,7 @@ class UpcomingBreedingCard extends ConsumerWidget {
       // Material: satırların dokunma dalgası kartın zemininde görünsün.
       child: Material(
         color: AppColors.surface,
-        shape: const RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: AppRadius.mdAll,
           side: BorderSide(color: AppColors.border),
         ),
@@ -63,7 +63,7 @@ class UpcomingBreedingCard extends ConsumerWidget {
               if (items.length > _shown)
                 Text(
                   l10n.upcomingMore(items.length - _shown),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     color: AppColors.onSurfaceMuted,
                   ),

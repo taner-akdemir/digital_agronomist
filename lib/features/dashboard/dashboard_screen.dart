@@ -104,7 +104,7 @@ class _TodayCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   l10n.dashboardTodayMilk,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 13,
                     color: AppColors.onSurfaceMuted,
                   ),
@@ -116,7 +116,7 @@ class _TodayCard extends StatelessWidget {
                     Container(
                       width: 8,
                       height: 8,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         color: AppColors.flowGreen,
                         shape: BoxShape.circle,
                       ),
@@ -124,7 +124,7 @@ class _TodayCard extends StatelessWidget {
                     const SizedBox(width: AppSpacing.xs),
                     Text(
                       l10n.dashboardActiveSessions(summary.activeSessions),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
                         color: AppColors.flowGreen,
@@ -141,7 +141,7 @@ class _TodayCard extends StatelessWidget {
             children: [
               Text(
                 _total,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 34,
                   fontWeight: FontWeight.bold,
                   color: AppColors.darkGreenColor,
@@ -150,10 +150,7 @@ class _TodayCard extends StatelessWidget {
               const SizedBox(width: AppSpacing.xs),
               Text(
                 volume.label,
-                style: const TextStyle(
-                  fontSize: 15,
-                  color: AppColors.onSurfaceMuted,
-                ),
+                style: TextStyle(fontSize: 15, color: AppColors.onSurfaceMuted),
               ),
             ],
           ),
@@ -165,10 +162,7 @@ class _TodayCard extends StatelessWidget {
               summary.milkingCount,
               summary.animalCount,
             ),
-            style: const TextStyle(
-              fontSize: 12,
-              color: AppColors.onSurfaceMuted,
-            ),
+            style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
           ),
         ],
       ),
@@ -190,7 +184,7 @@ class _SpeciesCard extends ConsumerWidget {
       return _Card(
         child: Text(
           l10n.dashboardNoMilkingToday,
-          style: const TextStyle(color: AppColors.onSurfaceMuted),
+          style: TextStyle(color: AppColors.onSurfaceMuted),
         ),
       );
     }
@@ -251,7 +245,7 @@ class _SpeciesRow extends StatelessWidget {
             ),
             Text(
               volume.amount(row.totalMl, species: row.speciesId),
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
                 color: AppColors.darkGreenColor,
@@ -269,9 +263,7 @@ class _SpeciesRow extends StatelessWidget {
             value: ratio,
             minHeight: 6,
             backgroundColor: AppColors.veryLightGreyColor,
-            valueColor: const AlwaysStoppedAnimation<Color>(
-              AppColors.chartPrimary,
-            ),
+            valueColor: AlwaysStoppedAnimation<Color>(AppColors.chartPrimary),
           ),
         ),
       ],
@@ -365,7 +357,7 @@ class _GroupCard extends ConsumerWidget {
                           ),
                           Text(
                             l10n.dashboardGroupMilked(g.milked, g.animals),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 12,
                               color: AppColors.onSurfaceMuted,
                             ),
@@ -385,7 +377,7 @@ class _GroupCard extends ConsumerWidget {
                             l10n.dashboardPerAnimal(
                               volume.amount(g.perAnimalMl),
                             ),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 12,
                               color: AppColors.onSurfaceMuted,
                             ),
@@ -450,10 +442,7 @@ class _ClassRow extends StatelessWidget {
               child: Text(
                 total == 0 ? '' : Fmt.percent(count / total * 100),
                 textAlign: TextAlign.right,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: AppColors.onSurfaceMuted,
-                ),
+                style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
               ),
             ),
             Icon(
@@ -516,10 +505,7 @@ class _AlertsCard extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
               child: Text(
                 l10n.dashboardNoOpenAlerts,
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: AppColors.onSurfaceMuted,
-                ),
+                style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
               ),
             )
           else ...[
@@ -529,7 +515,7 @@ class _AlertsCard extends ConsumerWidget {
                 padding: const EdgeInsets.only(top: AppSpacing.sm),
                 child: Text(
                   l10n.dashboardMoreAlerts(open.length - _limit),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 11,
                     color: AppColors.onSurfaceMuted,
                   ),

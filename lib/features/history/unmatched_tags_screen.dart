@@ -30,7 +30,7 @@ class UnmatchedTagsScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(
           l10n.unmatchedTitle,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -45,10 +45,7 @@ class UnmatchedTagsScreen extends ConsumerWidget {
           children: [
             Text(
               l10n.unmatchedIntro,
-              style: const TextStyle(
-                fontSize: 13,
-                color: AppColors.onSurfaceMuted,
-              ),
+              style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
             ),
             const SizedBox(height: AppSpacing.md),
             if (list.isEmpty)
@@ -83,7 +80,7 @@ class _TagTile extends ConsumerWidget {
           children: [
             Row(
               children: [
-                const Icon(Icons.nfc, color: AppColors.darkAmberColor),
+                Icon(Icons.nfc, color: AppColors.darkAmberColor),
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: Text(
@@ -104,10 +101,7 @@ class _TagTile extends ConsumerWidget {
                 '${Fmt.dayMonth(seen)} ${Fmt.time(seen)}',
                 l10n.unmatchedReadCount(tag.readCount),
               ].join(' · '),
-              style: const TextStyle(
-                fontSize: 12,
-                color: AppColors.onSurfaceMuted,
-              ),
+              style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
             ),
             const SizedBox(height: AppSpacing.sm),
             Row(
@@ -121,7 +115,7 @@ class _TagTile extends ConsumerWidget {
                 FilledButton(
                   onPressed: () => _assign(context, ref),
                   style: FilledButton.styleFrom(
-                    backgroundColor: AppColors.darkGreenColor,
+                    backgroundColor: AppColors.brandFill,
                   ),
                   child: Text(l10n.unmatchedAssign),
                 ),
@@ -183,14 +177,14 @@ class _TagTile extends ConsumerWidget {
       messenger.showSnackBar(
         SnackBar(
           content: Text(l10n.unmatchedAssigned(animal.earTag)),
-          backgroundColor: AppColors.darkGreenColor,
+          backgroundColor: AppColors.brandFill,
         ),
       );
     } catch (e) {
       messenger.showSnackBar(
         SnackBar(
           content: Text(userMessage(e) ?? l10n.commonSaveFailed('$e')),
-          backgroundColor: AppColors.flowRed,
+          backgroundColor: AppColors.dangerFill,
         ),
       );
     }
@@ -223,7 +217,7 @@ class _TagTile extends ConsumerWidget {
       messenger.showSnackBar(
         SnackBar(
           content: Text(userMessage(e) ?? l10n.unmatchedIgnoreFailed('$e')),
-          backgroundColor: AppColors.flowRed,
+          backgroundColor: AppColors.dangerFill,
         ),
       );
     }

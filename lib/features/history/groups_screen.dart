@@ -42,7 +42,7 @@ class GroupsScreen extends ConsumerWidget {
       messenger.showSnackBar(
         SnackBar(
           content: Text(userMessage(e) ?? l10n.commonSaveFailed('$e')),
-          backgroundColor: AppColors.flowRed,
+          backgroundColor: AppColors.dangerFill,
         ),
       );
     }
@@ -90,7 +90,9 @@ class GroupsScreen extends ConsumerWidget {
             child: Text(l10n.commonCancel),
           ),
           FilledButton(
-            style: FilledButton.styleFrom(backgroundColor: AppColors.flowRed),
+            style: FilledButton.styleFrom(
+              backgroundColor: AppColors.dangerFill,
+            ),
             onPressed: () => Navigator.of(context).pop(true),
             child: Text(l10n.commonDelete),
           ),
@@ -118,7 +120,7 @@ class GroupsScreen extends ConsumerWidget {
         ),
         title: Text(
           l10n.groupsTitle,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -127,8 +129,8 @@ class GroupsScreen extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _add(context, ref),
-        backgroundColor: AppColors.darkGreenColor,
-        foregroundColor: Colors.white,
+        backgroundColor: AppColors.brandFill,
+        foregroundColor: AppColors.onFill,
         icon: const Icon(Icons.add),
         label: Text(l10n.groupsAdd),
       ),
@@ -146,10 +148,7 @@ class GroupsScreen extends ConsumerWidget {
           children: [
             Text(
               l10n.groupsIntro,
-              style: const TextStyle(
-                fontSize: 12,
-                color: AppColors.onSurfaceMuted,
-              ),
+              style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
             ),
             const SizedBox(height: AppSpacing.md),
             if (list.isEmpty)
@@ -158,7 +157,7 @@ class GroupsScreen extends ConsumerWidget {
                 child: Text(
                   l10n.groupsEmpty,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(color: AppColors.onSurfaceMuted),
+                  style: TextStyle(color: AppColors.onSurfaceMuted),
                 ),
               ),
             for (final g in list)

@@ -32,7 +32,7 @@ class TeamScreen extends ConsumerWidget {
         ),
         title: Text(
           l10n.teamTitle,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -41,8 +41,8 @@ class TeamScreen extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _add(context, ref),
-        backgroundColor: AppColors.darkGreenColor,
-        foregroundColor: Colors.white,
+        backgroundColor: AppColors.brandFill,
+        foregroundColor: AppColors.onFill,
         icon: const Icon(Icons.person_add_alt_1),
         label: Text(l10n.teamAddUser),
       ),
@@ -90,7 +90,7 @@ void _showError(BuildContext context, Object e) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(_sentence(userMessage(e) ?? l10n.teamActionFailed(e))),
-      backgroundColor: AppColors.flowRed,
+      backgroundColor: AppColors.dangerFill,
     ),
   );
 }
@@ -102,23 +102,19 @@ class _Note extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppColors.flowGreenSurface,
         borderRadius: AppRadius.smAll,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(
-            Icons.info_outline,
-            size: 16,
-            color: AppColors.darkGreenColor,
-          ),
+          Icon(Icons.info_outline, size: 16, color: AppColors.darkGreenColor),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
               l10n.teamNote,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 12,
                 color: AppColors.darkGreenColor,
                 height: 1.35,
@@ -144,7 +140,7 @@ class _MemberCard extends ConsumerWidget {
       elevation: 0,
       color: AppColors.surface,
       margin: const EdgeInsets.only(bottom: AppSpacing.md),
-      shape: const RoundedRectangleBorder(
+      shape: RoundedRectangleBorder(
         borderRadius: AppRadius.mdAll,
         side: BorderSide(color: AppColors.border),
       ),
@@ -188,7 +184,7 @@ class _MemberCard extends ConsumerWidget {
                               ? l10n.teamAccessExpired
                               : l10n.teamAccessUntil(Fmt.dayMonthYear(u)),
                       ].join(' · '),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
                         color: AppColors.onSurfaceMuted,
                       ),
@@ -202,23 +198,17 @@ class _MemberCard extends ConsumerWidget {
                     horizontal: AppSpacing.sm,
                     vertical: 2,
                   ),
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: AppColors.flowYellowSurface,
                     borderRadius: AppRadius.smAll,
                   ),
                   child: Text(
                     l10n.teamSuspended,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: AppColors.flowYellow,
-                    ),
+                    style: TextStyle(fontSize: 12, color: AppColors.flowYellow),
                   ),
                 ),
               if (m.isManageable)
-                const Icon(
-                  Icons.chevron_right,
-                  color: AppColors.lightGreyColor,
-                ),
+                Icon(Icons.chevron_right, color: AppColors.lightGreyColor),
             ],
           ),
         ),
@@ -294,7 +284,9 @@ class _MemberCard extends ConsumerWidget {
             child: Text(l10n.commonCancel),
           ),
           FilledButton(
-            style: FilledButton.styleFrom(backgroundColor: AppColors.flowRed),
+            style: FilledButton.styleFrom(
+              backgroundColor: AppColors.dangerFill,
+            ),
             onPressed: () => Navigator.of(context).pop(true),
             child: Text(l10n.commonDelete),
           ),
@@ -390,10 +382,10 @@ class _ActionSheet extends StatelessWidget {
             onTap: () => pick(_Action.accessUntil),
           ),
           ListTile(
-            leading: const Icon(Icons.delete_outline, color: AppColors.flowRed),
+            leading: Icon(Icons.delete_outline, color: AppColors.flowRed),
             title: Text(
               l10n.commonDelete,
-              style: const TextStyle(color: AppColors.flowRed),
+              style: TextStyle(color: AppColors.flowRed),
             ),
             onTap: () => pick(_Action.delete),
           ),
@@ -527,7 +519,7 @@ class _AddMemberDialogState extends ConsumerState<_AddMemberDialog> {
                 const SizedBox(height: AppSpacing.xs),
                 Text(
                   roleHint(_role),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     color: AppColors.onSurfaceMuted,
                   ),
@@ -579,10 +571,7 @@ class _AddMemberDialogState extends ConsumerState<_AddMemberDialog> {
               ),
               if (_error != null) ...[
                 const SizedBox(height: AppSpacing.md),
-                Text(
-                  _error!,
-                  style: const TextStyle(color: AppColors.darkRedColor),
-                ),
+                Text(_error!, style: TextStyle(color: AppColors.darkRedColor)),
               ],
             ],
           ),

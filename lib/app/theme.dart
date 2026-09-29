@@ -1,49 +1,170 @@
 import 'package:flutter/material.dart';
 
+/// Bir parlaklığın (açık/karanlık) ham renk tablosu.
+///
+/// Tema seçilebilir (backend ADR 0109): açık tema varsayılandır ve tasarım
+/// dilinin kendisidir; karanlık tema isteğe bağlıdır. Widget'lar bu sınıfı
+/// DOĞRUDAN kullanmaz, [AppColors] üzerinden okur — o da geçerli parlaklığın
+/// tablosunu döner.
+class AppPalette {
+  const AppPalette({
+    required this.primaryColor,
+    required this.secondaryColor,
+    required this.darkBlackColor,
+    required this.darkBlueColor,
+    required this.darkRedColor,
+    required this.redColor,
+    required this.lightRedColor,
+    required this.darkGreenColor,
+    required this.lightGreenColor,
+    required this.lightGreyColor,
+    required this.veryLightGreyColor,
+    required this.iconGreyColor,
+    required this.amberColor,
+    required this.darkAmberColor,
+    required this.lightAmberColor,
+    required this.chartContext,
+    required this.surface,
+    required this.brandFill,
+    required this.dangerFill,
+    required this.onFill,
+  });
+
+  final Color primaryColor;
+  final Color secondaryColor;
+  final Color darkBlackColor;
+  final Color darkBlueColor;
+  final Color darkRedColor;
+  final Color redColor;
+  final Color lightRedColor;
+  final Color darkGreenColor;
+  final Color lightGreenColor;
+  final Color lightGreyColor;
+  final Color veryLightGreyColor;
+  final Color iconGreyColor;
+  final Color amberColor;
+  final Color darkAmberColor;
+  final Color lightAmberColor;
+  final Color chartContext;
+  final Color surface;
+  final Color brandFill;
+  final Color dangerFill;
+  final Color onFill;
+
+  /// İlk prototipten birebir gelen palet (değiştirilmedi).
+  static const light = AppPalette(
+    primaryColor: Color.fromRGBO(246, 249, 252, 1),
+    secondaryColor: Color.fromRGBO(244, 247, 250, 1),
+    darkBlackColor: Color.fromRGBO(24, 26, 28, 1),
+    darkBlueColor: Color.fromRGBO(48, 88, 120, 1),
+    darkRedColor: Color.fromRGBO(126, 28, 19, 1),
+    redColor: Color.fromRGBO(164, 44, 30, 1),
+    lightRedColor: Color.fromRGBO(248, 235, 235, 1),
+    darkGreenColor: Color.fromRGBO(31, 71, 50, 1),
+    lightGreenColor: Color.fromRGBO(180, 235, 201, 1),
+    lightGreyColor: Color.fromRGBO(165, 181, 173, 1),
+    veryLightGreyColor: Color.fromRGBO(238, 241, 245, 1),
+    iconGreyColor: Color.fromRGBO(57, 64, 59, 1),
+    amberColor: Color.fromRGBO(224, 150, 20, 1),
+    darkAmberColor: Color.fromRGBO(140, 92, 10, 1),
+    lightAmberColor: Color.fromRGBO(253, 244, 227, 1),
+    // Gri, lightGreyColor'dan KOYUdur: o ton beyaz üzerinde 2.08:1
+    // kontrasttaydı ve 90 günlük ince çizgi silik kalıyordu; bu ton 3:1
+    // eşiğini geçiyor.
+    chartContext: Color.fromRGBO(120, 134, 126, 1),
+    surface: Colors.white,
+    brandFill: Color.fromRGBO(31, 71, 50, 1),
+    dangerFill: Color.fromRGBO(164, 44, 30, 1),
+    onFill: Colors.white,
+  );
+
+  /// Karanlık tema (ADR 0109).
+  ///
+  /// Adlar AÇIK temadaki ROLÜ taşır: "darkGreenColor" karanlıkta açık bir
+  /// yeşildir, çünkü rolü "zemin üzerindeki marka metni/ikonu"dur; "light…"
+  /// yumuşak zeminler koyu, tonlu yüzeylere döner. §6.2 durum renkleri
+  /// ANLAMINI korur — yeşil yeşil, sarı kehribar, kırmızı kırmızı, gri gri —
+  /// yalnızca koyu zeminde okunacak kadar açılır.
+  static const dark = AppPalette(
+    primaryColor: Color.fromRGBO(17, 21, 19, 1),
+    secondaryColor: Color.fromRGBO(29, 34, 31, 1),
+    darkBlackColor: Color.fromRGBO(229, 234, 231, 1),
+    darkBlueColor: Color.fromRGBO(48, 88, 120, 1),
+    darkRedColor: Color.fromRGBO(255, 170, 158, 1),
+    redColor: Color.fromRGBO(240, 110, 94, 1),
+    lightRedColor: Color.fromRGBO(66, 30, 26, 1),
+    darkGreenColor: Color.fromRGBO(128, 204, 158, 1),
+    lightGreenColor: Color.fromRGBO(33, 74, 51, 1),
+    lightGreyColor: Color.fromRGBO(132, 146, 139, 1),
+    veryLightGreyColor: Color.fromRGBO(45, 52, 48, 1),
+    iconGreyColor: Color.fromRGBO(178, 189, 183, 1),
+    amberColor: Color.fromRGBO(236, 168, 48, 1),
+    darkAmberColor: Color.fromRGBO(240, 188, 88, 1),
+    lightAmberColor: Color.fromRGBO(64, 48, 18, 1),
+    chartContext: Color.fromRGBO(150, 163, 156, 1),
+    surface: Color.fromRGBO(26, 31, 28, 1),
+    brandFill: Color.fromRGBO(44, 118, 78, 1),
+    dangerFill: Color.fromRGBO(176, 52, 38, 1),
+    onFill: Colors.white,
+  );
+
+  static AppPalette of(Brightness b) => b == Brightness.dark ? dark : light;
+}
+
 /// Uygulamanın renk paleti.
 ///
 /// Mevcut tasarım dili KORUNUR (§15): açık arka plan, yeşil/koyu yeşil palet.
-/// Aşağıdaki ham renkler ilk prototipten birebir gelir; yeni olan tek şey
-/// anlamsal takma adlar ve sarı bandıdır.
+/// Ham renkler ilk prototipten birebir gelir; yeni olanlar anlamsal takma
+/// adlar, sarı bandı ve karanlık tema (ADR 0109).
+///
+/// Değerler SABİT DEĞİLDİR, geçerli parlaklıktan okunur ([brightness]; kökte
+/// `MilkTraceApp` yazar ve tema değişince ağacı baştan kurar). Bu yüzden
+/// `const` bağlamda kullanılamazlar. Widget'ta `Colors.white` gibi sabit renk
+/// YAZMA, buradan oku: yoksa o parça karanlık temada beyaz kalır.
 abstract final class AppColors {
-  // --- ham palet (değiştirilmedi) ---
-  static const Color primaryColor = Color.fromRGBO(246, 249, 252, 1);
-  static const Color secondaryColor = Color.fromRGBO(244, 247, 250, 1);
-  static const Color darkBlackColor = Color.fromRGBO(24, 26, 28, 1);
-  static const Color darkBlueColor = Color.fromRGBO(48, 88, 120, 1);
-  static const Color darkRedColor = Color.fromRGBO(126, 28, 19, 1);
-  static const Color redColor = Color.fromRGBO(164, 44, 30, 1);
-  static const Color lightRedColor = Color.fromRGBO(248, 235, 235, 1);
-  static const Color darkGreenColor = Color.fromRGBO(31, 71, 50, 1);
-  static const Color lightGreenColor = Color.fromRGBO(180, 235, 201, 1);
-  static const Color lightGreyColor = Color.fromRGBO(165, 181, 173, 1);
-  static const Color veryLightGreyColor = Color.fromRGBO(238, 241, 245, 1);
-  static const Color iconGreyColor = Color.fromRGBO(57, 64, 59, 1);
+  /// Geçerli parlaklık. Yalnızca kök (ve testler) yazar.
+  static Brightness brightness = Brightness.light;
 
-  // --- sarı bandı (YENİ) ---
+  static AppPalette get _p => AppPalette.of(brightness);
+
+  // --- ham palet ---
+  static Color get primaryColor => _p.primaryColor;
+  static Color get secondaryColor => _p.secondaryColor;
+  static Color get darkBlackColor => _p.darkBlackColor;
+  static Color get darkBlueColor => _p.darkBlueColor;
+  static Color get darkRedColor => _p.darkRedColor;
+  static Color get redColor => _p.redColor;
+  static Color get lightRedColor => _p.lightRedColor;
+  static Color get darkGreenColor => _p.darkGreenColor;
+  static Color get lightGreenColor => _p.lightGreenColor;
+  static Color get lightGreyColor => _p.lightGreyColor;
+  static Color get veryLightGreyColor => _p.veryLightGreyColor;
+  static Color get iconGreyColor => _p.iconGreyColor;
+
+  // --- sarı bandı ---
   //
   // Palette sarı YOKTU ve ilk prototip bu yüzden yalnızca kırmızı/yeşil
   // gösteriyordu (§15.3/14). Oysa §6.2 üç bant tanımlıyor ve sarı, normal
   // aralığın rengidir — yani sağımların ÇOĞU sarıdır. Kehribar tonu hem
   // yeşilden hem kırmızıdan ayrışsın ve beyaz üzerinde okunsun diye seçildi.
-  static const Color amberColor = Color.fromRGBO(224, 150, 20, 1);
-  static const Color darkAmberColor = Color.fromRGBO(140, 92, 10, 1);
-  static const Color lightAmberColor = Color.fromRGBO(253, 244, 227, 1);
+  static Color get amberColor => _p.amberColor;
+  static Color get darkAmberColor => _p.darkAmberColor;
+  static Color get lightAmberColor => _p.lightAmberColor;
 
   // --- anlamsal takma adlar (§6.2 debi renkleri) ---
   //
   // Widget'lar ham renk değil BUNLARI kullanır: renk kuralı değişirse tek
   // yerden değişir ve "neden bu renk?" sorusunun cevabı adında durur.
-  static const Color flowGreen = darkGreenColor;
-  static const Color flowYellow = darkAmberColor;
-  static const Color flowRed = redColor;
-  static const Color flowGrey = lightGreyColor;
+  static Color get flowGreen => darkGreenColor;
+  static Color get flowYellow => darkAmberColor;
+  static Color get flowRed => redColor;
+  static Color get flowGrey => lightGreyColor;
 
   /// Kart arka planları — renk durumunun yumuşak karşılığı.
-  static const Color flowGreenSurface = lightGreenColor;
-  static const Color flowYellowSurface = lightAmberColor;
-  static const Color flowRedSurface = lightRedColor;
-  static const Color flowGreySurface = veryLightGreyColor;
+  static Color get flowGreenSurface => lightGreenColor;
+  static Color get flowYellowSurface => lightAmberColor;
+  static Color get flowRedSurface => lightRedColor;
+  static Color get flowGreySurface => veryLightGreyColor;
 
   // --- grafik çizgileri (§15.1 verim grafiği) ---
   //
@@ -52,21 +173,30 @@ abstract final class AppColors {
   // anlamlar taşıyor. Bir çizgiyi sırf ikinci seri olduğu için sarıya
   // boyamak, o anlamı sulandırırdı.
   //
-  // Bu yüzden ana seri (7 gün ortalaması) koyu yeşil, bağlam serisi (günlük
-  // toplam) nötr gridir. Gri, lightGreyColor'dan KOYUdur: o ton beyaz
-  // üzerinde 2.08:1 kontrasttaydı ve 90 günlük ince çizgi silik kalıyordu;
-  // bu ton 3:1 eşiğini geçiyor.
-  static const Color chartPrimary = darkGreenColor;
-  static const Color chartContext = Color.fromRGBO(120, 134, 126, 1);
-  static const Color chartGrid = veryLightGreyColor;
+  // Bu yüzden ana seri (7 gün ortalaması) marka yeşili (karanlıkta açık
+  // yeşil), bağlam serisi (günlük toplam) nötr gridir.
+  static Color get chartPrimary => darkGreenColor;
+  static Color get chartContext => _p.chartContext;
+  static Color get chartGrid => veryLightGreyColor;
 
   // --- yüzeyler ---
-  static const Color background = primaryColor;
-  static const Color surface = Colors.white;
-  static const Color surfaceAlt = secondaryColor;
-  static const Color border = veryLightGreyColor;
-  static const Color onSurface = darkBlackColor;
-  static const Color onSurfaceMuted = iconGreyColor;
+  static Color get background => primaryColor;
+  static Color get surface => _p.surface;
+  static Color get surfaceAlt => secondaryColor;
+  static Color get border => veryLightGreyColor;
+  static Color get onSurface => darkBlackColor;
+  static Color get onSurfaceMuted => iconGreyColor;
+
+  // --- dolgular (düğme, FAB, snackbar, grafik ipucu) ---
+  //
+  // darkGreenColor karanlıkta açık yeşile döner ki METİN olarak okunsun;
+  // dolgu olarak kullanılsaydı üzerindeki beyaz yazı kaybolurdu. Dolgu ve
+  // üstündeki yazı bu yüzden AYRI token'lardır.
+  static Color get brandFill => _p.brandFill;
+  static Color get dangerFill => _p.dangerFill;
+
+  /// [brandFill] ve [dangerFill] üzerindeki metin/ikon.
+  static Color get onFill => _p.onFill;
 }
 
 /// Boşluk ölçeği.
@@ -102,19 +232,46 @@ abstract final class AppRadius {
 ///
 /// Poppins pubspec'ten bundle edilir; google_fonts ÇALIŞMA ZAMANINDA indirir
 /// ve ahırda internet zayıfsa yazı tipi ilk açılışta sonradan oturur.
-ThemeData buildAppTheme() {
-  final colorScheme = ColorScheme.fromSeed(seedColor: AppColors.darkBlueColor);
+ThemeData buildAppTheme([Brightness brightness = Brightness.light]) {
+  // Tema iki parlaklık için de AYNI anda kurulur (MaterialApp theme +
+  // darkTheme); global AppColors.brightness'a değil, açık tabloya bakar.
+  final p = AppPalette.of(brightness);
+  final dark = brightness == Brightness.dark;
+  final scheme = ColorScheme.fromSeed(
+    seedColor: p.darkBlueColor,
+    brightness: brightness,
+  );
 
   return ThemeData(
     useMaterial3: true,
-    colorScheme: colorScheme,
-    primaryColor: AppColors.primaryColor,
-    scaffoldBackgroundColor: AppColors.background,
+    colorScheme: dark
+        ? scheme.copyWith(surface: p.surface, onSurface: p.darkBlackColor)
+        : scheme,
+    primaryColor: p.primaryColor,
+    scaffoldBackgroundColor: p.primaryColor,
     fontFamily: 'Poppins',
-    appBarTheme: const AppBarTheme(
-      backgroundColor: AppColors.primaryColor,
+    appBarTheme: AppBarTheme(
+      backgroundColor: p.primaryColor,
       centerTitle: true,
     ),
-    iconTheme: const IconThemeData(color: AppColors.darkGreenColor),
+    iconTheme: IconThemeData(color: p.darkGreenColor),
+    // Karanlıkta Material varsayılanları tohum renginden (mavi) gelir ve
+    // dolgulu düğmenin yazısı koyulaşır; düğme ve snackbar dolgusu yeşil
+    // paletten, yazısı beyaz olsun. Açık tema bunlar olmadan zaten bugünkü
+    // görünümündedir.
+    filledButtonTheme: dark
+        ? FilledButtonThemeData(
+            style: FilledButton.styleFrom(
+              backgroundColor: p.brandFill,
+              foregroundColor: p.onFill,
+            ),
+          )
+        : null,
+    snackBarTheme: dark
+        ? SnackBarThemeData(
+            backgroundColor: p.veryLightGreyColor,
+            contentTextStyle: TextStyle(color: p.darkBlackColor),
+          )
+        : null,
   );
 }

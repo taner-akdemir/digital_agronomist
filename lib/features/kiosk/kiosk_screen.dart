@@ -54,7 +54,9 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
             child: Text(l10n.commonCancel),
           ),
           FilledButton(
-            style: FilledButton.styleFrom(backgroundColor: AppColors.flowRed),
+            style: FilledButton.styleFrom(
+              backgroundColor: AppColors.dangerFill,
+            ),
             onPressed: () => Navigator.of(context).pop(true),
             child: Text(l10n.kioskSignOut),
           ),
@@ -73,7 +75,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
           IconButton(
             tooltip: l10n.kioskSignOut,
             onPressed: _signOut,
-            icon: const Icon(Icons.logout, color: AppColors.darkGreenColor),
+            icon: Icon(Icons.logout, color: AppColors.darkGreenColor),
           ),
         ],
       ),

@@ -37,7 +37,7 @@ class AnimalFormScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(
           _isEdit ? l10n.animalFormEditTitle : l10n.animalFormNewTitle,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -287,16 +287,13 @@ class _FormState extends ConsumerState<_Form> {
           ],
           if (_error != null) ...[
             _gap,
-            Text(
-              _error!,
-              style: const TextStyle(color: AppColors.darkRedColor),
-            ),
+            Text(_error!, style: TextStyle(color: AppColors.darkRedColor)),
           ],
           const SizedBox(height: AppSpacing.xl),
           FilledButton(
             onPressed: _busy ? null : _save,
             style: FilledButton.styleFrom(
-              backgroundColor: AppColors.darkGreenColor,
+              backgroundColor: AppColors.brandFill,
               padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
               shape: const RoundedRectangleBorder(
                 borderRadius: AppRadius.mdAll,

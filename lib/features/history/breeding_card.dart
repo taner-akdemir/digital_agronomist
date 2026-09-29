@@ -66,14 +66,14 @@ class BreedingCard extends ConsumerWidget {
       messenger.showSnackBar(
         SnackBar(
           content: Text(l10n.breedingAdded),
-          backgroundColor: AppColors.darkGreenColor,
+          backgroundColor: AppColors.brandFill,
         ),
       );
     } catch (e) {
       messenger.showSnackBar(
         SnackBar(
           content: Text(userMessage(e) ?? l10n.commonSaveFailed(e)),
-          backgroundColor: AppColors.flowRed,
+          backgroundColor: AppColors.dangerFill,
         ),
       );
     }
@@ -98,7 +98,9 @@ class BreedingCard extends ConsumerWidget {
             child: Text(l10n.commonCancel),
           ),
           FilledButton(
-            style: FilledButton.styleFrom(backgroundColor: AppColors.flowRed),
+            style: FilledButton.styleFrom(
+              backgroundColor: AppColors.dangerFill,
+            ),
             onPressed: () => Navigator.of(context).pop(true),
             child: Text(l10n.commonDelete),
           ),
@@ -114,7 +116,7 @@ class BreedingCard extends ConsumerWidget {
       messenger.showSnackBar(
         SnackBar(
           content: Text(userMessage(err) ?? l10n.commonDeleteFailed(err)),
-          backgroundColor: AppColors.flowRed,
+          backgroundColor: AppColors.dangerFill,
         ),
       );
     }
@@ -160,7 +162,7 @@ class BreedingCard extends ConsumerWidget {
           if (p != null) ...[
             Text(
               p.statusLabel,
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.w600,
                 color: AppColors.darkGreenColor,
               ),
@@ -178,7 +180,7 @@ class BreedingCard extends ConsumerWidget {
               if (items.isEmpty) {
                 return Text(
                   l10n.breedingEmpty,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     color: AppColors.onSurfaceMuted,
                   ),

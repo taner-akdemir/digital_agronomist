@@ -109,7 +109,7 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
       messenger.showSnackBar(
         SnackBar(
           content: Text(userMessage(e) ?? l10n.feedbackSendFailed('$e')),
-          backgroundColor: AppColors.flowRed,
+          backgroundColor: AppColors.dangerFill,
         ),
       );
     } finally {
@@ -130,7 +130,7 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
         ),
         title: Text(
           l10n.feedbackTitle,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -144,7 +144,7 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
           children: [
             Text(
               l10n.feedbackIntro,
-              style: const TextStyle(color: AppColors.onSurfaceMuted),
+              style: TextStyle(color: AppColors.onSurfaceMuted),
             ),
             const SizedBox(height: AppSpacing.lg),
             TextFormField(
@@ -185,7 +185,7 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
                   Expanded(
                     child: Text(
                       image.name,
-                      style: const TextStyle(color: AppColors.onSurfaceMuted),
+                      style: TextStyle(color: AppColors.onSurfaceMuted),
                     ),
                   ),
                   IconButton(
@@ -218,10 +218,7 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
             if (_imageError case final err?)
               Padding(
                 padding: const EdgeInsets.only(top: AppSpacing.sm),
-                child: Text(
-                  err,
-                  style: const TextStyle(color: AppColors.flowRed),
-                ),
+                child: Text(err, style: TextStyle(color: AppColors.flowRed)),
               ),
             const SizedBox(height: AppSpacing.xl),
             FilledButton.icon(
@@ -234,7 +231,7 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
                   : const Icon(Icons.send),
               label: Text(l10n.feedbackSend),
               style: FilledButton.styleFrom(
-                backgroundColor: AppColors.darkGreenColor,
+                backgroundColor: AppColors.brandFill,
                 padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
                 shape: const RoundedRectangleBorder(
                   borderRadius: AppRadius.mdAll,

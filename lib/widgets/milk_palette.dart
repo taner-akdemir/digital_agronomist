@@ -18,22 +18,22 @@ class MilkPalette {
   final Color border;
 
   static MilkPalette of(MilkColor color) => switch (color) {
-    MilkColor.green => const MilkPalette(
+    MilkColor.green => MilkPalette(
       AppColors.flowGreen,
       AppColors.surface,
       AppColors.lightGreenColor,
     ),
-    MilkColor.yellow => const MilkPalette(
+    MilkColor.yellow => MilkPalette(
       AppColors.flowYellow,
       AppColors.surface,
       AppColors.lightAmberColor,
     ),
-    MilkColor.red => const MilkPalette(
+    MilkColor.red => MilkPalette(
       AppColors.flowRed,
       AppColors.flowRedSurface,
       AppColors.lightRedColor,
     ),
-    MilkColor.grey => const MilkPalette(
+    MilkColor.grey => MilkPalette(
       AppColors.flowGrey,
       AppColors.surfaceAlt,
       AppColors.border,

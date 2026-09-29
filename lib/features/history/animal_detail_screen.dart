@@ -97,7 +97,7 @@ class _BackBar extends ConsumerWidget {
               title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: AppColors.darkGreenColor,
@@ -261,9 +261,7 @@ class _CalvingButton extends ConsumerWidget {
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            style: FilledButton.styleFrom(
-              backgroundColor: AppColors.darkGreenColor,
-            ),
+            style: FilledButton.styleFrom(backgroundColor: AppColors.brandFill),
             child: Text(l10n.commonSave),
           ),
         ],
@@ -280,14 +278,14 @@ class _CalvingButton extends ConsumerWidget {
       messenger.showSnackBar(
         SnackBar(
           content: Text(l10n.animalDetailCalvingSaved),
-          backgroundColor: AppColors.darkGreenColor,
+          backgroundColor: AppColors.brandFill,
         ),
       );
     } catch (e) {
       messenger.showSnackBar(
         SnackBar(
           content: Text(userMessage(e) ?? l10n.commonSaveFailed(e)),
-          backgroundColor: AppColors.flowRed,
+          backgroundColor: AppColors.dangerFill,
         ),
       );
     }
@@ -324,7 +322,7 @@ class _IdentityCard extends StatelessWidget {
                     ),
                     Text(
                       animal.earTag,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
                         color: AppColors.onSurfaceMuted,
                       ),
@@ -372,10 +370,7 @@ class _IdentityCard extends StatelessWidget {
             // etiketinin kendisi kadar açıklaması da ekranda (§6.4).
             Text(
               l10n.animalDetailFreshLactation(freshDays),
-              style: const TextStyle(
-                fontSize: 12,
-                color: AppColors.onSurfaceMuted,
-              ),
+              style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
             ),
           ],
           const SizedBox(height: AppSpacing.md),
@@ -390,10 +385,7 @@ class _IdentityCard extends StatelessWidget {
               const SizedBox(height: AppSpacing.xs),
               Text(
                 l10n.animalDetailStaleClass(Fmt.dayMonthYear(at)),
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: AppColors.onSurfaceMuted,
-                ),
+                style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
               ),
             ],
           ],
@@ -407,7 +399,7 @@ class _IdentityCard extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(
+                Icon(
                   Icons.info_outline,
                   size: 14,
                   color: AppColors.lightGreyColor,
@@ -416,7 +408,7 @@ class _IdentityCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     l10n.animalDetailDisclaimer,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 11,
                       color: AppColors.onSurfaceMuted,
                       height: 1.4,
@@ -468,7 +460,7 @@ class _FrozenClass extends StatelessWidget {
         const SizedBox(height: AppSpacing.xs),
         Text(
           l10n.animalDetailFrozenClassNote,
-          style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
+          style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
         ),
       ],
     );
@@ -569,7 +561,7 @@ class _HistoryCard extends StatelessWidget {
       return _Card(
         child: Text(
           l10n.animalDetailNoMilkings,
-          style: const TextStyle(color: AppColors.onSurfaceMuted),
+          style: TextStyle(color: AppColors.onSurfaceMuted),
         ),
       );
     }
@@ -591,10 +583,7 @@ class _HistoryCard extends StatelessWidget {
             const SizedBox(height: AppSpacing.sm),
             Text(
               l10n.animalDetailShownOfTotal(milkings.length, _limit),
-              style: const TextStyle(
-                fontSize: 11,
-                color: AppColors.onSurfaceMuted,
-              ),
+              style: TextStyle(fontSize: 11, color: AppColors.onSurfaceMuted),
             ),
           ],
         ],
@@ -653,10 +642,7 @@ class _MilkingRow extends StatelessWidget {
               // Beklenti yoksa yüzde YAZILMAZ: %0 yanlış alarm olurdu (§6.3).
               milking.expectedMl == 0 ? '—' : Fmt.percent(milking.yieldPct),
               textAlign: TextAlign.right,
-              style: const TextStyle(
-                fontSize: 12,
-                color: AppColors.onSurfaceMuted,
-              ),
+              style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
             ),
           ),
         ],
@@ -680,10 +666,7 @@ class _Stat extends StatelessWidget {
         children: [
           Text(
             label,
-            style: const TextStyle(
-              fontSize: 11,
-              color: AppColors.onSurfaceMuted,
-            ),
+            style: TextStyle(fontSize: 11, color: AppColors.onSurfaceMuted),
           ),
           const SizedBox(height: 2),
           Text(
@@ -714,11 +697,11 @@ class _Fact extends StatelessWidget {
         children: [
           TextSpan(
             text: '$label: ',
-            style: const TextStyle(color: AppColors.onSurfaceMuted),
+            style: TextStyle(color: AppColors.onSurfaceMuted),
           ),
           TextSpan(
             text: value,
-            style: const TextStyle(
+            style: TextStyle(
               color: AppColors.onSurface,
               fontWeight: FontWeight.w600,
             ),
@@ -800,7 +783,7 @@ class _NotesCard extends ConsumerWidget {
               if (list.isEmpty) {
                 return Text(
                   l10n.animalDetailNoNotes,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     color: AppColors.onSurfaceMuted,
                   ),
@@ -831,7 +814,7 @@ class _NotesCard extends ConsumerWidget {
                                 Expanded(
                                   child: Text(
                                     n.note,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.w600,
                                       color: AppColors.darkGreenColor,
@@ -849,7 +832,7 @@ class _NotesCard extends ConsumerWidget {
                               '${Fmt.dayMonthYear(n.createdAt)} '
                                   '${Fmt.time(n.createdAt)}',
                             ].join(' · '),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 11,
                               color: AppColors.onSurfaceMuted,
                             ),
@@ -862,7 +845,7 @@ class _NotesCard extends ConsumerWidget {
                       padding: const EdgeInsets.only(top: AppSpacing.sm),
                       child: Text(
                         l10n.animalDetailMoreNotes(list.length - _shown),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 11,
                           color: AppColors.onSurfaceMuted,
                         ),
@@ -916,9 +899,7 @@ class _NoteDialogState extends State<_NoteDialog> {
       ),
       FilledButton(
         onPressed: () => Navigator.of(context).pop(_text.text),
-        style: FilledButton.styleFrom(
-          backgroundColor: AppColors.darkGreenColor,
-        ),
+        style: FilledButton.styleFrom(backgroundColor: AppColors.brandFill),
         child: Text(l10n.commonSave),
       ),
     ],

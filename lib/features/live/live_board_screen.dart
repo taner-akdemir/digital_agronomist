@@ -123,10 +123,7 @@ class _Header extends ConsumerWidget {
         children: [
           Text(
             l10n.liveTitle,
-            style: const TextStyle(
-              fontSize: 13,
-              color: AppColors.onSurfaceMuted,
-            ),
+            style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
           ),
           const SizedBox(height: AppSpacing.xs),
           Row(
@@ -136,7 +133,7 @@ class _Header extends ConsumerWidget {
                   child: DropdownButton<String>(
                     value: hall.id,
                     isExpanded: true,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: AppColors.darkGreenColor,
@@ -229,7 +226,7 @@ class _SessionControls extends ConsumerWidget {
                   icon: const Icon(Icons.play_arrow_rounded, size: 20),
                   label: Text(l10n.liveStartMilking),
                   style: FilledButton.styleFrom(
-                    backgroundColor: AppColors.darkGreenColor,
+                    backgroundColor: AppColors.brandFill,
                     shape: const RoundedRectangleBorder(
                       borderRadius: AppRadius.smAll,
                     ),
@@ -355,7 +352,10 @@ Future<void> _guard(
     await action();
   } on Object catch (e) {
     messenger.showSnackBar(
-      SnackBar(content: Text(_message(e)), backgroundColor: AppColors.flowRed),
+      SnackBar(
+        content: Text(_message(e)),
+        backgroundColor: AppColors.dangerFill,
+      ),
     );
   }
 }
@@ -392,7 +392,7 @@ class _Grid extends ConsumerWidget {
             child: Text(
               l10n.liveNoOpenSession,
               textAlign: TextAlign.center,
-              style: const TextStyle(color: AppColors.onSurfaceMuted),
+              style: TextStyle(color: AppColors.onSurfaceMuted),
             ),
           ),
         ),

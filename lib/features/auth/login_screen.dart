@@ -87,7 +87,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       children: [
                         Image.asset('assets/brand/mark.png', height: 72),
                         const SizedBox(height: AppSpacing.md),
-                        const Text(
+                        Text(
                           'Milk Trace',
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -101,9 +101,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         Text(
                           l10n.loginTagline,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: AppColors.onSurfaceMuted,
-                          ),
+                          style: TextStyle(color: AppColors.onSurfaceMuted),
                         ),
                         const SizedBox(height: AppSpacing.xxl),
                         if (_mfaToken != null) ...[
@@ -201,7 +199,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         FilledButton(
                           onPressed: _busy ? null : _submit,
                           style: FilledButton.styleFrom(
-                            backgroundColor: AppColors.darkGreenColor,
+                            backgroundColor: AppColors.brandFill,
                             padding: const EdgeInsets.symmetric(
                               vertical: AppSpacing.lg,
                             ),
@@ -210,12 +208,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             ),
                           ),
                           child: _busy
-                              ? const SizedBox(
+                              ? SizedBox(
                                   height: 20,
                                   width: 20,
                                   child: CircularProgressIndicator(
                                     strokeWidth: 2,
-                                    color: Colors.white,
+                                    color: AppColors.onFill,
                                   ),
                                 )
                               : Text(l10n.loginSubmit),
@@ -282,7 +280,7 @@ class _LanguageMenu extends ConsumerWidget {
     );
     return PopupMenuButton<String>(
       tooltip: l10n.languageTitle,
-      icon: const Icon(Icons.language, color: AppColors.onSurfaceMuted),
+      icon: Icon(Icons.language, color: AppColors.onSurfaceMuted),
       onSelected: (v) =>
           ref.read(appLanguageProvider.notifier).set(v == _auto ? null : v),
       itemBuilder: (_) => [
@@ -303,23 +301,19 @@ class _ErrorBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppColors.flowRedSurface,
         borderRadius: AppRadius.smAll,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(
-            Icons.error_outline,
-            color: AppColors.darkRedColor,
-            size: 20,
-          ),
+          Icon(Icons.error_outline, color: AppColors.darkRedColor, size: 20),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
               message,
-              style: const TextStyle(color: AppColors.darkRedColor),
+              style: TextStyle(color: AppColors.darkRedColor),
             ),
           ),
         ],

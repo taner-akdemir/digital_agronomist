@@ -523,6 +523,18 @@ seçer (hesap kartı, yalnızca sahip; `AuthUser.volumeUnit`). Miktar gösteren 
 yeni kodda KULLANILMAZ. kg = L × türün yoğunluğu (`Thresholds.milkDensity`, eşik
 ekranında; tür bilinmiyorsa 1,03). Eşikler (beklenen, günlük sınırlar) yine litre girilir.
 
+**Tema** (backend ADR 0109): hesap kartında BÜTÜN rollere "Tema": Açık / Karanlık / Cihaz.
+Varsayılan AÇIK (tasarım dili açık zemin; karanlık isteğe bağlı). Seçim cihazda
+(`settingsStoreProvider`, `app.theme`; `appThemeModeProvider`, "Cihaz" için
+`effectiveBrightnessProvider` sistem parlaklığını izler); tablette kart yok, kayıtlı seçimi
+izler. `AppColors` artık SABİT DEĞİL: getter'lar geçerli parlaklığın `AppPalette`'inden
+okur, kök (`app.dart`) `AppColors.brightness`'ı yazar ve MaterialApp'i parlaklıkla
+anahtarlar (değişince ağaç baştan kurulur). Bu yüzden renkler `const` içinde kullanılamaz ve
+widget'ta `Colors.white`/`Color(0x…)` YAZILMAZ — token'dan oku. Adlar açık temadaki ROLÜ
+taşır (`darkGreenColor` karanlıkta açık yeşil metin rengidir); dolgu için `brandFill` /
+`dangerFill`, üstündeki yazı `onFill`. §6.2 renkleri anlamını korur, yalnızca koyu zeminde
+okunacak kadar açılır.
+
 **Tedavi ve arınma** (backend ADR 0084): hayvan detayında "Tedavi ve arınma" kartı
 (`TreatmentsCard`); BÜTÜN roller ekler (veteriner), yanlış kaydı yalnızca sahip siler.
 `Animal.withdrawalUntil` / `SpoutAnimal.withdrawalUntil` = sütün ayrılacağı son gün; canlı

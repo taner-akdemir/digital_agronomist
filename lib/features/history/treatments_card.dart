@@ -56,14 +56,14 @@ class TreatmentsCard extends ConsumerWidget {
       messenger.showSnackBar(
         SnackBar(
           content: Text(l10n.treatmentSaved),
-          backgroundColor: AppColors.darkGreenColor,
+          backgroundColor: AppColors.brandFill,
         ),
       );
     } catch (e) {
       messenger.showSnackBar(
         SnackBar(
           content: Text(userMessage(e) ?? l10n.treatmentSaveFailed(e)),
-          backgroundColor: AppColors.flowRed,
+          backgroundColor: AppColors.dangerFill,
         ),
       );
     }
@@ -84,7 +84,9 @@ class TreatmentsCard extends ConsumerWidget {
             child: Text(l10n.commonCancel),
           ),
           FilledButton(
-            style: FilledButton.styleFrom(backgroundColor: AppColors.flowRed),
+            style: FilledButton.styleFrom(
+              backgroundColor: AppColors.dangerFill,
+            ),
             onPressed: () => Navigator.of(context).pop(true),
             child: Text(l10n.commonDelete),
           ),
@@ -102,7 +104,7 @@ class TreatmentsCard extends ConsumerWidget {
       messenger.showSnackBar(
         SnackBar(
           content: Text(userMessage(e) ?? l10n.commonDeleteFailed(e)),
-          backgroundColor: AppColors.flowRed,
+          backgroundColor: AppColors.dangerFill,
         ),
       );
     }
@@ -150,18 +152,18 @@ class TreatmentsCard extends ConsumerWidget {
               width: double.infinity,
               margin: const EdgeInsets.only(bottom: AppSpacing.sm),
               padding: const EdgeInsets.all(AppSpacing.md),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: AppColors.flowRedSurface,
                 borderRadius: AppRadius.smAll,
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.block, color: AppColors.flowRed, size: 18),
+                  Icon(Icons.block, color: AppColors.flowRed, size: 18),
                   const SizedBox(width: AppSpacing.sm),
                   Expanded(
                     child: Text(
                       l10n.treatmentWithdrawalBanner(Fmt.dayMonthYear(until)),
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppColors.darkRedColor,
                         fontWeight: FontWeight.w600,
                       ),
@@ -177,7 +179,7 @@ class TreatmentsCard extends ConsumerWidget {
               if (items.isEmpty) {
                 return Text(
                   l10n.treatmentEmpty,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     color: AppColors.onSurfaceMuted,
                   ),
@@ -322,10 +324,7 @@ class _TreatmentDialogState extends State<_TreatmentDialog> {
             ),
             if (_error != null) ...[
               const SizedBox(height: AppSpacing.sm),
-              Text(
-                _error!,
-                style: const TextStyle(color: AppColors.darkRedColor),
-              ),
+              Text(_error!, style: TextStyle(color: AppColors.darkRedColor)),
             ],
           ],
         ),

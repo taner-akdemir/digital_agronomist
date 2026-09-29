@@ -161,10 +161,10 @@ class _UnmatchedTagsBanner extends ConsumerWidget {
         color: AppColors.lightAmberColor,
         borderRadius: AppRadius.mdAll,
         child: ListTile(
-          leading: const Icon(Icons.nfc, color: AppColors.darkAmberColor),
+          leading: Icon(Icons.nfc, color: AppColors.darkAmberColor),
           title: Text(
             l10n.historyUnmatchedBanner(n),
-            style: const TextStyle(
+            style: TextStyle(
               fontWeight: FontWeight.bold,
               color: AppColors.darkAmberColor,
             ),
@@ -275,7 +275,7 @@ class _ActiveFilter extends ConsumerWidget {
       ),
       child: Row(
         children: [
-          const Icon(
+          Icon(
             Icons.filter_alt_outlined,
             size: 14,
             color: AppColors.onSurfaceMuted,
@@ -286,10 +286,7 @@ class _ActiveFilter extends ConsumerWidget {
               '${labels.join(' · ')} · ${l10n.historyAnimalCount(count)}',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontSize: 12,
-                color: AppColors.onSurfaceMuted,
-              ),
+              style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
             ),
           ),
           TextButton(
@@ -330,7 +327,7 @@ class _Chip extends StatelessWidget {
           showCheckmark: false,
           backgroundColor: AppColors.surface,
           selectedColor: AppColors.lightGreenColor,
-          side: const BorderSide(color: AppColors.border),
+          side: BorderSide(color: AppColors.border),
         ),
       ),
     );
@@ -374,7 +371,7 @@ class _AnimalTile extends StatelessWidget {
                             : animal.earTag,
                         ?animal.groupName,
                       ].join(' · '),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
                         color: AppColors.onSurfaceMuted,
                       ),
@@ -388,7 +385,7 @@ class _AnimalTile extends StatelessWidget {
               else
                 AnimalStatusChip(label: animal.statusLabel),
               const SizedBox(width: AppSpacing.xs),
-              const Icon(Icons.chevron_right, color: AppColors.lightGreyColor),
+              Icon(Icons.chevron_right, color: AppColors.lightGreyColor),
             ],
           ),
         ),
@@ -481,7 +478,7 @@ class _SessionTile extends StatelessWidget {
                             // Sistem açtıysa söylenir: "kim başlattı?"
                             // sorusunun cevabı (backend ADR 0083).
                             '${session.autoStarted ? ' · ${l10n.historySessionAutoStarted}' : ''}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     color: AppColors.onSurfaceMuted,
                   ),
@@ -492,7 +489,7 @@ class _SessionTile extends StatelessWidget {
           if (active)
             Text(
               l10n.historySessionRunning,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
                 color: AppColors.flowGreen,
@@ -501,10 +498,7 @@ class _SessionTile extends StatelessWidget {
           else if (started != null && ended != null)
             Text(
               Fmt.duration(ended.difference(started)),
-              style: const TextStyle(
-                fontSize: 12,
-                color: AppColors.onSurfaceMuted,
-              ),
+              style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
             ),
         ],
       ),
@@ -524,7 +518,7 @@ class _Empty extends StatelessWidget {
       child: Text(
         message,
         textAlign: TextAlign.center,
-        style: const TextStyle(color: AppColors.onSurfaceMuted),
+        style: TextStyle(color: AppColors.onSurfaceMuted),
       ),
     ),
   );

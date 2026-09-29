@@ -36,7 +36,7 @@ class UpdateRequiredScreen extends ConsumerWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.system_update,
                       size: 64,
                       color: AppColors.darkGreenColor,
@@ -45,7 +45,7 @@ class UpdateRequiredScreen extends ConsumerWidget {
                     Text(
                       l10n.updateTitle,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                         color: AppColors.darkGreenColor,
@@ -55,7 +55,7 @@ class UpdateRequiredScreen extends ConsumerWidget {
                     Text(
                       android ? l10n.updateBodyAndroid : l10n.updateBodyIos,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(color: AppColors.onSurfaceMuted),
+                      style: TextStyle(color: AppColors.onSurfaceMuted),
                     ),
                     if (android) ...[
                       const SizedBox(height: AppSpacing.xl),
@@ -63,7 +63,7 @@ class UpdateRequiredScreen extends ConsumerWidget {
                         onPressed: () =>
                             ref.read(supportLauncherProvider)(playStoreUri),
                         style: FilledButton.styleFrom(
-                          backgroundColor: AppColors.darkGreenColor,
+                          backgroundColor: AppColors.brandFill,
                           padding: const EdgeInsets.symmetric(
                             vertical: AppSpacing.lg,
                           ),

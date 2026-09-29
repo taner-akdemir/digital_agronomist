@@ -35,7 +35,7 @@ class TwoFactorScreen extends ConsumerWidget {
         ),
         title: Text(
           l10n.twoFactorTitle,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -92,7 +92,7 @@ class _SetupState extends ConsumerState<_Setup> {
     final children = <Widget>[
       Text(
         l10n.twoFactorIntro,
-        style: const TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
+        style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
       ),
       const SizedBox(height: AppSpacing.lg),
     ];
@@ -187,7 +187,7 @@ class _SetupState extends ConsumerState<_Setup> {
     if (_error != null) {
       children.addAll([
         const SizedBox(height: AppSpacing.md),
-        Text(_error!, style: const TextStyle(color: AppColors.darkRedColor)),
+        Text(_error!, style: TextStyle(color: AppColors.darkRedColor)),
       ]);
     }
     return ListView(
@@ -242,7 +242,7 @@ class _DisableState extends ConsumerState<_Disable> {
       children: [
         Row(
           children: [
-            const Icon(Icons.verified_user, color: AppColors.darkGreenColor),
+            Icon(Icons.verified_user, color: AppColors.darkGreenColor),
             const SizedBox(width: AppSpacing.sm),
             Expanded(
               child: Text(
@@ -255,7 +255,7 @@ class _DisableState extends ConsumerState<_Disable> {
         const SizedBox(height: AppSpacing.md),
         Text(
           l10n.twoFactorDisableHint,
-          style: const TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
+          style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
         ),
         const SizedBox(height: AppSpacing.md),
         TextField(
@@ -278,7 +278,7 @@ class _DisableState extends ConsumerState<_Disable> {
         ),
         if (_error != null) ...[
           const SizedBox(height: AppSpacing.md),
-          Text(_error!, style: const TextStyle(color: AppColors.darkRedColor)),
+          Text(_error!, style: TextStyle(color: AppColors.darkRedColor)),
         ],
         const SizedBox(height: AppSpacing.lg),
         OutlinedButton(

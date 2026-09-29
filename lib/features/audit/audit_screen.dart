@@ -72,7 +72,7 @@ class AuditScreen extends ConsumerWidget {
         ),
         title: Text(
           l10n.auditTitle,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -92,7 +92,7 @@ class AuditScreen extends ConsumerWidget {
                       child: Text(
                         l10n.auditEmpty,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(color: AppColors.onSurfaceMuted),
+                        style: TextStyle(color: AppColors.onSurfaceMuted),
                       ),
                     ),
                   ],
@@ -108,7 +108,7 @@ class AuditScreen extends ConsumerWidget {
                           padding: const EdgeInsets.only(bottom: AppSpacing.md),
                           child: Text(
                             l10n.auditIntro,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 12,
                               color: AppColors.onSurfaceMuted,
                             ),
@@ -152,10 +152,7 @@ class _Row extends StatelessWidget {
           if (e.detail.isNotEmpty) Text(e.detail),
           Text(
             '$who · $when',
-            style: const TextStyle(
-              fontSize: 12,
-              color: AppColors.onSurfaceMuted,
-            ),
+            style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
           ),
         ],
       ),

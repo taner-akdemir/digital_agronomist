@@ -32,7 +32,7 @@ class NotificationChannelsScreen extends ConsumerWidget {
         ),
         title: Text(
           l10n.channelsTitle,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -41,8 +41,8 @@ class NotificationChannelsScreen extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _pickProvider(context, ref),
-        backgroundColor: AppColors.darkGreenColor,
-        foregroundColor: Colors.white,
+        backgroundColor: AppColors.brandFill,
+        foregroundColor: AppColors.onFill,
         icon: const Icon(Icons.add),
         label: Text(l10n.channelsAdd),
       ),
@@ -97,14 +97,14 @@ class _PushNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppColors.flowGreenSurface,
         borderRadius: AppRadius.smAll,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(
+          Icon(
             Icons.notifications_active_outlined,
             size: 16,
             color: AppColors.darkGreenColor,
@@ -113,7 +113,7 @@ class _PushNote extends StatelessWidget {
           Expanded(
             child: Text(
               l10n.channelsPushNote,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 12,
                 color: AppColors.darkGreenColor,
                 height: 1.35,
@@ -135,7 +135,7 @@ class _EmptyState extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.xxl),
       child: Column(
         children: [
-          const Icon(
+          Icon(
             Icons.notifications_none,
             size: 40,
             color: AppColors.lightGreyColor,
@@ -149,10 +149,7 @@ class _EmptyState extends StatelessWidget {
           Text(
             l10n.channelsEmptyBody,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: AppColors.onSurfaceMuted,
-              fontSize: 13,
-            ),
+            style: TextStyle(color: AppColors.onSurfaceMuted, fontSize: 13),
           ),
         ],
       ),
@@ -182,7 +179,7 @@ class _ChannelCard extends ConsumerWidget {
       elevation: 0,
       color: AppColors.surface,
       margin: const EdgeInsets.only(bottom: AppSpacing.md),
-      shape: const RoundedRectangleBorder(
+      shape: RoundedRectangleBorder(
         borderRadius: AppRadius.mdAll,
         side: BorderSide(color: AppColors.border),
       ),
@@ -217,7 +214,7 @@ class _ChannelCard extends ConsumerWidget {
                     ),
                     Text(
                       subtitle,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
                         color: AppColors.onSurfaceMuted,
                       ),
@@ -292,7 +289,7 @@ class _ChannelCard extends ConsumerWidget {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(userMessage(e) ?? l10n.commonSaveFailed('$e')),
-            backgroundColor: AppColors.flowRed,
+            backgroundColor: AppColors.dangerFill,
           ),
         );
       }
@@ -352,7 +349,7 @@ class _ProviderPicker extends ConsumerWidget {
                         const SizedBox(width: AppSpacing.sm),
                         Text(
                           channelKindLabel(kind),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.w600,
                             color: AppColors.onSurfaceMuted,
                           ),

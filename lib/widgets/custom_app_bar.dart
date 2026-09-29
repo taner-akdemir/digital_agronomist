@@ -24,7 +24,7 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
           const SizedBox(width: AppSpacing.sm),
           Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
               color: AppColors.darkGreenColor,
@@ -74,7 +74,8 @@ class _BellWithBadge extends StatelessWidget {
 
     return Badge(
       label: Text('$count'),
-      backgroundColor: AppColors.flowRed,
+      backgroundColor: AppColors.dangerFill,
+      textColor: AppColors.onFill,
       child: icon,
     );
   }

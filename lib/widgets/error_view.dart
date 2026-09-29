@@ -32,7 +32,7 @@ class ErrorView extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.error_outline, color: AppColors.flowRed, size: 40),
+          Icon(Icons.error_outline, color: AppColors.flowRed, size: 40),
           const SizedBox(height: AppSpacing.sm),
           Text(message, style: const TextStyle(fontWeight: FontWeight.bold)),
           if (detail != null) ...[
@@ -40,10 +40,7 @@ class ErrorView extends StatelessWidget {
             Text(
               detail,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 12,
-                color: AppColors.onSurfaceMuted,
-              ),
+              style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
             ),
           ],
           if (onRetry case final retry?) ...[

@@ -35,7 +35,7 @@ class ThresholdsScreen extends ConsumerWidget {
         ),
         title: Text(
           l10n.thresholdsTitle,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -279,7 +279,7 @@ class _FormState extends ConsumerState<_Form> {
           FilledButton(
             onPressed: _canEdit && !_saving ? _save : null,
             style: FilledButton.styleFrom(
-              backgroundColor: AppColors.darkGreenColor,
+              backgroundColor: AppColors.brandFill,
               padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
               shape: const RoundedRectangleBorder(
                 borderRadius: AppRadius.mdAll,
@@ -388,7 +388,7 @@ class _FormState extends ConsumerState<_Form> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: error ? AppColors.flowRed : AppColors.darkGreenColor,
+        backgroundColor: error ? AppColors.dangerFill : AppColors.brandFill,
       ),
     );
   }
@@ -462,7 +462,7 @@ class _Group extends StatelessWidget {
           // adı, onu ilk kez gören çiftçiye hiçbir şey anlatmıyor.
           Text(
             hint,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 11,
               color: AppColors.onSurfaceMuted,
               height: 1.35,
@@ -487,23 +487,19 @@ class _CalibrationNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppColors.flowYellowSurface,
         borderRadius: AppRadius.smAll,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(
-            Icons.info_outline,
-            size: 16,
-            color: AppColors.darkAmberColor,
-          ),
+          Icon(Icons.info_outline, size: 16, color: AppColors.darkAmberColor),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
               l10n.thresholdsCalibrationNote,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 12,
                 color: AppColors.darkAmberColor,
                 height: 1.35,
@@ -523,19 +519,12 @@ class _ReadOnlyNote extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Icon(
-          Icons.lock_outline,
-          size: 14,
-          color: AppColors.lightGreyColor,
-        ),
+        Icon(Icons.lock_outline, size: 14, color: AppColors.lightGreyColor),
         const SizedBox(width: AppSpacing.xs),
         Expanded(
           child: Text(
             l10n.thresholdsReadOnly,
-            style: const TextStyle(
-              fontSize: 12,
-              color: AppColors.onSurfaceMuted,
-            ),
+            style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
           ),
         ),
       ],

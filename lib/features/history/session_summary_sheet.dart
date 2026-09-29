@@ -122,10 +122,7 @@ class _Section extends StatelessWidget {
           if (items.isEmpty)
             Text(
               empty!,
-              style: const TextStyle(
-                fontSize: 12,
-                color: AppColors.onSurfaceMuted,
-              ),
+              style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
             ),
           for (final a in items)
             ListTile(

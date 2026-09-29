@@ -99,7 +99,7 @@ class _ReportSheetState extends ConsumerState<_ReportSheet> {
             children: [
               Text(
                 l10n.yieldReportTitle,
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                   color: AppColors.darkGreenColor,
@@ -112,10 +112,7 @@ class _ReportSheetState extends ConsumerState<_ReportSheet> {
                       ? l10n.yieldReportKilogram
                       : l10n.yieldReportLitre,
                 ),
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: AppColors.onSurfaceMuted,
-                ),
+                style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
               ),
               const SizedBox(height: AppSpacing.sm),
               for (final d in reportPeriods)
@@ -132,10 +129,7 @@ class _ReportSheetState extends ConsumerState<_ReportSheet> {
                   onTap: () => _run(d),
                 ),
               if (_error != null)
-                Text(
-                  _error!,
-                  style: const TextStyle(color: AppColors.darkRedColor),
-                ),
+                Text(_error!, style: TextStyle(color: AppColors.darkRedColor)),
             ],
           ),
         ),

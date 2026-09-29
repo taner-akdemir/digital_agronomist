@@ -53,7 +53,7 @@ class _AccountSheet extends ConsumerWidget {
             children: [
               Row(
                 children: [
-                  const CircleAvatar(
+                  CircleAvatar(
                     radius: 24,
                     backgroundColor: AppColors.lightGreenColor,
                     child: Icon(Icons.person, color: AppColors.darkGreenColor),
@@ -75,9 +75,7 @@ class _AccountSheet extends ConsumerWidget {
                         if (user != null) ...[
                           Text(
                             user.email,
-                            style: const TextStyle(
-                              color: AppColors.onSurfaceMuted,
-                            ),
+                            style: TextStyle(color: AppColors.onSurfaceMuted),
                           ),
                           // Rol GÖRÜNÜR olmalı: eşik ayarlarının neden salt
                           // okunur açıldığının cevabı burada.
@@ -86,7 +84,7 @@ class _AccountSheet extends ConsumerWidget {
                               roleLabel(user.role),
                               ?user.tenantName,
                             ].join(' · '),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 12,
                               color: AppColors.lightGreyColor,
                             ),
@@ -109,6 +107,9 @@ class _AccountSheet extends ConsumerWidget {
               // Dil (backend ADR 0093): cihazda saklanır, her rol seçer.
               const SizedBox(height: AppSpacing.md),
               const _LanguageRow(),
+              // Tema (backend ADR 0109): cihazda saklanır, her rol seçer.
+              const SizedBox(height: AppSpacing.md),
+              const _ThemeRow(),
               // Birden çok işletmenin üyesi (veteriner, danışman; backend
               // ADR 0081) işletmeler arasında geçer.
               if ((user?.tenants.length ?? 0) > 1) ...[
@@ -434,7 +435,7 @@ class _PushRowState extends ConsumerState<_PushRow> {
         padding: const EdgeInsets.only(bottom: AppSpacing.md),
         child: Row(
           children: [
-            const Icon(
+            Icon(
               Icons.notifications_off_outlined,
               size: 18,
               color: AppColors.onSurfaceMuted,
@@ -443,10 +444,7 @@ class _PushRowState extends ConsumerState<_PushRow> {
             Expanded(
               child: Text(
                 l10n.accountPushUnavailable,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: AppColors.onSurfaceMuted,
-                ),
+                style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
               ),
             ),
           ],
@@ -489,7 +487,7 @@ Future<void> _pickTenant(
                       Text(t.name),
                       Text(
                         roleLabel(t.role),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 12,
                           color: AppColors.onSurfaceMuted,
                         ),
@@ -514,7 +512,7 @@ Future<void> _pickTenant(
     messenger.showSnackBar(
       SnackBar(
         content: Text(userMessage(e) ?? l10n.accountSwitchFarmFailed(e)),
-        backgroundColor: AppColors.flowRed,
+        backgroundColor: AppColors.dangerFill,
       ),
     );
   }
@@ -552,7 +550,7 @@ class _UnitRow extends ConsumerWidget {
               messenger.showSnackBar(
                 SnackBar(
                   content: Text(userMessage(e) ?? l10n.commonSaveFailed(e)),
-                  backgroundColor: AppColors.flowRed,
+                  backgroundColor: AppColors.dangerFill,
                 ),
               );
             }
@@ -600,6 +598,41 @@ class _LanguageRow extends ConsumerWidget {
   }
 }
 
+/// Tema (backend ADR 0109): Açık (varsayılan), Karanlık ya da Cihaz.
+/// Seçim cihazda saklanır; dil satırıyla aynı yerleşim.
+class _ThemeRow extends ConsumerWidget {
+  const _ThemeRow();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final mode = ref.watch(appThemeModeProvider);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          l10n.themeTitle,
+          style: const TextStyle(fontWeight: FontWeight.w600),
+        ),
+        const SizedBox(height: AppSpacing.xs),
+        SegmentedButton<ThemeMode>(
+          showSelectedIcon: false,
+          segments: [
+            ButtonSegment(value: ThemeMode.light, label: Text(l10n.themeLight)),
+            ButtonSegment(value: ThemeMode.dark, label: Text(l10n.themeDark)),
+            ButtonSegment(
+              value: ThemeMode.system,
+              label: Text(l10n.themeSystem),
+            ),
+          ],
+          selected: {mode},
+          onSelectionChanged: (s) =>
+              ref.read(appThemeModeProvider.notifier).set(s.first),
+        ),
+      ],
+    );
+  }
+}
+
 class _ModeBadge extends StatelessWidget {
   const _ModeBadge();
 
@@ -607,13 +640,13 @@ class _ModeBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppColors.flowYellowSurface,
         borderRadius: AppRadius.smAll,
       ),
       child: Row(
         children: [
-          const Icon(
+          Icon(
             Icons.science_outlined,
             size: 18,
             color: AppColors.darkAmberColor,
@@ -622,10 +655,7 @@ class _ModeBadge extends StatelessWidget {
           Expanded(
             child: Text(
               l10n.accountMockMode,
-              style: const TextStyle(
-                color: AppColors.darkAmberColor,
-                fontSize: 13,
-              ),
+              style: TextStyle(color: AppColors.darkAmberColor, fontSize: 13),
             ),
           ),
         ],

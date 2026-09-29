@@ -83,7 +83,7 @@ Future<bool> showAddDelivery(
     messenger.showSnackBar(
       SnackBar(
         content: Text(userMessage(e) ?? l10n.commonSaveFailed(e)),
-        backgroundColor: AppColors.flowRed,
+        backgroundColor: AppColors.dangerFill,
       ),
     );
     return false;
@@ -121,7 +121,7 @@ class DeliveriesScreen extends ConsumerWidget {
       messenger.showSnackBar(
         SnackBar(
           content: Text(userMessage(e) ?? l10n.commonSaveFailed(e)),
-          backgroundColor: AppColors.flowRed,
+          backgroundColor: AppColors.dangerFill,
         ),
       );
     }
@@ -186,7 +186,9 @@ class DeliveriesScreen extends ConsumerWidget {
             child: Text(l10n.commonCancel),
           ),
           FilledButton(
-            style: FilledButton.styleFrom(backgroundColor: AppColors.flowRed),
+            style: FilledButton.styleFrom(
+              backgroundColor: AppColors.dangerFill,
+            ),
             onPressed: () => Navigator.of(context).pop(true),
             child: Text(l10n.commonDelete),
           ),
@@ -202,7 +204,7 @@ class DeliveriesScreen extends ConsumerWidget {
       messenger.showSnackBar(
         SnackBar(
           content: Text(userMessage(e) ?? l10n.commonDeleteFailed(e)),
-          backgroundColor: AppColors.flowRed,
+          backgroundColor: AppColors.dangerFill,
         ),
       );
     }
@@ -225,7 +227,7 @@ class DeliveriesScreen extends ConsumerWidget {
         ),
         title: Text(
           l10n.deliveriesTitle,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -235,8 +237,8 @@ class DeliveriesScreen extends ConsumerWidget {
       floatingActionButton: canEnterDelivery(role)
           ? FloatingActionButton.extended(
               onPressed: () => showAddDelivery(context, ref, today: today),
-              backgroundColor: AppColors.darkGreenColor,
-              foregroundColor: Colors.white,
+              backgroundColor: AppColors.brandFill,
+              foregroundColor: AppColors.onFill,
               icon: const Icon(Icons.add),
               label: Text(l10n.deliveriesEnter),
             )
@@ -262,7 +264,7 @@ class DeliveriesScreen extends ConsumerWidget {
                       l10n.deliveriesExplainer(
                         v.tolerancePct.toStringAsFixed(1),
                       ),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
                         color: AppColors.onSurfaceMuted,
                       ),
@@ -294,7 +296,7 @@ class DeliveriesScreen extends ConsumerWidget {
                   child: Text(
                     l10n.deliveriesEmpty,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(color: AppColors.onSurfaceMuted),
+                    style: TextStyle(color: AppColors.onSurfaceMuted),
                   ),
                 )
               else
@@ -378,7 +380,7 @@ class DeliveryTile extends StatelessWidget {
                 const SizedBox(height: AppSpacing.xs),
                 Text(
                   detail,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     color: AppColors.onSurfaceMuted,
                   ),
@@ -404,7 +406,7 @@ class DeliveryTile extends StatelessWidget {
                       if (d.note.isNotEmpty) d.note,
                       if ((d.authorName ?? '').isNotEmpty) d.authorName!,
                     ].join(' · '),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 11,
                       color: AppColors.onSurfaceMuted,
                     ),
@@ -534,10 +536,7 @@ class _DeliveryDialogState extends State<_DeliveryDialog> {
             QualityInputs(controllers: _quality),
             if (_error != null) ...[
               const SizedBox(height: AppSpacing.sm),
-              Text(
-                _error!,
-                style: const TextStyle(color: AppColors.darkRedColor),
-              ),
+              Text(_error!, style: TextStyle(color: AppColors.darkRedColor)),
             ],
           ],
         ),

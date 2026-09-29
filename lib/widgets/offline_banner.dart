@@ -33,19 +33,12 @@ class OfflineBanner extends ConsumerWidget {
         ),
         child: Row(
           children: [
-            const Icon(
-              Icons.cloud_off,
-              size: 18,
-              color: AppColors.darkAmberColor,
-            ),
+            Icon(Icons.cloud_off, size: 18, color: AppColors.darkAmberColor),
             const SizedBox(width: AppSpacing.sm),
             Expanded(
               child: Text(
                 l10n.widgetOfflineBanner(when),
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: AppColors.darkAmberColor,
-                ),
+                style: TextStyle(fontSize: 12, color: AppColors.darkAmberColor),
               ),
             ),
           ],

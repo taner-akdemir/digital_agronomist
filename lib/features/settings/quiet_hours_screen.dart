@@ -39,7 +39,7 @@ class QuietHoursScreen extends ConsumerWidget {
         ),
         title: Text(
           l10n.quietTitle,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -92,7 +92,7 @@ class _FormState extends ConsumerState<_Form> {
       messenger.showSnackBar(
         SnackBar(
           content: Text(l10n.quietSameTime),
-          backgroundColor: AppColors.flowRed,
+          backgroundColor: AppColors.dangerFill,
         ),
       );
       return;
@@ -110,7 +110,7 @@ class _FormState extends ConsumerState<_Form> {
       messenger.showSnackBar(
         SnackBar(
           content: Text(userMessage(e) ?? l10n.commonSaveFailed('$e')),
-          backgroundColor: AppColors.flowRed,
+          backgroundColor: AppColors.dangerFill,
         ),
       );
     } finally {
@@ -137,7 +137,7 @@ class _FormState extends ConsumerState<_Form> {
       children: [
         Text(
           l10n.quietIntro,
-          style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
+          style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
         ),
         const SizedBox(height: AppSpacing.md),
         SwitchListTile(
@@ -152,7 +152,7 @@ class _FormState extends ConsumerState<_Form> {
         FilledButton(
           onPressed: _busy ? null : _save,
           style: FilledButton.styleFrom(
-            backgroundColor: AppColors.darkGreenColor,
+            backgroundColor: AppColors.brandFill,
             padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
           ),
           child: Text(l10n.commonSave),

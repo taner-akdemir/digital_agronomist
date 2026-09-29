@@ -17,13 +17,13 @@ class AnimalStatusChip extends StatelessWidget {
       horizontal: AppSpacing.sm,
       vertical: AppSpacing.xs,
     ),
-    decoration: const BoxDecoration(
+    decoration: BoxDecoration(
       color: AppColors.background,
       borderRadius: AppRadius.smAll,
     ),
     child: Text(
       label,
-      style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceMuted),
+      style: TextStyle(fontSize: 11, color: AppColors.onSurfaceMuted),
     ),
   );
 }

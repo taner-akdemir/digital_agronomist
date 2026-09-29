@@ -36,10 +36,7 @@ class YieldChart extends StatelessWidget {
         child: Center(
           child: Text(
             l10n.yieldChartNotEnough,
-            style: const TextStyle(
-              fontSize: 12,
-              color: AppColors.onSurfaceMuted,
-            ),
+            style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
           ),
         ),
       );
@@ -91,7 +88,7 @@ class YieldChart extends StatelessWidget {
                 // tarar. Yatay çizgiler okumaya yarıyor, onlar kalıyor.
                 drawVerticalLine: false,
                 getDrawingHorizontalLine: (_) =>
-                    const FlLine(color: AppColors.chartGrid, strokeWidth: 1),
+                    FlLine(color: AppColors.chartGrid, strokeWidth: 1),
               ),
               borderData: FlBorderData(show: false),
               titlesData: FlTitlesData(
@@ -103,7 +100,7 @@ class YieldChart extends StatelessWidget {
                     reservedSize: 34,
                     getTitlesWidget: (value, meta) => Text(
                       value == meta.max ? '' : value.toStringAsFixed(0),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 10,
                         color: AppColors.onSurfaceMuted,
                       ),
@@ -128,7 +125,7 @@ class YieldChart extends StatelessWidget {
                         fitInside: SideTitleFitInsideData.fromTitleMeta(meta),
                         child: Text(
                           Fmt.dayMonth(daily[i].date),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 10,
                             color: AppColors.onSurfaceMuted,
                           ),
@@ -140,7 +137,7 @@ class YieldChart extends StatelessWidget {
               ),
               lineTouchData: LineTouchData(
                 touchTooltipData: LineTouchTooltipData(
-                  getTooltipColor: (_) => AppColors.darkGreenColor,
+                  getTooltipColor: (_) => AppColors.brandFill,
                   getTooltipItems: (spots) => [
                     for (final s in spots)
                       LineTooltipItem(
@@ -148,7 +145,7 @@ class YieldChart extends StatelessWidget {
                             ? '${l10n.yieldChartAvg7} ${s.y.toStringAsFixed(1)} $unit'
                             : '${Fmt.dayMonth(daily[s.x.round()].date)}  '
                                   '${s.y.toStringAsFixed(1)} $unit',
-                        const TextStyle(color: Colors.white, fontSize: 11),
+                        TextStyle(color: AppColors.onFill, fontSize: 11),
                       ),
                   ],
                 ),
@@ -191,7 +188,7 @@ class _LegendItem extends StatelessWidget {
         // renkli çizgi taşır.
         Text(
           label,
-          style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceMuted),
+          style: TextStyle(fontSize: 11, color: AppColors.onSurfaceMuted),
         ),
       ],
     );

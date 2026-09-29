@@ -2344,6 +2344,18 @@ class AppLocalizationsTr extends AppLocalizations {
   String get teamTitle => 'Kullanıcılar';
 
   @override
+  String get themeDark => 'Karanlık';
+
+  @override
+  String get themeLight => 'Açık';
+
+  @override
+  String get themeSystem => 'Cihaz';
+
+  @override
+  String get themeTitle => 'Tema';
+
+  @override
   String get thresholdsAlertHold => 'Uyarı bekleme';
 
   @override

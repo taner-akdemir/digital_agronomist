@@ -27,6 +27,14 @@ class MilkTraceApp extends ConsumerWidget {
     // bu dille yazar.
     setL10nLocale(locale);
 
+    // Tema (backend ADR 0109): renk token'ları (AppColors) geçerli
+    // parlaklıktan okunur ve widget'larda sabit DEĞİLDİR; parlaklık da dil
+    // gibi BURADA yazılır ve anahtara girer — değişince ağaç baştan kurulur,
+    // her ekran yeni renklerle çizilir.
+    final themeMode = ref.watch(appThemeModeProvider);
+    final brightness = ref.watch(effectiveBrightnessProvider);
+    AppColors.brightness = brightness;
+
     // Router keepAlive bir provider'dan gelir: build içinde kurulsaydı her
     // yeniden çizimde yeni bir router doğar ve gezinme geçmişi sıfırlanırdı.
     // Eski kabuktaki PersistentTabController'ın hatası tam olarak buydu.
@@ -66,9 +74,11 @@ class MilkTraceApp extends ConsumerWidget {
     });
 
     return MaterialApp.router(
-      key: ValueKey(locale.languageCode),
+      key: ValueKey('${locale.languageCode}-${brightness.name}'),
       title: 'Milk Trace',
       theme: buildAppTheme(),
+      darkTheme: buildAppTheme(Brightness.dark),
+      themeMode: themeMode,
       routerConfig: router,
       // Material'in kendi metinleri de (tarih seçici, düğmeler) aynı dilde.
       locale: locale,

@@ -41,7 +41,7 @@ class NotificationChannelFormScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(
           _isEdit ? l10n.channelsEditTitle : l10n.channelsNewTitle,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -195,10 +195,7 @@ class _FormState extends ConsumerState<_Form> {
           _SectionTitle(l10n.channelsWhenSection),
           Text(
             l10n.channelsMinSeverity,
-            style: const TextStyle(
-              fontSize: 12,
-              color: AppColors.onSurfaceMuted,
-            ),
+            style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
           ),
           const SizedBox(height: AppSpacing.xs),
           SegmentedButton<String>(
@@ -282,7 +279,7 @@ class _FormState extends ConsumerState<_Form> {
           if (_sources.isEmpty)
             Text(
               l10n.channelsSourceRequired,
-              style: const TextStyle(color: AppColors.flowRed, fontSize: 12),
+              style: TextStyle(color: AppColors.flowRed, fontSize: 12),
             ),
           SwitchListTile(
             contentPadding: EdgeInsets.zero,
@@ -302,7 +299,7 @@ class _FormState extends ConsumerState<_Form> {
           FilledButton(
             onPressed: _busy ? null : _save,
             style: FilledButton.styleFrom(
-              backgroundColor: AppColors.darkGreenColor,
+              backgroundColor: AppColors.brandFill,
               padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
               shape: const RoundedRectangleBorder(
                 borderRadius: AppRadius.mdAll,
@@ -532,7 +529,7 @@ class _FormState extends ConsumerState<_Form> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: error ? AppColors.flowRed : AppColors.darkGreenColor,
+        backgroundColor: error ? AppColors.dangerFill : AppColors.brandFill,
       ),
     );
   }

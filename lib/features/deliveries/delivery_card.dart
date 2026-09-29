@@ -27,7 +27,7 @@ class DeliveryCard extends ConsumerWidget {
       padding: const EdgeInsets.only(top: AppSpacing.md),
       child: Material(
         color: AppColors.surface,
-        shape: const RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: AppRadius.mdAll,
           side: BorderSide(color: AppColors.border),
         ),
@@ -63,7 +63,7 @@ class DeliveryCard extends ConsumerWidget {
               if (items.isEmpty)
                 Text(
                   l10n.deliveriesCardHint,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     color: AppColors.onSurfaceMuted,
                   ),

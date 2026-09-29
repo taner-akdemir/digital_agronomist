@@ -80,10 +80,7 @@ class _DeleteAccountDialogState extends ConsumerState<_DeleteAccountDialog> {
             ),
             if (_error != null) ...[
               const SizedBox(height: AppSpacing.sm),
-              Text(
-                _error!,
-                style: const TextStyle(color: AppColors.darkRedColor),
-              ),
+              Text(_error!, style: TextStyle(color: AppColors.darkRedColor)),
             ],
           ],
         ),
@@ -94,7 +91,7 @@ class _DeleteAccountDialogState extends ConsumerState<_DeleteAccountDialog> {
           child: Text(l10n.commonCancel),
         ),
         FilledButton(
-          style: FilledButton.styleFrom(backgroundColor: AppColors.flowRed),
+          style: FilledButton.styleFrom(backgroundColor: AppColors.dangerFill),
           onPressed: _busy ? null : _delete,
           child: Text(l10n.deleteAccountConfirm),
         ),

@@ -31,7 +31,7 @@ class AlertsScreen extends ConsumerWidget {
         ),
         title: Text(
           l10n.alertsTitle,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -117,7 +117,7 @@ class _AlertCard extends ConsumerWidget {
                       const SizedBox(height: AppSpacing.xs),
                       Text(
                         alertTimeLabel(alert),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 11,
                           color: AppColors.onSurfaceMuted,
                         ),
@@ -141,8 +141,8 @@ class _AlertCard extends ConsumerWidget {
                     ),
                   )
                 else
-                  const Padding(
-                    padding: EdgeInsets.only(left: AppSpacing.sm, top: 2),
+                  Padding(
+                    padding: const EdgeInsets.only(left: AppSpacing.sm, top: 2),
                     child: Icon(
                       Icons.check,
                       size: 16,
@@ -189,7 +189,7 @@ class _Empty extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.xxl),
       children: [
         const SizedBox(height: AppSpacing.xxl),
-        const Icon(
+        Icon(
           Icons.notifications_none_outlined,
           size: 44,
           color: AppColors.lightGreyColor,
@@ -198,7 +198,7 @@ class _Empty extends StatelessWidget {
         Text(
           l10n.alertsEmpty,
           textAlign: TextAlign.center,
-          style: const TextStyle(color: AppColors.onSurfaceMuted),
+          style: TextStyle(color: AppColors.onSurfaceMuted),
         ),
       ],
     );

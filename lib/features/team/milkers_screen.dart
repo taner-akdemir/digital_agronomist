@@ -53,7 +53,7 @@ class _MilkersScreenState extends ConsumerState<MilkersScreen> {
         ),
         title: Text(
           l10n.milkersTitle,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppColors.darkGreenColor,
@@ -76,10 +76,7 @@ class _MilkersScreenState extends ConsumerState<MilkersScreen> {
             const SizedBox(height: AppSpacing.md),
             Text(
               l10n.milkersNote,
-              style: const TextStyle(
-                fontSize: 12,
-                color: AppColors.onSurfaceMuted,
-              ),
+              style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
             ),
             const SizedBox(height: AppSpacing.md),
             AsyncView(
@@ -92,7 +89,7 @@ class _MilkersScreenState extends ConsumerState<MilkersScreen> {
                       child: Text(
                         l10n.milkersEmpty,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(color: AppColors.onSurfaceMuted),
+                        style: TextStyle(color: AppColors.onSurfaceMuted),
                       ),
                     )
                   : Column(
@@ -122,7 +119,7 @@ class _MilkersScreenState extends ConsumerState<MilkersScreen> {
                                 if (!m.isKnown)
                                   Text(
                                     l10n.milkersUnknownHint,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 11,
                                       color: AppColors.onSurfaceMuted,
                                     ),
@@ -140,7 +137,7 @@ class _MilkersScreenState extends ConsumerState<MilkersScreen> {
                                     durationLabel(m.avgDurationSec),
                                     m.lowFlowPct.toStringAsFixed(0),
                                   ),
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 12,
                                     color: AppColors.onSurfaceMuted,
                                   ),

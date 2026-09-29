@@ -72,18 +72,14 @@ class LiveInfoCard extends StatelessWidget {
           if (unmatched != null)
             Row(
               children: [
-                const Icon(
-                  Icons.nfc,
-                  size: 13,
-                  color: AppColors.darkAmberColor,
-                ),
+                Icon(Icons.nfc, size: 13, color: AppColors.darkAmberColor),
                 const SizedBox(width: AppSpacing.xs),
                 Expanded(
                   child: Text(
                     unmatched.message,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
                       color: AppColors.darkAmberColor,
@@ -97,14 +93,14 @@ class LiveInfoCard extends StatelessWidget {
           else if (animal?.withdrawalUntil case final until?)
             Row(
               children: [
-                const Icon(Icons.block, size: 13, color: AppColors.flowRed),
+                Icon(Icons.block, size: 13, color: AppColors.flowRed),
                 const SizedBox(width: AppSpacing.xs),
                 Expanded(
                   child: Text(
                     l10n.liveWithholdUntil(Fmt.dayMonth(until)),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
                       color: AppColors.flowRed,
@@ -116,10 +112,7 @@ class LiveInfoCard extends StatelessWidget {
           else if (animal?.name != null)
             Text(
               animal!.earTag,
-              style: const TextStyle(
-                fontSize: 11,
-                color: AppColors.onSurfaceMuted,
-              ),
+              style: TextStyle(fontSize: 11, color: AppColors.onSurfaceMuted),
             ),
           const SizedBox(height: AppSpacing.md),
           _flowRow(palette),
@@ -140,7 +133,7 @@ class LiveInfoCard extends StatelessWidget {
             // yazıyordu ve yanlıştı (§15.3/15).
             Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.warning_amber_rounded,
                   size: 16,
                   color: AppColors.flowRed,
@@ -170,10 +163,7 @@ class LiveInfoCard extends StatelessWidget {
             title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontSize: 12,
-              color: AppColors.lightGreyColor,
-            ),
+            style: TextStyle(fontSize: 12, color: AppColors.lightGreyColor),
           ),
         ),
         Container(
@@ -195,10 +185,7 @@ class LiveInfoCard extends StatelessWidget {
         Expanded(
           child: Text(
             l10n.liveFlowRate,
-            style: const TextStyle(
-              fontSize: 13,
-              color: AppColors.onSurfaceMuted,
-            ),
+            style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
           ),
         ),
         Text(
@@ -214,10 +201,7 @@ class LiveInfoCard extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 2),
           child: Text(
             l10n.liveFlowUnit,
-            style: const TextStyle(
-              fontSize: 11,
-              color: AppColors.onSurfaceMuted,
-            ),
+            style: TextStyle(fontSize: 11, color: AppColors.onSurfaceMuted),
           ),
         ),
       ],
@@ -251,7 +235,7 @@ class LiveInfoCard extends StatelessWidget {
           update.expectedMl == 0
               ? l10n.liveNoTarget
               : Fmt.percent(update.yieldPct),
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 11,
             fontWeight: FontWeight.w600,
             color: AppColors.onSurfaceMuted,
@@ -269,15 +253,12 @@ class LiveInfoCard extends StatelessWidget {
           Expanded(
             child: Text(
               label,
-              style: const TextStyle(
-                fontSize: 13,
-                color: AppColors.onSurfaceMuted,
-              ),
+              style: TextStyle(fontSize: 13, color: AppColors.onSurfaceMuted),
             ),
           ),
           Text(
             value,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.bold,
               color: AppColors.darkGreenColor,
