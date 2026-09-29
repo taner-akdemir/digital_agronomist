@@ -5,6 +5,7 @@ import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/data/cache/cache_store.dart';
 import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/animal.dart';
+import 'package:milktrace/data/models/animal_group.dart';
 import 'package:milktrace/data/models/animal_import.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
@@ -428,6 +429,24 @@ class CachingRepository implements MilkTraceRepository {
       _net(() => _inner.setVolumeUnit(unit));
 
   @override
+  Future<List<AnimalGroup>> animalGroups() => _read(
+    'animal-groups',
+    _inner.animalGroups,
+    (j) => _list(j, AnimalGroup.fromJson),
+  );
+
+  @override
+  Future<AnimalGroup> createGroup(String name) =>
+      _net(() => _inner.createGroup(name));
+
+  @override
+  Future<AnimalGroup> renameGroup(String id, String name) =>
+      _net(() => _inner.renameGroup(id, name));
+
+  @override
+  Future<void> deleteGroup(String id) => _net(() => _inner.deleteGroup(id));
+
+  @override
   Future<Deliveries> deliveries() => _read(
     'deliveries',
     _inner.deliveries,
@@ -472,12 +491,14 @@ class CachingRepository implements MilkTraceRepository {
     required String fullName,
     required String role,
     String? password,
+    bool kiosk = false,
   }) => _net(
     () => _inner.addTeamMember(
       email: email,
       fullName: fullName,
       role: role,
       password: password,
+      kiosk: kiosk,
     ),
   );
 

@@ -34,6 +34,9 @@ abstract class DashboardSummary with _$DashboardSummary {
     /// §6.4 sınıf dağılımı. Sayısı sıfır olan sınıflar da gelir ki ekran
     /// "bu sınıfta hiç yok" ile "bu sınıf hiç hesaplanmadı"yı ayırabilsin.
     @Default(<YieldClassCount>[]) List<YieldClassCount> classDistribution,
+
+    /// Grupların bugünkü toplamı (backend ADR 0092); grup yoksa boş.
+    @Default(<GroupTotal>[]) List<GroupTotal> byGroup,
   }) = _DashboardSummary;
 
   factory DashboardSummary.fromJson(Map<String, dynamic> json) =>
@@ -64,4 +67,28 @@ abstract class YieldClassCount with _$YieldClassCount {
 
   factory YieldClassCount.fromJson(Map<String, dynamic> json) =>
       _$YieldClassCountFromJson(json);
+}
+
+/// Bir hayvan grubunun bugünkü toplamı (backend ADR 0092).
+@freezed
+abstract class GroupTotal with _$GroupTotal {
+  const factory GroupTotal({
+    required String groupId,
+    required String name,
+
+    /// Gruptaki sağmal hayvan sayısı.
+    @Default(0) int animals,
+
+    /// Bugün sağılan.
+    @Default(0) int milked,
+    @Default(0) int totalMl,
+  }) = _GroupTotal;
+
+  const GroupTotal._();
+
+  /// Sağılan hayvan başına mL; kimse sağılmadıysa 0.
+  int get perAnimalMl => milked == 0 ? 0 : totalMl ~/ milked;
+
+  factory GroupTotal.fromJson(Map<String, dynamic> json) =>
+      _$GroupTotalFromJson(json);
 }

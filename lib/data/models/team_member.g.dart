@@ -12,6 +12,7 @@ _TeamMember _$TeamMemberFromJson(Map<String, dynamic> json) => _TeamMember(
   fullName: json['fullName'] as String? ?? '',
   role: json['role'] as String,
   status: json['status'] as String? ?? 'active',
+  kiosk: json['kiosk'] as bool? ?? false,
 );
 
 Map<String, dynamic> _$TeamMemberToJson(_TeamMember instance) =>
@@ -21,4 +22,5 @@ Map<String, dynamic> _$TeamMemberToJson(_TeamMember instance) =>
       'fullName': instance.fullName,
       'role': instance.role,
       'status': instance.status,
+      'kiosk': instance.kiosk,
     };

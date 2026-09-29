@@ -322,6 +322,52 @@ final class SpoutLabelsProvider
 
 String _$spoutLabelsHash() => r'70c3cdc158b7863c47c4680ccd8c0ac75a22543b';
 
+/// İşletmenin hayvan grupları (backend ADR 0092).
+
+@ProviderFor(animalGroups)
+final animalGroupsProvider = AnimalGroupsProvider._();
+
+/// İşletmenin hayvan grupları (backend ADR 0092).
+
+final class AnimalGroupsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<AnimalGroup>>,
+          List<AnimalGroup>,
+          FutureOr<List<AnimalGroup>>
+        >
+    with
+        $FutureModifier<List<AnimalGroup>>,
+        $FutureProvider<List<AnimalGroup>> {
+  /// İşletmenin hayvan grupları (backend ADR 0092).
+  AnimalGroupsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'animalGroupsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$animalGroupsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<AnimalGroup>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<AnimalGroup>> create(Ref ref) {
+    return animalGroups(ref);
+  }
+}
+
+String _$animalGroupsHash() => r'b185ae8f3249dc0835e481f48f54ca4b7e46d4d4';
+
 /// Bir hayvanın trendi ve sınıfı.
 
 @ProviderFor(animalTrend)
@@ -460,7 +506,7 @@ final class AnimalFilterStateProvider
   }
 }
 
-String _$animalFilterStateHash() => r'9bfba3297f49db71648cdb110ce2f9f7f84cda52';
+String _$animalFilterStateHash() => r'98aa1d06ffe10182b7013ab39ddc3090df1c7209';
 
 /// keepAlive: filtre, onu okuyan ekran YOKKEN de yaşamalı.
 ///
@@ -542,4 +588,4 @@ final class FilteredAnimalsProvider
   }
 }
 
-String _$filteredAnimalsHash() => r'c7344ce9c0388b94e62ce8cfe1682ff315532868';
+String _$filteredAnimalsHash() => r'ea476e935e62c20dcb2763d9b42c4bbe461b8d10';

@@ -6,6 +6,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/animal.dart';
+import 'package:milktrace/data/models/animal_group.dart';
 import 'package:milktrace/data/models/animal_import.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
@@ -186,6 +187,9 @@ class MockRepository implements MilkTraceRepository {
         a.copyWith(
           withdrawalUntil: _withdrawalOf(a.id),
           pregnancy: _pregnancyOf(a, species),
+          // Grup adı sunucudaki gibi okunurken çözülür (ADR 0092).
+          groupId: _groups.containsKey(a.groupId) ? a.groupId : null,
+          groupName: _groups[a.groupId]?.name,
         ),
     ];
   });
@@ -862,6 +866,58 @@ class MockRepository implements MilkTraceRepository {
   @override
   Future<void> setVolumeUnit(String unit) => _delayed(() async {});
 
+  /// Mock'ta gruplar bellekte (ADR 0092).
+  final Map<String, AnimalGroup> _groups = {};
+  int _groupSeq = 0;
+
+  static const _groupConflict = ApiException(
+    code: 'CONFLICT',
+    message: 'bu adla bir grup zaten var',
+    status: 409,
+  );
+
+  bool _groupNameTaken(String name, {String? except}) => _groups.values.any(
+    (g) => g.id != except && g.name.toLowerCase() == name.toLowerCase(),
+  );
+
+  @override
+  Future<List<AnimalGroup>> animalGroups() => _delayed(() async {
+    final current = await animals();
+    return [
+      for (final g in _groups.values)
+        g.copyWith(
+          animals: current
+              .where((a) => a.groupId == g.id && a.isMilking)
+              .length,
+        ),
+    ]..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+  });
+
+  @override
+  Future<AnimalGroup> createGroup(String name) => _delayed(() async {
+    final n = name.trim();
+    if (_groupNameTaken(n)) throw _groupConflict;
+    final g = AnimalGroup(id: 'mock-group-${++_groupSeq}', name: n);
+    return _groups[g.id] = g;
+  });
+
+  @override
+  Future<AnimalGroup> renameGroup(String id, String name) => _delayed(() async {
+    final n = name.trim();
+    if (_groupNameTaken(n, except: id)) throw _groupConflict;
+    return _groups[id] = _groups[id]!.copyWith(name: n);
+  });
+
+  @override
+  Future<void> deleteGroup(String id) => _delayed(() async {
+    _groups.remove(id);
+    for (final e in _savedAnimals.entries.toList()) {
+      if (e.value.groupId == id) {
+        _savedAnimals[e.key] = e.value.copyWith(groupId: null, groupName: null);
+      }
+    }
+  });
+
   /// Mock'ta teslimler bellekte. Sayaç toplamı üretilmiş geçmişten
   /// çıkarılmıyor: karşılaştırma yok (`compared` false) — farkı uydurmak,
   /// demoda gerçek sanılacak bir alarm göstermek olurdu.
@@ -992,6 +1048,7 @@ class MockRepository implements MilkTraceRepository {
     required String fullName,
     required String role,
     String? password,
+    bool kiosk = false,
   }) => _delayed(() async {
     final e = email.trim().toLowerCase();
     if (_team.values.any((m) => m.email == e)) {
@@ -1005,7 +1062,9 @@ class MockRepository implements MilkTraceRepository {
       id: 'mock-user-${++_teamSeq}',
       email: e,
       fullName: fullName.trim(),
-      role: role,
+      // Tablet her zaman operatördür (backend ADR 0091).
+      role: kiosk ? 'tenant_operator' : role,
+      kiosk: kiosk,
     );
     _team[m.id] = m;
     final invited = password == null || password.isEmpty;
@@ -1164,6 +1223,7 @@ class MockRepository implements MilkTraceRepository {
     final milkedAnimals = <String>{};
     final speciesMl = <String, int>{};
     final speciesAnimals = <String, Set<String>>{};
+    final animalMl = <String, int>{};
 
     for (final animal in animals) {
       final t = thresholds.firstWhere(
@@ -1186,8 +1246,30 @@ class MockRepository implements MilkTraceRepository {
           ifAbsent: () => m.volumeMl,
         );
         (speciesAnimals[animal.speciesId] ??= {}).add(animal.id);
+        animalMl.update(
+          animal.id,
+          (v) => v + m.volumeMl,
+          ifAbsent: () => m.volumeMl,
+        );
       }
     }
+
+    // Gruplar (ADR 0092): üyelik kaydedilen hayvanlardan.
+    final current = await this.animals();
+    final byGroup = [
+      for (final g in _groups.values)
+        () {
+          final members = current.where((a) => a.groupId == g.id).toList();
+          final milked = members.where((a) => animalMl.containsKey(a.id));
+          return GroupTotal(
+            groupId: g.id,
+            name: g.name,
+            animals: members.where((a) => a.isMilking).length,
+            milked: milked.length,
+            totalMl: milked.fold(0, (s, a) => s + animalMl[a.id]!),
+          );
+        }(),
+    ]..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
 
     final counts = <YieldClass, int>{for (final c in YieldClass.values) c: 0};
     for (final a in animals) {
@@ -1216,6 +1298,7 @@ class MockRepository implements MilkTraceRepository {
         for (final entry in counts.entries)
           YieldClassCount(yieldClass: entry.key, count: entry.value),
       ],
+      byGroup: byGroup,
     );
   });
 

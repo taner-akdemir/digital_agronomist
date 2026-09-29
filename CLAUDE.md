@@ -273,6 +273,25 @@ Sağımcı = oturumu açan / hayvanı bağlayan (ayrı seçim adımı yok). 7/30
 süt, ortalama süre, düşük debi payı. Metin oranın kişiyi puanlamadığını söyler.
 Süt fiyatı/gelir takibi YOK (karar 28.09.2026).
 
+**Sağımhane tableti** (backend ADR 0091): Kullanıcılar → "Sağımhane tableti" ortak operatör
+hesabı açar (parola zorunlu, davet yok). `AuthUser.kiosk` ise router HER yolu `/kiosk`'a
+çevirir: yalnızca canlı ekran, sekme/hesap kartı/zil yok, ekran kararmaz (`wakelock_plus`,
+`screenAwakeProvider`), çıkış onayla. Kısıt asıl gateway'de (kiosk token'ı rapor, pano,
+ekip, eşik yazmada 403) — uygulamadaki yönlendirme kolaylık, güvenlik değil.
+
+**Kırmızı uyarısı** (`RedAlertListener`, ADR 0091): canlı ekran açıkken bir nokta
+kırmızıya GEÇİNCE titreşim + kısa sistem sesi, aynı sağım (nokta + hayvan) için bir kez;
+açılışta zaten kırmızı olan çalmaz. Renk sunucunun — ısınma/bitiş bastırması orada, burada
+ikinci kural YOK. Canlı başlıktaki zil simgesiyle kapatılır; ayar cihazda
+(`settingsStoreProvider`, `live.redAlert`). Testte `redAlertSinkProvider` sahtesi.
+
+**Hayvan grupları** (backend ADR 0092): hayvanın en çok BİR grubu (`Animal.groupId/
+groupName`). Geçmiş → Hayvanlar → "Gruplar" (yalnızca sahip) ekler/adlandırır/siler;
+atama formdan (`animalBody` `groupId`'yi HER ZAMAN gönderir — null = grupsuz). Listede grup
+çipi ve süzgeci (`AnimalFilter.groupId`), detayda "Grup" satırı, panoda "Gruplar · bugün"
+(sağılan başına ortalama; satır Geçmiş'i o gruba süzer). Tek alanlı pencereler için
+`showTextPrompt` — denetleyiciyi pencere kendisi tutar.
+
 Mock modda geçmiş **asset değil, üretilmiştir**: `MockLactation` §10'daki Wood laktasyon
 eğrisiyle deterministik seri üretir. 30 hayvan × 90 gün × 2 sağım elle tutulabilecek bir
 JSON değil. Bugünkü seviye hayvanın SINIFINA sabitlenir ki rozet ile grafik çelişmesin.

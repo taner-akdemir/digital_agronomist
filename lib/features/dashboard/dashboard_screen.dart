@@ -55,6 +55,13 @@ class DashboardScreen extends ConsumerWidget {
             _SpeciesCard(summary: s),
             const SizedBox(height: AppSpacing.md),
             _ClassCard(summary: s),
+            if (s.byGroup.isNotEmpty) ...[
+              const SizedBox(height: AppSpacing.md),
+              _GroupCard(
+                groups: s.byGroup,
+                volume: ref.watch(volumeFormatProvider),
+              ),
+            ],
             const SizedBox(height: AppSpacing.md),
             const _AlertsCard(),
             const DeliveryCard(),
@@ -306,6 +313,83 @@ class _ClassCard extends ConsumerWidget {
                         context.go('/history');
                       },
               ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Grupların bugünkü toplamı (backend ADR 0092). Satıra basmak Geçmiş'i o
+/// gruba filtreler.
+class _GroupCard extends ConsumerWidget {
+  const _GroupCard({required this.groups, required this.volume});
+
+  final List<GroupTotal> groups;
+  final VolumeFormat volume;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return _Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Gruplar · bugün',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          for (final g in groups)
+            InkWell(
+              borderRadius: AppRadius.smAll,
+              onTap: () {
+                ref
+                    .read(animalFilterStateProvider.notifier)
+                    .showGroup(g.groupId);
+                context.go('/history');
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            g.name,
+                            style: const TextStyle(fontWeight: FontWeight.w600),
+                          ),
+                          Text(
+                            '${g.milked}/${g.animals} hayvan sağıldı',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: AppColors.onSurfaceMuted,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          volume.amount(g.totalMl),
+                          style: const TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        if (g.milked > 0)
+                          Text(
+                            'hayvan başı ${volume.amount(g.perAnimalMl)}',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: AppColors.onSurfaceMuted,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
         ],
       ),
     );

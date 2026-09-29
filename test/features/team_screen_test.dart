@@ -136,6 +136,35 @@ void main() {
     expect(added.role, 'tenant_viewer');
   });
 
+  // Sağımhane tableti (backend ADR 0091): parola zorunlu, rol operatör.
+  testWidgets('sağımhane tableti parolayla eklenir', (tester) async {
+    await pumpApp(tester);
+    await tester.tap(find.text('Kullanıcı ekle'));
+    await tester.pumpAndSettle();
+    final fields = find.descendant(
+      of: find.byType(AlertDialog),
+      matching: find.byType(TextFormField),
+    );
+    await tester.enterText(fields.at(0), 'Sağımhane');
+    await tester.enterText(fields.at(1), 'tablet@ciftlik.tr');
+    await tester.tap(find.text('Sağımhane tableti'));
+    await tester.pumpAndSettle();
+    expect(find.text('Görüntüleyici'), findsNothing, reason: 'rol seçimi yok');
+    await tester.tap(find.text('Ekle'));
+    await tester.pumpAndSettle();
+    expect(find.text('Tablet için parola girin.'), findsOneWidget);
+
+    await tester.enterText(fields.at(2), 'tablet-123');
+    await tester.tap(find.text('Ekle'));
+    await tester.pumpAndSettle();
+    expect(find.byType(AlertDialog), findsNothing);
+    final members = (await tester.runAsync(repo.teamMembers))!;
+    final tablet = members.firstWhere((m) => m.email == 'tablet@ciftlik.tr');
+    expect(tablet.kiosk, isTrue);
+    expect(tablet.role, 'tenant_operator');
+    expect(find.textContaining('Sağımhane tableti ·'), findsOneWidget);
+  });
+
   testWidgets('kısa geçici parola reddedilir', (tester) async {
     await pumpApp(tester);
     await tester.tap(find.text('Kullanıcı ekle'));

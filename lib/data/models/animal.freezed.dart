@@ -34,7 +34,10 @@ mixin _$Animal {
 /// tanka katılmaz. Tedavi kaydından gelir; formdan GÖNDERİLMEZ.
  DateTime? get withdrawalUntil;/// Üreme durumu (backend ADR 0088); hiç kayıt yoksa null. Formdan
 /// GÖNDERİLMEZ.
- Pregnancy? get pregnancy;
+ Pregnancy? get pregnancy;/// Grubu (backend ADR 0092); en çok bir. PUT tam kayıt olduğu için
+/// formdan HER ZAMAN gider — null göndermek grubu kaldırır.
+ String? get groupId;/// Grubun adı; yalnızca okunur.
+ String? get groupName;
 /// Create a copy of Animal
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,20 +51,20 @@ $AnimalCopyWith<Animal> get copyWith => _$AnimalCopyWithImpl<Animal>(this as Ani
 @override
 bool operator ==(Object other) {
   final _this = this as Animal;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Animal&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.speciesId, _this.speciesId) || other.speciesId == _this.speciesId)&&(identical(other.earTag, _this.earTag) || other.earTag == _this.earTag)&&(identical(other.rfid, _this.rfid) || other.rfid == _this.rfid)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.breed, _this.breed) || other.breed == _this.breed)&&(identical(other.birthDate, _this.birthDate) || other.birthDate == _this.birthDate)&&(identical(other.lastCalvingDate, _this.lastCalvingDate) || other.lastCalvingDate == _this.lastCalvingDate)&&(identical(other.lactationNo, _this.lactationNo) || other.lactationNo == _this.lactationNo)&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.yieldClass, _this.yieldClass) || other.yieldClass == _this.yieldClass)&&(identical(other.yieldClassAt, _this.yieldClassAt) || other.yieldClassAt == _this.yieldClassAt)&&(identical(other.withdrawalUntil, _this.withdrawalUntil) || other.withdrawalUntil == _this.withdrawalUntil)&&(identical(other.pregnancy, _this.pregnancy) || other.pregnancy == _this.pregnancy));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Animal&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.speciesId, _this.speciesId) || other.speciesId == _this.speciesId)&&(identical(other.earTag, _this.earTag) || other.earTag == _this.earTag)&&(identical(other.rfid, _this.rfid) || other.rfid == _this.rfid)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.breed, _this.breed) || other.breed == _this.breed)&&(identical(other.birthDate, _this.birthDate) || other.birthDate == _this.birthDate)&&(identical(other.lastCalvingDate, _this.lastCalvingDate) || other.lastCalvingDate == _this.lastCalvingDate)&&(identical(other.lactationNo, _this.lactationNo) || other.lactationNo == _this.lactationNo)&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.yieldClass, _this.yieldClass) || other.yieldClass == _this.yieldClass)&&(identical(other.yieldClassAt, _this.yieldClassAt) || other.yieldClassAt == _this.yieldClassAt)&&(identical(other.withdrawalUntil, _this.withdrawalUntil) || other.withdrawalUntil == _this.withdrawalUntil)&&(identical(other.pregnancy, _this.pregnancy) || other.pregnancy == _this.pregnancy)&&(identical(other.groupId, _this.groupId) || other.groupId == _this.groupId)&&(identical(other.groupName, _this.groupName) || other.groupName == _this.groupName));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as Animal;
-  return Object.hash(runtimeType,_this.id,_this.speciesId,_this.earTag,_this.rfid,_this.name,_this.breed,_this.birthDate,_this.lastCalvingDate,_this.lactationNo,_this.status,_this.yieldClass,_this.yieldClassAt,_this.withdrawalUntil,_this.pregnancy);
+  return Object.hash(runtimeType,_this.id,_this.speciesId,_this.earTag,_this.rfid,_this.name,_this.breed,_this.birthDate,_this.lastCalvingDate,_this.lactationNo,_this.status,_this.yieldClass,_this.yieldClassAt,_this.withdrawalUntil,_this.pregnancy,_this.groupId,_this.groupName);
 }
 
 @override
 String toString() {
   final _this = this as Animal;
-  return 'Animal(id: ${_this.id}, speciesId: ${_this.speciesId}, earTag: ${_this.earTag}, rfid: ${_this.rfid}, name: ${_this.name}, breed: ${_this.breed}, birthDate: ${_this.birthDate}, lastCalvingDate: ${_this.lastCalvingDate}, lactationNo: ${_this.lactationNo}, status: ${_this.status}, yieldClass: ${_this.yieldClass}, yieldClassAt: ${_this.yieldClassAt}, withdrawalUntil: ${_this.withdrawalUntil}, pregnancy: ${_this.pregnancy})';
+  return 'Animal(id: ${_this.id}, speciesId: ${_this.speciesId}, earTag: ${_this.earTag}, rfid: ${_this.rfid}, name: ${_this.name}, breed: ${_this.breed}, birthDate: ${_this.birthDate}, lastCalvingDate: ${_this.lastCalvingDate}, lactationNo: ${_this.lactationNo}, status: ${_this.status}, yieldClass: ${_this.yieldClass}, yieldClassAt: ${_this.yieldClassAt}, withdrawalUntil: ${_this.withdrawalUntil}, pregnancy: ${_this.pregnancy}, groupId: ${_this.groupId}, groupName: ${_this.groupName})';
 }
 
 
@@ -72,7 +75,7 @@ abstract mixin class $AnimalCopyWith<$Res>  {
   factory $AnimalCopyWith(Animal value, $Res Function(Animal) _then) = _$AnimalCopyWithImpl;
 @useResult
 $Res call({
- String id, String speciesId, String earTag, String? rfid, String? name, String? breed, DateTime? birthDate, DateTime? lastCalvingDate, int lactationNo, String status,@JsonKey(unknownEnumValue: YieldClass.normal) YieldClass yieldClass, DateTime? yieldClassAt, DateTime? withdrawalUntil, Pregnancy? pregnancy
+ String id, String speciesId, String earTag, String? rfid, String? name, String? breed, DateTime? birthDate, DateTime? lastCalvingDate, int lactationNo, String status,@JsonKey(unknownEnumValue: YieldClass.normal) YieldClass yieldClass, DateTime? yieldClassAt, DateTime? withdrawalUntil, Pregnancy? pregnancy, String? groupId, String? groupName
 });
 
 
@@ -89,7 +92,7 @@ class _$AnimalCopyWithImpl<$Res>
 
 /// Create a copy of Animal
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? speciesId = null,Object? earTag = null,Object? rfid = freezed,Object? name = freezed,Object? breed = freezed,Object? birthDate = freezed,Object? lastCalvingDate = freezed,Object? lactationNo = null,Object? status = null,Object? yieldClass = null,Object? yieldClassAt = freezed,Object? withdrawalUntil = freezed,Object? pregnancy = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? speciesId = null,Object? earTag = null,Object? rfid = freezed,Object? name = freezed,Object? breed = freezed,Object? birthDate = freezed,Object? lastCalvingDate = freezed,Object? lactationNo = null,Object? status = null,Object? yieldClass = null,Object? yieldClassAt = freezed,Object? withdrawalUntil = freezed,Object? pregnancy = freezed,Object? groupId = freezed,Object? groupName = freezed,}) {
   return _then(Animal(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,speciesId: null == speciesId ? _self.speciesId : speciesId // ignore: cast_nullable_to_non_nullable
@@ -105,7 +108,9 @@ as String,yieldClass: null == yieldClass ? _self.yieldClass : yieldClass // igno
 as YieldClass,yieldClassAt: freezed == yieldClassAt ? _self.yieldClassAt : yieldClassAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,withdrawalUntil: freezed == withdrawalUntil ? _self.withdrawalUntil : withdrawalUntil // ignore: cast_nullable_to_non_nullable
 as DateTime?,pregnancy: freezed == pregnancy ? _self.pregnancy : pregnancy // ignore: cast_nullable_to_non_nullable
-as Pregnancy?,
+as Pregnancy?,groupId: freezed == groupId ? _self.groupId : groupId // ignore: cast_nullable_to_non_nullable
+as String?,groupName: freezed == groupName ? _self.groupName : groupName // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 /// Create a copy of Animal
@@ -202,10 +207,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String speciesId,  String earTag,  String? rfid,  String? name,  String? breed,  DateTime? birthDate,  DateTime? lastCalvingDate,  int lactationNo,  String status, @JsonKey(unknownEnumValue: YieldClass.normal)  YieldClass yieldClass,  DateTime? yieldClassAt,  DateTime? withdrawalUntil,  Pregnancy? pregnancy)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String speciesId,  String earTag,  String? rfid,  String? name,  String? breed,  DateTime? birthDate,  DateTime? lastCalvingDate,  int lactationNo,  String status, @JsonKey(unknownEnumValue: YieldClass.normal)  YieldClass yieldClass,  DateTime? yieldClassAt,  DateTime? withdrawalUntil,  Pregnancy? pregnancy,  String? groupId,  String? groupName)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Animal() when $default != null:
-return $default(_that.id,_that.speciesId,_that.earTag,_that.rfid,_that.name,_that.breed,_that.birthDate,_that.lastCalvingDate,_that.lactationNo,_that.status,_that.yieldClass,_that.yieldClassAt,_that.withdrawalUntil,_that.pregnancy);case _:
+return $default(_that.id,_that.speciesId,_that.earTag,_that.rfid,_that.name,_that.breed,_that.birthDate,_that.lastCalvingDate,_that.lactationNo,_that.status,_that.yieldClass,_that.yieldClassAt,_that.withdrawalUntil,_that.pregnancy,_that.groupId,_that.groupName);case _:
   return orElse();
 
 }
@@ -223,10 +228,10 @@ return $default(_that.id,_that.speciesId,_that.earTag,_that.rfid,_that.name,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String speciesId,  String earTag,  String? rfid,  String? name,  String? breed,  DateTime? birthDate,  DateTime? lastCalvingDate,  int lactationNo,  String status, @JsonKey(unknownEnumValue: YieldClass.normal)  YieldClass yieldClass,  DateTime? yieldClassAt,  DateTime? withdrawalUntil,  Pregnancy? pregnancy)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String speciesId,  String earTag,  String? rfid,  String? name,  String? breed,  DateTime? birthDate,  DateTime? lastCalvingDate,  int lactationNo,  String status, @JsonKey(unknownEnumValue: YieldClass.normal)  YieldClass yieldClass,  DateTime? yieldClassAt,  DateTime? withdrawalUntil,  Pregnancy? pregnancy,  String? groupId,  String? groupName)  $default,) {final _that = this;
 switch (_that) {
 case _Animal():
-return $default(_that.id,_that.speciesId,_that.earTag,_that.rfid,_that.name,_that.breed,_that.birthDate,_that.lastCalvingDate,_that.lactationNo,_that.status,_that.yieldClass,_that.yieldClassAt,_that.withdrawalUntil,_that.pregnancy);case _:
+return $default(_that.id,_that.speciesId,_that.earTag,_that.rfid,_that.name,_that.breed,_that.birthDate,_that.lastCalvingDate,_that.lactationNo,_that.status,_that.yieldClass,_that.yieldClassAt,_that.withdrawalUntil,_that.pregnancy,_that.groupId,_that.groupName);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -243,10 +248,10 @@ return $default(_that.id,_that.speciesId,_that.earTag,_that.rfid,_that.name,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String speciesId,  String earTag,  String? rfid,  String? name,  String? breed,  DateTime? birthDate,  DateTime? lastCalvingDate,  int lactationNo,  String status, @JsonKey(unknownEnumValue: YieldClass.normal)  YieldClass yieldClass,  DateTime? yieldClassAt,  DateTime? withdrawalUntil,  Pregnancy? pregnancy)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String speciesId,  String earTag,  String? rfid,  String? name,  String? breed,  DateTime? birthDate,  DateTime? lastCalvingDate,  int lactationNo,  String status, @JsonKey(unknownEnumValue: YieldClass.normal)  YieldClass yieldClass,  DateTime? yieldClassAt,  DateTime? withdrawalUntil,  Pregnancy? pregnancy,  String? groupId,  String? groupName)?  $default,) {final _that = this;
 switch (_that) {
 case _Animal() when $default != null:
-return $default(_that.id,_that.speciesId,_that.earTag,_that.rfid,_that.name,_that.breed,_that.birthDate,_that.lastCalvingDate,_that.lactationNo,_that.status,_that.yieldClass,_that.yieldClassAt,_that.withdrawalUntil,_that.pregnancy);case _:
+return $default(_that.id,_that.speciesId,_that.earTag,_that.rfid,_that.name,_that.breed,_that.birthDate,_that.lastCalvingDate,_that.lactationNo,_that.status,_that.yieldClass,_that.yieldClassAt,_that.withdrawalUntil,_that.pregnancy,_that.groupId,_that.groupName);case _:
   return null;
 
 }
@@ -258,7 +263,7 @@ return $default(_that.id,_that.speciesId,_that.earTag,_that.rfid,_that.name,_tha
 @JsonSerializable()
 
 class _Animal extends Animal {
-  const _Animal({required this.id, required this.speciesId, required this.earTag, this.rfid, this.name, this.breed, this.birthDate, this.lastCalvingDate, this.lactationNo = 0, this.status = 'active', @JsonKey(unknownEnumValue: YieldClass.normal) this.yieldClass = YieldClass.normal, this.yieldClassAt, this.withdrawalUntil, this.pregnancy}): super._();
+  const _Animal({required this.id, required this.speciesId, required this.earTag, this.rfid, this.name, this.breed, this.birthDate, this.lastCalvingDate, this.lactationNo = 0, this.status = 'active', @JsonKey(unknownEnumValue: YieldClass.normal) this.yieldClass = YieldClass.normal, this.yieldClassAt, this.withdrawalUntil, this.pregnancy, this.groupId, this.groupName}): super._();
   factory _Animal.fromJson(Map<String, dynamic> json) => _$AnimalFromJson(json);
 
 @override final  String id;
@@ -293,6 +298,11 @@ class _Animal extends Animal {
 /// Üreme durumu (backend ADR 0088); hiç kayıt yoksa null. Formdan
 /// GÖNDERİLMEZ.
 @override final  Pregnancy? pregnancy;
+/// Grubu (backend ADR 0092); en çok bir. PUT tam kayıt olduğu için
+/// formdan HER ZAMAN gider — null göndermek grubu kaldırır.
+@override final  String? groupId;
+/// Grubun adı; yalnızca okunur.
+@override final  String? groupName;
 
 /// Create a copy of Animal
 /// with the given fields replaced by the non-null parameter values.
@@ -307,18 +317,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Animal&&(identical(other.id, id) || other.id == id)&&(identical(other.speciesId, speciesId) || other.speciesId == speciesId)&&(identical(other.earTag, earTag) || other.earTag == earTag)&&(identical(other.rfid, rfid) || other.rfid == rfid)&&(identical(other.name, name) || other.name == name)&&(identical(other.breed, breed) || other.breed == breed)&&(identical(other.birthDate, birthDate) || other.birthDate == birthDate)&&(identical(other.lastCalvingDate, lastCalvingDate) || other.lastCalvingDate == lastCalvingDate)&&(identical(other.lactationNo, lactationNo) || other.lactationNo == lactationNo)&&(identical(other.status, status) || other.status == status)&&(identical(other.yieldClass, yieldClass) || other.yieldClass == yieldClass)&&(identical(other.yieldClassAt, yieldClassAt) || other.yieldClassAt == yieldClassAt)&&(identical(other.withdrawalUntil, withdrawalUntil) || other.withdrawalUntil == withdrawalUntil)&&(identical(other.pregnancy, pregnancy) || other.pregnancy == pregnancy));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Animal&&(identical(other.id, id) || other.id == id)&&(identical(other.speciesId, speciesId) || other.speciesId == speciesId)&&(identical(other.earTag, earTag) || other.earTag == earTag)&&(identical(other.rfid, rfid) || other.rfid == rfid)&&(identical(other.name, name) || other.name == name)&&(identical(other.breed, breed) || other.breed == breed)&&(identical(other.birthDate, birthDate) || other.birthDate == birthDate)&&(identical(other.lastCalvingDate, lastCalvingDate) || other.lastCalvingDate == lastCalvingDate)&&(identical(other.lactationNo, lactationNo) || other.lactationNo == lactationNo)&&(identical(other.status, status) || other.status == status)&&(identical(other.yieldClass, yieldClass) || other.yieldClass == yieldClass)&&(identical(other.yieldClassAt, yieldClassAt) || other.yieldClassAt == yieldClassAt)&&(identical(other.withdrawalUntil, withdrawalUntil) || other.withdrawalUntil == withdrawalUntil)&&(identical(other.pregnancy, pregnancy) || other.pregnancy == pregnancy)&&(identical(other.groupId, groupId) || other.groupId == groupId)&&(identical(other.groupName, groupName) || other.groupName == groupName));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,speciesId,earTag,rfid,name,breed,birthDate,lastCalvingDate,lactationNo,status,yieldClass,yieldClassAt,withdrawalUntil,pregnancy);
+    return Object.hash(runtimeType,id,speciesId,earTag,rfid,name,breed,birthDate,lastCalvingDate,lactationNo,status,yieldClass,yieldClassAt,withdrawalUntil,pregnancy,groupId,groupName);
 }
 
 @override
 String toString() {
-    return 'Animal(id: $id, speciesId: $speciesId, earTag: $earTag, rfid: $rfid, name: $name, breed: $breed, birthDate: $birthDate, lastCalvingDate: $lastCalvingDate, lactationNo: $lactationNo, status: $status, yieldClass: $yieldClass, yieldClassAt: $yieldClassAt, withdrawalUntil: $withdrawalUntil, pregnancy: $pregnancy)';
+    return 'Animal(id: $id, speciesId: $speciesId, earTag: $earTag, rfid: $rfid, name: $name, breed: $breed, birthDate: $birthDate, lastCalvingDate: $lastCalvingDate, lactationNo: $lactationNo, status: $status, yieldClass: $yieldClass, yieldClassAt: $yieldClassAt, withdrawalUntil: $withdrawalUntil, pregnancy: $pregnancy, groupId: $groupId, groupName: $groupName)';
 }
 
 
@@ -329,7 +339,7 @@ abstract mixin class _$AnimalCopyWith<$Res> implements $AnimalCopyWith<$Res> {
   factory _$AnimalCopyWith(_Animal value, $Res Function(_Animal) _then) = __$AnimalCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String speciesId, String earTag, String? rfid, String? name, String? breed, DateTime? birthDate, DateTime? lastCalvingDate, int lactationNo, String status,@JsonKey(unknownEnumValue: YieldClass.normal) YieldClass yieldClass, DateTime? yieldClassAt, DateTime? withdrawalUntil, Pregnancy? pregnancy
+ String id, String speciesId, String earTag, String? rfid, String? name, String? breed, DateTime? birthDate, DateTime? lastCalvingDate, int lactationNo, String status,@JsonKey(unknownEnumValue: YieldClass.normal) YieldClass yieldClass, DateTime? yieldClassAt, DateTime? withdrawalUntil, Pregnancy? pregnancy, String? groupId, String? groupName
 });
 
 
@@ -346,7 +356,7 @@ class __$AnimalCopyWithImpl<$Res>
 
 /// Create a copy of Animal
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? speciesId = null,Object? earTag = null,Object? rfid = freezed,Object? name = freezed,Object? breed = freezed,Object? birthDate = freezed,Object? lastCalvingDate = freezed,Object? lactationNo = null,Object? status = null,Object? yieldClass = null,Object? yieldClassAt = freezed,Object? withdrawalUntil = freezed,Object? pregnancy = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? speciesId = null,Object? earTag = null,Object? rfid = freezed,Object? name = freezed,Object? breed = freezed,Object? birthDate = freezed,Object? lastCalvingDate = freezed,Object? lactationNo = null,Object? status = null,Object? yieldClass = null,Object? yieldClassAt = freezed,Object? withdrawalUntil = freezed,Object? pregnancy = freezed,Object? groupId = freezed,Object? groupName = freezed,}) {
   return _then(_Animal(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,speciesId: null == speciesId ? _self.speciesId : speciesId // ignore: cast_nullable_to_non_nullable
@@ -362,7 +372,9 @@ as String,yieldClass: null == yieldClass ? _self.yieldClass : yieldClass // igno
 as YieldClass,yieldClassAt: freezed == yieldClassAt ? _self.yieldClassAt : yieldClassAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,withdrawalUntil: freezed == withdrawalUntil ? _self.withdrawalUntil : withdrawalUntil // ignore: cast_nullable_to_non_nullable
 as DateTime?,pregnancy: freezed == pregnancy ? _self.pregnancy : pregnancy // ignore: cast_nullable_to_non_nullable
-as Pregnancy?,
+as Pregnancy?,groupId: freezed == groupId ? _self.groupId : groupId // ignore: cast_nullable_to_non_nullable
+as String?,groupName: freezed == groupName ? _self.groupName : groupName // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

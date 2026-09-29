@@ -18,6 +18,7 @@ _AuthUser _$AuthUserFromJson(Map<String, dynamic> json) => _AuthUser(
           .toList() ??
       const <TenantRef>[],
   volumeUnit: json['volumeUnit'] as String? ?? 'L',
+  kiosk: json['kiosk'] as bool? ?? false,
 );
 
 Map<String, dynamic> _$AuthUserToJson(_AuthUser instance) => <String, dynamic>{
@@ -28,6 +29,7 @@ Map<String, dynamic> _$AuthUserToJson(_AuthUser instance) => <String, dynamic>{
   'tenantId': instance.tenantId,
   'tenants': instance.tenants,
   'volumeUnit': instance.volumeUnit,
+  'kiosk': instance.kiosk,
 };
 
 _TenantRef _$TenantRefFromJson(Map<String, dynamic> json) => _TenantRef(

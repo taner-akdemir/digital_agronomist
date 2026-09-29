@@ -79,6 +79,16 @@ class _AnimalsTab extends ConsumerWidget {
                 ),
               ),
               // Sürüyü ilk kez girerken tek tek eklemek yerine (ADR 0063).
+              // Gruplar (ADR 0092): yönetim sahibin.
+              if (isOwner)
+                TextButton.icon(
+                  onPressed: () => context.push('/animals/groups'),
+                  icon: const Icon(Icons.workspaces_outline),
+                  label: const Text('Gruplar'),
+                  style: TextButton.styleFrom(
+                    foregroundColor: AppColors.darkGreenColor,
+                  ),
+                ),
               if (isOwner)
                 TextButton.icon(
                   onPressed: () => context.push('/animals/import'),
@@ -174,6 +184,7 @@ class _Filters extends ConsumerWidget {
     final species = ref.watch(speciesListProvider).value ?? const <Species>[];
     final filter = ref.watch(animalFilterStateProvider);
     final notifier = ref.read(animalFilterStateProvider.notifier);
+    final groups = ref.watch(animalGroupsProvider).value ?? const [];
 
     // Tek satır, YATAY kaydırmalı: beş sınıf + üç tür çipi dikey sarılsaydı
     // filtreler listenin yarısını yerdi.
@@ -201,6 +212,18 @@ class _Filters extends ConsumerWidget {
                 selected: filter.yieldClass == c,
                 onTap: () => notifier.toggleClass(c),
               ),
+          if (groups.isNotEmpty)
+            const VerticalDivider(
+              width: AppSpacing.lg,
+              indent: 10,
+              endIndent: 10,
+            ),
+          for (final g in groups)
+            _Chip(
+              label: g.name,
+              selected: filter.groupId == g.id,
+              onTap: () => notifier.toggleGroup(g.id),
+            ),
         ],
       ),
     );
@@ -220,9 +243,12 @@ class _ActiveFilter extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final filter = ref.watch(animalFilterStateProvider);
-    if (filter.speciesId == null && filter.yieldClass == null) {
+    if (filter.speciesId == null &&
+        filter.yieldClass == null &&
+        filter.groupId == null) {
       return const SizedBox.shrink();
     }
+    final groups = ref.watch(animalGroupsProvider).value ?? const [];
 
     final species = ref.watch(speciesListProvider).value ?? const <Species>[];
     final labels = [
@@ -230,6 +256,9 @@ class _ActiveFilter extends ConsumerWidget {
         species.where((s) => s.id == id).map((s) => s.nameTr).firstOrNull ??
             'Tür',
       if (filter.yieldClass case final c?) c.label,
+      if (filter.groupId case final id?)
+        groups.where((g) => g.id == id).map((g) => g.name).firstOrNull ??
+            'Grup',
     ];
 
     return Padding(
@@ -334,9 +363,12 @@ class _AnimalTile extends StatelessWidget {
                     Text(
                       // Ad varsa küpe altta: ad boş olabilir ama küpe
                       // hayvanı TANIMLAYAN alandır, hep görünmeli (§4).
-                      animal.name == null
-                          ? '${animal.breed ?? ''} · ${animal.lactationNo}. laktasyon'
-                          : animal.earTag,
+                      [
+                        animal.name == null
+                            ? '${animal.breed ?? ''} · ${animal.lactationNo}. laktasyon'
+                            : animal.earTag,
+                        ?animal.groupName,
+                      ].join(' · '),
                       style: const TextStyle(
                         fontSize: 12,
                         color: AppColors.onSurfaceMuted,

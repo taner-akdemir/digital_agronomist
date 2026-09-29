@@ -18,6 +18,9 @@ abstract class TeamMember with _$TeamMember {
 
     /// active | suspended.
     @Default('active') String status,
+
+    /// Sağımhane tableti hesabı (backend ADR 0091).
+    @Default(false) bool kiosk,
   }) = _TeamMember;
 
   const TeamMember._();

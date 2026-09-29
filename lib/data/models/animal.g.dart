@@ -37,6 +37,8 @@ _Animal _$AnimalFromJson(Map<String, dynamic> json) => _Animal(
   pregnancy: json['pregnancy'] == null
       ? null
       : Pregnancy.fromJson(json['pregnancy'] as Map<String, dynamic>),
+  groupId: json['groupId'] as String?,
+  groupName: json['groupName'] as String?,
 );
 
 Map<String, dynamic> _$AnimalToJson(_Animal instance) => <String, dynamic>{
@@ -54,6 +56,8 @@ Map<String, dynamic> _$AnimalToJson(_Animal instance) => <String, dynamic>{
   'yieldClassAt': instance.yieldClassAt?.toIso8601String(),
   'withdrawalUntil': instance.withdrawalUntil?.toIso8601String(),
   'pregnancy': instance.pregnancy,
+  'groupId': instance.groupId,
+  'groupName': instance.groupName,
 };
 
 const _$YieldClassEnumMap = {

@@ -10,6 +10,7 @@ import 'package:milktrace/data/models/spout_update.dart';
 import 'package:milktrace/data/models/vacuum.dart';
 import 'package:milktrace/domain/flow_color.dart';
 import 'package:milktrace/features/live/live_providers.dart';
+import 'package:milktrace/features/live/red_alert.dart';
 import 'package:milktrace/features/live/widgets/animal_picker.dart';
 import 'package:milktrace/features/live/widgets/live_info_card.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
@@ -53,41 +54,44 @@ class _Board extends ConsumerWidget {
 
     final live = board.value;
 
-    return RefreshIndicator(
-      onRefresh: () async {
-        ref.invalidate(liveBoardProvider(hall.id));
-        await ref.read(liveBoardProvider(hall.id).future);
-      },
-      // Tek bir CustomScrollView. Eski ekran ListView içinde shrinkWrap'li
-      // bir GridView barındırıyordu ve her build'de YENİ bir ScrollController
-      // yaratıyordu (§15.3/13).
-      child: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: _Header(hall: hall, live: live),
-          ),
-          switch (board) {
-            AsyncLoading() when live == null => const SliverFillRemaining(
-              hasScrollBody: false,
-              child: Center(child: CircularProgressIndicator()),
+    return RedAlertListener(
+      hallId: hall.id,
+      child: RefreshIndicator(
+        onRefresh: () async {
+          ref.invalidate(liveBoardProvider(hall.id));
+          await ref.read(liveBoardProvider(hall.id).future);
+        },
+        // Tek bir CustomScrollView. Eski ekran ListView içinde shrinkWrap'li
+        // bir GridView barındırıyordu ve her build'de YENİ bir ScrollController
+        // yaratıyordu (§15.3/13).
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: _Header(hall: hall, live: live),
             ),
-            AsyncError(:final error) => SliverFillRemaining(
-              hasScrollBody: false,
-              child: ErrorView(
-                message: 'Canlı veri alınamadı',
-                error: error,
-                onRetry: () => ref.invalidate(liveBoardProvider(hall.id)),
+            switch (board) {
+              AsyncLoading() when live == null => const SliverFillRemaining(
+                hasScrollBody: false,
+                child: Center(child: CircularProgressIndicator()),
               ),
-            ),
-            _ => _Grid(
-              live: live!,
-              hall: hall,
-              spouts: spouts.value ?? const [],
-              vacuums: vacuums.value ?? const [],
-            ),
-          },
-          const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.lg)),
-        ],
+              AsyncError(:final error) => SliverFillRemaining(
+                hasScrollBody: false,
+                child: ErrorView(
+                  message: 'Canlı veri alınamadı',
+                  error: error,
+                  onRetry: () => ref.invalidate(liveBoardProvider(hall.id)),
+                ),
+              ),
+              _ => _Grid(
+                live: live!,
+                hall: hall,
+                spouts: spouts.value ?? const [],
+                vacuums: vacuums.value ?? const [],
+              ),
+            },
+            const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.lg)),
+          ],
+        ),
       ),
     );
   }
@@ -153,6 +157,21 @@ class _Header extends ConsumerWidget {
               LightInfo(color: AppColors.flowGreen, label: '$active Aktif'),
               const SizedBox(width: AppSpacing.sm),
               LightInfo(color: AppColors.flowGrey, label: '$passive Pasif'),
+              // Kırmızı uyarısı (backend ADR 0091): titreşim + kısa ses.
+              IconButton(
+                tooltip: ref.watch(redAlertEnabledProvider)
+                    ? 'Kırmızı uyarısını kapat'
+                    : 'Kırmızı uyarısını aç',
+                onPressed: () => ref
+                    .read(redAlertEnabledProvider.notifier)
+                    .set(!ref.read(redAlertEnabledProvider)),
+                icon: Icon(
+                  ref.watch(redAlertEnabledProvider)
+                      ? Icons.notifications_active_outlined
+                      : Icons.notifications_off_outlined,
+                  color: AppColors.darkGreenColor,
+                ),
+              ),
             ],
           ),
           const SizedBox(height: AppSpacing.sm),

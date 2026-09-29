@@ -86,6 +86,9 @@ class _FormState extends ConsumerState<_Form> {
   late final TextEditingController _lactation;
   late String? _speciesId;
   late String _status;
+
+  /// Grup (backend ADR 0092); null = grupsuz. PUT tam kayıt: her zaman gider.
+  late String? _groupId;
   DateTime? _birth;
   DateTime? _calving;
   bool _busy = false;
@@ -105,6 +108,7 @@ class _FormState extends ConsumerState<_Form> {
         a?.speciesId ??
         (widget.species.length == 1 ? widget.species.first.id : null);
     _status = a?.status ?? 'active';
+    _groupId = a?.groupId;
     _birth = a?.birthDate;
     _calving = a?.lastCalvingDate;
   }
@@ -137,10 +141,13 @@ class _FormState extends ConsumerState<_Form> {
       lastCalvingDate: _calving,
       lactationNo: int.tryParse(_lactation.text.trim()) ?? 0,
       status: _status,
+      groupId: _groupId,
     );
     try {
       final saved = await ref.read(repositoryProvider).saveAnimal(draft);
-      ref.invalidate(animalsProvider);
+      ref
+        ..invalidate(animalsProvider)
+        ..invalidate(animalGroupsProvider);
       // Durum değiştiyse backend not düştü (ADR 0057): detay onu göstersin.
       ref.invalidate(animalNotesProvider(saved.id));
       if (!mounted) return;
@@ -259,6 +266,24 @@ class _FormState extends ConsumerState<_Form> {
             ],
             onChanged: (v) => setState(() => _status = v ?? _status),
           ),
+          // Grup (ADR 0092): tanımlı grup yoksa alan çıkmaz; gruplar
+          // Geçmiş → Hayvanlar → Gruplar'da açılır.
+          if (ref.watch(animalGroupsProvider).value case final groups?
+              when groups.isNotEmpty) ...[
+            _gap,
+            DropdownButtonFormField<String?>(
+              initialValue: groups.any((g) => g.id == _groupId)
+                  ? _groupId
+                  : null,
+              decoration: _decoration('Grup'),
+              items: [
+                const DropdownMenuItem<String?>(child: Text('Grupsuz')),
+                for (final g in groups)
+                  DropdownMenuItem<String?>(value: g.id, child: Text(g.name)),
+              ],
+              onChanged: (v) => setState(() => _groupId = v),
+            ),
+          ],
           if (_error != null) ...[
             _gap,
             Text(

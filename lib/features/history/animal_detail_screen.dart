@@ -341,6 +341,7 @@ class _IdentityCard extends StatelessWidget {
             runSpacing: AppSpacing.xs,
             children: [
               if (animal.breed != null) _Fact('Irk', animal.breed!),
+              if (animal.groupName != null) _Fact('Grup', animal.groupName!),
               _Fact('Laktasyon', '${animal.lactationNo}.'),
               if (animal.lastCalvingDate != null)
                 _Fact(

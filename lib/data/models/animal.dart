@@ -56,6 +56,13 @@ abstract class Animal with _$Animal {
     /// Üreme durumu (backend ADR 0088); hiç kayıt yoksa null. Formdan
     /// GÖNDERİLMEZ.
     Pregnancy? pregnancy,
+
+    /// Grubu (backend ADR 0092); en çok bir. PUT tam kayıt olduğu için
+    /// formdan HER ZAMAN gider — null göndermek grubu kaldırır.
+    String? groupId,
+
+    /// Grubun adı; yalnızca okunur.
+    String? groupName,
   }) = _Animal;
 
   const Animal._();

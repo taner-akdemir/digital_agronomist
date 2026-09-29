@@ -11,8 +11,10 @@ import 'package:milktrace/features/devices/devices_screen.dart';
 import 'package:milktrace/features/history/animal_detail_screen.dart';
 import 'package:milktrace/features/history/animal_form_screen.dart';
 import 'package:milktrace/features/history/animal_import_screen.dart';
+import 'package:milktrace/features/history/groups_screen.dart';
 import 'package:milktrace/features/history/history_screen.dart';
 import 'package:milktrace/features/history/unmatched_tags_screen.dart';
+import 'package:milktrace/features/kiosk/kiosk_screen.dart';
 import 'package:milktrace/features/live/live_board_screen.dart';
 import 'package:milktrace/features/settings/notification_channel_form_screen.dart';
 import 'package:milktrace/features/settings/notification_channels_screen.dart';
@@ -60,6 +62,11 @@ GoRouter router(Ref ref) {
 
       if (!auth.isSignedIn) return at == '/login' ? null : '/login';
 
+      // Sağımhane tableti (backend ADR 0091): tek ekran. Gateway diğer
+      // uçları zaten kapatıyor; başka bir ekran açılsa boş hata gösterirdi.
+      if (auth.user?.kiosk ?? false) return at == '/kiosk' ? null : '/kiosk';
+      if (at == '/kiosk') return '/live';
+
       // Oturum açık: giriş ve açılış ekranlarında durmanın anlamı yok.
       if (at == '/login' || at == '/splash') return '/live';
 
@@ -69,6 +76,7 @@ GoRouter router(Ref ref) {
       GoRoute(path: '/splash', builder: (_, _) => const SplashScreen()),
       GoRoute(path: '/login', builder: (_, _) => const LoginScreen()),
       GoRoute(path: '/update', builder: (_, _) => const UpdateRequiredScreen()),
+      GoRoute(path: '/kiosk', builder: (_, _) => const KioskScreen()),
       // Kabuğun DIŞINDA: uyarı listesi bir sekmeye ait değil, her sekmeden
       // açılır ve tam ekran gelir.
       GoRoute(path: '/alerts', builder: (_, _) => const AlertsScreen()),
@@ -120,6 +128,8 @@ GoRouter router(Ref ref) {
         builder: (_, _) => const AnimalFormScreen(),
       ),
       // Toplu içe aktarma (backend ADR 0063): yalnızca işletme sahibi.
+      // Hayvan grupları (backend ADR 0092): yalnızca sahip.
+      GoRoute(path: '/animals/groups', builder: (_, _) => const GroupsScreen()),
       GoRoute(
         path: '/animals/import',
         builder: (_, _) => const AnimalImportScreen(),

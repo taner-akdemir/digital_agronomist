@@ -29,7 +29,9 @@ aktarım "paylaşım" sayılmaz.
 
 ## Notlar
 
-- İzinler yalnızca `INTERNET` ve `POST_NOTIFICATIONS`.
+- İzinler yalnızca `INTERNET` ve `POST_NOTIFICATIONS`. Sağımhane tabletinde ekranı
+  açık tutan `wakelock_plus` izin eklemiyor ve veri toplamıyor; canlı ekrandaki
+  titreşim sistemin dokunsal geri bildirimi (`VIBRATE` izni yok).
 - Dosya seçici (hayvan listesi içe aktarma) ve paylaşım (verim raporu) kullanıcının
   seçtiği dosyayla, istek anında; arka planda erişim yok.
 - Reklam kimliği kullanılmıyor → "Reklam kimliği" beyanında **Hayır**.

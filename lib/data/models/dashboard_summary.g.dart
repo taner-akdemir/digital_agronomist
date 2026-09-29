@@ -26,6 +26,11 @@ _DashboardSummary _$DashboardSummaryFromJson(Map<String, dynamic> json) =>
               ?.map((e) => YieldClassCount.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const <YieldClassCount>[],
+      byGroup:
+          (json['byGroup'] as List<dynamic>?)
+              ?.map((e) => GroupTotal.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const <GroupTotal>[],
     );
 
 Map<String, dynamic> _$DashboardSummaryToJson(_DashboardSummary instance) =>
@@ -38,6 +43,7 @@ Map<String, dynamic> _$DashboardSummaryToJson(_DashboardSummary instance) =>
       'openAlerts': instance.openAlerts,
       'bySpecies': instance.bySpecies,
       'classDistribution': instance.classDistribution,
+      'byGroup': instance.byGroup,
     };
 
 _SpeciesTotal _$SpeciesTotalFromJson(Map<String, dynamic> json) =>
@@ -77,3 +83,20 @@ const _$YieldClassEnumMap = {
   YieldClass.dryOffCandidate: 'dry_off_candidate',
   YieldClass.noMilk: 'no_milk',
 };
+
+_GroupTotal _$GroupTotalFromJson(Map<String, dynamic> json) => _GroupTotal(
+  groupId: json['groupId'] as String,
+  name: json['name'] as String,
+  animals: (json['animals'] as num?)?.toInt() ?? 0,
+  milked: (json['milked'] as num?)?.toInt() ?? 0,
+  totalMl: (json['totalMl'] as num?)?.toInt() ?? 0,
+);
+
+Map<String, dynamic> _$GroupTotalToJson(_GroupTotal instance) =>
+    <String, dynamic>{
+      'groupId': instance.groupId,
+      'name': instance.name,
+      'animals': instance.animals,
+      'milked': instance.milked,
+      'totalMl': instance.totalMl,
+    };

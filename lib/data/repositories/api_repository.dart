@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart' show Uint8List, visibleForTesting;
 import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/animal.dart';
+import 'package:milktrace/data/models/animal_group.dart';
 import 'package:milktrace/data/models/animal_import.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
@@ -311,6 +312,7 @@ class ApiRepository implements MilkTraceRepository {
     'lastCalvingDate': _day(a.lastCalvingDate),
     'lactationNo': a.lactationNo,
     'status': a.status,
+    'groupId': a.groupId,
   };
 
   static String? _day(DateTime? d) =>
@@ -600,6 +602,28 @@ class ApiRepository implements MilkTraceRepository {
       _dio.put<dynamic>('/tenant/settings', data: {'volumeUnit': unit});
 
   @override
+  Future<List<AnimalGroup>> animalGroups() async =>
+      _listOf(await _dio.get<dynamic>('/animal-groups'), AnimalGroup.fromJson);
+
+  @override
+  Future<AnimalGroup> createGroup(String name) async => AnimalGroup.fromJson(
+    _dataOf(await _dio.post<dynamic>('/animal-groups', data: {'name': name})),
+  );
+
+  @override
+  Future<AnimalGroup> renameGroup(String id, String name) async =>
+      AnimalGroup.fromJson(
+        _dataOf(
+          await _dio.put<dynamic>('/animal-groups/$id', data: {'name': name}),
+        ),
+      );
+
+  @override
+  Future<void> deleteGroup(String id) async {
+    await _dio.delete<dynamic>('/animal-groups/$id');
+  }
+
+  @override
   Future<Deliveries> deliveries() async =>
       Deliveries.fromJson(_dataOf(await _dio.get<dynamic>('/deliveries')));
 
@@ -658,6 +682,7 @@ class ApiRepository implements MilkTraceRepository {
     required String fullName,
     required String role,
     String? password,
+    bool kiosk = false,
   }) async {
     final r = await _dio.post<dynamic>(
       '/team',
@@ -666,6 +691,7 @@ class ApiRepository implements MilkTraceRepository {
         'fullName': fullName,
         'role': role,
         if (password != null && password.isNotEmpty) 'password': password,
+        if (kiosk) 'kiosk': true,
       },
     );
     return (

@@ -1,4 +1,5 @@
 import 'package:milktrace/data/models/animal.dart';
+import 'package:milktrace/data/models/animal_group.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
@@ -44,6 +45,11 @@ Future<Map<String, String>> spoutLabels(Ref ref) async {
   };
 }
 
+/// İşletmenin hayvan grupları (backend ADR 0092).
+@riverpod
+Future<List<AnimalGroup>> animalGroups(Ref ref) =>
+    ref.watch(repositoryProvider).animalGroups();
+
 /// Bir hayvanın trendi ve sınıfı.
 @riverpod
 Future<AnimalTrend> animalTrend(Ref ref, String animalId) =>
@@ -53,7 +59,11 @@ Future<AnimalTrend> animalTrend(Ref ref, String animalId) =>
 ///
 /// Tek bir nesnede tutuluyor: iki ayrı provider olsaydı filtre değişiminde
 /// liste iki kez yeniden hesaplanırdı.
-typedef AnimalFilter = ({String? speciesId, YieldClass? yieldClass});
+typedef AnimalFilter = ({
+  String? speciesId,
+  YieldClass? yieldClass,
+  String? groupId,
+});
 
 /// keepAlive: filtre, onu okuyan ekran YOKKEN de yaşamalı.
 ///
@@ -65,17 +75,26 @@ typedef AnimalFilter = ({String? speciesId, YieldClass? yieldClass});
 @Riverpod(keepAlive: true)
 class AnimalFilterState extends _$AnimalFilterState {
   @override
-  AnimalFilter build() => (speciesId: null, yieldClass: null);
+  AnimalFilter build() => (speciesId: null, yieldClass: null, groupId: null);
 
   /// Aynı değere tekrar basmak filtreyi KALDIRIR — çipler böyle çalışır.
   void toggleSpecies(String id) => state = (
     speciesId: state.speciesId == id ? null : id,
     yieldClass: state.yieldClass,
+    groupId: state.groupId,
   );
 
   void toggleClass(YieldClass c) => state = (
     speciesId: state.speciesId,
     yieldClass: state.yieldClass == c ? null : c,
+    groupId: state.groupId,
+  );
+
+  /// Grup süzgeci (backend ADR 0092).
+  void toggleGroup(String id) => state = (
+    speciesId: state.speciesId,
+    yieldClass: state.yieldClass,
+    groupId: state.groupId == id ? null : id,
   );
 
   /// Filtreyi TEK bir sınıfa sabitler.
@@ -83,9 +102,14 @@ class AnimalFilterState extends _$AnimalFilterState {
   /// toggleClass'tan farkı: aynı sınıfa ikinci kez gelince kaldırmaz.
   /// Dashboard'dan "3 hayvan kuruya aday" satırına basıldığında filtrenin
   /// kalkması, kullanıcıyı 30 hayvanlık tam listeye düşürürdü.
-  void showOnly(YieldClass c) => state = (speciesId: null, yieldClass: c);
+  void showOnly(YieldClass c) =>
+      state = (speciesId: null, yieldClass: c, groupId: null);
 
-  void clear() => state = (speciesId: null, yieldClass: null);
+  /// Filtreyi TEK bir gruba sabitler (panodaki grup satırı).
+  void showGroup(String id) =>
+      state = (speciesId: null, yieldClass: null, groupId: id);
+
+  void clear() => state = (speciesId: null, yieldClass: null, groupId: null);
 }
 
 /// Filtreden geçmiş hayvan listesi.
@@ -100,6 +124,7 @@ Future<List<Animal>> filteredAnimals(Ref ref) async {
 
   final out = all
       .where((a) => f.speciesId == null || a.speciesId == f.speciesId)
+      .where((a) => f.groupId == null || a.groupId == f.groupId)
       // Sınıf süzgecinde yalnızca SAĞMAL hayvan: pano sınıf dağılımını
       // sağmallardan sayıyor; dokununca açılan liste aynı sayıyı göstermeli.
       .where(

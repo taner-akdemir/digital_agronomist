@@ -176,7 +176,7 @@ class _MemberCard extends ConsumerWidget {
                     ),
                     Text(
                       [
-                        roleLabel(m.role),
+                        m.kiosk ? 'Sağımhane tableti' : roleLabel(m.role),
                         if (m.fullName.isNotEmpty) m.email,
                       ].join(' · '),
                       style: const TextStyle(
@@ -352,6 +352,10 @@ class _AddMemberDialogState extends ConsumerState<_AddMemberDialog> {
   final _email = TextEditingController();
   final _password = TextEditingController();
   String _role = 'tenant_operator';
+
+  /// Sağımhane tableti (backend ADR 0091): ortak operatör hesabı, yalnızca
+  /// canlı ekran; parola zorunlu (davet e-postası yok).
+  bool _kiosk = false;
   bool _busy = false;
   String? _error;
 
@@ -376,8 +380,9 @@ class _AddMemberDialogState extends ConsumerState<_AddMemberDialog> {
           .addTeamMember(
             email: _email.text.trim(),
             fullName: _name.text.trim(),
-            role: _role,
+            role: _kiosk ? 'tenant_operator' : _role,
             password: _password.text,
+            kiosk: _kiosk,
           );
       if (mounted) Navigator.of(context).pop(r.message);
     } catch (e) {
@@ -425,39 +430,61 @@ class _AddMemberDialogState extends ConsumerState<_AddMemberDialog> {
                     ? null
                     : 'Geçerli bir e-posta girin.',
               ),
-              const SizedBox(height: AppSpacing.md),
-              SegmentedButton<String>(
-                segments: [
-                  for (final r in const ['tenant_operator', 'tenant_viewer'])
-                    ButtonSegment(value: r, label: Text(roleLabel(r))),
-                ],
-                selected: {_role},
-                onSelectionChanged: _busy
-                    ? null
-                    : (s) => setState(() => _role = s.first),
-              ),
-              const SizedBox(height: AppSpacing.xs),
-              Text(
-                roleHint(_role),
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: AppColors.onSurfaceMuted,
+              const SizedBox(height: AppSpacing.sm),
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                value: _kiosk,
+                onChanged: _busy ? null : (v) => setState(() => _kiosk = v),
+                title: const Text('Sağımhane tableti'),
+                subtitle: const Text(
+                  'Sağımhanedeki ortak tablet için: yalnızca canlı sağım '
+                  'açılır, ekran kararmaz. Tablete bu e-posta ve parolayla '
+                  'girilir.',
                 ),
               ),
+              if (!_kiosk) ...[
+                const SizedBox(height: AppSpacing.md),
+                SegmentedButton<String>(
+                  segments: [
+                    for (final r in const ['tenant_operator', 'tenant_viewer'])
+                      ButtonSegment(value: r, label: Text(roleLabel(r))),
+                  ],
+                  selected: {_role},
+                  onSelectionChanged: _busy
+                      ? null
+                      : (s) => setState(() => _role = s.first),
+                ),
+                const SizedBox(height: AppSpacing.xs),
+                Text(
+                  roleHint(_role),
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: AppColors.onSurfaceMuted,
+                  ),
+                ),
+              ],
               const SizedBox(height: AppSpacing.md),
               TextFormField(
                 controller: _password,
                 enabled: !_busy,
                 obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Geçici parola (isteğe bağlı)',
-                  helperText: 'Boş bırakırsanız e-postayla davet gider.',
+                decoration: InputDecoration(
+                  labelText: _kiosk
+                      ? 'Tablet parolası'
+                      : 'Geçici parola (isteğe bağlı)',
+                  helperText: _kiosk
+                      ? 'Tablete bu parolayla girilir; en az 8 karakter.'
+                      : 'Boş bırakırsanız e-postayla davet gider.',
                   helperMaxLines: 2,
                   border: border,
                 ),
-                validator: (v) => (v ?? '').isNotEmpty && v!.length < 8
-                    ? 'En az 8 karakter.'
-                    : null,
+                validator: (v) {
+                  final p = v ?? '';
+                  if (_kiosk && p.isEmpty) return 'Tablet için parola girin.';
+                  return p.isNotEmpty && p.length < 8
+                      ? 'En az 8 karakter.'
+                      : null;
+                },
               ),
               if (_error != null) ...[
                 const SizedBox(height: AppSpacing.md),

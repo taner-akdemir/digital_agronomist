@@ -23,6 +23,10 @@ abstract class AuthUser with _$AuthUser {
 
     /// Seçili işletmenin süt birimi: "L" ya da "kg" (backend ADR 0086).
     @Default('L') String volumeUnit,
+
+    /// Sağımhane tableti hesabı (backend ADR 0091): uygulama yalnızca
+    /// canlı ekranı açar; gateway de diğer uçları kapatır.
+    @Default(false) bool kiosk,
   }) = _AuthUser;
 
   const AuthUser._();

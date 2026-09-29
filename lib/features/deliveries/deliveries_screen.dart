@@ -11,6 +11,7 @@ import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
+import 'package:milktrace/widgets/text_prompt_dialog.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'deliveries_screen.g.dart';
@@ -86,35 +87,15 @@ class DeliveriesScreen extends ConsumerWidget {
     WidgetRef ref,
     double current,
   ) async {
-    final ctrl = TextEditingController(text: current.toStringAsFixed(1));
-    final pct = await showDialog<double>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Fark eşiği'),
-        content: TextField(
-          controller: ctrl,
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          decoration: const InputDecoration(
-            labelText: 'Uyarı için fark (%)',
-            helperText: 'Sayaçlar ile tanker bundan fazla ayrışırsa uyarı.',
-            border: OutlineInputBorder(borderRadius: AppRadius.mdAll),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Vazgeç'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.of(
-              context,
-            ).pop(double.tryParse(ctrl.text.replaceAll(',', '.'))),
-            child: const Text('Kaydet'),
-          ),
-        ],
-      ),
+    final raw = await showTextPrompt(
+      context,
+      title: 'Fark eşiği',
+      label: 'Uyarı için fark (%)',
+      helper: 'Sayaçlar ile tanker bundan fazla ayrışırsa uyarı.',
+      initial: current.toStringAsFixed(1),
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
     );
-    ctrl.dispose();
+    final pct = raw == null ? null : double.tryParse(raw.replaceAll(',', '.'));
     if (pct == null || !context.mounted) return;
     final messenger = ScaffoldMessenger.of(context);
     try {

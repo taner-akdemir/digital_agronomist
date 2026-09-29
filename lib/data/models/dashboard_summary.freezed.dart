@@ -23,7 +23,8 @@ mixin _$DashboardSummary {
  int get activeSessions;/// Okunmamış uyarı sayısı.
  int get openAlerts; List<SpeciesTotal> get bySpecies;/// §6.4 sınıf dağılımı. Sayısı sıfır olan sınıflar da gelir ki ekran
 /// "bu sınıfta hiç yok" ile "bu sınıf hiç hesaplanmadı"yı ayırabilsin.
- List<YieldClassCount> get classDistribution;
+ List<YieldClassCount> get classDistribution;/// Grupların bugünkü toplamı (backend ADR 0092); grup yoksa boş.
+ List<GroupTotal> get byGroup;
 /// Create a copy of DashboardSummary
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -37,20 +38,20 @@ $DashboardSummaryCopyWith<DashboardSummary> get copyWith => _$DashboardSummaryCo
 @override
 bool operator ==(Object other) {
   final _this = this as DashboardSummary;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DashboardSummary&&(identical(other.date, _this.date) || other.date == _this.date)&&(identical(other.totalMl, _this.totalMl) || other.totalMl == _this.totalMl)&&(identical(other.milkingCount, _this.milkingCount) || other.milkingCount == _this.milkingCount)&&(identical(other.animalCount, _this.animalCount) || other.animalCount == _this.animalCount)&&(identical(other.activeSessions, _this.activeSessions) || other.activeSessions == _this.activeSessions)&&(identical(other.openAlerts, _this.openAlerts) || other.openAlerts == _this.openAlerts)&&const DeepCollectionEquality().equals(other.bySpecies, _this.bySpecies)&&const DeepCollectionEquality().equals(other.classDistribution, _this.classDistribution));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DashboardSummary&&(identical(other.date, _this.date) || other.date == _this.date)&&(identical(other.totalMl, _this.totalMl) || other.totalMl == _this.totalMl)&&(identical(other.milkingCount, _this.milkingCount) || other.milkingCount == _this.milkingCount)&&(identical(other.animalCount, _this.animalCount) || other.animalCount == _this.animalCount)&&(identical(other.activeSessions, _this.activeSessions) || other.activeSessions == _this.activeSessions)&&(identical(other.openAlerts, _this.openAlerts) || other.openAlerts == _this.openAlerts)&&const DeepCollectionEquality().equals(other.bySpecies, _this.bySpecies)&&const DeepCollectionEquality().equals(other.classDistribution, _this.classDistribution)&&const DeepCollectionEquality().equals(other.byGroup, _this.byGroup));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as DashboardSummary;
-  return Object.hash(runtimeType,_this.date,_this.totalMl,_this.milkingCount,_this.animalCount,_this.activeSessions,_this.openAlerts,const DeepCollectionEquality().hash(_this.bySpecies),const DeepCollectionEquality().hash(_this.classDistribution));
+  return Object.hash(runtimeType,_this.date,_this.totalMl,_this.milkingCount,_this.animalCount,_this.activeSessions,_this.openAlerts,const DeepCollectionEquality().hash(_this.bySpecies),const DeepCollectionEquality().hash(_this.classDistribution),const DeepCollectionEquality().hash(_this.byGroup));
 }
 
 @override
 String toString() {
   final _this = this as DashboardSummary;
-  return 'DashboardSummary(date: ${_this.date}, totalMl: ${_this.totalMl}, milkingCount: ${_this.milkingCount}, animalCount: ${_this.animalCount}, activeSessions: ${_this.activeSessions}, openAlerts: ${_this.openAlerts}, bySpecies: ${_this.bySpecies}, classDistribution: ${_this.classDistribution})';
+  return 'DashboardSummary(date: ${_this.date}, totalMl: ${_this.totalMl}, milkingCount: ${_this.milkingCount}, animalCount: ${_this.animalCount}, activeSessions: ${_this.activeSessions}, openAlerts: ${_this.openAlerts}, bySpecies: ${_this.bySpecies}, classDistribution: ${_this.classDistribution}, byGroup: ${_this.byGroup})';
 }
 
 
@@ -61,7 +62,7 @@ abstract mixin class $DashboardSummaryCopyWith<$Res>  {
   factory $DashboardSummaryCopyWith(DashboardSummary value, $Res Function(DashboardSummary) _then) = _$DashboardSummaryCopyWithImpl;
 @useResult
 $Res call({
- DateTime? date, int totalMl, int milkingCount, int animalCount, int activeSessions, int openAlerts, List<SpeciesTotal> bySpecies, List<YieldClassCount> classDistribution
+ DateTime? date, int totalMl, int milkingCount, int animalCount, int activeSessions, int openAlerts, List<SpeciesTotal> bySpecies, List<YieldClassCount> classDistribution, List<GroupTotal> byGroup
 });
 
 
@@ -78,7 +79,7 @@ class _$DashboardSummaryCopyWithImpl<$Res>
 
 /// Create a copy of DashboardSummary
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? date = freezed,Object? totalMl = null,Object? milkingCount = null,Object? animalCount = null,Object? activeSessions = null,Object? openAlerts = null,Object? bySpecies = null,Object? classDistribution = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? date = freezed,Object? totalMl = null,Object? milkingCount = null,Object? animalCount = null,Object? activeSessions = null,Object? openAlerts = null,Object? bySpecies = null,Object? classDistribution = null,Object? byGroup = null,}) {
   return _then(DashboardSummary(
 date: freezed == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as DateTime?,totalMl: null == totalMl ? _self.totalMl : totalMl // ignore: cast_nullable_to_non_nullable
@@ -88,7 +89,8 @@ as int,activeSessions: null == activeSessions ? _self.activeSessions : activeSes
 as int,openAlerts: null == openAlerts ? _self.openAlerts : openAlerts // ignore: cast_nullable_to_non_nullable
 as int,bySpecies: null == bySpecies ? _self.bySpecies : bySpecies // ignore: cast_nullable_to_non_nullable
 as List<SpeciesTotal>,classDistribution: null == classDistribution ? _self.classDistribution : classDistribution // ignore: cast_nullable_to_non_nullable
-as List<YieldClassCount>,
+as List<YieldClassCount>,byGroup: null == byGroup ? _self.byGroup : byGroup // ignore: cast_nullable_to_non_nullable
+as List<GroupTotal>,
   ));
 }
 
@@ -173,10 +175,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DateTime? date,  int totalMl,  int milkingCount,  int animalCount,  int activeSessions,  int openAlerts,  List<SpeciesTotal> bySpecies,  List<YieldClassCount> classDistribution)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DateTime? date,  int totalMl,  int milkingCount,  int animalCount,  int activeSessions,  int openAlerts,  List<SpeciesTotal> bySpecies,  List<YieldClassCount> classDistribution,  List<GroupTotal> byGroup)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DashboardSummary() when $default != null:
-return $default(_that.date,_that.totalMl,_that.milkingCount,_that.animalCount,_that.activeSessions,_that.openAlerts,_that.bySpecies,_that.classDistribution);case _:
+return $default(_that.date,_that.totalMl,_that.milkingCount,_that.animalCount,_that.activeSessions,_that.openAlerts,_that.bySpecies,_that.classDistribution,_that.byGroup);case _:
   return orElse();
 
 }
@@ -194,10 +196,10 @@ return $default(_that.date,_that.totalMl,_that.milkingCount,_that.animalCount,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DateTime? date,  int totalMl,  int milkingCount,  int animalCount,  int activeSessions,  int openAlerts,  List<SpeciesTotal> bySpecies,  List<YieldClassCount> classDistribution)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DateTime? date,  int totalMl,  int milkingCount,  int animalCount,  int activeSessions,  int openAlerts,  List<SpeciesTotal> bySpecies,  List<YieldClassCount> classDistribution,  List<GroupTotal> byGroup)  $default,) {final _that = this;
 switch (_that) {
 case _DashboardSummary():
-return $default(_that.date,_that.totalMl,_that.milkingCount,_that.animalCount,_that.activeSessions,_that.openAlerts,_that.bySpecies,_that.classDistribution);case _:
+return $default(_that.date,_that.totalMl,_that.milkingCount,_that.animalCount,_that.activeSessions,_that.openAlerts,_that.bySpecies,_that.classDistribution,_that.byGroup);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -214,10 +216,10 @@ return $default(_that.date,_that.totalMl,_that.milkingCount,_that.animalCount,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DateTime? date,  int totalMl,  int milkingCount,  int animalCount,  int activeSessions,  int openAlerts,  List<SpeciesTotal> bySpecies,  List<YieldClassCount> classDistribution)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DateTime? date,  int totalMl,  int milkingCount,  int animalCount,  int activeSessions,  int openAlerts,  List<SpeciesTotal> bySpecies,  List<YieldClassCount> classDistribution,  List<GroupTotal> byGroup)?  $default,) {final _that = this;
 switch (_that) {
 case _DashboardSummary() when $default != null:
-return $default(_that.date,_that.totalMl,_that.milkingCount,_that.animalCount,_that.activeSessions,_that.openAlerts,_that.bySpecies,_that.classDistribution);case _:
+return $default(_that.date,_that.totalMl,_that.milkingCount,_that.animalCount,_that.activeSessions,_that.openAlerts,_that.bySpecies,_that.classDistribution,_that.byGroup);case _:
   return null;
 
 }
@@ -229,7 +231,7 @@ return $default(_that.date,_that.totalMl,_that.milkingCount,_that.animalCount,_t
 @JsonSerializable()
 
 class _DashboardSummary implements DashboardSummary {
-  const _DashboardSummary({this.date, this.totalMl = 0, this.milkingCount = 0, this.animalCount = 0, this.activeSessions = 0, this.openAlerts = 0,  List<SpeciesTotal> bySpecies = const <SpeciesTotal>[],  List<YieldClassCount> classDistribution = const <YieldClassCount>[]}): _bySpecies = bySpecies,_classDistribution = classDistribution;
+  const _DashboardSummary({this.date, this.totalMl = 0, this.milkingCount = 0, this.animalCount = 0, this.activeSessions = 0, this.openAlerts = 0,  List<SpeciesTotal> bySpecies = const <SpeciesTotal>[],  List<YieldClassCount> classDistribution = const <YieldClassCount>[],  List<GroupTotal> byGroup = const <GroupTotal>[]}): _bySpecies = bySpecies,_classDistribution = classDistribution,_byGroup = byGroup;
   factory _DashboardSummary.fromJson(Map<String, dynamic> json) => _$DashboardSummaryFromJson(json);
 
 /// Özetin ait olduğu gün.
@@ -261,6 +263,15 @@ class _DashboardSummary implements DashboardSummary {
   return EqualUnmodifiableListView(_classDistribution);
 }
 
+/// Grupların bugünkü toplamı (backend ADR 0092); grup yoksa boş.
+ final  List<GroupTotal> _byGroup;
+/// Grupların bugünkü toplamı (backend ADR 0092); grup yoksa boş.
+@override@JsonKey() List<GroupTotal> get byGroup {
+  if (_byGroup is EqualUnmodifiableListView) return _byGroup;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_byGroup);
+}
+
 
 /// Create a copy of DashboardSummary
 /// with the given fields replaced by the non-null parameter values.
@@ -275,18 +286,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _DashboardSummary&&(identical(other.date, date) || other.date == date)&&(identical(other.totalMl, totalMl) || other.totalMl == totalMl)&&(identical(other.milkingCount, milkingCount) || other.milkingCount == milkingCount)&&(identical(other.animalCount, animalCount) || other.animalCount == animalCount)&&(identical(other.activeSessions, activeSessions) || other.activeSessions == activeSessions)&&(identical(other.openAlerts, openAlerts) || other.openAlerts == openAlerts)&&const DeepCollectionEquality().equals(other.bySpecies, _bySpecies)&&const DeepCollectionEquality().equals(other.classDistribution, _classDistribution));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _DashboardSummary&&(identical(other.date, date) || other.date == date)&&(identical(other.totalMl, totalMl) || other.totalMl == totalMl)&&(identical(other.milkingCount, milkingCount) || other.milkingCount == milkingCount)&&(identical(other.animalCount, animalCount) || other.animalCount == animalCount)&&(identical(other.activeSessions, activeSessions) || other.activeSessions == activeSessions)&&(identical(other.openAlerts, openAlerts) || other.openAlerts == openAlerts)&&const DeepCollectionEquality().equals(other.bySpecies, _bySpecies)&&const DeepCollectionEquality().equals(other.classDistribution, _classDistribution)&&const DeepCollectionEquality().equals(other.byGroup, _byGroup));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,date,totalMl,milkingCount,animalCount,activeSessions,openAlerts,const DeepCollectionEquality().hash(_bySpecies),const DeepCollectionEquality().hash(_classDistribution));
+    return Object.hash(runtimeType,date,totalMl,milkingCount,animalCount,activeSessions,openAlerts,const DeepCollectionEquality().hash(_bySpecies),const DeepCollectionEquality().hash(_classDistribution),const DeepCollectionEquality().hash(_byGroup));
 }
 
 @override
 String toString() {
-    return 'DashboardSummary(date: $date, totalMl: $totalMl, milkingCount: $milkingCount, animalCount: $animalCount, activeSessions: $activeSessions, openAlerts: $openAlerts, bySpecies: $bySpecies, classDistribution: $classDistribution)';
+    return 'DashboardSummary(date: $date, totalMl: $totalMl, milkingCount: $milkingCount, animalCount: $animalCount, activeSessions: $activeSessions, openAlerts: $openAlerts, bySpecies: $bySpecies, classDistribution: $classDistribution, byGroup: $byGroup)';
 }
 
 
@@ -297,7 +308,7 @@ abstract mixin class _$DashboardSummaryCopyWith<$Res> implements $DashboardSumma
   factory _$DashboardSummaryCopyWith(_DashboardSummary value, $Res Function(_DashboardSummary) _then) = __$DashboardSummaryCopyWithImpl;
 @override @useResult
 $Res call({
- DateTime? date, int totalMl, int milkingCount, int animalCount, int activeSessions, int openAlerts, List<SpeciesTotal> bySpecies, List<YieldClassCount> classDistribution
+ DateTime? date, int totalMl, int milkingCount, int animalCount, int activeSessions, int openAlerts, List<SpeciesTotal> bySpecies, List<YieldClassCount> classDistribution, List<GroupTotal> byGroup
 });
 
 
@@ -314,7 +325,7 @@ class __$DashboardSummaryCopyWithImpl<$Res>
 
 /// Create a copy of DashboardSummary
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? date = freezed,Object? totalMl = null,Object? milkingCount = null,Object? animalCount = null,Object? activeSessions = null,Object? openAlerts = null,Object? bySpecies = null,Object? classDistribution = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? date = freezed,Object? totalMl = null,Object? milkingCount = null,Object? animalCount = null,Object? activeSessions = null,Object? openAlerts = null,Object? bySpecies = null,Object? classDistribution = null,Object? byGroup = null,}) {
   return _then(_DashboardSummary(
 date: freezed == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as DateTime?,totalMl: null == totalMl ? _self.totalMl : totalMl // ignore: cast_nullable_to_non_nullable
@@ -324,7 +335,8 @@ as int,activeSessions: null == activeSessions ? _self.activeSessions : activeSes
 as int,openAlerts: null == openAlerts ? _self.openAlerts : openAlerts // ignore: cast_nullable_to_non_nullable
 as int,bySpecies: null == bySpecies ? _self._bySpecies : bySpecies // ignore: cast_nullable_to_non_nullable
 as List<SpeciesTotal>,classDistribution: null == classDistribution ? _self._classDistribution : classDistribution // ignore: cast_nullable_to_non_nullable
-as List<YieldClassCount>,
+as List<YieldClassCount>,byGroup: null == byGroup ? _self._byGroup : byGroup // ignore: cast_nullable_to_non_nullable
+as List<GroupTotal>,
   ));
 }
 
@@ -873,6 +885,292 @@ class __$YieldClassCountCopyWithImpl<$Res>
   return _then(_YieldClassCount(
 yieldClass: null == yieldClass ? _self.yieldClass : yieldClass // ignore: cast_nullable_to_non_nullable
 as YieldClass,count: null == count ? _self.count : count // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+
+/// @nodoc
+mixin _$GroupTotal {
+
+ String get groupId; String get name;/// Gruptaki sağmal hayvan sayısı.
+ int get animals;/// Bugün sağılan.
+ int get milked; int get totalMl;
+/// Create a copy of GroupTotal
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GroupTotalCopyWith<GroupTotal> get copyWith => _$GroupTotalCopyWithImpl<GroupTotal>(this as GroupTotal, _$identity);
+
+  /// Serializes this GroupTotal to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  final _this = this as GroupTotal;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GroupTotal&&(identical(other.groupId, _this.groupId) || other.groupId == _this.groupId)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.animals, _this.animals) || other.animals == _this.animals)&&(identical(other.milked, _this.milked) || other.milked == _this.milked)&&(identical(other.totalMl, _this.totalMl) || other.totalMl == _this.totalMl));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode {
+  final _this = this as GroupTotal;
+  return Object.hash(runtimeType,_this.groupId,_this.name,_this.animals,_this.milked,_this.totalMl);
+}
+
+@override
+String toString() {
+  final _this = this as GroupTotal;
+  return 'GroupTotal(groupId: ${_this.groupId}, name: ${_this.name}, animals: ${_this.animals}, milked: ${_this.milked}, totalMl: ${_this.totalMl})';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $GroupTotalCopyWith<$Res>  {
+  factory $GroupTotalCopyWith(GroupTotal value, $Res Function(GroupTotal) _then) = _$GroupTotalCopyWithImpl;
+@useResult
+$Res call({
+ String groupId, String name, int animals, int milked, int totalMl
+});
+
+
+
+
+}
+/// @nodoc
+class _$GroupTotalCopyWithImpl<$Res>
+    implements $GroupTotalCopyWith<$Res> {
+  _$GroupTotalCopyWithImpl(this._self, this._then);
+
+  final GroupTotal _self;
+  final $Res Function(GroupTotal) _then;
+
+/// Create a copy of GroupTotal
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? groupId = null,Object? name = null,Object? animals = null,Object? milked = null,Object? totalMl = null,}) {
+  return _then(GroupTotal(
+groupId: null == groupId ? _self.groupId : groupId // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,animals: null == animals ? _self.animals : animals // ignore: cast_nullable_to_non_nullable
+as int,milked: null == milked ? _self.milked : milked // ignore: cast_nullable_to_non_nullable
+as int,totalMl: null == totalMl ? _self.totalMl : totalMl // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [GroupTotal].
+extension GroupTotalPatterns on GroupTotal {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _GroupTotal value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _GroupTotal() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _GroupTotal value)  $default,){
+final _that = this;
+switch (_that) {
+case _GroupTotal():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _GroupTotal value)?  $default,){
+final _that = this;
+switch (_that) {
+case _GroupTotal() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String groupId,  String name,  int animals,  int milked,  int totalMl)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _GroupTotal() when $default != null:
+return $default(_that.groupId,_that.name,_that.animals,_that.milked,_that.totalMl);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String groupId,  String name,  int animals,  int milked,  int totalMl)  $default,) {final _that = this;
+switch (_that) {
+case _GroupTotal():
+return $default(_that.groupId,_that.name,_that.animals,_that.milked,_that.totalMl);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String groupId,  String name,  int animals,  int milked,  int totalMl)?  $default,) {final _that = this;
+switch (_that) {
+case _GroupTotal() when $default != null:
+return $default(_that.groupId,_that.name,_that.animals,_that.milked,_that.totalMl);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _GroupTotal extends GroupTotal {
+  const _GroupTotal({required this.groupId, required this.name, this.animals = 0, this.milked = 0, this.totalMl = 0}): super._();
+  factory _GroupTotal.fromJson(Map<String, dynamic> json) => _$GroupTotalFromJson(json);
+
+@override final  String groupId;
+@override final  String name;
+/// Gruptaki sağmal hayvan sayısı.
+@override@JsonKey() final  int animals;
+/// Bugün sağılan.
+@override@JsonKey() final  int milked;
+@override@JsonKey() final  int totalMl;
+
+/// Create a copy of GroupTotal
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$GroupTotalCopyWith<_GroupTotal> get copyWith => __$GroupTotalCopyWithImpl<_GroupTotal>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$GroupTotalToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _GroupTotal&&(identical(other.groupId, groupId) || other.groupId == groupId)&&(identical(other.name, name) || other.name == name)&&(identical(other.animals, animals) || other.animals == animals)&&(identical(other.milked, milked) || other.milked == milked)&&(identical(other.totalMl, totalMl) || other.totalMl == totalMl));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode {
+    return Object.hash(runtimeType,groupId,name,animals,milked,totalMl);
+}
+
+@override
+String toString() {
+    return 'GroupTotal(groupId: $groupId, name: $name, animals: $animals, milked: $milked, totalMl: $totalMl)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$GroupTotalCopyWith<$Res> implements $GroupTotalCopyWith<$Res> {
+  factory _$GroupTotalCopyWith(_GroupTotal value, $Res Function(_GroupTotal) _then) = __$GroupTotalCopyWithImpl;
+@override @useResult
+$Res call({
+ String groupId, String name, int animals, int milked, int totalMl
+});
+
+
+
+
+}
+/// @nodoc
+class __$GroupTotalCopyWithImpl<$Res>
+    implements _$GroupTotalCopyWith<$Res> {
+  __$GroupTotalCopyWithImpl(this._self, this._then);
+
+  final _GroupTotal _self;
+  final $Res Function(_GroupTotal) _then;
+
+/// Create a copy of GroupTotal
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? groupId = null,Object? name = null,Object? animals = null,Object? milked = null,Object? totalMl = null,}) {
+  return _then(_GroupTotal(
+groupId: null == groupId ? _self.groupId : groupId // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,animals: null == animals ? _self.animals : animals // ignore: cast_nullable_to_non_nullable
+as int,milked: null == milked ? _self.milked : milked // ignore: cast_nullable_to_non_nullable
+as int,totalMl: null == totalMl ? _self.totalMl : totalMl // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }

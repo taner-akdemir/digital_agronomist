@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/animal.dart';
+import 'package:milktrace/data/models/animal_group.dart';
 import 'package:milktrace/data/models/animal_import.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
@@ -272,6 +273,7 @@ abstract interface class MilkTraceRepository {
     required String fullName,
     required String role,
     String? password,
+    bool kiosk = false,
   });
 
   /// Ad, rol ve durum (active | suspended). Askıdaki kullanıcı giremez.
@@ -284,6 +286,15 @@ abstract interface class MilkTraceRepository {
 
   /// Kalıcı silme: yazdığı notlar "Silinmiş kullanıcı" olarak kalır.
   Future<void> deleteTeamMember(String id);
+
+  /// İşletmenin hayvan grupları (backend ADR 0092, `GET /animal-groups`).
+  Future<List<AnimalGroup>> animalGroups();
+
+  /// Grup ekler / adını değiştirir / siler; yalnızca sahip. Silinen grubun
+  /// hayvanları grupsuz kalır.
+  Future<AnimalGroup> createGroup(String name);
+  Future<AnimalGroup> renameGroup(String id, String name);
+  Future<void> deleteGroup(String id);
 
   /// Tank teslimleri ve fark eşiği (backend ADR 0089, `GET /deliveries`).
   Future<Deliveries> deliveries();
