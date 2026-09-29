@@ -119,7 +119,7 @@
   "channelsSourceSummary": "Milking summary",
   "channelsSourceHerd": "Every herd alert",
   "channelsSourceOpsHint": "System problems such as a silent meter box or data loss",
-  "channelsSourceSummaryHint": "A single message when milking ends (total milk, animals with low yield and low flow rate) and a weekly summary on Monday morning (Excel report attached in email)",
+  "channelsSourceSummaryHint": "A single message when milking ends (total milk, animals with low yield and low flow rate)",
   "channelsSourceHerdHint": "A separate message for each animal with low flow rate (can be noisy)",
   "channelsFieldHost": "SMTP server",
   "channelsFieldUsername": "Username",

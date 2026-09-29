@@ -1685,8 +1685,20 @@ abstract class AppLocalizations {
   /// No description provided for @channelsSourceSummaryHint.
   ///
   /// In tr, this message translates to:
-  /// **'Sağım bitince tek mesaj (toplam süt, düşük verim ve düşük debi olan hayvanlar) ve Pazartesi sabahı haftalık özet (e-postada Excel raporu ekli)'**
+  /// **'Sağım bitince tek mesaj (toplam süt, düşük verim ve düşük debi olan hayvanlar)'**
   String get channelsSourceSummaryHint;
+
+  /// No description provided for @channelsSourceWeekly.
+  ///
+  /// In tr, this message translates to:
+  /// **'Haftalık özet'**
+  String get channelsSourceWeekly;
+
+  /// No description provided for @channelsSourceWeeklyHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Pazartesi sabahı haftanın özeti: toplam süt, önceki haftaya göre değişim, düşüşteki hayvanlar (e-postada Excel raporu ekli)'**
+  String get channelsSourceWeeklyHint;
 
   /// No description provided for @channelsTestSent.
   ///
@@ -3486,6 +3498,95 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Sessiz saatteki uyarılar'**
   String get pushQuietChannelName;
+
+  /// No description provided for @qualityBacteria.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bakteri (bin/mL)'**
+  String get qualityBacteria;
+
+  /// No description provided for @qualityFat.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yağ (%)'**
+  String get qualityFat;
+
+  /// No description provided for @qualityHighScc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Somatik hücre sınırın üstünde ({limit} bin/mL)'**
+  String qualityHighScc(int limit);
+
+  /// No description provided for @qualityInvalid.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geçerli bir sayı girin'**
+  String get qualityInvalid;
+
+  /// No description provided for @qualityOptional.
+  ///
+  /// In tr, this message translates to:
+  /// **'İsteğe bağlı; fişte yazıyorsa girin.'**
+  String get qualityOptional;
+
+  /// No description provided for @qualityProtein.
+  ///
+  /// In tr, this message translates to:
+  /// **'Protein (%)'**
+  String get qualityProtein;
+
+  /// No description provided for @qualityScc.
+  ///
+  /// In tr, this message translates to:
+  /// **'Somatik hücre (bin/mL)'**
+  String get qualityScc;
+
+  /// No description provided for @qualitySccLimit.
+  ///
+  /// In tr, this message translates to:
+  /// **'Somatik hücre sınırı (bin/mL)'**
+  String get qualitySccLimit;
+
+  /// No description provided for @qualitySccLimitHelper.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aşılırsa uyarı gelir. Yaygın sınır 400.'**
+  String get qualitySccLimitHelper;
+
+  /// No description provided for @qualitySccLimitRange.
+  ///
+  /// In tr, this message translates to:
+  /// **'50 ile 2000 arasında olmalı'**
+  String get qualitySccLimitRange;
+
+  /// No description provided for @qualitySummary.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yağ %{fat} · Protein %{protein} · Hücre {scc} · Bakteri {bacteria}'**
+  String qualitySummary(
+    Object fat,
+    Object protein,
+    Object scc,
+    Object bacteria,
+  );
+
+  /// No description provided for @qualityTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mandıra analizi'**
+  String get qualityTitle;
+
+  /// No description provided for @qualityTrendEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Grafik için en az iki analiz gerekli.'**
+  String get qualityTrendEmpty;
+
+  /// No description provided for @qualityTrendTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Son 90 gün'**
+  String get qualityTrendTitle;
 
   /// No description provided for @quietEnabled.
   ///

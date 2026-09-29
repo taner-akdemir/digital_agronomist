@@ -346,17 +346,23 @@ abstract interface class MilkTraceRepository {
   Future<Deliveries> deliveries();
 
   /// Tanker fişi: gün ve miktar (mL). Sahip ve operatör; aynı gün 409.
+  /// Mandıra analizi isteğe bağlı (backend ADR 0110; hücre/bakteri bin/mL).
   Future<Delivery> addDelivery({
     required DateTime day,
     required int volumeMl,
     String note = '',
+    double? fatPct,
+    double? proteinPct,
+    int? sccK,
+    int? bacteriaK,
   });
 
   /// Yanlış teslimi siler; yalnızca sahip.
   Future<void> deleteDelivery(String id);
 
-  /// Fark eşiği (%, 0–50); yalnızca sahip.
-  Future<void> setDeliveryTolerance(double pct);
+  /// Fark eşiği (%, 0–50) ve somatik hücre sınırı (bin/mL, 50–2000; null
+  /// ise sunucu eskisini korur); yalnızca sahip.
+  Future<void> setDeliveryTolerance(double pct, {int? sccLimitK});
 
   /// Sağımcı özeti (backend ADR 0090, `GET /milkers`); yalnızca sahip.
   Future<List<Milker>> milkers({int days = 7});

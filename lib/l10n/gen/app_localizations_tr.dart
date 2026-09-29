@@ -918,7 +918,14 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get channelsSourceSummaryHint =>
-      'Sağım bitince tek mesaj (toplam süt, düşük verim ve düşük debi olan hayvanlar) ve Pazartesi sabahı haftalık özet (e-postada Excel raporu ekli)';
+      'Sağım bitince tek mesaj (toplam süt, düşük verim ve düşük debi olan hayvanlar)';
+
+  @override
+  String get channelsSourceWeekly => 'Haftalık özet';
+
+  @override
+  String get channelsSourceWeeklyHint =>
+      'Pazartesi sabahı haftanın özeti: toplam süt, önceki haftaya göre değişim, düşüşteki hayvanlar (e-postada Excel raporu ekli)';
 
   @override
   String get channelsTestSent => 'Deneme bildirimi gönderildi';
@@ -1996,6 +2003,57 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get pushQuietChannelName => 'Sessiz saatteki uyarılar';
+
+  @override
+  String get qualityBacteria => 'Bakteri (bin/mL)';
+
+  @override
+  String get qualityFat => 'Yağ (%)';
+
+  @override
+  String qualityHighScc(int limit) {
+    return 'Somatik hücre sınırın üstünde ($limit bin/mL)';
+  }
+
+  @override
+  String get qualityInvalid => 'Geçerli bir sayı girin';
+
+  @override
+  String get qualityOptional => 'İsteğe bağlı; fişte yazıyorsa girin.';
+
+  @override
+  String get qualityProtein => 'Protein (%)';
+
+  @override
+  String get qualityScc => 'Somatik hücre (bin/mL)';
+
+  @override
+  String get qualitySccLimit => 'Somatik hücre sınırı (bin/mL)';
+
+  @override
+  String get qualitySccLimitHelper => 'Aşılırsa uyarı gelir. Yaygın sınır 400.';
+
+  @override
+  String get qualitySccLimitRange => '50 ile 2000 arasında olmalı';
+
+  @override
+  String qualitySummary(
+    Object fat,
+    Object protein,
+    Object scc,
+    Object bacteria,
+  ) {
+    return 'Yağ %$fat · Protein %$protein · Hücre $scc · Bakteri $bacteria';
+  }
+
+  @override
+  String get qualityTitle => 'Mandıra analizi';
+
+  @override
+  String get qualityTrendEmpty => 'Grafik için en az iki analiz gerekli.';
+
+  @override
+  String get qualityTrendTitle => 'Son 90 gün';
 
   @override
   String get quietEnabled => 'Sessiz saat açık';

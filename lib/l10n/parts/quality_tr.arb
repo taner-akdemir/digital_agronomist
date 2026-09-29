@@ -1,0 +1,33 @@
+{
+  "channelsSourceWeekly": "Haftalık özet",
+  "channelsSourceWeeklyHint": "Pazartesi sabahı haftanın özeti: toplam süt, önceki haftaya göre değişim, düşüşteki hayvanlar (e-postada Excel raporu ekli)",
+  "qualityTitle": "Mandıra analizi",
+  "qualityOptional": "İsteğe bağlı; fişte yazıyorsa girin.",
+  "qualityFat": "Yağ (%)",
+  "qualityProtein": "Protein (%)",
+  "qualityScc": "Somatik hücre (bin/mL)",
+  "qualityBacteria": "Bakteri (bin/mL)",
+  "qualityInvalid": "Geçerli bir sayı girin",
+  "qualitySummary": "Yağ %{fat} · Protein %{protein} · Hücre {scc} · Bakteri {bacteria}",
+  "@qualitySummary": {
+    "placeholders": {
+      "fat": {},
+      "protein": {},
+      "scc": {},
+      "bacteria": {}
+    }
+  },
+  "qualityHighScc": "Somatik hücre sınırın üstünde ({limit} bin/mL)",
+  "@qualityHighScc": {
+    "placeholders": {
+      "limit": {
+        "type": "int"
+      }
+    }
+  },
+  "qualityTrendTitle": "Son 90 gün",
+  "qualityTrendEmpty": "Grafik için en az iki analiz gerekli.",
+  "qualitySccLimit": "Somatik hücre sınırı (bin/mL)",
+  "qualitySccLimitHelper": "Aşılırsa uyarı gelir. Yaygın sınır 400.",
+  "qualitySccLimitRange": "50 ile 2000 arasında olmalı"
+}

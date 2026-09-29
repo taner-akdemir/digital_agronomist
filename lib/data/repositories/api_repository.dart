@@ -752,6 +752,10 @@ class ApiRepository implements MilkTraceRepository {
     required DateTime day,
     required int volumeMl,
     String note = '',
+    double? fatPct,
+    double? proteinPct,
+    int? sccK,
+    int? bacteriaK,
   }) async => Delivery.fromJson(
     _dataOf(
       await _dio.post<dynamic>(
@@ -764,6 +768,10 @@ class ApiRepository implements MilkTraceRepository {
               '${day.day.toString().padLeft(2, '0')}',
           'volumeMl': volumeMl,
           'note': note,
+          'fatPct': ?fatPct,
+          'proteinPct': ?proteinPct,
+          'sccK': ?sccK,
+          'bacteriaK': ?bacteriaK,
         },
       ),
     ),
@@ -775,10 +783,10 @@ class ApiRepository implements MilkTraceRepository {
   }
 
   @override
-  Future<void> setDeliveryTolerance(double pct) async {
+  Future<void> setDeliveryTolerance(double pct, {int? sccLimitK}) async {
     await _dio.put<dynamic>(
       '/deliveries/settings',
-      data: {'tolerancePct': pct},
+      data: {'tolerancePct': pct, 'sccLimitK': ?sccLimitK},
     );
   }
 

@@ -921,7 +921,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get channelsSourceSummaryHint =>
-      'A single message when milking ends (total milk, animals with low yield and low flow rate) and a weekly summary on Monday morning (Excel report attached in email)';
+      'A single message when milking ends (total milk, animals with low yield and low flow rate)';
+
+  @override
+  String get channelsSourceWeekly => 'Weekly summary';
+
+  @override
+  String get channelsSourceWeeklyHint =>
+      'Monday morning summary of the week: total milk, change from the previous week, declining animals (Excel report attached in email)';
 
   @override
   String get channelsTestSent => 'Test notification sent';
@@ -2019,6 +2026,59 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pushQuietChannelName => 'Alerts during quiet hours';
+
+  @override
+  String get qualityBacteria => 'Bacteria (thousand/mL)';
+
+  @override
+  String get qualityFat => 'Fat (%)';
+
+  @override
+  String qualityHighScc(int limit) {
+    return 'Somatic cell count above the limit ($limit thousand/mL)';
+  }
+
+  @override
+  String get qualityInvalid => 'Enter a valid number';
+
+  @override
+  String get qualityOptional => 'Optional; enter if it is on the receipt.';
+
+  @override
+  String get qualityProtein => 'Protein (%)';
+
+  @override
+  String get qualityScc => 'Somatic cells (thousand/mL)';
+
+  @override
+  String get qualitySccLimit => 'Somatic cell limit (thousand/mL)';
+
+  @override
+  String get qualitySccLimitHelper =>
+      'An alert is sent above this. A common limit is 400.';
+
+  @override
+  String get qualitySccLimitRange => 'Must be between 50 and 2000';
+
+  @override
+  String qualitySummary(
+    Object fat,
+    Object protein,
+    Object scc,
+    Object bacteria,
+  ) {
+    return 'Fat $fat% · Protein $protein% · Cells $scc · Bacteria $bacteria';
+  }
+
+  @override
+  String get qualityTitle => 'Dairy analysis';
+
+  @override
+  String get qualityTrendEmpty =>
+      'At least two analyses are needed for the chart.';
+
+  @override
+  String get qualityTrendTitle => 'Last 90 days';
 
   @override
   String get quietEnabled => 'Quiet hours on';

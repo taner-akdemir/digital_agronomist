@@ -20,6 +20,11 @@ _Delivery _$DeliveryFromJson(Map<String, dynamic> json) => _Delivery(
   withheldMl: (json['withheldMl'] as num?)?.toInt() ?? 0,
   diffPct: (json['diffPct'] as num?)?.toDouble() ?? 0,
   mismatch: json['mismatch'] as bool? ?? false,
+  fatPct: (json['fatPct'] as num?)?.toDouble(),
+  proteinPct: (json['proteinPct'] as num?)?.toDouble(),
+  sccK: (json['sccK'] as num?)?.toInt(),
+  bacteriaK: (json['bacteriaK'] as num?)?.toInt(),
+  highScc: json['highScc'] as bool? ?? false,
 );
 
 Map<String, dynamic> _$DeliveryToJson(_Delivery instance) => <String, dynamic>{
@@ -34,10 +39,16 @@ Map<String, dynamic> _$DeliveryToJson(_Delivery instance) => <String, dynamic>{
   'withheldMl': instance.withheldMl,
   'diffPct': instance.diffPct,
   'mismatch': instance.mismatch,
+  'fatPct': instance.fatPct,
+  'proteinPct': instance.proteinPct,
+  'sccK': instance.sccK,
+  'bacteriaK': instance.bacteriaK,
+  'highScc': instance.highScc,
 };
 
 _Deliveries _$DeliveriesFromJson(Map<String, dynamic> json) => _Deliveries(
   tolerancePct: (json['tolerancePct'] as num?)?.toDouble() ?? 5,
+  sccLimitK: (json['sccLimitK'] as num?)?.toInt() ?? 400,
   items:
       (json['items'] as List<dynamic>?)
           ?.map((e) => Delivery.fromJson(e as Map<String, dynamic>))
@@ -48,6 +59,7 @@ _Deliveries _$DeliveriesFromJson(Map<String, dynamic> json) => _Deliveries(
 Map<String, dynamic> _$DeliveriesToJson(_Deliveries instance) =>
     <String, dynamic>{
       'tolerancePct': instance.tolerancePct,
+      'sccLimitK': instance.sccLimitK,
       'items': instance.items,
     };
 

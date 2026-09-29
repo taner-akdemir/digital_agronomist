@@ -1049,14 +1049,18 @@ class MockRepository implements MilkTraceRepository {
   /// demoda gerçek sanılacak bir alarm göstermek olurdu.
   final List<Delivery> _deliveries = [];
   double _tolerance = 5;
+  int _sccLimitK = 400;
   int _deliverySeq = 0;
 
   @override
   Future<Deliveries> deliveries() => _delayed(
     () async => Deliveries(
       tolerancePct: _tolerance,
-      items: [..._deliveries]
-        ..sort((a, b) => b.deliveredOn.compareTo(a.deliveredOn)),
+      sccLimitK: _sccLimitK,
+      items: [
+        for (final d in _deliveries)
+          d.copyWith(highScc: d.sccK != null && d.sccK! > _sccLimitK),
+      ]..sort((a, b) => b.deliveredOn.compareTo(a.deliveredOn)),
     ),
   );
 
@@ -1065,6 +1069,10 @@ class MockRepository implements MilkTraceRepository {
     required DateTime day,
     required int volumeMl,
     String note = '',
+    double? fatPct,
+    double? proteinPct,
+    int? sccK,
+    int? bacteriaK,
   }) => _delayed(() async {
     final d = DateTime(day.year, day.month, day.day);
     if (_deliveries.any((e) => e.deliveredOn == d)) {
@@ -1079,6 +1087,12 @@ class MockRepository implements MilkTraceRepository {
       volumeMl: volumeMl,
       note: note.trim(),
       authorName: 'Demo Çiftçi',
+      fatPct: fatPct,
+      proteinPct: proteinPct,
+      sccK: sccK,
+      bacteriaK: bacteriaK,
+      // Sunucu ile aynı kural; değer girilenden, uydurulmuyor.
+      highScc: sccK != null && sccK > _sccLimitK,
     );
     _deliveries.add(out);
     return out;
@@ -1089,8 +1103,11 @@ class MockRepository implements MilkTraceRepository {
       _delayed(() async => _deliveries.removeWhere((e) => e.id == id));
 
   @override
-  Future<void> setDeliveryTolerance(double pct) =>
-      _delayed(() async => _tolerance = pct);
+  Future<void> setDeliveryTolerance(double pct, {int? sccLimitK}) =>
+      _delayed(() async {
+        _tolerance = pct;
+        if (sccLimitK != null) _sccLimitK = sccLimitK;
+      });
 
   @override
   Future<List<Milker>> milkers({int days = 7}) => _delayed(

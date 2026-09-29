@@ -22,6 +22,15 @@ abstract class Delivery with _$Delivery {
     @Default(0) int withheldMl,
     @Default(0) double diffPct,
     @Default(false) bool mismatch,
+
+    /// Mandıra analizi (backend ADR 0110), isteğe bağlı: yağ ve protein %,
+    /// somatik hücre ve bakteri BİN/mL (fişteki gibi). `highScc`: işletmenin
+    /// somatik hücre sınırı aşıldı (sunucu karar verir).
+    double? fatPct,
+    double? proteinPct,
+    int? sccK,
+    int? bacteriaK,
+    @Default(false) bool highScc,
   }) = _Delivery;
 
   factory Delivery.fromJson(Map<String, dynamic> json) =>
@@ -33,6 +42,9 @@ abstract class Delivery with _$Delivery {
 abstract class Deliveries with _$Deliveries {
   const factory Deliveries({
     @Default(5) double tolerancePct,
+
+    /// Somatik hücre sınırı, bin/mL (backend ADR 0110).
+    @Default(400) int sccLimitK,
     @Default([]) List<Delivery> items,
   }) = _Deliveries;
 

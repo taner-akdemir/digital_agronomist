@@ -126,7 +126,7 @@ class _FormState extends ConsumerState<_Form> {
         (kind == 'sms' || kind == 'ivr' ? 'critical' : 'warning');
     _sendResolved = e?.sendResolved ?? true;
     _enabled = e?.enabled ?? true;
-    _sources = {...(e?.sources ?? defaultChannelSources)};
+    _sources = {...(e?.sources ?? defaultChannelSources(widget.spec.kind))};
     // Boş: türün varsayılanı. Ayarlanmış değer gösterilir, varsayılan
     // ipucunda.
     _dailyLimit = TextEditingController(text: e?.dailyLimit?.toString() ?? '');

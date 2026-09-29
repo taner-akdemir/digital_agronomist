@@ -532,16 +532,29 @@ class CachingRepository implements MilkTraceRepository {
     required DateTime day,
     required int volumeMl,
     String note = '',
-  }) =>
-      _net(() => _inner.addDelivery(day: day, volumeMl: volumeMl, note: note));
+    double? fatPct,
+    double? proteinPct,
+    int? sccK,
+    int? bacteriaK,
+  }) => _net(
+    () => _inner.addDelivery(
+      day: day,
+      volumeMl: volumeMl,
+      note: note,
+      fatPct: fatPct,
+      proteinPct: proteinPct,
+      sccK: sccK,
+      bacteriaK: bacteriaK,
+    ),
+  );
 
   @override
   Future<void> deleteDelivery(String id) =>
       _net(() => _inner.deleteDelivery(id));
 
   @override
-  Future<void> setDeliveryTolerance(double pct) =>
-      _net(() => _inner.setDeliveryTolerance(pct));
+  Future<void> setDeliveryTolerance(double pct, {int? sccLimitK}) =>
+      _net(() => _inner.setDeliveryTolerance(pct, sccLimitK: sccLimitK));
 
   @override
   Future<List<Milker>> milkers({int days = 7}) => _read(

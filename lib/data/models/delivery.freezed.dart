@@ -16,7 +16,10 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Delivery {
 
- String get id; DateTime get deliveredOn; int get volumeMl; String get note; String? get authorName; bool get compared; DateTime? get periodFrom; int get meteredMl; int get withheldMl; double get diffPct; bool get mismatch;
+ String get id; DateTime get deliveredOn; int get volumeMl; String get note; String? get authorName; bool get compared; DateTime? get periodFrom; int get meteredMl; int get withheldMl; double get diffPct; bool get mismatch;/// Mandıra analizi (backend ADR 0110), isteğe bağlı: yağ ve protein %,
+/// somatik hücre ve bakteri BİN/mL (fişteki gibi). `highScc`: işletmenin
+/// somatik hücre sınırı aşıldı (sunucu karar verir).
+ double? get fatPct; double? get proteinPct; int? get sccK; int? get bacteriaK; bool get highScc;
 /// Create a copy of Delivery
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,20 +33,20 @@ $DeliveryCopyWith<Delivery> get copyWith => _$DeliveryCopyWithImpl<Delivery>(thi
 @override
 bool operator ==(Object other) {
   final _this = this as Delivery;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Delivery&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.deliveredOn, _this.deliveredOn) || other.deliveredOn == _this.deliveredOn)&&(identical(other.volumeMl, _this.volumeMl) || other.volumeMl == _this.volumeMl)&&(identical(other.note, _this.note) || other.note == _this.note)&&(identical(other.authorName, _this.authorName) || other.authorName == _this.authorName)&&(identical(other.compared, _this.compared) || other.compared == _this.compared)&&(identical(other.periodFrom, _this.periodFrom) || other.periodFrom == _this.periodFrom)&&(identical(other.meteredMl, _this.meteredMl) || other.meteredMl == _this.meteredMl)&&(identical(other.withheldMl, _this.withheldMl) || other.withheldMl == _this.withheldMl)&&(identical(other.diffPct, _this.diffPct) || other.diffPct == _this.diffPct)&&(identical(other.mismatch, _this.mismatch) || other.mismatch == _this.mismatch));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Delivery&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.deliveredOn, _this.deliveredOn) || other.deliveredOn == _this.deliveredOn)&&(identical(other.volumeMl, _this.volumeMl) || other.volumeMl == _this.volumeMl)&&(identical(other.note, _this.note) || other.note == _this.note)&&(identical(other.authorName, _this.authorName) || other.authorName == _this.authorName)&&(identical(other.compared, _this.compared) || other.compared == _this.compared)&&(identical(other.periodFrom, _this.periodFrom) || other.periodFrom == _this.periodFrom)&&(identical(other.meteredMl, _this.meteredMl) || other.meteredMl == _this.meteredMl)&&(identical(other.withheldMl, _this.withheldMl) || other.withheldMl == _this.withheldMl)&&(identical(other.diffPct, _this.diffPct) || other.diffPct == _this.diffPct)&&(identical(other.mismatch, _this.mismatch) || other.mismatch == _this.mismatch)&&(identical(other.fatPct, _this.fatPct) || other.fatPct == _this.fatPct)&&(identical(other.proteinPct, _this.proteinPct) || other.proteinPct == _this.proteinPct)&&(identical(other.sccK, _this.sccK) || other.sccK == _this.sccK)&&(identical(other.bacteriaK, _this.bacteriaK) || other.bacteriaK == _this.bacteriaK)&&(identical(other.highScc, _this.highScc) || other.highScc == _this.highScc));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as Delivery;
-  return Object.hash(runtimeType,_this.id,_this.deliveredOn,_this.volumeMl,_this.note,_this.authorName,_this.compared,_this.periodFrom,_this.meteredMl,_this.withheldMl,_this.diffPct,_this.mismatch);
+  return Object.hash(runtimeType,_this.id,_this.deliveredOn,_this.volumeMl,_this.note,_this.authorName,_this.compared,_this.periodFrom,_this.meteredMl,_this.withheldMl,_this.diffPct,_this.mismatch,_this.fatPct,_this.proteinPct,_this.sccK,_this.bacteriaK,_this.highScc);
 }
 
 @override
 String toString() {
   final _this = this as Delivery;
-  return 'Delivery(id: ${_this.id}, deliveredOn: ${_this.deliveredOn}, volumeMl: ${_this.volumeMl}, note: ${_this.note}, authorName: ${_this.authorName}, compared: ${_this.compared}, periodFrom: ${_this.periodFrom}, meteredMl: ${_this.meteredMl}, withheldMl: ${_this.withheldMl}, diffPct: ${_this.diffPct}, mismatch: ${_this.mismatch})';
+  return 'Delivery(id: ${_this.id}, deliveredOn: ${_this.deliveredOn}, volumeMl: ${_this.volumeMl}, note: ${_this.note}, authorName: ${_this.authorName}, compared: ${_this.compared}, periodFrom: ${_this.periodFrom}, meteredMl: ${_this.meteredMl}, withheldMl: ${_this.withheldMl}, diffPct: ${_this.diffPct}, mismatch: ${_this.mismatch}, fatPct: ${_this.fatPct}, proteinPct: ${_this.proteinPct}, sccK: ${_this.sccK}, bacteriaK: ${_this.bacteriaK}, highScc: ${_this.highScc})';
 }
 
 
@@ -54,7 +57,7 @@ abstract mixin class $DeliveryCopyWith<$Res>  {
   factory $DeliveryCopyWith(Delivery value, $Res Function(Delivery) _then) = _$DeliveryCopyWithImpl;
 @useResult
 $Res call({
- String id, DateTime deliveredOn, int volumeMl, String note, String? authorName, bool compared, DateTime? periodFrom, int meteredMl, int withheldMl, double diffPct, bool mismatch
+ String id, DateTime deliveredOn, int volumeMl, String note, String? authorName, bool compared, DateTime? periodFrom, int meteredMl, int withheldMl, double diffPct, bool mismatch, double? fatPct, double? proteinPct, int? sccK, int? bacteriaK, bool highScc
 });
 
 
@@ -71,7 +74,7 @@ class _$DeliveryCopyWithImpl<$Res>
 
 /// Create a copy of Delivery
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? deliveredOn = null,Object? volumeMl = null,Object? note = null,Object? authorName = freezed,Object? compared = null,Object? periodFrom = freezed,Object? meteredMl = null,Object? withheldMl = null,Object? diffPct = null,Object? mismatch = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? deliveredOn = null,Object? volumeMl = null,Object? note = null,Object? authorName = freezed,Object? compared = null,Object? periodFrom = freezed,Object? meteredMl = null,Object? withheldMl = null,Object? diffPct = null,Object? mismatch = null,Object? fatPct = freezed,Object? proteinPct = freezed,Object? sccK = freezed,Object? bacteriaK = freezed,Object? highScc = null,}) {
   return _then(Delivery(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,deliveredOn: null == deliveredOn ? _self.deliveredOn : deliveredOn // ignore: cast_nullable_to_non_nullable
@@ -84,6 +87,11 @@ as DateTime?,meteredMl: null == meteredMl ? _self.meteredMl : meteredMl // ignor
 as int,withheldMl: null == withheldMl ? _self.withheldMl : withheldMl // ignore: cast_nullable_to_non_nullable
 as int,diffPct: null == diffPct ? _self.diffPct : diffPct // ignore: cast_nullable_to_non_nullable
 as double,mismatch: null == mismatch ? _self.mismatch : mismatch // ignore: cast_nullable_to_non_nullable
+as bool,fatPct: freezed == fatPct ? _self.fatPct : fatPct // ignore: cast_nullable_to_non_nullable
+as double?,proteinPct: freezed == proteinPct ? _self.proteinPct : proteinPct // ignore: cast_nullable_to_non_nullable
+as double?,sccK: freezed == sccK ? _self.sccK : sccK // ignore: cast_nullable_to_non_nullable
+as int?,bacteriaK: freezed == bacteriaK ? _self.bacteriaK : bacteriaK // ignore: cast_nullable_to_non_nullable
+as int?,highScc: null == highScc ? _self.highScc : highScc // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -169,10 +177,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  DateTime deliveredOn,  int volumeMl,  String note,  String? authorName,  bool compared,  DateTime? periodFrom,  int meteredMl,  int withheldMl,  double diffPct,  bool mismatch)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  DateTime deliveredOn,  int volumeMl,  String note,  String? authorName,  bool compared,  DateTime? periodFrom,  int meteredMl,  int withheldMl,  double diffPct,  bool mismatch,  double? fatPct,  double? proteinPct,  int? sccK,  int? bacteriaK,  bool highScc)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Delivery() when $default != null:
-return $default(_that.id,_that.deliveredOn,_that.volumeMl,_that.note,_that.authorName,_that.compared,_that.periodFrom,_that.meteredMl,_that.withheldMl,_that.diffPct,_that.mismatch);case _:
+return $default(_that.id,_that.deliveredOn,_that.volumeMl,_that.note,_that.authorName,_that.compared,_that.periodFrom,_that.meteredMl,_that.withheldMl,_that.diffPct,_that.mismatch,_that.fatPct,_that.proteinPct,_that.sccK,_that.bacteriaK,_that.highScc);case _:
   return orElse();
 
 }
@@ -190,10 +198,10 @@ return $default(_that.id,_that.deliveredOn,_that.volumeMl,_that.note,_that.autho
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  DateTime deliveredOn,  int volumeMl,  String note,  String? authorName,  bool compared,  DateTime? periodFrom,  int meteredMl,  int withheldMl,  double diffPct,  bool mismatch)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  DateTime deliveredOn,  int volumeMl,  String note,  String? authorName,  bool compared,  DateTime? periodFrom,  int meteredMl,  int withheldMl,  double diffPct,  bool mismatch,  double? fatPct,  double? proteinPct,  int? sccK,  int? bacteriaK,  bool highScc)  $default,) {final _that = this;
 switch (_that) {
 case _Delivery():
-return $default(_that.id,_that.deliveredOn,_that.volumeMl,_that.note,_that.authorName,_that.compared,_that.periodFrom,_that.meteredMl,_that.withheldMl,_that.diffPct,_that.mismatch);case _:
+return $default(_that.id,_that.deliveredOn,_that.volumeMl,_that.note,_that.authorName,_that.compared,_that.periodFrom,_that.meteredMl,_that.withheldMl,_that.diffPct,_that.mismatch,_that.fatPct,_that.proteinPct,_that.sccK,_that.bacteriaK,_that.highScc);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -210,10 +218,10 @@ return $default(_that.id,_that.deliveredOn,_that.volumeMl,_that.note,_that.autho
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  DateTime deliveredOn,  int volumeMl,  String note,  String? authorName,  bool compared,  DateTime? periodFrom,  int meteredMl,  int withheldMl,  double diffPct,  bool mismatch)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  DateTime deliveredOn,  int volumeMl,  String note,  String? authorName,  bool compared,  DateTime? periodFrom,  int meteredMl,  int withheldMl,  double diffPct,  bool mismatch,  double? fatPct,  double? proteinPct,  int? sccK,  int? bacteriaK,  bool highScc)?  $default,) {final _that = this;
 switch (_that) {
 case _Delivery() when $default != null:
-return $default(_that.id,_that.deliveredOn,_that.volumeMl,_that.note,_that.authorName,_that.compared,_that.periodFrom,_that.meteredMl,_that.withheldMl,_that.diffPct,_that.mismatch);case _:
+return $default(_that.id,_that.deliveredOn,_that.volumeMl,_that.note,_that.authorName,_that.compared,_that.periodFrom,_that.meteredMl,_that.withheldMl,_that.diffPct,_that.mismatch,_that.fatPct,_that.proteinPct,_that.sccK,_that.bacteriaK,_that.highScc);case _:
   return null;
 
 }
@@ -225,7 +233,7 @@ return $default(_that.id,_that.deliveredOn,_that.volumeMl,_that.note,_that.autho
 @JsonSerializable()
 
 class _Delivery implements Delivery {
-  const _Delivery({required this.id, required this.deliveredOn, required this.volumeMl, this.note = '', this.authorName, this.compared = false, this.periodFrom, this.meteredMl = 0, this.withheldMl = 0, this.diffPct = 0, this.mismatch = false});
+  const _Delivery({required this.id, required this.deliveredOn, required this.volumeMl, this.note = '', this.authorName, this.compared = false, this.periodFrom, this.meteredMl = 0, this.withheldMl = 0, this.diffPct = 0, this.mismatch = false, this.fatPct, this.proteinPct, this.sccK, this.bacteriaK, this.highScc = false});
   factory _Delivery.fromJson(Map<String, dynamic> json) => _$DeliveryFromJson(json);
 
 @override final  String id;
@@ -239,6 +247,14 @@ class _Delivery implements Delivery {
 @override@JsonKey() final  int withheldMl;
 @override@JsonKey() final  double diffPct;
 @override@JsonKey() final  bool mismatch;
+/// Mandıra analizi (backend ADR 0110), isteğe bağlı: yağ ve protein %,
+/// somatik hücre ve bakteri BİN/mL (fişteki gibi). `highScc`: işletmenin
+/// somatik hücre sınırı aşıldı (sunucu karar verir).
+@override final  double? fatPct;
+@override final  double? proteinPct;
+@override final  int? sccK;
+@override final  int? bacteriaK;
+@override@JsonKey() final  bool highScc;
 
 /// Create a copy of Delivery
 /// with the given fields replaced by the non-null parameter values.
@@ -253,18 +269,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Delivery&&(identical(other.id, id) || other.id == id)&&(identical(other.deliveredOn, deliveredOn) || other.deliveredOn == deliveredOn)&&(identical(other.volumeMl, volumeMl) || other.volumeMl == volumeMl)&&(identical(other.note, note) || other.note == note)&&(identical(other.authorName, authorName) || other.authorName == authorName)&&(identical(other.compared, compared) || other.compared == compared)&&(identical(other.periodFrom, periodFrom) || other.periodFrom == periodFrom)&&(identical(other.meteredMl, meteredMl) || other.meteredMl == meteredMl)&&(identical(other.withheldMl, withheldMl) || other.withheldMl == withheldMl)&&(identical(other.diffPct, diffPct) || other.diffPct == diffPct)&&(identical(other.mismatch, mismatch) || other.mismatch == mismatch));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Delivery&&(identical(other.id, id) || other.id == id)&&(identical(other.deliveredOn, deliveredOn) || other.deliveredOn == deliveredOn)&&(identical(other.volumeMl, volumeMl) || other.volumeMl == volumeMl)&&(identical(other.note, note) || other.note == note)&&(identical(other.authorName, authorName) || other.authorName == authorName)&&(identical(other.compared, compared) || other.compared == compared)&&(identical(other.periodFrom, periodFrom) || other.periodFrom == periodFrom)&&(identical(other.meteredMl, meteredMl) || other.meteredMl == meteredMl)&&(identical(other.withheldMl, withheldMl) || other.withheldMl == withheldMl)&&(identical(other.diffPct, diffPct) || other.diffPct == diffPct)&&(identical(other.mismatch, mismatch) || other.mismatch == mismatch)&&(identical(other.fatPct, fatPct) || other.fatPct == fatPct)&&(identical(other.proteinPct, proteinPct) || other.proteinPct == proteinPct)&&(identical(other.sccK, sccK) || other.sccK == sccK)&&(identical(other.bacteriaK, bacteriaK) || other.bacteriaK == bacteriaK)&&(identical(other.highScc, highScc) || other.highScc == highScc));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,deliveredOn,volumeMl,note,authorName,compared,periodFrom,meteredMl,withheldMl,diffPct,mismatch);
+    return Object.hash(runtimeType,id,deliveredOn,volumeMl,note,authorName,compared,periodFrom,meteredMl,withheldMl,diffPct,mismatch,fatPct,proteinPct,sccK,bacteriaK,highScc);
 }
 
 @override
 String toString() {
-    return 'Delivery(id: $id, deliveredOn: $deliveredOn, volumeMl: $volumeMl, note: $note, authorName: $authorName, compared: $compared, periodFrom: $periodFrom, meteredMl: $meteredMl, withheldMl: $withheldMl, diffPct: $diffPct, mismatch: $mismatch)';
+    return 'Delivery(id: $id, deliveredOn: $deliveredOn, volumeMl: $volumeMl, note: $note, authorName: $authorName, compared: $compared, periodFrom: $periodFrom, meteredMl: $meteredMl, withheldMl: $withheldMl, diffPct: $diffPct, mismatch: $mismatch, fatPct: $fatPct, proteinPct: $proteinPct, sccK: $sccK, bacteriaK: $bacteriaK, highScc: $highScc)';
 }
 
 
@@ -275,7 +291,7 @@ abstract mixin class _$DeliveryCopyWith<$Res> implements $DeliveryCopyWith<$Res>
   factory _$DeliveryCopyWith(_Delivery value, $Res Function(_Delivery) _then) = __$DeliveryCopyWithImpl;
 @override @useResult
 $Res call({
- String id, DateTime deliveredOn, int volumeMl, String note, String? authorName, bool compared, DateTime? periodFrom, int meteredMl, int withheldMl, double diffPct, bool mismatch
+ String id, DateTime deliveredOn, int volumeMl, String note, String? authorName, bool compared, DateTime? periodFrom, int meteredMl, int withheldMl, double diffPct, bool mismatch, double? fatPct, double? proteinPct, int? sccK, int? bacteriaK, bool highScc
 });
 
 
@@ -292,7 +308,7 @@ class __$DeliveryCopyWithImpl<$Res>
 
 /// Create a copy of Delivery
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? deliveredOn = null,Object? volumeMl = null,Object? note = null,Object? authorName = freezed,Object? compared = null,Object? periodFrom = freezed,Object? meteredMl = null,Object? withheldMl = null,Object? diffPct = null,Object? mismatch = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? deliveredOn = null,Object? volumeMl = null,Object? note = null,Object? authorName = freezed,Object? compared = null,Object? periodFrom = freezed,Object? meteredMl = null,Object? withheldMl = null,Object? diffPct = null,Object? mismatch = null,Object? fatPct = freezed,Object? proteinPct = freezed,Object? sccK = freezed,Object? bacteriaK = freezed,Object? highScc = null,}) {
   return _then(_Delivery(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,deliveredOn: null == deliveredOn ? _self.deliveredOn : deliveredOn // ignore: cast_nullable_to_non_nullable
@@ -305,6 +321,11 @@ as DateTime?,meteredMl: null == meteredMl ? _self.meteredMl : meteredMl // ignor
 as int,withheldMl: null == withheldMl ? _self.withheldMl : withheldMl // ignore: cast_nullable_to_non_nullable
 as int,diffPct: null == diffPct ? _self.diffPct : diffPct // ignore: cast_nullable_to_non_nullable
 as double,mismatch: null == mismatch ? _self.mismatch : mismatch // ignore: cast_nullable_to_non_nullable
+as bool,fatPct: freezed == fatPct ? _self.fatPct : fatPct // ignore: cast_nullable_to_non_nullable
+as double?,proteinPct: freezed == proteinPct ? _self.proteinPct : proteinPct // ignore: cast_nullable_to_non_nullable
+as double?,sccK: freezed == sccK ? _self.sccK : sccK // ignore: cast_nullable_to_non_nullable
+as int?,bacteriaK: freezed == bacteriaK ? _self.bacteriaK : bacteriaK // ignore: cast_nullable_to_non_nullable
+as int?,highScc: null == highScc ? _self.highScc : highScc // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -316,7 +337,8 @@ as bool,
 /// @nodoc
 mixin _$Deliveries {
 
- double get tolerancePct; List<Delivery> get items;
+ double get tolerancePct;/// Somatik hücre sınırı, bin/mL (backend ADR 0110).
+ int get sccLimitK; List<Delivery> get items;
 /// Create a copy of Deliveries
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -330,20 +352,20 @@ $DeliveriesCopyWith<Deliveries> get copyWith => _$DeliveriesCopyWithImpl<Deliver
 @override
 bool operator ==(Object other) {
   final _this = this as Deliveries;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Deliveries&&(identical(other.tolerancePct, _this.tolerancePct) || other.tolerancePct == _this.tolerancePct)&&const DeepCollectionEquality().equals(other.items, _this.items));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Deliveries&&(identical(other.tolerancePct, _this.tolerancePct) || other.tolerancePct == _this.tolerancePct)&&(identical(other.sccLimitK, _this.sccLimitK) || other.sccLimitK == _this.sccLimitK)&&const DeepCollectionEquality().equals(other.items, _this.items));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as Deliveries;
-  return Object.hash(runtimeType,_this.tolerancePct,const DeepCollectionEquality().hash(_this.items));
+  return Object.hash(runtimeType,_this.tolerancePct,_this.sccLimitK,const DeepCollectionEquality().hash(_this.items));
 }
 
 @override
 String toString() {
   final _this = this as Deliveries;
-  return 'Deliveries(tolerancePct: ${_this.tolerancePct}, items: ${_this.items})';
+  return 'Deliveries(tolerancePct: ${_this.tolerancePct}, sccLimitK: ${_this.sccLimitK}, items: ${_this.items})';
 }
 
 
@@ -354,7 +376,7 @@ abstract mixin class $DeliveriesCopyWith<$Res>  {
   factory $DeliveriesCopyWith(Deliveries value, $Res Function(Deliveries) _then) = _$DeliveriesCopyWithImpl;
 @useResult
 $Res call({
- double tolerancePct, List<Delivery> items
+ double tolerancePct, int sccLimitK, List<Delivery> items
 });
 
 
@@ -371,10 +393,11 @@ class _$DeliveriesCopyWithImpl<$Res>
 
 /// Create a copy of Deliveries
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? tolerancePct = null,Object? items = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? tolerancePct = null,Object? sccLimitK = null,Object? items = null,}) {
   return _then(Deliveries(
 tolerancePct: null == tolerancePct ? _self.tolerancePct : tolerancePct // ignore: cast_nullable_to_non_nullable
-as double,items: null == items ? _self.items : items // ignore: cast_nullable_to_non_nullable
+as double,sccLimitK: null == sccLimitK ? _self.sccLimitK : sccLimitK // ignore: cast_nullable_to_non_nullable
+as int,items: null == items ? _self.items : items // ignore: cast_nullable_to_non_nullable
 as List<Delivery>,
   ));
 }
@@ -460,10 +483,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( double tolerancePct,  List<Delivery> items)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( double tolerancePct,  int sccLimitK,  List<Delivery> items)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Deliveries() when $default != null:
-return $default(_that.tolerancePct,_that.items);case _:
+return $default(_that.tolerancePct,_that.sccLimitK,_that.items);case _:
   return orElse();
 
 }
@@ -481,10 +504,10 @@ return $default(_that.tolerancePct,_that.items);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( double tolerancePct,  List<Delivery> items)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( double tolerancePct,  int sccLimitK,  List<Delivery> items)  $default,) {final _that = this;
 switch (_that) {
 case _Deliveries():
-return $default(_that.tolerancePct,_that.items);case _:
+return $default(_that.tolerancePct,_that.sccLimitK,_that.items);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -501,10 +524,10 @@ return $default(_that.tolerancePct,_that.items);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( double tolerancePct,  List<Delivery> items)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( double tolerancePct,  int sccLimitK,  List<Delivery> items)?  $default,) {final _that = this;
 switch (_that) {
 case _Deliveries() when $default != null:
-return $default(_that.tolerancePct,_that.items);case _:
+return $default(_that.tolerancePct,_that.sccLimitK,_that.items);case _:
   return null;
 
 }
@@ -516,10 +539,12 @@ return $default(_that.tolerancePct,_that.items);case _:
 @JsonSerializable()
 
 class _Deliveries implements Deliveries {
-  const _Deliveries({this.tolerancePct = 5,  List<Delivery> items = const []}): _items = items;
+  const _Deliveries({this.tolerancePct = 5, this.sccLimitK = 400,  List<Delivery> items = const []}): _items = items;
   factory _Deliveries.fromJson(Map<String, dynamic> json) => _$DeliveriesFromJson(json);
 
 @override@JsonKey() final  double tolerancePct;
+/// Somatik hücre sınırı, bin/mL (backend ADR 0110).
+@override@JsonKey() final  int sccLimitK;
  final  List<Delivery> _items;
 @override@JsonKey() List<Delivery> get items {
   if (_items is EqualUnmodifiableListView) return _items;
@@ -541,18 +566,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Deliveries&&(identical(other.tolerancePct, tolerancePct) || other.tolerancePct == tolerancePct)&&const DeepCollectionEquality().equals(other.items, _items));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Deliveries&&(identical(other.tolerancePct, tolerancePct) || other.tolerancePct == tolerancePct)&&(identical(other.sccLimitK, sccLimitK) || other.sccLimitK == sccLimitK)&&const DeepCollectionEquality().equals(other.items, _items));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,tolerancePct,const DeepCollectionEquality().hash(_items));
+    return Object.hash(runtimeType,tolerancePct,sccLimitK,const DeepCollectionEquality().hash(_items));
 }
 
 @override
 String toString() {
-    return 'Deliveries(tolerancePct: $tolerancePct, items: $items)';
+    return 'Deliveries(tolerancePct: $tolerancePct, sccLimitK: $sccLimitK, items: $items)';
 }
 
 
@@ -563,7 +588,7 @@ abstract mixin class _$DeliveriesCopyWith<$Res> implements $DeliveriesCopyWith<$
   factory _$DeliveriesCopyWith(_Deliveries value, $Res Function(_Deliveries) _then) = __$DeliveriesCopyWithImpl;
 @override @useResult
 $Res call({
- double tolerancePct, List<Delivery> items
+ double tolerancePct, int sccLimitK, List<Delivery> items
 });
 
 
@@ -580,10 +605,11 @@ class __$DeliveriesCopyWithImpl<$Res>
 
 /// Create a copy of Deliveries
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? tolerancePct = null,Object? items = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? tolerancePct = null,Object? sccLimitK = null,Object? items = null,}) {
   return _then(_Deliveries(
 tolerancePct: null == tolerancePct ? _self.tolerancePct : tolerancePct // ignore: cast_nullable_to_non_nullable
-as double,items: null == items ? _self._items : items // ignore: cast_nullable_to_non_nullable
+as double,sccLimitK: null == sccLimitK ? _self.sccLimitK : sccLimitK // ignore: cast_nullable_to_non_nullable
+as int,items: null == items ? _self._items : items // ignore: cast_nullable_to_non_nullable
 as List<Delivery>,
   ));
 }

@@ -419,7 +419,9 @@
   "channelsSourceOpsHint": "System problems such as a silent meter box or data loss",
   "channelsSourceRequired": "Select at least one notification type",
   "channelsSourceSummary": "Milking summary",
-  "channelsSourceSummaryHint": "A single message when milking ends (total milk, animals with low yield and low flow rate) and a weekly summary on Monday morning (Excel report attached in email)",
+  "channelsSourceSummaryHint": "A single message when milking ends (total milk, animals with low yield and low flow rate)",
+  "channelsSourceWeekly": "Weekly summary",
+  "channelsSourceWeeklyHint": "Monday morning summary of the week: total milk, change from the previous week, declining animals (Excel report attached in email)",
   "channelsTestSent": "Test notification sent",
   "channelsTitle": "Notification channels",
   "channelsUnsupported": "This channel type is not supported: {kind}/{provider}",
@@ -993,6 +995,35 @@
   "pushChannelName": "Milking alerts",
   "pushQuietChannelDescription": "Non-critical alerts during quiet hours; no sound.",
   "pushQuietChannelName": "Alerts during quiet hours",
+  "qualityBacteria": "Bacteria (thousand/mL)",
+  "qualityFat": "Fat (%)",
+  "qualityHighScc": "Somatic cell count above the limit ({limit} thousand/mL)",
+  "@qualityHighScc": {
+    "placeholders": {
+      "limit": {
+        "type": "int"
+      }
+    }
+  },
+  "qualityInvalid": "Enter a valid number",
+  "qualityOptional": "Optional; enter if it is on the receipt.",
+  "qualityProtein": "Protein (%)",
+  "qualityScc": "Somatic cells (thousand/mL)",
+  "qualitySccLimit": "Somatic cell limit (thousand/mL)",
+  "qualitySccLimitHelper": "An alert is sent above this. A common limit is 400.",
+  "qualitySccLimitRange": "Must be between 50 and 2000",
+  "qualitySummary": "Fat {fat}% · Protein {protein}% · Cells {scc} · Bacteria {bacteria}",
+  "@qualitySummary": {
+    "placeholders": {
+      "fat": {},
+      "protein": {},
+      "scc": {},
+      "bacteria": {}
+    }
+  },
+  "qualityTitle": "Dairy analysis",
+  "qualityTrendEmpty": "At least two analyses are needed for the chart.",
+  "qualityTrendTitle": "Last 90 days",
   "quietEnabled": "Quiet hours on",
   "quietEnd": "End",
   "quietIntro": "During these hours alerts don't make your phone ring; the notification still arrives and stays in the alert list. Critical alerts (e.g. meter offline) always ring. This setting is only for you.",

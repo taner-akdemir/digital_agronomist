@@ -260,6 +260,14 @@ void main() {
       findsNothing,
       reason: 'eskalasyon yalnızca SMS/arama kanalında',
     );
+    bool checked(String label) => tester
+        .widget<CheckboxListTile>(find.widgetWithText(CheckboxListTile, label))
+        .value!;
+    expect(
+      checked('Haftalık özet'),
+      isTrue,
+      reason: 'SMS/arama dışı kanalda haftalık özet varsayılan (ADR 0111)',
+    );
   });
 
   // Listedeki aç/kapa tam gövde gönderir; sınır eklenmezse 0 gidip

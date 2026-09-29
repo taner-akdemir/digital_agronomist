@@ -7,6 +7,7 @@ import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/core/format.dart';
 import 'package:milktrace/core/volume.dart';
 import 'package:milktrace/data/models/delivery.dart';
+import 'package:milktrace/features/deliveries/milk_quality.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
@@ -51,16 +52,28 @@ Future<bool> showAddDelivery(
   try {
     final d = await ref
         .read(repositoryProvider)
-        .addDelivery(day: draft.day, volumeMl: draft.ml, note: draft.note);
+        .addDelivery(
+          day: draft.day,
+          volumeMl: draft.ml,
+          note: draft.note,
+          fatPct: draft.quality.fatPct,
+          proteinPct: draft.quality.proteinPct,
+          sccK: draft.quality.sccK,
+          bacteriaK: draft.quality.bacteriaK,
+        );
     ref.invalidate(deliveriesProvider);
     messenger.showSnackBar(
       SnackBar(
         content: Text(
           d.mismatch
               ? l10n.deliveriesSavedMismatch(diffLabel(d))
+              : d.highScc
+              ? l10n.qualityHighScc(
+                  ref.read(deliveriesProvider).value?.sccLimitK ?? 400,
+                )
               : l10n.deliveriesSaved,
         ),
-        backgroundColor: d.mismatch
+        backgroundColor: d.mismatch || d.highScc
             ? AppColors.darkAmberColor
             : AppColors.darkGreenColor,
       ),
@@ -103,6 +116,47 @@ class DeliveriesScreen extends ConsumerWidget {
     final messenger = ScaffoldMessenger.of(context);
     try {
       await ref.read(repositoryProvider).setDeliveryTolerance(pct);
+      ref.invalidate(deliveriesProvider);
+    } catch (e) {
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(userMessage(e) ?? l10n.commonSaveFailed(e)),
+          backgroundColor: AppColors.flowRed,
+        ),
+      );
+    }
+  }
+
+  /// Somatik hücre sınırı (backend ADR 0110); fark eşiği aynen gider.
+  Future<void> _sccLimit(
+    BuildContext context,
+    WidgetRef ref,
+    Deliveries v,
+  ) async {
+    final raw = await showTextPrompt(
+      context,
+      title: l10n.qualitySccLimit,
+      label: l10n.qualitySccLimit,
+      helper: l10n.qualitySccLimitHelper,
+      initial: '${v.sccLimitK}',
+      keyboardType: TextInputType.number,
+    );
+    if (raw == null || !context.mounted) return;
+    final limit = int.tryParse(raw.trim());
+    final messenger = ScaffoldMessenger.of(context);
+    if (limit == null || limit < 50 || limit > 2000) {
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(l10n.qualitySccLimitRange),
+          backgroundColor: AppColors.flowRed,
+        ),
+      );
+      return;
+    }
+    try {
+      await ref
+          .read(repositoryProvider)
+          .setDeliveryTolerance(v.tolerancePct, sccLimitK: limit);
       ref.invalidate(deliveriesProvider);
     } catch (e) {
       messenger.showSnackBar(
@@ -220,9 +274,20 @@ class DeliveriesScreen extends ConsumerWidget {
                       icon: const Icon(Icons.tune),
                       onPressed: () => _tolerance(context, ref, v.tolerancePct),
                     ),
+                  if (isOwner)
+                    IconButton(
+                      tooltip: l10n.qualitySccLimit,
+                      icon: const Icon(Icons.science_outlined),
+                      onPressed: () => _sccLimit(context, ref, v),
+                    ),
                 ],
               ),
               const SizedBox(height: AppSpacing.md),
+              QualityTrendCard(
+                items: v.items,
+                sccLimitK: v.sccLimitK,
+                today: today ?? DateTime.now(),
+              ),
               if (v.items.isEmpty)
                 Padding(
                   padding: const EdgeInsets.all(AppSpacing.xl),
@@ -237,6 +302,7 @@ class DeliveriesScreen extends ConsumerWidget {
                   DeliveryTile(
                     delivery: d,
                     volume: volume,
+                    sccLimitK: v.sccLimitK,
                     onDelete: isOwner ? () => _delete(context, ref, d) : null,
                   ),
             ],
@@ -253,11 +319,15 @@ class DeliveryTile extends StatelessWidget {
     super.key,
     required this.delivery,
     required this.volume,
+    this.sccLimitK = 400,
     this.onDelete,
   });
 
   final Delivery delivery;
   final VolumeFormat volume;
+
+  /// Somatik hücre sınırı (bin/mL), uyarı satırı için.
+  final int sccLimitK;
   final VoidCallback? onDelete;
 
   @override
@@ -287,7 +357,9 @@ class DeliveryTile extends StatelessWidget {
         color: AppColors.surface,
         borderRadius: AppRadius.mdAll,
         border: Border.all(
-          color: d.mismatch ? AppColors.amberColor : AppColors.border,
+          color: d.mismatch || d.highScc
+              ? AppColors.amberColor
+              : AppColors.border,
         ),
       ),
       child: Row(
@@ -325,6 +397,7 @@ class DeliveryTile extends StatelessWidget {
                       ),
                     ),
                   ),
+                QualityLine(delivery: d, sccLimitK: sccLimitK),
                 if (d.note.isNotEmpty || (d.authorName ?? '').isNotEmpty)
                   Text(
                     [
@@ -352,11 +425,12 @@ class DeliveryTile extends StatelessWidget {
 }
 
 class _Draft {
-  const _Draft(this.day, this.ml, this.note);
+  const _Draft(this.day, this.ml, this.note, this.quality);
 
   final DateTime day;
   final int ml;
   final String note;
+  final QualityDraft quality;
 }
 
 /// Tanker fişi: gün (bugün ya da geçmiş) ve miktar işletmenin biriminde.
@@ -380,12 +454,14 @@ class _DeliveryDialogState extends State<_DeliveryDialog> {
   );
   final _amount = TextEditingController();
   final _note = TextEditingController();
+  final _quality = QualityControllers();
   String? _error;
 
   @override
   void dispose() {
     _amount.dispose();
     _note.dispose();
+    _quality.dispose();
     super.dispose();
   }
 
@@ -395,10 +471,15 @@ class _DeliveryDialogState extends State<_DeliveryDialog> {
       setState(() => _error = l10n.deliveriesEnterAmount);
       return;
     }
+    final quality = _quality.read();
+    if (quality == null) {
+      setState(() => _error = l10n.qualityInvalid);
+      return;
+    }
     final litres = widget.volume.isKg ? v / VolumeFormat.defaultDensity : v;
     Navigator.of(
       context,
-    ).pop(_Draft(_day, (litres * 1000).round(), _note.text.trim()));
+    ).pop(_Draft(_day, (litres * 1000).round(), _note.text.trim(), quality));
   }
 
   @override
@@ -450,6 +531,7 @@ class _DeliveryDialogState extends State<_DeliveryDialog> {
                 border: border,
               ),
             ),
+            QualityInputs(controllers: _quality),
             if (_error != null) ...[
               const SizedBox(height: AppSpacing.sm),
               Text(

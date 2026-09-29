@@ -37,6 +37,8 @@ abstract final class AlertStyle {
     'calibration_due' => Icons.build_circle_outlined,
     // Sağım başlamadı (backend ADR 0099).
     'milking_missed' => Icons.alarm_off,
+    // Tank sütünde yüksek somatik hücre (backend ADR 0110).
+    'high_scc' => Icons.science_outlined,
     _ => Icons.notifications_none_outlined,
   };
 }

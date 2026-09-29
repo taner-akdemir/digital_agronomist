@@ -51,6 +51,7 @@ String severityLabel(String severity) => switch (severity) {
 String sourceLabel(String source) => switch (source) {
   'ops' => l10n.channelsSourceOps,
   'summary' => l10n.channelsSourceSummary,
+  'weekly' => l10n.channelsSourceWeekly,
   'herd' => l10n.channelsSourceHerd,
   _ => source,
 };
@@ -58,15 +59,21 @@ String sourceLabel(String source) => switch (source) {
 String sourceHint(String source) => switch (source) {
   'ops' => l10n.channelsSourceOpsHint,
   'summary' => l10n.channelsSourceSummaryHint,
+  'weekly' => l10n.channelsSourceWeeklyHint,
   'herd' => l10n.channelsSourceHerdHint,
   _ => '',
 };
 
-/// Formda gösterilen kaynaklar, sırasıyla. Yeni kanal varsayılanı ilk ikisi:
-/// tek tek hayvan uyarıları gürültülü, isteyen açıkça seçer (backend ile
-/// aynı varsayılan).
-const channelSources = ['ops', 'summary', 'herd'];
-const defaultChannelSources = ['ops', 'summary'];
+/// Formda gösterilen kaynaklar, sırasıyla. Tek tek hayvan uyarıları
+/// gürültülü, isteyen açıkça seçer (backend ile aynı varsayılan).
+const channelSources = ['ops', 'summary', 'weekly', 'herd'];
+
+/// Yeni kanal varsayılanı (backend ADR 0111): SMS/arama haftalık rapor
+/// metnini almaz.
+List<String> defaultChannelSources(String kind) =>
+    kind == 'sms' || kind == 'ivr'
+    ? const ['ops', 'summary']
+    : const ['ops', 'summary', 'weekly'];
 
 /// Ayar alanlarının etiketleri. Alan listesi backend'den gelir; burada
 /// olmayan alan adıyla gösterilir.

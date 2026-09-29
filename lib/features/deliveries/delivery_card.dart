@@ -72,6 +72,7 @@ class DeliveryCard extends ConsumerWidget {
                 DeliveryTile(
                   delivery: items.first,
                   volume: ref.watch(volumeFormatProvider),
+                  sccLimitK: value.sccLimitK,
                 ),
               if (canEnter)
                 Align(

@@ -470,7 +470,9 @@
   "channelsSourceOpsHint": "Sayaç kutusu sustu, veri kaybı gibi sistem sorunları",
   "channelsSourceRequired": "En az bir bildirim türü seçin",
   "channelsSourceSummary": "Sağım özeti",
-  "channelsSourceSummaryHint": "Sağım bitince tek mesaj (toplam süt, düşük verim ve düşük debi olan hayvanlar) ve Pazartesi sabahı haftalık özet (e-postada Excel raporu ekli)",
+  "channelsSourceSummaryHint": "Sağım bitince tek mesaj (toplam süt, düşük verim ve düşük debi olan hayvanlar)",
+  "channelsSourceWeekly": "Haftalık özet",
+  "channelsSourceWeeklyHint": "Pazartesi sabahı haftanın özeti: toplam süt, önceki haftaya göre değişim, düşüşteki hayvanlar (e-postada Excel raporu ekli)",
   "channelsTestSent": "Deneme bildirimi gönderildi",
   "channelsTitle": "Bildirim kanalları",
   "channelsUnsupported": "Bu kanal türü desteklenmiyor: {kind}/{provider}",
@@ -1140,6 +1142,35 @@
   "pushChannelName": "Sağım uyarıları",
   "pushQuietChannelDescription": "Sessiz saatte gelen, kritik olmayan uyarılar; ses çıkarmaz.",
   "pushQuietChannelName": "Sessiz saatteki uyarılar",
+  "qualityBacteria": "Bakteri (bin/mL)",
+  "qualityFat": "Yağ (%)",
+  "qualityHighScc": "Somatik hücre sınırın üstünde ({limit} bin/mL)",
+  "@qualityHighScc": {
+    "placeholders": {
+      "limit": {
+        "type": "int"
+      }
+    }
+  },
+  "qualityInvalid": "Geçerli bir sayı girin",
+  "qualityOptional": "İsteğe bağlı; fişte yazıyorsa girin.",
+  "qualityProtein": "Protein (%)",
+  "qualityScc": "Somatik hücre (bin/mL)",
+  "qualitySccLimit": "Somatik hücre sınırı (bin/mL)",
+  "qualitySccLimitHelper": "Aşılırsa uyarı gelir. Yaygın sınır 400.",
+  "qualitySccLimitRange": "50 ile 2000 arasında olmalı",
+  "qualitySummary": "Yağ %{fat} · Protein %{protein} · Hücre {scc} · Bakteri {bacteria}",
+  "@qualitySummary": {
+    "placeholders": {
+      "fat": {},
+      "protein": {},
+      "scc": {},
+      "bacteria": {}
+    }
+  },
+  "qualityTitle": "Mandıra analizi",
+  "qualityTrendEmpty": "Grafik için en az iki analiz gerekli.",
+  "qualityTrendTitle": "Son 90 gün",
   "quietEnabled": "Sessiz saat açık",
   "quietEnd": "Bitiş",
   "quietIntro": "Bu saatlerde uyarılar telefonunuzu çaldırmaz; bildirim yine gelir ve uyarı listesinde durur. Kritik uyarılar (ör. sayaç çevrimdışı) her zaman çalar. Ayar yalnızca sizin içindir.",

@@ -9,6 +9,7 @@ import 'package:milktrace/data/repositories/milktrace_repository.dart';
 import 'package:milktrace/data/repositories/mock_repository.dart';
 import 'package:milktrace/features/deliveries/deliveries_screen.dart';
 import 'package:milktrace/features/deliveries/delivery_card.dart';
+import 'package:milktrace/features/deliveries/milk_quality.dart';
 import 'package:milktrace/features/team/milkers_screen.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
@@ -170,6 +171,90 @@ void main() {
     );
     expect(find.textContaining('(ayrılan 10.0 L hariç)'), findsOneWidget);
     expect(find.text('+%5.0 · sayaçlar fazla'), findsOneWidget);
+  });
+
+  // Süt kalitesi (backend ADR 0110): analiz isteğe bağlı; sınır aşımı
+  // uyarı satırı ve amber kenar; eğilim en az iki analizle çizilir.
+  testWidgets('teslime analiz girilir; yüksek hücre uyarısı ve eğilim', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(1200, 2600);
+    addTearDown(tester.view.resetPhysicalSize);
+    final repo = MockRepository(latency: Duration.zero);
+    await tester.runAsync(
+      () => repo.addDelivery(
+        day: DateTime(2026, 9, 1),
+        volumeMl: 500000,
+        sccK: 250,
+        fatPct: 3.8,
+      ),
+    );
+    await _pump(
+      tester,
+      DeliveriesScreen(today: DateTime(2026, 9, 5)),
+      repo: repo,
+      scaffold: false,
+      role: 'tenant_operator',
+    );
+    expect(find.text('Grafik için en az iki analiz gerekli.'), findsOneWidget);
+
+    await tester.tap(find.text('Teslim gir'));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Teslim edilen (L)'),
+      '480',
+    );
+    await tester.tap(find.text('Mandıra analizi'));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Somatik hücre (bin/mL)'),
+      '520',
+    );
+    await tester.enterText(find.widgetWithText(TextField, 'Yağ (%)'), '40');
+    await tester.tap(find.text('Kaydet'));
+    await tester.pumpAndSettle();
+    expect(find.text('Geçerli bir sayı girin'), findsOneWidget);
+    await tester.enterText(find.widgetWithText(TextField, 'Yağ (%)'), '3,9');
+    await tester.tap(find.text('Kaydet'));
+    await tester.pumpAndSettle();
+
+    final saved = (await tester.runAsync(repo.deliveries))!;
+    final latest = saved.items.first;
+    expect(latest.sccK, 520);
+    expect(latest.fatPct, 3.9);
+    expect(latest.highScc, isTrue);
+    expect(
+      find.text('Somatik hücre sınırın üstünde (400 bin/mL)'),
+      findsWidgets,
+    );
+    expect(
+      find.text('Yağ %3.90 · Protein %— · Hücre 520 · Bakteri —'),
+      findsOneWidget,
+    );
+    expect(find.byType(QualityTrendCard), findsOneWidget);
+    expect(find.text('Grafik için en az iki analiz gerekli.'), findsNothing);
+  });
+
+  testWidgets('sahip somatik hücre sınırını değiştirir', (tester) async {
+    final repo = MockRepository(latency: Duration.zero);
+    await tester.runAsync(
+      () => repo.addDelivery(
+        day: DateTime(2026, 9, 3),
+        volumeMl: 200000,
+        sccK: 450,
+      ),
+    );
+    await _pump(tester, const DeliveriesScreen(), repo: repo, scaffold: false);
+    expect(find.textContaining('sınırın üstünde'), findsOneWidget);
+    await tester.tap(find.byTooltip('Somatik hücre sınırı (bin/mL)'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), '500');
+    await tester.tap(find.text('Kaydet'));
+    await tester.pumpAndSettle();
+    final v = (await tester.runAsync(repo.deliveries))!;
+    expect(v.sccLimitK, 500);
+    expect(v.tolerancePct, 5, reason: 'fark eşiği korunur');
+    expect(find.textContaining('sınırın üstünde'), findsNothing);
   });
 
   testWidgets('sağımcı özeti: bilinen ve bilinmeyen sağımcı', (tester) async {

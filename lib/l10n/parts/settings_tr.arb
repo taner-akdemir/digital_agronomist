@@ -171,7 +171,7 @@
   "channelsSourceSummary": "Sağım özeti",
   "channelsSourceHerd": "Her sürü uyarısı",
   "channelsSourceOpsHint": "Sayaç kutusu sustu, veri kaybı gibi sistem sorunları",
-  "channelsSourceSummaryHint": "Sağım bitince tek mesaj (toplam süt, düşük verim ve düşük debi olan hayvanlar) ve Pazartesi sabahı haftalık özet (e-postada Excel raporu ekli)",
+  "channelsSourceSummaryHint": "Sağım bitince tek mesaj (toplam süt, düşük verim ve düşük debi olan hayvanlar)",
   "channelsSourceHerdHint": "Düşük debi olan her hayvan için ayrı mesaj (kalabalık olabilir)",
   "channelsFieldHost": "SMTP sunucusu",
   "channelsFieldUsername": "Kullanıcı adı",

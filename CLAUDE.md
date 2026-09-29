@@ -282,6 +282,15 @@ SUNUCU yapar (önceki teslimden bu yana, ayrılan süt hariç; ilk teslim karş�
 eşik aşılırsa `delivery_mismatch` uyarısı. kg girilirse varsayılan yoğunlukla (1,03) mL'ye
 çevrilir — tankın sütü karışık. Mock'ta karşılaştırma yok (fark uydurulmaz).
 
+**Süt kalitesi** (backend ADR 0110): teslim penceresinde açılır "Mandıra analizi" — yağ,
+protein (%), somatik hücre ve bakteri (**bin/mL**, fişteki gibi), hepsi isteğe bağlı.
+Satırda analiz ve sınır aşımında kırmızı satır + amber kenar (`Delivery.highScc` SUNUCUDAN;
+mock yalnızca ayna). Listenin üstünde son 90 günün hücre eğilimi (`QualityTrendCard`, ayrı
+uç yok, liste okunur; sınır kesik gri çizgi). Sınır (`Deliveries.sccLimitK`, varsayılan
+400) sahibin; `setDeliveryTolerance(pct, sccLimitK:)` fark eşiğini de gönderir.
+Aşımda `high_scc` uyarısı. **Haftalık özet** (ADR 0079/0111) ayrı kanal kaynağı
+`weekly`: SMS/arama dışı yeni kanalda varsayılan açık (`defaultChannelSources(kind)`).
+
 **Sağımcılar** (`/settings/milkers`, backend ADR 0090): hesap kartından YALNIZCA sahibe.
 Sağımcı = oturumu açan / hayvanı bağlayan (ayrı seçim adımı yok). 7/30 gün; oturum, sağım,
 süt, ortalama süre, düşük debi payı. Metin oranın kişiyi puanlamadığını söyler.
