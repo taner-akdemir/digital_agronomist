@@ -6,6 +6,7 @@ import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/features/alerts/alerts_providers.dart';
 import 'package:milktrace/features/auth/account_sheet.dart';
 import 'package:milktrace/l10n/l10n.dart';
+import 'package:milktrace/widgets/brand_mark.dart';
 
 /// Uygulamanın üst çubuğu.
 class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
@@ -20,7 +21,7 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
       title: Row(
         children: [
           // Marka işareti (tool/brand): ikonla aynı damla ve debi çizgisi.
-          Image.asset('assets/brand/mark.png', height: 26, width: 26),
+          const BrandMark(size: 26),
           const SizedBox(width: AppSpacing.sm),
           Text(
             title,

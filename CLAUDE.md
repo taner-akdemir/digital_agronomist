@@ -145,7 +145,8 @@ flutter run
   debi çizgisi). İkonları elle düzenleme; `tool/brand/generate.sh` Android (uyarlanabilir +
   monokrom), iOS AppIcon ve bildirim simgesini (`drawable-*/ic_stat_milktrace`, tek renk
   siluet) üretir; ayrıca üst çubuk ve giriş ekranındaki işareti (`assets/brand/mark.png`,
-  açık zeminde koyu yeşil damla). Çıktı deterministik: kaynak değişmedikçe PNG'ler
+  açık zeminde koyu yeşil damla; koyu tema için `mark_dark.png`, açık yeşil damla — widget'ta
+  `BrandMark` kullan, `Image.asset` ile işareti doğrudan yazma). Çıktı deterministik: kaynak değişmedikçe PNG'ler
   değişmez. Uygulama adı "Milk Trace".
 
 ## 6. Kapsam çiti

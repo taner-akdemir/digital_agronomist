@@ -216,10 +216,7 @@ class QualityTrendCard extends StatelessWidget {
           if (spots.length < 2)
             Text(
               l10n.qualityTrendEmpty,
-              style: TextStyle(
-                fontSize: 12,
-                color: AppColors.onSurfaceMuted,
-              ),
+              style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
             )
           else
             SizedBox(

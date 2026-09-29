@@ -8,6 +8,7 @@ import 'package:milktrace/features/support/support.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/settings_providers.dart';
+import 'package:milktrace/widgets/brand_mark.dart';
 
 /// Giriş ekranı (§8.5 POST /auth/login).
 class LoginScreen extends ConsumerStatefulWidget {
@@ -85,7 +86,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Image.asset('assets/brand/mark.png', height: 72),
+                        const BrandMark(size: 72),
                         const SizedBox(height: AppSpacing.md),
                         Text(
                           'Milk Trace',

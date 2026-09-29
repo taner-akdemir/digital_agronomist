@@ -16,7 +16,7 @@ render() { # svg → 1024 png (saydam zemin)
   "$CHROME" --headless=new --disable-gpu --hide-scrollbars --window-size=1024,1024 \
     --default-background-color=00000000 --screenshot="$TMP/$1.png" "file://$PWD/tool/brand/$1.svg" >/dev/null 2>&1
 }
-render icon; render foreground; render monochrome; render mark
+render icon; render foreground; render monochrome; render mark; render mark_dark
 RES=android/app/src/main/res
 
 # Eski Android ikonu (48dp) ve uyarlanabilir katmanlar (108dp).
@@ -43,5 +43,9 @@ mkdir -p assets/brand/2.0x assets/brand/3.0x
 magick "$TMP/mark.png" -trim +repage -resize 48x48 -gravity center -background none -extent 48x48 "${PNG_OPTS[@]}" assets/brand/mark.png
 magick "$TMP/mark.png" -trim +repage -resize 96x96 -gravity center -background none -extent 96x96 "${PNG_OPTS[@]}" assets/brand/2.0x/mark.png
 magick "$TMP/mark.png" -trim +repage -resize 144x144 -gravity center -background none -extent 144x144 "${PNG_OPTS[@]}" assets/brand/3.0x/mark.png
+# Koyu tema işareti (ADR 0109): açık damla; BrandMark parlaklığa göre seçer.
+magick "$TMP/mark_dark.png" -trim +repage -resize 48x48 -gravity center -background none -extent 48x48 "${PNG_OPTS[@]}" assets/brand/mark_dark.png
+magick "$TMP/mark_dark.png" -trim +repage -resize 96x96 -gravity center -background none -extent 96x96 "${PNG_OPTS[@]}" assets/brand/2.0x/mark_dark.png
+magick "$TMP/mark_dark.png" -trim +repage -resize 144x144 -gravity center -background none -extent 144x144 "${PNG_OPTS[@]}" assets/brand/3.0x/mark_dark.png
 rm -rf "$TMP"
 echo "ikonlar üretildi"
