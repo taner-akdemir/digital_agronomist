@@ -318,6 +318,11 @@ class ApiRepository implements MilkTraceRepository {
     'groupId': a.groupId,
   };
 
+  static String _dayText(DateTime d) =>
+      '${d.year.toString().padLeft(4, '0')}-'
+      '${d.month.toString().padLeft(2, '0')}-'
+      '${d.day.toString().padLeft(2, '0')}';
+
   static String? _day(DateTime? d) =>
       d == null ? null : DateTime.utc(d.year, d.month, d.day).toIso8601String();
 
@@ -606,6 +611,35 @@ class ApiRepository implements MilkTraceRepository {
       _dio.put<dynamic>('/tenant/settings', data: {'volumeUnit': unit});
 
   @override
+  Future<bool> twoFactorEnabled() async =>
+      _dataOf(await _dio.get<dynamic>('/me/2fa'))['enabled'] == true;
+
+  @override
+  Future<({String secret, String uri})> twoFactorSetup() async {
+    final d = _dataOf(await _dio.post<dynamic>('/me/2fa/setup'));
+    return (secret: d['secret'] as String, uri: d['uri'] as String);
+  }
+
+  @override
+  Future<List<String>> twoFactorEnable(String code) async {
+    final d = _dataOf(
+      await _dio.post<dynamic>('/me/2fa/enable', data: {'code': code}),
+    );
+    return [for (final c in d['backupCodes'] as List<dynamic>) c as String];
+  }
+
+  @override
+  Future<void> twoFactorDisable({
+    required String password,
+    required String code,
+  }) async {
+    await _dio.post<dynamic>(
+      '/me/2fa/disable',
+      data: {'password': password, 'code': code},
+    );
+  }
+
+  @override
   Future<MilkingSchedule> milkingSchedule() async => MilkingSchedule.fromJson(
     _dataOf(await _dio.get<dynamic>('/milking-schedule')),
   );
@@ -711,6 +745,7 @@ class ApiRepository implements MilkTraceRepository {
     required String role,
     String? password,
     bool kiosk = false,
+    DateTime? accessUntil,
   }) async {
     final r = await _dio.post<dynamic>(
       '/team',
@@ -720,6 +755,7 @@ class ApiRepository implements MilkTraceRepository {
         'role': role,
         if (password != null && password.isNotEmpty) 'password': password,
         if (kiosk) 'kiosk': true,
+        if (accessUntil != null) 'accessUntil': _dayText(accessUntil),
       },
     );
     return (
@@ -736,11 +772,18 @@ class ApiRepository implements MilkTraceRepository {
     required String fullName,
     required String role,
     required String status,
+    DateTime? accessUntil,
   }) async => TeamMember.fromJson(
     _dataOf(
       await _dio.put<dynamic>(
         '/team/$id',
-        data: {'fullName': fullName, 'role': role, 'status': status},
+        // TAM kayıt (backend ADR 0103): bitiş gönderilmezse süre kalkar.
+        data: {
+          'fullName': fullName,
+          'role': role,
+          'status': status,
+          'accessUntil': accessUntil == null ? '' : _dayText(accessUntil),
+        },
       ),
     ),
   );

@@ -21,9 +21,24 @@ abstract class TeamMember with _$TeamMember {
 
     /// Sağımhane tableti hesabı (backend ADR 0091).
     @Default(false) bool kiosk,
+
+    /// Erişimin son günü (backend ADR 0103); o gün dahil girer. null =
+    /// süresiz.
+    DateTime? accessUntil,
   }) = _TeamMember;
 
   const TeamMember._();
+
+  /// Erişim süresi doldu mu (son gün dahil).
+  bool accessExpired(DateTime now) {
+    final u = accessUntil;
+    if (u == null) return false;
+    return DateTime(
+      now.year,
+      now.month,
+      now.day,
+    ).isAfter(DateTime(u.year, u.month, u.day));
+  }
 
   /// Sahibin yönetebildiği satır (sahip ekleme ve değiştirme platformda).
   bool get isManageable => role == 'tenant_operator' || role == 'tenant_viewer';

@@ -149,7 +149,7 @@ final class AuthProvider extends $NotifierProvider<Auth, AuthState> {
   }
 }
 
-String _$authHash() => r'ef1ba815c083b582ef75c0fe6ae60a816fd05688';
+String _$authHash() => r'52a84aab5d5b53e00f364c5ecdc5128ccf3d3431';
 
 /// Oturum durumu.
 

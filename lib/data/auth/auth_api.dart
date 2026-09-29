@@ -32,6 +32,23 @@ class AuthApi {
       '/auth/login',
       data: {'email': email, 'password': password},
     );
+    final data = _data(r);
+    // İki adımlı doğrulama açık (backend ADR 0102): oturum henüz yok.
+    if (data['mfaRequired'] == true) {
+      throw MfaRequired(data['mfaToken'] as String);
+    }
+    return LoginResult.fromJson(data);
+  });
+
+  /// Girişin ikinci adımı: 6 haneli kod ya da yedek kod (backend ADR 0102).
+  Future<LoginResult> loginSecondFactor({
+    required String mfaToken,
+    required String code,
+  }) => _call(() async {
+    final r = await _dio.post<dynamic>(
+      '/auth/login/2fa',
+      data: {'mfaToken': mfaToken, 'code': code},
+    );
     return LoginResult.fromJson(_data(r));
   });
 
@@ -107,3 +124,11 @@ class AuthApi {
 
 /// Destek iletişimi; E.164 (+905…).
 typedef SupportInfo = ({String? phone, String? whatsapp});
+
+/// Parola doğru ama iki adımlı doğrulama açık: giriş ekranı kod ister
+/// (backend ADR 0102). [token] ikinci adımın kısa ömürlü anahtarı.
+class MfaRequired implements Exception {
+  const MfaRequired(this.token);
+
+  final String token;
+}

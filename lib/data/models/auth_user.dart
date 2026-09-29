@@ -27,6 +27,9 @@ abstract class AuthUser with _$AuthUser {
     /// Sağımhane tableti hesabı (backend ADR 0091): uygulama yalnızca
     /// canlı ekranı açar; gateway de diğer uçları kapatır.
     @Default(false) bool kiosk,
+
+    /// İki adımlı doğrulama açık mı (backend ADR 0102).
+    @Default(false) bool twoFactor,
   }) = _AuthUser;
 
   const AuthUser._();

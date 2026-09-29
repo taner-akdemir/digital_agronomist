@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/api_exception.dart';
+import 'package:milktrace/core/format.dart';
 import 'package:milktrace/data/models/team_member.dart';
 import 'package:milktrace/features/auth/role_labels.dart';
 import 'package:milktrace/features/team/team_providers.dart';
@@ -181,6 +182,11 @@ class _MemberCard extends ConsumerWidget {
                       [
                         m.kiosk ? l10n.teamKiosk : roleLabel(m.role),
                         if (m.fullName.isNotEmpty) m.email,
+                        // Süreli erişim (backend ADR 0103).
+                        if (m.accessUntil case final u?)
+                          m.accessExpired(DateTime.now())
+                              ? l10n.teamAccessExpired
+                              : l10n.teamAccessUntil(Fmt.dayMonthYear(u)),
                       ].join(' · '),
                       style: const TextStyle(
                         fontSize: 12,
@@ -233,6 +239,7 @@ class _MemberCard extends ConsumerWidget {
     final m = member;
     try {
       switch (action) {
+        // Güncelleme TAM kayıt (backend ADR 0103): bitiş her zaman taşınır.
         case _Action.toggleRole:
           await repo.updateTeamMember(
             m.id,
@@ -241,6 +248,7 @@ class _MemberCard extends ConsumerWidget {
                 ? 'tenant_viewer'
                 : 'tenant_operator',
             status: m.status,
+            accessUntil: m.accessUntil,
           );
         case _Action.toggleSuspend:
           await repo.updateTeamMember(
@@ -248,6 +256,17 @@ class _MemberCard extends ConsumerWidget {
             fullName: m.fullName,
             role: m.role,
             status: m.isSuspended ? 'active' : 'suspended',
+            accessUntil: m.accessUntil,
+          );
+        case _Action.accessUntil:
+          final pick = await pickAccessUntil(context, m.accessUntil);
+          if (pick == null) return;
+          await repo.updateTeamMember(
+            m.id,
+            fullName: m.fullName,
+            role: m.role,
+            status: m.status,
+            accessUntil: pick.day,
           );
         case _Action.delete:
           final ok = await _confirmDelete(context, m);
@@ -286,7 +305,45 @@ class _MemberCard extends ConsumerWidget {
   }
 }
 
-enum _Action { toggleRole, toggleSuspend, delete }
+enum _Action { toggleRole, toggleSuspend, accessUntil, delete }
+
+/// Erişim bitişi seçimi (backend ADR 0103): gün ya da "süresiz". null =
+/// vazgeçildi; day null = süresiz.
+Future<({DateTime? day})?> pickAccessUntil(
+  BuildContext context,
+  DateTime? current,
+) async {
+  final now = DateTime.now();
+  final today = DateTime(now.year, now.month, now.day);
+  final choice = await showDialog<String>(
+    context: context,
+    builder: (context) => SimpleDialog(
+      title: Text(l10n.teamAccessTitle),
+      children: [
+        SimpleDialogOption(
+          onPressed: () => Navigator.of(context).pop('date'),
+          child: Text(l10n.teamAccessPickDate),
+        ),
+        SimpleDialogOption(
+          onPressed: () => Navigator.of(context).pop('none'),
+          child: Text(l10n.teamAccessUnlimited),
+        ),
+      ],
+    ),
+  );
+  if (choice == null || !context.mounted) return null;
+  if (choice == 'none') return (day: null);
+  final picked = await showDatePicker(
+    context: context,
+    initialDate: current != null && !current.isBefore(today)
+        ? current
+        : today.add(const Duration(days: 30)),
+    firstDate: today,
+    lastDate: today.add(const Duration(days: 730)),
+    helpText: l10n.teamAccessTitle,
+  );
+  return picked == null ? null : (day: picked);
+}
 
 class _ActionSheet extends StatelessWidget {
   const _ActionSheet({required this.member});
@@ -323,6 +380,16 @@ class _ActionSheet extends StatelessWidget {
             onTap: () => pick(_Action.toggleSuspend),
           ),
           ListTile(
+            leading: const Icon(Icons.event_busy_outlined),
+            title: Text(l10n.teamAccessTitle),
+            subtitle: Text(
+              m.accessUntil == null
+                  ? l10n.teamAccessUnlimited
+                  : l10n.teamAccessUntil(Fmt.dayMonthYear(m.accessUntil!)),
+            ),
+            onTap: () => pick(_Action.accessUntil),
+          ),
+          ListTile(
             leading: const Icon(Icons.delete_outline, color: AppColors.flowRed),
             title: Text(
               l10n.commonDelete,
@@ -357,6 +424,9 @@ class _AddMemberDialogState extends ConsumerState<_AddMemberDialog> {
   /// Sağımhane tableti (backend ADR 0091): ortak operatör hesabı, yalnızca
   /// canlı ekran; parola zorunlu (davet e-postası yok).
   bool _kiosk = false;
+
+  /// Erişim bitişi (backend ADR 0103); null = süresiz.
+  DateTime? _until;
   bool _busy = false;
   String? _error;
 
@@ -384,6 +454,7 @@ class _AddMemberDialogState extends ConsumerState<_AddMemberDialog> {
             role: _kiosk ? 'tenant_operator' : _role,
             password: _password.text,
             kiosk: _kiosk,
+            accessUntil: _kiosk ? null : _until,
           );
       if (mounted) Navigator.of(context).pop(r.message);
     } catch (e) {
@@ -460,6 +531,25 @@ class _AddMemberDialogState extends ConsumerState<_AddMemberDialog> {
                     fontSize: 12,
                     color: AppColors.onSurfaceMuted,
                   ),
+                ),
+              ],
+              if (!_kiosk) ...[
+                const SizedBox(height: AppSpacing.sm),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.event_busy_outlined),
+                  title: Text(l10n.teamAccessTitle),
+                  subtitle: Text(
+                    _until == null
+                        ? l10n.teamAccessUnlimited
+                        : l10n.teamAccessUntil(Fmt.dayMonthYear(_until!)),
+                  ),
+                  onTap: _busy
+                      ? null
+                      : () async {
+                          final pick = await pickAccessUntil(context, _until);
+                          if (pick != null) setState(() => _until = pick.day);
+                        },
                 ),
               ],
               const SizedBox(height: AppSpacing.md),

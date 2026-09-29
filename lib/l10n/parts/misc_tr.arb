@@ -23,5 +23,37 @@
     "placeholders": {
       "n": {}
     }
+  },
+  "loginMfaHint": "Doğrulama uygulamanızdaki 6 haneli kodu ya da bir yedek kodu girin.",
+  "loginMfaCode": "Doğrulama kodu",
+  "loginMfaCodeRequired": "Kodu girin.",
+  "accountTwoFactor": "İki adımlı doğrulama",
+  "accountTwoFactorOn": "İki adımlı doğrulama açık",
+  "twoFactorTitle": "İki adımlı doğrulama",
+  "twoFactorIntro": "Girişte parolanın yanında telefonunuzdaki doğrulama uygulamasının (Google Authenticator, Microsoft Authenticator vb.) ürettiği 6 haneli kod istenir. Parolanız ele geçse bile hesabınıza girilemez.",
+  "twoFactorStart": "Kurulumu başlat",
+  "twoFactorStep1": "1. Doğrulama uygulamasında \"hesap ekle\" → \"kurulum anahtarı gir\" ile bu anahtarı ekleyin (hesap adı: Milk Trace):",
+  "twoFactorCopyKey": "Anahtarı kopyala",
+  "twoFactorOpenApp": "Uygulamada aç",
+  "twoFactorStep2": "2. Uygulamanın gösterdiği 6 haneli kodu girin:",
+  "twoFactorCode": "6 haneli kod",
+  "twoFactorEnable": "Doğrula ve aç",
+  "twoFactorBackupTitle": "Yedek kodlar",
+  "twoFactorBackupBody": "Telefonunuz kaybolursa bunlarla girersiniz; her biri bir kez geçer. Yalnızca şimdi gösteriliyor — güvenli bir yere kaydedin.",
+  "twoFactorCopyCodes": "Kodları kopyala",
+  "twoFactorDone": "Kaydettim",
+  "twoFactorOn": "İki adımlı doğrulama açık",
+  "twoFactorDisableHint": "Kapatmak için parolanızı ve doğrulama kodunu (ya da bir yedek kodu) girin.",
+  "twoFactorCodeOrBackup": "Kod ya da yedek kod",
+  "twoFactorDisable": "İki adımlı doğrulamayı kapat",
+  "teamAccessTitle": "Erişim bitişi",
+  "teamAccessPickDate": "Gün seç",
+  "teamAccessUnlimited": "Süresiz",
+  "teamAccessUntil": "erişim {date} dahil",
+  "teamAccessExpired": "erişim süresi doldu",
+  "@teamAccessUntil": {
+    "placeholders": {
+      "date": {}
+    }
   }
 }

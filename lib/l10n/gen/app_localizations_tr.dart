@@ -70,6 +70,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get accountThresholds => 'Eşik ayarları';
 
   @override
+  String get accountTwoFactor => 'İki adımlı doğrulama';
+
+  @override
+  String get accountTwoFactorOn => 'İki adımlı doğrulama açık';
+
+  @override
   String get accountUnitKilogram => 'Kilogram';
 
   @override
@@ -1723,6 +1729,16 @@ class AppLocalizationsTr extends AppLocalizations {
   String get loginHidePassword => 'Parolayı gizle';
 
   @override
+  String get loginMfaCode => 'Doğrulama kodu';
+
+  @override
+  String get loginMfaCodeRequired => 'Kodu girin.';
+
+  @override
+  String get loginMfaHint =>
+      'Doğrulama uygulamanızdaki 6 haneli kodu ya da bir yedek kodu girin.';
+
+  @override
   String get loginPasswordLabel => 'Parola';
 
   @override
@@ -1970,6 +1986,23 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String supportWhatsAppVersion(Object version) {
     return ' (Uygulama $version)';
+  }
+
+  @override
+  String get teamAccessExpired => 'erişim süresi doldu';
+
+  @override
+  String get teamAccessPickDate => 'Gün seç';
+
+  @override
+  String get teamAccessTitle => 'Erişim bitişi';
+
+  @override
+  String get teamAccessUnlimited => 'Süresiz';
+
+  @override
+  String teamAccessUntil(Object date) {
+    return 'erişim $date dahil';
   }
 
   @override
@@ -2332,6 +2365,61 @@ class AppLocalizationsTr extends AppLocalizations {
   String treatmentWithdrawalBanner(Object date) {
     return 'Arınmada: sütü $date dahil tanka katmayın.';
   }
+
+  @override
+  String get twoFactorBackupBody =>
+      'Telefonunuz kaybolursa bunlarla girersiniz; her biri bir kez geçer. Yalnızca şimdi gösteriliyor — güvenli bir yere kaydedin.';
+
+  @override
+  String get twoFactorBackupTitle => 'Yedek kodlar';
+
+  @override
+  String get twoFactorCode => '6 haneli kod';
+
+  @override
+  String get twoFactorCodeOrBackup => 'Kod ya da yedek kod';
+
+  @override
+  String get twoFactorCopyCodes => 'Kodları kopyala';
+
+  @override
+  String get twoFactorCopyKey => 'Anahtarı kopyala';
+
+  @override
+  String get twoFactorDisable => 'İki adımlı doğrulamayı kapat';
+
+  @override
+  String get twoFactorDisableHint =>
+      'Kapatmak için parolanızı ve doğrulama kodunu (ya da bir yedek kodu) girin.';
+
+  @override
+  String get twoFactorDone => 'Kaydettim';
+
+  @override
+  String get twoFactorEnable => 'Doğrula ve aç';
+
+  @override
+  String get twoFactorIntro =>
+      'Girişte parolanın yanında telefonunuzdaki doğrulama uygulamasının (Google Authenticator, Microsoft Authenticator vb.) ürettiği 6 haneli kod istenir. Parolanız ele geçse bile hesabınıza girilemez.';
+
+  @override
+  String get twoFactorOn => 'İki adımlı doğrulama açık';
+
+  @override
+  String get twoFactorOpenApp => 'Uygulamada aç';
+
+  @override
+  String get twoFactorStart => 'Kurulumu başlat';
+
+  @override
+  String get twoFactorStep1 =>
+      '1. Doğrulama uygulamasında \"hesap ekle\" → \"kurulum anahtarı gir\" ile bu anahtarı ekleyin (hesap adı: Milk Trace):';
+
+  @override
+  String get twoFactorStep2 => '2. Uygulamanın gösterdiği 6 haneli kodu girin:';
+
+  @override
+  String get twoFactorTitle => 'İki adımlı doğrulama';
 
   @override
   String get unmatchedAssign => 'Hayvana ata';

@@ -13,6 +13,9 @@ _TeamMember _$TeamMemberFromJson(Map<String, dynamic> json) => _TeamMember(
   role: json['role'] as String,
   status: json['status'] as String? ?? 'active',
   kiosk: json['kiosk'] as bool? ?? false,
+  accessUntil: json['accessUntil'] == null
+      ? null
+      : DateTime.parse(json['accessUntil'] as String),
 );
 
 Map<String, dynamic> _$TeamMemberToJson(_TeamMember instance) =>
@@ -23,4 +26,5 @@ Map<String, dynamic> _$TeamMemberToJson(_TeamMember instance) =>
       'role': instance.role,
       'status': instance.status,
       'kiosk': instance.kiosk,
+      'accessUntil': instance.accessUntil?.toIso8601String(),
     };

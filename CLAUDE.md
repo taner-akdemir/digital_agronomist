@@ -541,6 +541,17 @@ sunucunun mesajı, pencere açık kalır). Web karşılığı panelin `/admin/he
 sahibe; sabah/akşam saati (kapalı olabilir) ve gecikme payı. Sunucu saatten sonra oturumu
 açılmamış bölge için `milking_missed` uyarısı açar; oturum açılınca çözülür.
 
+**İki adımlı doğrulama** (backend ADR 0102): hesap kartında bütün rollere "İki adımlı
+doğrulama" (`/settings/2fa`): kurulum anahtarı + "Uygulamada aç" (otpauth), kodla açma,
+yedek kodlar YALNIZCA bir kez; kapatma parola + kod. Girişte sunucu `mfaRequired`
+dönerse `AuthApi.login` `MfaRequired` atar, giriş ekranı kod adımına geçer
+(`Auth.signInSecondFactor`). Durum önbelleklenmez. Platform yöneticisine zorunlu (panel).
+
+**Süreli erişim** (backend ADR 0103): Kullanıcılar'da ekleme ve kişi menüsünde "Erişim
+bitişi" (gün ya da süresiz). `updateTeamMember` TAM kayıt: `accessUntil` her çağrıda
+taşınır — gönderilmezse süre kalkar (testle kilitli). Ertesi gün sunucu girişi keser,
+sahibe `access_ended` bildirimi gider (dokununca Kullanıcılar).
+
 **Çökme raporu** (backend ADR 0100): `CrashReporting.init()` main'de; Firebase
 Crashlytics, debug'da kapalı, Firebase yoksa sessizce atlanır. Rapora kullanıcı/işletme
 bilgisi EKLENMEZ (`setUserIdentifier` çağırma). Gizlilik belgeleri buna göre.

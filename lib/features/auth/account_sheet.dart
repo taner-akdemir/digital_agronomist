@@ -249,6 +249,32 @@ class _AccountSheet extends ConsumerWidget {
                   ),
                 ),
               ],
+              // İki adımlı doğrulama (backend ADR 0102): bütün roller; tablet
+              // hesabının kartı yok.
+              const SizedBox(height: AppSpacing.sm),
+              OutlinedButton.icon(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  context.push('/settings/2fa');
+                },
+                icon: Icon(
+                  (user?.twoFactor ?? false)
+                      ? Icons.verified_user
+                      : Icons.shield_outlined,
+                ),
+                label: Text(
+                  (user?.twoFactor ?? false)
+                      ? l10n.accountTwoFactorOn
+                      : l10n.accountTwoFactor,
+                ),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: AppColors.darkGreenColor,
+                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadius.mdAll,
+                  ),
+                ),
+              ),
               const SizedBox(height: AppSpacing.sm),
               OutlinedButton.icon(
                 onPressed: Env.apiMode == ApiMode.mock

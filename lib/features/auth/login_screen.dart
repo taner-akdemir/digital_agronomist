@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/api_exception.dart';
+import 'package:milktrace/data/auth/auth_api.dart';
 import 'package:milktrace/features/support/support.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
@@ -25,10 +26,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   bool _obscure = true;
   String? _error;
 
+  /// İki adımlı doğrulama (backend ADR 0102): parola geçince kod adımı.
+  String? _mfaToken;
+  final _code = TextEditingController();
+
   @override
   void dispose() {
     _email.dispose();
     _password.dispose();
+    _code.dispose();
     super.dispose();
   }
 
@@ -42,11 +48,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     });
 
     try {
-      await ref
-          .read(authProvider.notifier)
-          .signIn(email: _email.text.trim(), password: _password.text);
+      final auth = ref.read(authProvider.notifier);
+      if (_mfaToken case final token?) {
+        await auth.signInSecondFactor(mfaToken: token, code: _code.text.trim());
+      } else {
+        await auth.signIn(email: _email.text.trim(), password: _password.text);
+      }
       // Yönlendirme router'ın işi: oturum açılınca redirect devreye girer.
       // Burada context.go çağırmak İKİ yönlendirme kaynağı yaratırdı.
+    } on MfaRequired catch (e) {
+      if (mounted) setState(() => _mfaToken = e.token);
     } on ApiException catch (e) {
       // Sunucunun Türkçe mesajı doğrudan gösterilir (§16).
       if (mounted) setState(() => _error = e.message);
@@ -95,59 +106,93 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
                         ),
                         const SizedBox(height: AppSpacing.xxl),
-                        TextFormField(
-                          controller: _email,
-                          enabled: !_busy,
-                          keyboardType: TextInputType.emailAddress,
-                          autofillHints: const [AutofillHints.username],
-                          textInputAction: TextInputAction.next,
-                          decoration: InputDecoration(
-                            labelText: l10n.loginEmailLabel,
-                            prefixIcon: const Icon(Icons.alternate_email),
-                            border: const OutlineInputBorder(
-                              borderRadius: AppRadius.mdAll,
-                            ),
-                          ),
-                          validator: (v) {
-                            final value = v?.trim() ?? '';
-                            if (value.isEmpty) return l10n.loginEmailRequired;
-                            if (!EmailValidator.validate(value)) {
-                              return l10n.loginEmailInvalid;
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: AppSpacing.lg),
-                        TextFormField(
-                          controller: _password,
-                          enabled: !_busy,
-                          obscureText: _obscure,
-                          autofillHints: const [AutofillHints.password],
-                          textInputAction: TextInputAction.done,
-                          onFieldSubmitted: (_) => _submit(),
-                          decoration: InputDecoration(
-                            labelText: l10n.loginPasswordLabel,
-                            prefixIcon: const Icon(Icons.lock_outline),
-                            border: const OutlineInputBorder(
-                              borderRadius: AppRadius.mdAll,
-                            ),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                _obscure
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
+                        if (_mfaToken != null) ...[
+                          Text(l10n.loginMfaHint, textAlign: TextAlign.center),
+                          const SizedBox(height: AppSpacing.lg),
+                          TextFormField(
+                            controller: _code,
+                            enabled: !_busy,
+                            autofocus: true,
+                            autofillHints: const [AutofillHints.oneTimeCode],
+                            keyboardType: TextInputType.visiblePassword,
+                            textInputAction: TextInputAction.done,
+                            onFieldSubmitted: (_) => _submit(),
+                            decoration: InputDecoration(
+                              labelText: l10n.loginMfaCode,
+                              prefixIcon: const Icon(Icons.pin_outlined),
+                              border: const OutlineInputBorder(
+                                borderRadius: AppRadius.mdAll,
                               ),
-                              tooltip: _obscure
-                                  ? l10n.loginShowPassword
-                                  : l10n.loginHidePassword,
-                              onPressed: () =>
-                                  setState(() => _obscure = !_obscure),
                             ),
+                            validator: (v) => (v ?? '').trim().isEmpty
+                                ? l10n.loginMfaCodeRequired
+                                : null,
                           ),
-                          validator: (v) => (v == null || v.isEmpty)
-                              ? l10n.loginPasswordRequired
-                              : null,
-                        ),
+                          TextButton(
+                            onPressed: _busy
+                                ? null
+                                : () => setState(() {
+                                    _mfaToken = null;
+                                    _code.clear();
+                                    _error = null;
+                                  }),
+                            child: Text(l10n.commonBack),
+                          ),
+                        ] else ...[
+                          TextFormField(
+                            controller: _email,
+                            enabled: !_busy,
+                            keyboardType: TextInputType.emailAddress,
+                            autofillHints: const [AutofillHints.username],
+                            textInputAction: TextInputAction.next,
+                            decoration: InputDecoration(
+                              labelText: l10n.loginEmailLabel,
+                              prefixIcon: const Icon(Icons.alternate_email),
+                              border: const OutlineInputBorder(
+                                borderRadius: AppRadius.mdAll,
+                              ),
+                            ),
+                            validator: (v) {
+                              final value = v?.trim() ?? '';
+                              if (value.isEmpty) return l10n.loginEmailRequired;
+                              if (!EmailValidator.validate(value)) {
+                                return l10n.loginEmailInvalid;
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: AppSpacing.lg),
+                          TextFormField(
+                            controller: _password,
+                            enabled: !_busy,
+                            obscureText: _obscure,
+                            autofillHints: const [AutofillHints.password],
+                            textInputAction: TextInputAction.done,
+                            onFieldSubmitted: (_) => _submit(),
+                            decoration: InputDecoration(
+                              labelText: l10n.loginPasswordLabel,
+                              prefixIcon: const Icon(Icons.lock_outline),
+                              border: const OutlineInputBorder(
+                                borderRadius: AppRadius.mdAll,
+                              ),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _obscure
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                ),
+                                tooltip: _obscure
+                                    ? l10n.loginShowPassword
+                                    : l10n.loginHidePassword,
+                                onPressed: () =>
+                                    setState(() => _obscure = !_obscure),
+                              ),
+                            ),
+                            validator: (v) => (v == null || v.isEmpty)
+                                ? l10n.loginPasswordRequired
+                                : null,
+                          ),
+                        ],
                         if (_error != null) ...[
                           const SizedBox(height: AppSpacing.lg),
                           _ErrorBanner(message: _error!),

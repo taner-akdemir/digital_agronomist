@@ -103,9 +103,26 @@ class Auth extends _$Auth {
 
   /// Giriş. Hata ApiException olarak YUKARI atılır — ekran sunucunun
   /// Türkçe mesajını gösterir, kendi metnini uydurmaz.
+  ///
+  /// İki adımlı doğrulama açıksa [MfaRequired] atılır; ekran kodu ister ve
+  /// [signInSecondFactor] çağırır (backend ADR 0102).
   Future<void> signIn({required String email, required String password}) async {
-    final result = await _session.api.login(email: email, password: password);
+    await _adoptLogin(
+      await _session.api.login(email: email, password: password),
+    );
+  }
 
+  /// Girişin ikinci adımı (backend ADR 0102).
+  Future<void> signInSecondFactor({
+    required String mfaToken,
+    required String code,
+  }) async {
+    await _adoptLogin(
+      await _session.api.loginSecondFactor(mfaToken: mfaToken, code: code),
+    );
+  }
+
+  Future<void> _adoptLogin(LoginResult result) async {
     await _session.adopt(
       AuthTokens(
         accessToken: result.accessToken,

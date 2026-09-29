@@ -868,6 +868,41 @@ class MockRepository implements MilkTraceRepository {
   @override
   Future<void> setVolumeUnit(String unit) => _delayed(() async {});
 
+  /// Mock'ta 2FA bellekte; kod "123456" geçer (demo).
+  bool _twoFactor = false;
+
+  @override
+  Future<bool> twoFactorEnabled() => _delayed(() async => _twoFactor);
+
+  @override
+  Future<({String secret, String uri})> twoFactorSetup() => _delayed(
+    () async => (
+      secret: 'JBSWY3DPEHPK3PXP',
+      uri:
+          'otpauth://totp/Milk%20Trace:demo?secret=JBSWY3DPEHPK3PXP&issuer=Milk%20Trace',
+    ),
+  );
+
+  @override
+  Future<List<String>> twoFactorEnable(String code) => _delayed(() async {
+    if (code != '123456') {
+      throw const ApiException(
+        code: 'VALIDATION',
+        message:
+            'kod tutmadı; telefonun saatini ve girdiğiniz kodu kontrol edin',
+        status: 422,
+      );
+    }
+    _twoFactor = true;
+    return [for (var i = 0; i < 10; i++) 'demo$i-kod$i'];
+  });
+
+  @override
+  Future<void> twoFactorDisable({
+    required String password,
+    required String code,
+  }) => _delayed(() async => _twoFactor = false);
+
   MilkingSchedule _schedule = const MilkingSchedule();
 
   @override
@@ -1085,6 +1120,7 @@ class MockRepository implements MilkTraceRepository {
     required String role,
     String? password,
     bool kiosk = false,
+    DateTime? accessUntil,
   }) => _delayed(() async {
     final e = email.trim().toLowerCase();
     if (_team.values.any((m) => m.email == e)) {
@@ -1101,6 +1137,7 @@ class MockRepository implements MilkTraceRepository {
       // Tablet her zaman operatördür (backend ADR 0091).
       role: kiosk ? 'tenant_operator' : role,
       kiosk: kiosk,
+      accessUntil: accessUntil,
     );
     _team[m.id] = m;
     final invited = password == null || password.isEmpty;
@@ -1118,6 +1155,7 @@ class MockRepository implements MilkTraceRepository {
     required String fullName,
     required String role,
     required String status,
+    DateTime? accessUntil,
   }) => _delayed(() async {
     final old = _team[id];
     if (old == null || !old.isManageable) throw _teamNotFound;
@@ -1125,6 +1163,7 @@ class MockRepository implements MilkTraceRepository {
       fullName: fullName,
       role: role,
       status: status,
+      accessUntil: accessUntil,
     );
   });
 

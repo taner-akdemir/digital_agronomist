@@ -49,11 +49,16 @@ class PushMessage {
     Map<String, dynamic> data = const {},
   }) {
     final animalId = _string(data['animalId']);
+    // Süreli erişim sona erdi (backend ADR 0103): sahibi Kullanıcılar'a.
+    final route = switch (_string(data['type'])) {
+      'access_ended' => '/settings/team',
+      _ => animalId == null ? alertsRoute : '/history/animal/$animalId',
+    };
 
     return PushMessage(
       title: title,
       body: body,
-      route: animalId == null ? alertsRoute : '/history/animal/$animalId',
+      route: route,
       tenantId: _string(data['tenantId']),
     );
   }

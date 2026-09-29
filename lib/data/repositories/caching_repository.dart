@@ -430,6 +430,24 @@ class CachingRepository implements MilkTraceRepository {
   Future<void> setVolumeUnit(String unit) =>
       _net(() => _inner.setVolumeUnit(unit));
 
+  // 2FA hesap güvenliği: önbelleklenmez, çevrimdışı eski durum gösterilmez.
+  @override
+  Future<bool> twoFactorEnabled() => _net(_inner.twoFactorEnabled);
+
+  @override
+  Future<({String secret, String uri})> twoFactorSetup() =>
+      _net(_inner.twoFactorSetup);
+
+  @override
+  Future<List<String>> twoFactorEnable(String code) =>
+      _net(() => _inner.twoFactorEnable(code));
+
+  @override
+  Future<void> twoFactorDisable({
+    required String password,
+    required String code,
+  }) => _net(() => _inner.twoFactorDisable(password: password, code: code));
+
   @override
   Future<MilkingSchedule> milkingSchedule() => _read(
     'milking-schedule',
@@ -516,6 +534,7 @@ class CachingRepository implements MilkTraceRepository {
     required String role,
     String? password,
     bool kiosk = false,
+    DateTime? accessUntil,
   }) => _net(
     () => _inner.addTeamMember(
       email: email,
@@ -523,6 +542,7 @@ class CachingRepository implements MilkTraceRepository {
       role: role,
       password: password,
       kiosk: kiosk,
+      accessUntil: accessUntil,
     ),
   );
 
@@ -532,12 +552,14 @@ class CachingRepository implements MilkTraceRepository {
     required String fullName,
     required String role,
     required String status,
+    DateTime? accessUntil,
   }) => _net(
     () => _inner.updateTeamMember(
       id,
       fullName: fullName,
       role: role,
       status: status,
+      accessUntil: accessUntil,
     ),
   );
 

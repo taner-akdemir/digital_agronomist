@@ -276,6 +276,7 @@ abstract interface class MilkTraceRepository {
     required String role,
     String? password,
     bool kiosk = false,
+    DateTime? accessUntil,
   });
 
   /// Ad, rol ve durum (active | suspended). Askıdaki kullanıcı giremez.
@@ -284,10 +285,27 @@ abstract interface class MilkTraceRepository {
     required String fullName,
     required String role,
     required String status,
+    DateTime? accessUntil,
   });
 
   /// Kalıcı silme: yazdığı notlar "Silinmiş kullanıcı" olarak kalır.
   Future<void> deleteTeamMember(String id);
+
+  /// İki adımlı doğrulama açık mı (backend ADR 0102).
+  Future<bool> twoFactorEnabled();
+
+  /// Kurulumu başlatır: doğrulama uygulamasına girilecek sır ve otpauth
+  /// adresi; henüz etkin değil.
+  Future<({String secret, String uri})> twoFactorSetup();
+
+  /// Uygulamadaki kodla açar; yedek kodlar YALNIZCA burada döner.
+  Future<List<String>> twoFactorEnable(String code);
+
+  /// Kapatır: parola VE kod (ya da yedek kod).
+  Future<void> twoFactorDisable({
+    required String password,
+    required String code,
+  });
 
   /// Sağım saatleri (backend ADR 0099); okuma herkes, yazma sahip.
   Future<MilkingSchedule> milkingSchedule();

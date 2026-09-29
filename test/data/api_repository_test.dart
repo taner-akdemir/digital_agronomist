@@ -584,6 +584,28 @@ void main() {
 
   // Push jetonu uçları (VARSAYIM: §8.5 bunları listelemiyor, `notification`
   // servisi yazılırken doğrulanmalı).
+  // Süreli erişim (backend ADR 0103): güncelleme TAM kayıt; bitiş yoksa
+  // boş gider (süre kalkar), varsa gün olarak.
+  test('kullanıcı güncellemesi erişim bitişini taşır', () async {
+    final member = {'id': 'u', 'email': 'v@x', 'role': 'tenant_viewer'};
+    final r = rig((o) async => okEnvelope(member));
+    await r.repo.updateTeamMember(
+      'u',
+      fullName: 'Dr. V',
+      role: 'tenant_viewer',
+      status: 'active',
+      accessUntil: DateTime(2026, 10, 5),
+    );
+    await r.repo.updateTeamMember(
+      'u',
+      fullName: 'Dr. V',
+      role: 'tenant_viewer',
+      status: 'active',
+    );
+    expect(r.adapter.requests[0].data['accessUntil'], '2026-10-05');
+    expect(r.adapter.requests[1].data['accessUntil'], '');
+  });
+
   test('push jetonu kaydedilir', () async {
     final r = rig((o) async => okEnvelope({}));
 

@@ -33,6 +33,8 @@
     }
   },
   "accountThresholds": "Eşik ayarları",
+  "accountTwoFactor": "İki adımlı doğrulama",
+  "accountTwoFactorOn": "İki adımlı doğrulama açık",
   "accountUnitKilogram": "Kilogram",
   "accountUnitLitre": "Litre",
   "accountUsers": "Kullanıcılar",
@@ -992,6 +994,9 @@
   "loginEmailRequired": "E-posta girin.",
   "loginForgotPassword": "Parolamı unuttum",
   "loginHidePassword": "Parolayı gizle",
+  "loginMfaCode": "Doğrulama kodu",
+  "loginMfaCodeRequired": "Kodu girin.",
+  "loginMfaHint": "Doğrulama uygulamanızdaki 6 haneli kodu ya da bir yedek kodu girin.",
   "loginPasswordLabel": "Parola",
   "loginPasswordRequired": "Parola girin.",
   "loginResetIntro": "E-posta adresinize yeni parola belirleme bağlantısı gönderelim.",
@@ -1128,6 +1133,16 @@
   "@supportWhatsAppVersion": {
     "placeholders": {
       "version": {}
+    }
+  },
+  "teamAccessExpired": "erişim süresi doldu",
+  "teamAccessPickDate": "Gün seç",
+  "teamAccessTitle": "Erişim bitişi",
+  "teamAccessUnlimited": "Süresiz",
+  "teamAccessUntil": "erişim {date} dahil",
+  "@teamAccessUntil": {
+    "placeholders": {
+      "date": {}
     }
   },
   "teamActionFailed": "İşlem yapılamadı: {error}",
@@ -1297,6 +1312,23 @@
       "date": {}
     }
   },
+  "twoFactorBackupBody": "Telefonunuz kaybolursa bunlarla girersiniz; her biri bir kez geçer. Yalnızca şimdi gösteriliyor — güvenli bir yere kaydedin.",
+  "twoFactorBackupTitle": "Yedek kodlar",
+  "twoFactorCode": "6 haneli kod",
+  "twoFactorCodeOrBackup": "Kod ya da yedek kod",
+  "twoFactorCopyCodes": "Kodları kopyala",
+  "twoFactorCopyKey": "Anahtarı kopyala",
+  "twoFactorDisable": "İki adımlı doğrulamayı kapat",
+  "twoFactorDisableHint": "Kapatmak için parolanızı ve doğrulama kodunu (ya da bir yedek kodu) girin.",
+  "twoFactorDone": "Kaydettim",
+  "twoFactorEnable": "Doğrula ve aç",
+  "twoFactorIntro": "Girişte parolanın yanında telefonunuzdaki doğrulama uygulamasının (Google Authenticator, Microsoft Authenticator vb.) ürettiği 6 haneli kod istenir. Parolanız ele geçse bile hesabınıza girilemez.",
+  "twoFactorOn": "İki adımlı doğrulama açık",
+  "twoFactorOpenApp": "Uygulamada aç",
+  "twoFactorStart": "Kurulumu başlat",
+  "twoFactorStep1": "1. Doğrulama uygulamasında \"hesap ekle\" → \"kurulum anahtarı gir\" ile bu anahtarı ekleyin (hesap adı: Milk Trace):",
+  "twoFactorStep2": "2. Uygulamanın gösterdiği 6 haneli kodu girin:",
+  "twoFactorTitle": "İki adımlı doğrulama",
   "unmatchedAssign": "Hayvana ata",
   "unmatchedAssigned": "Küpe {earTag} kaydına eklendi",
   "@unmatchedAssigned": {

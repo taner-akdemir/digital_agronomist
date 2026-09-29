@@ -71,6 +71,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountThresholds => 'Threshold settings';
 
   @override
+  String get accountTwoFactor => 'Two-step verification';
+
+  @override
+  String get accountTwoFactorOn => 'Two-step verification is on';
+
+  @override
   String get accountUnitKilogram => 'Kilogram';
 
   @override
@@ -1748,6 +1754,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginHidePassword => 'Hide password';
 
   @override
+  String get loginMfaCode => 'Verification code';
+
+  @override
+  String get loginMfaCodeRequired => 'Enter the code.';
+
+  @override
+  String get loginMfaHint =>
+      'Enter the 6-digit code from your authenticator app or a backup code.';
+
+  @override
   String get loginPasswordLabel => 'Password';
 
   @override
@@ -1995,6 +2011,23 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String supportWhatsAppVersion(Object version) {
     return ' (App $version)';
+  }
+
+  @override
+  String get teamAccessExpired => 'access expired';
+
+  @override
+  String get teamAccessPickDate => 'Pick a date';
+
+  @override
+  String get teamAccessTitle => 'Access ends';
+
+  @override
+  String get teamAccessUnlimited => 'No end date';
+
+  @override
+  String teamAccessUntil(Object date) {
+    return 'access until $date';
   }
 
   @override
@@ -2362,6 +2395,61 @@ class AppLocalizationsEn extends AppLocalizations {
   String treatmentWithdrawalBanner(Object date) {
     return 'In withdrawal: keep the milk out of the tank through $date.';
   }
+
+  @override
+  String get twoFactorBackupBody =>
+      'If you lose your phone you can sign in with these; each works once. Shown only now — keep them somewhere safe.';
+
+  @override
+  String get twoFactorBackupTitle => 'Backup codes';
+
+  @override
+  String get twoFactorCode => '6-digit code';
+
+  @override
+  String get twoFactorCodeOrBackup => 'Code or backup code';
+
+  @override
+  String get twoFactorCopyCodes => 'Copy codes';
+
+  @override
+  String get twoFactorCopyKey => 'Copy key';
+
+  @override
+  String get twoFactorDisable => 'Turn off two-step verification';
+
+  @override
+  String get twoFactorDisableHint =>
+      'To turn it off, enter your password and a verification code (or a backup code).';
+
+  @override
+  String get twoFactorDone => 'I saved them';
+
+  @override
+  String get twoFactorEnable => 'Verify and turn on';
+
+  @override
+  String get twoFactorIntro =>
+      'When signing in, besides your password you enter the 6-digit code from the authenticator app on your phone (Google Authenticator, Microsoft Authenticator, etc.). Even if your password leaks, nobody can sign in.';
+
+  @override
+  String get twoFactorOn => 'Two-step verification is on';
+
+  @override
+  String get twoFactorOpenApp => 'Open in app';
+
+  @override
+  String get twoFactorStart => 'Start setup';
+
+  @override
+  String get twoFactorStep1 =>
+      '1. In the authenticator app choose \"add account\" → \"enter a setup key\" and add this key (account name: Milk Trace):';
+
+  @override
+  String get twoFactorStep2 => '2. Enter the 6-digit code the app shows:';
+
+  @override
+  String get twoFactorTitle => 'Two-step verification';
 
   @override
   String get unmatchedAssign => 'Assign to animal';

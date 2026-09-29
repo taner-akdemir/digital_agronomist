@@ -206,6 +206,18 @@ abstract class AppLocalizations {
   /// **'Eşik ayarları'**
   String get accountThresholds;
 
+  /// No description provided for @accountTwoFactor.
+  ///
+  /// In tr, this message translates to:
+  /// **'İki adımlı doğrulama'**
+  String get accountTwoFactor;
+
+  /// No description provided for @accountTwoFactorOn.
+  ///
+  /// In tr, this message translates to:
+  /// **'İki adımlı doğrulama açık'**
+  String get accountTwoFactorOn;
+
   /// No description provided for @accountUnitKilogram.
   ///
   /// In tr, this message translates to:
@@ -3007,6 +3019,24 @@ abstract class AppLocalizations {
   /// **'Parolayı gizle'**
   String get loginHidePassword;
 
+  /// No description provided for @loginMfaCode.
+  ///
+  /// In tr, this message translates to:
+  /// **'Doğrulama kodu'**
+  String get loginMfaCode;
+
+  /// No description provided for @loginMfaCodeRequired.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kodu girin.'**
+  String get loginMfaCodeRequired;
+
+  /// No description provided for @loginMfaHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Doğrulama uygulamanızdaki 6 haneli kodu ya da bir yedek kodu girin.'**
+  String get loginMfaHint;
+
   /// No description provided for @loginPasswordLabel.
   ///
   /// In tr, this message translates to:
@@ -3432,6 +3462,36 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **' (Uygulama {version})'**
   String supportWhatsAppVersion(Object version);
+
+  /// No description provided for @teamAccessExpired.
+  ///
+  /// In tr, this message translates to:
+  /// **'erişim süresi doldu'**
+  String get teamAccessExpired;
+
+  /// No description provided for @teamAccessPickDate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gün seç'**
+  String get teamAccessPickDate;
+
+  /// No description provided for @teamAccessTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Erişim bitişi'**
+  String get teamAccessTitle;
+
+  /// No description provided for @teamAccessUnlimited.
+  ///
+  /// In tr, this message translates to:
+  /// **'Süresiz'**
+  String get teamAccessUnlimited;
+
+  /// No description provided for @teamAccessUntil.
+  ///
+  /// In tr, this message translates to:
+  /// **'erişim {date} dahil'**
+  String teamAccessUntil(Object date);
 
   /// No description provided for @teamActionFailed.
   ///
@@ -4056,6 +4116,108 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Arınmada: sütü {date} dahil tanka katmayın.'**
   String treatmentWithdrawalBanner(Object date);
+
+  /// No description provided for @twoFactorBackupBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Telefonunuz kaybolursa bunlarla girersiniz; her biri bir kez geçer. Yalnızca şimdi gösteriliyor — güvenli bir yere kaydedin.'**
+  String get twoFactorBackupBody;
+
+  /// No description provided for @twoFactorBackupTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yedek kodlar'**
+  String get twoFactorBackupTitle;
+
+  /// No description provided for @twoFactorCode.
+  ///
+  /// In tr, this message translates to:
+  /// **'6 haneli kod'**
+  String get twoFactorCode;
+
+  /// No description provided for @twoFactorCodeOrBackup.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kod ya da yedek kod'**
+  String get twoFactorCodeOrBackup;
+
+  /// No description provided for @twoFactorCopyCodes.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kodları kopyala'**
+  String get twoFactorCopyCodes;
+
+  /// No description provided for @twoFactorCopyKey.
+  ///
+  /// In tr, this message translates to:
+  /// **'Anahtarı kopyala'**
+  String get twoFactorCopyKey;
+
+  /// No description provided for @twoFactorDisable.
+  ///
+  /// In tr, this message translates to:
+  /// **'İki adımlı doğrulamayı kapat'**
+  String get twoFactorDisable;
+
+  /// No description provided for @twoFactorDisableHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kapatmak için parolanızı ve doğrulama kodunu (ya da bir yedek kodu) girin.'**
+  String get twoFactorDisableHint;
+
+  /// No description provided for @twoFactorDone.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydettim'**
+  String get twoFactorDone;
+
+  /// No description provided for @twoFactorEnable.
+  ///
+  /// In tr, this message translates to:
+  /// **'Doğrula ve aç'**
+  String get twoFactorEnable;
+
+  /// No description provided for @twoFactorIntro.
+  ///
+  /// In tr, this message translates to:
+  /// **'Girişte parolanın yanında telefonunuzdaki doğrulama uygulamasının (Google Authenticator, Microsoft Authenticator vb.) ürettiği 6 haneli kod istenir. Parolanız ele geçse bile hesabınıza girilemez.'**
+  String get twoFactorIntro;
+
+  /// No description provided for @twoFactorOn.
+  ///
+  /// In tr, this message translates to:
+  /// **'İki adımlı doğrulama açık'**
+  String get twoFactorOn;
+
+  /// No description provided for @twoFactorOpenApp.
+  ///
+  /// In tr, this message translates to:
+  /// **'Uygulamada aç'**
+  String get twoFactorOpenApp;
+
+  /// No description provided for @twoFactorStart.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kurulumu başlat'**
+  String get twoFactorStart;
+
+  /// No description provided for @twoFactorStep1.
+  ///
+  /// In tr, this message translates to:
+  /// **'1. Doğrulama uygulamasında \"hesap ekle\" → \"kurulum anahtarı gir\" ile bu anahtarı ekleyin (hesap adı: Milk Trace):'**
+  String get twoFactorStep1;
+
+  /// No description provided for @twoFactorStep2.
+  ///
+  /// In tr, this message translates to:
+  /// **'2. Uygulamanın gösterdiği 6 haneli kodu girin:'**
+  String get twoFactorStep2;
+
+  /// No description provided for @twoFactorTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'İki adımlı doğrulama'**
+  String get twoFactorTitle;
 
   /// No description provided for @unmatchedAssign.
   ///
