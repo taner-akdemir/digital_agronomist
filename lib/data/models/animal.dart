@@ -64,6 +64,13 @@ abstract class Animal with _$Animal {
 
     /// Grubun adı; yalnızca okunur.
     String? groupName,
+
+    /// Soy (backend ADR 0114): anne sürüdeki hayvan, baba boğa/sperma
+    /// kodu. PUT tam kayıt: formdan HER ZAMAN gider, null kaldırır.
+    /// `damEarTag` yalnızca okunur. Yavrular listeden süzülür (`damId`).
+    String? damId,
+    String? damEarTag,
+    String? sireCode,
   }) = _Animal;
 
   const Animal._();

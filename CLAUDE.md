@@ -292,6 +292,18 @@ uç yok, liste okunur; sınır kesik gri çizgi). Sınır (`Deliveries.sccLimitK
 Aşımda `high_scc` uyarısı. **Haftalık özet** (ADR 0079/0111) ayrı kanal kaynağı
 `weekly`: SMS/arama dışı yeni kanalda varsayılan açık (`defaultChannelSources(kind)`).
 
+**Soy bilgisi** (backend ADR 0114): `Animal.damId` (sürüdeki anne) ve `sireCode` (boğa/sperma
+kodu); `animalBody` ikisini HER ZAMAN gönderir (tam kayıt, testle kilitli). Formda aynı türden
+anne seçici; detayda anne çipi, baba kodu ve yavrular (liste `damId`'ye göre süzülür).
+Buzağılama kaydedilince bildirimde "Yavruyu kaydet" → `/animals/new?damId=&birth=` (tür
+annenin türüyle gelir). Döngü ve başka işletmenin hayvanı sunucuda 422.
+
+**Nokta sağlığı** (backend ADR 0113, `GET /spout-health`): nokta 7 günde farklı hayvanlarda
+ünitesinin diğer noktalarından belirgin düşük debi ölçüyorsa (`low` SUNUCUDAN) Cihazlar'da
+çevrimiçi satır SARI "Düşük debi · %44", ünite açık gelir, sayaç sayfasında açıklama.
+Okunamazsa sessizce düşer (ağaç ondan bağımsız). Mock'ta yok. Sunucu ayrıca
+`spout_low_flow` uyarısı açar.
+
 **Sağımcılar** (`/settings/milkers`, backend ADR 0090): hesap kartından YALNIZCA sahibe.
 Sağımcı = oturumu açan / hayvanı bağlayan (ayrı seçim adımı yok). 7/30 gün; oturum, sağım,
 süt, ortalama süre, düşük debi payı. Metin oranın kişiyi puanlamadığını söyler.

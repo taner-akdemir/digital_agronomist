@@ -221,6 +221,7 @@ class _CalvingButton extends ConsumerWidget {
 
   Future<void> _record(BuildContext context, WidgetRef ref) async {
     final messenger = ScaffoldMessenger.of(context);
+    final router = GoRouter.maybeOf(context);
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final last = animal.lastCalvingDate;
@@ -281,10 +282,23 @@ class _CalvingButton extends ConsumerWidget {
         ..invalidate(animalsProvider)
         ..invalidate(animalNotesProvider(animal.id))
         ..invalidate(animalTrendProvider(animal.id));
+      final day =
+          '${date.year.toString().padLeft(4, '0')}-'
+          '${date.month.toString().padLeft(2, '0')}-'
+          '${date.day.toString().padLeft(2, '0')}';
       messenger.showSnackBar(
         SnackBar(
           content: Text(l10n.animalDetailCalvingSaved),
           backgroundColor: AppColors.brandFill,
+          // Yavruyu anne ve doğum günü dolu formla kaydet (ADR 0114).
+          action: router == null
+              ? null
+              : SnackBarAction(
+                  label: l10n.lineageRegisterCalf,
+                  textColor: AppColors.onFill,
+                  onPressed: () =>
+                      router.push('/animals/new?damId=${animal.id}&birth=$day'),
+                ),
         ),
       );
     } catch (e) {
@@ -370,6 +384,7 @@ class _IdentityCard extends StatelessWidget {
                 ),
             ],
           ),
+          _Lineage(animal: animal),
           if (animal.isMilking && dim != null && dim < freshDays) ...[
             const SizedBox(height: AppSpacing.sm),
             // Neden "düşüşte" ya da "kuruya aday" görünmediği: sınıf
@@ -683,6 +698,55 @@ class _Stat extends StatelessWidget {
               color: color ?? AppColors.onSurface,
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Soy (backend ADR 0114): anne (dokununca detayı), baba kodu ve yavrular
+/// (listeden süzülür). Hiçbiri yoksa çizilmez.
+class _Lineage extends ConsumerWidget {
+  const _Lineage({required this.animal});
+
+  final Animal animal;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final offspring =
+        [
+          for (final a in ref.watch(animalsProvider).value ?? const <Animal>[])
+            if (a.damId == animal.id) a,
+        ]..sort(
+          (a, b) => (b.birthDate ?? DateTime(0)).compareTo(
+            a.birthDate ?? DateTime(0),
+          ),
+        );
+    if (animal.damId == null && animal.sireCode == null && offspring.isEmpty) {
+      return const SizedBox.shrink();
+    }
+    Widget link(String id, String label) => ActionChip(
+      label: Text(label, style: const TextStyle(fontSize: 12)),
+      visualDensity: VisualDensity.compact,
+      onPressed: () => context.push('/history/animal/$id'),
+    );
+    return Padding(
+      padding: const EdgeInsets.only(top: AppSpacing.sm),
+      child: Wrap(
+        spacing: AppSpacing.sm,
+        runSpacing: AppSpacing.xs,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          if (animal.damId case final dam?)
+            link(dam, '${l10n.lineageDam}: ${animal.damEarTag ?? dam}'),
+          if (animal.sireCode case final sire?) _Fact(l10n.lineageSire, sire),
+          if (offspring.isNotEmpty) ...[
+            Text(
+              '${l10n.lineageOffspring}:',
+              style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
+            ),
+            for (final o in offspring) link(o.id, o.earTag),
+          ],
         ],
       ),
     );

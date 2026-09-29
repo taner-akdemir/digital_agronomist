@@ -22,6 +22,7 @@ import 'package:milktrace/data/models/session_milking.dart';
 import 'package:milktrace/data/models/session_summary.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
+import 'package:milktrace/data/models/spout_health.dart';
 import 'package:milktrace/data/models/spout_update.dart';
 import 'package:milktrace/data/models/team_member.dart';
 import 'package:milktrace/data/models/thresholds.dart';
@@ -342,6 +343,9 @@ abstract interface class MilkTraceRepository {
   Future<AnimalGroup> createGroup(String name);
   Future<AnimalGroup> renameGroup(String id, String name);
   Future<void> deleteGroup(String id);
+
+  /// Nokta sağlığı (backend ADR 0113, `GET /spout-health`); bütün roller.
+  Future<List<SpoutHealth>> spoutHealth();
 
   /// Tank teslimleri ve fark eşiği (backend ADR 0089, `GET /deliveries`).
   Future<Deliveries> deliveries();

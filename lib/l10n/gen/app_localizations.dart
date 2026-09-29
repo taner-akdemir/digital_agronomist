@@ -2953,6 +2953,48 @@ abstract class AppLocalizations {
   /// **'Türkçe'**
   String get languageTurkish;
 
+  /// No description provided for @lineageDam.
+  ///
+  /// In tr, this message translates to:
+  /// **'Anne'**
+  String get lineageDam;
+
+  /// No description provided for @lineageNoDam.
+  ///
+  /// In tr, this message translates to:
+  /// **'Anne kayıtlı değil'**
+  String get lineageNoDam;
+
+  /// No description provided for @lineageOffspring.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yavrular'**
+  String get lineageOffspring;
+
+  /// No description provided for @lineageRegisterCalf.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yavruyu kaydet'**
+  String get lineageRegisterCalf;
+
+  /// No description provided for @lineageSire.
+  ///
+  /// In tr, this message translates to:
+  /// **'Baba (boğa/sperma kodu)'**
+  String get lineageSire;
+
+  /// No description provided for @lineageSireHelper.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tohumlama kaydındaki kodla aynı biçimde'**
+  String get lineageSireHelper;
+
+  /// No description provided for @lineageSireTooLong.
+  ///
+  /// In tr, this message translates to:
+  /// **'En çok 60 karakter'**
+  String get lineageSireTooLong;
+
   /// No description provided for @liveActionFailed.
   ///
   /// In tr, this message translates to:
@@ -3899,6 +3941,18 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Koyun'**
   String get speciesSheep;
+
+  /// No description provided for @spoutLowFlowDetail.
+  ///
+  /// In tr, this message translates to:
+  /// **'Son 7 günde ünitenin diğer noktalarından %{pct} düşük debi ölçüyor (ort. {avg} L/dk, ünite {unit} L/dk). Başlık, pulsatör ve süt hortumunu kontrol edin.'**
+  String spoutLowFlowDetail(Object pct, Object avg, Object unit);
+
+  /// No description provided for @spoutLowFlowShort.
+  ///
+  /// In tr, this message translates to:
+  /// **'Düşük debi · %{pct}'**
+  String spoutLowFlowShort(Object pct);
 
   /// No description provided for @supportCall.
   ///

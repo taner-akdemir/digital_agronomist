@@ -1,0 +1,9 @@
+{
+  "lineageDam": "Anne",
+  "lineageNoDam": "Anne kayıtlı değil",
+  "lineageSire": "Baba (boğa/sperma kodu)",
+  "lineageSireHelper": "Tohumlama kaydındaki kodla aynı biçimde",
+  "lineageSireTooLong": "En çok 60 karakter",
+  "lineageOffspring": "Yavrular",
+  "lineageRegisterCalf": "Yavruyu kaydet"
+}

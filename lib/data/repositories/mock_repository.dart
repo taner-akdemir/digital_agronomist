@@ -27,6 +27,7 @@ import 'package:milktrace/data/models/session_milking.dart';
 import 'package:milktrace/data/models/session_summary.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
+import 'package:milktrace/data/models/spout_health.dart';
 import 'package:milktrace/data/models/spout_update.dart';
 import 'package:milktrace/data/models/team_member.dart';
 import 'package:milktrace/data/models/thresholds.dart';
@@ -1273,6 +1274,11 @@ class MockRepository implements MilkTraceRepository {
   double _tolerance = 5;
   int _sccLimitK = 400;
   int _deliverySeq = 0;
+
+  /// Mock'ta nokta sağlığı YOK: üretilmiş geçmiş noktaya bağlı değil;
+  /// düşük nokta uydurmak demoda gerçek sanılacak bir arıza göstermek olurdu.
+  @override
+  Future<List<SpoutHealth>> spoutHealth() => _delayed(() async => const []);
 
   @override
   Future<Deliveries> deliveries() => _delayed(

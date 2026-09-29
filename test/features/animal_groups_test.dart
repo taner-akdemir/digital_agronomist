@@ -152,7 +152,11 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Padok 1').last);
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('Kaydet'));
+    await tester.scrollUntilVisible(
+      find.text('Kaydet'),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.tap(find.text('Kaydet'));
     await tester.pumpAndSettle();
 

@@ -1712,6 +1712,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get languageTurkish => 'Türkçe';
 
   @override
+  String get lineageDam => 'Dam';
+
+  @override
+  String get lineageNoDam => 'No dam recorded';
+
+  @override
+  String get lineageOffspring => 'Offspring';
+
+  @override
+  String get lineageRegisterCalf => 'Register the calf';
+
+  @override
+  String get lineageSire => 'Sire (bull/semen code)';
+
+  @override
+  String get lineageSireHelper => 'Same format as the insemination record';
+
+  @override
+  String get lineageSireTooLong => 'At most 60 characters';
+
+  @override
   String liveActionFailed(Object error) {
     return 'Couldn\'t complete the action: $error';
   }
@@ -2259,6 +2280,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get speciesSheep => 'Sheep';
+
+  @override
+  String spoutLowFlowDetail(Object pct, Object avg, Object unit) {
+    return 'Over the last 7 days this point read $pct% lower flow than the unit\'s other points (avg $avg L/min, unit $unit L/min). Check the cluster, pulsator and milk hose.';
+  }
+
+  @override
+  String spoutLowFlowShort(Object pct) {
+    return 'Low flow · $pct%';
+  }
 
   @override
   String get supportCall => 'Call';

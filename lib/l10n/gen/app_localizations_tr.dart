@@ -1688,6 +1688,27 @@ class AppLocalizationsTr extends AppLocalizations {
   String get languageTurkish => 'Türkçe';
 
   @override
+  String get lineageDam => 'Anne';
+
+  @override
+  String get lineageNoDam => 'Anne kayıtlı değil';
+
+  @override
+  String get lineageOffspring => 'Yavrular';
+
+  @override
+  String get lineageRegisterCalf => 'Yavruyu kaydet';
+
+  @override
+  String get lineageSire => 'Baba (boğa/sperma kodu)';
+
+  @override
+  String get lineageSireHelper => 'Tohumlama kaydındaki kodla aynı biçimde';
+
+  @override
+  String get lineageSireTooLong => 'En çok 60 karakter';
+
+  @override
   String liveActionFailed(Object error) {
     return 'İşlem tamamlanamadı: $error';
   }
@@ -2232,6 +2253,16 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get speciesSheep => 'Koyun';
+
+  @override
+  String spoutLowFlowDetail(Object pct, Object avg, Object unit) {
+    return 'Son 7 günde ünitenin diğer noktalarından %$pct düşük debi ölçüyor (ort. $avg L/dk, ünite $unit L/dk). Başlık, pulsatör ve süt hortumunu kontrol edin.';
+  }
+
+  @override
+  String spoutLowFlowShort(Object pct) {
+    return 'Düşük debi · %$pct';
+  }
 
   @override
   String get supportCall => 'Ara';

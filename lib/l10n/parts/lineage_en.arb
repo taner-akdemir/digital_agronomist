@@ -1,0 +1,9 @@
+{
+  "lineageDam": "Dam",
+  "lineageNoDam": "No dam recorded",
+  "lineageSire": "Sire (bull/semen code)",
+  "lineageSireHelper": "Same format as the insemination record",
+  "lineageSireTooLong": "At most 60 characters",
+  "lineageOffspring": "Offspring",
+  "lineageRegisterCalf": "Register the calf"
+}

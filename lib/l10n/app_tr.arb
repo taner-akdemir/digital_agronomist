@@ -955,6 +955,13 @@
   "languageEnglish": "English",
   "languageTitle": "Dil",
   "languageTurkish": "Türkçe",
+  "lineageDam": "Anne",
+  "lineageNoDam": "Anne kayıtlı değil",
+  "lineageOffspring": "Yavrular",
+  "lineageRegisterCalf": "Yavruyu kaydet",
+  "lineageSire": "Baba (boğa/sperma kodu)",
+  "lineageSireHelper": "Tohumlama kaydındaki kodla aynı biçimde",
+  "lineageSireTooLong": "En çok 60 karakter",
   "liveActionFailed": "İşlem tamamlanamadı: {error}",
   "@liveActionFailed": {
     "placeholders": {
@@ -1256,6 +1263,20 @@
   "speciesCow": "İnek",
   "speciesGoat": "Keçi",
   "speciesSheep": "Koyun",
+  "spoutLowFlowDetail": "Son 7 günde ünitenin diğer noktalarından %{pct} düşük debi ölçüyor (ort. {avg} L/dk, ünite {unit} L/dk). Başlık, pulsatör ve süt hortumunu kontrol edin.",
+  "@spoutLowFlowDetail": {
+    "placeholders": {
+      "pct": {},
+      "avg": {},
+      "unit": {}
+    }
+  },
+  "spoutLowFlowShort": "Düşük debi · %{pct}",
+  "@spoutLowFlowShort": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
   "supportCall": "Ara",
   "supportOpenFailed": "Açılamadı: {target}",
   "@supportOpenFailed": {

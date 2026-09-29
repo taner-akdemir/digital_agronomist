@@ -1,0 +1,16 @@
+{
+  "spoutLowFlowShort": "Düşük debi · %{pct}",
+  "@spoutLowFlowShort": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "spoutLowFlowDetail": "Son 7 günde ünitenin diğer noktalarından %{pct} düşük debi ölçüyor (ort. {avg} L/dk, ünite {unit} L/dk). Başlık, pulsatör ve süt hortumunu kontrol edin.",
+  "@spoutLowFlowDetail": {
+    "placeholders": {
+      "pct": {},
+      "avg": {},
+      "unit": {}
+    }
+  }
+}

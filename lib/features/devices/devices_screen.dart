@@ -4,6 +4,7 @@ import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/format.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/device_error.dart';
+import 'package:milktrace/data/models/spout_health.dart';
 import 'package:milktrace/domain/flow_color.dart';
 import 'package:milktrace/features/devices/devices_providers.dart';
 import 'package:milktrace/l10n/l10n.dart';
@@ -26,7 +27,9 @@ class DevicesScreen extends ConsumerWidget {
 
     return RefreshIndicator(
       onRefresh: () async {
-        ref.invalidate(deviceTreeProvider);
+        ref
+          ..invalidate(deviceTreeProvider)
+          ..invalidate(spoutHealthProvider);
         await ref.read(deviceTreeProvider.future);
       },
       child: AsyncView(
@@ -175,15 +178,16 @@ class _HallSection extends StatelessWidget {
   }
 }
 
-class _VacuumCard extends StatelessWidget {
+class _VacuumCard extends ConsumerWidget {
   const _VacuumCard({required this.node, required this.showProtocol});
 
   final VacuumNode node;
   final bool showProtocol;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final now = DateTime.now();
+    final health = ref.watch(spoutHealthProvider).value ?? const {};
     // Yakın zamanda hata bildiren sayaç da ilgilenilmeli sayılır: çevrimiçi
     // ama arızalı bir sayaç, kapalı bir ünitenin içinde kaybolmamalı.
     final problems = node.spouts
@@ -192,7 +196,9 @@ class _VacuumCard extends StatelessWidget {
               s.device == null ||
               s.device!.status != 'online' ||
               s.device!.hasRecentError(now) ||
-              s.device!.isCalibrationDue(now),
+              s.device!.isCalibrationDue(now) ||
+              // Nokta farklı hayvanlarda düşük debi ölçüyor (ADR 0113).
+              (health[s.spout.id]?.low ?? false),
         )
         .length;
 
@@ -201,6 +207,9 @@ class _VacuumCard extends StatelessWidget {
       // Varsayılan olarak KAPALI ve sorunlu ünite AÇIK: 30 noktayı birden
       // açmak, ilgilenilmesi gereken iki satırı kaydırma içinde kaybederdi.
       child: ExpansionTile(
+        // Nokta sağlığı ağaçtan SONRA gelebilir; initiallyExpanded yalnızca
+        // ilk çizimde okunur, anahtar sorun durumu değişince kartı yeniler.
+        key: ValueKey('${node.vacuum.id}:${problems > 0}'),
         initiallyExpanded: problems > 0,
         shape: const Border(),
         collapsedShape: const Border(),
@@ -226,7 +235,11 @@ class _VacuumCard extends StatelessWidget {
         ),
         children: [
           for (final s in node.spouts)
-            _SpoutRow(node: s, showProtocol: showProtocol),
+            _SpoutRow(
+              node: s,
+              showProtocol: showProtocol,
+              health: health[s.spout.id],
+            ),
         ],
       ),
     );
@@ -234,9 +247,16 @@ class _VacuumCard extends StatelessWidget {
 }
 
 class _SpoutRow extends StatelessWidget {
-  const _SpoutRow({required this.node, required this.showProtocol});
+  const _SpoutRow({
+    required this.node,
+    required this.showProtocol,
+    this.health,
+  });
 
   final SpoutNode node;
+
+  /// Nokta sağlığı (ADR 0113); düşükse çevrimiçi satır SARI olur.
+  final SpoutHealth? health;
 
   /// Karışık protokollü tesiste satırda protokol de yazılır.
   final bool showProtocol;
@@ -244,11 +264,22 @@ class _SpoutRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final device = node.device;
-    final status = _DeviceStatus.of(device);
+    final base = _DeviceStatus.of(device);
+    // Ekipman işareti yalnızca sayaç başka bir sorun bildirmiyorsa öne
+    // çıkar: çevrimdışı/hata daha acil.
+    final lowFlow = (health?.low ?? false) && base.color == MilkColor.green;
+    final status = lowFlow
+        ? _DeviceStatus(
+            l10n.spoutLowFlowShort(health!.diffPct.abs().toStringAsFixed(0)),
+            MilkColor.yellow,
+          )
+        : base;
     final palette = MilkPalette.of(status.color);
 
     return InkWell(
-      onTap: device == null ? null : () => _showDeviceSheet(context, device),
+      onTap: device == null
+          ? null
+          : () => _showDeviceSheet(context, device, health: health),
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: AppSpacing.lg,
@@ -285,7 +316,7 @@ class _SpoutRow extends StatelessWidget {
               // ekranda seri numarasını dışarı itiyordu.
               constraints: const BoxConstraints(maxWidth: 132),
               child: Text(
-                status.detail(device),
+                lowFlow ? status.label : status.detail(device),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.right,
@@ -372,7 +403,11 @@ class _UnassignedCard extends StatelessWidget {
 /// Seri no, yazılım ve kalibrasyon katsayısı sahada TELEFONDAN okunuyor:
 /// cihazın üstündeki etiket sağım sırasında görünmüyor ve destek hattı ilk
 /// bunları soruyor.
-void _showDeviceSheet(BuildContext context, Device device) {
+void _showDeviceSheet(
+  BuildContext context,
+  Device device, {
+  SpoutHealth? health,
+}) {
   final status = _DeviceStatus.of(device);
 
   showModalBottomSheet<void>(
@@ -464,6 +499,22 @@ void _showDeviceSheet(BuildContext context, Device device) {
               l10n.devicesDetailLastError,
               _lastErrorText(device.lastError),
             ),
+            // Nokta sağlığı (ADR 0113): düşükse açıklama ve ne yapılacağı.
+            if (health != null && health.low && health.unitMedian != null)
+              Padding(
+                padding: const EdgeInsets.only(top: AppSpacing.md),
+                child: Text(
+                  l10n.spoutLowFlowDetail(
+                    health.diffPct.abs().toStringAsFixed(0),
+                    health.avgFlow.toStringAsFixed(2),
+                    health.unitMedian!.toStringAsFixed(2),
+                  ),
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: AppColors.darkAmberColor,
+                  ),
+                ),
+              ),
             if (device.isSimulated)
               // Simülatör cihazı GÖRÜNÜR olmalı: demo verisini gerçek sanıp
               // sahada arayan olmasın (§10).

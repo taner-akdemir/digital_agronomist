@@ -162,7 +162,14 @@ GoRouter router(Ref ref) {
       // formuyla aynı). Yalnızca işletme sahibi açar.
       GoRoute(
         path: '/animals/new',
-        builder: (_, _) => const AnimalFormScreen(),
+        // Buzağılamadan "Yavruyu kaydet" (backend ADR 0114): anne ve doğum
+        // günü dolu gelir.
+        builder: (_, state) => AnimalFormScreen(
+          damId: state.uri.queryParameters['damId'],
+          birthDate: DateTime.tryParse(
+            state.uri.queryParameters['birth'] ?? '',
+          ),
+        ),
       ),
       // Toplu içe aktarma (backend ADR 0063): yalnızca işletme sahibi.
       // Hayvan grupları (backend ADR 0092): yalnızca sahip.

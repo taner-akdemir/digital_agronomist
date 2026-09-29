@@ -19,17 +19,27 @@ import 'package:milktrace/widgets/async_view.dart';
 /// döner). Düzenleme TAM kayıttır: form bütün alanları gönderir, boş
 /// bırakılan alan silinir. Verim sınıfı formda YOK — gece hesabının alanı.
 class AnimalFormScreen extends ConsumerWidget {
-  const AnimalFormScreen({super.key, this.animalId});
+  const AnimalFormScreen({
+    super.key,
+    this.animalId,
+    this.damId,
+    this.birthDate,
+  });
 
   /// Düzenlenecek hayvan; null ise yeni hayvan.
   final String? animalId;
+
+  /// Yeni yavru kısayolu (backend ADR 0114): anne ve doğum günü.
+  final String? damId;
+  final DateTime? birthDate;
 
   bool get _isEdit => animalId != null;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final species = ref.watch(speciesListProvider);
-    final animals = _isEdit
+    // Yavru kısayolunda annenin türü için de liste gerekir.
+    final animals = _isEdit || damId != null
         ? ref.watch(animalsProvider)
         : const AsyncData(<Animal>[]);
 
@@ -57,7 +67,16 @@ class AnimalFormScreen extends ConsumerWidget {
             if (_isEdit && existing == null) {
               return Center(child: Text(l10n.animalFormNotFound));
             }
-            return _Form(species: speciesList, existing: existing);
+            return _Form(
+              species: speciesList,
+              existing: existing,
+              damId: damId,
+              damSpeciesId: list
+                  .where((a) => a.id == damId)
+                  .firstOrNull
+                  ?.speciesId,
+              birthDate: birthDate,
+            );
           },
         ),
       ),
@@ -69,10 +88,21 @@ class AnimalFormScreen extends ConsumerWidget {
 const _statuses = ['active', 'dry', 'sold', 'slaughtered', 'dead'];
 
 class _Form extends ConsumerStatefulWidget {
-  const _Form({required this.species, this.existing});
+  const _Form({
+    required this.species,
+    this.existing,
+    this.damId,
+    this.damSpeciesId,
+    this.birthDate,
+  });
 
   final List<Species> species;
   final Animal? existing;
+  final String? damId;
+
+  /// Yavru kısayolunda tür annenin türüyle gelir (anne aynı türden olmalı).
+  final String? damSpeciesId;
+  final DateTime? birthDate;
 
   @override
   ConsumerState<_Form> createState() => _FormState();
@@ -85,6 +115,10 @@ class _FormState extends ConsumerState<_Form> {
   late final TextEditingController _breed;
   late final TextEditingController _rfid;
   late final TextEditingController _lactation;
+  late final TextEditingController _sire;
+
+  /// Anne (backend ADR 0114); null = yok. PUT tam kayıt: her zaman gider.
+  late String? _damId;
   late String? _speciesId;
   late String _status;
 
@@ -107,22 +141,31 @@ class _FormState extends ConsumerState<_Form> {
     // Yeni hayvanda tür tek ise (keçi çiftliği) seçili gelir.
     _speciesId =
         a?.speciesId ??
+        widget.damSpeciesId ??
         (widget.species.length == 1 ? widget.species.first.id : null);
     _status = a?.status ?? 'active';
     _groupId = a?.groupId;
-    _birth = a?.birthDate;
+    _damId = a?.damId ?? widget.damId;
+    _sire = TextEditingController(text: a?.sireCode ?? '');
+    _birth = a?.birthDate ?? widget.birthDate;
     _calving = a?.lastCalvingDate;
   }
 
   @override
   void dispose() {
-    for (final c in [_earTag, _name, _breed, _rfid, _lactation]) {
+    for (final c in [_earTag, _name, _breed, _rfid, _lactation, _sire]) {
       c.dispose();
     }
     super.dispose();
   }
 
   String? _nullIfBlank(String s) => s.trim().isEmpty ? null : s.trim();
+
+  /// Anne adayları: seçili türden, kendisi hariç (döngüyü sunucu da denetler).
+  List<Animal> _damCandidates(List<Animal> all) => [
+    for (final a in all)
+      if (a.speciesId == _speciesId && a.id != widget.existing?.id) a,
+  ]..sort((a, b) => a.earTag.compareTo(b.earTag));
 
   Future<void> _save() async {
     if (!(_key.currentState?.validate() ?? false)) return;
@@ -143,6 +186,8 @@ class _FormState extends ConsumerState<_Form> {
       lactationNo: int.tryParse(_lactation.text.trim()) ?? 0,
       status: _status,
       groupId: _groupId,
+      damId: _damId,
+      sireCode: _nullIfBlank(_sire.text),
     );
     try {
       final saved = await ref.read(repositoryProvider).saveAnimal(draft);
@@ -285,6 +330,38 @@ class _FormState extends ConsumerState<_Form> {
               onChanged: (v) => setState(() => _groupId = v),
             ),
           ],
+          // Soy (backend ADR 0114): anne aynı türden, kendisi değil.
+          if (ref.watch(animalsProvider).value case final all?) ...[
+            _gap,
+            DropdownButtonFormField<String?>(
+              initialValue: _damCandidates(all).any((a) => a.id == _damId)
+                  ? _damId
+                  : null,
+              isExpanded: true,
+              decoration: _decoration(l10n.lineageDam),
+              items: [
+                DropdownMenuItem<String?>(child: Text(l10n.lineageNoDam)),
+                for (final a in _damCandidates(all))
+                  DropdownMenuItem<String?>(
+                    value: a.id,
+                    child: Text(
+                      a.name == null ? a.earTag : '${a.earTag} · ${a.name}',
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+              ],
+              onChanged: (v) => setState(() => _damId = v),
+            ),
+          ],
+          _gap,
+          TextFormField(
+            controller: _sire,
+            decoration: _decoration(
+              l10n.lineageSire,
+            ).copyWith(helperText: l10n.lineageSireHelper),
+            validator: (v) =>
+                (v ?? '').trim().length > 60 ? l10n.lineageSireTooLong : null,
+          ),
           if (_error != null) ...[
             _gap,
             Text(_error!, style: TextStyle(color: AppColors.darkRedColor)),

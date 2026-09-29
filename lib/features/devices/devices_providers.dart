@@ -2,6 +2,7 @@ import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/device_profile.dart';
 import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/spout.dart';
+import 'package:milktrace/data/models/spout_health.dart';
 import 'package:milktrace/data/models/vacuum.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -134,4 +135,16 @@ Future<DeviceTree> deviceTree(Ref ref) async {
     protocols: Map<String, int>.unmodifiable(protocols),
     unprofiled: unprofiled,
   );
+}
+
+/// Nokta sağlığı (backend ADR 0113), noktaya göre. Okunamazsa BOŞ: ağaç ve
+/// sayaç durumu bu ek bilgi yüzünden düşmesin.
+@riverpod
+Future<Map<String, SpoutHealth>> spoutHealth(Ref ref) async {
+  try {
+    final list = await ref.watch(repositoryProvider).spoutHealth();
+    return {for (final h in list) h.spoutId: h};
+  } catch (_) {
+    return const {};
+  }
 }

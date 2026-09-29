@@ -26,6 +26,7 @@ import 'package:milktrace/data/models/session_milking.dart';
 import 'package:milktrace/data/models/session_summary.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
+import 'package:milktrace/data/models/spout_health.dart';
 import 'package:milktrace/data/models/spout_update.dart';
 import 'package:milktrace/data/models/team_member.dart';
 import 'package:milktrace/data/models/thresholds.dart';
@@ -581,6 +582,13 @@ class CachingRepository implements MilkTraceRepository {
 
   @override
   Future<void> deleteGroup(String id) => _net(() => _inner.deleteGroup(id));
+
+  @override
+  Future<List<SpoutHealth>> spoutHealth() => _read(
+    'spout-health',
+    _inner.spoutHealth,
+    (j) => _list(j, SpoutHealth.fromJson),
+  );
 
   @override
   Future<Deliveries> deliveries() => _read(

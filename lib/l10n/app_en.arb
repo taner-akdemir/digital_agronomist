@@ -832,6 +832,13 @@
   "languageEnglish": "English",
   "languageTitle": "Language",
   "languageTurkish": "Türkçe",
+  "lineageDam": "Dam",
+  "lineageNoDam": "No dam recorded",
+  "lineageOffspring": "Offspring",
+  "lineageRegisterCalf": "Register the calf",
+  "lineageSire": "Sire (bull/semen code)",
+  "lineageSireHelper": "Same format as the insemination record",
+  "lineageSireTooLong": "At most 60 characters",
   "liveActionFailed": "Couldn't complete the action: {error}",
   "@liveActionFailed": {
     "placeholders": {
@@ -1076,6 +1083,20 @@
   "speciesCow": "Cow",
   "speciesGoat": "Goat",
   "speciesSheep": "Sheep",
+  "spoutLowFlowDetail": "Over the last 7 days this point read {pct}% lower flow than the unit's other points (avg {avg} L/min, unit {unit} L/min). Check the cluster, pulsator and milk hose.",
+  "@spoutLowFlowDetail": {
+    "placeholders": {
+      "pct": {},
+      "avg": {},
+      "unit": {}
+    }
+  },
+  "spoutLowFlowShort": "Low flow · {pct}%",
+  "@spoutLowFlowShort": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
   "supportCall": "Call",
   "supportOpenFailed": "Couldn't open: {target}",
   "@supportOpenFailed": {

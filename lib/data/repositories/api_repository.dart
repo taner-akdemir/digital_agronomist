@@ -26,6 +26,7 @@ import 'package:milktrace/data/models/session_milking.dart';
 import 'package:milktrace/data/models/session_summary.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
+import 'package:milktrace/data/models/spout_health.dart';
 import 'package:milktrace/data/models/spout_update.dart';
 import 'package:milktrace/data/models/team_member.dart';
 import 'package:milktrace/data/models/thresholds.dart';
@@ -398,6 +399,8 @@ class ApiRepository implements MilkTraceRepository {
     'lactationNo': a.lactationNo,
     'status': a.status,
     'groupId': a.groupId,
+    'damId': a.damId,
+    'sireCode': a.sireCode,
   };
 
   static String _dayText(DateTime d) =>
@@ -815,6 +818,10 @@ class ApiRepository implements MilkTraceRepository {
   Future<void> deleteGroup(String id) async {
     await _dio.delete<dynamic>('/animal-groups/$id');
   }
+
+  @override
+  Future<List<SpoutHealth>> spoutHealth() async =>
+      _listOf(await _dio.get<dynamic>('/spout-health'), SpoutHealth.fromJson);
 
   @override
   Future<Deliveries> deliveries() async =>

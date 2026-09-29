@@ -1,0 +1,16 @@
+{
+  "spoutLowFlowShort": "Low flow · {pct}%",
+  "@spoutLowFlowShort": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "spoutLowFlowDetail": "Over the last 7 days this point read {pct}% lower flow than the unit's other points (avg {avg} L/min, unit {unit} L/min). Check the cluster, pulsator and milk hose.",
+  "@spoutLowFlowDetail": {
+    "placeholders": {
+      "pct": {},
+      "avg": {},
+      "unit": {}
+    }
+  }
+}
