@@ -44,6 +44,9 @@ String auditActionLabel(String action) => switch (action) {
   'channel.create' => l10n.auditChannelCreate,
   'channel.update' => l10n.auditChannelUpdate,
   'channel.delete' => l10n.auditChannelDelete,
+  'api_key.create' => l10n.auditApiKeyCreate,
+  'api_key.revoke' => l10n.auditApiKeyRevoke,
+  'meter.check' => l10n.auditMeterCheck,
   _ => action,
 };
 
@@ -58,6 +61,8 @@ IconData _icon(String action) => switch (action.split('.').first) {
   'delivery' => Icons.local_shipping_outlined,
   'vaccine_plan' || 'vaccination' => Icons.vaccines_outlined,
   'settings' => Icons.settings_outlined,
+  'api_key' => Icons.key,
+  'meter' => Icons.speed,
   _ => Icons.history,
 };
 

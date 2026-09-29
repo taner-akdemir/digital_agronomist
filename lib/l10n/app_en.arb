@@ -1,5 +1,6 @@
 {
   "@@locale": "en",
+  "accountApiKeys": "API keys",
   "accountAuditLog": "Activity log",
   "accountDefaultName": "User",
   "accountFarmLocation": "Farm location",
@@ -283,10 +284,47 @@
   "animalImportTitle": "Import from list",
   "animalImportUpdateHint": "Only filled cells in the file are written; an empty cell never clears saved data. Species is not changed.",
   "animalImportUpdateSwitch": "Update registered animals",
+  "apiKeysCopied": "Key copied",
+  "apiKeysCopy": "Copy",
+  "apiKeysCreate": "Create key",
+  "apiKeysCreatedBy": "{who} · {date}",
+  "@apiKeysCreatedBy": {
+    "placeholders": {
+      "who": {},
+      "date": {}
+    }
+  },
+  "apiKeysCreatedTitle": "Key created",
+  "apiKeysDone": "I saved it",
+  "apiKeysEmpty": "No keys yet.",
+  "apiKeysIntro": "So a feed program, accounting or cooperative system can fetch your data automatically. Keys are READ-ONLY: the animal list, tank deliveries and daily yield can be read; notes, treatments and any writes are closed.",
+  "apiKeysLastUsed": "Last used {when}",
+  "@apiKeysLastUsed": {
+    "placeholders": {
+      "when": {}
+    }
+  },
+  "apiKeysNameHelper": "Which system will use it? E.g. Feed program",
+  "apiKeysNameLabel": "Key name",
+  "apiKeysNeverUsed": "Never used",
+  "apiKeysRevoke": "Revoke",
+  "apiKeysRevokeBody": "The system connected with \"{name}\" loses access within 1 minute at most. This cannot be undone.",
+  "@apiKeysRevokeBody": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "apiKeysRevokeTitle": "Revoke this key?",
+  "apiKeysRevoked": "Key revoked",
+  "apiKeysShownOnce": "This key will not be shown again. Copy it now into the system that will connect; if you lose it, revoke it and create a new one.",
+  "apiKeysTitle": "API keys",
+  "apiKeysUsage": "Daily yield:\nGET /api/v1/exports/daily?from=YYYY-MM-DD&to=YYYY-MM-DD\nHeader: Authorization: Bearer <key>",
   "auditAnimalCalving": "Calving recorded",
   "auditAnimalCreate": "Animal added",
   "auditAnimalImport": "Import from list",
   "auditAnimalUpdate": "Animal record changed",
+  "auditApiKeyCreate": "API key created",
+  "auditApiKeyRevoke": "API key revoked",
   "auditBreedingAdd": "Breeding record added",
   "auditBreedingDelete": "Breeding record deleted",
   "auditChannelCreate": "Notification channel added",
@@ -298,6 +336,7 @@
   "auditEmpty": "No recorded changes in the last 90 days.",
   "auditIntro": "Last 90 days: changes to thresholds, animal records, matching, users and notification channels.",
   "auditLoadFailed": "Could not load the activity log",
+  "auditMeterCheck": "Meter check",
   "auditSettingsUpdate": "Farm setting changed",
   "auditSpoutUnassign": "Matching removed",
   "auditTagDismiss": "Unrecognized ear tag dismissed",
@@ -871,6 +910,7 @@
   },
   "historyAnimalsLoadFailed": "Could not load animals",
   "historyFilterGroup": "Group",
+  "historyFilterSlow": "Slow milkers",
   "historyFilterSpecies": "Species",
   "historyFromList": "From list",
   "historyGroups": "Groups",
@@ -1085,6 +1125,63 @@
   "loginShowPassword": "Show password",
   "loginSubmit": "Sign in",
   "loginTagline": "Milking tracking for your farm",
+  "meterCheckAmountLabel": "Measured milk ({unit})",
+  "@meterCheckAmountLabel": {
+    "placeholders": {
+      "unit": {}
+    }
+  },
+  "meterCheckCalibrate": "The deviation persists: ask the installation team for calibration.",
+  "meterCheckEnterAmount": "Enter the measured amount",
+  "meterCheckIntro": "{when} · the meter read {metered}. Weigh or measure this milking's milk; it is compared with the meter, the factor is not changed.",
+  "@meterCheckIntro": {
+    "placeholders": {
+      "when": {},
+      "metered": {}
+    }
+  },
+  "meterCheckResult": "Meter {dev}% · average of last {n} checks {avg}%",
+  "@meterCheckResult": {
+    "placeholders": {
+      "dev": {},
+      "n": {},
+      "avg": {}
+    }
+  },
+  "meterCheckRow": "{date} · {tag} · meter {metered} / manual {manual}",
+  "@meterCheckRow": {
+    "placeholders": {
+      "date": {},
+      "tag": {},
+      "metered": {},
+      "manual": {}
+    }
+  },
+  "meterCheckRowPct": "{pct}%",
+  "@meterCheckRowPct": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "meterCheckTapHint": "To check a meter, tap a milking and enter the weighed milk.",
+  "meterCheckTitle": "Manual measurement",
+  "meterDriftShort": "Check deviation {pct}%",
+  "@meterDriftShort": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "meterSectionCalibrate": "Average deviation exceeds 5%: ask the installation team for calibration.",
+  "meterSectionEmpty": "No manual measurements yet. They are entered from the recent milkings on the animal page.",
+  "meterSectionFew": "At least 3 checks are needed for a calibration decision.",
+  "meterSectionSummary": "Average of last {n} checks {avg}%",
+  "@meterSectionSummary": {
+    "placeholders": {
+      "n": {},
+      "avg": {}
+    }
+  },
+  "meterSectionTitle": "Meter check",
   "milkersDurationMinutesSeconds": "{m} min {s} s",
   "milkersDurationSeconds": "{s} s",
   "milkersEmpty": "No milkings in this period.",
@@ -1214,6 +1311,29 @@
   "speciesCow": "Cow",
   "speciesGoat": "Goat",
   "speciesSheep": "Sheep",
+  "speedAvgFlow": "Average flow",
+  "speedDuration": "Average duration",
+  "speedFlowValue": "{v} L/min",
+  "@speedFlowValue": {
+    "placeholders": {
+      "v": {}
+    }
+  },
+  "speedHerd": "Herd average {v} L/min · {n} milkings",
+  "@speedHerd": {
+    "placeholders": {
+      "v": {},
+      "n": {}
+    }
+  },
+  "speedPeakFlow": "Peak flow",
+  "speedSlow": "Slow milker: {pct}% below the herd average. Keeps the unit busy longer; consider it in the milking order.",
+  "@speedSlow": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "speedTitle": "Milking speed · last 30 days",
   "spoutLowFlowDetail": "Over the last 7 days this point read {pct}% lower flow than the unit's other points (avg {avg} L/min, unit {unit} L/min). Check the cluster, pulsator and milk hose.",
   "@spoutLowFlowDetail": {
     "placeholders": {

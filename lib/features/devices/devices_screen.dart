@@ -4,10 +4,12 @@ import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/format.dart';
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/device_error.dart';
+import 'package:milktrace/data/models/meter_check.dart';
 import 'package:milktrace/data/models/spout_health.dart';
 import 'package:milktrace/domain/flow_color.dart';
 import 'package:milktrace/features/devices/devices_providers.dart';
 import 'package:milktrace/l10n/l10n.dart';
+import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
 import 'package:milktrace/widgets/light_info.dart';
 import 'package:milktrace/widgets/milk_palette.dart';
@@ -29,7 +31,8 @@ class DevicesScreen extends ConsumerWidget {
       onRefresh: () async {
         ref
           ..invalidate(deviceTreeProvider)
-          ..invalidate(spoutHealthProvider);
+          ..invalidate(spoutHealthProvider)
+          ..invalidate(meterSummariesProvider);
         await ref.read(deviceTreeProvider.future);
       },
       child: AsyncView(
@@ -188,6 +191,7 @@ class _VacuumCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final now = DateTime.now();
     final health = ref.watch(spoutHealthProvider).value ?? const {};
+    final meters = ref.watch(meterSummariesProvider).value ?? const {};
     // Yakın zamanda hata bildiren sayaç da ilgilenilmeli sayılır: çevrimiçi
     // ama arızalı bir sayaç, kapalı bir ünitenin içinde kaybolmamalı.
     final problems = node.spouts
@@ -198,7 +202,9 @@ class _VacuumCard extends ConsumerWidget {
               s.device!.hasRecentError(now) ||
               s.device!.isCalibrationDue(now) ||
               // Nokta farklı hayvanlarda düşük debi ölçüyor (ADR 0113).
-              (health[s.spout.id]?.low ?? false),
+              (health[s.spout.id]?.low ?? false) ||
+              // Elle ölçümle kontrol sapması (ADR 0124).
+              (meters[s.device!.id]?.needsCalibration ?? false),
         )
         .length;
 
@@ -239,6 +245,7 @@ class _VacuumCard extends ConsumerWidget {
               node: s,
               showProtocol: showProtocol,
               health: health[s.spout.id],
+              meter: s.device == null ? null : meters[s.device!.id],
             ),
         ],
       ),
@@ -251,9 +258,14 @@ class _SpoutRow extends StatelessWidget {
     required this.node,
     required this.showProtocol,
     this.health,
+    this.meter,
   });
 
   final SpoutNode node;
+
+  /// Sayaç kontrolü özeti (ADR 0124); kalibrasyon gerekiyorsa çevrimiçi
+  /// satır SARI olur.
+  final MeterSummary? meter;
 
   /// Nokta sağlığı (ADR 0113); düşükse çevrimiçi satır SARI olur.
   final SpoutHealth? health;
@@ -268,9 +280,20 @@ class _SpoutRow extends StatelessWidget {
     // Ekipman işareti yalnızca sayaç başka bir sorun bildirmiyorsa öne
     // çıkar: çevrimdışı/hata daha acil.
     final lowFlow = (health?.low ?? false) && base.color == MilkColor.green;
+    // Kontrol sapması da aynı öncelikte: çevrimdışı/hata/kalibrasyon zamanı
+    // daha acil; düşük debi (nokta) önce, çünkü sapma onu da açıklayabilir.
+    final drift =
+        !lowFlow &&
+        (meter?.needsCalibration ?? false) &&
+        base.color == MilkColor.green;
     final status = lowFlow
         ? _DeviceStatus(
             l10n.spoutLowFlowShort(health!.diffPct.abs().toStringAsFixed(0)),
+            MilkColor.yellow,
+          )
+        : drift
+        ? _DeviceStatus(
+            l10n.meterDriftShort(signedPct(meter!.avgDeviationPct, digits: 0)),
             MilkColor.yellow,
           )
         : base;
@@ -316,7 +339,7 @@ class _SpoutRow extends StatelessWidget {
               // ekranda seri numarasını dışarı itiyordu.
               constraints: const BoxConstraints(maxWidth: 132),
               child: Text(
-                lowFlow ? status.label : status.detail(device),
+                lowFlow || drift ? status.label : status.detail(device),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.right,
@@ -412,12 +435,15 @@ void _showDeviceSheet(
 
   showModalBottomSheet<void>(
     context: context,
+    // Sayaç kontrolü bölümüyle kart uzayabilir; içerik kadar, gerekirse
+    // kaydırılır.
+    isScrollControlled: true,
     backgroundColor: AppColors.surface,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.lg)),
     ),
     builder: (_) => SafeArea(
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(AppSpacing.xl),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -515,6 +541,8 @@ void _showDeviceSheet(
                   ),
                 ),
               ),
+            // Sayaç kontrolü (ADR 0124): elle ölçümlerle karşılaştırma.
+            _MeterSection(deviceId: device.id),
             if (device.isSimulated)
               // Simülatör cihazı GÖRÜNÜR olmalı: demo verisini gerçek sanıp
               // sahada arayan olmasın (§10).
@@ -543,6 +571,85 @@ void _showDeviceSheet(
       ),
     ),
   );
+}
+
+/// Sayaç kontrolü bölümü (backend ADR 0124): son kontrollerin ortalama
+/// sapması, sayısı ve son 3 kontrol (gün, küpe, sayaç / elle). Okunamazsa
+/// SESSİZCE düşer — sayaç sayfasının geri kalanı bu ek bilgiye bağlı değil.
+class _MeterSection extends ConsumerWidget {
+  const _MeterSection({required this.deviceId});
+
+  final String deviceId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final checks = ref.watch(deviceMeterChecksProvider(deviceId)).value;
+    if (checks == null) return const SizedBox.shrink();
+    final volume = ref.watch(volumeFormatProvider);
+    final s = checks.summary;
+    final muted = TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted);
+    return Padding(
+      padding: const EdgeInsets.only(top: AppSpacing.md),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            l10n.meterSectionTitle,
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: AppSpacing.xs),
+          if (checks.items.isEmpty)
+            Text(l10n.meterSectionEmpty, style: muted)
+          else ...[
+            Text(
+              l10n.meterSectionSummary(s.checks, signedPct(s.avgDeviationPct)),
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: s.needsCalibration ? AppColors.darkAmberColor : null,
+              ),
+            ),
+            if (s.needsCalibration)
+              Text(
+                l10n.meterSectionCalibrate,
+                style: TextStyle(fontSize: 12, color: AppColors.darkAmberColor),
+              )
+            else if (s.checks < 3)
+              Text(l10n.meterSectionFew, style: muted),
+            const SizedBox(height: AppSpacing.xs),
+            for (final c in checks.items.take(3))
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 2),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        l10n.meterCheckRow(
+                          c.createdAt == null
+                              ? '—'
+                              : Fmt.dayMonth(c.createdAt!),
+                          c.earTag,
+                          volume.amount(c.meteredMl),
+                          volume.amount(c.manualMl),
+                        ),
+                        style: muted,
+                      ),
+                    ),
+                    Text(
+                      l10n.meterCheckRowPct(signedPct(c.deviationPct)),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+          ],
+        ],
+      ),
+    );
+  }
 }
 
 /// Son hata satırı: "E17 · Akış sensörü arızası (3 sa önce, 24.09 14:48)".

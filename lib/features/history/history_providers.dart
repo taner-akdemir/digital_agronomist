@@ -4,6 +4,7 @@ import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/milking_session.dart';
+import 'package:milktrace/data/models/milking_speed.dart';
 import 'package:milktrace/data/models/unmatched_tag_row.dart';
 import 'package:milktrace/domain/yield_class.dart';
 import 'package:milktrace/l10n/l10n.dart';
@@ -59,6 +60,18 @@ Future<List<AnimalGroup>> animalGroups(Ref ref) =>
 Future<AnimalTrend> animalTrend(Ref ref, String animalId) =>
     ref.watch(repositoryProvider).animalTrend(animalId);
 
+/// Sağım hızı (backend ADR 0125), hayvana göre. Okunamazsa BOŞ: detay ve
+/// liste bu ek bilgi yüzünden düşmesin (kart gizlenir, süzgeç boş kalır).
+@riverpod
+Future<Map<String, MilkingSpeed>> milkingSpeed(Ref ref) async {
+  try {
+    final list = await ref.watch(repositoryProvider).milkingSpeed();
+    return {for (final s in list) s.animalId: s};
+  } catch (_) {
+    return const {};
+  }
+}
+
 /// Hayvan listesi filtreleri (§15.1: "filtre: tür, sınıf").
 ///
 /// Tek bir nesnede tutuluyor: iki ayrı provider olsaydı filtre değişiminde
@@ -67,6 +80,9 @@ typedef AnimalFilter = ({
   String? speciesId,
   YieldClass? yieldClass,
   String? groupId,
+
+  /// Yalnızca yavaş sağılanlar (backend ADR 0125).
+  bool slow,
 });
 
 /// keepAlive: filtre, onu okuyan ekran YOKKEN de yaşamalı.
@@ -79,19 +95,22 @@ typedef AnimalFilter = ({
 @Riverpod(keepAlive: true)
 class AnimalFilterState extends _$AnimalFilterState {
   @override
-  AnimalFilter build() => (speciesId: null, yieldClass: null, groupId: null);
+  AnimalFilter build() =>
+      (speciesId: null, yieldClass: null, groupId: null, slow: false);
 
   /// Aynı değere tekrar basmak filtreyi KALDIRIR — çipler böyle çalışır.
   void toggleSpecies(String id) => state = (
     speciesId: state.speciesId == id ? null : id,
     yieldClass: state.yieldClass,
     groupId: state.groupId,
+    slow: state.slow,
   );
 
   void toggleClass(YieldClass c) => state = (
     speciesId: state.speciesId,
     yieldClass: state.yieldClass == c ? null : c,
     groupId: state.groupId,
+    slow: state.slow,
   );
 
   /// Grup süzgeci (backend ADR 0092).
@@ -99,6 +118,15 @@ class AnimalFilterState extends _$AnimalFilterState {
     speciesId: state.speciesId,
     yieldClass: state.yieldClass,
     groupId: state.groupId == id ? null : id,
+    slow: state.slow,
+  );
+
+  /// Yavaş sağılanlar süzgeci (backend ADR 0125).
+  void toggleSlow() => state = (
+    speciesId: state.speciesId,
+    yieldClass: state.yieldClass,
+    groupId: state.groupId,
+    slow: !state.slow,
   );
 
   /// Filtreyi TEK bir sınıfa sabitler.
@@ -107,13 +135,14 @@ class AnimalFilterState extends _$AnimalFilterState {
   /// Dashboard'dan "3 hayvan kuruya aday" satırına basıldığında filtrenin
   /// kalkması, kullanıcıyı 30 hayvanlık tam listeye düşürürdü.
   void showOnly(YieldClass c) =>
-      state = (speciesId: null, yieldClass: c, groupId: null);
+      state = (speciesId: null, yieldClass: c, groupId: null, slow: false);
 
   /// Filtreyi TEK bir gruba sabitler (panodaki grup satırı).
   void showGroup(String id) =>
-      state = (speciesId: null, yieldClass: null, groupId: id);
+      state = (speciesId: null, yieldClass: null, groupId: id, slow: false);
 
-  void clear() => state = (speciesId: null, yieldClass: null, groupId: null);
+  void clear() =>
+      state = (speciesId: null, yieldClass: null, groupId: null, slow: false);
 }
 
 /// Filtreden geçmiş hayvan listesi.
@@ -125,10 +154,15 @@ class AnimalFilterState extends _$AnimalFilterState {
 Future<List<Animal>> filteredAnimals(Ref ref) async {
   final all = await ref.watch(animalsProvider.future);
   final f = ref.watch(animalFilterStateProvider);
+  // Hız yalnızca süzgeç açıkken okunur: liste ona bağlı kalmasın.
+  final speed = f.slow
+      ? await ref.watch(milkingSpeedProvider.future)
+      : const <String, MilkingSpeed>{};
 
   final out = all
       .where((a) => f.speciesId == null || a.speciesId == f.speciesId)
       .where((a) => f.groupId == null || a.groupId == f.groupId)
+      .where((a) => !f.slow || (speed[a.id]?.slow ?? false))
       // Sınıf süzgecinde yalnızca SAĞMAL hayvan: pano sınıf dağılımını
       // sağmallardan sayıyor; dokununca açılan liste aynı sayıyı göstermeli.
       .where(

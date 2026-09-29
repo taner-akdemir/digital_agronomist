@@ -1,0 +1,122 @@
+{
+  "meterCheckTitle": "Elle ölçüm",
+  "meterCheckTapHint": "Sayacı denetlemek için sağıma dokunup tartılan sütü girin.",
+  "meterCheckIntro": "{when} · sayaç {metered} ölçtü. Bu sağımın sütünü tartın ya da ölçün; sayaçla karşılaştırılır, katsayı değişmez.",
+  "@meterCheckIntro": {
+    "placeholders": {
+      "when": {},
+      "metered": {}
+    }
+  },
+  "meterCheckAmountLabel": "Ölçülen süt ({unit})",
+  "@meterCheckAmountLabel": {
+    "placeholders": {
+      "unit": {}
+    }
+  },
+  "meterCheckEnterAmount": "Ölçülen miktarı girin",
+  "meterCheckResult": "Sayaç %{dev} · son {n} kontrol ortalaması %{avg}",
+  "@meterCheckResult": {
+    "placeholders": {
+      "dev": {},
+      "n": {},
+      "avg": {}
+    }
+  },
+  "meterCheckCalibrate": "Sapma sürüyor: kurulum ekibinden kalibrasyon isteyin.",
+  "meterDriftShort": "Kontrol sapması %{pct}",
+  "@meterDriftShort": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "meterSectionTitle": "Sayaç kontrolü",
+  "meterSectionEmpty": "Henüz elle ölçüm yok. Hayvan detayındaki son sağımlardan girilir.",
+  "meterSectionSummary": "Son {n} kontrol ortalaması %{avg}",
+  "@meterSectionSummary": {
+    "placeholders": {
+      "n": {},
+      "avg": {}
+    }
+  },
+  "meterSectionCalibrate": "Ortalama sapma %5'i aşıyor: kurulum ekibinden kalibrasyon isteyin.",
+  "meterSectionFew": "Kalibrasyon kararı için en az 3 kontrol gerekir.",
+  "meterCheckRow": "{date} · {tag} · sayaç {metered} / elle {manual}",
+  "@meterCheckRow": {
+    "placeholders": {
+      "date": {},
+      "tag": {},
+      "metered": {},
+      "manual": {}
+    }
+  },
+  "meterCheckRowPct": "%{pct}",
+  "@meterCheckRowPct": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "speedTitle": "Sağım hızı · son 30 gün",
+  "speedAvgFlow": "Ortalama debi",
+  "speedPeakFlow": "Tepe debi",
+  "speedDuration": "Ortalama süre",
+  "speedFlowValue": "{v} L/dk",
+  "@speedFlowValue": {
+    "placeholders": {
+      "v": {}
+    }
+  },
+  "speedHerd": "Sürü ortalaması {v} L/dk · {n} sağım",
+  "@speedHerd": {
+    "placeholders": {
+      "v": {},
+      "n": {}
+    }
+  },
+  "speedSlow": "Yavaş sağılıyor: sürü ortalamasının %{pct} altında. Üniteyi uzun tutar; sağım sırasında dikkate alın.",
+  "@speedSlow": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "historyFilterSlow": "Yavaş sağılanlar",
+  "accountApiKeys": "API anahtarları",
+  "apiKeysTitle": "API anahtarları",
+  "apiKeysIntro": "Yem programı, muhasebe ya da kooperatif sistemi verinizi otomatik alabilsin diye. Anahtar SALT OKUNUR: hayvan listesi, tank teslimleri ve günlük verim okunur; notlar, tedaviler ve her türlü yazma kapalıdır.",
+  "apiKeysUsage": "Günlük verim:\nGET /api/v1/exports/daily?from=YYYY-MM-DD&to=YYYY-MM-DD\nBaşlık: Authorization: Bearer <anahtar>",
+  "apiKeysEmpty": "Henüz anahtar yok.",
+  "apiKeysCreate": "Anahtar oluştur",
+  "apiKeysNameLabel": "Anahtar adı",
+  "apiKeysNameHelper": "Hangi sistem kullanacak? Ör. Yem programı",
+  "apiKeysCreatedTitle": "Anahtar oluşturuldu",
+  "apiKeysShownOnce": "Bu anahtar bir daha gösterilmez. Şimdi kopyalayıp bağlanacak sisteme girin; kaybederseniz iptal edip yenisini oluşturun.",
+  "apiKeysCopy": "Kopyala",
+  "apiKeysCopied": "Anahtar kopyalandı",
+  "apiKeysDone": "Kaydettim",
+  "apiKeysCreatedBy": "{who} · {date}",
+  "@apiKeysCreatedBy": {
+    "placeholders": {
+      "who": {},
+      "date": {}
+    }
+  },
+  "apiKeysLastUsed": "Son kullanım {when}",
+  "@apiKeysLastUsed": {
+    "placeholders": {
+      "when": {}
+    }
+  },
+  "apiKeysNeverUsed": "Hiç kullanılmadı",
+  "apiKeysRevoke": "İptal et",
+  "apiKeysRevokeTitle": "Anahtar iptal edilsin mi?",
+  "apiKeysRevokeBody": "\"{name}\" anahtarıyla bağlanan sistem en geç 1 dakika içinde erişimini kaybeder. Geri alınamaz.",
+  "@apiKeysRevokeBody": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "apiKeysRevoked": "Anahtar iptal edildi",
+  "auditApiKeyCreate": "API anahtarı oluşturuldu",
+  "auditApiKeyRevoke": "API anahtarı iptal edildi",
+  "auditMeterCheck": "Sayaç kontrolü"
+}

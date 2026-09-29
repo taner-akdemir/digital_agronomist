@@ -17,6 +17,7 @@ import 'package:milktrace/features/history/unmatched_tags_screen.dart';
 import 'package:milktrace/features/history/vaccinations_screen.dart';
 import 'package:milktrace/features/kiosk/kiosk_screen.dart';
 import 'package:milktrace/features/live/live_board_screen.dart';
+import 'package:milktrace/features/settings/api_keys_screen.dart';
 import 'package:milktrace/features/settings/farm_location_screen.dart';
 import 'package:milktrace/features/settings/farms_screen.dart';
 import 'package:milktrace/features/settings/feedback_screen.dart';
@@ -100,6 +101,11 @@ GoRouter router(Ref ref) {
       GoRoute(path: '/settings/team', builder: (_, _) => const TeamScreen()),
       // İşlem kaydı (backend ADR 0082): hesap kartından, yalnızca sahibe.
       GoRoute(path: '/settings/audit', builder: (_, _) => const AuditScreen()),
+      // API anahtarları (backend ADR 0126): hesap kartından, yalnızca sahibe.
+      GoRoute(
+        path: '/settings/api-keys',
+        builder: (_, _) => const ApiKeysScreen(),
+      ),
       // Geri bildirim (backend ADR 0106): hesap kartından, bütün rollere.
       GoRoute(
         path: '/settings/feedback',

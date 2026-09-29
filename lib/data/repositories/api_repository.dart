@@ -11,6 +11,7 @@ import 'package:milktrace/data/models/animal_import.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
+import 'package:milktrace/data/models/api_key.dart';
 import 'package:milktrace/data/models/audit_entry.dart';
 import 'package:milktrace/data/models/breeding.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
@@ -19,8 +20,10 @@ import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/farm_summary.dart';
 import 'package:milktrace/data/models/hall.dart';
+import 'package:milktrace/data/models/meter_check.dart';
 import 'package:milktrace/data/models/milking_schedule.dart';
 import 'package:milktrace/data/models/milking_session.dart';
+import 'package:milktrace/data/models/milking_speed.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
 import 'package:milktrace/data/models/quiet_hours.dart';
 import 'package:milktrace/data/models/session_milking.dart';
@@ -842,6 +845,53 @@ class ApiRepository implements MilkTraceRepository {
   @override
   Future<List<SpoutHealth>> spoutHealth() async =>
       _listOf(await _dio.get<dynamic>('/spout-health'), SpoutHealth.fromJson);
+
+  @override
+  Future<MeterCheckResult> addMeterCheck(
+    String milkingId,
+    int manualMl,
+  ) async => MeterCheckResult.fromJson(
+    _dataOf(
+      await _dio.post<dynamic>(
+        '/milkings/$milkingId/meter-check',
+        data: {'manualMl': manualMl},
+      ),
+    ),
+  );
+
+  @override
+  Future<List<MeterSummary>> meterSummaries() async =>
+      _listOf(await _dio.get<dynamic>('/meter-checks'), MeterSummary.fromJson);
+
+  @override
+  Future<MeterChecks> meterChecks(String deviceId) async =>
+      MeterChecks.fromJson(
+        _dataOf(
+          await _dio.get<dynamic>(
+            '/meter-checks',
+            queryParameters: {'deviceId': deviceId},
+          ),
+        ),
+      );
+
+  @override
+  Future<List<MilkingSpeed>> milkingSpeed() async =>
+      _listOf(await _dio.get<dynamic>('/milking-speed'), MilkingSpeed.fromJson);
+
+  @override
+  Future<List<ApiKey>> apiKeys() async =>
+      _listOf(await _dio.get<dynamic>('/api-keys'), ApiKey.fromJson);
+
+  @override
+  Future<ApiKeyCreated> createApiKey(String name) async =>
+      ApiKeyCreated.fromJson(
+        _dataOf(await _dio.post<dynamic>('/api-keys', data: {'name': name})),
+      );
+
+  @override
+  Future<void> revokeApiKey(String id) async {
+    await _dio.delete<dynamic>('/api-keys/$id');
+  }
 
   @override
   Future<Deliveries> deliveries() async =>

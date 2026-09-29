@@ -9,6 +9,9 @@ class AppLocalizationsTr extends AppLocalizations {
   AppLocalizationsTr([String locale = 'tr']) : super(locale);
 
   @override
+  String get accountApiKeys => 'API anahtarları';
+
+  @override
   String get accountAuditLog => 'İşlem kaydı';
 
   @override
@@ -507,6 +510,72 @@ class AppLocalizationsTr extends AppLocalizations {
   String get animalImportUpdateSwitch => 'Kayıtlı hayvanları güncelle';
 
   @override
+  String get apiKeysCopied => 'Anahtar kopyalandı';
+
+  @override
+  String get apiKeysCopy => 'Kopyala';
+
+  @override
+  String get apiKeysCreate => 'Anahtar oluştur';
+
+  @override
+  String apiKeysCreatedBy(Object who, Object date) {
+    return '$who · $date';
+  }
+
+  @override
+  String get apiKeysCreatedTitle => 'Anahtar oluşturuldu';
+
+  @override
+  String get apiKeysDone => 'Kaydettim';
+
+  @override
+  String get apiKeysEmpty => 'Henüz anahtar yok.';
+
+  @override
+  String get apiKeysIntro =>
+      'Yem programı, muhasebe ya da kooperatif sistemi verinizi otomatik alabilsin diye. Anahtar SALT OKUNUR: hayvan listesi, tank teslimleri ve günlük verim okunur; notlar, tedaviler ve her türlü yazma kapalıdır.';
+
+  @override
+  String apiKeysLastUsed(Object when) {
+    return 'Son kullanım $when';
+  }
+
+  @override
+  String get apiKeysNameHelper => 'Hangi sistem kullanacak? Ör. Yem programı';
+
+  @override
+  String get apiKeysNameLabel => 'Anahtar adı';
+
+  @override
+  String get apiKeysNeverUsed => 'Hiç kullanılmadı';
+
+  @override
+  String get apiKeysRevoke => 'İptal et';
+
+  @override
+  String apiKeysRevokeBody(Object name) {
+    return '\"$name\" anahtarıyla bağlanan sistem en geç 1 dakika içinde erişimini kaybeder. Geri alınamaz.';
+  }
+
+  @override
+  String get apiKeysRevokeTitle => 'Anahtar iptal edilsin mi?';
+
+  @override
+  String get apiKeysRevoked => 'Anahtar iptal edildi';
+
+  @override
+  String get apiKeysShownOnce =>
+      'Bu anahtar bir daha gösterilmez. Şimdi kopyalayıp bağlanacak sisteme girin; kaybederseniz iptal edip yenisini oluşturun.';
+
+  @override
+  String get apiKeysTitle => 'API anahtarları';
+
+  @override
+  String get apiKeysUsage =>
+      'Günlük verim:\nGET /api/v1/exports/daily?from=YYYY-MM-DD&to=YYYY-MM-DD\nBaşlık: Authorization: Bearer <anahtar>';
+
+  @override
   String get auditAnimalCalving => 'Buzağılama kaydedildi';
 
   @override
@@ -517,6 +586,12 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get auditAnimalUpdate => 'Hayvan kaydı değişti';
+
+  @override
+  String get auditApiKeyCreate => 'API anahtarı oluşturuldu';
+
+  @override
+  String get auditApiKeyRevoke => 'API anahtarı iptal edildi';
 
   @override
   String get auditBreedingAdd => 'Üreme kaydı eklendi';
@@ -551,6 +626,9 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get auditLoadFailed => 'İşlem kaydı yüklenemedi';
+
+  @override
+  String get auditMeterCheck => 'Sayaç kontrolü';
 
   @override
   String get auditSettingsUpdate => 'İşletme ayarı değişti';
@@ -1727,6 +1805,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get historyFilterGroup => 'Grup';
 
   @override
+  String get historyFilterSlow => 'Yavaş sağılanlar';
+
+  @override
   String get historyFilterSpecies => 'Tür';
 
   @override
@@ -2094,6 +2175,70 @@ class AppLocalizationsTr extends AppLocalizations {
   String get loginTagline => 'İşletmenizin sağım takibi';
 
   @override
+  String meterCheckAmountLabel(Object unit) {
+    return 'Ölçülen süt ($unit)';
+  }
+
+  @override
+  String get meterCheckCalibrate =>
+      'Sapma sürüyor: kurulum ekibinden kalibrasyon isteyin.';
+
+  @override
+  String get meterCheckEnterAmount => 'Ölçülen miktarı girin';
+
+  @override
+  String meterCheckIntro(Object when, Object metered) {
+    return '$when · sayaç $metered ölçtü. Bu sağımın sütünü tartın ya da ölçün; sayaçla karşılaştırılır, katsayı değişmez.';
+  }
+
+  @override
+  String meterCheckResult(Object dev, Object n, Object avg) {
+    return 'Sayaç %$dev · son $n kontrol ortalaması %$avg';
+  }
+
+  @override
+  String meterCheckRow(Object date, Object tag, Object metered, Object manual) {
+    return '$date · $tag · sayaç $metered / elle $manual';
+  }
+
+  @override
+  String meterCheckRowPct(Object pct) {
+    return '%$pct';
+  }
+
+  @override
+  String get meterCheckTapHint =>
+      'Sayacı denetlemek için sağıma dokunup tartılan sütü girin.';
+
+  @override
+  String get meterCheckTitle => 'Elle ölçüm';
+
+  @override
+  String meterDriftShort(Object pct) {
+    return 'Kontrol sapması %$pct';
+  }
+
+  @override
+  String get meterSectionCalibrate =>
+      'Ortalama sapma %5\'i aşıyor: kurulum ekibinden kalibrasyon isteyin.';
+
+  @override
+  String get meterSectionEmpty =>
+      'Henüz elle ölçüm yok. Hayvan detayındaki son sağımlardan girilir.';
+
+  @override
+  String get meterSectionFew =>
+      'Kalibrasyon kararı için en az 3 kontrol gerekir.';
+
+  @override
+  String meterSectionSummary(Object n, Object avg) {
+    return 'Son $n kontrol ortalaması %$avg';
+  }
+
+  @override
+  String get meterSectionTitle => 'Sayaç kontrolü';
+
+  @override
   String milkersDurationMinutesSeconds(Object m, Object s) {
     return '$m dk $s sn';
   }
@@ -2436,6 +2581,33 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get speciesSheep => 'Koyun';
+
+  @override
+  String get speedAvgFlow => 'Ortalama debi';
+
+  @override
+  String get speedDuration => 'Ortalama süre';
+
+  @override
+  String speedFlowValue(Object v) {
+    return '$v L/dk';
+  }
+
+  @override
+  String speedHerd(Object v, Object n) {
+    return 'Sürü ortalaması $v L/dk · $n sağım';
+  }
+
+  @override
+  String get speedPeakFlow => 'Tepe debi';
+
+  @override
+  String speedSlow(Object pct) {
+    return 'Yavaş sağılıyor: sürü ortalamasının %$pct altında. Üniteyi uzun tutar; sağım sırasında dikkate alın.';
+  }
+
+  @override
+  String get speedTitle => 'Sağım hızı · son 30 gün';
 
   @override
   String spoutLowFlowDetail(Object pct, Object avg, Object unit) {

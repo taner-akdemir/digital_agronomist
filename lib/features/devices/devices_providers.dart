@@ -1,6 +1,7 @@
 import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/device_profile.dart';
 import 'package:milktrace/data/models/hall.dart';
+import 'package:milktrace/data/models/meter_check.dart';
 import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_health.dart';
 import 'package:milktrace/data/models/vacuum.dart';
@@ -148,3 +149,20 @@ Future<Map<String, SpoutHealth>> spoutHealth(Ref ref) async {
     return const {};
   }
 }
+
+/// Sayaç kontrolü özetleri (backend ADR 0124), sayaca göre. Okunamazsa BOŞ:
+/// ağaç ve sayaç durumu bu ek bilgi yüzünden düşmesin.
+@riverpod
+Future<Map<String, MeterSummary>> meterSummaries(Ref ref) async {
+  try {
+    final list = await ref.watch(repositoryProvider).meterSummaries();
+    return {for (final s in list) s.deviceId: s};
+  } catch (_) {
+    return const {};
+  }
+}
+
+/// Sayacın son kontrolleri ve özeti (sayaç sayfası).
+@riverpod
+Future<MeterChecks> deviceMeterChecks(Ref ref, String deviceId) =>
+    ref.watch(repositoryProvider).meterChecks(deviceId);

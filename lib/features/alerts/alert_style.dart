@@ -50,6 +50,8 @@ abstract final class AlertStyle {
     'heat_stress' => Icons.thermostat,
     // Aşı zamanı geldi (backend ADR 0112).
     'vaccination_due' => Icons.vaccines_outlined,
+    // Sayaç elle ölçüme göre sapıyor (backend ADR 0124).
+    'meter_drift' => Icons.speed,
     _ => Icons.notifications_none_outlined,
   };
 }

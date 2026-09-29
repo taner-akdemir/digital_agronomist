@@ -8,15 +8,18 @@ import 'package:milktrace/core/volume.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
+import 'package:milktrace/data/models/milking_speed.dart';
 import 'package:milktrace/domain/yield_class.dart';
 import 'package:milktrace/features/history/breeding_card.dart';
 import 'package:milktrace/features/history/history_providers.dart';
+import 'package:milktrace/features/history/meter_check_dialog.dart';
 import 'package:milktrace/features/history/treatments_card.dart';
 import 'package:milktrace/features/history/vaccinations_card.dart';
 import 'package:milktrace/features/history/vaccinations_screen.dart';
 import 'package:milktrace/features/history/widgets/animal_status_chip.dart';
 import 'package:milktrace/features/history/widgets/yield_chart.dart';
 import 'package:milktrace/features/history/widgets/yield_class_badge.dart';
+import 'package:milktrace/features/team/milkers_screen.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
@@ -136,7 +139,8 @@ class _Body extends ConsumerWidget {
           ..invalidate(animalNotesProvider(animal.id))
           ..invalidate(animalTreatmentsProvider(animal.id))
           ..invalidate(animalVaccinationsProvider(animal.id))
-          ..invalidate(animalBreedingProvider(animal.id));
+          ..invalidate(animalBreedingProvider(animal.id))
+          ..invalidate(milkingSpeedProvider);
         await ref.read(animalTrendProvider(animal.id).future);
       },
       child: ListView(
@@ -195,6 +199,12 @@ class _Body extends ConsumerWidget {
               ],
             ),
           ),
+          // Sağım hızı (backend ADR 0125); veri yoksa kart yok.
+          if (ref.watch(milkingSpeedProvider).value?[animal.id]
+              case final speed? when speed.milkings > 0) ...[
+            const SizedBox(height: AppSpacing.md),
+            _SpeedCard(speed: speed),
+          ],
           const SizedBox(height: AppSpacing.md),
           AsyncView(
             value: history,
@@ -203,6 +213,15 @@ class _Body extends ConsumerWidget {
               milkings: h,
               volume: ref.watch(volumeFormatProvider),
               species: animal.speciesId,
+              // Elle ölçüm (backend ADR 0124): sahip ve operatör.
+              onTap: canCheckMeter(ref.watch(authProvider).user?.role)
+                  ? (m) => showMeterCheck(
+                      context,
+                      ref,
+                      milking: m,
+                      species: animal.speciesId,
+                    )
+                  : null,
             ),
           ),
         ],
@@ -641,10 +660,15 @@ class _HistoryCard extends StatelessWidget {
     required this.milkings,
     required this.volume,
     this.species,
+    this.onTap,
   });
 
   /// Yeniden eskiye sıralı.
   final List<AnimalMilking> milkings;
+
+  /// Sağıma dokununca (elle ölçüm, backend ADR 0124); null ise satırlar
+  /// dokunulmaz.
+  final ValueChanged<AnimalMilking>? onTap;
 
   /// Miktar birimi ve hayvanın türü (backend ADR 0086).
   final VolumeFormat volume;
@@ -677,9 +701,19 @@ class _HistoryCard extends StatelessWidget {
             l10n.animalDetailRecentMilkings,
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
+          if (onTap != null)
+            Text(
+              l10n.meterCheckTapHint,
+              style: TextStyle(fontSize: 11, color: AppColors.onSurfaceMuted),
+            ),
           const SizedBox(height: AppSpacing.sm),
           for (final m in shown)
-            _MilkingRow(milking: m, volume: volume, species: species),
+            _MilkingRow(
+              milking: m,
+              volume: volume,
+              species: species,
+              onTap: onTap == null ? null : () => onTap!(m),
+            ),
           if (milkings.length > _limit) ...[
             const SizedBox(height: AppSpacing.sm),
             Text(
@@ -698,19 +732,21 @@ class _MilkingRow extends StatelessWidget {
     required this.milking,
     required this.volume,
     this.species,
+    this.onTap,
   });
 
   final VolumeFormat volume;
   final String? species;
 
   final AnimalMilking milking;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     final palette = MilkPalette.of(milking.color);
     final started = milking.startedAt;
 
-    return Padding(
+    final row = Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
       child: Row(
         children: [
@@ -746,6 +782,63 @@ class _MilkingRow extends StatelessWidget {
               style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
             ),
           ),
+        ],
+      ),
+    );
+    if (onTap == null) return row;
+    return InkWell(onTap: onTap, borderRadius: AppRadius.smAll, child: row);
+  }
+}
+
+/// Sağım hızı (backend ADR 0125): son 30 günün ortalama ve tepe debisi,
+/// ortalama süre ve türün sürü ortalaması. "Yavaş" kararı SUNUCUNUN (en az
+/// 10 sağım, sürü ortalamasının %80'inin altı); amber satır — kırmızı
+/// değil: arıza değil, sağım sırası planının bilgisi.
+class _SpeedCard extends StatelessWidget {
+  const _SpeedCard({required this.speed});
+
+  final MilkingSpeed speed;
+
+  @override
+  Widget build(BuildContext context) {
+    return _Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            l10n.speedTitle,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          ),
+          const SizedBox(height: AppSpacing.md),
+          Row(
+            children: [
+              _Stat(
+                l10n.speedAvgFlow,
+                l10n.speedFlowValue(speed.avgFlow.toStringAsFixed(2)),
+                color: speed.slow ? AppColors.darkAmberColor : null,
+              ),
+              _Stat(
+                l10n.speedPeakFlow,
+                l10n.speedFlowValue(speed.peakFlow.toStringAsFixed(2)),
+              ),
+              _Stat(l10n.speedDuration, durationLabel(speed.durationSec)),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Text(
+            l10n.speedHerd(
+              speed.herdAvgFlow.toStringAsFixed(2),
+              speed.milkings,
+            ),
+            style: TextStyle(fontSize: 12, color: AppColors.onSurfaceMuted),
+          ),
+          if (speed.slow) ...[
+            const SizedBox(height: AppSpacing.xs),
+            Text(
+              l10n.speedSlow(speed.belowHerdPct),
+              style: TextStyle(fontSize: 12, color: AppColors.darkAmberColor),
+            ),
+          ],
         ],
       ),
     );

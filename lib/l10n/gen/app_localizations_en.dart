@@ -9,6 +9,9 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get accountApiKeys => 'API keys';
+
+  @override
   String get accountAuditLog => 'Activity log';
 
   @override
@@ -509,6 +512,72 @@ class AppLocalizationsEn extends AppLocalizations {
   String get animalImportUpdateSwitch => 'Update registered animals';
 
   @override
+  String get apiKeysCopied => 'Key copied';
+
+  @override
+  String get apiKeysCopy => 'Copy';
+
+  @override
+  String get apiKeysCreate => 'Create key';
+
+  @override
+  String apiKeysCreatedBy(Object who, Object date) {
+    return '$who · $date';
+  }
+
+  @override
+  String get apiKeysCreatedTitle => 'Key created';
+
+  @override
+  String get apiKeysDone => 'I saved it';
+
+  @override
+  String get apiKeysEmpty => 'No keys yet.';
+
+  @override
+  String get apiKeysIntro =>
+      'So a feed program, accounting or cooperative system can fetch your data automatically. Keys are READ-ONLY: the animal list, tank deliveries and daily yield can be read; notes, treatments and any writes are closed.';
+
+  @override
+  String apiKeysLastUsed(Object when) {
+    return 'Last used $when';
+  }
+
+  @override
+  String get apiKeysNameHelper => 'Which system will use it? E.g. Feed program';
+
+  @override
+  String get apiKeysNameLabel => 'Key name';
+
+  @override
+  String get apiKeysNeverUsed => 'Never used';
+
+  @override
+  String get apiKeysRevoke => 'Revoke';
+
+  @override
+  String apiKeysRevokeBody(Object name) {
+    return 'The system connected with \"$name\" loses access within 1 minute at most. This cannot be undone.';
+  }
+
+  @override
+  String get apiKeysRevokeTitle => 'Revoke this key?';
+
+  @override
+  String get apiKeysRevoked => 'Key revoked';
+
+  @override
+  String get apiKeysShownOnce =>
+      'This key will not be shown again. Copy it now into the system that will connect; if you lose it, revoke it and create a new one.';
+
+  @override
+  String get apiKeysTitle => 'API keys';
+
+  @override
+  String get apiKeysUsage =>
+      'Daily yield:\nGET /api/v1/exports/daily?from=YYYY-MM-DD&to=YYYY-MM-DD\nHeader: Authorization: Bearer <key>';
+
+  @override
   String get auditAnimalCalving => 'Calving recorded';
 
   @override
@@ -519,6 +588,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get auditAnimalUpdate => 'Animal record changed';
+
+  @override
+  String get auditApiKeyCreate => 'API key created';
+
+  @override
+  String get auditApiKeyRevoke => 'API key revoked';
 
   @override
   String get auditBreedingAdd => 'Breeding record added';
@@ -553,6 +628,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get auditLoadFailed => 'Could not load the activity log';
+
+  @override
+  String get auditMeterCheck => 'Meter check';
 
   @override
   String get auditSettingsUpdate => 'Farm setting changed';
@@ -1749,6 +1827,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get historyFilterGroup => 'Group';
 
   @override
+  String get historyFilterSlow => 'Slow milkers';
+
+  @override
   String get historyFilterSpecies => 'Species';
 
   @override
@@ -2118,6 +2199,70 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginTagline => 'Milking tracking for your farm';
 
   @override
+  String meterCheckAmountLabel(Object unit) {
+    return 'Measured milk ($unit)';
+  }
+
+  @override
+  String get meterCheckCalibrate =>
+      'The deviation persists: ask the installation team for calibration.';
+
+  @override
+  String get meterCheckEnterAmount => 'Enter the measured amount';
+
+  @override
+  String meterCheckIntro(Object when, Object metered) {
+    return '$when · the meter read $metered. Weigh or measure this milking\'s milk; it is compared with the meter, the factor is not changed.';
+  }
+
+  @override
+  String meterCheckResult(Object dev, Object n, Object avg) {
+    return 'Meter $dev% · average of last $n checks $avg%';
+  }
+
+  @override
+  String meterCheckRow(Object date, Object tag, Object metered, Object manual) {
+    return '$date · $tag · meter $metered / manual $manual';
+  }
+
+  @override
+  String meterCheckRowPct(Object pct) {
+    return '$pct%';
+  }
+
+  @override
+  String get meterCheckTapHint =>
+      'To check a meter, tap a milking and enter the weighed milk.';
+
+  @override
+  String get meterCheckTitle => 'Manual measurement';
+
+  @override
+  String meterDriftShort(Object pct) {
+    return 'Check deviation $pct%';
+  }
+
+  @override
+  String get meterSectionCalibrate =>
+      'Average deviation exceeds 5%: ask the installation team for calibration.';
+
+  @override
+  String get meterSectionEmpty =>
+      'No manual measurements yet. They are entered from the recent milkings on the animal page.';
+
+  @override
+  String get meterSectionFew =>
+      'At least 3 checks are needed for a calibration decision.';
+
+  @override
+  String meterSectionSummary(Object n, Object avg) {
+    return 'Average of last $n checks $avg%';
+  }
+
+  @override
+  String get meterSectionTitle => 'Meter check';
+
+  @override
   String milkersDurationMinutesSeconds(Object m, Object s) {
     return '$m min $s s';
   }
@@ -2463,6 +2608,33 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get speciesSheep => 'Sheep';
+
+  @override
+  String get speedAvgFlow => 'Average flow';
+
+  @override
+  String get speedDuration => 'Average duration';
+
+  @override
+  String speedFlowValue(Object v) {
+    return '$v L/min';
+  }
+
+  @override
+  String speedHerd(Object v, Object n) {
+    return 'Herd average $v L/min · $n milkings';
+  }
+
+  @override
+  String get speedPeakFlow => 'Peak flow';
+
+  @override
+  String speedSlow(Object pct) {
+    return 'Slow milker: $pct% below the herd average. Keeps the unit busy longer; consider it in the milking order.';
+  }
+
+  @override
+  String get speedTitle => 'Milking speed · last 30 days';
 
   @override
   String spoutLowFlowDetail(Object pct, Object avg, Object unit) {

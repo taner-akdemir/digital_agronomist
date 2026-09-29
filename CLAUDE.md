@@ -343,6 +343,34 @@ adım gizli), kapatma cihazda işletme başına (`setup.dismissed.<işletme>`). 
 `WhatsNewListener` kabukta; `whatsNewId` değişince bir kez, ilk kurulumda HİÇ; hesap
 kartında "Yenilikler". YENİ SÜRÜMDE `whatsNewId` ve `whatsNewItem*` ARB metinleri güncellenir.
 
+**Sayaç kontrolü** (backend ADR 0124): hayvan detayındaki son sağımlarda sahip ve operatör
+sağıma dokunur → "Elle ölçüm" (`showMeterCheck`; miktar işletmenin biriminde, kg HAYVANIN
+TÜRÜNÜN yoğunluğuyla mL'ye — tank fişinden farkı: tek hayvanın sütü) →
+`POST /milkings/{id}/meter-check`. Sapma ve sayacın özeti (son 10 kontrol, ≥ 3 kontrol ve
+|ort.| > %5 = `needsCalibration`) SUNUCUDAN; bildirimde "Sayaç %+8.0 · son 3 kontrol
+ortalaması %+8.0" (+ kalibrasyon isteyin). Sayaçsız sağım 422, mesaj olduğu gibi. Cihazlar'da
+`meterSummariesProvider` (`GET /meter-checks`, okunamazsa boş): kalibrasyon gereken çevrimiçi
+sayaç SARI "Kontrol sapması %+8" (çevrimdışı/hata/kalibrasyon zamanı/düşük debi önce), ünite
+açık; sayaç sayfasında "Sayaç kontrolü" (`GET /meter-checks?deviceId=`, önbelleksiz): ortalama,
+sayı, son 3 kontrol. Katsayı uygulamada DEĞİŞMEZ; `meter_drift` uyarısı sunucunun. Mock
+üretilmiş sağımı hayvanın kimliğinden deterministik bir çevrimiçi sayaca bağlar (geçmiş
+noktasız), kontroller bellekte, özet backend kuralıyla.
+
+**Sağım hızı** (backend ADR 0125, `GET /milking-speed`): `milkingSpeedProvider` (hayvana göre,
+okunamazsa boş). Detayda "Sağım hızı · son 30 gün" (ortalama/tepe debi, ortalama süre
+`durationLabel`, türün sürü ortalaması; `slow` SUNUCUDAN → amber "Yavaş sağılıyor: sürü
+ortalamasının %X altında"); veri yoksa kart yok. Geçmiş → Hayvanlar'da "Yavaş sağılanlar"
+çipi (`AnimalFilter.slow`; hız yalnızca süzgeç açıkken okunur). Mock üretilmiş geçmişten aynı
+kuralla hesaplar; üretici debiyi türün bandından sabit aldığı için mock'ta yavaş YOK.
+
+**API anahtarları** (`/settings/api-keys`, backend ADR 0126): hesap kartından YALNIZCA sahibe.
+Liste (ad, `mtk_<önek>_…`, oluşturan/tarih, son kullanım), "Anahtar oluştur"
+(`showTextPrompt`) → tam anahtar BİR KEZ (kopyala + "Bu anahtar bir daha gösterilmez";
+pencere dışarı dokunarak kapanmaz), iptal onayla (gateway'de ≤ 1 dk). Anahtar salt okunur:
+hayvan listesi, teslimler, `GET /api/v1/exports/daily?from=&to=` + `Authorization: Bearer`.
+Önbelleklenmez (Kullanıcılar gibi: çevrimdışı eski liste iptal edilmiş sanılan açık anahtarı
+gösterebilir). Mock bellekte.
+
 **Sağımcılar** (`/settings/milkers`, backend ADR 0090): hesap kartından YALNIZCA sahibe.
 Sağımcı = oturumu açan / hayvanı bağlayan (ayrı seçim adımı yok). 7/30 gün; oturum, sağım,
 süt, ortalama süre, düşük debi payı. Metin oranın kişiyi puanlamadığını söyler.

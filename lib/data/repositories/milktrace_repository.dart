@@ -7,6 +7,7 @@ import 'package:milktrace/data/models/animal_import.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
+import 'package:milktrace/data/models/api_key.dart';
 import 'package:milktrace/data/models/audit_entry.dart';
 import 'package:milktrace/data/models/breeding.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
@@ -15,8 +16,10 @@ import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/farm_summary.dart';
 import 'package:milktrace/data/models/hall.dart';
+import 'package:milktrace/data/models/meter_check.dart';
 import 'package:milktrace/data/models/milking_schedule.dart';
 import 'package:milktrace/data/models/milking_session.dart';
+import 'package:milktrace/data/models/milking_speed.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
 import 'package:milktrace/data/models/quiet_hours.dart';
 import 'package:milktrace/data/models/session_milking.dart';
@@ -357,6 +360,30 @@ abstract interface class MilkTraceRepository {
 
   /// Nokta sağlığı (backend ADR 0113, `GET /spout-health`); bütün roller.
   Future<List<SpoutHealth>> spoutHealth();
+
+  /// Sayaç kontrolü (backend ADR 0124): bitmiş sağımın elle ölçülen sütü
+  /// (mL). Sahip ve operatör; sayaçsız sağım 422. Sapmayı ve sayacın
+  /// özetini sunucu hesaplar.
+  Future<MeterCheckResult> addMeterCheck(String milkingId, int manualMl);
+
+  /// İşletmenin kontrolü olan sayaçlarının özetleri (`GET /meter-checks`).
+  Future<List<MeterSummary>> meterSummaries();
+
+  /// Sayacın son kontrolleri ve özeti (`GET /meter-checks?deviceId=`).
+  Future<MeterChecks> meterChecks(String deviceId);
+
+  /// Hayvan başına son 30 günün sağım hızı (backend ADR 0125,
+  /// `GET /milking-speed`); bütün roller.
+  Future<List<MilkingSpeed>> milkingSpeed();
+
+  /// İşletmenin etkin API anahtarları (backend ADR 0126); yalnızca sahip.
+  Future<List<ApiKey>> apiKeys();
+
+  /// Anahtar üretir; TAM anahtar yalnızca bu cevapta, bir kez döner.
+  Future<ApiKeyCreated> createApiKey(String name);
+
+  /// Anahtarı iptal eder (gateway'de en çok 1 dk sonra etkili).
+  Future<void> revokeApiKey(String id);
 
   /// Tank teslimleri ve fark eşiği (backend ADR 0089, `GET /deliveries`).
   Future<Deliveries> deliveries();

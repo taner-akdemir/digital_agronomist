@@ -288,6 +288,25 @@ class _AccountSheet extends ConsumerWidget {
                     ),
                   ),
                 ),
+                // API anahtarları (backend ADR 0126): yalnızca sahip.
+                const SizedBox(height: AppSpacing.sm),
+                OutlinedButton.icon(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    context.push('/settings/api-keys');
+                  },
+                  icon: const Icon(Icons.key),
+                  label: Text(l10n.accountApiKeys),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.darkGreenColor,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppSpacing.lg,
+                    ),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadius.mdAll,
+                    ),
+                  ),
+                ),
               ],
               // Sessiz saat (backend ADR 0107): bütün roller, kişiye ait.
               const SizedBox(height: AppSpacing.sm),

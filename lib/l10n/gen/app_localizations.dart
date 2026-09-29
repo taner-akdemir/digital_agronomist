@@ -98,6 +98,12 @@ abstract class AppLocalizations {
     Locale('tr'),
   ];
 
+  /// No description provided for @accountApiKeys.
+  ///
+  /// In tr, this message translates to:
+  /// **'API anahtarları'**
+  String get accountApiKeys;
+
   /// No description provided for @accountAuditLog.
   ///
   /// In tr, this message translates to:
@@ -926,6 +932,120 @@ abstract class AppLocalizations {
   /// **'Kayıtlı hayvanları güncelle'**
   String get animalImportUpdateSwitch;
 
+  /// No description provided for @apiKeysCopied.
+  ///
+  /// In tr, this message translates to:
+  /// **'Anahtar kopyalandı'**
+  String get apiKeysCopied;
+
+  /// No description provided for @apiKeysCopy.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kopyala'**
+  String get apiKeysCopy;
+
+  /// No description provided for @apiKeysCreate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Anahtar oluştur'**
+  String get apiKeysCreate;
+
+  /// No description provided for @apiKeysCreatedBy.
+  ///
+  /// In tr, this message translates to:
+  /// **'{who} · {date}'**
+  String apiKeysCreatedBy(Object who, Object date);
+
+  /// No description provided for @apiKeysCreatedTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Anahtar oluşturuldu'**
+  String get apiKeysCreatedTitle;
+
+  /// No description provided for @apiKeysDone.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydettim'**
+  String get apiKeysDone;
+
+  /// No description provided for @apiKeysEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz anahtar yok.'**
+  String get apiKeysEmpty;
+
+  /// No description provided for @apiKeysIntro.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yem programı, muhasebe ya da kooperatif sistemi verinizi otomatik alabilsin diye. Anahtar SALT OKUNUR: hayvan listesi, tank teslimleri ve günlük verim okunur; notlar, tedaviler ve her türlü yazma kapalıdır.'**
+  String get apiKeysIntro;
+
+  /// No description provided for @apiKeysLastUsed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Son kullanım {when}'**
+  String apiKeysLastUsed(Object when);
+
+  /// No description provided for @apiKeysNameHelper.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hangi sistem kullanacak? Ör. Yem programı'**
+  String get apiKeysNameHelper;
+
+  /// No description provided for @apiKeysNameLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Anahtar adı'**
+  String get apiKeysNameLabel;
+
+  /// No description provided for @apiKeysNeverUsed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hiç kullanılmadı'**
+  String get apiKeysNeverUsed;
+
+  /// No description provided for @apiKeysRevoke.
+  ///
+  /// In tr, this message translates to:
+  /// **'İptal et'**
+  String get apiKeysRevoke;
+
+  /// No description provided for @apiKeysRevokeBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'\"{name}\" anahtarıyla bağlanan sistem en geç 1 dakika içinde erişimini kaybeder. Geri alınamaz.'**
+  String apiKeysRevokeBody(Object name);
+
+  /// No description provided for @apiKeysRevokeTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Anahtar iptal edilsin mi?'**
+  String get apiKeysRevokeTitle;
+
+  /// No description provided for @apiKeysRevoked.
+  ///
+  /// In tr, this message translates to:
+  /// **'Anahtar iptal edildi'**
+  String get apiKeysRevoked;
+
+  /// No description provided for @apiKeysShownOnce.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu anahtar bir daha gösterilmez. Şimdi kopyalayıp bağlanacak sisteme girin; kaybederseniz iptal edip yenisini oluşturun.'**
+  String get apiKeysShownOnce;
+
+  /// No description provided for @apiKeysTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'API anahtarları'**
+  String get apiKeysTitle;
+
+  /// No description provided for @apiKeysUsage.
+  ///
+  /// In tr, this message translates to:
+  /// **'Günlük verim:\nGET /api/v1/exports/daily?from=YYYY-MM-DD&to=YYYY-MM-DD\nBaşlık: Authorization: Bearer <anahtar>'**
+  String get apiKeysUsage;
+
   /// No description provided for @auditAnimalCalving.
   ///
   /// In tr, this message translates to:
@@ -949,6 +1069,18 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Hayvan kaydı değişti'**
   String get auditAnimalUpdate;
+
+  /// No description provided for @auditApiKeyCreate.
+  ///
+  /// In tr, this message translates to:
+  /// **'API anahtarı oluşturuldu'**
+  String get auditApiKeyCreate;
+
+  /// No description provided for @auditApiKeyRevoke.
+  ///
+  /// In tr, this message translates to:
+  /// **'API anahtarı iptal edildi'**
+  String get auditApiKeyRevoke;
 
   /// No description provided for @auditBreedingAdd.
   ///
@@ -1015,6 +1147,12 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'İşlem kaydı yüklenemedi'**
   String get auditLoadFailed;
+
+  /// No description provided for @auditMeterCheck.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sayaç kontrolü'**
+  String get auditMeterCheck;
 
   /// No description provided for @auditSettingsUpdate.
   ///
@@ -3019,6 +3157,12 @@ abstract class AppLocalizations {
   /// **'Grup'**
   String get historyFilterGroup;
 
+  /// No description provided for @historyFilterSlow.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yavaş sağılanlar'**
+  String get historyFilterSlow;
+
   /// No description provided for @historyFilterSpecies.
   ///
   /// In tr, this message translates to:
@@ -3649,6 +3793,96 @@ abstract class AppLocalizations {
   /// **'İşletmenizin sağım takibi'**
   String get loginTagline;
 
+  /// No description provided for @meterCheckAmountLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ölçülen süt ({unit})'**
+  String meterCheckAmountLabel(Object unit);
+
+  /// No description provided for @meterCheckCalibrate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sapma sürüyor: kurulum ekibinden kalibrasyon isteyin.'**
+  String get meterCheckCalibrate;
+
+  /// No description provided for @meterCheckEnterAmount.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ölçülen miktarı girin'**
+  String get meterCheckEnterAmount;
+
+  /// No description provided for @meterCheckIntro.
+  ///
+  /// In tr, this message translates to:
+  /// **'{when} · sayaç {metered} ölçtü. Bu sağımın sütünü tartın ya da ölçün; sayaçla karşılaştırılır, katsayı değişmez.'**
+  String meterCheckIntro(Object when, Object metered);
+
+  /// No description provided for @meterCheckResult.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sayaç %{dev} · son {n} kontrol ortalaması %{avg}'**
+  String meterCheckResult(Object dev, Object n, Object avg);
+
+  /// No description provided for @meterCheckRow.
+  ///
+  /// In tr, this message translates to:
+  /// **'{date} · {tag} · sayaç {metered} / elle {manual}'**
+  String meterCheckRow(Object date, Object tag, Object metered, Object manual);
+
+  /// No description provided for @meterCheckRowPct.
+  ///
+  /// In tr, this message translates to:
+  /// **'%{pct}'**
+  String meterCheckRowPct(Object pct);
+
+  /// No description provided for @meterCheckTapHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sayacı denetlemek için sağıma dokunup tartılan sütü girin.'**
+  String get meterCheckTapHint;
+
+  /// No description provided for @meterCheckTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Elle ölçüm'**
+  String get meterCheckTitle;
+
+  /// No description provided for @meterDriftShort.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kontrol sapması %{pct}'**
+  String meterDriftShort(Object pct);
+
+  /// No description provided for @meterSectionCalibrate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ortalama sapma %5\'i aşıyor: kurulum ekibinden kalibrasyon isteyin.'**
+  String get meterSectionCalibrate;
+
+  /// No description provided for @meterSectionEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz elle ölçüm yok. Hayvan detayındaki son sağımlardan girilir.'**
+  String get meterSectionEmpty;
+
+  /// No description provided for @meterSectionFew.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kalibrasyon kararı için en az 3 kontrol gerekir.'**
+  String get meterSectionFew;
+
+  /// No description provided for @meterSectionSummary.
+  ///
+  /// In tr, this message translates to:
+  /// **'Son {n} kontrol ortalaması %{avg}'**
+  String meterSectionSummary(Object n, Object avg);
+
+  /// No description provided for @meterSectionTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sayaç kontrolü'**
+  String get meterSectionTitle;
+
   /// No description provided for @milkersDurationMinutesSeconds.
   ///
   /// In tr, this message translates to:
@@ -4247,6 +4481,48 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Koyun'**
   String get speciesSheep;
+
+  /// No description provided for @speedAvgFlow.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ortalama debi'**
+  String get speedAvgFlow;
+
+  /// No description provided for @speedDuration.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ortalama süre'**
+  String get speedDuration;
+
+  /// No description provided for @speedFlowValue.
+  ///
+  /// In tr, this message translates to:
+  /// **'{v} L/dk'**
+  String speedFlowValue(Object v);
+
+  /// No description provided for @speedHerd.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sürü ortalaması {v} L/dk · {n} sağım'**
+  String speedHerd(Object v, Object n);
+
+  /// No description provided for @speedPeakFlow.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tepe debi'**
+  String get speedPeakFlow;
+
+  /// No description provided for @speedSlow.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yavaş sağılıyor: sürü ortalamasının %{pct} altında. Üniteyi uzun tutar; sağım sırasında dikkate alın.'**
+  String speedSlow(Object pct);
+
+  /// No description provided for @speedTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sağım hızı · son 30 gün'**
+  String get speedTitle;
 
   /// No description provided for @spoutLowFlowDetail.
   ///

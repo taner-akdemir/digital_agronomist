@@ -1,0 +1,122 @@
+{
+  "meterCheckTitle": "Manual measurement",
+  "meterCheckTapHint": "To check a meter, tap a milking and enter the weighed milk.",
+  "meterCheckIntro": "{when} · the meter read {metered}. Weigh or measure this milking's milk; it is compared with the meter, the factor is not changed.",
+  "@meterCheckIntro": {
+    "placeholders": {
+      "when": {},
+      "metered": {}
+    }
+  },
+  "meterCheckAmountLabel": "Measured milk ({unit})",
+  "@meterCheckAmountLabel": {
+    "placeholders": {
+      "unit": {}
+    }
+  },
+  "meterCheckEnterAmount": "Enter the measured amount",
+  "meterCheckResult": "Meter {dev}% · average of last {n} checks {avg}%",
+  "@meterCheckResult": {
+    "placeholders": {
+      "dev": {},
+      "n": {},
+      "avg": {}
+    }
+  },
+  "meterCheckCalibrate": "The deviation persists: ask the installation team for calibration.",
+  "meterDriftShort": "Check deviation {pct}%",
+  "@meterDriftShort": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "meterSectionTitle": "Meter check",
+  "meterSectionEmpty": "No manual measurements yet. They are entered from the recent milkings on the animal page.",
+  "meterSectionSummary": "Average of last {n} checks {avg}%",
+  "@meterSectionSummary": {
+    "placeholders": {
+      "n": {},
+      "avg": {}
+    }
+  },
+  "meterSectionCalibrate": "Average deviation exceeds 5%: ask the installation team for calibration.",
+  "meterSectionFew": "At least 3 checks are needed for a calibration decision.",
+  "meterCheckRow": "{date} · {tag} · meter {metered} / manual {manual}",
+  "@meterCheckRow": {
+    "placeholders": {
+      "date": {},
+      "tag": {},
+      "metered": {},
+      "manual": {}
+    }
+  },
+  "meterCheckRowPct": "{pct}%",
+  "@meterCheckRowPct": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "speedTitle": "Milking speed · last 30 days",
+  "speedAvgFlow": "Average flow",
+  "speedPeakFlow": "Peak flow",
+  "speedDuration": "Average duration",
+  "speedFlowValue": "{v} L/min",
+  "@speedFlowValue": {
+    "placeholders": {
+      "v": {}
+    }
+  },
+  "speedHerd": "Herd average {v} L/min · {n} milkings",
+  "@speedHerd": {
+    "placeholders": {
+      "v": {},
+      "n": {}
+    }
+  },
+  "speedSlow": "Slow milker: {pct}% below the herd average. Keeps the unit busy longer; consider it in the milking order.",
+  "@speedSlow": {
+    "placeholders": {
+      "pct": {}
+    }
+  },
+  "historyFilterSlow": "Slow milkers",
+  "accountApiKeys": "API keys",
+  "apiKeysTitle": "API keys",
+  "apiKeysIntro": "So a feed program, accounting or cooperative system can fetch your data automatically. Keys are READ-ONLY: the animal list, tank deliveries and daily yield can be read; notes, treatments and any writes are closed.",
+  "apiKeysUsage": "Daily yield:\nGET /api/v1/exports/daily?from=YYYY-MM-DD&to=YYYY-MM-DD\nHeader: Authorization: Bearer <key>",
+  "apiKeysEmpty": "No keys yet.",
+  "apiKeysCreate": "Create key",
+  "apiKeysNameLabel": "Key name",
+  "apiKeysNameHelper": "Which system will use it? E.g. Feed program",
+  "apiKeysCreatedTitle": "Key created",
+  "apiKeysShownOnce": "This key will not be shown again. Copy it now into the system that will connect; if you lose it, revoke it and create a new one.",
+  "apiKeysCopy": "Copy",
+  "apiKeysCopied": "Key copied",
+  "apiKeysDone": "I saved it",
+  "apiKeysCreatedBy": "{who} · {date}",
+  "@apiKeysCreatedBy": {
+    "placeholders": {
+      "who": {},
+      "date": {}
+    }
+  },
+  "apiKeysLastUsed": "Last used {when}",
+  "@apiKeysLastUsed": {
+    "placeholders": {
+      "when": {}
+    }
+  },
+  "apiKeysNeverUsed": "Never used",
+  "apiKeysRevoke": "Revoke",
+  "apiKeysRevokeTitle": "Revoke this key?",
+  "apiKeysRevokeBody": "The system connected with \"{name}\" loses access within 1 minute at most. This cannot be undone.",
+  "@apiKeysRevokeBody": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "apiKeysRevoked": "Key revoked",
+  "auditApiKeyCreate": "API key created",
+  "auditApiKeyRevoke": "API key revoked",
+  "auditMeterCheck": "Meter check"
+}

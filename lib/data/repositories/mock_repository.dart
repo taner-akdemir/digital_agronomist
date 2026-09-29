@@ -12,6 +12,7 @@ import 'package:milktrace/data/models/animal_import.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
+import 'package:milktrace/data/models/api_key.dart';
 import 'package:milktrace/data/models/audit_entry.dart';
 import 'package:milktrace/data/models/breeding.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
@@ -20,8 +21,10 @@ import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/farm_summary.dart';
 import 'package:milktrace/data/models/hall.dart';
+import 'package:milktrace/data/models/meter_check.dart';
 import 'package:milktrace/data/models/milking_schedule.dart';
 import 'package:milktrace/data/models/milking_session.dart';
+import 'package:milktrace/data/models/milking_speed.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
 import 'package:milktrace/data/models/quiet_hours.dart';
 import 'package:milktrace/data/models/session_milking.dart';
@@ -1341,6 +1344,242 @@ class MockRepository implements MilkTraceRepository {
   /// düşük nokta uydurmak demoda gerçek sanılacak bir arıza göstermek olurdu.
   @override
   Future<List<SpoutHealth>> spoutHealth() => _delayed(() async => const []);
+
+  // ------------------------------------------------ sayaç kontrolü (ADR 0124)
+
+  /// Mock'ta kontroller bellekte, sağım başına bir kayıt (yeniden girilirse
+  /// güncellenir — backend'deki gibi).
+  final Map<String, MeterCheck> _meterChecks = {};
+  int _meterCheckSeq = 0;
+
+  /// Üretilmiş sağımın kimliği `<hayvan>-YYYY-MM-DD-m|e`.
+  static const _milkingIdSuffix = 13;
+
+  /// Üretilmiş geçmiş noktaya/sayaca bağlı DEĞİL. Kontrol mock'ta da
+  /// denenebilsin diye her hayvan, noktaya takılı çevrimiçi sayaçlardan
+  /// birine DETERMİNİSTİK bağlanır (küpe kimliğinden); sayaç yoksa backend
+  /// gibi 422.
+  Future<Device?> _meterOf(String animalId) async {
+    final online = [
+      for (final d in await _list('devices.json', Device.fromJson))
+        if (d.status == 'online' && d.spoutId != null) d,
+    ];
+    if (online.isEmpty) return null;
+    final h = animalId.codeUnits.fold<int>(0, (a, c) => (a * 31 + c) & 0xffff);
+    return online[h % online.length];
+  }
+
+  MeterSummary _meterSummary(Device d) {
+    final since = _clock.subtract(const Duration(days: 90));
+    final recent =
+        _meterChecks.values
+            .where(
+              (c) =>
+                  c.deviceId == d.id &&
+                  (c.createdAt == null || c.createdAt!.isAfter(since)),
+            )
+            .toList()
+          ..sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
+    final last = recent.take(10).toList();
+    if (last.isEmpty) return MeterSummary(deviceId: d.id, serialNo: d.serialNo);
+    final avg =
+        last.map((c) => c.deviationPct).reduce((a, b) => a + b) / last.length;
+    final rounded = (avg * 10).round() / 10;
+    return MeterSummary(
+      deviceId: d.id,
+      serialNo: d.serialNo,
+      checks: last.length,
+      avgDeviationPct: rounded,
+      needsCalibration: last.length >= 3 && rounded.abs() > 5,
+    );
+  }
+
+  @override
+  Future<MeterCheckResult> addMeterCheck(String milkingId, int manualMl) =>
+      _delayed(() async {
+        if (manualMl <= 0 || manualMl > 100000) {
+          throw const ApiException(
+            code: 'VALIDATION',
+            message: 'ölçülen miktar 0 ile 100 L arasında olmalı',
+            status: 422,
+          );
+        }
+        const notFound = ApiException(
+          code: 'NOT_FOUND',
+          message: 'bitmiş sağım bulunamadı',
+          status: 404,
+        );
+        if (milkingId.length <= _milkingIdSuffix) throw notFound;
+        final animalId = milkingId.substring(
+          0,
+          milkingId.length - _milkingIdSuffix,
+        );
+        final List<AnimalMilking> history;
+        try {
+          history = await animalHistory(animalId);
+        } on ArgumentError {
+          throw notFound;
+        }
+        final m = history.where((x) => x.id == milkingId).firstOrNull;
+        if (m == null) throw notFound;
+        final device = await _meterOf(animalId);
+        if (device == null || m.volumeMl <= 0) {
+          throw const ApiException(
+            code: 'VALIDATION',
+            message: 'bu sağımda sayaç ölçümü yok; kontrol yapılamaz',
+            status: 422,
+          );
+        }
+        final dev = ((m.volumeMl - manualMl) / manualMl * 1000).round() / 10;
+        final animal = (await _list(
+          'animals.json',
+          Animal.fromJson,
+        )).where((a) => a.id == animalId).firstOrNull;
+        final check = MeterCheck(
+          id: _meterChecks[milkingId]?.id ?? 'mock-check-${++_meterCheckSeq}',
+          milkingId: milkingId,
+          deviceId: device.id,
+          earTag: animal?.earTag ?? '',
+          meteredMl: m.volumeMl,
+          manualMl: manualMl,
+          deviationPct: dev,
+          authorName: 'Demo Kullanıcı',
+          createdAt: _clock.toUtc(),
+        );
+        _meterChecks[milkingId] = check;
+        return MeterCheckResult(check: check, summary: _meterSummary(device));
+      });
+
+  @override
+  Future<List<MeterSummary>> meterSummaries() => _delayed(() async {
+    final ids = {for (final c in _meterChecks.values) c.deviceId};
+    return [
+      for (final d in await _list('devices.json', Device.fromJson))
+        if (ids.contains(d.id)) _meterSummary(d),
+    ]..sort((a, b) => a.serialNo.compareTo(b.serialNo));
+  });
+
+  @override
+  Future<MeterChecks> meterChecks(String deviceId) => _delayed(() async {
+    final d = (await _list(
+      'devices.json',
+      Device.fromJson,
+    )).where((x) => x.id == deviceId).firstOrNull;
+    final items =
+        _meterChecks.values.where((c) => c.deviceId == deviceId).toList()
+          ..sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
+    return MeterChecks(
+      summary: d == null ? MeterSummary(deviceId: deviceId) : _meterSummary(d),
+      items: items.take(10).toList(),
+    );
+  });
+
+  // --------------------------------------------------- sağım hızı (ADR 0125)
+
+  /// Üretilmiş geçmişten, backend'in kuralıyla (son 30 gün; en az 10 sağım
+  /// ve türün sürü ortalamasının %80'inin altı = yavaş). Üretici debiyi
+  /// türün bandından sabit aldığı için mock'ta yavaş hayvan ÇIKMAZ —
+  /// uydurulmaz.
+  @override
+  Future<List<MilkingSpeed>> milkingSpeed() => _delayed(() async {
+    final from = _now.subtract(const Duration(days: 30));
+    final rows = <(Animal, List<AnimalMilking>)>[];
+    for (final a in await _list('animals.json', Animal.fromJson)) {
+      final (animal, t) = await _animalWithThresholds(a.id);
+      final h = MockLactation.history(animal, t, _now, from: from);
+      if (h.isNotEmpty) rows.add((animal, h));
+    }
+    // Sürü ortalaması türün BÜTÜN sağımlarından.
+    final herd = <String, List<double>>{};
+    for (final (a, h) in rows) {
+      herd.putIfAbsent(a.speciesId, () => []).addAll(h.map((m) => m.avgFlow));
+    }
+    double mean(Iterable<double> xs) =>
+        xs.isEmpty ? 0 : xs.reduce((a, b) => a + b) / xs.length;
+    double r2(double v) => (v * 100).round() / 100;
+    return [
+      for (final (a, h) in rows)
+        () {
+          final avg = mean(h.map((m) => m.avgFlow));
+          final herdAvg = mean(herd[a.speciesId]!);
+          final secs = [
+            for (final m in h)
+              if (m.startedAt != null && m.endedAt != null)
+                m.endedAt!.difference(m.startedAt!).inSeconds.toDouble(),
+          ];
+          return MilkingSpeed(
+            animalId: a.id,
+            milkings: h.length,
+            avgFlow: r2(avg),
+            peakFlow: r2(mean(h.map((m) => m.peakFlow))),
+            durationSec: mean(secs).round(),
+            herdAvgFlow: r2(herdAvg),
+            slow: h.length >= 10 && avg < herdAvg * 0.8,
+          );
+        }(),
+    ];
+  });
+
+  // ------------------------------------------------ API anahtarları (0126)
+
+  /// Mock'ta anahtarlar bellekte; tam anahtar backend gibi yalnızca
+  /// oluşturulunca döner, listede yalnızca önek.
+  final List<ApiKey> _apiKeys = [];
+  int _apiKeySeq = 0;
+
+  String _token(int n) {
+    const alphabet = 'abcdefghijklmnopqrstuvwxyz234567';
+    return String.fromCharCodes([
+      for (var i = 0; i < n; i++)
+        alphabet.codeUnitAt(_random.nextInt(alphabet.length)),
+    ]);
+  }
+
+  @override
+  Future<List<ApiKey>> apiKeys() =>
+      _delayed(() async => List.unmodifiable(_apiKeys.reversed));
+
+  @override
+  Future<ApiKeyCreated> createApiKey(String name) => _delayed(() async {
+    final n = name.trim();
+    if (n.isEmpty || n.length > 60) {
+      throw const ApiException(
+        code: 'VALIDATION',
+        message: 'anahtar adı 1 ile 60 karakter arasında olmalı',
+        status: 422,
+      );
+    }
+    if (_apiKeys.length >= 10) {
+      throw const ApiException(
+        code: 'CONFLICT',
+        message: 'en çok 10 etkin anahtar olabilir; kullanılmayanı iptal edin',
+        status: 409,
+      );
+    }
+    final prefix = _token(8);
+    final key = ApiKey(
+      id: 'mock-key-${++_apiKeySeq}',
+      name: n,
+      prefix: prefix,
+      createdAt: _clock.toUtc(),
+      createdBy: 'Demo Kullanıcı',
+    );
+    _apiKeys.add(key);
+    return ApiKeyCreated(key: key, token: 'mtk_${prefix}_${_token(32)}');
+  });
+
+  @override
+  Future<void> revokeApiKey(String id) => _delayed(() async {
+    final before = _apiKeys.length;
+    _apiKeys.removeWhere((k) => k.id == id);
+    if (_apiKeys.length == before) {
+      throw const ApiException(
+        code: 'NOT_FOUND',
+        message: 'anahtar bulunamadı',
+        status: 404,
+      );
+    }
+  });
 
   @override
   Future<Deliveries> deliveries() => _delayed(

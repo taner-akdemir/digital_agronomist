@@ -224,6 +224,12 @@ class _Filters extends ConsumerWidget {
                 selected: filter.yieldClass == c,
                 onTap: () => notifier.toggleClass(c),
               ),
+          // Yavaş sağılanlar (backend ADR 0125): karar sunucunun.
+          _Chip(
+            label: l10n.historyFilterSlow,
+            selected: filter.slow,
+            onTap: notifier.toggleSlow,
+          ),
           if (groups.isNotEmpty)
             const VerticalDivider(
               width: AppSpacing.lg,
@@ -257,7 +263,8 @@ class _ActiveFilter extends ConsumerWidget {
     final filter = ref.watch(animalFilterStateProvider);
     if (filter.speciesId == null &&
         filter.yieldClass == null &&
-        filter.groupId == null) {
+        filter.groupId == null &&
+        !filter.slow) {
       return const SizedBox.shrink();
     }
     final groups = ref.watch(animalGroupsProvider).value ?? const [];
@@ -274,6 +281,7 @@ class _ActiveFilter extends ConsumerWidget {
       if (filter.groupId case final id?)
         groups.where((g) => g.id == id).map((g) => g.name).firstOrNull ??
             l10n.historyFilterGroup,
+      if (filter.slow) l10n.historyFilterSlow,
     ];
 
     return Padding(

@@ -11,6 +11,7 @@ import 'package:milktrace/data/models/animal_import.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
+import 'package:milktrace/data/models/api_key.dart';
 import 'package:milktrace/data/models/audit_entry.dart';
 import 'package:milktrace/data/models/breeding.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
@@ -19,8 +20,10 @@ import 'package:milktrace/data/models/device.dart';
 import 'package:milktrace/data/models/farm.dart';
 import 'package:milktrace/data/models/farm_summary.dart';
 import 'package:milktrace/data/models/hall.dart';
+import 'package:milktrace/data/models/meter_check.dart';
 import 'package:milktrace/data/models/milking_schedule.dart';
 import 'package:milktrace/data/models/milking_session.dart';
+import 'package:milktrace/data/models/milking_speed.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
 import 'package:milktrace/data/models/quiet_hours.dart';
 import 'package:milktrace/data/models/session_milking.dart';
@@ -601,6 +604,44 @@ class CachingRepository implements MilkTraceRepository {
     _inner.spoutHealth,
     (j) => _list(j, SpoutHealth.fromJson),
   );
+
+  @override
+  Future<MeterCheckResult> addMeterCheck(String milkingId, int manualMl) =>
+      _net(() => _inner.addMeterCheck(milkingId, manualMl));
+
+  @override
+  Future<List<MeterSummary>> meterSummaries() => _read(
+    'meter-checks',
+    _inner.meterSummaries,
+    (j) => _list(j, MeterSummary.fromJson),
+  );
+
+  /// Sayacın kontrol listesi önbelleklenmez: sayaç sayfasında, kontrol
+  /// girildikten hemen sonra açılır; çevrimdışı eski liste yanıltırdı.
+  @override
+  Future<MeterChecks> meterChecks(String deviceId) =>
+      _net(() => _inner.meterChecks(deviceId));
+
+  @override
+  Future<List<MilkingSpeed>> milkingSpeed() => _read(
+    'milking-speed',
+    _inner.milkingSpeed,
+    (j) => _list(j, MilkingSpeed.fromJson),
+  );
+
+  /// API anahtarları ÖNBELLEKLENMEZ (Kullanıcılar gibi): liste sırsız da
+  /// olsa entegrasyon erişiminin ne olduğunu söyler; çevrimdışı eski
+  /// listeden "iptal edildi" sanılan anahtar hâlâ açık olabilir ve çıkışta
+  /// silinmeyi bekleyen bir önbellekte durmasının getirisi yok.
+  @override
+  Future<List<ApiKey>> apiKeys() => _net(_inner.apiKeys);
+
+  @override
+  Future<ApiKeyCreated> createApiKey(String name) =>
+      _net(() => _inner.createApiKey(name));
+
+  @override
+  Future<void> revokeApiKey(String id) => _net(() => _inner.revokeApiKey(id));
 
   @override
   Future<Deliveries> deliveries() => _read(

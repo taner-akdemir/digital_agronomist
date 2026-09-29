@@ -452,6 +452,55 @@ final class AnimalTrendFamily extends $Family
   String toString() => r'animalTrendProvider';
 }
 
+/// Sağım hızı (backend ADR 0125), hayvana göre. Okunamazsa BOŞ: detay ve
+/// liste bu ek bilgi yüzünden düşmesin (kart gizlenir, süzgeç boş kalır).
+
+@ProviderFor(milkingSpeed)
+final milkingSpeedProvider = MilkingSpeedProvider._();
+
+/// Sağım hızı (backend ADR 0125), hayvana göre. Okunamazsa BOŞ: detay ve
+/// liste bu ek bilgi yüzünden düşmesin (kart gizlenir, süzgeç boş kalır).
+
+final class MilkingSpeedProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Map<String, MilkingSpeed>>,
+          Map<String, MilkingSpeed>,
+          FutureOr<Map<String, MilkingSpeed>>
+        >
+    with
+        $FutureModifier<Map<String, MilkingSpeed>>,
+        $FutureProvider<Map<String, MilkingSpeed>> {
+  /// Sağım hızı (backend ADR 0125), hayvana göre. Okunamazsa BOŞ: detay ve
+  /// liste bu ek bilgi yüzünden düşmesin (kart gizlenir, süzgeç boş kalır).
+  MilkingSpeedProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'milkingSpeedProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$milkingSpeedHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<Map<String, MilkingSpeed>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Map<String, MilkingSpeed>> create(Ref ref) {
+    return milkingSpeed(ref);
+  }
+}
+
+String _$milkingSpeedHash() => r'e27cb8b4acc821a97813029f6eb65770c84c2e42';
+
 /// keepAlive: filtre, onu okuyan ekran YOKKEN de yaşamalı.
 ///
 /// Dashboard'daki "3 hayvan kuruya aday" satırı Geçmiş ekranı kurulmadan
@@ -506,7 +555,7 @@ final class AnimalFilterStateProvider
   }
 }
 
-String _$animalFilterStateHash() => r'98aa1d06ffe10182b7013ab39ddc3090df1c7209';
+String _$animalFilterStateHash() => r'26262a392b465546ab61f9886cc3373507d3b7a4';
 
 /// keepAlive: filtre, onu okuyan ekran YOKKEN de yaşamalı.
 ///
@@ -588,4 +637,4 @@ final class FilteredAnimalsProvider
   }
 }
 
-String _$filteredAnimalsHash() => r'ea476e935e62c20dcb2763d9b42c4bbe461b8d10';
+String _$filteredAnimalsHash() => r'48386710037d680a7bdd080806f64051a1161652';
