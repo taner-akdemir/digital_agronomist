@@ -205,7 +205,7 @@
       "to": {}
     }
   },
-  "animalImportColumns": "Sütunlar: Küpe No (zorunlu) · Tür · Adı · Irkı · RFID · Doğum Tarihi · Son Buzağılama · Laktasyon · Durumu · Grup",
+  "animalImportColumns": "Sütunlar: Küpe No (zorunlu) · Tür · Adı · Irkı · RFID · Doğum Tarihi · Son Buzağılama · Laktasyon · Durumu · Grup · Anne Küpe · Baba",
   "animalImportCountCreate": "{n} eklenecek",
   "@animalImportCountCreate": {
     "placeholders": {

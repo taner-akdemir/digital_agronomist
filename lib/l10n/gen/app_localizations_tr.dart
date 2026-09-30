@@ -373,7 +373,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get animalImportColumns =>
-      'Sütunlar: Küpe No (zorunlu) · Tür · Adı · Irkı · RFID · Doğum Tarihi · Son Buzağılama · Laktasyon · Durumu · Grup';
+      'Sütunlar: Küpe No (zorunlu) · Tür · Adı · Irkı · RFID · Doğum Tarihi · Son Buzağılama · Laktasyon · Durumu · Grup · Anne Küpe · Baba';
 
   @override
   String animalImportCountCreate(Object n) {

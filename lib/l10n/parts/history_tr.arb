@@ -75,7 +75,7 @@
     }
   },
   "animalImportIntro": "Veterinerden, Birlik'ten ya da Hayvan Bilgi Sistemi'nden aldığınız listeyi yükleyin (Excel .xlsx ya da CSV). İlk satır sütun başlıkları olmalı; tarihler gün önde (03.04.2021).",
-  "animalImportColumns": "Sütunlar: Küpe No (zorunlu) · Tür · Adı · Irkı · RFID · Doğum Tarihi · Son Buzağılama · Laktasyon · Durumu · Grup",
+  "animalImportColumns": "Sütunlar: Küpe No (zorunlu) · Tür · Adı · Irkı · RFID · Doğum Tarihi · Son Buzağılama · Laktasyon · Durumu · Grup · Anne Küpe · Baba",
   "animalImportRules": "Küpesi zaten kayıtlı hayvanlar, güncelleme açılmadıkça değiştirilmez. Hatalı satırlar atlanır; dosyayı düzeltip yeniden yüklemek güvenlidir.",
   "animalImportDefaultSpecies": "Türü yazılmamış satırlar",
   "animalImportPickFile": "Dosya seç",

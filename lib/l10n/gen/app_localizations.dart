@@ -713,7 +713,7 @@ abstract class AppLocalizations {
   /// No description provided for @animalImportColumns.
   ///
   /// In tr, this message translates to:
-  /// **'Sütunlar: Küpe No (zorunlu) · Tür · Adı · Irkı · RFID · Doğum Tarihi · Son Buzağılama · Laktasyon · Durumu · Grup'**
+  /// **'Sütunlar: Küpe No (zorunlu) · Tür · Adı · Irkı · RFID · Doğum Tarihi · Son Buzağılama · Laktasyon · Durumu · Grup · Anne Küpe · Baba'**
   String get animalImportColumns;
 
   /// No description provided for @animalImportCountCreate.

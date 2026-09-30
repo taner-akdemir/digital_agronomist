@@ -376,7 +376,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get animalImportColumns =>
-      'Columns (Turkish headers): Küpe No (ear tag, required) · Tür (species) · Adı (name) · Irkı (breed) · RFID · Doğum Tarihi (birth date) · Son Buzağılama (last calving) · Laktasyon (lactation) · Durumu (status) · Grup (group)';
+      'Columns (Turkish headers): Küpe No (ear tag, required) · Tür (species) · Adı (name) · Irkı (breed) · RFID · Doğum Tarihi (birth date) · Son Buzağılama (last calving) · Laktasyon (lactation) · Durumu (status) · Grup (group) · Anne Küpe (dam ear tag) · Baba (sire code)';
 
   @override
   String animalImportCountCreate(Object n) {
