@@ -1,7 +1,7 @@
 # Milk Trace — KVKK Aydınlatma Metni
 
 > **TASLAK (28.09.2026)** — 6698 sayılı KVKK md. 10 ve Aydınlatma Yükümlülüğü Tebliği
-> yapısında. Hukuki kontrolden geçmeli; `[DOLDUR]` yerleri bilinmiyor.
+> yapısında. Hukuki kontrolden geçmeli.
 >
 > **Hukukçu için açık soru — roller:** İşletmenin (çiftliğin) kendi çalışanlarının ve
 > bildirim alıcılarının verileri bakımından **veri sorumlusu işletme**, Milk Trace ise
@@ -10,7 +10,7 @@
 
 ## Veri sorumlusu
 
-[DOLDUR: şirket unvanı], [DOLDUR: adres], [DOLDUR: MERSİS no], iletişim: [DOLDUR: e-posta].
+Algebran Soft (Taner Akdemir, şahıs işletmesi), Atakent Mah. 1472. Cad. Eda Apt. No: 5 D: 3, Elvankent, Etimesgut / Ankara; iletişim: taner.akdemir@algebransoft.com.
 
 ## İşlenen kişisel veriler ve amaçları
 
@@ -23,22 +23,25 @@
 | Cihaz | bildirim jetonu, platform | bildirim iletimi | (c) sözleşmenin ifası |
 | Uygulama hata raporu | yığın izi, cihaz modeli, işletim sistemi, uygulama sürümü (kişiyle ilişkilendirilmez) | hataların bulunup giderilmesi | (f) meşru menfaat |
 | Geri bildirim | kullanıcının yazdığı metin, isteğe bağlı seçtiği ekran görüntüsü, uygulama sürümü, platform, işletim sistemi sürümü, cihaz modeli, kullanıcı kimliği ve işletme (1 yıl) | destek, hataların giderilmesi, hizmetin geliştirilmesi | (f) meşru menfaat |
-| İletişim (alıcı) | bildirim kanalı e-posta/telefon | uyarıların iletilmesi | (c) sözleşmenin ifası; alıcı işletme dışındaysa [DOLDUR] |
+| Demo talebi | ad, telefon, e-posta (isteğe bağlı), çiftlik adı, mesaj, IP adresi, tarayıcı (1 yıl) | talep sahibine dönülmesi | (c) sözleşmenin kurulmasıyla doğrudan ilgili (talep sahibinin isteği) |
+| İletişim (alıcı) | bildirim kanalı e-posta/telefon | uyarıların iletilmesi | (c) sözleşmenin ifası; alıcı işletme dışındaysa (f) meşru menfaat |
 
 ## Toplama yöntemi
 
 Hesaplar platform yöneticisi tarafından işletme adına açılır; diğer veriler mobil
-uygulama ve yönetim paneli üzerinden elektronik olarak, sağım verileri sayaçlardan
+uygulama, web paneli ve tanıtım sitesindeki demo formu üzerinden elektronik olarak, sağım verileri sayaçlardan
 otomatik olarak toplanır.
 
 ## Aktarım
 
-- **Yurt içi:** SMS sağlayıcıları (NetGSM / İleti Merkezi) — işletmenin seçtiği SMS
-  bildirimleri.
+- **Yurt içi:** SMS ve sesli arama sağlayıcıları (NetGSM / İleti Merkezi / JetSMS) —
+  işletmenin seçtiği bildirimler.
 - **Yurt dışı (md. 9):** netcup GmbH (Almanya, barındırma); Google LLC (Firebase Cloud
-  Messaging, bildirim; Firebase Crashlytics, uygulama hata raporları); Twilio SendGrid (ABD, e-posta). Dayanak: [DOLDUR — açık rıza,
-  standart sözleşme ya da Kurul izni; 2024 değişikliği sonrası md. 9 usulü].
-- Hava tahmini (Open-Meteo): ısı stresi uyarısı için yalnızca tesisin koordinatı
+  Messaging, bildirim; Firebase Crashlytics, uygulama hata raporları); Twilio SendGrid (ABD, e-posta);
+  işletme seçerse Twilio / Vonage (ABD, SMS ve sesli arama), Slack / Microsoft Teams (ABD,
+  sohbet bildirimi). Dayanak: md. 9 uyarınca Kurul'un ilan ettiği standart sözleşme; sözleşme
+  imzalandıktan sonra 5 iş günü içinde Kurul'a bildirilir.
+- Hava tahmini (Open-Meteo, İsviçre): ısı stresi uyarısı için yalnızca tesisin koordinatı
   gönderilir; kişisel veri aktarılmaz (backend ADR 0119).
 - Yetkili kamu kurumlarına, hukuki yükümlülük hâlinde.
 
@@ -46,9 +49,9 @@ otomatik olarak toplanır.
 
 Hizmet sözleşmesi süresince ve sona ermesinden sonra 90 gün; ardından kendiliğinden
 silinir (faturalama kayıtları işletme adı anonimleştirilerek vergi mevzuatı süresince
-saklanır). Yedekler 7 gün (sunucu dışı kopya 14 gün), sunucu kayıtları (IP adresi dahil) 30 gün, uygulama içi geri bildirim 1 yıl. Süre sonunda
+saklanır). Yedekler 7 gün (sunucu dışı kopya 14 gün), sunucu kayıtları (IP adresi dahil) 30 gün, uygulama içi geri bildirim ve demo talepleri 1 yıl. Süre sonunda
 silinir, yok edilir ya da anonimleştirilir. Sözleşme sürerken hesap uygulamadan ("Hesabımı
-sil") ya da https://api.milktrace.com.tr/admin/hesap-sil adresinden kalıcı silinir; yazılan hayvan notları sürü kaydı olarak kalır, yazar adı kaldırılır.
+sil") ya da https://milktrace.com.tr/hesap-sil adresinden kalıcı silinir; yazılan hayvan notları sürü kaydı olarak kalır, yazar adı kaldırılır.
 
 ## Haklarınız (md. 11)
 
@@ -59,5 +62,5 @@ işlemlerin aktarılan kişilere bildirilmesini isteme, münhasıran otomatik si
 sonucu aleyhe bir sonuca itiraz etme ve kanuna aykırı işleme sebebiyle zararın giderilmesini
 talep etme.
 
-Başvuru: [DOLDUR: e-posta / adres], Veri Sorumlusuna Başvuru Usul ve Esasları Hakkında
+Başvuru: taner.akdemir@algebransoft.com ya da yazılı olarak Atakent Mah. 1472. Cad. Eda Apt. No: 5 D: 3, Elvankent, Etimesgut / Ankara adresine, Veri Sorumlusuna Başvuru Usul ve Esasları Hakkında
 Tebliğ'e uygun olarak. Başvurular en geç 30 gün içinde ücretsiz sonuçlandırılır.

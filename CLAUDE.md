@@ -662,7 +662,7 @@ kalibrasyon GİRİLMEZ (tesis yapısı gibi kurulum ekibinin işi).
 
 **Hesap silme** (backend ADR 0098; Play şartı): hesap kartının altında "Hesabımı sil"
 (mock modda yok) → parola onayı → `DELETE /me` → yerel çıkış. Tek sahip silemez (409,
-sunucunun mesajı, pencere açık kalır). Web karşılığı panelin `/admin/hesap-sil` sayfası
+sunucunun mesajı, pencere açık kalır). Web karşılığı sitenin `milktrace.com.tr/hesap-sil` sayfası
 — Play Console'daki silme bağlantısı.
 
 **Sağım saatleri** (`/settings/schedule`, backend ADR 0099): hesap kartından yalnızca
@@ -809,8 +809,11 @@ kaybolursa Play Console'dan sıfırlanabilir.
 İlk yüklemeden önce Console'un istediği "Uygulama içeriği" formları (veri güvenliği,
 hedef kitle, gizlilik politikası bağlantısı) doldurulur. Taslaklar `docs/gizlilik/`:
 gizlilik politikası, KVKK aydınlatma metni ve veri güvenliği formu cevapları — koddan
-çıkarıldı, **hukuki kontrol ve `[DOLDUR]` yerleri** bekliyor. Yeni izin ya da SDK
-eklenirse üçü birlikte güncellenir. Alan adı **`milktrace.com.tr`** (29.09.2026): API ve panel `api.milktrace.com.tr`; hesap silme
-`https://api.milktrace.com.tr/admin/hesap-sil`. Gizlilik politikası ve KVKK metni panelde herkese
-açık: `/admin/gizlilik`, `/admin/kvkk` — panel bu dosyaları kopyalar; burada değiştirince
-panelde `scripts/sync-legal.sh` koş. `>` alıntılar (taslak notları) yayımlanmaz.
+çıkarıldı, şirket bilgileri dolu (30.09.2026), **hukuki kontrol** bekliyor. Yeni izin, SDK,
+bildirim sağlayıcısı ya da veri toplayan form eklenirse üçü birlikte güncellenir. Alan adı
+**`milktrace.com.tr`**: site + müşteri paneli kökte, API `api.`, yönetim paneli `admin.`.
+Hesap silme `https://milktrace.com.tr/hesap-sil`; gizlilik politikası ve KVKK metni sitede
+herkese açık: `/gizlilik`, `/kvkk` — site (`~/WebstormProjects/milktrace-site`) bu dosyaları
+kopyalar; burada değiştirince sitede `scripts/sync-legal.sh` koş. `>` alıntılar (taslak
+notları) yayımlanmaz. Yurt dışı aktarım dayanağı Kurul'un standart sözleşmesi: sağlayıcılarla
+imzalanıp 5 iş günü içinde Kurul'a bildirilmesi işletme sahibinin (Taner) işi.
