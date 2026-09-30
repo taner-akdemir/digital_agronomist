@@ -347,6 +347,32 @@ class _PlanTile extends StatelessWidget {
 
 /// Planın zamanı gelen hayvanları: kayıtsız ve en gecikmiş üstte (sunucu
 /// sıralar). Seçilenler tek istekte "uygulandı" işaretlenir.
+/// `/vaccinations/:planId`: aşı uyarısından doğrudan planın zamanı gelenleri.
+///
+/// Plan silinmişse (uyarı eski kalmış olabilir) plan listesi açılır.
+class VaccinePlanRoute extends ConsumerWidget {
+  const VaccinePlanRoute({super.key, required this.planId});
+
+  final String planId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final plans = ref.watch(vaccinePlansProvider);
+    final plan = plans.value?.where((p) => p.id == planId).firstOrNull;
+    if (plan != null) return VaccinePlanDueScreen(plan: plan);
+    if (plans.hasValue) return const VaccinationsScreen();
+    return Scaffold(
+      appBar: AppBar(),
+      body: AsyncView(
+        value: plans,
+        errorMessage: l10n.vaccineLoadFailed,
+        onRetry: () => ref.invalidate(vaccinePlansProvider),
+        builder: (_) => const SizedBox.shrink(),
+      ),
+    );
+  }
+}
+
 class VaccinePlanDueScreen extends ConsumerStatefulWidget {
   const VaccinePlanDueScreen({super.key, required this.plan, this.today});
 

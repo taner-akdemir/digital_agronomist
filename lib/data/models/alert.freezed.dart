@@ -21,7 +21,9 @@ mixin _$Alert {
  String get severity; String? get animalId; String? get sessionId; DateTime? get createdAt; String? get acknowledgedBy; DateTime? get acknowledgedAt;/// Sorunun geçtiği an: sayaç geri geldi (ADR 0041) ya da hatası düzeldi
 /// (ADR 0058). Okundu
 /// bilgisinden BAĞIMSIZ — sağımcı görmeden sayaç dönmüş olabilir.
- DateTime? get resolvedAt;
+ DateTime? get resolvedAt;/// Aşı hatırlatmasının planı (backend ADR 0112): uyarı plan başınadır,
+/// hayvana bağlı değil; dokununca o planın zamanı gelenleri açılır.
+ String? get planId;
 /// Create a copy of Alert
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -35,20 +37,20 @@ $AlertCopyWith<Alert> get copyWith => _$AlertCopyWithImpl<Alert>(this as Alert, 
 @override
 bool operator ==(Object other) {
   final _this = this as Alert;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Alert&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.message, _this.message) || other.message == _this.message)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.severity, _this.severity) || other.severity == _this.severity)&&(identical(other.animalId, _this.animalId) || other.animalId == _this.animalId)&&(identical(other.sessionId, _this.sessionId) || other.sessionId == _this.sessionId)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.acknowledgedBy, _this.acknowledgedBy) || other.acknowledgedBy == _this.acknowledgedBy)&&(identical(other.acknowledgedAt, _this.acknowledgedAt) || other.acknowledgedAt == _this.acknowledgedAt)&&(identical(other.resolvedAt, _this.resolvedAt) || other.resolvedAt == _this.resolvedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Alert&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.message, _this.message) || other.message == _this.message)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.severity, _this.severity) || other.severity == _this.severity)&&(identical(other.animalId, _this.animalId) || other.animalId == _this.animalId)&&(identical(other.sessionId, _this.sessionId) || other.sessionId == _this.sessionId)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.acknowledgedBy, _this.acknowledgedBy) || other.acknowledgedBy == _this.acknowledgedBy)&&(identical(other.acknowledgedAt, _this.acknowledgedAt) || other.acknowledgedAt == _this.acknowledgedAt)&&(identical(other.resolvedAt, _this.resolvedAt) || other.resolvedAt == _this.resolvedAt)&&(identical(other.planId, _this.planId) || other.planId == _this.planId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as Alert;
-  return Object.hash(runtimeType,_this.id,_this.message,_this.type,_this.severity,_this.animalId,_this.sessionId,_this.createdAt,_this.acknowledgedBy,_this.acknowledgedAt,_this.resolvedAt);
+  return Object.hash(runtimeType,_this.id,_this.message,_this.type,_this.severity,_this.animalId,_this.sessionId,_this.createdAt,_this.acknowledgedBy,_this.acknowledgedAt,_this.resolvedAt,_this.planId);
 }
 
 @override
 String toString() {
   final _this = this as Alert;
-  return 'Alert(id: ${_this.id}, message: ${_this.message}, type: ${_this.type}, severity: ${_this.severity}, animalId: ${_this.animalId}, sessionId: ${_this.sessionId}, createdAt: ${_this.createdAt}, acknowledgedBy: ${_this.acknowledgedBy}, acknowledgedAt: ${_this.acknowledgedAt}, resolvedAt: ${_this.resolvedAt})';
+  return 'Alert(id: ${_this.id}, message: ${_this.message}, type: ${_this.type}, severity: ${_this.severity}, animalId: ${_this.animalId}, sessionId: ${_this.sessionId}, createdAt: ${_this.createdAt}, acknowledgedBy: ${_this.acknowledgedBy}, acknowledgedAt: ${_this.acknowledgedAt}, resolvedAt: ${_this.resolvedAt}, planId: ${_this.planId})';
 }
 
 
@@ -59,7 +61,7 @@ abstract mixin class $AlertCopyWith<$Res>  {
   factory $AlertCopyWith(Alert value, $Res Function(Alert) _then) = _$AlertCopyWithImpl;
 @useResult
 $Res call({
- String id, String message, String type, String severity, String? animalId, String? sessionId, DateTime? createdAt, String? acknowledgedBy, DateTime? acknowledgedAt, DateTime? resolvedAt
+ String id, String message, String type, String severity, String? animalId, String? sessionId, DateTime? createdAt, String? acknowledgedBy, DateTime? acknowledgedAt, DateTime? resolvedAt, String? planId
 });
 
 
@@ -76,7 +78,7 @@ class _$AlertCopyWithImpl<$Res>
 
 /// Create a copy of Alert
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? message = null,Object? type = null,Object? severity = null,Object? animalId = freezed,Object? sessionId = freezed,Object? createdAt = freezed,Object? acknowledgedBy = freezed,Object? acknowledgedAt = freezed,Object? resolvedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? message = null,Object? type = null,Object? severity = null,Object? animalId = freezed,Object? sessionId = freezed,Object? createdAt = freezed,Object? acknowledgedBy = freezed,Object? acknowledgedAt = freezed,Object? resolvedAt = freezed,Object? planId = freezed,}) {
   return _then(Alert(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
@@ -88,7 +90,8 @@ as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // igno
 as DateTime?,acknowledgedBy: freezed == acknowledgedBy ? _self.acknowledgedBy : acknowledgedBy // ignore: cast_nullable_to_non_nullable
 as String?,acknowledgedAt: freezed == acknowledgedAt ? _self.acknowledgedAt : acknowledgedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,resolvedAt: freezed == resolvedAt ? _self.resolvedAt : resolvedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+as DateTime?,planId: freezed == planId ? _self.planId : planId // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -173,10 +176,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String message,  String type,  String severity,  String? animalId,  String? sessionId,  DateTime? createdAt,  String? acknowledgedBy,  DateTime? acknowledgedAt,  DateTime? resolvedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String message,  String type,  String severity,  String? animalId,  String? sessionId,  DateTime? createdAt,  String? acknowledgedBy,  DateTime? acknowledgedAt,  DateTime? resolvedAt,  String? planId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Alert() when $default != null:
-return $default(_that.id,_that.message,_that.type,_that.severity,_that.animalId,_that.sessionId,_that.createdAt,_that.acknowledgedBy,_that.acknowledgedAt,_that.resolvedAt);case _:
+return $default(_that.id,_that.message,_that.type,_that.severity,_that.animalId,_that.sessionId,_that.createdAt,_that.acknowledgedBy,_that.acknowledgedAt,_that.resolvedAt,_that.planId);case _:
   return orElse();
 
 }
@@ -194,10 +197,10 @@ return $default(_that.id,_that.message,_that.type,_that.severity,_that.animalId,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String message,  String type,  String severity,  String? animalId,  String? sessionId,  DateTime? createdAt,  String? acknowledgedBy,  DateTime? acknowledgedAt,  DateTime? resolvedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String message,  String type,  String severity,  String? animalId,  String? sessionId,  DateTime? createdAt,  String? acknowledgedBy,  DateTime? acknowledgedAt,  DateTime? resolvedAt,  String? planId)  $default,) {final _that = this;
 switch (_that) {
 case _Alert():
-return $default(_that.id,_that.message,_that.type,_that.severity,_that.animalId,_that.sessionId,_that.createdAt,_that.acknowledgedBy,_that.acknowledgedAt,_that.resolvedAt);case _:
+return $default(_that.id,_that.message,_that.type,_that.severity,_that.animalId,_that.sessionId,_that.createdAt,_that.acknowledgedBy,_that.acknowledgedAt,_that.resolvedAt,_that.planId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -214,10 +217,10 @@ return $default(_that.id,_that.message,_that.type,_that.severity,_that.animalId,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String message,  String type,  String severity,  String? animalId,  String? sessionId,  DateTime? createdAt,  String? acknowledgedBy,  DateTime? acknowledgedAt,  DateTime? resolvedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String message,  String type,  String severity,  String? animalId,  String? sessionId,  DateTime? createdAt,  String? acknowledgedBy,  DateTime? acknowledgedAt,  DateTime? resolvedAt,  String? planId)?  $default,) {final _that = this;
 switch (_that) {
 case _Alert() when $default != null:
-return $default(_that.id,_that.message,_that.type,_that.severity,_that.animalId,_that.sessionId,_that.createdAt,_that.acknowledgedBy,_that.acknowledgedAt,_that.resolvedAt);case _:
+return $default(_that.id,_that.message,_that.type,_that.severity,_that.animalId,_that.sessionId,_that.createdAt,_that.acknowledgedBy,_that.acknowledgedAt,_that.resolvedAt,_that.planId);case _:
   return null;
 
 }
@@ -229,7 +232,7 @@ return $default(_that.id,_that.message,_that.type,_that.severity,_that.animalId,
 @JsonSerializable()
 
 class _Alert extends Alert {
-  const _Alert({required this.id, required this.message, this.type = '', this.severity = 'warning', this.animalId, this.sessionId, this.createdAt, this.acknowledgedBy, this.acknowledgedAt, this.resolvedAt}): super._();
+  const _Alert({required this.id, required this.message, this.type = '', this.severity = 'warning', this.animalId, this.sessionId, this.createdAt, this.acknowledgedBy, this.acknowledgedAt, this.resolvedAt, this.planId}): super._();
   factory _Alert.fromJson(Map<String, dynamic> json) => _$AlertFromJson(json);
 
 @override final  String id;
@@ -247,6 +250,9 @@ class _Alert extends Alert {
 /// (ADR 0058). Okundu
 /// bilgisinden BAĞIMSIZ — sağımcı görmeden sayaç dönmüş olabilir.
 @override final  DateTime? resolvedAt;
+/// Aşı hatırlatmasının planı (backend ADR 0112): uyarı plan başınadır,
+/// hayvana bağlı değil; dokununca o planın zamanı gelenleri açılır.
+@override final  String? planId;
 
 /// Create a copy of Alert
 /// with the given fields replaced by the non-null parameter values.
@@ -261,18 +267,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Alert&&(identical(other.id, id) || other.id == id)&&(identical(other.message, message) || other.message == message)&&(identical(other.type, type) || other.type == type)&&(identical(other.severity, severity) || other.severity == severity)&&(identical(other.animalId, animalId) || other.animalId == animalId)&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.acknowledgedBy, acknowledgedBy) || other.acknowledgedBy == acknowledgedBy)&&(identical(other.acknowledgedAt, acknowledgedAt) || other.acknowledgedAt == acknowledgedAt)&&(identical(other.resolvedAt, resolvedAt) || other.resolvedAt == resolvedAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Alert&&(identical(other.id, id) || other.id == id)&&(identical(other.message, message) || other.message == message)&&(identical(other.type, type) || other.type == type)&&(identical(other.severity, severity) || other.severity == severity)&&(identical(other.animalId, animalId) || other.animalId == animalId)&&(identical(other.sessionId, sessionId) || other.sessionId == sessionId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.acknowledgedBy, acknowledgedBy) || other.acknowledgedBy == acknowledgedBy)&&(identical(other.acknowledgedAt, acknowledgedAt) || other.acknowledgedAt == acknowledgedAt)&&(identical(other.resolvedAt, resolvedAt) || other.resolvedAt == resolvedAt)&&(identical(other.planId, planId) || other.planId == planId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,message,type,severity,animalId,sessionId,createdAt,acknowledgedBy,acknowledgedAt,resolvedAt);
+    return Object.hash(runtimeType,id,message,type,severity,animalId,sessionId,createdAt,acknowledgedBy,acknowledgedAt,resolvedAt,planId);
 }
 
 @override
 String toString() {
-    return 'Alert(id: $id, message: $message, type: $type, severity: $severity, animalId: $animalId, sessionId: $sessionId, createdAt: $createdAt, acknowledgedBy: $acknowledgedBy, acknowledgedAt: $acknowledgedAt, resolvedAt: $resolvedAt)';
+    return 'Alert(id: $id, message: $message, type: $type, severity: $severity, animalId: $animalId, sessionId: $sessionId, createdAt: $createdAt, acknowledgedBy: $acknowledgedBy, acknowledgedAt: $acknowledgedAt, resolvedAt: $resolvedAt, planId: $planId)';
 }
 
 
@@ -283,7 +289,7 @@ abstract mixin class _$AlertCopyWith<$Res> implements $AlertCopyWith<$Res> {
   factory _$AlertCopyWith(_Alert value, $Res Function(_Alert) _then) = __$AlertCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String message, String type, String severity, String? animalId, String? sessionId, DateTime? createdAt, String? acknowledgedBy, DateTime? acknowledgedAt, DateTime? resolvedAt
+ String id, String message, String type, String severity, String? animalId, String? sessionId, DateTime? createdAt, String? acknowledgedBy, DateTime? acknowledgedAt, DateTime? resolvedAt, String? planId
 });
 
 
@@ -300,7 +306,7 @@ class __$AlertCopyWithImpl<$Res>
 
 /// Create a copy of Alert
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? message = null,Object? type = null,Object? severity = null,Object? animalId = freezed,Object? sessionId = freezed,Object? createdAt = freezed,Object? acknowledgedBy = freezed,Object? acknowledgedAt = freezed,Object? resolvedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? message = null,Object? type = null,Object? severity = null,Object? animalId = freezed,Object? sessionId = freezed,Object? createdAt = freezed,Object? acknowledgedBy = freezed,Object? acknowledgedAt = freezed,Object? resolvedAt = freezed,Object? planId = freezed,}) {
   return _then(_Alert(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
@@ -312,7 +318,8 @@ as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // igno
 as DateTime?,acknowledgedBy: freezed == acknowledgedBy ? _self.acknowledgedBy : acknowledgedBy // ignore: cast_nullable_to_non_nullable
 as String?,acknowledgedAt: freezed == acknowledgedAt ? _self.acknowledgedAt : acknowledgedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,resolvedAt: freezed == resolvedAt ? _self.resolvedAt : resolvedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+as DateTime?,planId: freezed == planId ? _self.planId : planId // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

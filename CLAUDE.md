@@ -634,7 +634,8 @@ hayvan ZAMANI GELMİŞ sayılır ("kayıt yok") — plan açılınca mevcut duru
 Hayvan detayında `TreatmentsCard`'ın altında `VaccinationsCard`: plan başına "sonraki 3 Eki"
 / "kayıt yok" / kırmızı "gecikti · …", satırda "Uygulandı", son 3 kayıt. Tarihler gün
 olarak (`vaccineDay`). Hatırlatma uyarısı `vaccination_due` SUNUCUDAN (6 saatte bir, plan
-başına tek uyarı); uygulama hesaplamaz. Mock'taki durum hesabı yalnızca ayna.
+başına tek uyarı); uygulama hesaplamaz. Uyarı `planId` taşır: dokununca
+`/vaccinations/:planId` o planın zamanı gelenlerini açar (plan silinmişse liste). Mock'taki durum hesabı yalnızca ayna.
 
 **Oturum kendiliğinden açılır/kapanır** (backend ADR 0083): açık oturumu olmayan bölgede
 sayaç akış bildirince backend oturumu açar (tür saate göre), 45 dk akışsız kalınca kapatır.

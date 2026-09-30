@@ -33,6 +33,10 @@ abstract class Alert with _$Alert {
     /// (ADR 0058). Okundu
     /// bilgisinden BAĞIMSIZ — sağımcı görmeden sayaç dönmüş olabilir.
     DateTime? resolvedAt,
+
+    /// Aşı hatırlatmasının planı (backend ADR 0112): uyarı plan başınadır,
+    /// hayvana bağlı değil; dokununca o planın zamanı gelenleri açılır.
+    String? planId,
   }) = _Alert;
 
   const Alert._();

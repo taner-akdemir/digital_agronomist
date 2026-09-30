@@ -149,6 +149,14 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/vaccinations',
         builder: (_, _) => const VaccinationsScreen(),
+        routes: [
+          // Aşı uyarısından (planId) doğrudan planın zamanı gelenleri.
+          GoRoute(
+            path: ':planId',
+            builder: (_, s) =>
+                VaccinePlanRoute(planId: s.pathParameters['planId']!),
+          ),
+        ],
       ),
       // Bildirim kanalları (backend ADR 0028): hesap kartından, yalnızca
       // işletme sahibine.

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/repositories/milktrace_repository.dart';
 import 'package:milktrace/data/repositories/mock_repository.dart';
@@ -127,4 +128,54 @@ void main() {
     expect(alertTimeLabel(a('device_error')), contains('düzeldi 21:29'));
     expect(alertTimeLabel(a('device_offline')), contains('geri geldi 21:29'));
   });
+
+  // Aşı hatırlatması hayvana değil plana bağlı (backend ADR 0112): dokununca
+  // o planın zamanı gelenleri açılır.
+  testWidgets('aşı uyarısı planını açar', (tester) async {
+    _container.dispose();
+    _container = ProviderContainer(
+      overrides: [
+        repositoryProvider.overrideWith(
+          (ref) => _VaccineAlertRepo() as MilkTraceRepository,
+        ),
+      ],
+    );
+    final router = GoRouter(
+      routes: [
+        GoRoute(path: '/', builder: (_, _) => const AlertsScreen()),
+        GoRoute(
+          path: '/vaccinations/:planId',
+          builder: (_, s) => Text('plan ${s.pathParameters['planId']}'),
+        ),
+      ],
+    );
+    await tester.pumpWidget(
+      UncontrolledProviderScope(
+        container: _container,
+        child: MaterialApp.router(routerConfig: router),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.textContaining('Şap: 12 hayvan'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('plan p-sap'), findsOneWidget);
+  });
+}
+
+class _VaccineAlertRepo extends MockRepository {
+  _VaccineAlertRepo()
+    : super(latency: Duration.zero, today: _today, loadAsset: _diskAsset);
+
+  @override
+  Future<List<Alert>> alerts() async => [
+    Alert(
+      id: 'v1',
+      type: 'vaccination_due',
+      message: 'Şap: 12 hayvanın zamanı geldi',
+      createdAt: DateTime.utc(2026, 9, 22, 6),
+      planId: 'p-sap',
+    ),
+  ];
 }

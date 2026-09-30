@@ -188,6 +188,37 @@ void main() {
     },
   );
 
+  // Aşı uyarısından gelen yol (/vaccinations/:planId, backend ADR 0112).
+  testWidgets(
+    'plan yolu planın zamanı gelenlerini, silinmiş plan listeyi açar',
+    (tester) async {
+      final repo = _repo();
+      // Mock'un gecikmesi sahte saatte ilerlemez: gerçek zamanda kaydedilir.
+      final plan = (await tester.runAsync(
+        () => repo.saveVaccinePlan(name: 'Şap', intervalDays: 180),
+      ))!;
+
+      await _pump(
+        tester,
+        repo,
+        VaccinePlanRoute(planId: plan.id),
+        role: 'tenant_operator',
+      );
+      expect(
+        find.textContaining('Zamanı geçmiş, 30 gün içinde'),
+        findsOneWidget,
+      );
+
+      await _pump(
+        tester,
+        repo,
+        const VaccinePlanRoute(planId: 'silinmis'),
+        role: 'tenant_operator',
+      );
+      expect(find.text('Aşı takvimi'), findsOneWidget);
+    },
+  );
+
   testWidgets('sahip plan ekler; kayıtsız hayvanlar zamanı gelmiş sayılır', (
     tester,
   ) async {

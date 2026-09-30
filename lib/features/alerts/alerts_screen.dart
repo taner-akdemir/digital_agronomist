@@ -84,9 +84,17 @@ class _AlertCard extends ConsumerWidget {
           borderRadius: AppRadius.mdAll,
           // Hayvan uyarısından hayvanın geçmişine geçilir: "düşük debi"
           // uyarısının ilk sorusu "bu hayvan daha önce de böyle miydi?".
-          onTap: animalId == null
-              ? null
-              : () => context.go('/history/animal/$animalId'),
+          // Aşı hatırlatması hayvana değil plana bağlı (ADR 0112): o planın
+          // zamanı gelenleri açılır; geri tuşu uyarılara döner.
+          onTap: animalId != null
+              ? () => context.go('/history/animal/$animalId')
+              : alert.type == 'vaccination_due'
+              ? () => context.push(
+                  alert.planId == null
+                      ? '/vaccinations'
+                      : '/vaccinations/${alert.planId}',
+                )
+              : null,
           child: Container(
             padding: const EdgeInsets.all(AppSpacing.md),
             decoration: BoxDecoration(
