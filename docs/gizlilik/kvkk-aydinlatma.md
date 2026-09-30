@@ -10,7 +10,7 @@
 
 ## Veri sorumlusu
 
-Algebran Soft (Taner Akdemir, şahıs işletmesi), Atakent Mah. 1472. Cad. Eda Apt. No: 5 D: 3, Elvankent, Etimesgut / Ankara; iletişim: taner.akdemir@algebransoft.com.
+Algebran Soft (Taner Akdemir, şahıs işletmesi), Atakent Mah. 1472. Cad. Eda Apt. No: 5 D: 3, Elvankent, Etimesgut / Ankara (Etimesgut Vergi Dairesi); iletişim: taner.akdemir@algebransoft.com.
 
 ## İşlenen kişisel veriler ve amaçları
 

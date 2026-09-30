@@ -15,7 +15,7 @@ sitesindeki demo talep formu üzerinden işlenen kişisel verileri anlatır.
 
 ## 1. Hizmeti sunan
 
-Algebran Soft (Taner Akdemir, şahıs işletmesi), Atakent Mah. 1472. Cad. Eda Apt. No: 5 D: 3, Elvankent, Etimesgut / Ankara. İletişim: taner.akdemir@algebransoft.com.
+Algebran Soft (Taner Akdemir, şahıs işletmesi), Atakent Mah. 1472. Cad. Eda Apt. No: 5 D: 3, Elvankent, Etimesgut / Ankara (Etimesgut Vergi Dairesi). İletişim: taner.akdemir@algebransoft.com.
 
 Milk Trace işletmelere (çiftliklere) sunulur. Uygulamayı kullanan kişilerin hesaplarını
 işletme adına platform yöneticisi açar; uygulama içinden hesap oluşturulmaz.
