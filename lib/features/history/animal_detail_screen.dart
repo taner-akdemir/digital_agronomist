@@ -712,7 +712,11 @@ class _HistoryCard extends StatelessWidget {
               milking: m,
               volume: volume,
               species: species,
-              onTap: onTap == null ? null : () => onTap!(m),
+              // Yalnızca BİTMİŞ sağım denetlenir: sunucu sürene "bitmiş
+              // sağım bulunamadı" der; süren satır dokunulmaz (web ile aynı).
+              onTap: onTap == null || m.endedAt == null
+                  ? null
+                  : () => onTap!(m),
             ),
           if (milkings.length > _limit) ...[
             const SizedBox(height: AppSpacing.sm),

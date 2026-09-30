@@ -11,6 +11,7 @@ import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/api_key.dart';
 import 'package:milktrace/data/models/auth_state.dart';
 import 'package:milktrace/data/models/auth_user.dart';
+import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/meter_check.dart';
 import 'package:milktrace/data/models/milking_speed.dart';
 import 'package:milktrace/data/repositories/milktrace_repository.dart';
@@ -51,13 +52,32 @@ class _User extends Auth {
 
 /// Sunucunun cevabı gibi ek veri dönen mock.
 class _Repo extends MockRepository {
-  _Repo({this.summaries, this.checks, this.speed, this.checkError})
-    : super(latency: Duration.zero, today: _today, loadAsset: _disk);
+  _Repo({
+    this.summaries,
+    this.checks,
+    this.speed,
+    this.checkError,
+    this.firstOngoing = false,
+  }) : super(latency: Duration.zero, today: _today, loadAsset: _disk);
 
   final List<MeterSummary>? summaries;
   final MeterChecks? checks;
   final List<MilkingSpeed>? speed;
   final Object? checkError;
+
+  /// En yeni sağım sürüyor (endedAt yok): sağım sırasında açılan detay.
+  final bool firstOngoing;
+
+  @override
+  Future<List<AnimalMilking>> animalHistory(
+    String animalId, {
+    DateTime? from,
+    DateTime? to,
+  }) async {
+    final list = await super.animalHistory(animalId, from: from, to: to);
+    if (!firstOngoing || list.isEmpty) return list;
+    return [list.first.copyWith(endedAt: null), ...list.skip(1)];
+  }
 
   @override
   Future<List<MeterSummary>> meterSummaries() async =>
@@ -345,6 +365,28 @@ void main() {
         find.text('bu sağımda sayaç ölçümü yok; kontrol yapılamaz'),
         findsOneWidget,
       );
+    });
+
+    testWidgets('süren sağıma dokunulmaz; bitmişe dokunulur', (tester) async {
+      final repo = _Repo(firstOngoing: true);
+      final (animal, list) = (await tester.runAsync(() async {
+        final a = (await repo.animals()).first;
+        return (a, await repo.animalHistory(a.id));
+      }))!;
+      expect(list.first.endedAt, isNull);
+      expect(list[1].endedAt, isNotNull);
+      await _pumpDetail(tester, repo, animal.id, role: 'tenant_operator');
+      String label(AnimalMilking m) =>
+          '${Fmt.dayMonth(m.startedAt!)} · ${Fmt.sessionType(m.sessionType)}';
+
+      // Sunucu süreni reddederdi ("bitmiş sağım bulunamadı"): pencere açılmaz.
+      await tester.tap(find.text(label(list.first)).first);
+      await tester.pumpAndSettle();
+      expect(find.text('Elle ölçüm'), findsNothing);
+
+      await tester.tap(find.text(label(list[1])).last);
+      await tester.pumpAndSettle();
+      expect(find.text('Elle ölçüm'), findsOneWidget);
     });
 
     testWidgets('görüntüleyici sağıma dokunamaz', (tester) async {
