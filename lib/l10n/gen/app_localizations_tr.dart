@@ -3353,23 +3353,23 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get whatsNewItem1 =>
-      'Sessiz saat: gece kritik olmayan uyarılar çalmaz; okunmayan kritik uyarı SMS/aramayla tekrar edilir.';
+      'Web paneli: bilgisayardan milktrace.com.tr/giris adresinden aynı hesapla girin.';
 
   @override
   String get whatsNewItem2 =>
-      'Aşı takvimi, kızgınlık takibi ve kuruya çıkarma/doğum hatırlatmaları.';
+      'Sayaç kontrolü: son sağımlarda \"Elle ölçüm\" ile sayacın sapmasını görün.';
 
   @override
   String get whatsNewItem3 =>
-      'Hayvan detayında 305 günlük verim tahmini; panoda üreme göstergeleri.';
+      'Sağım hızı: hayvan detayında ortalama debi ve süre; Hayvanlar\'da \"Yavaş sağılanlar\" süzgeci.';
 
   @override
   String get whatsNewItem4 =>
-      'Isı stresi uyarısı: tesis konumunu girin, sıcak günler grafikte işaretlensin.';
+      'API anahtarları: yem ve muhasebe programları sürü verisini okuyabilsin (yalnızca sahip).';
 
   @override
   String get whatsNewItem5 =>
-      'Karanlık tema: hesap kartından Açık / Karanlık / Cihaz.';
+      'Aşı uyarısına dokununca o planın zamanı gelen hayvanları açılır.';
 
   @override
   String get whatsNewOk => 'Tamam';

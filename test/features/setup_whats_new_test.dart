@@ -138,7 +138,7 @@ void main() {
       store: store,
     );
     expect(find.text('Yenilikler'), findsOneWidget);
-    expect(find.textContaining('Karanlık tema'), findsOneWidget);
+    expect(find.textContaining('Web paneli'), findsOneWidget);
     await tester.tap(find.text('Tamam'));
     await tester.pumpAndSettle();
 

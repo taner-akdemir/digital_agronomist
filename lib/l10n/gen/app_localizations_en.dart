@@ -3398,23 +3398,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get whatsNewItem1 =>
-      'Quiet hours: non-critical alerts don\'t ring at night; unread critical alerts are repeated by SMS/call.';
+      'Web panel: sign in from a computer at milktrace.com.tr/giris with the same account.';
 
   @override
   String get whatsNewItem2 =>
-      'Vaccination schedule, heat tracking and dry-off/calving reminders.';
+      'Meter check: use \"Manual measurement\" on recent milkings to see how far the meter is off.';
 
   @override
   String get whatsNewItem3 =>
-      '305-day yield projection on the animal page; breeding indicators on the dashboard.';
+      'Milking speed: average flow and duration on the animal page; \"Slow milkers\" filter in Animals.';
 
   @override
   String get whatsNewItem4 =>
-      'Heat stress alert: enter the farm location and hot days are marked on the chart.';
+      'API keys: let feed and accounting software read herd data (owner only).';
 
   @override
   String get whatsNewItem5 =>
-      'Dark theme: Light / Dark / Device in the account sheet.';
+      'Tapping a vaccination alert opens that plan\'s animals that are due.';
 
   @override
   String get whatsNewOk => 'OK';

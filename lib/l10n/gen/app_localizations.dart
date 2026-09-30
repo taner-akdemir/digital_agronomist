@@ -5764,31 +5764,31 @@ abstract class AppLocalizations {
   /// No description provided for @whatsNewItem1.
   ///
   /// In tr, this message translates to:
-  /// **'Sessiz saat: gece kritik olmayan uyarılar çalmaz; okunmayan kritik uyarı SMS/aramayla tekrar edilir.'**
+  /// **'Web paneli: bilgisayardan milktrace.com.tr/giris adresinden aynı hesapla girin.'**
   String get whatsNewItem1;
 
   /// No description provided for @whatsNewItem2.
   ///
   /// In tr, this message translates to:
-  /// **'Aşı takvimi, kızgınlık takibi ve kuruya çıkarma/doğum hatırlatmaları.'**
+  /// **'Sayaç kontrolü: son sağımlarda \"Elle ölçüm\" ile sayacın sapmasını görün.'**
   String get whatsNewItem2;
 
   /// No description provided for @whatsNewItem3.
   ///
   /// In tr, this message translates to:
-  /// **'Hayvan detayında 305 günlük verim tahmini; panoda üreme göstergeleri.'**
+  /// **'Sağım hızı: hayvan detayında ortalama debi ve süre; Hayvanlar\'da \"Yavaş sağılanlar\" süzgeci.'**
   String get whatsNewItem3;
 
   /// No description provided for @whatsNewItem4.
   ///
   /// In tr, this message translates to:
-  /// **'Isı stresi uyarısı: tesis konumunu girin, sıcak günler grafikte işaretlensin.'**
+  /// **'API anahtarları: yem ve muhasebe programları sürü verisini okuyabilsin (yalnızca sahip).'**
   String get whatsNewItem4;
 
   /// No description provided for @whatsNewItem5.
   ///
   /// In tr, this message translates to:
-  /// **'Karanlık tema: hesap kartından Açık / Karanlık / Cihaz.'**
+  /// **'Aşı uyarısına dokununca o planın zamanı gelen hayvanları açılır.'**
   String get whatsNewItem5;
 
   /// No description provided for @whatsNewOk.
