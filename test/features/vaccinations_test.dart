@@ -123,6 +123,16 @@ void main() {
     expect(dueLabel(v.due.last, _today).text, 'kayıt yok');
     expect(dueLabel(v.due.last, _today).alarm, isTrue);
 
+    // Başka yıla düşen gün yılıyla: yıllık planın bir sonraki dozu bugünle
+    // karışmasın; geçen yıldan kalan gecikme de.
+    final nextYear = v.due.first.copyWith(dueOn: DateTime.utc(2027, 9, 22));
+    expect(dueLabel(nextYear, _today, next: true).text, 'sonraki 22 Eyl 2027');
+    final lastYear = v.due.first.copyWith(dueOn: DateTime.utc(2026, 12, 20));
+    expect(
+      dueLabel(lastYear, DateTime(2027, 1, 5)).text,
+      'gecikti · 20 Ara 2026',
+    );
+
     expect(AlertStyle.icon('vaccination_due'), Icons.vaccines_outlined);
     expect(auditActionLabel('vaccination.add'), 'Aşı uygulandı');
     expect(auditActionLabel('vaccine_plan.create'), 'Aşı planı eklendi');
@@ -346,7 +356,12 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('1 hayvan işaretlendi'), findsOneWidget);
     expect(find.text('kayıt yok'), findsNothing);
-    expect(find.text('sonraki 22 Eyl'), findsOneWidget, reason: '+365 gün');
+    // +365 gün gelecek yıla düşer: yılıyla, yoksa bugünle ("22 Eyl") karışırdı.
+    expect(
+      find.text('sonraki 22 Eyl 2027'),
+      findsOneWidget,
+      reason: '+365 gün',
+    );
     final v = (await tester.runAsync(() => repo.animalVaccinations(_sarikiz)))!;
     expect(v.items.first.planName, 'Brusella');
   });

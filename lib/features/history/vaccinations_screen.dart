@@ -39,7 +39,12 @@ Future<AnimalVaccinations> animalVaccinations(Ref ref, String animalId) =>
 }) {
   final due = d.dueOn;
   if (due == null) return (text: l10n.vaccineNever, alarm: true);
-  final day = Fmt.dayMonth(vaccineDay(due));
+  // Başka yıldaysa yılıyla: yıllık planda bugün uygulanan dozun sonraki
+  // günü de "22 Eyl" çıkıyor ve bugünle karışıyordu.
+  final shown = vaccineDay(due);
+  final day = shown.year == today.year
+      ? Fmt.dayMonth(shown)
+      : Fmt.dayMonthYear(shown);
   if (d.overdueOn(today)) return (text: l10n.vaccineOverdue(day), alarm: true);
   return (
     text: next ? l10n.vaccineNext(day) : l10n.vaccineDueOn(day),
