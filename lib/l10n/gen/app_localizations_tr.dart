@@ -3353,23 +3353,11 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get whatsNewItem1 =>
-      'Web paneli: bilgisayardan milktrace.com.tr/giris adresinden aynı hesapla girin.';
+      'Yeni görünüm: ekranlar daha açık ve ferah; yeşil artık yalnızca önemli yerlerde.';
 
   @override
   String get whatsNewItem2 =>
-      'Sayaç kontrolü: son sağımlarda \"Elle ölçüm\" ile sayacın sapmasını görün.';
-
-  @override
-  String get whatsNewItem3 =>
-      'Sağım hızı: hayvan detayında ortalama debi ve süre; Hayvanlar\'da \"Yavaş sağılanlar\" süzgeci.';
-
-  @override
-  String get whatsNewItem4 =>
-      'API anahtarları: yem ve muhasebe programları sürü verisini okuyabilsin (yalnızca sahip).';
-
-  @override
-  String get whatsNewItem5 =>
-      'Aşı uyarısına dokununca o planın zamanı gelen hayvanları açılır.';
+      'Web panelinde de aynı yeni görünüm: milktrace.com.tr/giris.';
 
   @override
   String get whatsNewOk => 'Tamam';

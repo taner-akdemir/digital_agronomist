@@ -3398,23 +3398,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get whatsNewItem1 =>
-      'Web panel: sign in from a computer at milktrace.com.tr/giris with the same account.';
+      'New look: lighter, airier screens; green is now used only where it matters.';
 
   @override
   String get whatsNewItem2 =>
-      'Meter check: use \"Manual measurement\" on recent milkings to see how far the meter is off.';
-
-  @override
-  String get whatsNewItem3 =>
-      'Milking speed: average flow and duration on the animal page; \"Slow milkers\" filter in Animals.';
-
-  @override
-  String get whatsNewItem4 =>
-      'API keys: let feed and accounting software read herd data (owner only).';
-
-  @override
-  String get whatsNewItem5 =>
-      'Tapping a vaccination alert opens that plan\'s animals that are due.';
+      'The web panel has the same new look: milktrace.com.tr/giris.';
 
   @override
   String get whatsNewOk => 'OK';

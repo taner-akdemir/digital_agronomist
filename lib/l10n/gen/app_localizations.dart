@@ -5764,32 +5764,14 @@ abstract class AppLocalizations {
   /// No description provided for @whatsNewItem1.
   ///
   /// In tr, this message translates to:
-  /// **'Web paneli: bilgisayardan milktrace.com.tr/giris adresinden aynı hesapla girin.'**
+  /// **'Yeni görünüm: ekranlar daha açık ve ferah; yeşil artık yalnızca önemli yerlerde.'**
   String get whatsNewItem1;
 
   /// No description provided for @whatsNewItem2.
   ///
   /// In tr, this message translates to:
-  /// **'Sayaç kontrolü: son sağımlarda \"Elle ölçüm\" ile sayacın sapmasını görün.'**
+  /// **'Web panelinde de aynı yeni görünüm: milktrace.com.tr/giris.'**
   String get whatsNewItem2;
-
-  /// No description provided for @whatsNewItem3.
-  ///
-  /// In tr, this message translates to:
-  /// **'Sağım hızı: hayvan detayında ortalama debi ve süre; Hayvanlar\'da \"Yavaş sağılanlar\" süzgeci.'**
-  String get whatsNewItem3;
-
-  /// No description provided for @whatsNewItem4.
-  ///
-  /// In tr, this message translates to:
-  /// **'API anahtarları: yem ve muhasebe programları sürü verisini okuyabilsin (yalnızca sahip).'**
-  String get whatsNewItem4;
-
-  /// No description provided for @whatsNewItem5.
-  ///
-  /// In tr, this message translates to:
-  /// **'Aşı uyarısına dokununca o planın zamanı gelen hayvanları açılır.'**
-  String get whatsNewItem5;
 
   /// No description provided for @whatsNewOk.
   ///

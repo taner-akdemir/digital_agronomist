@@ -18,9 +18,6 @@
   "setupLocation": "Isı stresi uyarısı için tesis konumunu girin",
   "whatsNewTitle": "Yenilikler",
   "whatsNewOk": "Tamam",
-  "whatsNewItem1": "Web paneli: bilgisayardan milktrace.com.tr/giris adresinden aynı hesapla girin.",
-  "whatsNewItem2": "Sayaç kontrolü: son sağımlarda \"Elle ölçüm\" ile sayacın sapmasını görün.",
-  "whatsNewItem3": "Sağım hızı: hayvan detayında ortalama debi ve süre; Hayvanlar'da \"Yavaş sağılanlar\" süzgeci.",
-  "whatsNewItem4": "API anahtarları: yem ve muhasebe programları sürü verisini okuyabilsin (yalnızca sahip).",
-  "whatsNewItem5": "Aşı uyarısına dokununca o planın zamanı gelen hayvanları açılır."
+  "whatsNewItem1": "Yeni görünüm: ekranlar daha açık ve ferah; yeşil artık yalnızca önemli yerlerde.",
+  "whatsNewItem2": "Web panelinde de aynı yeni görünüm: milktrace.com.tr/giris."
 }
