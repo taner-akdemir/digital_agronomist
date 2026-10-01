@@ -38,15 +38,16 @@ otomatik olarak toplanır.
 - **Yurt içi:** SMS ve sesli arama sağlayıcıları (NetGSM / İleti Merkezi / JetSMS) —
   işletmenin seçtiği bildirimler. **PayTR Ödeme ve Elektronik Para Kuruluşu A.Ş.** (lisanslı
   ödeme kuruluşu) — abonelik ödemesi: ad/unvan, e-posta, telefon, adres ve tutar; kart
-  bilgilerini PayTR'nin ödeme sayfasına doğrudan siz girersiniz. Faturayı düzenleyen muhasebe
-  yazılımı / e-Fatura entegratörü ve mali müşavir [DOLDUR: sağlayıcı adı] — fatura bilgileri.
+  bilgilerini PayTR'nin ödeme sayfasına doğrudan siz girersiniz. Faturayı düzenleyen mali
+  müşavirimiz ve e-Fatura hizmet sağlayıcısı (Türkiye) — fatura bilgileri.
 - **Yurt dışı (md. 9):** netcup GmbH (Almanya, barındırma); Google LLC (Firebase Cloud
   Messaging, bildirim; Firebase Crashlytics, uygulama hata raporları); Twilio SendGrid (ABD, e-posta);
   işletme seçerse Twilio / Vonage (ABD, SMS ve sesli arama), Slack / Microsoft Teams (ABD,
   sohbet bildirimi). Dayanak: md. 9 uyarınca Kurul'un ilan ettiği standart sözleşme; sözleşme
   imzalandıktan sonra 5 iş günü içinde Kurul'a bildirilir.
 - Ödeme altyapısı: ödeme isteği, Algebran Soft'un işlettiği ödeme sunucusu üzerinden PayTR'ye
-  iletilir [DOLDUR: sunucunun barındırıcısı ve ülkesi — doğrulanmalı].
+  iletilir; bu sunucu netcup GmbH'de, Almanya'dadır (yukarıdaki yurt dışı aktarımla aynı
+  dayanak).
 - Hava tahmini (Open-Meteo, İsviçre): ısı stresi uyarısı için yalnızca tesisin koordinatı
   gönderilir; kişisel veri aktarılmaz (backend ADR 0119).
 - Yetkili kamu kurumlarına, hukuki yükümlülük hâlinde.
@@ -56,7 +57,7 @@ otomatik olarak toplanır.
 Hizmet sözleşmesi süresince ve sona ermesinden sonra 90 gün; ardından kendiliğinden
 silinir (faturalama kayıtları işletme adı anonimleştirilerek vergi mevzuatı süresince
 saklanır). Abonelik siparişleri ve fatura bilgileri vergi mevzuatının öngördüğü süre
-(Vergi Usul Kanunu ve Türk Ticaret Kanunu; [hukuki kontrol: 5 / 10 yıl]) saklanır; işletme
+(Vergi Usul Kanunu'na göre 5 yıl, Türk Ticaret Kanunu'na göre 10 yıl; uzun olan süre uygulanır) saklanır; işletme
 verisi silindiğinde de silinmez. Yedekler 7 gün (sunucu dışı kopya 14 gün), sunucu kayıtları (IP adresi dahil) 30 gün, uygulama içi geri bildirim ve demo talepleri 1 yıl. Süre sonunda
 silinir, yok edilir ya da anonimleştirilir. Sözleşme sürerken hesap uygulamadan ("Hesabımı
 sil") ya da https://milktrace.com.tr/hesap-sil adresinden kalıcı silinir; yazılan hayvan notları sürü kaydı olarak kalır, yazar adı kaldırılır.

@@ -98,7 +98,7 @@ gerektiği kadar:
 | Google (Firebase Crashlytics) | uygulama hata raporları (yığın izi, cihaz modeli, sürüm) | ABD / AB |
 | Twilio SendGrid | işletmenin seçtiği e-posta bildirimleri, parola sıfırlama, ödeme onayı ve abonelik hatırlatması e-postaları (e-posta adresi, ad) | ABD |
 | PayTR Ödeme ve Elektronik Para Kuruluşu A.Ş. | abonelik ödemesi (ad/unvan, e-posta, telefon, adres, tutar; kart bilgisini doğrudan siz girersiniz) | Türkiye |
-| Muhasebe yazılımı / e-Fatura entegratörü [DOLDUR] | faturanın düzenlenmesi (fatura bilgileri) | Türkiye |
+| Mali müşavirimiz ve e-Fatura hizmet sağlayıcısı | faturanın düzenlenmesi (fatura bilgileri) | Türkiye |
 | NetGSM / İleti Merkezi / JetSMS | işletmenin seçtiği SMS (NetGSM: sesli arama da) bildirimleri (telefon numarası, bildirim metni) | Türkiye |
 | Twilio / Vonage | işletmenin seçtiği SMS ve sesli arama bildirimleri (telefon numarası, bildirim metni) | ABD |
 | Open-Meteo | ısı stresi uyarısı için hava tahmini — sunucumuz yalnızca işletme sahibinin girdiği tesis koordinatını gönderir; kişisel veri gönderilmez (backend ADR 0119) | İsviçre (OpenMeteo GmbH) |

@@ -11,10 +11,11 @@
 > 1. Alıcıların çoğu çiftliğini ticari/mesleki amaçla işleten üreticidir; 6502 sayılı
 >    Kanun'un "tüketici" tanımına girmeyebilirler. Metin her iki durumu da karşılayacak
 >    biçimde yazıldı (§10, §11). Yeterli mi?
-> 2. Cayma hakkı istisnası olarak Mesafeli Sözleşmeler Yönetmeliği m.15'in hangi bendine
->    (anında ifa edilen elektronik hizmet / cayma süresi içinde onayla ifasına başlanan
->    hizmet) dayanılacağı.
-> 3. Satıcı şahıs işletmesi; vergi kimlik numarası, varsa MERSİS ve telefon [DOLDUR].
+> 2. Cayma hakkı istisnası Mesafeli Sözleşmeler Yönetmeliği m.15/1-(ğ)'ye (elektronik
+>    ortamda anında ifa edilen hizmet) dayandırıldı; Alıcı'nın onayı ödeme sırasında ayrıca
+>    alınır ve kaydedilir. Spitfire'daki yaklaşımla aynı. Yeterli mi?
+> 3. Satıcı şahıs işletmesi; vergi kimlik numarası bilinçli olarak yazılmadı (zorunlu
+>    değil, T.C. kimlik numarasıyla aynı); MERSİS yok.
 
 **Sürüm:** 2026-10-01.1
 
@@ -81,15 +82,16 @@ ortamda düzenlenip e-posta adresine gönderilir. Ödeme onay e-postası fatura 
 
 Hizmet elektronik ortamda anında ifa edilen bir hizmettir. Alıcı, ödeme sırasında
 hizmetin dönemin başladığı gün ifasına başlanmasını ve bu nedenle cayma hakkının o gün sona
-ereceğini **ayrıca onaylamıştır** (Mesafeli Sözleşmeler Yönetmeliği m.15).
+ereceğini **ayrıca onaylamıştır** (Mesafeli Sözleşmeler Yönetmeliği m.15/1-(ğ)). Satın
+almadan önce hizmet ücretsiz deneme süresi boyunca bütün özellikleriyle denenebilir.
 
 Buna karşın:
 - **Henüz başlamamış dönem** (süren dönemin ya da denemenin ardına eklenmiş dönem):
   başlangıç gününden önce taner.akdemir@algebransoft.com adresine bildirilirse ödenen
   tutarın tamamı iade edilir.
-- Satın alma gününden itibaren **14 gün içinde** yazılı bildirimle vazgeçen tüketici
-  Alıcı'ya, kullanılmamış günlere düşen tutar iade edilir. [Hukuki kontrol: ticari Alıcı için
-  bu iadenin uygulanıp uygulanmayacağı — iade-ve-cayma.md ile aynı karar.]
+- Hizmet Satıcı'dan kaynaklanan bir sebeple dönemin önemli bir kısmında kullanılamazsa,
+  sorun giderilemediğinde kullanılamayan günlere düşen tutar iade edilir ya da dönem o kadar
+  uzatılır.
 
 İade, ödemenin alındığı karta PayTR aracılığıyla, bildirimden itibaren en geç 14 gün içinde
 yapılır. İade edilen dönem hizmet süresinden düşülür.

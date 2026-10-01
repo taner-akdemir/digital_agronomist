@@ -1,13 +1,11 @@
 # Milk Trace — İade ve Cayma Koşulları
 
-> **TASLAK (01.10.2026)** — hukuki kontrolden ve **ürün kararından** geçmeli. Sürümü mesafeli
+> **TASLAK (01.10.2026)** — hukuki kontrolden geçmeli. Sürümü mesafeli
 > satış sözleşmesiyle ve backend `billing.TermsVersion` ile AYNI. `>` blokları yayımlanmaz.
 >
-> **Karar bekleyen:** başlamış dönemde 14 gün içindeki vazgeçmede kullanılmamış günlerin
-> iadesi yalnızca tüketici Alıcı'ya mı, herkese mi? Taslak: tüketiciye kısmi iade, ticari
-> Alıcı'ya başlamış dönemde iade yok (hizmet kesintisi hariç). İadeyi bugün ödeme
-> servisinden platform yöneticisi elle yapar; backend iadeyi kendiliğinden işler (tamamı
-> iade edilen dönem düşer).
+> Karar (01.10.2026): cayma istisnası m.15/1-(ğ), onay ödeme sırasında alınır; başlamış
+> dönemde kısmi iade yok (Spitfire ile aynı). İadeyi platform yöneticisi ödeme servisinden
+> elle yapar; backend iadeyi kendiliğinden işler.
 
 **Sürüm:** 2026-10-01.1
 
@@ -15,7 +13,8 @@
 
 Milk Trace aboneliği elektronik ortamda anında ifa edilen bir hizmettir. Ödeme sırasında
 hizmetin dönemin başladığı gün ifasına başlanmasını ve cayma hakkınızın o gün sona ereceğini
-ayrıca onaylarsınız (Mesafeli Sözleşmeler Yönetmeliği m.15).
+ayrıca onaylarsınız (Mesafeli Sözleşmeler Yönetmeliği m.15/1-(ğ)); bu onaydan sonra
+başlamış bir dönem için cayma hakkı kullanılamaz.
 
 ## Başlamamış dönemden vazgeçme
 
@@ -23,10 +22,10 @@ Süren döneminizin ya da deneme sürenizin ardına eklenmiş, henüz başlamam�
 başlangıç gününden önce vazgeçtiğinizi taner.akdemir@algebransoft.com adresine yazarsanız
 ödediğiniz tutarın tamamı iade edilir.
 
-## İlk 14 gün (tüketiciler)
+## Satın almadan önce deneyin
 
-Tüketici olarak satın aldıysanız, satın alma gününden itibaren 14 gün içinde yazılı
-bildirimle vazgeçtiğinizde kullanılmamış günlere düşen tutar iade edilir.
+Milk Trace'in bütün özellikleri ücretsiz deneme süresinde açıktır. Abonelik almadan önce
+kendi sürünüzle deneyebilirsiniz.
 
 ## Hizmet kesintisi
 
