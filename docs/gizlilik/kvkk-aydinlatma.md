@@ -1,6 +1,6 @@
 # Milk Trace — KVKK Aydınlatma Metni
 
-> **TASLAK (28.09.2026)** — 6698 sayılı KVKK md. 10 ve Aydınlatma Yükümlülüğü Tebliği
+> **TASLAK (28.09.2026; ödeme ve fatura 01.10.2026, backend ADR 0130)** — 6698 sayılı KVKK md. 10 ve Aydınlatma Yükümlülüğü Tebliği
 > yapısında. Hukuki kontrolden geçmeli.
 >
 > **Hukukçu için açık soru — roller:** İşletmenin (çiftliğin) kendi çalışanlarının ve
@@ -25,6 +25,7 @@ Algebran Soft (Taner Akdemir, şahıs işletmesi), Atakent Mah. 1472. Cad. Eda A
 | Geri bildirim | kullanıcının yazdığı metin, isteğe bağlı seçtiği ekran görüntüsü, uygulama sürümü, platform, işletim sistemi sürümü, cihaz modeli, kullanıcı kimliği ve işletme (1 yıl) | destek, hataların giderilmesi, hizmetin geliştirilmesi | (f) meşru menfaat |
 | Demo talebi | ad, telefon, e-posta (isteğe bağlı), çiftlik adı, mesaj, IP adresi, tarayıcı (1 yıl) | talep sahibine dönülmesi | (c) sözleşmenin kurulmasıyla doğrudan ilgili (talep sahibinin isteği) |
 | İletişim (alıcı) | bildirim kanalı e-posta/telefon | uyarıların iletilmesi | (c) sözleşmenin ifası; alıcı işletme dışındaysa (f) meşru menfaat |
+| Ödeme ve fatura | fatura unvanı ya da ad soyad, T.C. kimlik no (şahısta isteğe bağlı) ya da vergi kimlik no ve vergi dairesi, fatura adresi, e-posta, telefon; sipariş (dönem, tutar, ödeme sonucu, iade); onaylanan sözleşme sürümü, onay anı ve IP adresi. **Kart bilgisi Milk Trace'e gelmez.** | abonelik satışı, faturanın düzenlenmesi, ödeme hatırlatması, sözleşme onayının ispatı | (c) sözleşmenin kurulması/ifası, (ç) hukuki yükümlülük (vergi mevzuatı), (e) bir hakkın tesisi/korunması |
 
 ## Toplama yöntemi
 
@@ -35,12 +36,17 @@ otomatik olarak toplanır.
 ## Aktarım
 
 - **Yurt içi:** SMS ve sesli arama sağlayıcıları (NetGSM / İleti Merkezi / JetSMS) —
-  işletmenin seçtiği bildirimler.
+  işletmenin seçtiği bildirimler. **PayTR Ödeme ve Elektronik Para Kuruluşu A.Ş.** (lisanslı
+  ödeme kuruluşu) — abonelik ödemesi: ad/unvan, e-posta, telefon, adres ve tutar; kart
+  bilgilerini PayTR'nin ödeme sayfasına doğrudan siz girersiniz. Faturayı düzenleyen muhasebe
+  yazılımı / e-Fatura entegratörü ve mali müşavir [DOLDUR: sağlayıcı adı] — fatura bilgileri.
 - **Yurt dışı (md. 9):** netcup GmbH (Almanya, barındırma); Google LLC (Firebase Cloud
   Messaging, bildirim; Firebase Crashlytics, uygulama hata raporları); Twilio SendGrid (ABD, e-posta);
   işletme seçerse Twilio / Vonage (ABD, SMS ve sesli arama), Slack / Microsoft Teams (ABD,
   sohbet bildirimi). Dayanak: md. 9 uyarınca Kurul'un ilan ettiği standart sözleşme; sözleşme
   imzalandıktan sonra 5 iş günü içinde Kurul'a bildirilir.
+- Ödeme altyapısı: ödeme isteği, Algebran Soft'un işlettiği ödeme sunucusu üzerinden PayTR'ye
+  iletilir [DOLDUR: sunucunun barındırıcısı ve ülkesi — doğrulanmalı].
 - Hava tahmini (Open-Meteo, İsviçre): ısı stresi uyarısı için yalnızca tesisin koordinatı
   gönderilir; kişisel veri aktarılmaz (backend ADR 0119).
 - Yetkili kamu kurumlarına, hukuki yükümlülük hâlinde.
@@ -49,7 +55,9 @@ otomatik olarak toplanır.
 
 Hizmet sözleşmesi süresince ve sona ermesinden sonra 90 gün; ardından kendiliğinden
 silinir (faturalama kayıtları işletme adı anonimleştirilerek vergi mevzuatı süresince
-saklanır). Yedekler 7 gün (sunucu dışı kopya 14 gün), sunucu kayıtları (IP adresi dahil) 30 gün, uygulama içi geri bildirim ve demo talepleri 1 yıl. Süre sonunda
+saklanır). Abonelik siparişleri ve fatura bilgileri vergi mevzuatının öngördüğü süre
+(Vergi Usul Kanunu ve Türk Ticaret Kanunu; [hukuki kontrol: 5 / 10 yıl]) saklanır; işletme
+verisi silindiğinde de silinmez. Yedekler 7 gün (sunucu dışı kopya 14 gün), sunucu kayıtları (IP adresi dahil) 30 gün, uygulama içi geri bildirim ve demo talepleri 1 yıl. Süre sonunda
 silinir, yok edilir ya da anonimleştirilir. Sözleşme sürerken hesap uygulamadan ("Hesabımı
 sil") ya da https://milktrace.com.tr/hesap-sil adresinden kalıcı silinir; yazılan hayvan notları sürü kaydı olarak kalır, yazar adı kaldırılır.
 

@@ -6,7 +6,7 @@
 > (`~/WebstormProjects/milktrace-site`) bu dosyayı KOPYALAYARAK yayımlar: burada değiştirince
 > sitede `scripts/sync-legal.sh` koşulur. `>` alıntı blokları (bu not) yayımlanmaz.
 
-**Son güncelleme:** 30 Eylül 2026
+**Son güncelleme:** 1 Ekim 2026
 
 Milk Trace, süt hayvancılığı işletmelerinin sağım noktalarındaki sayaçlardan gelen
 ölçümlerle her hayvanın ne kadar süt verdiğini izlemesini sağlayan bir hizmettir. Bu
@@ -64,6 +64,13 @@ kullanılır, **1 yıl** saklanır.
 e-postası, çiftlik adı ve mesajı ile formu gönderen IP adresi ve tarayıcı bilgisi. Yalnızca
 size dönmek için kullanılır, **1 yıl** saklanır.
 
+**Abonelik ödemesi:** işletme sahibi abonelik satın alırken fatura unvanı ya da ad soyad,
+T.C. kimlik numarası (şahısta isteğe bağlı) ya da vergi kimlik numarası ve vergi dairesi,
+fatura adresi, e-posta ve telefon girer; sipariş (dönem, tutar, ödeme sonucu), onaylanan
+sözleşme sürümü, onay anı ve IP adresi kaydedilir. **Kart bilgileriniz bize gelmez**: kartı
+ödeme kuruluşu PayTR'nin sayfasına girersiniz. Fatura bilgileri yalnızca işletme sahibi ve
+Milk Trace yöneticileri tarafından görülür.
+
 **Sunucu kayıtları:** güvenlik ve hata ayıklama için isteklerin zamanı, yolu, sonucu ve
 istek yapan IP adresi.
 
@@ -76,7 +83,8 @@ analitiği ya da reklam amaçlı izleme. Uygulamada reklam yoktur.
 - Hizmeti sunmak: giriş, canlı sağım ekranı, hayvan geçmişi, raporlar (sözleşmenin ifası).
 - Sizi uyarmak: sayaç arızası, sağım özeti gibi bildirimler (sözleşmenin ifası).
 - Güvenlik ve kötüye kullanımın önlenmesi, hata ayıklama (meşru menfaat).
-- Faturalama: işletmenin kullandığı sayaç sayısı (sözleşmenin ifası). Kişisel veri içermez.
+- Faturalama ve abonelik: işletmenin sağmal hayvan sayısına göre fiyat, ödeme, fatura ve
+  dönem bitimi hatırlatması (sözleşmenin ifası; fatura kayıtları için vergi mevzuatı).
 
 ## 4. Kimlerle paylaşıyoruz
 
@@ -88,7 +96,9 @@ gerektiği kadar:
 | netcup GmbH | sunucu barındırma (tüm veriler) | Almanya |
 | Google (Firebase Cloud Messaging) | bildirim iletimi (bildirim jetonu, bildirim metni) | ABD / AB |
 | Google (Firebase Crashlytics) | uygulama hata raporları (yığın izi, cihaz modeli, sürüm) | ABD / AB |
-| Twilio SendGrid | işletmenin seçtiği e-posta bildirimleri ve parola sıfırlama e-postası (e-posta adresi, ad) | ABD |
+| Twilio SendGrid | işletmenin seçtiği e-posta bildirimleri, parola sıfırlama, ödeme onayı ve abonelik hatırlatması e-postaları (e-posta adresi, ad) | ABD |
+| PayTR Ödeme ve Elektronik Para Kuruluşu A.Ş. | abonelik ödemesi (ad/unvan, e-posta, telefon, adres, tutar; kart bilgisini doğrudan siz girersiniz) | Türkiye |
+| Muhasebe yazılımı / e-Fatura entegratörü [DOLDUR] | faturanın düzenlenmesi (fatura bilgileri) | Türkiye |
 | NetGSM / İleti Merkezi / JetSMS | işletmenin seçtiği SMS (NetGSM: sesli arama da) bildirimleri (telefon numarası, bildirim metni) | Türkiye |
 | Twilio / Vonage | işletmenin seçtiği SMS ve sesli arama bildirimleri (telefon numarası, bildirim metni) | ABD |
 | Open-Meteo | ısı stresi uyarısı için hava tahmini — sunucumuz yalnızca işletme sahibinin girdiği tesis koordinatını gönderir; kişisel veri gönderilmez (backend ADR 0119) | İsviçre (OpenMeteo GmbH) |
@@ -109,7 +119,9 @@ sözleşme alıcılarla imzalanıp Kurul'a bildirilerek yapılır.
 - Hesap ve işletme verileri: işletmenin hizmet sözleşmesi sürdükçe; sözleşme sona
   erdikten **90 gün** sonra kendiliğinden silinir. Bu sürede işletme sahibinin talebiyle
   işletmenin bütün verisi (hayvanlar, sağımlar, notlar, uyarılar) Excel dosyası olarak verilir. Faturalama için yalnızca işletmenin kullandığı sayaç-gün kayıtları,
-  işletme adı anonimleştirilerek, vergi mevzuatının öngördüğü süre saklanır.
+  işletme adı anonimleştirilerek, vergi mevzuatının öngördüğü süre saklanır. Abonelik
+  siparişleri fatura bilgileriyle birlikte aynı nedenle vergi mevzuatının öngördüğü süre
+  saklanır.
 - Veritabanı yedekleri: 7 gün (sunucu dışı kopya kullanılıyorsa o kopya 14 gün); silinen
   veri en geç bu süre sonunda yedeklerden de çıkar.
 - Uygulama hata raporları: Firebase Crashlytics'in saklama süresi (90 gün).
