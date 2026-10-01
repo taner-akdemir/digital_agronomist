@@ -58,20 +58,22 @@ class AppPalette {
   final Color warningFill;
   final Color onFill;
 
-  /// İlk prototipten birebir gelen palet (değiştirilmedi).
+  /// Açık palet — web ile aynı (karar 01.10.2026: "daha açık, yeşil yalnızca
+  /// vurgu"). Zemin nötr sıcak beyaz, yazı nötr koyu gri; koyu orman yeşili
+  /// yerine daha canlı bir yeşil, dolgularda ve marka metninde.
   static const light = AppPalette(
-    primaryColor: Color.fromRGBO(246, 249, 252, 1),
-    secondaryColor: Color.fromRGBO(244, 247, 250, 1),
-    darkBlackColor: Color.fromRGBO(24, 26, 28, 1),
+    primaryColor: Color.fromRGBO(250, 250, 248, 1),
+    secondaryColor: Color.fromRGBO(242, 243, 240, 1),
+    darkBlackColor: Color.fromRGBO(28, 36, 32, 1),
     darkBlueColor: Color.fromRGBO(48, 88, 120, 1),
     darkRedColor: Color.fromRGBO(126, 28, 19, 1),
     redColor: Color.fromRGBO(164, 44, 30, 1),
     lightRedColor: Color.fromRGBO(248, 235, 235, 1),
-    darkGreenColor: Color.fromRGBO(31, 71, 50, 1),
-    lightGreenColor: Color.fromRGBO(180, 235, 201, 1),
+    darkGreenColor: Color.fromRGBO(30, 110, 67, 1),
+    lightGreenColor: Color.fromRGBO(214, 239, 224, 1),
     lightGreyColor: Color.fromRGBO(165, 181, 173, 1),
-    veryLightGreyColor: Color.fromRGBO(238, 241, 245, 1),
-    iconGreyColor: Color.fromRGBO(57, 64, 59, 1),
+    veryLightGreyColor: Color.fromRGBO(229, 232, 228, 1),
+    iconGreyColor: Color.fromRGBO(71, 81, 76, 1),
     amberColor: Color.fromRGBO(224, 150, 20, 1),
     darkAmberColor: Color.fromRGBO(140, 92, 10, 1),
     lightAmberColor: Color.fromRGBO(253, 244, 227, 1),
@@ -81,7 +83,7 @@ class AppPalette {
     chartContext: Color.fromRGBO(120, 134, 126, 1),
     chartHeat: Color.fromRGBO(217, 116, 43, 1),
     surface: Colors.white,
-    brandFill: Color.fromRGBO(31, 71, 50, 1),
+    brandFill: Color.fromRGBO(35, 122, 75, 1),
     dangerFill: Color.fromRGBO(164, 44, 30, 1),
     warningFill: Color.fromRGBO(140, 92, 10, 1),
     onFill: Colors.white,
@@ -124,9 +126,9 @@ class AppPalette {
 
 /// Uygulamanın renk paleti.
 ///
-/// Mevcut tasarım dili KORUNUR (§15): açık arka plan, yeşil/koyu yeşil palet.
-/// Ham renkler ilk prototipten birebir gelir; yeni olanlar anlamsal takma
-/// adlar, sarı bandı ve karanlık tema (ADR 0109).
+/// Tasarım dili: açık arka plan, yeşil VURGU (01.10.2026'da web'le birlikte
+/// açıldı; önceki koyu yeşil ağırlıklı palet prototipten geliyordu). Yeni
+/// olanlar anlamsal takma adlar, sarı bandı ve karanlık tema (ADR 0109).
 ///
 /// Değerler SABİT DEĞİLDİR, geçerli parlaklıktan okunur ([brightness]; kökte
 /// `MilkTraceApp` yazar ve tema değişince ağacı baştan kurar). Bu yüzden

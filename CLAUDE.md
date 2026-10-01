@@ -137,7 +137,8 @@ flutter run
   zaten çevirip gönderir. Veri (hayvan/bölge/grup adı) çevrilmez; tür adı
   `Species.displayName`. Dil: hesap kartı ya da giriş ekranı → `appLanguageProvider`;
   yoksa cihaz dili (İngilizce cihaz → İngilizce, diğerleri Türkçe).
-- Tasarım dili korunur: açık arka plan, yeşil/koyu yeşil palet, Poppins, kart tabanlı görünüm.
+- Tasarım dili: açık, nötr sıcak beyaz zemin; yeşil yalnızca VURGU (dolgu #237A4B, marka metni
+  #1E6E43) — 01.10.2026'da web'le birlikte açıldı, koyu yeşil zeminler yok; Poppins, kart tabanlı görünüm.
   Renk/boşluk/köşe değerleri `lib/app/theme.dart` içindeki token'lardan gelir, çağrı yerinde
   sabit yazılmaz.
 
