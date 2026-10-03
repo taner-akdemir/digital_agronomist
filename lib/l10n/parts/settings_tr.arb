@@ -200,5 +200,12 @@
   "channelsHintRegion": "Boş bırakılabilir (eu: AB veri yerleşimi)",
   "channelsHintTls": "Boş bırakılırsa starttls",
   "channelsLanguage": "Bildirim dili",
-  "channelsLanguageHelper": "Bu kanala giden uyarı, özet ve haftalık e-posta bu dilde."
+  "channelsLanguageHelper": "Bu kanala giden uyarı, özet ve haftalık e-posta bu dilde.",
+  "channelsFieldTemplateName": "Şablon adı",
+  "channelsFieldTemplateLanguage": "Şablon dili",
+  "channelsHintContentSid": "Onaylı WhatsApp şablonunun HX… kimliği; boşsa yalnızca Twilio deneme kutusunda çalışır",
+  "channelsHintTemplateName": "Meta'da onaylı şablonun adı, ör. milktrace_uyari (gövdesi: Milk Trace bildirimi + tek değişken)",
+  "channelsHintTemplateLanguage": "Boş bırakılırsa tr",
+  "channelsHintPhoneNumberId": "Meta WhatsApp Manager'daki telefon numarası kimliği (yalnızca rakam)",
+  "channelsHintWhatsappFrom": "Twilio'daki WhatsApp numaranız, ör. +14155238886"
 }

@@ -148,5 +148,12 @@
   "channelsHintRegion": "Can be left empty (eu: EU data residency)",
   "channelsHintTls": "starttls if left empty",
   "channelsLanguage": "Notification language",
-  "channelsLanguageHelper": "Alerts, summaries and the weekly email go to this channel in this language."
+  "channelsLanguageHelper": "Alerts, summaries and the weekly email go to this channel in this language.",
+  "channelsFieldTemplateName": "Template name",
+  "channelsFieldTemplateLanguage": "Template language",
+  "channelsHintContentSid": "The HX… ID of the approved WhatsApp template; if empty it only works in the Twilio sandbox",
+  "channelsHintTemplateName": "Name of the approved template in Meta, e.g. milktrace_uyari (body: Milk Trace bildirimi + one variable)",
+  "channelsHintTemplateLanguage": "Leave empty for tr",
+  "channelsHintPhoneNumberId": "The phone number ID in Meta WhatsApp Manager (digits only)",
+  "channelsHintWhatsappFrom": "Your WhatsApp number in Twilio, e.g. +14155238886"
 }

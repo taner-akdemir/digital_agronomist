@@ -1634,6 +1634,18 @@ abstract class AppLocalizations {
   /// **'SMS başlığı'**
   String get channelsFieldSmsHeader;
 
+  /// No description provided for @channelsFieldTemplateLanguage.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şablon dili'**
+  String get channelsFieldTemplateLanguage;
+
+  /// No description provided for @channelsFieldTemplateName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şablon adı'**
+  String get channelsFieldTemplateName;
+
   /// No description provided for @channelsFieldTls.
   ///
   /// In tr, this message translates to:
@@ -1670,11 +1682,23 @@ abstract class AppLocalizations {
   /// **'Webhook adresi'**
   String get channelsFieldWebhookUrl;
 
+  /// No description provided for @channelsHintContentSid.
+  ///
+  /// In tr, this message translates to:
+  /// **'Onaylı WhatsApp şablonunun HX… kimliği; boşsa yalnızca Twilio deneme kutusunda çalışır'**
+  String get channelsHintContentSid;
+
   /// No description provided for @channelsHintFrom.
   ///
   /// In tr, this message translates to:
   /// **'ornek@alanadi.com.tr'**
   String get channelsHintFrom;
+
+  /// No description provided for @channelsHintPhoneNumberId.
+  ///
+  /// In tr, this message translates to:
+  /// **'Meta WhatsApp Manager\'daki telefon numarası kimliği (yalnızca rakam)'**
+  String get channelsHintPhoneNumberId;
 
   /// No description provided for @channelsHintRegion.
   ///
@@ -1694,6 +1718,18 @@ abstract class AppLocalizations {
   /// **'Sağlayıcıda onaylı gönderici adı (en çok 11 karakter)'**
   String get channelsHintSmsHeader;
 
+  /// No description provided for @channelsHintTemplateLanguage.
+  ///
+  /// In tr, this message translates to:
+  /// **'Boş bırakılırsa tr'**
+  String get channelsHintTemplateLanguage;
+
+  /// No description provided for @channelsHintTemplateName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Meta\'da onaylı şablonun adı, ör. milktrace_uyari (gövdesi: Milk Trace bildirimi + tek değişken)'**
+  String get channelsHintTemplateName;
+
   /// No description provided for @channelsHintTls.
   ///
   /// In tr, this message translates to:
@@ -1711,6 +1747,12 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Slack / Teams\'in verdiği gelen webhook adresi'**
   String get channelsHintWebhookUrl;
+
+  /// No description provided for @channelsHintWhatsappFrom.
+  ///
+  /// In tr, this message translates to:
+  /// **'Twilio\'daki WhatsApp numaranız, ör. +14155238886'**
+  String get channelsHintWhatsappFrom;
 
   /// No description provided for @channelsInvalidEmail.
   ///

@@ -319,7 +319,7 @@ class _ProviderPicker extends ConsumerWidget {
             for (final p in list) {
               byKind.putIfAbsent(p.kind, () => []).add(p);
             }
-            const order = ['email', 'sms', 'ivr', 'slack', 'teams', 'webhook'];
+            const order = ['email', 'whatsapp', 'sms', 'ivr', 'slack', 'teams', 'webhook'];
             final kinds = byKind.keys.toList()
               ..sort((a, b) {
                 final ia = order.indexOf(a), ib = order.indexOf(b);

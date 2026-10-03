@@ -899,6 +899,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get channelsFieldSmsHeader => 'SMS başlığı';
 
   @override
+  String get channelsFieldTemplateLanguage => 'Şablon dili';
+
+  @override
+  String get channelsFieldTemplateName => 'Şablon adı';
+
+  @override
   String get channelsFieldTls => 'Şifreleme (starttls, tls)';
 
   @override
@@ -917,7 +923,15 @@ class AppLocalizationsTr extends AppLocalizations {
   String get channelsFieldWebhookUrl => 'Webhook adresi';
 
   @override
+  String get channelsHintContentSid =>
+      'Onaylı WhatsApp şablonunun HX… kimliği; boşsa yalnızca Twilio deneme kutusunda çalışır';
+
+  @override
   String get channelsHintFrom => 'ornek@alanadi.com.tr';
+
+  @override
+  String get channelsHintPhoneNumberId =>
+      'Meta WhatsApp Manager\'daki telefon numarası kimliği (yalnızca rakam)';
 
   @override
   String get channelsHintRegion => 'Boş bırakılabilir (eu: AB veri yerleşimi)';
@@ -930,6 +944,13 @@ class AppLocalizationsTr extends AppLocalizations {
       'Sağlayıcıda onaylı gönderici adı (en çok 11 karakter)';
 
   @override
+  String get channelsHintTemplateLanguage => 'Boş bırakılırsa tr';
+
+  @override
+  String get channelsHintTemplateName =>
+      'Meta\'da onaylı şablonun adı, ör. milktrace_uyari (gövdesi: Milk Trace bildirimi + tek değişken)';
+
+  @override
   String get channelsHintTls => 'Boş bırakılırsa starttls';
 
   @override
@@ -938,6 +959,10 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get channelsHintWebhookUrl =>
       'Slack / Teams\'in verdiği gelen webhook adresi';
+
+  @override
+  String get channelsHintWhatsappFrom =>
+      'Twilio\'daki WhatsApp numaranız, ör. +14155238886';
 
   @override
   String channelsInvalidEmail(Object value) {

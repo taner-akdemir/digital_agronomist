@@ -48,7 +48,7 @@ void main() {
     final specs = raw
         .map((e) => NotificationProvider.fromJson(e as Map<String, dynamic>))
         .toList();
-    expect(specs, hasLength(13));
+    expect(specs, hasLength(15));
     final netgsm = specs.firstWhere(
       (s) => s.kind == 'sms' && s.provider == 'netgsm',
     );

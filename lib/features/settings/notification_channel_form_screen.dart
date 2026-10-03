@@ -367,7 +367,7 @@ class _FormState extends ConsumerState<_Form> {
     return _text(
       controller: _fields[f.name]!,
       label: fieldLabel(f.name) + (f.required ? ' *' : ''),
-      helper: f.secret && saved ? l10n.channelsSecretSaved : fieldHint(f.name),
+      helper: f.secret && saved ? l10n.channelsSecretSaved : fieldHint(f.name, kind: widget.spec.kind),
       // Adres sırrı (Slack/Teams/webhook URL'si) gizlenmez: yapıştırılan
       // uzun adres görülmeden doğrulanamaz. Sunucu sırrı zaten geri vermez.
       obscure: f.secret && !fieldMultiline(f.name) && !fieldUrl(f.name),

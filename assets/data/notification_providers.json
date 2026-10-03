@@ -317,5 +317,61 @@
       }
     ],
     "defaultDailyLimit": 0
+  },
+  {
+    "kind": "whatsapp",
+    "provider": "meta",
+    "recipients": "phone",
+    "fields": [
+      {
+        "name": "phone_number_id",
+        "required": true,
+        "secret": false
+      },
+      {
+        "name": "access_token",
+        "required": true,
+        "secret": true
+      },
+      {
+        "name": "template_name",
+        "required": true,
+        "secret": false
+      },
+      {
+        "name": "template_language",
+        "required": false,
+        "secret": false
+      }
+    ],
+    "defaultDailyLimit": 100
+  },
+  {
+    "kind": "whatsapp",
+    "provider": "twilio",
+    "recipients": "phone",
+    "fields": [
+      {
+        "name": "account_sid",
+        "required": true,
+        "secret": false
+      },
+      {
+        "name": "auth_token",
+        "required": true,
+        "secret": true
+      },
+      {
+        "name": "from",
+        "required": true,
+        "secret": false
+      },
+      {
+        "name": "content_sid",
+        "required": false,
+        "secret": false
+      }
+    ],
+    "defaultDailyLimit": 100
   }
 ]

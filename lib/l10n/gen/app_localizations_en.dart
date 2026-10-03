@@ -901,6 +901,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get channelsFieldSmsHeader => 'SMS sender ID';
 
   @override
+  String get channelsFieldTemplateLanguage => 'Template language';
+
+  @override
+  String get channelsFieldTemplateName => 'Template name';
+
+  @override
   String get channelsFieldTls => 'Encryption (starttls, tls)';
 
   @override
@@ -919,7 +925,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get channelsFieldWebhookUrl => 'Webhook URL';
 
   @override
+  String get channelsHintContentSid =>
+      'The HX… ID of the approved WhatsApp template; if empty it only works in the Twilio sandbox';
+
+  @override
   String get channelsHintFrom => 'name@example.com';
+
+  @override
+  String get channelsHintPhoneNumberId =>
+      'The phone number ID in Meta WhatsApp Manager (digits only)';
 
   @override
   String get channelsHintRegion => 'Can be left empty (eu: EU data residency)';
@@ -932,6 +946,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Sender name approved by the provider (at most 11 characters)';
 
   @override
+  String get channelsHintTemplateLanguage => 'Leave empty for tr';
+
+  @override
+  String get channelsHintTemplateName =>
+      'Name of the approved template in Meta, e.g. milktrace_uyari (body: Milk Trace bildirimi + one variable)';
+
+  @override
   String get channelsHintTls => 'starttls if left empty';
 
   @override
@@ -941,6 +962,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get channelsHintWebhookUrl =>
       'The incoming webhook URL provided by Slack / Teams';
+
+  @override
+  String get channelsHintWhatsappFrom =>
+      'Your WhatsApp number in Twilio, e.g. +14155238886';
 
   @override
   String channelsInvalidEmail(Object value) {

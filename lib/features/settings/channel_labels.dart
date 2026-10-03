@@ -14,6 +14,7 @@ String channelKindLabel(String kind) => switch (kind) {
   'webhook' => 'Webhook',
   'sms' => 'SMS',
   'ivr' => l10n.channelsKindVoiceCall,
+  'whatsapp' => 'WhatsApp',
   _ => kind,
 };
 
@@ -23,6 +24,7 @@ IconData channelKindIcon(String kind) => switch (kind) {
   'webhook' => Icons.webhook,
   'sms' => Icons.sms_outlined,
   'ivr' => Icons.phone_in_talk_outlined,
+  'whatsapp' => Icons.chat_outlined,
   _ => Icons.notifications_none,
 };
 
@@ -37,6 +39,7 @@ String channelProviderLabel(String provider) => switch (provider) {
   'iletimerkezi' => 'İleti Merkezi',
   'vonage' => 'Vonage',
   'jetsms' => 'JetSMS',
+  'meta' => 'Meta (WhatsApp Cloud API)',
   _ => provider,
 };
 
@@ -105,11 +108,22 @@ String fieldLabel(String name) => switch (name) {
   'language' => l10n.channelsFieldLanguage,
   'application_id' => l10n.channelsFieldApplicationId,
   'private_key' => l10n.channelsFieldPrivateKey,
+  'content_sid' => 'Content SID',
+  'phone_number_id' => 'Phone number ID',
+  'access_token' => 'Access token',
+  'template_name' => l10n.channelsFieldTemplateName,
+  'template_language' => l10n.channelsFieldTemplateLanguage,
   _ => name,
 };
 
-/// Alanın altında gösterilen kısa ipucu; bilinmeyen alanda yok.
-String? fieldHint(String name) => switch (name) {
+/// Alanın altında gösterilen kısa ipucu; bilinmeyen alanda yok. Aynı alan
+/// adı türe göre farklı anlam taşıyabilir (WhatsApp'ta `from` bir numara).
+String? fieldHint(String name, {String? kind}) => switch ((kind, name)) {
+  ('whatsapp', 'from') => l10n.channelsHintWhatsappFrom,
+  (_, final n) => _fieldHint(n),
+};
+
+String? _fieldHint(String name) => switch (name) {
   'from' => l10n.channelsHintFrom,
   'webhook_url' => l10n.channelsHintWebhookUrl,
   'url' => l10n.channelsHintUrl,
@@ -117,6 +131,10 @@ String? fieldHint(String name) => switch (name) {
   'msgheader' || 'sender' || 'originator' => l10n.channelsHintSmsHeader,
   'region' => l10n.channelsHintRegion,
   'tls' => l10n.channelsHintTls,
+  'content_sid' => l10n.channelsHintContentSid,
+  'template_name' => l10n.channelsHintTemplateName,
+  'template_language' => l10n.channelsHintTemplateLanguage,
+  'phone_number_id' => l10n.channelsHintPhoneNumberId,
   _ => null,
 };
 

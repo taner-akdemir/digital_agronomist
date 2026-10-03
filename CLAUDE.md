@@ -523,7 +523,8 @@ olmalı çünkü eşiklerin neden salt okunur açıldığının cevabı orada.
 
 **Hesap kartı → Bildirim kanalları** (`/settings/notifications`): işletme sahibi push'un
 yanında e-posta (SMTP, SendGrid), Slack, Teams, webhook, SMS (Twilio, NetGSM, İleti
-Merkezi, Vonage, JetSMS) ve sesli arama (Twilio, NetGSM, Vonage) kanalı ekler. Backend
+Merkezi, Vonage, JetSMS), sesli arama (Twilio, NetGSM, Vonage) ve WhatsApp (Twilio,
+Meta Cloud API; onaylı tek değişkenli şablon, backend ADR 0134) kanalı ekler. Backend
 tarafı `~/GolandProjects/milktrace` ADR 0028; uçlar `/notification-channels`,
 `/notification-providers`, `…/{id}/test`.
 
