@@ -233,7 +233,7 @@ altta. Okunamazsa öneri sessizce düşer, liste küpe sırasıyla gelir — ön
 **Sıralı öneri** (backend ADR 0136, `GET /sessions/placements`, `hallPlacementsProvider`):
 hayvanlar her gün aşağı yukarı aynı sırayla girer. `PlacementSequence` (lib/domain, web
 paneliyle AYNI hesap) son 10 oturumda A'nın 1–3 nokta arkasından kim geldiğini sayar (yeni
-oturum ağır, ×0,85); seçici öndeki en yakın 3 DOLU noktaya göre "genelde X arkasından gelir"
+oturum ağır, ×0,85); seçici 1–3 önündeki noktalarda (T−d, doluysa) bağlı hayvanlara göre "genelde X arkasından gelir"
 hayvanları EN ÜSTE koyar. Canlı ekranda boş noktalar için "Grubu aynen onayla (N)":
 önizleme → tek dokunuşla mevcut eşleştirme ucuyla sırayla (`MilkingControl.assignAll`;
 toplu uç yok), hata veren atlanır.
