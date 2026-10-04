@@ -42,4 +42,16 @@ abstract final class Env {
   /// doğru kalıyor.
   static String get wsBaseUrl =>
       apiBaseUrl.replaceFirst(RegExp(r'^http'), 'ws');
+
+  /// Müşteri web panelinin giriş adresi (mandıra hesabı, backend ADR 0137).
+  ///
+  /// API tabanından TÜRETİLİR: `https://api.X/api/v1` → `https://X/giris`.
+  /// Yerel geliştirme ortamında (api. öneki yok) üretim sitesi.
+  static String get webLoginUrl {
+    final u = Uri.parse(apiBaseUrl);
+    if (u.host.startsWith('api.')) {
+      return '${u.scheme}://${u.host.substring(4)}/giris';
+    }
+    return 'https://milktrace.com.tr/giris';
+  }
 }

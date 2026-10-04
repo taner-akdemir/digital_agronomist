@@ -10,6 +10,7 @@ import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/api_key.dart';
 import 'package:milktrace/data/models/audit_entry.dart';
 import 'package:milktrace/data/models/breeding.dart';
+import 'package:milktrace/data/models/dairy.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
 import 'package:milktrace/data/models/delivery.dart';
 import 'package:milktrace/data/models/device.dart';
@@ -389,6 +390,22 @@ abstract interface class MilkTraceRepository {
 
   /// Anahtarı iptal eder (gateway'de en çok 1 dk sonra etkili).
   Future<void> revokeApiKey(String id);
+
+  /// Onay verilebilecek mandıralar (backend ADR 0137); yalnızca sahip.
+  Future<List<Dairy>> dairies();
+
+  /// İşletmenin mandıra paylaşım onayları, geçmiş dahil; yalnızca sahip.
+  Future<List<DairyShare>> dairyShares();
+
+  /// Mandıraya AÇIK RIZAYLA onay verir; aynı mandıranın açık onayı yenisiyle
+  /// değişir.
+  Future<DairyShare> grantDairyShare({
+    required String dairyId,
+    required SharePeriod period,
+  });
+
+  /// Onayı anında iptal eder.
+  Future<void> revokeDairyShare(String id);
 
   /// Tank teslimleri ve fark eşiği (backend ADR 0089, `GET /deliveries`).
   Future<Deliveries> deliveries();

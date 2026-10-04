@@ -108,6 +108,15 @@ gerektiği kadar:
 Aynı işletmenin kullanıcıları o işletmenin verilerini rollerine göre görür. Başka bir
 işletme sizin işletmenizin verisini göremez.
 
+**Mandıra paylaşımı (yalnızca açık onayınızla).** İşletme sahibi uygulamada ya da web
+panelinde "Entegrasyonlar → Mandıra paylaşımı"ndan sütünü sattığı mandırayı seçip açık
+onay verirse, o mandıranın yetkili kullanıcıları onay süresince (3 ay, 1 yıl ya da süresiz)
+işletmenin **çiftlik bazlı** verilerini görür: işletme adı, toplam süt miktarı ve günlük
+eğilimi, ortalama sağım debisi, sağılan hayvan sayısı, tank teslimleri ve sonraki teslim
+tahmini, mandıra analizi (yağ, protein, somatik hücre, bakteri). Hayvan adı, küpe numarası,
+hayvan bazlı veri, kullanıcı ve ekip bilgisi **paylaşılmaz**. Onay verilmedikçe hiçbir
+mandıraya veri gitmez; onay her an tek dokunuşla geri alınır ve hemen geçerli olur.
+
 ## 5. Yurt dışına aktarım
 
 Sunucular Almanya'dadır; bildirim ve e-posta sağlayıcılarının bir kısmı ABD'dedir. Bu

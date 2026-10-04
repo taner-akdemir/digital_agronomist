@@ -5,6 +5,8 @@ import 'package:milktrace/data/models/auth_state.dart';
 import 'package:milktrace/features/alerts/alerts_screen.dart';
 import 'package:milktrace/features/audit/audit_screen.dart';
 import 'package:milktrace/features/auth/login_screen.dart';
+import 'package:milktrace/features/dairy/dairy_account_screen.dart';
+import 'package:milktrace/features/dairy/dairy_sharing_screen.dart';
 import 'package:milktrace/features/dashboard/dashboard_screen.dart';
 import 'package:milktrace/features/deliveries/deliveries_screen.dart';
 import 'package:milktrace/features/devices/devices_screen.dart';
@@ -77,6 +79,13 @@ GoRouter router(Ref ref) {
       if (auth.user?.kiosk ?? false) return at == '/kiosk' ? null : '/kiosk';
       if (at == '/kiosk') return '/live';
 
+      // Mandıra hesabı (backend ADR 0137): işletmesiz, mandıra ekranları web
+      // panelinde. Gateway işletme uçlarını kapatıyor; tek ekran yönlendirir.
+      if (auth.user?.isDairy ?? false) {
+        return at == '/dairy-account' ? null : '/dairy-account';
+      }
+      if (at == '/dairy-account') return '/live';
+
       // Oturum açık: giriş ve açılış ekranlarında durmanın anlamı yok.
       if (at == '/login' || at == '/splash') return '/live';
 
@@ -87,6 +96,10 @@ GoRouter router(Ref ref) {
       GoRoute(path: '/login', builder: (_, _) => const LoginScreen()),
       GoRoute(path: '/update', builder: (_, _) => const UpdateRequiredScreen()),
       GoRoute(path: '/kiosk', builder: (_, _) => const KioskScreen()),
+      GoRoute(
+        path: '/dairy-account',
+        builder: (_, _) => const DairyAccountScreen(),
+      ),
       // Kabuğun DIŞINDA: uyarı listesi bir sekmeye ait değil, her sekmeden
       // açılır ve tam ekran gelir.
       GoRoute(path: '/alerts', builder: (_, _) => const AlertsScreen()),
@@ -105,6 +118,11 @@ GoRouter router(Ref ref) {
       GoRoute(
         path: '/settings/api-keys',
         builder: (_, _) => const ApiKeysScreen(),
+      ),
+      // Mandıra paylaşımı (backend ADR 0137): hesap kartından, yalnızca sahibe.
+      GoRoute(
+        path: '/settings/dairy-sharing',
+        builder: (_, _) => const DairySharingScreen(),
       ),
       // Geri bildirim (backend ADR 0106): hesap kartından, bütün rollere.
       GoRoute(

@@ -46,6 +46,8 @@ String auditActionLabel(String action) => switch (action) {
   'channel.delete' => l10n.auditChannelDelete,
   'api_key.create' => l10n.auditApiKeyCreate,
   'api_key.revoke' => l10n.auditApiKeyRevoke,
+  'dairy_share.grant' => l10n.auditDairyShareGrant,
+  'dairy_share.revoke' => l10n.auditDairyShareRevoke,
   'meter.check' => l10n.auditMeterCheck,
   _ => action,
 };

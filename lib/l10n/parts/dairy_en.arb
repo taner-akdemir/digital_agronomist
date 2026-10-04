@@ -1,0 +1,76 @@
+{
+  "accountIntegrations": "Integrations",
+  "accountDairySharing": "Dairy sharing",
+  "dairyTitle": "Dairy sharing",
+  "dairyPitch": "Share your milk's quality and quantity with your dairy in real time, with your own consent; earn a milk premium as a trusted supplier.",
+  "dairyPrivateByDefault": "Your farm data is private by default. No data goes to a dairy you have not approved, and you can withdraw consent at any time with one tap.",
+  "dairySharedTitle": "What the dairy sees while consent lasts",
+  "dairySharedItems": "• The farm's total milk and daily trend\n• Average milking flow\n• Tank deliveries and next delivery forecast\n• Dairy analysis: fat, protein, somatic cells, bacteria",
+  "dairyNotSharedTitle": "Not shared",
+  "dairyNotSharedItems": "• Animal names, ear tags and any per-animal data\n• Team, notes, treatments, breeding records",
+  "dairyActiveTitle": "Active consents",
+  "dairyNoActive": "You are not sharing data with any dairy.",
+  "dairyHistoryTitle": "History",
+  "dairySince": "Since: {date}",
+  "@dairySince": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "dairyUntil": "Until: {date}",
+  "@dairyUntil": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "dairyUnlimited": "No end date",
+  "dairyRevokedAt": "Revoked: {date}",
+  "@dairyRevokedAt": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "dairyExpired": "Expired",
+  "dairyRevoke": "Revoke",
+  "dairyRevokeTitle": "Revoke sharing?",
+  "dairyRevokeBody": "{dairy} will no longer see your farm's data. This takes effect immediately.",
+  "@dairyRevokeBody": {
+    "placeholders": {
+      "dairy": {}
+    }
+  },
+  "dairyRevoked": "Sharing revoked",
+  "dairyAdd": "Add dairy",
+  "dairyAddTitle": "Data sharing consent for a dairy",
+  "dairySelect": "Dairy",
+  "dairyNoDairies": "No dairies listed. Contact support so we can add the dairy that buys your milk.",
+  "dairyPeriod": "Period",
+  "dairyPeriod3m": "3 months",
+  "dairyPeriod1y": "1 year",
+  "dairyPeriodUnlimited": "No end date",
+  "dairyConsent": "I give my explicit consent to share the farm data listed above with {dairy} for the period I selected; I can withdraw it at any time.",
+  "@dairyConsent": {
+    "placeholders": {
+      "dairy": {}
+    }
+  },
+  "dairyConsentPlaceholder": "the selected dairy",
+  "dairyGrant": "Give consent",
+  "dairyGranted": "Sharing with {dairy} started",
+  "@dairyGranted": {
+    "placeholders": {
+      "dairy": {}
+    }
+  },
+  "auditDairyShareGrant": "Dairy sharing approved",
+  "auditDairyShareRevoke": "Dairy sharing revoked",
+  "dairyAccountTitle": "Dairy account",
+  "dairyAccountBody": "You signed in with the {dairy} dairy account. You can see the farms sharing data with you in the web panel; the mobile app is for farm users.",
+  "@dairyAccountBody": {
+    "placeholders": {
+      "dairy": {}
+    }
+  },
+  "dairyAccountOpenWeb": "Open web panel",
+  "dairyAccountSignOut": "Sign out"
+}

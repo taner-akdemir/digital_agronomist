@@ -15,10 +15,16 @@ class AppLocalizationsTr extends AppLocalizations {
   String get accountAuditLog => 'İşlem kaydı';
 
   @override
+  String get accountDairySharing => 'Mandıra paylaşımı';
+
+  @override
   String get accountDefaultName => 'Kullanıcı';
 
   @override
   String get accountFarmLocation => 'Tesis konumu';
+
+  @override
+  String get accountIntegrations => 'Entegrasyonlar';
 
   @override
   String get accountMilkUnit => 'Süt birimi';
@@ -607,6 +613,12 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get auditChannelUpdate => 'Bildirim kanalı değişti';
+
+  @override
+  String get auditDairyShareGrant => 'Mandıra paylaşımı onaylandı';
+
+  @override
+  String get auditDairyShareRevoke => 'Mandıra paylaşımı iptal edildi';
 
   @override
   String get auditDeletedUser => 'Silinmiş kullanıcı';
@@ -1205,6 +1217,130 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String coreRouteNotFoundBody(Object uri) {
     return 'Aradığınız sayfa bulunamadı:\n$uri';
+  }
+
+  @override
+  String dairyAccountBody(Object dairy) {
+    return '$dairy mandıra hesabıyla giriş yaptınız. Size veri paylaşan çiftlikleri web panelinden görürsünüz; mobil uygulama işletme kullanıcıları içindir.';
+  }
+
+  @override
+  String get dairyAccountOpenWeb => 'Web panelini aç';
+
+  @override
+  String get dairyAccountSignOut => 'Çıkış yap';
+
+  @override
+  String get dairyAccountTitle => 'Mandıra hesabı';
+
+  @override
+  String get dairyActiveTitle => 'Açık onaylar';
+
+  @override
+  String get dairyAdd => 'Mandıra ekle';
+
+  @override
+  String get dairyAddTitle => 'Mandıraya veri paylaşım onayı';
+
+  @override
+  String dairyConsent(Object dairy) {
+    return '$dairy ile yukarıda yazan çiftlik verilerinin seçtiğim süre boyunca paylaşılmasına açık rızamla onay veriyorum; onayı istediğim an geri alabilirim.';
+  }
+
+  @override
+  String get dairyConsentPlaceholder => 'seçtiğim mandıra';
+
+  @override
+  String get dairyExpired => 'Süresi doldu';
+
+  @override
+  String get dairyGrant => 'Onay ver';
+
+  @override
+  String dairyGranted(Object dairy) {
+    return '$dairy ile paylaşım başladı';
+  }
+
+  @override
+  String get dairyHistoryTitle => 'Geçmiş';
+
+  @override
+  String get dairyNoActive => 'Hiçbir mandıraya veri paylaşmıyorsunuz.';
+
+  @override
+  String get dairyNoDairies =>
+      'Listede mandıra yok. Sütünüzü aldığı mandırayı eklememiz için destekle iletişime geçin.';
+
+  @override
+  String get dairyNotSharedItems =>
+      '• Hayvan adı, küpe ve hayvan bazlı her veri\n• Ekip, notlar, tedaviler, üreme kayıtları';
+
+  @override
+  String get dairyNotSharedTitle => 'Paylaşılmayan';
+
+  @override
+  String get dairyPeriod => 'Süre';
+
+  @override
+  String get dairyPeriod1y => '1 yıl';
+
+  @override
+  String get dairyPeriod3m => '3 ay';
+
+  @override
+  String get dairyPeriodUnlimited => 'Süresiz';
+
+  @override
+  String get dairyPitch =>
+      'Sütünüzün kalitesini ve miktarını, kendi onayınız dahilinde mandıranızla anlık paylaşın; güvenilir tedarikçi statüsüyle sütünüze prim desteği alın.';
+
+  @override
+  String get dairyPrivateByDefault =>
+      'Çiftlik verileriniz varsayılan olarak gizlidir. Onay vermediğiniz hiçbir mandıraya veri gitmez; onayı istediğiniz an tek dokunuşla geri alırsınız.';
+
+  @override
+  String get dairyRevoke => 'İptal et';
+
+  @override
+  String dairyRevokeBody(Object dairy) {
+    return '$dairy artık çiftliğinizin verisini göremez. Bu hemen geçerli olur.';
+  }
+
+  @override
+  String get dairyRevokeTitle => 'Paylaşım iptal edilsin mi?';
+
+  @override
+  String get dairyRevoked => 'Paylaşım iptal edildi';
+
+  @override
+  String dairyRevokedAt(Object date) {
+    return 'İptal edildi: $date';
+  }
+
+  @override
+  String get dairySelect => 'Mandıra';
+
+  @override
+  String get dairySharedItems =>
+      '• Çiftliğin toplam sütü ve günlük eğilimi\n• Ortalama sağım debisi\n• Tank teslimleri ve sonraki teslim tahmini\n• Mandıra analizi: yağ, protein, somatik hücre, bakteri';
+
+  @override
+  String get dairySharedTitle => 'Onay süresince mandıranın gördüğü';
+
+  @override
+  String dairySince(Object date) {
+    return 'Onay: $date';
+  }
+
+  @override
+  String get dairyTitle => 'Mandıra paylaşımı';
+
+  @override
+  String get dairyUnlimited => 'Süresiz';
+
+  @override
+  String dairyUntil(Object date) {
+    return 'Bitiş: $date';
   }
 
   @override

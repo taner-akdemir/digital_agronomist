@@ -110,6 +110,12 @@ abstract class AppLocalizations {
   /// **'İşlem kaydı'**
   String get accountAuditLog;
 
+  /// No description provided for @accountDairySharing.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mandıra paylaşımı'**
+  String get accountDairySharing;
+
   /// No description provided for @accountDefaultName.
   ///
   /// In tr, this message translates to:
@@ -121,6 +127,12 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Tesis konumu'**
   String get accountFarmLocation;
+
+  /// No description provided for @accountIntegrations.
+  ///
+  /// In tr, this message translates to:
+  /// **'Entegrasyonlar'**
+  String get accountIntegrations;
 
   /// No description provided for @accountMilkUnit.
   ///
@@ -1111,6 +1123,18 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Bildirim kanalı değişti'**
   String get auditChannelUpdate;
+
+  /// No description provided for @auditDairyShareGrant.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mandıra paylaşımı onaylandı'**
+  String get auditDairyShareGrant;
+
+  /// No description provided for @auditDairyShareRevoke.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mandıra paylaşımı iptal edildi'**
+  String get auditDairyShareRevoke;
 
   /// No description provided for @auditDeletedUser.
   ///
@@ -2191,6 +2215,216 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Aradığınız sayfa bulunamadı:\n{uri}'**
   String coreRouteNotFoundBody(Object uri);
+
+  /// No description provided for @dairyAccountBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'{dairy} mandıra hesabıyla giriş yaptınız. Size veri paylaşan çiftlikleri web panelinden görürsünüz; mobil uygulama işletme kullanıcıları içindir.'**
+  String dairyAccountBody(Object dairy);
+
+  /// No description provided for @dairyAccountOpenWeb.
+  ///
+  /// In tr, this message translates to:
+  /// **'Web panelini aç'**
+  String get dairyAccountOpenWeb;
+
+  /// No description provided for @dairyAccountSignOut.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çıkış yap'**
+  String get dairyAccountSignOut;
+
+  /// No description provided for @dairyAccountTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mandıra hesabı'**
+  String get dairyAccountTitle;
+
+  /// No description provided for @dairyActiveTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Açık onaylar'**
+  String get dairyActiveTitle;
+
+  /// No description provided for @dairyAdd.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mandıra ekle'**
+  String get dairyAdd;
+
+  /// No description provided for @dairyAddTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mandıraya veri paylaşım onayı'**
+  String get dairyAddTitle;
+
+  /// No description provided for @dairyConsent.
+  ///
+  /// In tr, this message translates to:
+  /// **'{dairy} ile yukarıda yazan çiftlik verilerinin seçtiğim süre boyunca paylaşılmasına açık rızamla onay veriyorum; onayı istediğim an geri alabilirim.'**
+  String dairyConsent(Object dairy);
+
+  /// No description provided for @dairyConsentPlaceholder.
+  ///
+  /// In tr, this message translates to:
+  /// **'seçtiğim mandıra'**
+  String get dairyConsentPlaceholder;
+
+  /// No description provided for @dairyExpired.
+  ///
+  /// In tr, this message translates to:
+  /// **'Süresi doldu'**
+  String get dairyExpired;
+
+  /// No description provided for @dairyGrant.
+  ///
+  /// In tr, this message translates to:
+  /// **'Onay ver'**
+  String get dairyGrant;
+
+  /// No description provided for @dairyGranted.
+  ///
+  /// In tr, this message translates to:
+  /// **'{dairy} ile paylaşım başladı'**
+  String dairyGranted(Object dairy);
+
+  /// No description provided for @dairyHistoryTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geçmiş'**
+  String get dairyHistoryTitle;
+
+  /// No description provided for @dairyNoActive.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hiçbir mandıraya veri paylaşmıyorsunuz.'**
+  String get dairyNoActive;
+
+  /// No description provided for @dairyNoDairies.
+  ///
+  /// In tr, this message translates to:
+  /// **'Listede mandıra yok. Sütünüzü aldığı mandırayı eklememiz için destekle iletişime geçin.'**
+  String get dairyNoDairies;
+
+  /// No description provided for @dairyNotSharedItems.
+  ///
+  /// In tr, this message translates to:
+  /// **'• Hayvan adı, küpe ve hayvan bazlı her veri\n• Ekip, notlar, tedaviler, üreme kayıtları'**
+  String get dairyNotSharedItems;
+
+  /// No description provided for @dairyNotSharedTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Paylaşılmayan'**
+  String get dairyNotSharedTitle;
+
+  /// No description provided for @dairyPeriod.
+  ///
+  /// In tr, this message translates to:
+  /// **'Süre'**
+  String get dairyPeriod;
+
+  /// No description provided for @dairyPeriod1y.
+  ///
+  /// In tr, this message translates to:
+  /// **'1 yıl'**
+  String get dairyPeriod1y;
+
+  /// No description provided for @dairyPeriod3m.
+  ///
+  /// In tr, this message translates to:
+  /// **'3 ay'**
+  String get dairyPeriod3m;
+
+  /// No description provided for @dairyPeriodUnlimited.
+  ///
+  /// In tr, this message translates to:
+  /// **'Süresiz'**
+  String get dairyPeriodUnlimited;
+
+  /// No description provided for @dairyPitch.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sütünüzün kalitesini ve miktarını, kendi onayınız dahilinde mandıranızla anlık paylaşın; güvenilir tedarikçi statüsüyle sütünüze prim desteği alın.'**
+  String get dairyPitch;
+
+  /// No description provided for @dairyPrivateByDefault.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çiftlik verileriniz varsayılan olarak gizlidir. Onay vermediğiniz hiçbir mandıraya veri gitmez; onayı istediğiniz an tek dokunuşla geri alırsınız.'**
+  String get dairyPrivateByDefault;
+
+  /// No description provided for @dairyRevoke.
+  ///
+  /// In tr, this message translates to:
+  /// **'İptal et'**
+  String get dairyRevoke;
+
+  /// No description provided for @dairyRevokeBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'{dairy} artık çiftliğinizin verisini göremez. Bu hemen geçerli olur.'**
+  String dairyRevokeBody(Object dairy);
+
+  /// No description provided for @dairyRevokeTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Paylaşım iptal edilsin mi?'**
+  String get dairyRevokeTitle;
+
+  /// No description provided for @dairyRevoked.
+  ///
+  /// In tr, this message translates to:
+  /// **'Paylaşım iptal edildi'**
+  String get dairyRevoked;
+
+  /// No description provided for @dairyRevokedAt.
+  ///
+  /// In tr, this message translates to:
+  /// **'İptal edildi: {date}'**
+  String dairyRevokedAt(Object date);
+
+  /// No description provided for @dairySelect.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mandıra'**
+  String get dairySelect;
+
+  /// No description provided for @dairySharedItems.
+  ///
+  /// In tr, this message translates to:
+  /// **'• Çiftliğin toplam sütü ve günlük eğilimi\n• Ortalama sağım debisi\n• Tank teslimleri ve sonraki teslim tahmini\n• Mandıra analizi: yağ, protein, somatik hücre, bakteri'**
+  String get dairySharedItems;
+
+  /// No description provided for @dairySharedTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Onay süresince mandıranın gördüğü'**
+  String get dairySharedTitle;
+
+  /// No description provided for @dairySince.
+  ///
+  /// In tr, this message translates to:
+  /// **'Onay: {date}'**
+  String dairySince(Object date);
+
+  /// No description provided for @dairyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mandıra paylaşımı'**
+  String get dairyTitle;
+
+  /// No description provided for @dairyUnlimited.
+  ///
+  /// In tr, this message translates to:
+  /// **'Süresiz'**
+  String get dairyUnlimited;
+
+  /// No description provided for @dairyUntil.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bitiş: {date}'**
+  String dairyUntil(Object date);
 
   /// No description provided for @dashboardActiveSessions.
   ///

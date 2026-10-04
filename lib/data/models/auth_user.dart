@@ -30,9 +30,17 @@ abstract class AuthUser with _$AuthUser {
 
     /// İki adımlı doğrulama açık mı (backend ADR 0102).
     @Default(false) bool twoFactor,
+
+    /// Mandıra kullanıcısının mandırası (backend ADR 0137): işletmesiz;
+    /// mandıra ekranları web panelinde, uygulama yalnızca yönlendirir.
+    String? dairyId,
+    String? dairyName,
   }) = _AuthUser;
 
   const AuthUser._();
+
+  /// Mandıra hesabı (`dairy_viewer`): işletme uçlarının hepsi 403.
+  bool get isDairy => role == 'dairy_viewer';
 
   /// Seçili işletmenin adı; listede yoksa null.
   String? get tenantName {

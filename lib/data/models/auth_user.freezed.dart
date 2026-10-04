@@ -22,7 +22,9 @@ mixin _$AuthUser {
  String get volumeUnit;/// Sağımhane tableti hesabı (backend ADR 0091): uygulama yalnızca
 /// canlı ekranı açar; gateway de diğer uçları kapatır.
  bool get kiosk;/// İki adımlı doğrulama açık mı (backend ADR 0102).
- bool get twoFactor;
+ bool get twoFactor;/// Mandıra kullanıcısının mandırası (backend ADR 0137): işletmesiz;
+/// mandıra ekranları web panelinde, uygulama yalnızca yönlendirir.
+ String? get dairyId; String? get dairyName;
 /// Create a copy of AuthUser
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -36,20 +38,20 @@ $AuthUserCopyWith<AuthUser> get copyWith => _$AuthUserCopyWithImpl<AuthUser>(thi
 @override
 bool operator ==(Object other) {
   final _this = this as AuthUser;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthUser&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.email, _this.email) || other.email == _this.email)&&(identical(other.fullName, _this.fullName) || other.fullName == _this.fullName)&&(identical(other.role, _this.role) || other.role == _this.role)&&(identical(other.tenantId, _this.tenantId) || other.tenantId == _this.tenantId)&&const DeepCollectionEquality().equals(other.tenants, _this.tenants)&&(identical(other.volumeUnit, _this.volumeUnit) || other.volumeUnit == _this.volumeUnit)&&(identical(other.kiosk, _this.kiosk) || other.kiosk == _this.kiosk)&&(identical(other.twoFactor, _this.twoFactor) || other.twoFactor == _this.twoFactor));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthUser&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.email, _this.email) || other.email == _this.email)&&(identical(other.fullName, _this.fullName) || other.fullName == _this.fullName)&&(identical(other.role, _this.role) || other.role == _this.role)&&(identical(other.tenantId, _this.tenantId) || other.tenantId == _this.tenantId)&&const DeepCollectionEquality().equals(other.tenants, _this.tenants)&&(identical(other.volumeUnit, _this.volumeUnit) || other.volumeUnit == _this.volumeUnit)&&(identical(other.kiosk, _this.kiosk) || other.kiosk == _this.kiosk)&&(identical(other.twoFactor, _this.twoFactor) || other.twoFactor == _this.twoFactor)&&(identical(other.dairyId, _this.dairyId) || other.dairyId == _this.dairyId)&&(identical(other.dairyName, _this.dairyName) || other.dairyName == _this.dairyName));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as AuthUser;
-  return Object.hash(runtimeType,_this.id,_this.email,_this.fullName,_this.role,_this.tenantId,const DeepCollectionEquality().hash(_this.tenants),_this.volumeUnit,_this.kiosk,_this.twoFactor);
+  return Object.hash(runtimeType,_this.id,_this.email,_this.fullName,_this.role,_this.tenantId,const DeepCollectionEquality().hash(_this.tenants),_this.volumeUnit,_this.kiosk,_this.twoFactor,_this.dairyId,_this.dairyName);
 }
 
 @override
 String toString() {
   final _this = this as AuthUser;
-  return 'AuthUser(id: ${_this.id}, email: ${_this.email}, fullName: ${_this.fullName}, role: ${_this.role}, tenantId: ${_this.tenantId}, tenants: ${_this.tenants}, volumeUnit: ${_this.volumeUnit}, kiosk: ${_this.kiosk}, twoFactor: ${_this.twoFactor})';
+  return 'AuthUser(id: ${_this.id}, email: ${_this.email}, fullName: ${_this.fullName}, role: ${_this.role}, tenantId: ${_this.tenantId}, tenants: ${_this.tenants}, volumeUnit: ${_this.volumeUnit}, kiosk: ${_this.kiosk}, twoFactor: ${_this.twoFactor}, dairyId: ${_this.dairyId}, dairyName: ${_this.dairyName})';
 }
 
 
@@ -60,7 +62,7 @@ abstract mixin class $AuthUserCopyWith<$Res>  {
   factory $AuthUserCopyWith(AuthUser value, $Res Function(AuthUser) _then) = _$AuthUserCopyWithImpl;
 @useResult
 $Res call({
- String id, String email, String fullName, String role, String? tenantId, List<TenantRef> tenants, String volumeUnit, bool kiosk, bool twoFactor
+ String id, String email, String fullName, String role, String? tenantId, List<TenantRef> tenants, String volumeUnit, bool kiosk, bool twoFactor, String? dairyId, String? dairyName
 });
 
 
@@ -77,7 +79,7 @@ class _$AuthUserCopyWithImpl<$Res>
 
 /// Create a copy of AuthUser
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? email = null,Object? fullName = null,Object? role = null,Object? tenantId = freezed,Object? tenants = null,Object? volumeUnit = null,Object? kiosk = null,Object? twoFactor = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? email = null,Object? fullName = null,Object? role = null,Object? tenantId = freezed,Object? tenants = null,Object? volumeUnit = null,Object? kiosk = null,Object? twoFactor = null,Object? dairyId = freezed,Object? dairyName = freezed,}) {
   return _then(AuthUser(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
@@ -88,7 +90,9 @@ as String?,tenants: null == tenants ? _self.tenants : tenants // ignore: cast_nu
 as List<TenantRef>,volumeUnit: null == volumeUnit ? _self.volumeUnit : volumeUnit // ignore: cast_nullable_to_non_nullable
 as String,kiosk: null == kiosk ? _self.kiosk : kiosk // ignore: cast_nullable_to_non_nullable
 as bool,twoFactor: null == twoFactor ? _self.twoFactor : twoFactor // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,dairyId: freezed == dairyId ? _self.dairyId : dairyId // ignore: cast_nullable_to_non_nullable
+as String?,dairyName: freezed == dairyName ? _self.dairyName : dairyName // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -173,10 +177,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String email,  String fullName,  String role,  String? tenantId,  List<TenantRef> tenants,  String volumeUnit,  bool kiosk,  bool twoFactor)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String email,  String fullName,  String role,  String? tenantId,  List<TenantRef> tenants,  String volumeUnit,  bool kiosk,  bool twoFactor,  String? dairyId,  String? dairyName)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AuthUser() when $default != null:
-return $default(_that.id,_that.email,_that.fullName,_that.role,_that.tenantId,_that.tenants,_that.volumeUnit,_that.kiosk,_that.twoFactor);case _:
+return $default(_that.id,_that.email,_that.fullName,_that.role,_that.tenantId,_that.tenants,_that.volumeUnit,_that.kiosk,_that.twoFactor,_that.dairyId,_that.dairyName);case _:
   return orElse();
 
 }
@@ -194,10 +198,10 @@ return $default(_that.id,_that.email,_that.fullName,_that.role,_that.tenantId,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String email,  String fullName,  String role,  String? tenantId,  List<TenantRef> tenants,  String volumeUnit,  bool kiosk,  bool twoFactor)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String email,  String fullName,  String role,  String? tenantId,  List<TenantRef> tenants,  String volumeUnit,  bool kiosk,  bool twoFactor,  String? dairyId,  String? dairyName)  $default,) {final _that = this;
 switch (_that) {
 case _AuthUser():
-return $default(_that.id,_that.email,_that.fullName,_that.role,_that.tenantId,_that.tenants,_that.volumeUnit,_that.kiosk,_that.twoFactor);case _:
+return $default(_that.id,_that.email,_that.fullName,_that.role,_that.tenantId,_that.tenants,_that.volumeUnit,_that.kiosk,_that.twoFactor,_that.dairyId,_that.dairyName);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -214,10 +218,10 @@ return $default(_that.id,_that.email,_that.fullName,_that.role,_that.tenantId,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String email,  String fullName,  String role,  String? tenantId,  List<TenantRef> tenants,  String volumeUnit,  bool kiosk,  bool twoFactor)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String email,  String fullName,  String role,  String? tenantId,  List<TenantRef> tenants,  String volumeUnit,  bool kiosk,  bool twoFactor,  String? dairyId,  String? dairyName)?  $default,) {final _that = this;
 switch (_that) {
 case _AuthUser() when $default != null:
-return $default(_that.id,_that.email,_that.fullName,_that.role,_that.tenantId,_that.tenants,_that.volumeUnit,_that.kiosk,_that.twoFactor);case _:
+return $default(_that.id,_that.email,_that.fullName,_that.role,_that.tenantId,_that.tenants,_that.volumeUnit,_that.kiosk,_that.twoFactor,_that.dairyId,_that.dairyName);case _:
   return null;
 
 }
@@ -229,7 +233,7 @@ return $default(_that.id,_that.email,_that.fullName,_that.role,_that.tenantId,_t
 @JsonSerializable()
 
 class _AuthUser extends AuthUser {
-  const _AuthUser({required this.id, required this.email, required this.fullName, required this.role, this.tenantId,  List<TenantRef> tenants = const <TenantRef>[], this.volumeUnit = 'L', this.kiosk = false, this.twoFactor = false}): _tenants = tenants,super._();
+  const _AuthUser({required this.id, required this.email, required this.fullName, required this.role, this.tenantId,  List<TenantRef> tenants = const <TenantRef>[], this.volumeUnit = 'L', this.kiosk = false, this.twoFactor = false, this.dairyId, this.dairyName}): _tenants = tenants,super._();
   factory _AuthUser.fromJson(Map<String, dynamic> json) => _$AuthUserFromJson(json);
 
 @override final  String id;
@@ -255,6 +259,10 @@ class _AuthUser extends AuthUser {
 @override@JsonKey() final  bool kiosk;
 /// İki adımlı doğrulama açık mı (backend ADR 0102).
 @override@JsonKey() final  bool twoFactor;
+/// Mandıra kullanıcısının mandırası (backend ADR 0137): işletmesiz;
+/// mandıra ekranları web panelinde, uygulama yalnızca yönlendirir.
+@override final  String? dairyId;
+@override final  String? dairyName;
 
 /// Create a copy of AuthUser
 /// with the given fields replaced by the non-null parameter values.
@@ -269,18 +277,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthUser&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.role, role) || other.role == role)&&(identical(other.tenantId, tenantId) || other.tenantId == tenantId)&&const DeepCollectionEquality().equals(other.tenants, _tenants)&&(identical(other.volumeUnit, volumeUnit) || other.volumeUnit == volumeUnit)&&(identical(other.kiosk, kiosk) || other.kiosk == kiosk)&&(identical(other.twoFactor, twoFactor) || other.twoFactor == twoFactor));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthUser&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.role, role) || other.role == role)&&(identical(other.tenantId, tenantId) || other.tenantId == tenantId)&&const DeepCollectionEquality().equals(other.tenants, _tenants)&&(identical(other.volumeUnit, volumeUnit) || other.volumeUnit == volumeUnit)&&(identical(other.kiosk, kiosk) || other.kiosk == kiosk)&&(identical(other.twoFactor, twoFactor) || other.twoFactor == twoFactor)&&(identical(other.dairyId, dairyId) || other.dairyId == dairyId)&&(identical(other.dairyName, dairyName) || other.dairyName == dairyName));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,email,fullName,role,tenantId,const DeepCollectionEquality().hash(_tenants),volumeUnit,kiosk,twoFactor);
+    return Object.hash(runtimeType,id,email,fullName,role,tenantId,const DeepCollectionEquality().hash(_tenants),volumeUnit,kiosk,twoFactor,dairyId,dairyName);
 }
 
 @override
 String toString() {
-    return 'AuthUser(id: $id, email: $email, fullName: $fullName, role: $role, tenantId: $tenantId, tenants: $tenants, volumeUnit: $volumeUnit, kiosk: $kiosk, twoFactor: $twoFactor)';
+    return 'AuthUser(id: $id, email: $email, fullName: $fullName, role: $role, tenantId: $tenantId, tenants: $tenants, volumeUnit: $volumeUnit, kiosk: $kiosk, twoFactor: $twoFactor, dairyId: $dairyId, dairyName: $dairyName)';
 }
 
 
@@ -291,7 +299,7 @@ abstract mixin class _$AuthUserCopyWith<$Res> implements $AuthUserCopyWith<$Res>
   factory _$AuthUserCopyWith(_AuthUser value, $Res Function(_AuthUser) _then) = __$AuthUserCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String email, String fullName, String role, String? tenantId, List<TenantRef> tenants, String volumeUnit, bool kiosk, bool twoFactor
+ String id, String email, String fullName, String role, String? tenantId, List<TenantRef> tenants, String volumeUnit, bool kiosk, bool twoFactor, String? dairyId, String? dairyName
 });
 
 
@@ -308,7 +316,7 @@ class __$AuthUserCopyWithImpl<$Res>
 
 /// Create a copy of AuthUser
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? email = null,Object? fullName = null,Object? role = null,Object? tenantId = freezed,Object? tenants = null,Object? volumeUnit = null,Object? kiosk = null,Object? twoFactor = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? email = null,Object? fullName = null,Object? role = null,Object? tenantId = freezed,Object? tenants = null,Object? volumeUnit = null,Object? kiosk = null,Object? twoFactor = null,Object? dairyId = freezed,Object? dairyName = freezed,}) {
   return _then(_AuthUser(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
@@ -319,7 +327,9 @@ as String?,tenants: null == tenants ? _self._tenants : tenants // ignore: cast_n
 as List<TenantRef>,volumeUnit: null == volumeUnit ? _self.volumeUnit : volumeUnit // ignore: cast_nullable_to_non_nullable
 as String,kiosk: null == kiosk ? _self.kiosk : kiosk // ignore: cast_nullable_to_non_nullable
 as bool,twoFactor: null == twoFactor ? _self.twoFactor : twoFactor // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,dairyId: freezed == dairyId ? _self.dairyId : dairyId // ignore: cast_nullable_to_non_nullable
+as String?,dairyName: freezed == dairyName ? _self.dairyName : dairyName // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

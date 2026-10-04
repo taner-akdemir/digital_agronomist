@@ -15,10 +15,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountAuditLog => 'Activity log';
 
   @override
+  String get accountDairySharing => 'Dairy sharing';
+
+  @override
   String get accountDefaultName => 'User';
 
   @override
   String get accountFarmLocation => 'Farm location';
+
+  @override
+  String get accountIntegrations => 'Integrations';
 
   @override
   String get accountMilkUnit => 'Milk unit';
@@ -609,6 +615,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get auditChannelUpdate => 'Notification channel changed';
+
+  @override
+  String get auditDairyShareGrant => 'Dairy sharing approved';
+
+  @override
+  String get auditDairyShareRevoke => 'Dairy sharing revoked';
 
   @override
   String get auditDeletedUser => 'Deleted user';
@@ -1211,6 +1223,130 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String coreRouteNotFoundBody(Object uri) {
     return 'The page you\'re looking for wasn\'t found:\n$uri';
+  }
+
+  @override
+  String dairyAccountBody(Object dairy) {
+    return 'You signed in with the $dairy dairy account. You can see the farms sharing data with you in the web panel; the mobile app is for farm users.';
+  }
+
+  @override
+  String get dairyAccountOpenWeb => 'Open web panel';
+
+  @override
+  String get dairyAccountSignOut => 'Sign out';
+
+  @override
+  String get dairyAccountTitle => 'Dairy account';
+
+  @override
+  String get dairyActiveTitle => 'Active consents';
+
+  @override
+  String get dairyAdd => 'Add dairy';
+
+  @override
+  String get dairyAddTitle => 'Data sharing consent for a dairy';
+
+  @override
+  String dairyConsent(Object dairy) {
+    return 'I give my explicit consent to share the farm data listed above with $dairy for the period I selected; I can withdraw it at any time.';
+  }
+
+  @override
+  String get dairyConsentPlaceholder => 'the selected dairy';
+
+  @override
+  String get dairyExpired => 'Expired';
+
+  @override
+  String get dairyGrant => 'Give consent';
+
+  @override
+  String dairyGranted(Object dairy) {
+    return 'Sharing with $dairy started';
+  }
+
+  @override
+  String get dairyHistoryTitle => 'History';
+
+  @override
+  String get dairyNoActive => 'You are not sharing data with any dairy.';
+
+  @override
+  String get dairyNoDairies =>
+      'No dairies listed. Contact support so we can add the dairy that buys your milk.';
+
+  @override
+  String get dairyNotSharedItems =>
+      '• Animal names, ear tags and any per-animal data\n• Team, notes, treatments, breeding records';
+
+  @override
+  String get dairyNotSharedTitle => 'Not shared';
+
+  @override
+  String get dairyPeriod => 'Period';
+
+  @override
+  String get dairyPeriod1y => '1 year';
+
+  @override
+  String get dairyPeriod3m => '3 months';
+
+  @override
+  String get dairyPeriodUnlimited => 'No end date';
+
+  @override
+  String get dairyPitch =>
+      'Share your milk\'s quality and quantity with your dairy in real time, with your own consent; earn a milk premium as a trusted supplier.';
+
+  @override
+  String get dairyPrivateByDefault =>
+      'Your farm data is private by default. No data goes to a dairy you have not approved, and you can withdraw consent at any time with one tap.';
+
+  @override
+  String get dairyRevoke => 'Revoke';
+
+  @override
+  String dairyRevokeBody(Object dairy) {
+    return '$dairy will no longer see your farm\'s data. This takes effect immediately.';
+  }
+
+  @override
+  String get dairyRevokeTitle => 'Revoke sharing?';
+
+  @override
+  String get dairyRevoked => 'Sharing revoked';
+
+  @override
+  String dairyRevokedAt(Object date) {
+    return 'Revoked: $date';
+  }
+
+  @override
+  String get dairySelect => 'Dairy';
+
+  @override
+  String get dairySharedItems =>
+      '• The farm\'s total milk and daily trend\n• Average milking flow\n• Tank deliveries and next delivery forecast\n• Dairy analysis: fat, protein, somatic cells, bacteria';
+
+  @override
+  String get dairySharedTitle => 'What the dairy sees while consent lasts';
+
+  @override
+  String dairySince(Object date) {
+    return 'Since: $date';
+  }
+
+  @override
+  String get dairyTitle => 'Dairy sharing';
+
+  @override
+  String get dairyUnlimited => 'No end date';
+
+  @override
+  String dairyUntil(Object date) {
+    return 'Until: $date';
   }
 
   @override

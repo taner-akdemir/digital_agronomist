@@ -54,7 +54,10 @@ class PushRegistration extends _$PushRegistration {
     // Oturumun TAMAMI izlenir: işletme değişince de (backend ADR 0081)
     // yeniden kurulur ve jeton yeni işletmeye yazılır — bildirimler seçili
     // işletmeyi izler.
-    final signedIn = ref.watch(authProvider).isSignedIn;
+    final auth = ref.watch(authProvider);
+    // Mandıra hesabı (backend ADR 0137) bildirim almaz: işletmesiz, jeton
+    // ucu ona kapalı.
+    final signedIn = auth.isSignedIn && !(auth.user?.isDairy ?? false);
     // Dil değişince jeton yeni dille yeniden yazılır: bildirim metni
     // sunucuda o dilde seçiliyor (backend ADR 0093).
     ref.watch(appLanguageProvider);

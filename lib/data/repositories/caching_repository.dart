@@ -14,6 +14,7 @@ import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/api_key.dart';
 import 'package:milktrace/data/models/audit_entry.dart';
 import 'package:milktrace/data/models/breeding.dart';
+import 'package:milktrace/data/models/dairy.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
 import 'package:milktrace/data/models/delivery.dart';
 import 'package:milktrace/data/models/device.dart';
@@ -650,6 +651,24 @@ class CachingRepository implements MilkTraceRepository {
 
   @override
   Future<void> revokeApiKey(String id) => _net(() => _inner.revokeApiKey(id));
+
+  // Mandıra paylaşımı (backend ADR 0137) ÖNBELLEKLENMEZ: çevrimdışı eski
+  // liste iptal edilmiş onayı açık gösterebilirdi.
+  @override
+  Future<List<Dairy>> dairies() => _net(_inner.dairies);
+
+  @override
+  Future<List<DairyShare>> dairyShares() => _net(_inner.dairyShares);
+
+  @override
+  Future<DairyShare> grantDairyShare({
+    required String dairyId,
+    required SharePeriod period,
+  }) => _net(() => _inner.grantDairyShare(dairyId: dairyId, period: period));
+
+  @override
+  Future<void> revokeDairyShare(String id) =>
+      _net(() => _inner.revokeDairyShare(id));
 
   @override
   Future<Deliveries> deliveries() => _read(

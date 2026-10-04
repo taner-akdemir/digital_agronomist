@@ -15,6 +15,7 @@ import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/api_key.dart';
 import 'package:milktrace/data/models/audit_entry.dart';
 import 'package:milktrace/data/models/breeding.dart';
+import 'package:milktrace/data/models/dairy.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
 import 'package:milktrace/data/models/delivery.dart';
 import 'package:milktrace/data/models/device.dart';
@@ -1555,6 +1556,81 @@ class MockRepository implements MilkTraceRepository {
   /// Mock'ta anahtarlar bellekte; tam anahtar backend gibi yalnızca
   /// oluşturulunca döner, listede yalnızca önek.
   final List<ApiKey> _apiKeys = [];
+
+  // Mandıra paylaşımı (backend ADR 0137): bellekte.
+  static const _dairies = [
+    Dairy(id: 'mock-dairy-1', name: 'Yayla Süt', city: 'Konya'),
+    Dairy(id: 'mock-dairy-2', name: 'Ova Mandıra', city: 'Bursa'),
+    Dairy(id: 'mock-dairy-3', name: 'Dere Süt Kooperatifi', city: 'Balıkesir'),
+  ];
+  final List<DairyShare> _shares = [];
+
+  @override
+  Future<List<Dairy>> dairies() => _delayed(() async => _dairies);
+
+  @override
+  Future<List<DairyShare>> dairyShares() => _delayed(
+    () async => [
+      ..._shares.reversed.where((s) => s.isActive),
+      ..._shares.reversed.where((s) => !s.isActive),
+    ],
+  );
+
+  @override
+  Future<DairyShare> grantDairyShare({
+    required String dairyId,
+    required SharePeriod period,
+  }) => _delayed(() async {
+    final d = _dairies.firstWhere(
+      (x) => x.id == dairyId,
+      orElse: () => throw const ApiException(
+        code: 'NOT_FOUND',
+        message: 'Mandıra bulunamadı',
+        status: 404,
+      ),
+    );
+    final now = DateTime.now().toUtc();
+    for (var i = 0; i < _shares.length; i++) {
+      if (_shares[i].dairyId == dairyId && _shares[i].isActive) {
+        _shares[i] = _shares[i].copyWith(revokedAt: now, status: 'revoked');
+      }
+    }
+    final share = DairyShare(
+      id: 'mock-share-${_shares.length + 1}',
+      dairyId: d.id,
+      dairyName: d.name,
+      dairyCity: d.city,
+      grantedAt: now,
+      grantedBy: 'Demo Kullanıcı',
+      expiresAt: switch (period) {
+        SharePeriod.threeMonths => DateTime.utc(
+          now.year,
+          now.month + 3,
+          now.day,
+        ),
+        SharePeriod.oneYear => DateTime.utc(now.year + 1, now.month, now.day),
+        SharePeriod.unlimited => null,
+      },
+    );
+    _shares.add(share);
+    return share;
+  });
+
+  @override
+  Future<void> revokeDairyShare(String id) => _delayed(() async {
+    final i = _shares.indexWhere((s) => s.id == id && s.isActive);
+    if (i < 0) {
+      throw const ApiException(
+        code: 'NOT_FOUND',
+        message: 'Açık paylaşım bulunamadı',
+        status: 404,
+      );
+    }
+    _shares[i] = _shares[i].copyWith(
+      revokedAt: DateTime.now().toUtc(),
+      status: 'revoked',
+    );
+  });
   int _apiKeySeq = 0;
 
   String _token(int n) {

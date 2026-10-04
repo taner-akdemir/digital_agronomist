@@ -50,6 +50,10 @@ otomatik olarak toplanır.
   dayanak).
 - Hava tahmini (Open-Meteo, İsviçre): ısı stresi uyarısı için yalnızca tesisin koordinatı
   gönderilir; kişisel veri aktarılmaz (backend ADR 0119).
+- **Mandıra (yalnızca açık rızayla, md. 5/1):** işletme sahibi seçtiği mandıraya onay
+  verirse onay süresince çiftlik bazlı toplamlar (işletme adı, süt miktarı ve eğilimi,
+  ortalama debi, teslim ve kalite analizi) görüntülenir; hayvan, kullanıcı ve ekip verisi
+  aktarılmaz. Rıza her an uygulamadan ya da web panelinden geri alınabilir.
 - Yetkili kamu kurumlarına, hukuki yükümlülük hâlinde.
 
 ## Saklama süresi

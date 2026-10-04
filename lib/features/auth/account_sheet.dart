@@ -288,7 +288,35 @@ class _AccountSheet extends ConsumerWidget {
                     ),
                   ),
                 ),
-                // API anahtarları (backend ADR 0126): yalnızca sahip.
+                // Entegrasyonlar: API anahtarları (backend ADR 0126) ve
+                // mandıra paylaşımı (ADR 0137); yalnızca sahip.
+                const SizedBox(height: AppSpacing.md),
+                Text(
+                  l10n.accountIntegrations,
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.onSurfaceMuted,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.xs),
+                OutlinedButton.icon(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    context.push('/settings/dairy-sharing');
+                  },
+                  icon: const Icon(Icons.handshake_outlined),
+                  label: Text(l10n.accountDairySharing),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.darkGreenColor,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppSpacing.lg,
+                    ),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadius.mdAll,
+                    ),
+                  ),
+                ),
                 const SizedBox(height: AppSpacing.sm),
                 OutlinedButton.icon(
                   onPressed: () {

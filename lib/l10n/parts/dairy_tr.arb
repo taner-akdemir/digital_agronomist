@@ -1,0 +1,76 @@
+{
+  "accountIntegrations": "Entegrasyonlar",
+  "accountDairySharing": "Mandıra paylaşımı",
+  "dairyTitle": "Mandıra paylaşımı",
+  "dairyPitch": "Sütünüzün kalitesini ve miktarını, kendi onayınız dahilinde mandıranızla anlık paylaşın; güvenilir tedarikçi statüsüyle sütünüze prim desteği alın.",
+  "dairyPrivateByDefault": "Çiftlik verileriniz varsayılan olarak gizlidir. Onay vermediğiniz hiçbir mandıraya veri gitmez; onayı istediğiniz an tek dokunuşla geri alırsınız.",
+  "dairySharedTitle": "Onay süresince mandıranın gördüğü",
+  "dairySharedItems": "• Çiftliğin toplam sütü ve günlük eğilimi\n• Ortalama sağım debisi\n• Tank teslimleri ve sonraki teslim tahmini\n• Mandıra analizi: yağ, protein, somatik hücre, bakteri",
+  "dairyNotSharedTitle": "Paylaşılmayan",
+  "dairyNotSharedItems": "• Hayvan adı, küpe ve hayvan bazlı her veri\n• Ekip, notlar, tedaviler, üreme kayıtları",
+  "dairyActiveTitle": "Açık onaylar",
+  "dairyNoActive": "Hiçbir mandıraya veri paylaşmıyorsunuz.",
+  "dairyHistoryTitle": "Geçmiş",
+  "dairySince": "Onay: {date}",
+  "@dairySince": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "dairyUntil": "Bitiş: {date}",
+  "@dairyUntil": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "dairyUnlimited": "Süresiz",
+  "dairyRevokedAt": "İptal edildi: {date}",
+  "@dairyRevokedAt": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "dairyExpired": "Süresi doldu",
+  "dairyRevoke": "İptal et",
+  "dairyRevokeTitle": "Paylaşım iptal edilsin mi?",
+  "dairyRevokeBody": "{dairy} artık çiftliğinizin verisini göremez. Bu hemen geçerli olur.",
+  "@dairyRevokeBody": {
+    "placeholders": {
+      "dairy": {}
+    }
+  },
+  "dairyRevoked": "Paylaşım iptal edildi",
+  "dairyAdd": "Mandıra ekle",
+  "dairyAddTitle": "Mandıraya veri paylaşım onayı",
+  "dairySelect": "Mandıra",
+  "dairyNoDairies": "Listede mandıra yok. Sütünüzü aldığı mandırayı eklememiz için destekle iletişime geçin.",
+  "dairyPeriod": "Süre",
+  "dairyPeriod3m": "3 ay",
+  "dairyPeriod1y": "1 yıl",
+  "dairyPeriodUnlimited": "Süresiz",
+  "dairyConsent": "{dairy} ile yukarıda yazan çiftlik verilerinin seçtiğim süre boyunca paylaşılmasına açık rızamla onay veriyorum; onayı istediğim an geri alabilirim.",
+  "@dairyConsent": {
+    "placeholders": {
+      "dairy": {}
+    }
+  },
+  "dairyConsentPlaceholder": "seçtiğim mandıra",
+  "dairyGrant": "Onay ver",
+  "dairyGranted": "{dairy} ile paylaşım başladı",
+  "@dairyGranted": {
+    "placeholders": {
+      "dairy": {}
+    }
+  },
+  "auditDairyShareGrant": "Mandıra paylaşımı onaylandı",
+  "auditDairyShareRevoke": "Mandıra paylaşımı iptal edildi",
+  "dairyAccountTitle": "Mandıra hesabı",
+  "dairyAccountBody": "{dairy} mandıra hesabıyla giriş yaptınız. Size veri paylaşan çiftlikleri web panelinden görürsünüz; mobil uygulama işletme kullanıcıları içindir.",
+  "@dairyAccountBody": {
+    "placeholders": {
+      "dairy": {}
+    }
+  },
+  "dairyAccountOpenWeb": "Web panelini aç",
+  "dairyAccountSignOut": "Çıkış yap"
+}

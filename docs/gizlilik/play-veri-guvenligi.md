@@ -37,6 +37,12 @@ aktarım "paylaşım" sayılmaz.
 
 ## Notlar
 
+- Mandıra paylaşımı (backend ADR 0137): işletme sahibinin açıkça başlattığı ve onay
+  kutusuyla onayladığı, her an geri alınabilen aktarım; yalnızca çiftlik bazlı toplamlar
+  (kişisel veri değil). Play'in "kullanıcının başlattığı aktarım" istisnasına girer; yine de
+  formda "Paylaşılan veri" sorulursa "Evet — kullanıcının açık onayıyla, çiftlik toplamları"
+  diye işaretlenir.
+
 - İzinler yalnızca `INTERNET` ve `POST_NOTIFICATIONS`. Sağımhane tabletinde ekranı
   açık tutan `wakelock_plus` izin eklemiyor ve veri toplamıyor; canlı ekrandaki
   titreşim sistemin dokunsal geri bildirimi (`VIBRATE` izni yok).

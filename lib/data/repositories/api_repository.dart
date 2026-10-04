@@ -14,6 +14,7 @@ import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/api_key.dart';
 import 'package:milktrace/data/models/audit_entry.dart';
 import 'package:milktrace/data/models/breeding.dart';
+import 'package:milktrace/data/models/dairy.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
 import 'package:milktrace/data/models/delivery.dart';
 import 'package:milktrace/data/models/device.dart';
@@ -902,6 +903,33 @@ class ApiRepository implements MilkTraceRepository {
   @override
   Future<void> revokeApiKey(String id) async {
     await _dio.delete<dynamic>('/api-keys/$id');
+  }
+
+  @override
+  Future<List<Dairy>> dairies() async =>
+      _listOf(await _dio.get<dynamic>('/dairies'), Dairy.fromJson);
+
+  @override
+  Future<List<DairyShare>> dairyShares() async =>
+      _listOf(await _dio.get<dynamic>('/dairy-shares'), DairyShare.fromJson);
+
+  @override
+  Future<DairyShare> grantDairyShare({
+    required String dairyId,
+    required SharePeriod period,
+  }) async => DairyShare.fromJson(
+    _dataOf(
+      await _dio.post<dynamic>(
+        '/dairy-shares',
+        // Rıza açık: ekran onay kutusu işaretlenmeden düğmeyi açmıyor.
+        data: {'dairyId': dairyId, 'period': period.code, 'consent': true},
+      ),
+    ),
+  );
+
+  @override
+  Future<void> revokeDairyShare(String id) async {
+    await _dio.delete<dynamic>('/dairy-shares/$id');
   }
 
   @override

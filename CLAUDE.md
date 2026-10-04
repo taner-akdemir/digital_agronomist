@@ -364,6 +364,21 @@ sayı, son 3 kontrol. Katsayı uygulamada DEĞİŞMEZ; `meter_drift` uyarısı s
 üretilmiş sağımı hayvanın kimliğinden deterministik bir çevrimiçi sayaca bağlar (geçmiş
 noktasız), kontroller bellekte, özet backend kuralıyla.
 
+**Erken mastitis riski** (backend ADR 0135): sağımın ortalama debisi hayvanın kendi 7 günlük
+ortalamasının türün eşiği (`Thresholds.flowDropPct`, varsayılan %30) kadar altındaysa sunucu
+`flow_drop` uyarısı açar (nokta düşük debideyse açmaz; iletkenlik de yüksekse ve kızgınlık
+penceresindeyse metin söyler). Push bütün üyelere — veteriner (görüntüleyici) dahil. Eşik
+ekranında "Mastitis şüphesi ve erken risk" grubunda; uygulama hesaplamaz.
+
+**Mandıra paylaşımı** (backend ADR 0137): hesap kartında sahibe "Entegrasyonlar → Mandıra
+paylaşımı" (`/settings/dairy-sharing`). Veri VARSAYILAN GİZLİ; mandıra listeden seçilir,
+süre (3 ay / 1 yıl / süresiz) ve AÇIK RIZA kutusu işaretlenmeden "Onay ver" kapalı;
+`POST /dairy-shares` `consent: true`. Ekran neyin paylaşıldığını (çiftlik bazlı süt, debi,
+teslim, kalite) ve neyin paylaşılMADIĞINI (hayvan bazlı her şey) onaydan önce yazar. İptal
+tek dokunuş, anında; geçmiş silinmez. Önbelleklenmez. Mandıra kullanıcısı (`dairy_viewer`,
+`AuthUser.isDairy`) uygulamada TEK ekran görür (`/dairy-account`): web paneline yönlendirme
+ve çıkış; push kaydı yapılmaz. Mandıra ekranları web panelinde.
+
 **Sağım hızı** (backend ADR 0125, `GET /milking-speed`): `milkingSpeedProvider` (hayvana göre,
 okunamazsa boş). Detayda "Sağım hızı · son 30 gün" (ortalama/tepe debi, ortalama süre
 `durationLabel`, türün sürü ortalaması; `slow` SUNUCUDAN → amber "Yavaş sağılıyor: sürü

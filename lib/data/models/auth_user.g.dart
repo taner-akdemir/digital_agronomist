@@ -20,6 +20,8 @@ _AuthUser _$AuthUserFromJson(Map<String, dynamic> json) => _AuthUser(
   volumeUnit: json['volumeUnit'] as String? ?? 'L',
   kiosk: json['kiosk'] as bool? ?? false,
   twoFactor: json['twoFactor'] as bool? ?? false,
+  dairyId: json['dairyId'] as String?,
+  dairyName: json['dairyName'] as String?,
 );
 
 Map<String, dynamic> _$AuthUserToJson(_AuthUser instance) => <String, dynamic>{
@@ -32,6 +34,8 @@ Map<String, dynamic> _$AuthUserToJson(_AuthUser instance) => <String, dynamic>{
   'volumeUnit': instance.volumeUnit,
   'kiosk': instance.kiosk,
   'twoFactor': instance.twoFactor,
+  'dairyId': instance.dairyId,
+  'dairyName': instance.dairyName,
 };
 
 _TenantRef _$TenantRefFromJson(Map<String, dynamic> json) => _TenantRef(
