@@ -35,8 +35,8 @@
   "thresholdsNoMilk": "Empty milking limit",
   "thresholdsNoMilkCount": "Recent milkings checked",
   "thresholdsFresh": "Fresh lactation",
-  "thresholdsMastitisGroupTitle": "Suspected mastitis",
-  "thresholdsMastitisGroupHint": "If the meter measures conductivity: alert when a milking's conductivity is this much above the animal's own 7-day average. This is not a diagnosis; it is a signal for a veterinary check.",
+  "thresholdsMastitisGroupTitle": "Suspected mastitis and early risk",
+  "thresholdsMastitisGroupHint": "Alert when a milking's conductivity is this much above the animal's own 7-day average (if the meter measures conductivity) or its average flow is this much below it. This is not a diagnosis; it is a signal for a veterinary check.",
   "thresholdsConductivity": "Conductivity rise",
   "thresholdsDensityGroupTitle": "Milk density",
   "thresholdsDensityGroupHint": "If the farm shows amounts in kilograms, litres are converted with this factor (1 L of cow milk ≈ 1.03 kg). Thresholds are still entered in litres.",
@@ -155,5 +155,7 @@
   "channelsHintTemplateName": "Name of the approved template in Meta, e.g. milktrace_uyari (body: Milk Trace bildirimi + one variable)",
   "channelsHintTemplateLanguage": "Leave empty for tr",
   "channelsHintPhoneNumberId": "The phone number ID in Meta WhatsApp Manager (digits only)",
-  "channelsHintWhatsappFrom": "Your WhatsApp number in Twilio, e.g. +14155238886"
+  "channelsHintWhatsappFrom": "Your WhatsApp number in Twilio, e.g. +14155238886",
+  "thresholdsFlowDrop": "Flow drop",
+  "thresholdsErrorFlowDropRange": "Must be between 10 and 90"
 }

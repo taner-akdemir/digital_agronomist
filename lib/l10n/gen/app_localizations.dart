@@ -4975,6 +4975,12 @@ abstract class AppLocalizations {
   /// **'0,90–1,20 arasında olmalı'**
   String get thresholdsErrorDensityRange;
 
+  /// No description provided for @thresholdsErrorFlowDropRange.
+  ///
+  /// In tr, this message translates to:
+  /// **'10–90 arasında olmalı'**
+  String get thresholdsErrorFlowDropRange;
+
   /// No description provided for @thresholdsErrorInteger.
   ///
   /// In tr, this message translates to:
@@ -5023,6 +5029,12 @@ abstract class AppLocalizations {
   /// **'Yanlış alarm koruması'**
   String get thresholdsFalseAlarmGroupTitle;
 
+  /// No description provided for @thresholdsFlowDrop.
+  ///
+  /// In tr, this message translates to:
+  /// **'Debi düşüşü'**
+  String get thresholdsFlowDrop;
+
   /// No description provided for @thresholdsFlowGroupHint.
   ///
   /// In tr, this message translates to:
@@ -5068,13 +5080,13 @@ abstract class AppLocalizations {
   /// No description provided for @thresholdsMastitisGroupHint.
   ///
   /// In tr, this message translates to:
-  /// **'Sayaç iletkenlik ölçüyorsa: sağımın iletkenliği hayvanın kendi 7 günlük ortalamasının bu oran kadar üstündeyse uyarı. Teşhis değildir; veteriner kontrolü için işarettir.'**
+  /// **'Sağımın iletkenliği hayvanın kendi 7 günlük ortalamasının bu oran kadar üstündeyse (sayaç iletkenlik ölçüyorsa) ya da ortalama debisi bu oran kadar altındaysa uyarı. Teşhis değildir; veteriner kontrolü için işarettir.'**
   String get thresholdsMastitisGroupHint;
 
   /// No description provided for @thresholdsMastitisGroupTitle.
   ///
   /// In tr, this message translates to:
-  /// **'Mastitis şüphesi'**
+  /// **'Mastitis şüphesi ve erken risk'**
   String get thresholdsMastitisGroupTitle;
 
   /// No description provided for @thresholdsNoMilk.

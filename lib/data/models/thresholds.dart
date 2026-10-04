@@ -61,6 +61,10 @@ abstract class Thresholds with _$Thresholds {
     /// Sağım iletkenliği hayvanın 7 günlük ortalamasının bu yüzde kadar
     /// üstündeyse "mastitis şüphesi" (backend ADR 0087).
     @Default(15) int conductivityRisePct,
+
+    /// Sağımın ortalama debisi hayvanın 7 günlük ortalamasının bu yüzde kadar
+    /// altındaysa "erken mastitis riski" (backend ADR 0135).
+    @Default(30) int flowDropPct,
   }) = _Thresholds;
 
   factory Thresholds.fromJson(Map<String, dynamic> json) =>

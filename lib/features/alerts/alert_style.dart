@@ -31,6 +31,8 @@ abstract final class AlertStyle {
     'device_error' => Icons.error_outline,
     // Mastitis şüphesi (backend ADR 0087): iletkenlik yükseldi.
     'high_conductivity' => Icons.health_and_safety_outlined,
+    // Erken mastitis riski (backend ADR 0135): debi kendi ortalamasının altında.
+    'flow_drop' => Icons.monitor_heart_outlined,
     // Tank teslim farkı (backend ADR 0089): tanker ile sayaçlar tutmadı.
     'delivery_mismatch' => Icons.local_shipping_outlined,
     // Kalibrasyon zamanı (backend ADR 0097).

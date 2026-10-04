@@ -2874,6 +2874,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get thresholdsErrorDensityRange => '0,90–1,20 arasında olmalı';
 
   @override
+  String get thresholdsErrorFlowDropRange => '10–90 arasında olmalı';
+
+  @override
   String get thresholdsErrorInteger => 'Tam sayı girin';
 
   @override
@@ -2901,6 +2904,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get thresholdsFalseAlarmGroupTitle => 'Yanlış alarm koruması';
 
   @override
+  String get thresholdsFlowDrop => 'Debi düşüşü';
+
+  @override
   String get thresholdsFlowGroupHint =>
       'Altında kırmızı, üstünde yeşil; arası sarı (§6.2).';
 
@@ -2924,10 +2930,10 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get thresholdsMastitisGroupHint =>
-      'Sayaç iletkenlik ölçüyorsa: sağımın iletkenliği hayvanın kendi 7 günlük ortalamasının bu oran kadar üstündeyse uyarı. Teşhis değildir; veteriner kontrolü için işarettir.';
+      'Sağımın iletkenliği hayvanın kendi 7 günlük ortalamasının bu oran kadar üstündeyse (sayaç iletkenlik ölçüyorsa) ya da ortalama debisi bu oran kadar altındaysa uyarı. Teşhis değildir; veteriner kontrolü için işarettir.';
 
   @override
-  String get thresholdsMastitisGroupTitle => 'Mastitis şüphesi';
+  String get thresholdsMastitisGroupTitle => 'Mastitis şüphesi ve erken risk';
 
   @override
   String get thresholdsNoMilk => 'Boş sağım sınırı';

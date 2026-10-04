@@ -2911,6 +2911,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get thresholdsErrorDensityRange => 'Must be between 0.90 and 1.20';
 
   @override
+  String get thresholdsErrorFlowDropRange => 'Must be between 10 and 90';
+
+  @override
   String get thresholdsErrorInteger => 'Enter a whole number';
 
   @override
@@ -2938,6 +2941,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get thresholdsFalseAlarmGroupTitle => 'False-alarm protection';
 
   @override
+  String get thresholdsFlowDrop => 'Flow drop';
+
+  @override
   String get thresholdsFlowGroupHint =>
       'Red below, green above; yellow in between (§6.2).';
 
@@ -2961,10 +2967,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get thresholdsMastitisGroupHint =>
-      'If the meter measures conductivity: alert when a milking\'s conductivity is this much above the animal\'s own 7-day average. This is not a diagnosis; it is a signal for a veterinary check.';
+      'Alert when a milking\'s conductivity is this much above the animal\'s own 7-day average (if the meter measures conductivity) or its average flow is this much below it. This is not a diagnosis; it is a signal for a veterinary check.';
 
   @override
-  String get thresholdsMastitisGroupTitle => 'Suspected mastitis';
+  String get thresholdsMastitisGroupTitle =>
+      'Suspected mastitis and early risk';
 
   @override
   String get thresholdsNoMilk => 'Empty milking limit';

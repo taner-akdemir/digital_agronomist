@@ -144,6 +144,7 @@ class _FormState extends ConsumerState<_Form> {
       'fresh': TextEditingController(text: '${t.freshLactationDays}'),
       'density': TextEditingController(text: _num(t.milkDensity)),
       'conductivity': TextEditingController(text: '${t.conductivityRisePct}'),
+      'flowDrop': TextEditingController(text: '${t.flowDropPct}'),
     };
   }
 
@@ -268,6 +269,7 @@ class _FormState extends ConsumerState<_Form> {
             hint: l10n.thresholdsMastitisGroupHint,
             children: [
               _field('conductivity', l10n.thresholdsConductivity, '%'),
+              _field('flowDrop', l10n.thresholdsFlowDrop, '%'),
             ],
           ),
           _Group(
@@ -330,8 +332,10 @@ class _FormState extends ConsumerState<_Form> {
       'density' when v < 0.9 || v > 1.2 => l10n.thresholdsErrorDensityRange,
       'conductivity' when v < 5 || v > 100 =>
         l10n.thresholdsErrorConductivityRange,
+      'flowDrop' when v < 10 || v > 90 => l10n.thresholdsErrorFlowDropRange,
       'decline' ||
       'conductivity' ||
+      'flowDrop' ||
       'noMilk' ||
       'noMilkCount' when v != v.roundToDouble() => l10n.thresholdsErrorInteger,
       // Beklenen sağım hacmine eşit bir "boş sağım" sınırı normal sağılan
@@ -367,6 +371,7 @@ class _FormState extends ConsumerState<_Form> {
       freshLactationDays: _value('fresh')!.round(),
       milkDensity: _value('density')!,
       conductivityRisePct: _value('conductivity')!.round(),
+      flowDropPct: _value('flowDrop')!.round(),
     );
 
     try {
