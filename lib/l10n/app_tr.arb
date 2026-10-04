@@ -1151,6 +1151,34 @@
   "liveEndMilking": "Sağımı Bitir",
   "liveFlowRate": "Akış oranı",
   "liveFlowUnit": "L/dk",
+  "liveGroupApply": "Onayla ({count})",
+  "@liveGroupApply": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "liveGroupConfirm": "Grubu aynen onayla ({count})",
+  "@liveGroupConfirm": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "liveGroupDone": "{count} nokta eşleştirildi",
+  "@liveGroupDone": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "liveGroupHint": "Önceki sağımlardaki giriş sırasına göre önerildi. Kontrol edin; tek dokunuşla hepsi eşleştirilir.",
+  "liveGroupPartial": "{count} nokta eşleştirildi. {error}",
+  "@liveGroupPartial": {
+    "placeholders": {
+      "count": {},
+      "error": {}
+    }
+  },
+  "liveGroupReasonSequence": "sıraya göre",
+  "liveGroupTitle": "Grubu aynen onayla",
   "liveHallName": "{name} Bölgesi",
   "@liveHallName": {
     "placeholders": {
@@ -1179,6 +1207,12 @@
     }
   },
   "livePickerElsewhere": "başka noktada",
+  "livePickerFollows": "genelde {tag} arkasından gelir",
+  "@livePickerFollows": {
+    "placeholders": {
+      "tag": {}
+    }
+  },
   "livePickerLoadFailed": "Hayvanlar yüklenemedi",
   "livePickerNoMatch": "Eşleşen hayvan yok",
   "livePickerNotMilking": "{message}: listede yok. Yanlışlıkla girdiyse başlığı çıkarın; sağılacaksa önce hayvanın durumunu değiştirin.",

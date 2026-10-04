@@ -1028,6 +1028,34 @@
   "liveEndMilking": "End Milking",
   "liveFlowRate": "Flow rate",
   "liveFlowUnit": "L/min",
+  "liveGroupApply": "Confirm ({count})",
+  "@liveGroupApply": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "liveGroupConfirm": "Confirm group as is ({count})",
+  "@liveGroupConfirm": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "liveGroupDone": "{count} points paired",
+  "@liveGroupDone": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "liveGroupHint": "Suggested from the entry order of previous milkings. Check it; one tap pairs them all.",
+  "liveGroupPartial": "{count} points paired. {error}",
+  "@liveGroupPartial": {
+    "placeholders": {
+      "count": {},
+      "error": {}
+    }
+  },
+  "liveGroupReasonSequence": "by order",
+  "liveGroupTitle": "Confirm group as is",
   "liveHallName": "Area {name}",
   "@liveHallName": {
     "placeholders": {
@@ -1056,6 +1084,12 @@
     }
   },
   "livePickerElsewhere": "at another point",
+  "livePickerFollows": "usually follows {tag}",
+  "@livePickerFollows": {
+    "placeholders": {
+      "tag": {}
+    }
+  },
   "livePickerLoadFailed": "Couldn't load animals",
   "livePickerNoMatch": "No matching animals",
   "livePickerNotMilking": "{message}: not in the list. If it came in by mistake, remove the cluster; to milk it, change the animal's status first.",

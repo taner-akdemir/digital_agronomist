@@ -230,6 +230,13 @@ Seçici bölgenin son BİTMİŞ oturumunun yerleşimini (`GET /sessions/{id}/mil
 `previousSpoutsProvider`) okur: önce önceki sağımda bu noktadaki hayvan ("önceki sağımda bu
 noktadaydı"), sonra önceki sağımda sağılanlar, sonra kalanlar; başka noktaya bağlı olan en
 altta. Okunamazsa öneri sessizce düşer, liste küpe sırasıyla gelir — öneri engel olmamalı.
+**Sıralı öneri** (backend ADR 0136, `GET /sessions/placements`, `hallPlacementsProvider`):
+hayvanlar her gün aşağı yukarı aynı sırayla girer. `PlacementSequence` (lib/domain, web
+paneliyle AYNI hesap) son 10 oturumda A'nın 1–3 nokta arkasından kim geldiğini sayar (yeni
+oturum ağır, ×0,85); seçici öndeki en yakın 3 DOLU noktaya göre "genelde X arkasından gelir"
+hayvanları EN ÜSTE koyar. Canlı ekranda boş noktalar için "Grubu aynen onayla (N)":
+önizleme → tek dokunuşla mevcut eşleştirme ucuyla sırayla (`MilkingControl.assignAll`;
+toplu uç yok), hata veren atlanır.
 
 **Hayvan ekleme/düzenleme** (`/animals/new`, `/animals/:id/edit`; kabuğun dışında tam
 ekran form): küpe (zorunlu, işletmede tekil), tür, ad, ırk, RFID, doğum ve son buzağılama

@@ -27,6 +27,7 @@ import 'package:milktrace/data/models/milking_speed.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
 import 'package:milktrace/data/models/quiet_hours.dart';
 import 'package:milktrace/data/models/session_milking.dart';
+import 'package:milktrace/data/models/session_placements.dart';
 import 'package:milktrace/data/models/session_summary.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
@@ -357,6 +358,13 @@ class CachingRepository implements MilkTraceRepository {
     'milkings:$sessionId',
     () => _inner.sessionMilkings(sessionId),
     (j) => _list(j, SessionMilking.fromJson),
+  );
+
+  @override
+  Future<List<SessionPlacements>> hallPlacements(String hallId) => _read(
+    'placements:$hallId',
+    () => _inner.hallPlacements(hallId),
+    (j) => _list(j, SessionPlacements.fromJson),
   );
 
   @override

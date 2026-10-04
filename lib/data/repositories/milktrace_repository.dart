@@ -23,6 +23,7 @@ import 'package:milktrace/data/models/milking_speed.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
 import 'package:milktrace/data/models/quiet_hours.dart';
 import 'package:milktrace/data/models/session_milking.dart';
+import 'package:milktrace/data/models/session_placements.dart';
 import 'package:milktrace/data/models/session_summary.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
@@ -220,6 +221,10 @@ abstract interface class MilkTraceRepository {
 
   /// Oturumun sağımları (GET /sessions/{id}/milkings, backend ADR 0062).
   Future<List<SessionMilking>> sessionMilkings(String sessionId);
+
+  /// Bölgenin son bitmiş oturumlarının yerleşimi, en yeni başta
+  /// (GET /sessions/placements, backend ADR 0136).
+  Future<List<SessionPlacements>> hallPlacements(String hallId);
 
   /// Günün özeti ve sınıf dağılımı (§8.5 GET /dashboard).
   Future<DashboardSummary> dashboard();

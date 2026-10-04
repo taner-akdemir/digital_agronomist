@@ -2045,6 +2045,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get liveFlowUnit => 'L/min';
 
   @override
+  String liveGroupApply(Object count) {
+    return 'Confirm ($count)';
+  }
+
+  @override
+  String liveGroupConfirm(Object count) {
+    return 'Confirm group as is ($count)';
+  }
+
+  @override
+  String liveGroupDone(Object count) {
+    return '$count points paired';
+  }
+
+  @override
+  String get liveGroupHint =>
+      'Suggested from the entry order of previous milkings. Check it; one tap pairs them all.';
+
+  @override
+  String liveGroupPartial(Object count, Object error) {
+    return '$count points paired. $error';
+  }
+
+  @override
+  String get liveGroupReasonSequence => 'by order';
+
+  @override
+  String get liveGroupTitle => 'Confirm group as is';
+
+  @override
   String liveHallName(Object name) {
     return 'Area $name';
   }
@@ -2089,6 +2119,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get livePickerElsewhere => 'at another point';
+
+  @override
+  String livePickerFollows(Object tag) {
+    return 'usually follows $tag';
+  }
 
   @override
   String get livePickerLoadFailed => 'Couldn\'t load animals';

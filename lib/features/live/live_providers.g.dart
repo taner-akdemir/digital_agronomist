@@ -415,6 +415,102 @@ final class PreviousSpoutsFamily extends $Family
   String toString() => r'previousSpoutsProvider';
 }
 
+/// Bölgenin son bitmiş oturumlarının yerleşimi (backend ADR 0136): sıralı
+/// öneri ve "Grubu aynen onayla" bunu okur. Öneri bir KOLAYLIK: okunamazsa
+/// boş liste, seçici ADR 0062 sırasıyla çalışır.
+
+@ProviderFor(hallPlacements)
+final hallPlacementsProvider = HallPlacementsFamily._();
+
+/// Bölgenin son bitmiş oturumlarının yerleşimi (backend ADR 0136): sıralı
+/// öneri ve "Grubu aynen onayla" bunu okur. Öneri bir KOLAYLIK: okunamazsa
+/// boş liste, seçici ADR 0062 sırasıyla çalışır.
+
+final class HallPlacementsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<SessionPlacements>>,
+          List<SessionPlacements>,
+          FutureOr<List<SessionPlacements>>
+        >
+    with
+        $FutureModifier<List<SessionPlacements>>,
+        $FutureProvider<List<SessionPlacements>> {
+  /// Bölgenin son bitmiş oturumlarının yerleşimi (backend ADR 0136): sıralı
+  /// öneri ve "Grubu aynen onayla" bunu okur. Öneri bir KOLAYLIK: okunamazsa
+  /// boş liste, seçici ADR 0062 sırasıyla çalışır.
+  HallPlacementsProvider._({
+    required HallPlacementsFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'hallPlacementsProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$hallPlacementsHash();
+
+  @override
+  String toString() {
+    return r'hallPlacementsProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<List<SessionPlacements>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<SessionPlacements>> create(Ref ref) {
+    final argument = this.argument as String;
+    return hallPlacements(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is HallPlacementsProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$hallPlacementsHash() => r'0aa2c3c2404787c15ae371c8e6c17c847594840c';
+
+/// Bölgenin son bitmiş oturumlarının yerleşimi (backend ADR 0136): sıralı
+/// öneri ve "Grubu aynen onayla" bunu okur. Öneri bir KOLAYLIK: okunamazsa
+/// boş liste, seçici ADR 0062 sırasıyla çalışır.
+
+final class HallPlacementsFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<List<SessionPlacements>>, String> {
+  HallPlacementsFamily._()
+    : super(
+        retry: null,
+        name: r'hallPlacementsProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// Bölgenin son bitmiş oturumlarının yerleşimi (backend ADR 0136): sıralı
+  /// öneri ve "Grubu aynen onayla" bunu okur. Öneri bir KOLAYLIK: okunamazsa
+  /// boş liste, seçici ADR 0062 sırasıyla çalışır.
+
+  HallPlacementsProvider call(String hallId) =>
+      HallPlacementsProvider._(argument: hallId, from: this);
+
+  @override
+  String toString() => r'hallPlacementsProvider';
+}
+
 /// Bölgenin canlı sağım durumu.
 ///
 /// İlk yükleme `GET /sessions/{id}/live`, sonrası WebSocket akışı (§8.5).
@@ -583,7 +679,7 @@ final class MilkingControlProvider
   }
 }
 
-String _$milkingControlHash() => r'b81a3ed7852617f0733bacf52b28c695fb118d6b';
+String _$milkingControlHash() => r'e97f156a5526364c5feef9f4f3b7a28afced24d6';
 
 /// Sağım kontrolü: başlat, eşleştir, bitir (§15.1).
 ///

@@ -27,6 +27,7 @@ import 'package:milktrace/data/models/milking_speed.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
 import 'package:milktrace/data/models/quiet_hours.dart';
 import 'package:milktrace/data/models/session_milking.dart';
+import 'package:milktrace/data/models/session_placements.dart';
 import 'package:milktrace/data/models/session_summary.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
@@ -602,6 +603,16 @@ class ApiRepository implements MilkTraceRepository {
       _listOf(
         await _dio.get<dynamic>('/sessions/$sessionId/milkings'),
         SessionMilking.fromJson,
+      );
+
+  @override
+  Future<List<SessionPlacements>> hallPlacements(String hallId) async =>
+      _listOf(
+        await _dio.get<dynamic>(
+          '/sessions/placements',
+          queryParameters: {'hallId': hallId, 'limit': 10},
+        ),
+        SessionPlacements.fromJson,
       );
 
   @override

@@ -3523,6 +3523,48 @@ abstract class AppLocalizations {
   /// **'L/dk'**
   String get liveFlowUnit;
 
+  /// No description provided for @liveGroupApply.
+  ///
+  /// In tr, this message translates to:
+  /// **'Onayla ({count})'**
+  String liveGroupApply(Object count);
+
+  /// No description provided for @liveGroupConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'Grubu aynen onayla ({count})'**
+  String liveGroupConfirm(Object count);
+
+  /// No description provided for @liveGroupDone.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} nokta eşleştirildi'**
+  String liveGroupDone(Object count);
+
+  /// No description provided for @liveGroupHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Önceki sağımlardaki giriş sırasına göre önerildi. Kontrol edin; tek dokunuşla hepsi eşleştirilir.'**
+  String get liveGroupHint;
+
+  /// No description provided for @liveGroupPartial.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} nokta eşleştirildi. {error}'**
+  String liveGroupPartial(Object count, Object error);
+
+  /// No description provided for @liveGroupReasonSequence.
+  ///
+  /// In tr, this message translates to:
+  /// **'sıraya göre'**
+  String get liveGroupReasonSequence;
+
+  /// No description provided for @liveGroupTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Grubu aynen onayla'**
+  String get liveGroupTitle;
+
   /// No description provided for @liveHallName.
   ///
   /// In tr, this message translates to:
@@ -3600,6 +3642,12 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'başka noktada'**
   String get livePickerElsewhere;
+
+  /// No description provided for @livePickerFollows.
+  ///
+  /// In tr, this message translates to:
+  /// **'genelde {tag} arkasından gelir'**
+  String livePickerFollows(Object tag);
 
   /// No description provided for @livePickerLoadFailed.
   ///

@@ -1,0 +1,36 @@
+{
+  "livePickerFollows": "usually follows {tag}",
+  "@livePickerFollows": {
+    "placeholders": {
+      "tag": {}
+    }
+  },
+  "liveGroupConfirm": "Confirm group as is ({count})",
+  "@liveGroupConfirm": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "liveGroupTitle": "Confirm group as is",
+  "liveGroupHint": "Suggested from the entry order of previous milkings. Check it; one tap pairs them all.",
+  "liveGroupReasonSequence": "by order",
+  "liveGroupApply": "Confirm ({count})",
+  "@liveGroupApply": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "liveGroupDone": "{count} points paired",
+  "@liveGroupDone": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "liveGroupPartial": "{count} points paired. {error}",
+  "@liveGroupPartial": {
+    "placeholders": {
+      "count": {},
+      "error": {}
+    }
+  }
+}

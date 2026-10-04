@@ -28,6 +28,7 @@ import 'package:milktrace/data/models/milking_speed.dart';
 import 'package:milktrace/data/models/notification_channel.dart';
 import 'package:milktrace/data/models/quiet_hours.dart';
 import 'package:milktrace/data/models/session_milking.dart';
+import 'package:milktrace/data/models/session_placements.dart';
 import 'package:milktrace/data/models/session_summary.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout.dart';
@@ -925,6 +926,35 @@ class MockRepository implements MilkTraceRepository {
       ),
     );
   }
+
+  /// Son oturumların yerleşimi (backend ADR 0136): geçmiş sağımın sırası
+  /// beş oturum boyunca; ikide bir ilk iki hayvan yer değiştirir — sıralı
+  /// öneri demoda olasılıkla sıralansın.
+  @override
+  Future<List<SessionPlacements>> hallPlacements(String hallId) =>
+      _delayed(() async {
+        final last = [
+          for (final m in await sessionMilkings(''))
+            if (m.spoutId != null) m,
+        ];
+        final spouts = [for (final m in last) m.spoutId!];
+        final animals = [for (final m in last) m.animalId];
+        final at = DateTime.utc(2026, 9, 20, 17, 0);
+        return [
+          for (var k = 0; k < 5; k++)
+            SessionPlacements(
+              sessionId: 'mock-placements-$k',
+              startedAt: at.subtract(Duration(hours: 12 * k)),
+              placements: [
+                for (var i = 0; i < spouts.length; i++)
+                  Placement(
+                    spoutId: spouts[i],
+                    animalId: k.isOdd && i < 2 ? animals[1 - i] : animals[i],
+                  ),
+              ],
+            ),
+        ];
+      });
 
   /// Geçmiş oturumun sağımları: canlı demodaki yerleşim, üstüne boştaki 8.
   /// noktada Gelin — seçicinin "önceki sağımda bu noktadaydı" önerisi

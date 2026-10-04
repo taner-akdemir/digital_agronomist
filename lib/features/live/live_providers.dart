@@ -1,7 +1,9 @@
 import 'package:milktrace/data/models/hall.dart';
 import 'package:milktrace/data/models/milking_session.dart';
+import 'package:milktrace/data/models/session_placements.dart';
 import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/vacuum.dart';
+import 'package:milktrace/domain/placement_sequence.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -76,6 +78,18 @@ Future<Map<String, String>> previousSpouts(Ref ref, String hallId) async {
     return {for (final m in milkings) m.animalId: ?m.spoutId};
   } on Object {
     return const {};
+  }
+}
+
+/// Bölgenin son bitmiş oturumlarının yerleşimi (backend ADR 0136): sıralı
+/// öneri ve "Grubu aynen onayla" bunu okur. Öneri bir KOLAYLIK: okunamazsa
+/// boş liste, seçici ADR 0062 sırasıyla çalışır.
+@riverpod
+Future<List<SessionPlacements>> hallPlacements(Ref ref, String hallId) async {
+  try {
+    return await ref.watch(repositoryProvider).hallPlacements(hallId);
+  } on Object {
+    return const [];
   }
 }
 
@@ -171,6 +185,39 @@ class MilkingControl extends _$MilkingControl {
       animalId: animalId,
     );
   });
+
+  /// "Grubu aynen onayla" (backend ADR 0136): önerilen noktaları sırayla
+  /// mevcut eşleştirme ucuyla yazar. Hata veren nokta atlanır; yazılan sayı
+  /// ve ilk hata döner. Ayrı toplu uç yok: eşleştirmenin kuralları tek
+  /// yerde kalsın.
+  Future<({int done, Object? error})> assignAll({
+    required String sessionId,
+    required List<Proposal> proposals,
+  }) async {
+    if (state) return (done: 0, error: null);
+    state = true;
+    var done = 0;
+    Object? first;
+    try {
+      final repo = ref.read(repositoryProvider);
+      for (final p in proposals) {
+        try {
+          await repo.assignAnimal(
+            sessionId: sessionId,
+            spoutId: p.spoutId,
+            animalId: p.animalId,
+          );
+          done++;
+        } on Object catch (e) {
+          first ??= e;
+        }
+      }
+      ref.invalidate(liveBoardProvider);
+    } finally {
+      state = false;
+    }
+    return (done: done, error: first);
+  }
 
   /// Yanlış eşleştirmeyi geri alır.
   Future<void> unassign({required String sessionId, required String spoutId}) =>

@@ -6,6 +6,7 @@ import 'package:milktrace/core/volume.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/spout_update.dart';
+import 'package:milktrace/domain/placement_sequence.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
@@ -44,6 +45,7 @@ Future<AnimalPick?> showAnimalPicker(
   SpoutAnimal? current,
   String? spoutId,
   Map<String, String> previousSpouts = const {},
+  List<Follower> followers = const [],
 }) => showModalBottomSheet<AnimalPick>(
   context: context,
   isScrollControlled: true,
@@ -56,6 +58,7 @@ Future<AnimalPick?> showAnimalPicker(
     current: current,
     spoutId: spoutId,
     previousSpouts: previousSpouts,
+    followers: followers,
   ),
 );
 
@@ -67,6 +70,7 @@ class _AnimalPicker extends ConsumerStatefulWidget {
     this.current,
     this.spoutId,
     this.previousSpouts = const {},
+    this.followers = const [],
   });
 
   final String spoutLabel;
@@ -82,6 +86,10 @@ class _AnimalPicker extends ConsumerStatefulWidget {
 
   /// Bu oturumda BAŞKA noktalara eşleştirilmiş hayvanlar.
   final Set<String> alreadyAssigned;
+
+  /// Sıralı öneri (backend ADR 0136): öndeki noktalardaki hayvanların
+  /// geçmişte arkasından gelenler, puana göre. Listenin EN ÜSTÜNDE.
+  final List<Follower> followers;
 
   @override
   ConsumerState<_AnimalPicker> createState() => _AnimalPickerState();
@@ -218,7 +226,11 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
                   return Column(
                     children: [
                       ?chips,
-                      Expanded(child: _list(context, matches, speciesName)),
+                      Expanded(
+                        child: _list(context, matches, speciesName, {
+                          for (final a in list) a.id: a.earTag,
+                        }),
+                      ),
                     ],
                   );
                 },
@@ -234,6 +246,7 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
     BuildContext context,
     List<Animal> matches,
     Map<String, String> speciesName,
+    Map<String, String> tagOf,
   ) {
     return ListView.builder(
       itemCount: matches.length,
@@ -262,6 +275,8 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
               speciesName[a.speciesId] ?? '',
               if (taken)
                 l10n.livePickerElsewhere
+              else if (_follower[a.id] case final f?)
+                l10n.livePickerFollows(tagOf[f.leaderId] ?? '')
               else if (_rank(a) == 0)
                 l10n.livePickerPrevHere
               else if (_rank(a) == 1)
@@ -311,19 +326,31 @@ class _AnimalPickerState extends ConsumerState<_AnimalPicker> {
           a,
     ];
 
-    // Önce muhtemel hayvanlar, eşleştirilmişler ALTTA (bkz. _rank).
+    // Önce sıralı öneri (puana göre), sonra muhtemel hayvanlar,
+    // eşleştirilmişler ALTTA (bkz. _rank).
     matches.sort((a, b) {
       final ra = _rank(a), rb = _rank(b);
-      return ra != rb ? ra - rb : a.earTag.compareTo(b.earTag);
+      if (ra != rb) return ra - rb;
+      if (ra == -1) {
+        final s = _follower[b.id]!.score.compareTo(_follower[a.id]!.score);
+        if (s != 0) return s;
+      }
+      return a.earTag.compareTo(b.earTag);
     });
     return matches;
   }
 
-  /// Listedeki sıra (backend ADR 0062): 0 önceki sağımda BU noktadaydı,
+  late final Map<String, Follower> _follower = {
+    for (final f in widget.followers) f.animalId: f,
+  };
+
+  /// Listedeki sıra (backend ADR 0062, 0136): -1 sıralı öneri (öndeki
+  /// hayvanın genelde arkasından gelir), 0 önceki sağımda BU noktadaydı,
   /// 1 önceki sağımda sağıldı ama bu oturumda henüz bağlanmadı, 2 diğerleri,
   /// 3 bu oturumda başka noktada (seçilemez).
   int _rank(Animal a) {
     if (widget.alreadyAssigned.contains(a.id)) return 3;
+    if (_follower.containsKey(a.id)) return -1;
     final prev = widget.previousSpouts[a.id];
     if (prev != null && prev == widget.spoutId) return 0;
     if (prev != null) return 1;

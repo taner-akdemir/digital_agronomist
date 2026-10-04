@@ -1,0 +1,36 @@
+{
+  "livePickerFollows": "genelde {tag} arkasından gelir",
+  "@livePickerFollows": {
+    "placeholders": {
+      "tag": {}
+    }
+  },
+  "liveGroupConfirm": "Grubu aynen onayla ({count})",
+  "@liveGroupConfirm": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "liveGroupTitle": "Grubu aynen onayla",
+  "liveGroupHint": "Önceki sağımlardaki giriş sırasına göre önerildi. Kontrol edin; tek dokunuşla hepsi eşleştirilir.",
+  "liveGroupReasonSequence": "sıraya göre",
+  "liveGroupApply": "Onayla ({count})",
+  "@liveGroupApply": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "liveGroupDone": "{count} nokta eşleştirildi",
+  "@liveGroupDone": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "liveGroupPartial": "{count} nokta eşleştirildi. {error}",
+  "@liveGroupPartial": {
+    "placeholders": {
+      "count": {},
+      "error": {}
+    }
+  }
+}

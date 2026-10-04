@@ -9,6 +9,7 @@ import 'package:milktrace/data/models/spout.dart';
 import 'package:milktrace/data/models/spout_update.dart';
 import 'package:milktrace/data/models/vacuum.dart';
 import 'package:milktrace/domain/flow_color.dart';
+import 'package:milktrace/domain/placement_sequence.dart';
 import 'package:milktrace/features/live/live_providers.dart';
 import 'package:milktrace/features/live/red_alert.dart';
 import 'package:milktrace/features/live/widgets/animal_picker.dart';
@@ -381,6 +382,9 @@ class _Grid extends ConsumerWidget {
     // Önceki sağımın yerleşimi ÖNCEDEN yüklenir: seçici açıldığında hazır
     // olsun (backend ADR 0062).
     ref.watch(previousSpoutsProvider(hall.id));
+    final history =
+        ref.watch(hallPlacementsProvider(hall.id)).value ?? const [];
+    final animals = ref.watch(animalsProvider).value ?? const [];
     final active = live.session.status == 'active';
 
     if (!active) {
@@ -418,7 +422,38 @@ class _Grid extends ConsumerWidget {
         if (u.animal case final a?) a.id,
     };
 
-    return SliverPadding(
+    // Sıralı öneri (backend ADR 0136): sıra canlı ekranın nokta sırası.
+    final seq = PlacementSequence.build([
+      for (final u in updates) u.spoutId,
+    ], history);
+    final current = {
+      for (final u in updates)
+        if (u.animal case final a?) u.spoutId: a.id,
+    };
+    final eligible = {
+      for (final a in animals)
+        if (a.isMilking) a.id,
+    };
+    final tagOf = {for (final a in animals) a.id: a.earTag};
+    final proposals = seq.isEmpty
+        ? const <Proposal>[]
+        : seq.propose(
+            current,
+            eligible,
+            rank: (x, y) => (tagOf[x] ?? x).compareTo(tagOf[y] ?? y),
+          );
+    String titleOf(String spoutId) {
+      final spout = spoutById[spoutId];
+      final vacuum = spout == null ? null : vacuumById[spout.vacuumId];
+      return spout == null
+          ? l10n.liveSpout
+          : l10n.liveSpoutTitle(
+              vacuum?.name ?? l10n.liveUnitFallback,
+              '${spout.positionNo}',
+            );
+    }
+
+    final grid = SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
       // mainAxisExtent: kart yüksekliği SABİT. Eski ekran childAspectRatio'yu
       // (ekran yüksekliği - 300) üzerinden hesaplıyordu; küçük ekranda kart
@@ -449,7 +484,14 @@ class _Grid extends ConsumerWidget {
             // dolu ve ayrı bir ekrana gidip nokta seçmesi gereksiz bir
             // adım olurdu. Hayvanı olan karta dokunmak da eşleştirmeyi
             // değiştirmeye izin verir — yanlış hayvan bağlanabilir.
-            onTap: () => _assign(context, ref, u, title, assigned),
+            onTap: () => _assign(
+              context,
+              ref,
+              u,
+              title,
+              assigned,
+              seq.followers(u.spoutId, current, eligible),
+            ),
             child: LiveInfoCard(
               update: u,
               title: title,
@@ -457,6 +499,132 @@ class _Grid extends ConsumerWidget {
             ),
           );
         }),
+      ),
+    );
+    if (proposals.isEmpty) return grid;
+    // "Grubu aynen onayla" (ADR 0136): boş noktalar önceki sıraya göre
+    // önerilir; önizlemeden tek dokunuşla hepsi eşleştirilir.
+    return SliverMainAxisGroup(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.lg,
+              0,
+              AppSpacing.lg,
+              AppSpacing.md,
+            ),
+            child: FilledButton.tonalIcon(
+              icon: const Icon(Icons.playlist_add_check),
+              label: Text(l10n.liveGroupConfirm(proposals.length)),
+              onPressed: ref.watch(milkingControlProvider)
+                  ? null
+                  : () => _confirmGroup(context, ref, proposals, titleOf, {
+                      for (final a in animals)
+                        a.id: a.name == null
+                            ? a.earTag
+                            : '${a.earTag} · ${a.name}',
+                    }),
+            ),
+          ),
+        ),
+        grid,
+      ],
+    );
+  }
+
+  Future<void> _confirmGroup(
+    BuildContext context,
+    WidgetRef ref,
+    List<Proposal> proposals,
+    String Function(String spoutId) titleOf,
+    Map<String, String> labelOf,
+  ) async {
+    final ok = await showModalBottomSheet<bool>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      backgroundColor: AppColors.surface,
+      builder: (context) => SafeArea(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.75,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.liveGroupTitle,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.xs),
+                    Text(
+                      l10n.liveGroupHint,
+                      style: TextStyle(color: AppColors.onSurfaceMuted),
+                    ),
+                  ],
+                ),
+              ),
+              Flexible(
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    for (final p in proposals)
+                      ListTile(
+                        dense: true,
+                        leading: Icon(
+                          p.reason == ProposalReason.sequence
+                              ? Icons.timeline
+                              : Icons.history,
+                          color: AppColors.darkGreenColor,
+                        ),
+                        title: Text(labelOf[p.animalId] ?? p.animalId),
+                        subtitle: Text(
+                          '${titleOf(p.spoutId)} · '
+                          '${p.reason == ProposalReason.sequence ? l10n.liveGroupReasonSequence : l10n.livePickerPrevHere}',
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(AppSpacing.lg),
+                child: FilledButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppColors.brandFill,
+                  ),
+                  child: Text(l10n.liveGroupApply(proposals.length)),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    if (ok != true || !context.mounted) return;
+    final messenger = ScaffoldMessenger.of(context);
+    final r = await ref
+        .read(milkingControlProvider.notifier)
+        .assignAll(sessionId: live.session.id, proposals: proposals);
+    final err = r.error;
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text(
+          err == null
+              ? l10n.liveGroupDone(r.done)
+              : l10n.liveGroupPartial(r.done, _message(err)),
+        ),
+        backgroundColor: err == null ? null : AppColors.warningFill,
       ),
     );
   }
@@ -467,6 +635,7 @@ class _Grid extends ConsumerWidget {
     SpoutUpdate update,
     String title,
     Set<String> assigned,
+    List<Follower> followers,
   ) async {
     final spoutId = update.spoutId;
     final pick = await showAnimalPicker(
@@ -478,6 +647,7 @@ class _Grid extends ConsumerWidget {
       spoutId: spoutId,
       previousSpouts:
           ref.read(previousSpoutsProvider(hall.id)).value ?? const {},
+      followers: followers,
     );
     if (pick == null || !context.mounted) return;
 

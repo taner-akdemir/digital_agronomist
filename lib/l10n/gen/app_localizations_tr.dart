@@ -2021,6 +2021,36 @@ class AppLocalizationsTr extends AppLocalizations {
   String get liveFlowUnit => 'L/dk';
 
   @override
+  String liveGroupApply(Object count) {
+    return 'Onayla ($count)';
+  }
+
+  @override
+  String liveGroupConfirm(Object count) {
+    return 'Grubu aynen onayla ($count)';
+  }
+
+  @override
+  String liveGroupDone(Object count) {
+    return '$count nokta eşleştirildi';
+  }
+
+  @override
+  String get liveGroupHint =>
+      'Önceki sağımlardaki giriş sırasına göre önerildi. Kontrol edin; tek dokunuşla hepsi eşleştirilir.';
+
+  @override
+  String liveGroupPartial(Object count, Object error) {
+    return '$count nokta eşleştirildi. $error';
+  }
+
+  @override
+  String get liveGroupReasonSequence => 'sıraya göre';
+
+  @override
+  String get liveGroupTitle => 'Grubu aynen onayla';
+
+  @override
   String liveHallName(Object name) {
     return '$name Bölgesi';
   }
@@ -2065,6 +2095,11 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get livePickerElsewhere => 'başka noktada';
+
+  @override
+  String livePickerFollows(Object tag) {
+    return 'genelde $tag arkasından gelir';
+  }
 
   @override
   String get livePickerLoadFailed => 'Hayvanlar yüklenemedi';
