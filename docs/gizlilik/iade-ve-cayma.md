@@ -19,7 +19,7 @@ başlamış bir dönem için cayma hakkı kullanılamaz.
 ## Başlamamış dönemden vazgeçme
 
 Süren döneminizin ya da deneme sürenizin ardına eklenmiş, henüz başlamamış bir dönemden
-başlangıç gününden önce vazgeçtiğinizi taner.akdemir@algebransoft.com adresine yazarsanız
+başlangıç gününden önce vazgeçtiğinizi info@milktrace.com.tr adresine yazarsanız
 ödediğiniz tutarın tamamı iade edilir.
 
 ## Satın almadan önce deneyin

@@ -15,7 +15,7 @@ sitesindeki demo talep formu üzerinden işlenen kişisel verileri anlatır.
 
 ## 1. Hizmeti sunan
 
-Algebran Soft (Taner Akdemir, şahıs işletmesi), Atakent Mah. 1472. Cad. Eda Apt. No: 5 D: 3, Elvankent, Etimesgut / Ankara (Etimesgut Vergi Dairesi). İletişim: taner.akdemir@algebransoft.com.
+Algebran Soft (Taner Akdemir, şahıs işletmesi), Atakent Mah. 1472. Cad. Eda Apt. No: 5 D: 3, Elvankent, Etimesgut / Ankara (Etimesgut Vergi Dairesi). İletişim: info@milktrace.com.tr.
 
 Milk Trace işletmelere (çiftliklere) sunulur. Uygulamayı kullanan kişilerin hesaplarını
 işletme adına platform yöneticisi açar; uygulama içinden hesap oluşturulmaz.
@@ -152,7 +152,7 @@ tutulur; çerez ya da izleme aracı kullanılmaz. Çıkışta jeton silinir.
 
 KVKK md. 11 uyarınca verilerinizin işlenip işlenmediğini öğrenme, bilgi isteme,
 düzeltilmesini ya da silinmesini isteme, itiraz etme ve zararın giderilmesini isteme
-haklarına sahipsiniz. Başvuru: taner.akdemir@algebransoft.com. **Hesabınızı kendiniz silebilirsiniz:**
+haklarına sahipsiniz. Başvuru: info@milktrace.com.tr. **Hesabınızı kendiniz silebilirsiniz:**
 uygulamada hesap kartı → "Hesabımı sil" ya da https://milktrace.com.tr/hesap-sil
 (parolanızla). Bir işletmenin tek sahibiyseniz işletme sahipsiz kalmasın diye önce bize
 başvurun. Hesap silinince adınız, e-postanız,

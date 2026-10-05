@@ -25,7 +25,7 @@
 - Unvan: Algebran Soft — Taner Akdemir (şahıs işletmesi)
 - Adres: Atakent Mah. 1472. Cad. Eda Apt. No: 5 D: 3, Elvankent, Etimesgut / Ankara
 - Vergi dairesi: Etimesgut Vergi Dairesi
-- E-posta: taner.akdemir@algebransoft.com
+- E-posta: info@milktrace.com.tr
 - Telefon: +90 530 320 06 47
 
 **ALICI:** ödeme sayfasında fatura bilgisi olarak girilen kişi ya da kuruluş (ad soyad veya
@@ -87,7 +87,7 @@ almadan önce hizmet ücretsiz deneme süresi boyunca bütün özellikleriyle de
 
 Buna karşın:
 - **Henüz başlamamış dönem** (süren dönemin ya da denemenin ardına eklenmiş dönem):
-  başlangıç gününden önce taner.akdemir@algebransoft.com adresine bildirilirse ödenen
+  başlangıç gününden önce info@milktrace.com.tr adresine bildirilirse ödenen
   tutarın tamamı iade edilir.
 - Hizmet Satıcı'dan kaynaklanan bir sebeple dönemin önemli bir kısmında kullanılamazsa,
   sorun giderilemediğinde kullanılamayan günlere düşen tutar iade edilir ya da dönem o kadar

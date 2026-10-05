@@ -10,7 +10,7 @@
 
 ## Veri sorumlusu
 
-Algebran Soft (Taner Akdemir, şahıs işletmesi), Atakent Mah. 1472. Cad. Eda Apt. No: 5 D: 3, Elvankent, Etimesgut / Ankara (Etimesgut Vergi Dairesi); iletişim: taner.akdemir@algebransoft.com.
+Algebran Soft (Taner Akdemir, şahıs işletmesi), Atakent Mah. 1472. Cad. Eda Apt. No: 5 D: 3, Elvankent, Etimesgut / Ankara (Etimesgut Vergi Dairesi); iletişim: info@milktrace.com.tr.
 
 ## İşlenen kişisel veriler ve amaçları
 
@@ -75,5 +75,5 @@ işlemlerin aktarılan kişilere bildirilmesini isteme, münhasıran otomatik si
 sonucu aleyhe bir sonuca itiraz etme ve kanuna aykırı işleme sebebiyle zararın giderilmesini
 talep etme.
 
-Başvuru: taner.akdemir@algebransoft.com ya da yazılı olarak Atakent Mah. 1472. Cad. Eda Apt. No: 5 D: 3, Elvankent, Etimesgut / Ankara adresine, Veri Sorumlusuna Başvuru Usul ve Esasları Hakkında
+Başvuru: info@milktrace.com.tr ya da yazılı olarak Atakent Mah. 1472. Cad. Eda Apt. No: 5 D: 3, Elvankent, Etimesgut / Ankara adresine, Veri Sorumlusuna Başvuru Usul ve Esasları Hakkında
 Tebliğ'e uygun olarak. Başvurular en geç 30 gün içinde ücretsiz sonuçlandırılır.
