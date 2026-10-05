@@ -3432,6 +3432,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get upcomingTitle => 'Upcoming';
 
   @override
+  String get updateAppStoreButton => 'Update on the App Store';
+
+  @override
   String get updateBodyAndroid =>
       'This version of Milk Trace is no longer supported. Update the app from Google Play to keep milking records accurate.';
 

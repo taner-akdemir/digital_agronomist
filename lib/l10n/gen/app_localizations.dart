@@ -5827,6 +5827,12 @@ abstract class AppLocalizations {
   /// **'Yaklaşanlar'**
   String get upcomingTitle;
 
+  /// No description provided for @updateAppStoreButton.
+  ///
+  /// In tr, this message translates to:
+  /// **'App Store\'da güncelle'**
+  String get updateAppStoreButton;
+
   /// No description provided for @updateBodyAndroid.
   ///
   /// In tr, this message translates to:

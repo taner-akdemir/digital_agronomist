@@ -22,9 +22,9 @@ abstract final class AppBuild {
   static String? osVersion;
   static String? device;
 
-  /// Cihaz bilgisi için yerel kanal (Android `MainActivity`). Eklenti
-  /// eklenmedi: iki alan için bir bağımlılık fazla. Kanal yoksa (iOS,
-  /// testler) Dart'ın verdiğiyle yetinilir.
+  /// Cihaz bilgisi için yerel kanal (Android `MainActivity`, iOS
+  /// `AppDelegate`). Eklenti eklenmedi: iki alan için bir bağımlılık fazla.
+  /// Kanal yoksa (testler) Dart'ın verdiğiyle yetinilir.
   static const _deviceChannel = MethodChannel('milktrace/device');
 
   static Future<void> load() async {

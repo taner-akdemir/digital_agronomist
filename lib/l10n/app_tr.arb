@@ -1948,6 +1948,7 @@
     }
   },
   "upcomingTitle": "Yaklaşanlar",
+  "updateAppStoreButton": "App Store'da güncelle",
   "updateBodyAndroid": "Milk Trace'in bu sürümü artık desteklenmiyor. Sağım kayıtlarının doğru tutulması için uygulamayı Google Play'den güncelleyin.",
   "updateBodyIos": "Milk Trace'in bu sürümü artık desteklenmiyor. Sağım kayıtlarının doğru tutulması için uygulamayı App Store'dan güncelleyin.",
   "updatePlayButton": "Google Play'de güncelle",

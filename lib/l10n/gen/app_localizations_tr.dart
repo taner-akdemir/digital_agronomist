@@ -3387,6 +3387,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get upcomingTitle => 'Yaklaşanlar';
 
   @override
+  String get updateAppStoreButton => 'App Store\'da güncelle';
+
+  @override
   String get updateBodyAndroid =>
       'Milk Trace\'in bu sürümü artık desteklenmiyor. Sağım kayıtlarının doğru tutulması için uygulamayı Google Play\'den güncelleyin.';
 

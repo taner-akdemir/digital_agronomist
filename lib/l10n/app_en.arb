@@ -1733,6 +1733,7 @@
     }
   },
   "upcomingTitle": "Upcoming",
+  "updateAppStoreButton": "Update on the App Store",
   "updateBodyAndroid": "This version of Milk Trace is no longer supported. Update the app from Google Play to keep milking records accurate.",
   "updateBodyIos": "This version of Milk Trace is no longer supported. Update the app from the App Store to keep milking records accurate.",
   "updatePlayButton": "Update on Google Play",

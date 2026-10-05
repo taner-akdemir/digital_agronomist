@@ -764,6 +764,12 @@ Android ve iOS, ikisi de `com.algebran.milktrace.milktrace`.
   yükle; Xcode'da Signing & Capabilities → ekip seç (`DEVELOPMENT_TEAM` boş; Apple
   Developer Program üyeliği gerekli — ücretsiz hesap push yeteneğini imzalayamaz); gerçek
   iPhone'da test bildirimi. Push simülatörde de denenebilir ama asıl doğrulama cihazda.
+  **Üyelik ödendi (05.10.2026), onay bekleniyor.** Hesapsız yapılabilen hazır: galeri amaç
+  metni ve şifreleme beyanı (`Info.plist`), `PrivacyInfo.xcprivacy` (cevaplar
+  `docs/gizlilik/app-store-gizlilik.md`), iOS cihaz modeli (`AppDelegate`,
+  `milktrace/device`), `tool/release_ios.sh` (.ipa; ekip seçilmemişse reddeder).
+  App Store Connect kaydı açılınca `update_required_screen.dart`'taki `_appStoreId`
+  yazılır (boşken iOS'ta mağaza düğmesi yok) ve backend'de `MIN_APP_BUILD_IOS`.
 - **Araç zinciri:** Flutter ≥ 3.47 gerekir (25.09.2026'da 3.47.5'e yükseltildi). 3.41.3,
   Xcode 27'nin `lipo -verify_arch`'ı birden çok mimari kabul etmediği için
   `flutter build ios --simulator`'da düşüyordu. 3.47 iOS eklentilerini CocoaPods'tan **Swift Package

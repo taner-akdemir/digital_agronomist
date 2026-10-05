@@ -78,6 +78,7 @@ void main() {
   Future<List<Uri>> pumpScreen(
     WidgetTester tester, {
     required bool android,
+    Uri? iosStoreUri,
   }) async {
     final opened = <Uri>[];
     await tester.pumpWidget(
@@ -89,7 +90,12 @@ void main() {
             return true;
           }),
         ],
-        child: MaterialApp(home: UpdateRequiredScreen(isAndroid: android)),
+        child: MaterialApp(
+          home: UpdateRequiredScreen(
+            isAndroid: android,
+            iosStoreUri: iosStoreUri,
+          ),
+        ),
       ),
     );
     await tester.pumpAndSettle();
@@ -106,11 +112,18 @@ void main() {
     expect(opened, [playStoreUri]);
   });
 
-  testWidgets('iOS: mağaza bağlantısı henüz yok, yalnızca metin', (
-    tester,
-  ) async {
+  testWidgets('iOS: App Store düğmesi mağaza sayfasını açar', (tester) async {
+    final uri = Uri.parse('https://apps.apple.com/app/id123');
+    final opened = await pumpScreen(tester, android: false, iosStoreUri: uri);
+    await tester.tap(find.text("App Store'da güncelle"));
+    await tester.pumpAndSettle();
+    expect(opened, [uri]);
+  });
+
+  testWidgets('iOS: mağaza kimliği yokken yalnızca metin', (tester) async {
     await pumpScreen(tester, android: false);
     expect(find.textContaining("App Store'dan"), findsOneWidget);
     expect(find.text("Google Play'de güncelle"), findsNothing);
+    expect(find.text("App Store'da güncelle"), findsNothing);
   });
 }
