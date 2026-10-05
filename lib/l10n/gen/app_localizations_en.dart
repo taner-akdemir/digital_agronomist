@@ -3601,11 +3601,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get whatsNewItem1 =>
-      'New look: lighter, airier screens; green is now used only where it matters.';
+      'Early mastitis risk: an alert when milking flow drops well below the animal\'s own average (adjust on the thresholds screen).';
 
   @override
   String get whatsNewItem2 =>
-      'The web panel has the same new look: milktrace.com.tr/giris.';
+      'Ordered suggestions for farms without readers: the picker puts the animal that usually follows the one in front at the top; \"Confirm group as is\" fills empty points in one tap.';
+
+  @override
+  String get whatsNewItem3 =>
+      'Dairy sharing (account card → Integrations): share farm totals with your dairy with your explicit consent; withdraw it any time.';
+
+  @override
+  String get whatsNewItem4 => 'WhatsApp added to notification channels.';
 
   @override
   String get whatsNewOk => 'OK';

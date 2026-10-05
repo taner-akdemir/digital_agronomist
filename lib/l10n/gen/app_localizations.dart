@@ -6100,14 +6100,26 @@ abstract class AppLocalizations {
   /// No description provided for @whatsNewItem1.
   ///
   /// In tr, this message translates to:
-  /// **'Yeni görünüm: ekranlar daha açık ve ferah; yeşil artık yalnızca önemli yerlerde.'**
+  /// **'Erken mastitis riski: sağım debisi hayvanın kendi ortalamasının belirgin altına düşünce uyarı (eşik ekranından ayarlanır).'**
   String get whatsNewItem1;
 
   /// No description provided for @whatsNewItem2.
   ///
   /// In tr, this message translates to:
-  /// **'Web panelinde de aynı yeni görünüm: milktrace.com.tr/giris.'**
+  /// **'Okuyucusuz çiftlikte sıralı öneri: seçici, öndeki noktadaki hayvanın genelde arkasından geleni en üste koyar; \"Grubu aynen onayla\" boş noktaları tek dokunuşla doldurur.'**
   String get whatsNewItem2;
+
+  /// No description provided for @whatsNewItem3.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mandıra paylaşımı (hesap kartı → Entegrasyonlar): açık onayınızla mandıranıza çiftlik toplamlarını paylaşın; onay her an geri alınır.'**
+  String get whatsNewItem3;
+
+  /// No description provided for @whatsNewItem4.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bildirim kanallarına WhatsApp eklendi.'**
+  String get whatsNewItem4;
 
   /// No description provided for @whatsNewOk.
   ///

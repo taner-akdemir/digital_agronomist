@@ -138,7 +138,7 @@ void main() {
       store: store,
     );
     expect(find.text('Yenilikler'), findsOneWidget);
-    expect(find.textContaining('Yeni görünüm'), findsOneWidget);
+    expect(find.textContaining('Erken mastitis riski'), findsOneWidget);
     await tester.tap(find.text('Tamam'));
     await tester.pumpAndSettle();
 

@@ -18,6 +18,8 @@
   "setupLocation": "Isı stresi uyarısı için tesis konumunu girin",
   "whatsNewTitle": "Yenilikler",
   "whatsNewOk": "Tamam",
-  "whatsNewItem1": "Yeni görünüm: ekranlar daha açık ve ferah; yeşil artık yalnızca önemli yerlerde.",
-  "whatsNewItem2": "Web panelinde de aynı yeni görünüm: milktrace.com.tr/giris."
+  "whatsNewItem1": "Erken mastitis riski: sağım debisi hayvanın kendi ortalamasının belirgin altına düşünce uyarı (eşik ekranından ayarlanır).",
+  "whatsNewItem2": "Okuyucusuz çiftlikte sıralı öneri: seçici, öndeki noktadaki hayvanın genelde arkasından geleni en üste koyar; \"Grubu aynen onayla\" boş noktaları tek dokunuşla doldurur.",
+  "whatsNewItem3": "Mandıra paylaşımı (hesap kartı → Entegrasyonlar): açık onayınızla mandıranıza çiftlik toplamlarını paylaşın; onay her an geri alınır.",
+  "whatsNewItem4": "Bildirim kanallarına WhatsApp eklendi."
 }

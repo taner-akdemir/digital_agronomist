@@ -3555,11 +3555,18 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get whatsNewItem1 =>
-      'Yeni görünüm: ekranlar daha açık ve ferah; yeşil artık yalnızca önemli yerlerde.';
+      'Erken mastitis riski: sağım debisi hayvanın kendi ortalamasının belirgin altına düşünce uyarı (eşik ekranından ayarlanır).';
 
   @override
   String get whatsNewItem2 =>
-      'Web panelinde de aynı yeni görünüm: milktrace.com.tr/giris.';
+      'Okuyucusuz çiftlikte sıralı öneri: seçici, öndeki noktadaki hayvanın genelde arkasından geleni en üste koyar; \"Grubu aynen onayla\" boş noktaları tek dokunuşla doldurur.';
+
+  @override
+  String get whatsNewItem3 =>
+      'Mandıra paylaşımı (hesap kartı → Entegrasyonlar): açık onayınızla mandıranıza çiftlik toplamlarını paylaşın; onay her an geri alınır.';
+
+  @override
+  String get whatsNewItem4 => 'Bildirim kanallarına WhatsApp eklendi.';
 
   @override
   String get whatsNewOk => 'Tamam';
