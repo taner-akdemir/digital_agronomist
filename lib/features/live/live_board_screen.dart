@@ -135,6 +135,8 @@ class _Header extends ConsumerWidget {
                     value: hall.id,
                     isExpanded: true,
                     style: TextStyle(
+                      // Açılır listenin stili temadan yazı tipi almaz.
+                      fontFamily: 'Poppins',
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: AppColors.darkGreenColor,

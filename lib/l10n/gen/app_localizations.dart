@@ -4780,7 +4780,7 @@ abstract class AppLocalizations {
   /// No description provided for @shellTabDashboard.
   ///
   /// In tr, this message translates to:
-  /// **'Dashboard'**
+  /// **'Özet'**
   String get shellTabDashboard;
 
   /// No description provided for @shellTabDevices.

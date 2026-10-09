@@ -2768,7 +2768,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get shellTabDashboard => 'Dashboard';
+  String get shellTabDashboard => 'Özet';
 
   @override
   String get shellTabDevices => 'Cihazlar';

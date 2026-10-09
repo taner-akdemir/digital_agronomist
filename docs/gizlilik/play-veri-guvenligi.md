@@ -1,5 +1,8 @@
 # Play Console — "Veri güvenliği" formu cevapları (taslak)
 
+> Uygulama içeriğinin diğer beyanları (uygulama erişimi, reklam, IARC, hedef kitle,
+> mağaza ayarları): `play-uygulama-icerigi.md`.
+
 > Kodun 28.09.2026 hâlinden çıkarıldı; 29.09.2026'da Crashlytics, uygulama içi hesap
 > silme ve geri bildirim (backend ADR 0098, 0100, 0106) eklendi (AndroidManifest, pubspec, backend şemaları).
 > Tesis konumu (ADR 0119): elle girilen koordinat, işletmenin verisi; konum İZNİ yok,
@@ -14,8 +17,8 @@
 | Aktarımda şifreleniyor mu? | **Evet** (HTTPS/TLS) | sürüm paketi yalnızca https'e derleniyor (`tool/release.sh`), düz http'ye izin yok |
 | Kullanıcılar verilerinin silinmesini isteyebilir mi? | **Evet** | uygulama içi: hesap kartı → "Hesabımı sil" (parola onayı, backend ADR 0098); web: `https://milktrace.com.tr/hesap-sil` |
 | Hesap uygulama içinden oluşturuluyor mu? | **Hayır** | hesapları işletme sahibi ya da platform açar; yine de uygulama içi silme ve web bağlantısı var |
-| Hesap silme bağlantısı (Play "Veri silme" bölümü) | `https://milktrace.com.tr/hesap-sil` | panelin herkese açık sayfası |
-| Gizlilik politikası bağlantısı ("Uygulama içeriği") | `https://milktrace.com.tr/gizlilik` | sitenin herkese açık sayfası; KVKK metni `/kvkk` |
+| Hesap silme bağlantısı (Play "Veri silme" bölümü) | `https://milktrace.com.tr/hesap-sil` | panelin herkese açık sayfası; İngilizcesi `/en/delete-account` |
+| Gizlilik politikası bağlantısı ("Uygulama içeriği") | `https://milktrace.com.tr/gizlilik` | sitenin herkese açık sayfası; İngilizcesi `/en/privacy`, KVKK metni `/kvkk` |
 
 ## Toplanan veri türleri
 
@@ -43,9 +46,12 @@ aktarım "paylaşım" sayılmaz.
   formda "Paylaşılan veri" sorulursa "Evet — kullanıcının açık onayıyla, çiftlik toplamları"
   diye işaretlenir.
 
-- İzinler yalnızca `INTERNET` ve `POST_NOTIFICATIONS`. Sağımhane tabletinde ekranı
-  açık tutan `wakelock_plus` izin eklemiyor ve veri toplamıyor; canlı ekrandaki
-  titreşim sistemin dokunsal geri bildirimi (`VIBRATE` izni yok).
+- Uygulamanın kendi manifestindeki izinler yalnızca `INTERNET` ve `POST_NOTIFICATIONS`.
+  Sağımhane tabletinde ekranı açık tutan `wakelock_plus` izin eklemiyor ve veri
+  toplamıyor; canlı ekrandaki titreşim sistemin dokunsal geri bildirimi. Birleşik sürüm
+  manifestine kütüphaneler `ACCESS_NETWORK_STATE`, `WAKE_LOCK`, FCM `RECEIVE` ve
+  (flutter_local_notifications) `VIBRATE` ekliyor; hiçbiri veri toplamaz ya da beyan
+  istemez (`play-uygulama-icerigi.md` §8).
 - Dosya seçici (hayvan listesi içe aktarma, geri bildirim ekran görüntüsü) ve paylaşım
   (verim raporu) kullanıcının seçtiği dosyayla, istek anında; arka planda erişim yok.
   Geri bildirim (hesap kartı → "Geri bildirim", backend ADR 0106): metin, isteğe bağlı
