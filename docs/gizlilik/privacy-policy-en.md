@@ -1,11 +1,11 @@
 # Milk Trace — Privacy Policy
 
-> **TASLAK ÇEVİRİ (09.10.2026).** `gizlilik-politikasi.md`'nin (1 Ekim 2026 sürümü) sadık
+> **TASLAK ÇEVİRİ (09.10.2026; 11.10.2026 güncellemesi).** `gizlilik-politikasi.md`'nin (11 Ekim 2026 sürümü) sadık
 > İngilizce çevirisi; yayımlamadan önce hukuki kontrolden geçmeli. Türkçe metin
 > değişince bu dosya da aynı gün güncellenir. Site `https://milktrace.com.tr/en/privacy`
 > adresinde yayımlar (`scripts/sync-legal.sh`). `>` alıntı blokları (bu not) yayımlanmaz.
 
-**Last updated:** 1 October 2026
+**Last updated:** 11 October 2026
 
 This is an English translation provided for convenience. If it differs from the Turkish
 version (https://milktrace.com.tr/gizlilik), the Turkish version prevails.
@@ -13,11 +13,12 @@ version (https://milktrace.com.tr/gizlilik), the Turkish version prevails.
 Milk Trace is a service that lets dairy farms track how much milk each animal gives, using
 measurements from the meters at the milking points. This policy describes the personal data
 processed through the Milk Trace mobile app, the web panel (milktrace.com.tr) and the demo
-request form on the website.
+request form on the website. The cookies and browser storage used on the website and the web
+panel are described in detail in the Cookie Policy (https://milktrace.com.tr/en/cookie-policy).
 
 ## 1. Who provides the service
 
-Algebran Soft (Taner Akdemir, sole proprietorship), Atakent Mah. 1472. Cad. Eda Apt. No: 5 D: 3, Elvankent, Etimesgut / Ankara, Türkiye (Etimesgut Tax Office). Contact: info@milktrace.com.tr.
+Algebran Soft and Consultant (Algebran Yazılım ve Danışmanlık), Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara, Türkiye; Etimesgut Tax Office, tax ID (VKN) 0210300337. Email: info@milktrace.com.tr; registered electronic mail (KEP): taner.akdemir@hs01.kep.tr; web: https://algebransoft.com.
 
 Milk Trace is provided to businesses (farms). The accounts of the people who use the app are
 opened on behalf of the business by the platform administrator; accounts cannot be created
@@ -81,9 +82,35 @@ Trace administrators.
 **Server logs:** for security and debugging, the time, path and result of requests and the
 IP address making the request.
 
+**Website measurement (only with your consent):** if you allow "Analytics" in the cookie
+banner on the website and the web panel, two measurements run; if you do not, neither is
+loaded and no request is sent:
+
+- **Cloudflare Web Analytics** (Cloudflare, Inc., USA): a script is loaded from
+  `static.cloudflareinsights.com`; the address of the page visited, the referring page,
+  browser type, screen size and page load times are sent to Cloudflare. Your IP address
+  reaches Cloudflare with this request; according to Cloudflare it is not used to identify
+  visitors. It does not use cookies or local storage.
+- **Milk Trace conversion counter** (first party): for events such as submitting the demo
+  form (successfully or with an error), or clicking the WhatsApp, phone or Google Play links,
+  only the name of the event and its location on the page (e.g. "whatsapp_click", "footer")
+  are sent to our server. No name, email, identifier, device information or cookie is sent;
+  the server keeps only a total count per event (90 days), not linked to any person. Like
+  every other request, the request appears in the server logs (including IP address, 30
+  days).
+
+**Strictly necessary cookies and browser storage (no consent needed):** the
+`cookie_consent` cookie that stores your cookie choice (policy version, time of choice and
+choices; 180 days); your language choice; in the web panel, if you are signed in, the
+session refresh token and session marker, theme and screen preferences (in the browser's
+local storage). The site is served through Cloudflare; if Cloudflare's bot and attack
+protection starts a security check, Cloudflare security cookies (`__cf_bm`,
+`cf_clearance`) may be set. No advertising, social media or retargeting cookies are used.
+Full list and durations: Cookie Policy (https://milktrace.com.tr/en/cookie-policy).
+
 **What we do not collect:** location, contacts, microphone; photos (other than a screenshot
-you choose to attach to feedback); advertising ID; usage analytics or tracking for
-advertising. There are no ads in the app.
+you choose to attach to feedback); advertising ID; tracking or profiling for advertising.
+There are no ads and no usage analytics in the mobile app.
 
 ## 3. Why we process it
 
@@ -95,6 +122,13 @@ advertising. There are no ads in the app.
 - Billing and subscription: price based on the number of lactating animals in the business,
   payment, invoice and end-of-period reminder (performance of the contract; tax legislation
   for billing records).
+- Strictly necessary cookies and browser storage: the panel session and the settings you
+  ask for (KVKK Art. 5/2-c, establishment and performance of the contract), the security of
+  the site and remembering your cookie choice (Art. 5/2-f, legitimate interest).
+- Website measurement (Cloudflare Web Analytics and the conversion counter): to understand
+  how the site is used and improve it — only with your **explicit consent** (KVKK Art. 5/1);
+  you can withdraw it at any time via the "Cookie preferences" link at the bottom of the
+  pages.
 
 ## 4. Who we share it with
 
@@ -104,6 +138,7 @@ as much as necessary:
 | Provider | Purpose | Location |
 |---|---|---|
 | netcup GmbH | server hosting (all data) | Germany |
+| Cloudflare, Inc. | delivering the website and the web panel over the network and protecting them against attacks (IP address, request information, a security cookie if needed); Web Analytics only with your consent (page address, referrer, browser, screen, load time) | USA / global |
 | Google (Firebase Cloud Messaging) | delivering notifications (notification token, notification text) | USA / EU |
 | Google (Firebase Crashlytics) | app error reports (stack trace, device model, version) | USA / EU |
 | Twilio SendGrid | email notifications chosen by the business, password reset, payment confirmation and subscription reminder emails (email address, name) | USA |
@@ -130,10 +165,13 @@ consent can be withdrawn at any time with a single tap and takes effect immediat
 
 ## 5. Transfers abroad
 
-The servers are in Germany; some of the notification and email providers are in the USA.
-These transfers are made under Article 9 of the Turkish Personal Data Protection Law (KVKK)
-by signing the standard contracts announced by the Personal Data Protection Board with the
-recipients and notifying the Board.
+The servers are in Germany; some of the notification and email providers and Cloudflare are
+in the USA. These transfers are made under Article 9 of the Turkish Personal Data Protection
+Law (KVKK) by signing the standard contracts announced by the Personal Data Protection Board
+with the recipients and notifying the Board. The transfer abroad of measurement data
+collected with Cloudflare Web Analytics is additionally based on the **explicit consent** you
+give in the cookie banner (KVKK Art. 5/1 and Art. 9); if you do not consent, this transfer
+does not take place.
 
 ## 6. How long we keep it
 
@@ -151,22 +189,32 @@ recipients and notifying the Board.
 - Server logs (including IP address): **30 days**.
 - Activity log (who changed what, and when): **90 days**.
 - Demo requests: **1 year**.
+- Your cookie choice (`cookie_consent`): **180 days**; you are asked again when it expires or
+  when the Cookie Policy changes with a new version.
+- Conversion counter (only a total count per event): **90 days**. Cloudflare Web Analytics
+  data is subject to Cloudflare's retention period.
 - Feedback (text, screenshot, device information): **1 year**. If you delete your account,
   the feedback remains but its link to you is removed.
 
-## 7. What is kept on your phone
+## 7. What is kept on your phone and in your browser
 
-The session token in the operating system's secure storage; the most recently viewed data
-in the app's own storage for offline use. Both are deleted when you sign out. In the web
-panel, the session refresh token and your language and theme preferences are kept in the
-browser's local storage; no cookies or tracking tools are used. The token is deleted on
-sign-out.
+In the mobile app, the session token in the operating system's secure storage; the most
+recently viewed data in the app's own storage for offline use. Both are deleted when you
+sign out. The mobile app does not use cookies or tracking tools.
+
+In the web panel, the session refresh token and your language and theme preferences are kept
+in the browser's local storage; the token is deleted on sign-out. On the website and the web
+panel, only the strictly necessary cookies and storage described above and, if you allow it,
+analytics measurement are used. You can change your choice at any time via the **"Cookie
+preferences"** link at the bottom of every page; details are in the Cookie Policy
+(https://milktrace.com.tr/en/cookie-policy).
 
 ## 8. Your rights
 
 Under Article 11 of KVKK you have the right to learn whether your data is processed, to
 request information, to request its correction or deletion, to object and to request
-compensation for damages. Requests: info@milktrace.com.tr. **You can delete your account
+compensation for damages. Requests: info@milktrace.com.tr or by registered electronic mail
+(KEP) to taner.akdemir@hs01.kep.tr. **You can delete your account
 yourself:** in the app, account card → "Delete my account", or at
 https://milktrace.com.tr/en/delete-account (with your password). If you are the sole owner
 of a business, contact us first so that the business is not left without an owner. When the

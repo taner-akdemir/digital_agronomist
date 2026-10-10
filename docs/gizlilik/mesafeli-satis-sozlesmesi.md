@@ -7,6 +7,12 @@
 > `[DOLDUR]` yerleri ve aşağıdaki açık sorular yayımdan önce kapanmalı. `>` blokları
 > yayımlanmaz.
 >
+> **Not (11.10.2026):** satıcı unvanı "Algebran Yazılım ve Danışmanlık" olarak düzeltildi;
+> vergi numarası, KEP ve web adresi eklendi (kullanıcı kararı, MERSİS yok). Yalnız satıcı
+> kimliği değişti; sözleşme hükümleri aynı olduğundan `billing.TermsVersion` (2026-10-01.1)
+> artırılmadı. Backend'deki satıcı ayarı (`BILLING_SELLER_NAME`/`_ADDRESS`, deploy
+> values) aynı unvanla ayrıca güncellenmeli.
+>
 > **Hukukçu için açık sorular:**
 > 1. Alıcıların çoğu çiftliğini ticari/mesleki amaçla işleten üreticidir; 6502 sayılı
 >    Kanun'un "tüketici" tanımına girmeyebilirler. Metin her iki durumu da karşılayacak
@@ -14,18 +20,18 @@
 > 2. Cayma hakkı istisnası Mesafeli Sözleşmeler Yönetmeliği m.15/1-(ğ)'ye (elektronik
 >    ortamda anında ifa edilen hizmet) dayandırıldı; Alıcı'nın onayı ödeme sırasında ayrıca
 >    alınır ve kaydedilir. Spitfire'daki yaklaşımla aynı. Yeterli mi?
-> 3. Satıcı şahıs işletmesi; vergi kimlik numarası bilinçli olarak yazılmadı (zorunlu
->    değil, T.C. kimlik numarasıyla aynı); MERSİS yok.
 
-**Sürüm:** 2026-10-01.1
+**Sürüm:** 2026-10-01.1 · **Son güncelleme:** 11 Ekim 2026 (satıcı bilgileri)
 
 ## 1. Taraflar
 
 **SATICI**
-- Unvan: Algebran Soft — Taner Akdemir (şahıs işletmesi)
-- Adres: Atakent Mah. 1472. Cad. Eda Apt. No: 5 D: 3, Elvankent, Etimesgut / Ankara
-- Vergi dairesi: Etimesgut Vergi Dairesi
+- Unvan: Algebran Yazılım ve Danışmanlık (Algebran Soft)
+- Adres: Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara
+- Vergi dairesi / no: Etimesgut Vergi Dairesi / 0210300337
 - E-posta: info@milktrace.com.tr
+- KEP: taner.akdemir@hs01.kep.tr
+- Web: https://algebransoft.com
 - Telefon: +90 530 320 06 47
 
 **ALICI:** ödeme sayfasında fatura bilgisi olarak girilen kişi ya da kuruluş (ad soyad veya

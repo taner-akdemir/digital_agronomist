@@ -6,7 +6,7 @@
 > `[LIABILITY CAP]` Türkçedeki `[SORUMLULUK ÜST SINIRI]` ile birlikte doldurulur.
 > `>` blokları yayımlanmaz.
 
-**Last updated:** 9 October 2026
+**Last updated:** 11 October 2026
 
 This is an English translation provided for convenience. If it differs from the Turkish
 version (https://milktrace.com.tr/kullanim-kosullari), the Turkish version prevails.
@@ -14,9 +14,10 @@ version (https://milktrace.com.tr/kullanim-kosullari), the Turkish version preva
 ## 1. Scope
 
 These terms govern the use of the Milk Trace service (the "Service") — the mobile app, the
-web panel (milktrace.com.tr) and the API — provided by Algebran Soft (Taner Akdemir, sole
-proprietorship; Atakent Mah. 1472. Cad. Eda Apt. No: 5 D: 3, Elvankent, Etimesgut / Ankara,
-Türkiye; Etimesgut Tax Office; info@milktrace.com.tr). By using the Service you accept these
+web panel (milktrace.com.tr) and the API — provided by Algebran Soft and Consultant
+(Algebran Yazılım ve Danışmanlık; Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara, Türkiye;
+Etimesgut Tax Office, tax ID (VKN) 0210300337; info@milktrace.com.tr; registered electronic
+mail (KEP): taner.akdemir@hs01.kep.tr; https://algebransoft.com). By using the Service you accept these
 terms.
 
 When a subscription is purchased, the Distance Sales Agreement, the Preliminary Information
@@ -104,7 +105,8 @@ says so.
 
 ## 8. Intellectual property
 
-The Milk Trace software, app, website, brand and content belong to Algebran Soft. The
+The Milk Trace software, app, website, brand and content belong to Algebran Soft and
+Consultant. The
 Service grants the business the right to use it for its own business for as long as these
 terms apply; copying the software, attempting to extract its source code or imitating the
 Service is prohibited.

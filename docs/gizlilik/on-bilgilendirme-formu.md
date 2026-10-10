@@ -5,16 +5,18 @@
 > AYNI. Ödeme sayfası bu formu sipariş özetiyle (dönem, kademe, net, KDV, toplam, alıcı)
 > birlikte, ödemeden ÖNCE gösterir. `>` blokları yayımlanmaz.
 
-**Sürüm:** 2026-10-01.1
+**Sürüm:** 2026-10-01.1 · **Son güncelleme:** 11 Ekim 2026 (satıcı bilgileri)
 
 Bu form, sözleşme kurulmadan önce Alıcı'yı bilgilendirmek için hazırlanmıştır.
 
 ## 1. Satıcı
 
-- Unvan: Algebran Soft — Taner Akdemir (şahıs işletmesi)
-- Adres: Atakent Mah. 1472. Cad. Eda Apt. No: 5 D: 3, Elvankent, Etimesgut / Ankara
-- Vergi dairesi: Etimesgut Vergi Dairesi
+- Unvan: Algebran Yazılım ve Danışmanlık (Algebran Soft)
+- Adres: Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara
+- Vergi dairesi / no: Etimesgut Vergi Dairesi / 0210300337
 - E-posta: info@milktrace.com.tr
+- KEP: taner.akdemir@hs01.kep.tr
+- Web: https://algebransoft.com
 - Telefon: +90 530 320 06 47
 
 ## 2. Hizmetin temel nitelikleri
