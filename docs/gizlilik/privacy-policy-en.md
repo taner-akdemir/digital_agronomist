@@ -5,7 +5,7 @@
 > değişince bu dosya da aynı gün güncellenir. Site `https://milktrace.com.tr/en/privacy`
 > adresinde yayımlar (`scripts/sync-legal.sh`). `>` alıntı blokları (bu not) yayımlanmaz.
 
-**Last updated:** 11 October 2026
+**Last updated:** 16 October 2026
 
 This is an English translation provided for convenience. If it differs from the Turkish
 version (https://milktrace.com.tr/gizlilik), the Turkish version prevails.
@@ -18,7 +18,7 @@ panel are described in detail in the Cookie Policy (https://milktrace.com.tr/en/
 
 ## 1. Who provides the service
 
-Algebran Software and Consultancy (registered Turkish title: Algebran Yazılım ve Danışmanlık), Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara, Türkiye; Etimesgut Tax Office, tax ID (VKN) 0210300337. Email: info@milktrace.com.tr; registered electronic mail (KEP): taner.akdemir@hs01.kep.tr; web: https://algebransoft.com.
+Albiferro Yazılım ve Sistem Limited Şirketi (Albiferro Software & System Limited Company), Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara, Türkiye; Etimesgut Tax Office, tax ID (VKN) 0210300337. Email: info@milktrace.com.tr; registered electronic mail (KEP): taner.akdemir@hs01.kep.tr; web: https://algebransoft.com.
 
 Milk Trace is provided to businesses (farms). The accounts of the people who use the app are
 opened on behalf of the business by the platform administrator; accounts cannot be created

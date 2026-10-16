@@ -15,11 +15,11 @@
 > 3. Uygulama içinde ya da girişte bu koşulların onayı alınmıyor; onay mekanizması
 >    gerekip gerekmediği hukukçuya sorulmalı.
 
-**Son güncelleme:** 11 Ekim 2026
+**Son güncelleme:** 16 Ekim 2026
 
 ## 1. Kapsam
 
-Bu koşullar, Algebran Yazılım ve Danışmanlık (Algebran Soft; Atakent Mah. 1472. Cad.
+Bu koşullar, Albiferro Yazılım ve Sistem Limited Şirketi (Atakent Mah. 1472. Cad.
 No: 5 D: 3, Elvankent, Etimesgut / Ankara; Etimesgut Vergi Dairesi, VKN 0210300337;
 info@milktrace.com.tr; KEP: taner.akdemir@hs01.kep.tr; https://algebransoft.com)
 tarafından sunulan Milk Trace hizmetinin ("Hizmet") — mobil uygulama, web paneli
@@ -104,8 +104,8 @@ güncelleme gerektiğinde uygulama bunu söyler.
 
 ## 8. Fikrî haklar
 
-Milk Trace yazılımı, uygulaması, web sitesi, markası ve içerikleri Algebran Yazılım ve
-Danışmanlık'a aittir.
+Milk Trace yazılımı, uygulaması, web sitesi, markası ve içerikleri Albiferro Yazılım ve Sistem Limited Şirketi'ne
+aittir.
 Hizmet, bu koşullar süresince işletmenin kendi işi için kullanma hakkı verir; yazılımın
 kopyalanması, kaynak kodunun çıkarılmaya çalışılması ya da Hizmetin taklit edilmesi
 yasaktır.

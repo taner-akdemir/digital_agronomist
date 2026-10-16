@@ -12,11 +12,11 @@
 > Cloudflare Web Analytics ve dönüşüm sayacı (backend ADR 0131) ile Cloudflare (ABD)
 > aktarımı sitenin çerez politikasıyla aynı hukuki sebeplerle eklendi.
 
-**Son güncelleme:** 11 Ekim 2026
+**Son güncelleme:** 16 Ekim 2026
 
 ## Veri sorumlusu
 
-Algebran Yazılım ve Danışmanlık (Algebran Soft), Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara; Etimesgut Vergi Dairesi, VKN 0210300337. E-posta: info@milktrace.com.tr; KEP: taner.akdemir@hs01.kep.tr; web: https://algebransoft.com.
+Albiferro Yazılım ve Sistem Limited Şirketi, Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara; Etimesgut Vergi Dairesi, VKN 0210300337. E-posta: info@milktrace.com.tr; KEP: taner.akdemir@hs01.kep.tr; web: https://algebransoft.com.
 
 ## İşlenen kişisel veriler ve amaçları
 
@@ -62,7 +62,7 @@ Politikası'ndadır (https://milktrace.com.tr/cerez-politikasi).
 - **Cloudflare Web Analytics (yalnızca açık rızayla, md. 5/1 ve md. 9):** çerez bandında
   "Analiz"e izin verilirse yukarıdaki ölçüm verisi Cloudflare, Inc.'in (ABD) sunucularına
   aktarılır; izin verilmezse aktarılmaz. Rıza her an "Çerez tercihleri"nden geri alınabilir.
-- Ödeme altyapısı: ödeme isteği, Algebran Yazılım ve Danışmanlık'ın işlettiği ödeme sunucusu üzerinden PayTR'ye
+- Ödeme altyapısı: ödeme isteği, Albiferro Yazılım ve Sistem Limited Şirketi'nin işlettiği ödeme sunucusu üzerinden PayTR'ye
   iletilir; bu sunucu netcup GmbH'de, Almanya'dadır (yukarıdaki yurt dışı aktarımla aynı
   dayanak).
 - Hava tahmini (Open-Meteo, İsviçre): ısı stresi uyarısı için yalnızca tesisin koordinatı

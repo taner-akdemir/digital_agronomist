@@ -12,7 +12,7 @@
 > dönüşüm sayacı (backend ADR 0131), zorunlu çerez/depolama, Cloudflare (ABD) aktarımı.
 > Cloudflare ile standart sözleşme ve Kurul'a bildirim durumu hukukçuyla doğrulanmalı.
 
-**Son güncelleme:** 11 Ekim 2026
+**Son güncelleme:** 16 Ekim 2026
 
 Milk Trace, süt hayvancılığı işletmelerinin sağım noktalarındaki sayaçlardan gelen
 ölçümlerle her hayvanın ne kadar süt verdiğini izlemesini sağlayan bir hizmettir. Bu
@@ -23,7 +23,7 @@ panelinde kullanılan çerezler ve tarayıcı depolaması ayrıca Çerez Politik
 
 ## 1. Hizmeti sunan
 
-Algebran Yazılım ve Danışmanlık (Algebran Soft), Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara; Etimesgut Vergi Dairesi, VKN 0210300337. E-posta: info@milktrace.com.tr; KEP: taner.akdemir@hs01.kep.tr; web: https://algebransoft.com.
+Albiferro Yazılım ve Sistem Limited Şirketi, Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara; Etimesgut Vergi Dairesi, VKN 0210300337. E-posta: info@milktrace.com.tr; KEP: taner.akdemir@hs01.kep.tr; web: https://algebransoft.com.
 
 Milk Trace işletmelere (çiftliklere) sunulur. Uygulamayı kullanan kişilerin hesaplarını
 işletme adına platform yöneticisi açar; uygulama içinden hesap oluşturulmaz.

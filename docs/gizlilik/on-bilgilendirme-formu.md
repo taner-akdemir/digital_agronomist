@@ -5,13 +5,13 @@
 > AYNI. Ödeme sayfası bu formu sipariş özetiyle (dönem, kademe, net, KDV, toplam, alıcı)
 > birlikte, ödemeden ÖNCE gösterir. `>` blokları yayımlanmaz.
 
-**Sürüm:** 2026-10-01.1 · **Son güncelleme:** 11 Ekim 2026 (satıcı bilgileri)
+**Sürüm:** 2026-10-01.1 · **Son güncelleme:** 16 Ekim 2026 (satıcı unvanı)
 
 Bu form, sözleşme kurulmadan önce Alıcı'yı bilgilendirmek için hazırlanmıştır.
 
 ## 1. Satıcı
 
-- Unvan: Algebran Yazılım ve Danışmanlık (Algebran Soft)
+- Unvan: Albiferro Yazılım ve Sistem Limited Şirketi
 - Adres: Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara
 - Vergi dairesi / no: Etimesgut Vergi Dairesi / 0210300337
 - E-posta: info@milktrace.com.tr

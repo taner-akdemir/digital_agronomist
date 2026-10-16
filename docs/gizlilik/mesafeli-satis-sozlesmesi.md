@@ -13,6 +13,13 @@
 > artırılmadı. Backend'deki satıcı ayarı (`BILLING_SELLER_NAME`/`_ADDRESS`, deploy
 > values) aynı unvanla ayrıca güncellenmeli.
 >
+> **Not (16.10.2026):** satıcı, yeni kurulan Albiferro Yazılım ve Sistem Limited Şirketi
+> oldu; unvan bütün metinlerde birlikte değiştirildi. Adres aynı; vergi numarası, MERSİS ve
+> telefon yeni şirketinkiyle sonra güncellenecek. 11.10.2026'daki gibi yalnız satıcı kimliği
+> değişti, hükümler aynı: `billing.TermsVersion` (2026-10-01.1) artırılmadı. Backend satıcı
+> ayarı (`BILLING_SELLER_NAME`, deploy values `billing.seller.name`) aynı unvanla güncellenir.
+> Hukukçuya: eski işletmeden yeni şirkete geçişte mevcut aboneliklerin devri/bildirimi gerekir mi?
+>
 > **Hukukçu için açık sorular:**
 > 1. Alıcıların çoğu çiftliğini ticari/mesleki amaçla işleten üreticidir; 6502 sayılı
 >    Kanun'un "tüketici" tanımına girmeyebilirler. Metin her iki durumu da karşılayacak
@@ -21,12 +28,12 @@
 >    ortamda anında ifa edilen hizmet) dayandırıldı; Alıcı'nın onayı ödeme sırasında ayrıca
 >    alınır ve kaydedilir. Spitfire'daki yaklaşımla aynı. Yeterli mi?
 
-**Sürüm:** 2026-10-01.1 · **Son güncelleme:** 11 Ekim 2026 (satıcı bilgileri)
+**Sürüm:** 2026-10-01.1 · **Son güncelleme:** 16 Ekim 2026 (satıcı unvanı)
 
 ## 1. Taraflar
 
 **SATICI**
-- Unvan: Algebran Yazılım ve Danışmanlık (Algebran Soft)
+- Unvan: Albiferro Yazılım ve Sistem Limited Şirketi
 - Adres: Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara
 - Vergi dairesi / no: Etimesgut Vergi Dairesi / 0210300337
 - E-posta: info@milktrace.com.tr
