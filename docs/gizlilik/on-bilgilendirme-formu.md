@@ -5,7 +5,7 @@
 > AYNI. Ödeme sayfası bu formu sipariş özetiyle (dönem, kademe, net, KDV, toplam, alıcı)
 > birlikte, ödemeden ÖNCE gösterir. `>` blokları yayımlanmaz.
 
-**Sürüm:** 2026-10-01.1 · **Son güncelleme:** 16 Ekim 2026 (satıcı bilgileri)
+**Sürüm:** 2026-10-16.1 · **Son güncelleme:** 16 Ekim 2026 (satıcı bilgileri)
 
 Bu form, sözleşme kurulmadan önce Alıcı'yı bilgilendirmek için hazırlanmıştır.
 

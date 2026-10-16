@@ -7,7 +7,7 @@
 > dönemde kısmi iade yok (Spitfire ile aynı). İadeyi platform yöneticisi ödeme servisinden
 > elle yapar; backend iadeyi kendiliğinden işler.
 
-**Sürüm:** 2026-10-01.1
+**Sürüm:** 2026-10-16.1
 
 ## Cayma hakkı
 

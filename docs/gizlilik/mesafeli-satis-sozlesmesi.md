@@ -16,8 +16,10 @@
 > **Not (16.10.2026):** satıcı, yeni kurulan Albiferro Yazılım ve Sistem Limited Şirketi
 > oldu; unvan, VKN (0501474977, eskisi 0210300337) ve MERSİS No (0050147497700001) bütün
 > metinlerde birlikte değiştirildi. Adres ve vergi dairesi aynı; telefon yeni şirketinkiyle
-> sonra güncellenecek. 11.10.2026'daki gibi yalnız satıcı kimliği
-> değişti, hükümler aynı: `billing.TermsVersion` (2026-10-01.1) artırılmadı. Backend satıcı
+> sonra güncellenecek. Hükümler aynı, ama sözleşmenin tarafı artık başka bir tüzel kişi
+> (farklı VKN): siparişte kayıtlı sürüm hangi satıcıyla anlaşıldığını ayırt etsin diye
+> `billing.TermsVersion` 2026-10-01.1 → 2026-10-16.1 artırıldı (11.10.2026'daki yalnız unvan
+> düzeltmesinden farklı olarak). Backend satıcı
 > ayarı (`BILLING_SELLER_NAME`/`_TAX_ID`/`_MERSIS`, deploy values `billing.seller.*`) aynı
 > bilgilerle güncellenir.
 > Hukukçuya: eski işletmeden yeni şirkete geçişte mevcut aboneliklerin devri/bildirimi gerekir mi?
@@ -30,7 +32,7 @@
 >    ortamda anında ifa edilen hizmet) dayandırıldı; Alıcı'nın onayı ödeme sırasında ayrıca
 >    alınır ve kaydedilir. Spitfire'daki yaklaşımla aynı. Yeterli mi?
 
-**Sürüm:** 2026-10-01.1 · **Son güncelleme:** 16 Ekim 2026 (satıcı bilgileri)
+**Sürüm:** 2026-10-16.1 · **Son güncelleme:** 16 Ekim 2026 (satıcı bilgileri)
 
 ## 1. Taraflar
 
