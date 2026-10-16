@@ -18,7 +18,7 @@ panel are described in detail in the Cookie Policy (https://milktrace.com.tr/en/
 
 ## 1. Who provides the service
 
-Albiferro Yazılım ve Sistem Limited Şirketi (Albiferro Software & System Limited Company), Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara, Türkiye; Etimesgut Tax Office, tax ID (VKN) 0210300337. Email: info@milktrace.com.tr; registered electronic mail (KEP): taner.akdemir@hs01.kep.tr; web: https://algebransoft.com.
+Albiferro Yazılım ve Sistem Limited Şirketi (Albiferro Software & System Limited Company), Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara, Türkiye; Tax office: Etimesgut, Ankara, Türkiye; tax ID (VKN) 0501474977; MERSİS (Central Registry) No 0050147497700001. Email: info@milktrace.com.tr; registered electronic mail (KEP): taner.akdemir@hs01.kep.tr; web: https://algebransoft.com.
 
 Milk Trace is provided to businesses (farms). The accounts of the people who use the app are
 opened on behalf of the business by the platform administrator; accounts cannot be created

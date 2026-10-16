@@ -16,7 +16,7 @@
 
 ## Veri sorumlusu
 
-Albiferro Yazılım ve Sistem Limited Şirketi, Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara; Etimesgut Vergi Dairesi, VKN 0210300337. E-posta: info@milktrace.com.tr; KEP: taner.akdemir@hs01.kep.tr; web: https://algebransoft.com.
+Albiferro Yazılım ve Sistem Limited Şirketi, Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara; Etimesgut Vergi Dairesi, VKN 0501474977, MERSİS No 0050147497700001. E-posta: info@milktrace.com.tr; KEP: taner.akdemir@hs01.kep.tr; web: https://algebransoft.com.
 
 ## İşlenen kişisel veriler ve amaçları
 

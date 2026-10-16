@@ -16,7 +16,7 @@ version (https://milktrace.com.tr/kullanim-kosullari), the Turkish version preva
 These terms govern the use of the Milk Trace service (the "Service") — the mobile app, the
 web panel (milktrace.com.tr) and the API — provided by Albiferro Yazılım ve Sistem Limited Şirketi (Albiferro Software & System Limited Company;
 Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara, Türkiye;
-Etimesgut Tax Office, tax ID (VKN) 0210300337; info@milktrace.com.tr; registered electronic
+Tax office: Etimesgut, Ankara, Türkiye; tax ID (VKN) 0501474977; MERSİS (Central Registry) No 0050147497700001; info@milktrace.com.tr; registered electronic
 mail (KEP): taner.akdemir@hs01.kep.tr; https://algebransoft.com). By using the Service you accept these
 terms.
 

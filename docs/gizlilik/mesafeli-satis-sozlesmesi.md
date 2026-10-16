@@ -14,10 +14,12 @@
 > values) aynı unvanla ayrıca güncellenmeli.
 >
 > **Not (16.10.2026):** satıcı, yeni kurulan Albiferro Yazılım ve Sistem Limited Şirketi
-> oldu; unvan bütün metinlerde birlikte değiştirildi. Adres aynı; vergi numarası, MERSİS ve
-> telefon yeni şirketinkiyle sonra güncellenecek. 11.10.2026'daki gibi yalnız satıcı kimliği
+> oldu; unvan, VKN (0501474977, eskisi 0210300337) ve MERSİS No (0050147497700001) bütün
+> metinlerde birlikte değiştirildi. Adres ve vergi dairesi aynı; telefon yeni şirketinkiyle
+> sonra güncellenecek. 11.10.2026'daki gibi yalnız satıcı kimliği
 > değişti, hükümler aynı: `billing.TermsVersion` (2026-10-01.1) artırılmadı. Backend satıcı
-> ayarı (`BILLING_SELLER_NAME`, deploy values `billing.seller.name`) aynı unvanla güncellenir.
+> ayarı (`BILLING_SELLER_NAME`/`_TAX_ID`/`_MERSIS`, deploy values `billing.seller.*`) aynı
+> bilgilerle güncellenir.
 > Hukukçuya: eski işletmeden yeni şirkete geçişte mevcut aboneliklerin devri/bildirimi gerekir mi?
 >
 > **Hukukçu için açık sorular:**
@@ -28,14 +30,15 @@
 >    ortamda anında ifa edilen hizmet) dayandırıldı; Alıcı'nın onayı ödeme sırasında ayrıca
 >    alınır ve kaydedilir. Spitfire'daki yaklaşımla aynı. Yeterli mi?
 
-**Sürüm:** 2026-10-01.1 · **Son güncelleme:** 16 Ekim 2026 (satıcı unvanı)
+**Sürüm:** 2026-10-01.1 · **Son güncelleme:** 16 Ekim 2026 (satıcı bilgileri)
 
 ## 1. Taraflar
 
 **SATICI**
 - Unvan: Albiferro Yazılım ve Sistem Limited Şirketi
 - Adres: Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara
-- Vergi dairesi / no: Etimesgut Vergi Dairesi / 0210300337
+- Vergi dairesi / no: Etimesgut Vergi Dairesi / 0501474977
+- MERSİS No: 0050147497700001
 - E-posta: info@milktrace.com.tr
 - KEP: taner.akdemir@hs01.kep.tr
 - Web: https://algebransoft.com
