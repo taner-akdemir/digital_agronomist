@@ -73,7 +73,16 @@ abstract interface class MilkTraceRepository {
 
   /// Not ekler (POST /animals/{id}/notes). Bütün işletme rolleri yazar;
   /// yazar oturumdaki kullanıcıdır.
-  Future<AnimalNote> addAnimalNote(String animalId, String note);
+  ///
+  /// [idempotencyKey] (backend ADR 0140): kuyruk kaydının kalıcı kimliği,
+  /// `Idempotency-Key` başlığında gider; aynı kayıt yeniden gönderilince
+  /// sunucu ikinci satırı yazmasın. Aynı parametre [addBreeding],
+  /// [addTreatment], [addVaccinations] ve [recordCalving]'de.
+  Future<AnimalNote> addAnimalNote(
+    String animalId,
+    String note, {
+    String? idempotencyKey,
+  });
 
   /// Üreme kayıtları, en yeni üstte (backend ADR 0088).
   Future<List<BreedingEvent>> breedingEvents(String animalId);
@@ -87,6 +96,7 @@ abstract interface class MilkTraceRepository {
     String sire = '',
     String? result,
     String note = '',
+    String? idempotencyKey,
   });
 
   /// Yanlış kaydı siler; yalnızca sahip (backend 403).
@@ -106,6 +116,7 @@ abstract interface class MilkTraceRepository {
     required DateTime startedOn,
     required DateTime withdrawalUntil,
     String note = '',
+    String? idempotencyKey,
   });
 
   /// Yanlış girilen kaydı siler; yalnızca işletme sahibi (backend 403).
@@ -131,7 +142,11 @@ abstract interface class MilkTraceRepository {
   /// Buzağılamayı kaydeder (POST /animals/{id}/calving, backend ADR 0060):
   /// tek işlemde son buzağılama tarihi, laktasyon sırası +1, durum sağmal ve
   /// not. Aynı tarih ikinci kez 409. Yalnızca işletme sahibi.
-  Future<Animal> recordCalving(String animalId, DateTime date);
+  Future<Animal> recordCalving(
+    String animalId,
+    DateTime date, {
+    String? idempotencyKey,
+  });
   Future<List<Thresholds>> thresholds();
 
   /// Bir türün eşiklerini günceller (§8.5 PUT /species/thresholds, owner).
@@ -463,6 +478,7 @@ abstract interface class MilkTraceRepository {
     required List<String> animalIds,
     required DateTime givenOn,
     String note = '',
+    String? idempotencyKey,
   });
 
   /// Yanlış kaydı siler; yalnızca sahip.

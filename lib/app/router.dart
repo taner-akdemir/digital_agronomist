@@ -36,6 +36,8 @@ import 'package:milktrace/features/splash/splash_screen.dart';
 import 'package:milktrace/features/team/milkers_screen.dart';
 import 'package:milktrace/features/team/team_screen.dart';
 import 'package:milktrace/features/update/update_required_screen.dart';
+import 'package:milktrace/features/write_queue/pending_writes.dart';
+import 'package:milktrace/features/write_queue/pending_writes_screen.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -104,6 +106,11 @@ GoRouter router(Ref ref) {
       // Kabuğun DIŞINDA: uyarı listesi bir sekmeye ait değil, her sekmeden
       // açılır ve tam ekran gelir.
       GoRoute(path: '/alerts', builder: (_, _) => const AlertsScreen()),
+      // Gönderilmeyi bekleyen kayıtlar (backend ADR 0140).
+      GoRoute(
+        path: pendingWritesRoute,
+        builder: (_, _) => const PendingWritesScreen(),
+      ),
       // Eşik ayarları da kabuğun dışında: hesap kartından açılıyor ve bir
       // sekmeye ait değil.
       GoRoute(

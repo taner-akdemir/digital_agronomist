@@ -178,7 +178,7 @@ final class AnimalsProvider
   }
 }
 
-String _$animalsHash() => r'1cb5caa6be6ae261d57b524eabc7a35faaeb2dd2';
+String _$animalsHash() => r'de6107e967140619c9cf7191dcc9c678f6e353e1';
 
 /// Süt miktarı biçimi: işletmenin birimi ve türlerin yoğunluğu (backend
 /// ADR 0086). Eşik ya da tür listesi okunamazsa birim yine uygulanır,

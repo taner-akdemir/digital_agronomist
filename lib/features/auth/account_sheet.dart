@@ -15,6 +15,7 @@ import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/push_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/providers/settings_providers.dart';
+import 'package:milktrace/providers/write_queue_providers.dart';
 
 /// Hesap kartı: kim giriş yapmış, rolü ne, ayarlar ve çıkış.
 ///
@@ -451,8 +452,21 @@ class _AccountSheet extends ConsumerWidget {
                     // geçemeyeceği bir giriş ekranına kilitlerdi.
                     ? null
                     : () async {
+                        // Gönderilmemiş kayıtlar (backend ADR 0140/9):
+                        // çıkış onları siler, önce sorulur.
+                        final queue = ref.read(writeQueueProvider.notifier);
+                        final auth = ref.read(authProvider.notifier);
+                        final waiting = ref.read(writeQueueProvider).length;
+                        if (waiting > 0) {
+                          final ok = await confirmSignOutWithPending(
+                            context,
+                            waiting,
+                          );
+                          if (!ok || !context.mounted) return;
+                        }
                         Navigator.of(context).pop();
-                        await ref.read(authProvider.notifier).signOut();
+                        if (waiting > 0) await queue.clear();
+                        await auth.signOut();
                       },
                 icon: const Icon(Icons.logout),
                 label: Text(l10n.accountSignOut),
@@ -808,4 +822,27 @@ class _ModeBadge extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Çıkışta gönderilmemiş kayıt uyarısı (backend ADR 0140/9).
+Future<bool> confirmSignOutWithPending(BuildContext context, int count) async {
+  final ok = await showDialog<bool>(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text(l10n.writeQueueSignOutTitle),
+      content: Text(l10n.writeQueueSignOutBody(count)),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(false),
+          child: Text(l10n.commonCancel),
+        ),
+        FilledButton(
+          style: FilledButton.styleFrom(backgroundColor: AppColors.dangerFill),
+          onPressed: () => Navigator.of(context).pop(true),
+          child: Text(l10n.writeQueueSignOutConfirm),
+        ),
+      ],
+    ),
+  );
+  return ok ?? false;
 }

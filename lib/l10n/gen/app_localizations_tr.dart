@@ -3675,6 +3675,121 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String writeQueueAnimals(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count hayvan',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String writeQueueBannerFailed(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count kayıt gönderilemedi',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String writeQueueBannerPending(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count kayıt gönderilmeyi bekliyor',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get writeQueueDiscard => 'Sil';
+
+  @override
+  String get writeQueueDiscardBody => 'Bu kayıt sunucuya hiç gönderilmeyecek.';
+
+  @override
+  String get writeQueueDiscardTitle => 'Kayıt silinsin mi?';
+
+  @override
+  String get writeQueueEmpty => 'Gönderilmeyi bekleyen kayıt yok.';
+
+  @override
+  String writeQueueEnteredAt(String when) {
+    return 'Girildi: $when';
+  }
+
+  @override
+  String get writeQueueExpired => '7 günden eski olduğu için gönderilmedi.';
+
+  @override
+  String get writeQueueFailedChip => 'Gönderilemedi';
+
+  @override
+  String get writeQueueFailedSection => 'Gönderilemeyenler';
+
+  @override
+  String get writeQueueFull =>
+      'Gönderilmeyi bekleyen kayıt sınırı doldu. Önce bekleyenleri gönderin ya da silin.';
+
+  @override
+  String get writeQueueIntro =>
+      'Bağlantı yokken girilen kayıtlar burada bekler ve bağlantı gelince girildiği sırayla gönderilir. Sunucunun kabul etmediği kayıtlar nedeniyle birlikte \"Gönderilemeyenler\" altında kalır; düzeltip yeniden deneyebilir ya da silebilirsiniz.';
+
+  @override
+  String get writeQueueKindCalving => 'Buzağılama';
+
+  @override
+  String get writeQueueKindNote => 'Not';
+
+  @override
+  String get writeQueueKindTreatment => 'Tedavi';
+
+  @override
+  String get writeQueueKindVaccination => 'Aşı';
+
+  @override
+  String get writeQueuePendingChip => 'Bekliyor';
+
+  @override
+  String get writeQueuePendingSection => 'Bekliyor';
+
+  @override
+  String get writeQueueQueued =>
+      'Bağlantı yok: kayıt sıraya alındı, bağlantı gelince gönderilecek.';
+
+  @override
+  String get writeQueueRetries => 'Sunucu art arda hata verdi.';
+
+  @override
+  String get writeQueueRetry => 'Yeniden dene';
+
+  @override
+  String get writeQueueSendNow => 'Şimdi gönder';
+
+  @override
+  String writeQueueSignOutBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count kayıt henüz gönderilmedi. Çıkış yaparsanız bu kayıtlar telefondan silinir.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get writeQueueSignOutConfirm => 'Sil ve çıkış yap';
+
+  @override
+  String get writeQueueSignOutTitle => 'Gönderilmemiş kayıtlar var';
+
+  @override
+  String get writeQueueTitle => 'Gönderilmeyi bekleyenler';
+
+  @override
   String get yieldChartAvg7 => '7 gün ort.';
 
   @override

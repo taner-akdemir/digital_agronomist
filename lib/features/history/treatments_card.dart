@@ -5,10 +5,14 @@ import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/core/format.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/treatment.dart';
+import 'package:milktrace/data/write_queue/pending_write.dart';
+import 'package:milktrace/data/write_queue/write_sender.dart';
+import 'package:milktrace/features/write_queue/pending_writes.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
+import 'package:milktrace/providers/write_queue_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -16,8 +20,11 @@ part 'treatments_card.g.dart';
 
 /// Hayvanın tedavileri (backend ADR 0084).
 @riverpod
-Future<List<Treatment>> animalTreatments(Ref ref, String animalId) =>
-    ref.watch(repositoryProvider).treatments(animalId);
+Future<List<Treatment>> animalTreatments(Ref ref, String animalId) {
+  // Kuyruktan kayıt teslim edilince yenilensin (backend ADR 0140).
+  ref.watch(writeQueueDeliveredProvider);
+  return ref.watch(repositoryProvider).treatments(animalId);
+}
 
 /// Tedavi ve arınma kartı: süren arınma kırmızı bantla ("sütü tanka
 /// katmayın"), altında son tedaviler. BÜTÜN roller ekler (tedaviyi
@@ -40,15 +47,25 @@ class TreatmentsCard extends ConsumerWidget {
     if (draft == null || !context.mounted) return;
     final messenger = ScaffoldMessenger.of(context);
     try {
-      await ref
-          .read(repositoryProvider)
-          .addTreatment(
-            animal.id,
-            drug: draft.drug,
-            startedOn: draft.start,
-            withdrawalUntil: draft.until,
-            note: draft.note,
+      final res = await ref
+          .read(writeQueueProvider.notifier)
+          .submit(
+            kind: PendingKind.treatment,
+            animalId: animal.id,
+            subject: animalSubject(ref, animal.id),
+            payload: PendingPayload.treatment(
+              drug: draft.drug,
+              startedOn: draft.start,
+              withdrawalUntil: draft.until,
+              note: draft.note,
+            ),
           );
+      // Sunucuya ulaşılamadı: kayıt kuyrukta; arınma sunucuda henüz YOK,
+      // kartta "Bekliyor" satırı bunu gösterir (backend ADR 0140).
+      if (res is WriteQueued) {
+        messenger.showSnackBar(writeQueuedSnackBar());
+        return;
+      }
       ref
         ..invalidate(animalTreatmentsProvider(animal.id))
         // Hayvanın arınma günü değişti: liste, detay ve seçici görsün.
@@ -172,6 +189,11 @@ class TreatmentsCard extends ConsumerWidget {
                 ],
               ),
             ),
+          // Kuyruktaki tedaviler (backend ADR 0140).
+          PendingWritesStrip(
+            animalId: animal.id,
+            kinds: const {PendingKind.treatment},
+          ),
           AsyncView(
             value: list,
             errorMessage: l10n.treatmentLoadFailed,

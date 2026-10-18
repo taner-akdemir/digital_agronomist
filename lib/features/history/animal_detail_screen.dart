@@ -9,6 +9,8 @@ import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/milking_speed.dart';
+import 'package:milktrace/data/write_queue/pending_write.dart';
+import 'package:milktrace/data/write_queue/write_sender.dart';
 import 'package:milktrace/domain/yield_class.dart';
 import 'package:milktrace/features/history/breeding_card.dart';
 import 'package:milktrace/features/history/history_providers.dart';
@@ -20,10 +22,11 @@ import 'package:milktrace/features/history/widgets/animal_status_chip.dart';
 import 'package:milktrace/features/history/widgets/yield_chart.dart';
 import 'package:milktrace/features/history/widgets/yield_class_badge.dart';
 import 'package:milktrace/features/team/milkers_screen.dart';
+import 'package:milktrace/features/write_queue/pending_writes.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
-import 'package:milktrace/providers/repository_providers.dart';
+import 'package:milktrace/providers/write_queue_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
 import 'package:milktrace/widgets/error_view.dart';
 import 'package:milktrace/widgets/milk_palette.dart';
@@ -240,14 +243,26 @@ class _CalvingButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: TextButton.icon(
-        onPressed: () => _record(context, ref),
-        icon: const Icon(Icons.child_friendly_outlined),
-        label: Text(l10n.animalDetailCalved),
-        style: TextButton.styleFrom(foregroundColor: AppColors.darkGreenColor),
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Align(
+          alignment: Alignment.centerRight,
+          child: TextButton.icon(
+            onPressed: () => _record(context, ref),
+            icon: const Icon(Icons.child_friendly_outlined),
+            label: Text(l10n.animalDetailCalved),
+            style: TextButton.styleFrom(
+              foregroundColor: AppColors.darkGreenColor,
+            ),
+          ),
+        ),
+        // Kuyruktaki buzağılama (backend ADR 0140).
+        PendingWritesStrip(
+          animalId: animal.id,
+          kinds: const {PendingKind.calving},
+        ),
+      ],
     );
   }
 
@@ -309,7 +324,19 @@ class _CalvingButton extends ConsumerWidget {
     if (ok != true) return;
 
     try {
-      await ref.read(repositoryProvider).recordCalving(animal.id, date);
+      final res = await ref
+          .read(writeQueueProvider.notifier)
+          .submit(
+            kind: PendingKind.calving,
+            animalId: animal.id,
+            subject: animalSubject(ref, animal.id),
+            payload: PendingPayload.calving(date),
+          );
+      // Sunucuya ulaşılamadı: kayıt kuyrukta (backend ADR 0140).
+      if (res is WriteQueued) {
+        messenger.showSnackBar(writeQueuedSnackBar());
+        return;
+      }
       ref
         ..invalidate(animalsProvider)
         ..invalidate(animalNotesProvider(animal.id))
@@ -980,7 +1007,19 @@ class _NotesCard extends ConsumerWidget {
     if (text == null || text.trim().isEmpty || !context.mounted) return;
     final messenger = ScaffoldMessenger.of(context);
     try {
-      await ref.read(repositoryProvider).addAnimalNote(animalId, text);
+      final res = await ref
+          .read(writeQueueProvider.notifier)
+          .submit(
+            kind: PendingKind.note,
+            animalId: animalId,
+            subject: animalSubject(ref, animalId),
+            payload: PendingPayload.note(text),
+          );
+      // Sunucuya ulaşılamadı: not kuyrukta, kartta "Bekliyor" (ADR 0140).
+      if (res is WriteQueued) {
+        messenger.showSnackBar(writeQueuedSnackBar());
+        return;
+      }
       ref.invalidate(animalNotesProvider(animalId));
       messenger.showSnackBar(
         SnackBar(content: Text(l10n.animalDetailNoteAdded)),
@@ -1022,6 +1061,11 @@ class _NotesCard extends ConsumerWidget {
                 ),
               ),
             ],
+          ),
+          // Kuyruktaki notlar, gerçek notların üstünde (backend ADR 0140).
+          PendingWritesStrip(
+            animalId: animalId,
+            kinds: const {PendingKind.note},
           ),
           AsyncView(
             value: notes,

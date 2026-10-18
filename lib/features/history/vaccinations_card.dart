@@ -5,7 +5,9 @@ import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/core/format.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/vaccination.dart';
+import 'package:milktrace/data/write_queue/pending_write.dart';
 import 'package:milktrace/features/history/vaccinations_screen.dart';
+import 'package:milktrace/features/write_queue/pending_writes.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
@@ -92,6 +94,12 @@ class VaccinationsCard extends ConsumerWidget {
             style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: AppSpacing.xs),
+          // Kuyruktaki aşılar; toplu işaret de bu hayvanı içeriyorsa
+          // (backend ADR 0140).
+          PendingWritesStrip(
+            animalId: animal.id,
+            kinds: const {PendingKind.vaccination},
+          ),
           AsyncView(
             value: data,
             errorMessage: l10n.vaccineCardLoadFailed,
@@ -177,6 +185,7 @@ class VaccinationsCard extends ConsumerWidget {
           ref,
           planId: d.planId,
           animalIds: [animal.id],
+          planName: d.planName,
           today: now,
         ),
         style: TextButton.styleFrom(foregroundColor: AppColors.darkGreenColor),

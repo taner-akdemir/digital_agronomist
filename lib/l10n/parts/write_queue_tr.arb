@@ -1,0 +1,64 @@
+{
+  "writeQueueQueued": "Bağlantı yok: kayıt sıraya alındı, bağlantı gelince gönderilecek.",
+  "writeQueueFull": "Gönderilmeyi bekleyen kayıt sınırı doldu. Önce bekleyenleri gönderin ya da silin.",
+  "writeQueueBannerPending": "{count, plural, other{{count} kayıt gönderilmeyi bekliyor}}",
+  "@writeQueueBannerPending": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "writeQueueBannerFailed": "{count, plural, other{{count} kayıt gönderilemedi}}",
+  "@writeQueueBannerFailed": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "writeQueueTitle": "Gönderilmeyi bekleyenler",
+  "writeQueueIntro": "Bağlantı yokken girilen kayıtlar burada bekler ve bağlantı gelince girildiği sırayla gönderilir. Sunucunun kabul etmediği kayıtlar nedeniyle birlikte \"Gönderilemeyenler\" altında kalır; düzeltip yeniden deneyebilir ya da silebilirsiniz.",
+  "writeQueuePendingSection": "Bekliyor",
+  "writeQueueFailedSection": "Gönderilemeyenler",
+  "writeQueuePendingChip": "Bekliyor",
+  "writeQueueFailedChip": "Gönderilemedi",
+  "writeQueueSendNow": "Şimdi gönder",
+  "writeQueueRetry": "Yeniden dene",
+  "writeQueueDiscard": "Sil",
+  "writeQueueDiscardTitle": "Kayıt silinsin mi?",
+  "writeQueueDiscardBody": "Bu kayıt sunucuya hiç gönderilmeyecek.",
+  "writeQueueEmpty": "Gönderilmeyi bekleyen kayıt yok.",
+  "writeQueueExpired": "7 günden eski olduğu için gönderilmedi.",
+  "writeQueueRetries": "Sunucu art arda hata verdi.",
+  "writeQueueEnteredAt": "Girildi: {when}",
+  "@writeQueueEnteredAt": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "writeQueueKindNote": "Not",
+  "writeQueueKindTreatment": "Tedavi",
+  "writeQueueKindVaccination": "Aşı",
+  "writeQueueKindCalving": "Buzağılama",
+  "writeQueueAnimals": "{count, plural, other{{count} hayvan}}",
+  "@writeQueueAnimals": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "writeQueueSignOutTitle": "Gönderilmemiş kayıtlar var",
+  "writeQueueSignOutBody": "{count, plural, other{{count} kayıt henüz gönderilmedi. Çıkış yaparsanız bu kayıtlar telefondan silinir.}}",
+  "@writeQueueSignOutBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "writeQueueSignOutConfirm": "Sil ve çıkış yap"
+}

@@ -7,10 +7,14 @@ import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/core/format.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/vaccination.dart';
+import 'package:milktrace/data/write_queue/pending_write.dart';
+import 'package:milktrace/data/write_queue/write_sender.dart';
+import 'package:milktrace/features/write_queue/pending_writes.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
+import 'package:milktrace/providers/write_queue_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -18,18 +22,25 @@ part 'vaccinations_screen.g.dart';
 
 /// Aşı ve ilaç takvimi (backend ADR 0112).
 @riverpod
-Future<List<VaccinePlan>> vaccinePlans(Ref ref) =>
-    ref.watch(repositoryProvider).vaccinePlans();
+Future<List<VaccinePlan>> vaccinePlans(Ref ref) {
+  // Kuyruktan aşı teslim edilince sayılar yenilensin (backend ADR 0140).
+  ref.watch(writeQueueDeliveredProvider);
+  return ref.watch(repositoryProvider).vaccinePlans();
+}
 
 /// Zamanı geçmiş, 30 gün içinde gelecek ya da hiç uygulanmamış olanlar.
 @riverpod
-Future<List<VaccinationDue>> dueVaccinations(Ref ref) =>
-    ref.watch(repositoryProvider).dueVaccinations();
+Future<List<VaccinationDue>> dueVaccinations(Ref ref) {
+  ref.watch(writeQueueDeliveredProvider);
+  return ref.watch(repositoryProvider).dueVaccinations();
+}
 
 /// Hayvan detayındaki "Aşılar" kartının verisi.
 @riverpod
-Future<AnimalVaccinations> animalVaccinations(Ref ref, String animalId) =>
-    ref.watch(repositoryProvider).animalVaccinations(animalId);
+Future<AnimalVaccinations> animalVaccinations(Ref ref, String animalId) {
+  ref.watch(writeQueueDeliveredProvider);
+  return ref.watch(repositoryProvider).animalVaccinations(animalId);
+}
 
 /// "kayıt yok" / "gecikti · 3 Eki" / "zamanı 3 Eki" ve rengi.
 ({String text, bool alarm}) dueLabel(
@@ -59,6 +70,7 @@ Future<bool> markVaccinated(
   WidgetRef ref, {
   required String planId,
   required List<String> animalIds,
+  String planName = '',
   DateTime? today,
 }) async {
   final draft = await showDialog<_MarkDraft>(
@@ -68,14 +80,29 @@ Future<bool> markVaccinated(
   if (draft == null || !context.mounted) return false;
   final messenger = ScaffoldMessenger.of(context);
   try {
-    final n = await ref
-        .read(repositoryProvider)
-        .addVaccinations(
-          planId: planId,
-          animalIds: animalIds,
-          givenOn: draft.day,
-          note: draft.note,
+    final res = await ref
+        .read(writeQueueProvider.notifier)
+        .submit(
+          kind: PendingKind.vaccination,
+          animalId: animalIds.length == 1 ? animalIds.single : null,
+          subject: animalIds.length == 1
+              ? animalSubject(ref, animalIds.single)
+              : '',
+          payload: PendingPayload.vaccination(
+            planId: planId,
+            animalIds: animalIds,
+            givenOn: draft.day,
+            note: draft.note,
+            planName: planName,
+          ),
         );
+    // Sunucuya ulaşılamadı: kayıt kuyrukta (backend ADR 0140). Seçim
+    // temizlensin diye true; aynı güne ikinci işaret sunucuda tekilleşir.
+    if (res is WriteQueued) {
+      messenger.showSnackBar(writeQueuedSnackBar());
+      return true;
+    }
+    final n = (res as WriteSent).value! as int;
     ref
       ..invalidate(vaccinePlansProvider)
       ..invalidate(dueVaccinationsProvider)
@@ -397,6 +424,7 @@ class _VaccinePlanDueScreenState extends ConsumerState<VaccinePlanDueScreen> {
       ref,
       planId: widget.plan.id,
       animalIds: _selected.toList(),
+      planName: widget.plan.name,
       today: _today,
     );
     if (ok && mounted) setState(_selected.clear);

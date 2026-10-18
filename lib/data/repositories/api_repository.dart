@@ -192,6 +192,7 @@ class ApiRepository implements MilkTraceRepository {
     String sire = '',
     String? result,
     String note = '',
+    String? idempotencyKey,
   }) async => BreedingEvent.fromJson(
     _dataOf(
       await _dio.post<dynamic>(
@@ -204,6 +205,7 @@ class ApiRepository implements MilkTraceRepository {
           'result': ?result,
           'note': note,
         },
+        options: _idem(idempotencyKey),
       ),
     ),
   );
@@ -235,6 +237,7 @@ class ApiRepository implements MilkTraceRepository {
     required DateTime startedOn,
     required DateTime withdrawalUntil,
     String note = '',
+    String? idempotencyKey,
   }) async {
     String day(DateTime d) =>
         '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
@@ -248,6 +251,7 @@ class ApiRepository implements MilkTraceRepository {
             'withdrawalUntil': day(withdrawalUntil),
             'note': note,
           },
+          options: _idem(idempotencyKey),
         ),
       ),
     );
@@ -310,6 +314,7 @@ class ApiRepository implements MilkTraceRepository {
     required List<String> animalIds,
     required DateTime givenOn,
     String note = '',
+    String? idempotencyKey,
   }) async {
     final data = _dataOf(
       await _dio.post<dynamic>(
@@ -320,6 +325,7 @@ class ApiRepository implements MilkTraceRepository {
           'givenOn': _dayText(givenOn),
           'note': note,
         },
+        options: _idem(idempotencyKey),
       ),
     );
     return (data['recorded'] as num?)?.toInt() ?? 0;
@@ -330,15 +336,19 @@ class ApiRepository implements MilkTraceRepository {
       _dio.delete<dynamic>('/vaccinations/$id');
 
   @override
-  Future<AnimalNote> addAnimalNote(String animalId, String note) async =>
-      AnimalNote.fromJson(
-        _dataOf(
-          await _dio.post<dynamic>(
-            '/animals/$animalId/notes',
-            data: {'note': note},
-          ),
-        ),
-      );
+  Future<AnimalNote> addAnimalNote(
+    String animalId,
+    String note, {
+    String? idempotencyKey,
+  }) async => AnimalNote.fromJson(
+    _dataOf(
+      await _dio.post<dynamic>(
+        '/animals/$animalId/notes',
+        data: {'note': note},
+        options: _idem(idempotencyKey),
+      ),
+    ),
+  );
 
   @override
   Future<ReportFile> yieldReport({DateTime? from, DateTime? to}) async {
@@ -387,21 +397,31 @@ class ApiRepository implements MilkTraceRepository {
   );
 
   @override
-  Future<Animal> recordCalving(String animalId, DateTime date) async =>
-      Animal.fromJson(
-        _dataOf(
-          await _dio.post<dynamic>(
-            '/animals/$animalId/calving',
-            // Yalnızca GÜN: saat yok, saat dilimi kaydırması olmasın.
-            data: {
-              'date':
-                  '${date.year.toString().padLeft(4, '0')}-'
-                  '${date.month.toString().padLeft(2, '0')}-'
-                  '${date.day.toString().padLeft(2, '0')}',
-            },
-          ),
-        ),
-      );
+  Future<Animal> recordCalving(
+    String animalId,
+    DateTime date, {
+    String? idempotencyKey,
+  }) async => Animal.fromJson(
+    _dataOf(
+      await _dio.post<dynamic>(
+        '/animals/$animalId/calving',
+        // Yalnızca GÜN: saat yok, saat dilimi kaydırması olmasın.
+        data: {
+          'date':
+              '${date.year.toString().padLeft(4, '0')}-'
+              '${date.month.toString().padLeft(2, '0')}-'
+              '${date.day.toString().padLeft(2, '0')}',
+        },
+        options: _idem(idempotencyKey),
+      ),
+    ),
+  );
+
+  /// Kuyruk kaydının kimliği (backend ADR 0140): `Idempotency-Key`
+  /// başlığında. Backend bugün yok sayıyor; ara katman gelince tekrar
+  /// gönderim ikinci kayıt yazmaz.
+  static Options? _idem(String? key) =>
+      key == null ? null : Options(headers: {'Idempotency-Key': key});
 
   /// Formun gövdesi: kimlik ve verim sınıfı YOK (sınıfı gece hesabı yazar;
   /// formun eski bir değerle ezmesi istenmez). Tarihler gün olarak, UTC

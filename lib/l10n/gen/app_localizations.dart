@@ -6301,6 +6301,168 @@ abstract class AppLocalizations {
   /// **'Çevrimdışı · son veri {when}. Değişiklikler bağlantı gelince yapılabilir.'**
   String widgetOfflineBanner(Object when);
 
+  /// No description provided for @writeQueueAnimals.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count, plural, other{{count} hayvan}}'**
+  String writeQueueAnimals(int count);
+
+  /// No description provided for @writeQueueBannerFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count, plural, other{{count} kayıt gönderilemedi}}'**
+  String writeQueueBannerFailed(int count);
+
+  /// No description provided for @writeQueueBannerPending.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count, plural, other{{count} kayıt gönderilmeyi bekliyor}}'**
+  String writeQueueBannerPending(int count);
+
+  /// No description provided for @writeQueueDiscard.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sil'**
+  String get writeQueueDiscard;
+
+  /// No description provided for @writeQueueDiscardBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu kayıt sunucuya hiç gönderilmeyecek.'**
+  String get writeQueueDiscardBody;
+
+  /// No description provided for @writeQueueDiscardTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kayıt silinsin mi?'**
+  String get writeQueueDiscardTitle;
+
+  /// No description provided for @writeQueueEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gönderilmeyi bekleyen kayıt yok.'**
+  String get writeQueueEmpty;
+
+  /// No description provided for @writeQueueEnteredAt.
+  ///
+  /// In tr, this message translates to:
+  /// **'Girildi: {when}'**
+  String writeQueueEnteredAt(String when);
+
+  /// No description provided for @writeQueueExpired.
+  ///
+  /// In tr, this message translates to:
+  /// **'7 günden eski olduğu için gönderilmedi.'**
+  String get writeQueueExpired;
+
+  /// No description provided for @writeQueueFailedChip.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gönderilemedi'**
+  String get writeQueueFailedChip;
+
+  /// No description provided for @writeQueueFailedSection.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gönderilemeyenler'**
+  String get writeQueueFailedSection;
+
+  /// No description provided for @writeQueueFull.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gönderilmeyi bekleyen kayıt sınırı doldu. Önce bekleyenleri gönderin ya da silin.'**
+  String get writeQueueFull;
+
+  /// No description provided for @writeQueueIntro.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bağlantı yokken girilen kayıtlar burada bekler ve bağlantı gelince girildiği sırayla gönderilir. Sunucunun kabul etmediği kayıtlar nedeniyle birlikte \"Gönderilemeyenler\" altında kalır; düzeltip yeniden deneyebilir ya da silebilirsiniz.'**
+  String get writeQueueIntro;
+
+  /// No description provided for @writeQueueKindCalving.
+  ///
+  /// In tr, this message translates to:
+  /// **'Buzağılama'**
+  String get writeQueueKindCalving;
+
+  /// No description provided for @writeQueueKindNote.
+  ///
+  /// In tr, this message translates to:
+  /// **'Not'**
+  String get writeQueueKindNote;
+
+  /// No description provided for @writeQueueKindTreatment.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tedavi'**
+  String get writeQueueKindTreatment;
+
+  /// No description provided for @writeQueueKindVaccination.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aşı'**
+  String get writeQueueKindVaccination;
+
+  /// No description provided for @writeQueuePendingChip.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bekliyor'**
+  String get writeQueuePendingChip;
+
+  /// No description provided for @writeQueuePendingSection.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bekliyor'**
+  String get writeQueuePendingSection;
+
+  /// No description provided for @writeQueueQueued.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bağlantı yok: kayıt sıraya alındı, bağlantı gelince gönderilecek.'**
+  String get writeQueueQueued;
+
+  /// No description provided for @writeQueueRetries.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sunucu art arda hata verdi.'**
+  String get writeQueueRetries;
+
+  /// No description provided for @writeQueueRetry.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeniden dene'**
+  String get writeQueueRetry;
+
+  /// No description provided for @writeQueueSendNow.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şimdi gönder'**
+  String get writeQueueSendNow;
+
+  /// No description provided for @writeQueueSignOutBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count, plural, other{{count} kayıt henüz gönderilmedi. Çıkış yaparsanız bu kayıtlar telefondan silinir.}}'**
+  String writeQueueSignOutBody(int count);
+
+  /// No description provided for @writeQueueSignOutConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sil ve çıkış yap'**
+  String get writeQueueSignOutConfirm;
+
+  /// No description provided for @writeQueueSignOutTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gönderilmemiş kayıtlar var'**
+  String get writeQueueSignOutTitle;
+
+  /// No description provided for @writeQueueTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gönderilmeyi bekleyenler'**
+  String get writeQueueTitle;
+
   /// No description provided for @yieldChartAvg7.
   ///
   /// In tr, this message translates to:

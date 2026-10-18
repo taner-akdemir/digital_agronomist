@@ -73,10 +73,12 @@ bool _unavailable(int? status) =>
 /// ulaşılamazsa son cevap döner ve [onOffline] o verinin anıyla çağrılır.
 /// Hiç önbellek yoksa hata olduğu gibi yukarı çıkar.
 ///
-/// YAZMALAR (eşleştirme, not, buzağılama…) önbelleğe ALINMAZ ve kuyruğa
-/// konmaz: çevrimdışıyken hata verir. Kuyruk, iki telefonun aynı noktaya
-/// farklı hayvan bağlaması gibi çakışmaları sonradan çözmeyi gerektirirdi;
-/// ürün kararı bunu şimdilik dışarıda bıraktı.
+/// YAZMALAR önbelleğe ALINMAZ; burada kuyruğa da konmaz, çevrimdışıyken
+/// hata verir. Yalnızca yeni kayıt ekleyen beş uç (not, üreme, tedavi, aşı,
+/// buzağılama) ekranlarda `WriteQueue` üzerinden yazılır ve sunucuya
+/// ulaşılamazsa kuyruğa girer (backend ADR 0140). Eşleştirme, düzenleme ve
+/// silme kuyruğa girmez: iki telefonun aynı noktaya farklı hayvan bağlaması
+/// gibi çakışmalar sonradan çözülemez.
 ///
 /// Canlı akış (WebSocket) önbelleklenmez: kendi yeniden bağlanma döngüsü
 /// var; tahta son anlık görüntüyle açılır.
@@ -215,6 +217,7 @@ class CachingRepository implements MilkTraceRepository {
     String sire = '',
     String? result,
     String note = '',
+    String? idempotencyKey,
   }) => _net(
     () => _inner.addBreeding(
       animalId,
@@ -223,6 +226,7 @@ class CachingRepository implements MilkTraceRepository {
       sire: sire,
       result: result,
       note: note,
+      idempotencyKey: idempotencyKey,
     ),
   );
 
@@ -251,6 +255,7 @@ class CachingRepository implements MilkTraceRepository {
     required DateTime startedOn,
     required DateTime withdrawalUntil,
     String note = '',
+    String? idempotencyKey,
   }) => _net(
     () => _inner.addTreatment(
       animalId,
@@ -258,6 +263,7 @@ class CachingRepository implements MilkTraceRepository {
       startedOn: startedOn,
       withdrawalUntil: withdrawalUntil,
       note: note,
+      idempotencyKey: idempotencyKey,
     ),
   );
 
@@ -313,12 +319,14 @@ class CachingRepository implements MilkTraceRepository {
     required List<String> animalIds,
     required DateTime givenOn,
     String note = '',
+    String? idempotencyKey,
   }) => _net(
     () => _inner.addVaccinations(
       planId: planId,
       animalIds: animalIds,
       givenOn: givenOn,
       note: note,
+      idempotencyKey: idempotencyKey,
     ),
   );
 
@@ -405,8 +413,13 @@ class CachingRepository implements MilkTraceRepository {
       _net(() => _inner.dismissUnmatchedTag(rfid));
 
   @override
-  Future<AnimalNote> addAnimalNote(String animalId, String note) =>
-      _net(() => _inner.addAnimalNote(animalId, note));
+  Future<AnimalNote> addAnimalNote(
+    String animalId,
+    String note, {
+    String? idempotencyKey,
+  }) => _net(
+    () => _inner.addAnimalNote(animalId, note, idempotencyKey: idempotencyKey),
+  );
 
   /// Önbelleklenmez: dosya her seferinde güncel üretilmeli; çevrimdışıyken
   /// eski raporu yeni diye paylaşmak yanıltıcı olurdu.
@@ -430,8 +443,13 @@ class CachingRepository implements MilkTraceRepository {
   );
 
   @override
-  Future<Animal> recordCalving(String animalId, DateTime date) =>
-      _net(() => _inner.recordCalving(animalId, date));
+  Future<Animal> recordCalving(
+    String animalId,
+    DateTime date, {
+    String? idempotencyKey,
+  }) => _net(
+    () => _inner.recordCalving(animalId, date, idempotencyKey: idempotencyKey),
+  );
 
   @override
   Future<Thresholds> updateThresholds(Thresholds thresholds) =>

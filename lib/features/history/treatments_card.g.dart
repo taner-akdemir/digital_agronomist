@@ -68,7 +68,7 @@ final class AnimalTreatmentsProvider
   }
 }
 
-String _$animalTreatmentsHash() => r'ff6364bf886b2a4009727c570ce3b814f6a35810';
+String _$animalTreatmentsHash() => r'98519ef4a2389a1986baae08dbdbbc15722c550f';
 
 /// Hayvanın tedavileri (backend ADR 0084).
 

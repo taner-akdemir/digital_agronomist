@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/features/whats_new/whats_new.dart';
+import 'package:milktrace/features/write_queue/pending_writes.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/widgets/custom_app_bar.dart';
 import 'package:milktrace/widgets/offline_banner.dart';
@@ -33,8 +34,14 @@ class ScaffoldWithNavBar extends StatelessWidget {
       body: Column(
         children: [
           const OfflineBanner(),
+          // Gönderilmeyi bekleyen kayıtlar (backend ADR 0140).
+          const PendingWritesBanner(),
           // Güncellemeden sonra bir kez Yenilikler (backend ADR 0123).
-          Expanded(child: WhatsNewListener(child: navigationShell)),
+          Expanded(
+            child: WriteQueueListener(
+              child: WhatsNewListener(child: navigationShell),
+            ),
+          ),
         ],
       ),
       bottomNavigationBar: NavigationBar(

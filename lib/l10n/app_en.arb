@@ -1903,6 +1903,68 @@
       "when": {}
     }
   },
+  "writeQueueAnimals": "{count, plural, =1{{count} animal} other{{count} animals}}",
+  "@writeQueueAnimals": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "writeQueueBannerFailed": "{count, plural, =1{{count} record could not be sent} other{{count} records could not be sent}}",
+  "@writeQueueBannerFailed": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "writeQueueBannerPending": "{count, plural, =1{{count} record waiting to be sent} other{{count} records waiting to be sent}}",
+  "@writeQueueBannerPending": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "writeQueueDiscard": "Delete",
+  "writeQueueDiscardBody": "This record will never be sent to the server.",
+  "writeQueueDiscardTitle": "Delete this record?",
+  "writeQueueEmpty": "No records waiting to be sent.",
+  "writeQueueEnteredAt": "Entered: {when}",
+  "@writeQueueEnteredAt": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "writeQueueExpired": "Not sent because it is older than 7 days.",
+  "writeQueueFailedChip": "Not sent",
+  "writeQueueFailedSection": "Not sent",
+  "writeQueueFull": "The queue of records waiting to be sent is full. Send or delete the waiting records first.",
+  "writeQueueIntro": "Records entered without a connection wait here and are sent in the order they were entered once the connection is back. Records the server does not accept stay under \"Not sent\" with the reason; you can fix and retry them or delete them.",
+  "writeQueueKindCalving": "Calving",
+  "writeQueueKindNote": "Note",
+  "writeQueueKindTreatment": "Treatment",
+  "writeQueueKindVaccination": "Vaccination",
+  "writeQueuePendingChip": "Waiting",
+  "writeQueuePendingSection": "Waiting",
+  "writeQueueQueued": "No connection: the record is queued and will be sent when the connection is back.",
+  "writeQueueRetries": "The server kept returning errors.",
+  "writeQueueRetry": "Retry",
+  "writeQueueSendNow": "Send now",
+  "writeQueueSignOutBody": "{count, plural, =1{{count} record has not been sent yet. If you sign out it will be deleted from this phone.} other{{count} records have not been sent yet. If you sign out they will be deleted from this phone.}}",
+  "@writeQueueSignOutBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "writeQueueSignOutConfirm": "Delete and sign out",
+  "writeQueueSignOutTitle": "Unsent records",
+  "writeQueueTitle": "Waiting to be sent",
   "yieldChartAvg7": "7-day avg.",
   "yieldChartDaily": "Daily",
   "yieldChartHeat": "Heat stress day (THI ≥ 72)",

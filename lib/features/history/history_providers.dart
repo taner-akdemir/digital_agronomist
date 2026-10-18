@@ -10,6 +10,7 @@ import 'package:milktrace/domain/yield_class.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
+import 'package:milktrace/providers/write_queue_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'history_providers.g.dart';
@@ -26,8 +27,11 @@ Future<List<AnimalMilking>> animalHistory(Ref ref, String animalId) =>
 
 /// Bir hayvanın notları, en yeni üstte.
 @riverpod
-Future<List<AnimalNote>> animalNotes(Ref ref, String animalId) =>
-    ref.watch(repositoryProvider).animalNotes(animalId);
+Future<List<AnimalNote>> animalNotes(Ref ref, String animalId) {
+  // Kuyruktan not teslim edilince yenilensin (backend ADR 0140).
+  ref.watch(writeQueueDeliveredProvider);
+  return ref.watch(repositoryProvider).animalNotes(animalId);
+}
 
 /// Hiçbir hayvana kayıtlı olmayan okunmuş küpeler (backend ADR 0056).
 /// Yalnızca işletme sahibinin ekranında izlenir; backend başkasına 403.

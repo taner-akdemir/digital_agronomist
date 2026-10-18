@@ -701,6 +701,28 @@ void main() {
     expect(r.adapter.requests.last.data, {'note': 'Mastitis'});
   });
 
+  // Kuyruk kaydının kimliği her denemede Idempotency-Key olarak gider
+  // (backend ADR 0140); anahtar verilmeyen yazmada başlık yok.
+  test('kuyruk yazmaları Idempotency-Key başlığı taşır', () async {
+    final r = rig(
+      (o) async => okEnvelope({
+        'id': 'n2',
+        'animalId': 'a1',
+        'note': 'Mastitis',
+        'createdAt': '2026-09-24T12:00:00Z',
+      }),
+    );
+
+    await r.repo.addAnimalNote('a1', 'Mastitis', idempotencyKey: 'k-1');
+    expect(r.adapter.requests.last.headers['Idempotency-Key'], 'k-1');
+
+    await r.repo.addAnimalNote('a1', 'Mastitis');
+    expect(
+      r.adapter.requests.last.headers.containsKey('Idempotency-Key'),
+      isFalse,
+    );
+  });
+
   test('push jetonu silinir', () async {
     final r = rig((o) async => okEnvelope({}));
 

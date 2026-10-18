@@ -52,7 +52,7 @@ final class VaccinePlansProvider
   }
 }
 
-String _$vaccinePlansHash() => r'8545805d49af58e95ae45e27899f2ffd421b71f0';
+String _$vaccinePlansHash() => r'b7cee962899bb87ec5ed69b41ced4243926e3374';
 
 /// Zamanı geçmiş, 30 gün içinde gelecek ya da hiç uygulanmamış olanlar.
 
@@ -98,7 +98,7 @@ final class DueVaccinationsProvider
   }
 }
 
-String _$dueVaccinationsHash() => r'bc4e748e86238d16700b10a54039502c7baeb171';
+String _$dueVaccinationsHash() => r'a2a9b8e3dc17972645bb30984826d56a9ad91331';
 
 /// Hayvan detayındaki "Aşılar" kartının verisi.
 
@@ -163,7 +163,7 @@ final class AnimalVaccinationsProvider
 }
 
 String _$animalVaccinationsHash() =>
-    r'4868be1e170807604925574eaaa84a5106445099';
+    r'1401443c75126916eeabe69b28b54d063121be57';
 
 /// Hayvan detayındaki "Aşılar" kartının verisi.
 

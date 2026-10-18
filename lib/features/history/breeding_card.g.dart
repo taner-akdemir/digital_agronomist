@@ -70,7 +70,7 @@ final class AnimalBreedingProvider
   }
 }
 
-String _$animalBreedingHash() => r'0daa31b6afc25d1f809264bda8eaa0cb5d98b80b';
+String _$animalBreedingHash() => r'af9ea09bd52901af4b87a09813561e15cae1e034';
 
 /// Hayvanın üreme kayıtları (backend ADR 0088).
 

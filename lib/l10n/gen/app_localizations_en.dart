@@ -3722,6 +3722,127 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String writeQueueAnimals(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count animals',
+      one: '$count animal',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String writeQueueBannerFailed(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count records could not be sent',
+      one: '$count record could not be sent',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String writeQueueBannerPending(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count records waiting to be sent',
+      one: '$count record waiting to be sent',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get writeQueueDiscard => 'Delete';
+
+  @override
+  String get writeQueueDiscardBody =>
+      'This record will never be sent to the server.';
+
+  @override
+  String get writeQueueDiscardTitle => 'Delete this record?';
+
+  @override
+  String get writeQueueEmpty => 'No records waiting to be sent.';
+
+  @override
+  String writeQueueEnteredAt(String when) {
+    return 'Entered: $when';
+  }
+
+  @override
+  String get writeQueueExpired => 'Not sent because it is older than 7 days.';
+
+  @override
+  String get writeQueueFailedChip => 'Not sent';
+
+  @override
+  String get writeQueueFailedSection => 'Not sent';
+
+  @override
+  String get writeQueueFull =>
+      'The queue of records waiting to be sent is full. Send or delete the waiting records first.';
+
+  @override
+  String get writeQueueIntro =>
+      'Records entered without a connection wait here and are sent in the order they were entered once the connection is back. Records the server does not accept stay under \"Not sent\" with the reason; you can fix and retry them or delete them.';
+
+  @override
+  String get writeQueueKindCalving => 'Calving';
+
+  @override
+  String get writeQueueKindNote => 'Note';
+
+  @override
+  String get writeQueueKindTreatment => 'Treatment';
+
+  @override
+  String get writeQueueKindVaccination => 'Vaccination';
+
+  @override
+  String get writeQueuePendingChip => 'Waiting';
+
+  @override
+  String get writeQueuePendingSection => 'Waiting';
+
+  @override
+  String get writeQueueQueued =>
+      'No connection: the record is queued and will be sent when the connection is back.';
+
+  @override
+  String get writeQueueRetries => 'The server kept returning errors.';
+
+  @override
+  String get writeQueueRetry => 'Retry';
+
+  @override
+  String get writeQueueSendNow => 'Send now';
+
+  @override
+  String writeQueueSignOutBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count records have not been sent yet. If you sign out they will be deleted from this phone.',
+      one:
+          '$count record has not been sent yet. If you sign out it will be deleted from this phone.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get writeQueueSignOutConfirm => 'Delete and sign out';
+
+  @override
+  String get writeQueueSignOutTitle => 'Unsent records';
+
+  @override
+  String get writeQueueTitle => 'Waiting to be sent';
+
+  @override
   String get yieldChartAvg7 => '7-day avg.';
 
   @override

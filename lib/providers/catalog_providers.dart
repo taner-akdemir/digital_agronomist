@@ -5,6 +5,7 @@ import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/data/models/thresholds.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
+import 'package:milktrace/providers/write_queue_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'catalog_providers.g.dart';
@@ -26,8 +27,12 @@ Future<List<Thresholds>> thresholdsList(Ref ref) =>
     ref.watch(repositoryProvider).thresholds();
 
 @riverpod
-Future<List<Animal>> animals(Ref ref) =>
-    ref.watch(repositoryProvider).animals();
+Future<List<Animal>> animals(Ref ref) {
+  // Kuyruktan kayıt teslim edilince (buzağılama, tedavi, üreme hayvanın
+  // durumunu değiştirir) yenilensin (backend ADR 0140).
+  ref.watch(writeQueueDeliveredProvider);
+  return ref.watch(repositoryProvider).animals();
+}
 
 /// Süt miktarı biçimi: işletmenin birimi ve türlerin yoğunluğu (backend
 /// ADR 0086). Eşik ya da tür listesi okunamazsa birim yine uygulanır,

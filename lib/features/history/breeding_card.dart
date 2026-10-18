@@ -5,10 +5,14 @@ import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/core/format.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/breeding.dart';
+import 'package:milktrace/data/write_queue/pending_write.dart';
+import 'package:milktrace/data/write_queue/write_sender.dart';
+import 'package:milktrace/features/write_queue/pending_writes.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
+import 'package:milktrace/providers/write_queue_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -16,8 +20,11 @@ part 'breeding_card.g.dart';
 
 /// Hayvanın üreme kayıtları (backend ADR 0088).
 @riverpod
-Future<List<BreedingEvent>> animalBreeding(Ref ref, String animalId) =>
-    ref.watch(repositoryProvider).breedingEvents(animalId);
+Future<List<BreedingEvent>> animalBreeding(Ref ref, String animalId) {
+  // Kuyruktan kayıt teslim edilince yenilensin (backend ADR 0140).
+  ref.watch(writeQueueDeliveredProvider);
+  return ref.watch(repositoryProvider).breedingEvents(animalId);
+}
 
 /// Yaklaşan doğum ve kuruya çıkarmalar (30 gün).
 @riverpod
@@ -53,15 +60,24 @@ class BreedingCard extends ConsumerWidget {
     if (draft == null || !context.mounted) return;
     final messenger = ScaffoldMessenger.of(context);
     try {
-      await ref
-          .read(repositoryProvider)
-          .addBreeding(
-            animal.id,
-            kind: draft.kind,
-            date: draft.date,
-            sire: draft.sire,
-            result: draft.result,
+      final res = await ref
+          .read(writeQueueProvider.notifier)
+          .submit(
+            kind: PendingKind.breeding,
+            animalId: animal.id,
+            subject: animalSubject(ref, animal.id),
+            payload: PendingPayload.breeding(
+              kind: draft.kind,
+              date: draft.date,
+              sire: draft.sire,
+              result: draft.result,
+            ),
           );
+      // Sunucuya ulaşılamadı: kayıt kuyrukta (backend ADR 0140).
+      if (res is WriteQueued) {
+        messenger.showSnackBar(writeQueuedSnackBar());
+        return;
+      }
       _refresh(ref);
       messenger.showSnackBar(
         SnackBar(
@@ -181,6 +197,11 @@ class BreedingCard extends ConsumerWidget {
               ),
             const SizedBox(height: AppSpacing.sm),
           ],
+          // Kuyruktaki üreme kayıtları (backend ADR 0140).
+          PendingWritesStrip(
+            animalId: animal.id,
+            kinds: const {PendingKind.breeding},
+          ),
           AsyncView(
             value: list,
             errorMessage: l10n.breedingLoadFailed,

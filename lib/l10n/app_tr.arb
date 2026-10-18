@@ -2118,6 +2118,68 @@
       "when": {}
     }
   },
+  "writeQueueAnimals": "{count, plural, other{{count} hayvan}}",
+  "@writeQueueAnimals": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "writeQueueBannerFailed": "{count, plural, other{{count} kayıt gönderilemedi}}",
+  "@writeQueueBannerFailed": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "writeQueueBannerPending": "{count, plural, other{{count} kayıt gönderilmeyi bekliyor}}",
+  "@writeQueueBannerPending": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "writeQueueDiscard": "Sil",
+  "writeQueueDiscardBody": "Bu kayıt sunucuya hiç gönderilmeyecek.",
+  "writeQueueDiscardTitle": "Kayıt silinsin mi?",
+  "writeQueueEmpty": "Gönderilmeyi bekleyen kayıt yok.",
+  "writeQueueEnteredAt": "Girildi: {when}",
+  "@writeQueueEnteredAt": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "writeQueueExpired": "7 günden eski olduğu için gönderilmedi.",
+  "writeQueueFailedChip": "Gönderilemedi",
+  "writeQueueFailedSection": "Gönderilemeyenler",
+  "writeQueueFull": "Gönderilmeyi bekleyen kayıt sınırı doldu. Önce bekleyenleri gönderin ya da silin.",
+  "writeQueueIntro": "Bağlantı yokken girilen kayıtlar burada bekler ve bağlantı gelince girildiği sırayla gönderilir. Sunucunun kabul etmediği kayıtlar nedeniyle birlikte \"Gönderilemeyenler\" altında kalır; düzeltip yeniden deneyebilir ya da silebilirsiniz.",
+  "writeQueueKindCalving": "Buzağılama",
+  "writeQueueKindNote": "Not",
+  "writeQueueKindTreatment": "Tedavi",
+  "writeQueueKindVaccination": "Aşı",
+  "writeQueuePendingChip": "Bekliyor",
+  "writeQueuePendingSection": "Bekliyor",
+  "writeQueueQueued": "Bağlantı yok: kayıt sıraya alındı, bağlantı gelince gönderilecek.",
+  "writeQueueRetries": "Sunucu art arda hata verdi.",
+  "writeQueueRetry": "Yeniden dene",
+  "writeQueueSendNow": "Şimdi gönder",
+  "writeQueueSignOutBody": "{count, plural, other{{count} kayıt henüz gönderilmedi. Çıkış yaparsanız bu kayıtlar telefondan silinir.}}",
+  "@writeQueueSignOutBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "writeQueueSignOutConfirm": "Sil ve çıkış yap",
+  "writeQueueSignOutTitle": "Gönderilmemiş kayıtlar var",
+  "writeQueueTitle": "Gönderilmeyi bekleyenler",
   "yieldChartAvg7": "7 gün ort.",
   "yieldChartDaily": "Günlük",
   "yieldChartHeat": "Isı stresi günü (THI ≥ 72)",

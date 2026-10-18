@@ -246,18 +246,21 @@ class MockRepository implements MilkTraceRepository {
       _delayed(() async => List.unmodifiable(_notes[animalId] ?? const []));
 
   @override
-  Future<AnimalNote> addAnimalNote(String animalId, String note) =>
-      _delayed(() async {
-        final n = AnimalNote(
-          id: 'mock-note-${(_notes[animalId]?.length ?? 0) + 1}',
-          animalId: animalId,
-          note: note.trim(),
-          authorName: 'Demo Kullanıcı',
-          createdAt: DateTime.now().toUtc(),
-        );
-        (_notes[animalId] ??= []).insert(0, n);
-        return n;
-      });
+  Future<AnimalNote> addAnimalNote(
+    String animalId,
+    String note, {
+    String? idempotencyKey,
+  }) => _delayed(() async {
+    final n = AnimalNote(
+      id: 'mock-note-${(_notes[animalId]?.length ?? 0) + 1}',
+      animalId: animalId,
+      note: note.trim(),
+      authorName: 'Demo Kullanıcı',
+      createdAt: DateTime.now().toUtc(),
+    );
+    (_notes[animalId] ??= []).insert(0, n);
+    return n;
+  });
 
   DateTime? _withdrawalOf(String animalId) {
     DateTime? best;
@@ -347,6 +350,7 @@ class MockRepository implements MilkTraceRepository {
     String sire = '',
     String? result,
     String note = '',
+    String? idempotencyKey,
   }) => _delayed(() async {
     final e = BreedingEvent(
       id: 'mock-breeding-${++_breedingSeq}',
@@ -424,6 +428,7 @@ class MockRepository implements MilkTraceRepository {
     required DateTime startedOn,
     required DateTime withdrawalUntil,
     String note = '',
+    String? idempotencyKey,
   }) => _delayed(() async {
     if (withdrawalUntil.isBefore(startedOn)) {
       throw const ApiException(
@@ -624,6 +629,7 @@ class MockRepository implements MilkTraceRepository {
     required List<String> animalIds,
     required DateTime givenOn,
     String note = '',
+    String? idempotencyKey,
   }) => _delayed(() async {
     if (animalIds.isEmpty) {
       throw _vaccineInvalid('en az bir hayvan seçilmeli');
@@ -700,62 +706,65 @@ class MockRepository implements MilkTraceRepository {
   );
 
   @override
-  Future<Animal> recordCalving(String animalId, DateTime date) =>
-      _delayed(() async {
-        final a = (await animals()).firstWhere((x) => x.id == animalId);
-        final day = DateTime.utc(date.year, date.month, date.day);
-        final last = a.lastCalvingDate;
-        // Backend'in kuralları (ADR 0060): aynı gün ikinci kez, önceki
-        // buzağılamadan önce reddedilir.
-        if (last != null && !day.isAfter(last)) {
-          throw day == last
-              ? const ApiException(
-                  code: 'CONFLICT',
-                  message: 'bu tarihte buzağılama zaten kayıtlı',
-                  status: 409,
-                )
-              : const ApiException(
-                  code: 'VALIDATION',
-                  message: 'buzağılama tarihi son buzağılamadan önce olamaz',
-                  status: 422,
-                );
-        }
-        // Yeni laktasyon: eski sınıf taşınmaz (backend ADR 0060).
-        final saved = a.copyWith(
-          lastCalvingDate: day,
-          lactationNo: a.lactationNo + 1,
-          status: 'active',
-          yieldClass: YieldClass.normal,
-          yieldClassAt: null,
-        );
-        _savedAnimals[saved.id] = saved;
-        var note =
-            'Buzağıladı: ${day.day.toString().padLeft(2, '0')}.'
-            '${day.month.toString().padLeft(2, '0')}.${day.year} '
-            '(${saved.lactationNo}. laktasyon)';
-        if (!a.isMilking) note += '; durum: ${a.statusLabel} → Sağmal';
-        // Biten laktasyonun son sınıfı (backend ADR 0060): yalnızca son
-        // buzağılamadan sonra hesaplandıysa.
-        final at = a.yieldClassAt;
-        if (at != null && (last == null || !at.isBefore(last))) {
-          note +=
-              '; önceki laktasyon: ${a.yieldClass.label} '
-              '(${at.day.toString().padLeft(2, '0')}.'
-              '${at.month.toString().padLeft(2, '0')}.${at.year} hesabı)';
-        }
-        (_notes[saved.id] ??= []).insert(
-          0,
-          AnimalNote(
-            id: 'mock-note-${(_notes[saved.id]?.length ?? 0) + 1}',
-            animalId: saved.id,
-            note: note,
-            authorName: 'Demo Kullanıcı',
-            createdAt: DateTime.now().toUtc(),
-            kind: 'calving',
-          ),
-        );
-        return saved;
-      });
+  Future<Animal> recordCalving(
+    String animalId,
+    DateTime date, {
+    String? idempotencyKey,
+  }) => _delayed(() async {
+    final a = (await animals()).firstWhere((x) => x.id == animalId);
+    final day = DateTime.utc(date.year, date.month, date.day);
+    final last = a.lastCalvingDate;
+    // Backend'in kuralları (ADR 0060): aynı gün ikinci kez, önceki
+    // buzağılamadan önce reddedilir.
+    if (last != null && !day.isAfter(last)) {
+      throw day == last
+          ? const ApiException(
+              code: 'CONFLICT',
+              message: 'bu tarihte buzağılama zaten kayıtlı',
+              status: 409,
+            )
+          : const ApiException(
+              code: 'VALIDATION',
+              message: 'buzağılama tarihi son buzağılamadan önce olamaz',
+              status: 422,
+            );
+    }
+    // Yeni laktasyon: eski sınıf taşınmaz (backend ADR 0060).
+    final saved = a.copyWith(
+      lastCalvingDate: day,
+      lactationNo: a.lactationNo + 1,
+      status: 'active',
+      yieldClass: YieldClass.normal,
+      yieldClassAt: null,
+    );
+    _savedAnimals[saved.id] = saved;
+    var note =
+        'Buzağıladı: ${day.day.toString().padLeft(2, '0')}.'
+        '${day.month.toString().padLeft(2, '0')}.${day.year} '
+        '(${saved.lactationNo}. laktasyon)';
+    if (!a.isMilking) note += '; durum: ${a.statusLabel} → Sağmal';
+    // Biten laktasyonun son sınıfı (backend ADR 0060): yalnızca son
+    // buzağılamadan sonra hesaplandıysa.
+    final at = a.yieldClassAt;
+    if (at != null && (last == null || !at.isBefore(last))) {
+      note +=
+          '; önceki laktasyon: ${a.yieldClass.label} '
+          '(${at.day.toString().padLeft(2, '0')}.'
+          '${at.month.toString().padLeft(2, '0')}.${at.year} hesabı)';
+    }
+    (_notes[saved.id] ??= []).insert(
+      0,
+      AnimalNote(
+        id: 'mock-note-${(_notes[saved.id]?.length ?? 0) + 1}',
+        animalId: saved.id,
+        note: note,
+        authorName: 'Demo Kullanıcı',
+        createdAt: DateTime.now().toUtc(),
+        kind: 'calving',
+      ),
+    );
+    return saved;
+  });
 
   /// Mock'ta kaydedilen hayvanlar (id → hayvan).
   final Map<String, Animal> _savedAnimals = {};

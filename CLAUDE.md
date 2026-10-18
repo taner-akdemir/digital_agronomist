@@ -206,8 +206,22 @@ temizler.
 **Çevrimdışı** (§18/7, backend ADR 0061): `CachingRepository` ApiRepository'yi sarar. Okuma
 cevapları cihaza yazılır (`mtcache:v1:<işletme>:<kullanıcı>:`), sunucuya ULAŞILAMAZSA son
 cevap döner ve `OfflineBanner` "Çevrimdışı · son veri HH:mm" der; sunucu hatası (4xx/5xx)
-önbellekle ÖRTÜLMEZ. Yazmalar çevrimdışıyken hata verir, kuyruk YOK (ürün kararı). Çıkışta
-önbellek silinir. Yeni bir okuma ucu eklersen `CachingRepository`'de `_read` ile sarmayı unutma.
+önbellekle ÖRTÜLMEZ. Çıkışta önbellek silinir. Yeni bir okuma ucu eklersen
+`CachingRepository`'de `_read` ile sarmayı unutma.
+
+**Çevrimdışı yazma kuyruğu** (backend ADR 0140): YALNIZCA yeni kayıt ekleyen beş uç kuyruğa
+girer — not, üreme (tohumlama/gebelik kontrolü/kızgınlık), tedavi, aşı, buzağılama. Ekran
+`writeQueueProvider.notifier.submit(kind, payload: PendingPayload.…)` ile yazar: önce doğrudan
+gönderilir, yalnızca sunucuya ULAŞILAMAZSA (`isNetworkError`) kayıt kuyruğa girer; `WriteQueued`
+dönerse amber `writeQueuedSnackBar` ve kartta `PendingWritesStrip` "Bekliyor" gösterir. Sunucu
+hatası (4xx/500) eskisi gibi ekrana çıkar. Kuyruk `mtqueue:v1:<işletme>:<kullanıcı>` (önbellekten
+ayrı, zorunlu çıkışta silinmez; kullanıcı çıkışı onay sorup siler), katı FIFO, her denemede aynı
+`Idempotency-Key` (kayıt kimliği, UUID v4). Boşaltma: bağlantı dönünce, uygulama öne gelince,
+bekleyen varken 30 sn'de bir (`WriteQueueListener`), "Şimdi gönder". 4xx → "Gönderilemeyenler"
+(`/pending-writes`, yeniden dene / sil); 5xx artan bekleme, 8 hatada bırakılır; 7 günden eski
+bekleyen gönderilmez; en çok 200 kayıt. Eşleştirme, oturum, düzenleme, silme ve ayarlar BİLEREK
+kuyruğa girmez: çevrimdışıyken hata verir. Yeni bir "ekleme" ucunu kuyruğa almak için
+`PendingKind` + `PendingPayload` + `sendPendingWrite`'a ekle ve depoda `idempotencyKey` geçir.
 
 `Env.wsBaseUrl`, `apiBaseUrl`'den **türetilir** (`http` → `ws`): ayrı tanımlansaydı biri
 değişip diğeri unutulduğunda canlı ekran sessizce bağlanamazdı.
