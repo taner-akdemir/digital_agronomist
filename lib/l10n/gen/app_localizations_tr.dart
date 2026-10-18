@@ -2932,6 +2932,18 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String get tabletSelectAlert =>
+      'Hayvanın geçmişini görmek için hayvana bağlı bir uyarı seçin';
+
+  @override
+  String get tabletSelectAnimal =>
+      'Ayrıntısını görmek için soldan bir hayvan seçin';
+
+  @override
+  String get tabletSelectSession =>
+      'Özetini görmek için soldan bir oturum seçin';
+
+  @override
   String get teamAccessExpired => 'erişim süresi doldu';
 
   @override

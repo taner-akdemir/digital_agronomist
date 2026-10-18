@@ -8,6 +8,7 @@ import 'package:milktrace/features/settings/channel_labels.dart';
 import 'package:milktrace/features/settings/notification_channels_providers.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/repository_providers.dart';
+import 'package:milktrace/widgets/adaptive.dart';
 import 'package:milktrace/widgets/async_view.dart';
 
 /// Bildirim kanalı ekleme ve düzenleme.
@@ -164,11 +165,14 @@ class _FormState extends ConsumerState<_Form> {
       child: ListView(
         // Alt pay sistem hareket çubuğu için: en alttaki düğme onun altında
         // kalıyordu.
-        padding: EdgeInsets.fromLTRB(
-          AppSpacing.lg,
-          AppSpacing.lg,
-          AppSpacing.lg,
-          AppSpacing.lg + MediaQuery.paddingOf(context).bottom,
+        padding: formPadding(
+          context,
+          base: EdgeInsets.fromLTRB(
+            AppSpacing.lg,
+            AppSpacing.lg,
+            AppSpacing.lg,
+            AppSpacing.lg + MediaQuery.paddingOf(context).bottom,
+          ),
         ),
         children: [
           Row(
@@ -367,7 +371,9 @@ class _FormState extends ConsumerState<_Form> {
     return _text(
       controller: _fields[f.name]!,
       label: fieldLabel(f.name) + (f.required ? ' *' : ''),
-      helper: f.secret && saved ? l10n.channelsSecretSaved : fieldHint(f.name, kind: widget.spec.kind),
+      helper: f.secret && saved
+          ? l10n.channelsSecretSaved
+          : fieldHint(f.name, kind: widget.spec.kind),
       // Adres sırrı (Slack/Teams/webhook URL'si) gizlenmez: yapıştırılan
       // uzun adres görülmeden doğrulanamaz. Sunucu sırrı zaten geri vermez.
       obscure: f.secret && !fieldMultiline(f.name) && !fieldUrl(f.name),

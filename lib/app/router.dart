@@ -255,24 +255,37 @@ GoRouter router(Ref ref) {
             routes: [
               GoRoute(
                 path: '/live',
-                builder: (_, _) => const LiveBoardScreen(),
+                // Tablette kartlar büyür (ADR 0141); kiosk kendi örneğini
+                // kurar ve değişmez.
+                builder: (_, _) => const LiveBoardScreen(largeTiles: true),
               ),
             ],
           ),
           StatefulShellBranch(
             routes: [
-              GoRoute(
-                path: '/history',
-                builder: (_, _) => const HistoryScreen(),
+              // Tablette liste–detay (backend ADR 0141): liste kabukta
+              // KALICI durur (kaydırma ve filtre korunur), detay sağ
+              // bölmedeki iç yığında açılır. Telefonda kabuk saydamdır.
+              ShellRoute(
+                builder: (_, state, child) => HistoryPanes(
+                  selectedAnimalId: state.pathParameters['id'],
+                  child: child,
+                ),
                 routes: [
-                  // ALT ROTA: hayvan detayı Geçmiş sekmesinin yığınında açılır.
-                  // Kök seviyede olsaydı detaydan geri dönüş sekmeyi de
-                  // sıfırlar, seçili filtreler kaybolurdu.
                   GoRoute(
-                    path: 'animal/:id',
-                    builder: (_, state) => AnimalDetailScreen(
-                      animalId: state.pathParameters['id']!,
-                    ),
+                    path: '/history',
+                    builder: (_, _) => const HistoryRoot(),
+                    routes: [
+                      // ALT ROTA: hayvan detayı Geçmiş sekmesinin yığınında açılır.
+                      // Kök seviyede olsaydı detaydan geri dönüş sekmeyi de
+                      // sıfırlar, seçili filtreler kaybolurdu.
+                      GoRoute(
+                        path: 'animal/:id',
+                        builder: (_, state) => AnimalDetailScreen(
+                          animalId: state.pathParameters['id']!,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

@@ -11,6 +11,7 @@ import 'package:milktrace/features/history/history_providers.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
+import 'package:milktrace/widgets/adaptive.dart';
 import 'package:milktrace/widgets/async_view.dart';
 
 /// Hayvan ekleme ve düzenleme (§8.5 POST/PUT /animals, backend ADR 0049).
@@ -237,7 +238,7 @@ class _FormState extends ConsumerState<_Form> {
     return Form(
       key: _key,
       child: ListView(
-        padding: const EdgeInsets.all(AppSpacing.lg),
+        padding: formPadding(context),
         children: [
           _field(
             _earTag,

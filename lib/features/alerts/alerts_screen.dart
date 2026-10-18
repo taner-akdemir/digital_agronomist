@@ -6,19 +6,32 @@ import 'package:milktrace/core/format.dart';
 import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/features/alerts/alert_style.dart';
 import 'package:milktrace/features/alerts/alerts_providers.dart';
+import 'package:milktrace/features/history/animal_detail_screen.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/widgets/async_view.dart';
+import 'package:milktrace/widgets/list_detail.dart';
 import 'package:milktrace/widgets/milk_palette.dart';
 
 /// Bildirim merkezi (§15.1 "Diğer").
 ///
 /// Sekme kabuğunun DIŞINDA, tam ekran açılır: uyarı listesi bir sekmenin
 /// alt ekranı değil, her sekmeden ulaşılan bir yer.
-class AlertsScreen extends ConsumerWidget {
+///
+/// Tablette (backend ADR 0141) liste–detay: hayvana bağlı uyarıya dokunmak
+/// hayvanın detayını sağ bölmede açar; uyarılar ekrandan çıkmaz.
+class AlertsScreen extends ConsumerStatefulWidget {
   const AlertsScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<AlertsScreen> createState() => _AlertsScreenState();
+}
+
+class _AlertsScreenState extends ConsumerState<AlertsScreen> {
+  /// Sağ bölmede açık hayvan (yalnızca iki bölmede).
+  String? _animalId;
+
+  @override
+  Widget build(BuildContext context) {
     final alerts = ref.watch(alertListProvider);
 
     return Scaffold(
@@ -38,24 +51,39 @@ class AlertsScreen extends ConsumerWidget {
           ),
         ),
       ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          ref.invalidate(alertListProvider);
-          await ref.read(alertListProvider.future);
+      body: ListDetail(
+        detail: switch (_animalId) {
+          null => null,
+          final id => AnimalDetailScreen(key: ValueKey(id), animalId: id),
         },
-        child: AsyncView(
-          value: alerts,
-          errorMessage: l10n.alertsLoadFailed,
-          onRetry: () => ref.invalidate(alertListProvider),
-          builder: (list) => list.isEmpty
-              ? const _Empty()
-              : ListView.separated(
-                  padding: const EdgeInsets.all(AppSpacing.lg),
-                  itemCount: list.length,
-                  separatorBuilder: (_, _) =>
-                      const SizedBox(height: AppSpacing.sm),
-                  itemBuilder: (_, i) => _AlertCard(alert: list[i]),
-                ),
+        placeholder: DetailPlaceholder(
+          icon: Icons.notifications_none_outlined,
+          text: l10n.tabletSelectAlert,
+        ),
+        list: RefreshIndicator(
+          onRefresh: () async {
+            ref.invalidate(alertListProvider);
+            await ref.read(alertListProvider.future);
+          },
+          child: AsyncView(
+            value: alerts,
+            errorMessage: l10n.alertsLoadFailed,
+            onRetry: () => ref.invalidate(alertListProvider),
+            builder: (list) => list.isEmpty
+                ? const _Empty()
+                : ListView.separated(
+                    padding: const EdgeInsets.all(AppSpacing.lg),
+                    itemCount: list.length,
+                    separatorBuilder: (_, _) =>
+                        const SizedBox(height: AppSpacing.sm),
+                    itemBuilder: (_, i) => _AlertCard(
+                      alert: list[i],
+                      selected:
+                          _animalId != null && list[i].animalId == _animalId,
+                      onOpenAnimal: (id) => setState(() => _animalId = id),
+                    ),
+                  ),
+          ),
         ),
       ),
     );
@@ -63,15 +91,26 @@ class AlertsScreen extends ConsumerWidget {
 }
 
 class _AlertCard extends ConsumerWidget {
-  const _AlertCard({required this.alert});
+  const _AlertCard({
+    required this.alert,
+    required this.selected,
+    required this.onOpenAnimal,
+  });
 
   final Alert alert;
+
+  /// İki bölmede sağda bu uyarının hayvanı açık.
+  final bool selected;
+
+  /// İki bölmede hayvanı sağda açar.
+  final ValueChanged<String> onOpenAnimal;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final palette = MilkPalette.of(AlertStyle.color(alert.severity));
     final acked = alert.isAcknowledged;
     final animalId = alert.animalId;
+    final twoPane = ListDetailScope.isTwoPane(context);
 
     return Opacity(
       // Okunmuş uyarı SİLİNMEZ, soluklaşır: neyin ne zaman kapatıldığı
@@ -86,7 +125,9 @@ class _AlertCard extends ConsumerWidget {
           // uyarısının ilk sorusu "bu hayvan daha önce de böyle miydi?".
           // Aşı hatırlatması hayvana değil plana bağlı (ADR 0112): o planın
           // zamanı gelenleri açılır; geri tuşu uyarılara döner.
-          onTap: animalId != null
+          onTap: animalId != null && twoPane
+              ? () => onOpenAnimal(animalId)
+              : animalId != null
               ? () => context.go('/history/animal/$animalId')
               : alert.type == 'vaccination_due'
               ? () => context.push(
@@ -100,7 +141,12 @@ class _AlertCard extends ConsumerWidget {
             decoration: BoxDecoration(
               borderRadius: AppRadius.mdAll,
               border: Border.all(
-                color: acked ? AppColors.border : palette.border,
+                color: selected
+                    ? AppColors.darkGreenColor
+                    : acked
+                    ? AppColors.border
+                    : palette.border,
+                width: selected ? 2 : 1,
               ),
             ),
             child: Row(

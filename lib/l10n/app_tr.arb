@@ -1721,6 +1721,9 @@
       "version": {}
     }
   },
+  "tabletSelectAlert": "Hayvanın geçmişini görmek için hayvana bağlı bir uyarı seçin",
+  "tabletSelectAnimal": "Ayrıntısını görmek için soldan bir hayvan seçin",
+  "tabletSelectSession": "Özetini görmek için soldan bir oturum seçin",
   "teamAccessExpired": "erişim süresi doldu",
   "teamAccessPickDate": "Gün seç",
   "teamAccessTitle": "Erişim bitişi",

@@ -1,0 +1,5 @@
+{
+  "tabletSelectAnimal": "Select an animal on the left to see its details",
+  "tabletSelectSession": "Select a session on the left to see its summary",
+  "tabletSelectAlert": "Select an animal alert to see the animal's history"
+}

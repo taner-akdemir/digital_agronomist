@@ -4,6 +4,7 @@ import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/features/whats_new/whats_new.dart';
 import 'package:milktrace/features/write_queue/pending_writes.dart';
 import 'package:milktrace/l10n/l10n.dart';
+import 'package:milktrace/widgets/adaptive.dart';
 import 'package:milktrace/widgets/custom_app_bar.dart';
 import 'package:milktrace/widgets/offline_banner.dart';
 
@@ -29,41 +30,120 @@ class ScaffoldWithNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Telefonda alt menü, tablette yan ray (backend ADR 0141): karar
+    // genişlikten. Gövde her iki düzende de AYNI anahtarla Row'un içinde
+    // durur; dönünce sekme yığınları ve ekranların durumu kaybolmaz.
+    final compact = WindowSize.of(context).isCompact;
     return Scaffold(
       appBar: const CustomAppBar(title: 'Milk Trace'),
-      body: Column(
+      body: Row(
         children: [
-          const OfflineBanner(),
-          // Gönderilmeyi bekleyen kayıtlar (backend ADR 0140).
-          const PendingWritesBanner(),
-          // Güncellemeden sonra bir kez Yenilikler (backend ADR 0123).
+          if (!compact) ...[
+            _Rail(navigationShell: navigationShell, tabs: _tabs),
+            VerticalDivider(width: 1, thickness: 1, color: AppColors.border),
+          ],
           Expanded(
-            child: WriteQueueListener(
-              child: WhatsNewListener(child: navigationShell),
+            key: const ValueKey('shell-body'),
+            child: Column(
+              children: [
+                const OfflineBanner(),
+                // Gönderilmeyi bekleyen kayıtlar (backend ADR 0140).
+                const PendingWritesBanner(),
+                // Güncellemeden sonra bir kez Yenilikler (backend ADR 0123).
+                Expanded(
+                  child: WriteQueueListener(
+                    child: WhatsNewListener(child: navigationShell),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
       ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: navigationShell.currentIndex,
-        onDestinationSelected: (index) => navigationShell.goBranch(
-          index,
-          // Zaten açık sekmeye tekrar basmak o sekmeyi köküne döndürür.
-          initialLocation: index == navigationShell.currentIndex,
-        ),
-        backgroundColor: AppColors.surface,
-        indicatorColor: AppColors.lightGreenColor,
-        destinations: [
-          for (final t in _tabs)
-            NavigationDestination(
-              icon: Icon(t.icon, color: AppColors.iconGreyColor),
-              selectedIcon: Icon(
-                t.selectedIcon,
-                color: AppColors.darkGreenColor,
+      bottomNavigationBar: compact
+          ? NavigationBar(
+              selectedIndex: navigationShell.currentIndex,
+              onDestinationSelected: (index) => _go(navigationShell, index),
+              backgroundColor: AppColors.surface,
+              indicatorColor: AppColors.lightGreenColor,
+              destinations: [
+                for (final t in _tabs)
+                  NavigationDestination(
+                    icon: Icon(t.icon, color: AppColors.iconGreyColor),
+                    selectedIcon: Icon(
+                      t.selectedIcon,
+                      color: AppColors.darkGreenColor,
+                    ),
+                    label: t.label,
+                  ),
+              ],
+            )
+          : null,
+    );
+  }
+}
+
+void _go(StatefulNavigationShell shell, int index) => shell.goBranch(
+  index,
+  // Zaten açık sekmeye tekrar basmak o sekmeyi köküne döndürür.
+  initialLocation: index == shell.currentIndex,
+);
+
+/// Tablet yan rayı. Yatay telefonda yükseklik dört hedefe yetmeyebilir:
+/// ray kaydırılabilir, taşmaz.
+class _Rail extends StatelessWidget {
+  const _Rail({required this.navigationShell, required this.tabs});
+
+  final StatefulNavigationShell navigationShell;
+  final List<_TabSpec> tabs;
+
+  @override
+  Widget build(BuildContext context) {
+    final extended = MediaQuery.sizeOf(context).width >= kExtendedRailMinWidth;
+    final label = Theme.of(context).textTheme.labelLarge;
+    return SafeArea(
+      top: false,
+      right: false,
+      child: LayoutBuilder(
+        builder: (context, constraints) => SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: IntrinsicHeight(
+              child: NavigationRail(
+                extended: extended,
+                minExtendedWidth: 220,
+                labelType: extended
+                    ? NavigationRailLabelType.none
+                    : NavigationRailLabelType.all,
+                groupAlignment: -1,
+                selectedIndex: navigationShell.currentIndex,
+                onDestinationSelected: (index) => _go(navigationShell, index),
+                backgroundColor: AppColors.surface,
+                indicatorColor: AppColors.lightGreenColor,
+                // Ray, verilen stili temaya katmadan kullanır: yazı tipi
+                // temadan alınmazsa etiketler Poppins yerine Roboto çıkar.
+                selectedLabelTextStyle: label?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.darkGreenColor,
+                ),
+                unselectedLabelTextStyle: label?.copyWith(
+                  color: AppColors.onSurfaceMuted,
+                ),
+                destinations: [
+                  for (final t in tabs)
+                    NavigationRailDestination(
+                      icon: Icon(t.icon, color: AppColors.iconGreyColor),
+                      selectedIcon: Icon(
+                        t.selectedIcon,
+                        color: AppColors.darkGreenColor,
+                      ),
+                      label: Text(t.label),
+                    ),
+                ],
               ),
-              label: t.label,
             ),
-        ],
+          ),
+        ),
       ),
     );
   }
