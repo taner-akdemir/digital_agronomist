@@ -8,11 +8,15 @@ abstract final class AssistantLimits {
   /// Bir istekte en çok mesaj (10 soru + 9 cevap).
   static const maxMessages = 19;
 
-  /// Mesaj başına en çok karakter.
+  /// Soru başına en çok karakter.
   static const maxMessageChars = 2000;
 
+  /// Geçmişte geri gönderilen asistan cevabı başına en çok karakter (cevap
+  /// `max_tokens` 2000'e kadar uzar; sunucu cevaba bu kadar tanır).
+  static const maxAnswerChars = 12000;
+
   /// Bir istekteki bütün mesajların toplamı.
-  static const maxTotalChars = 20000;
+  static const maxTotalChars = 120000;
 
   /// Sayaç bu uzunluktan sonra görünür.
   static const counterFrom = 1800;
@@ -32,7 +36,7 @@ enum AssistantHistoryIssue {
   /// Konuşma 19 mesaja ulaştı; yeni konuşma gerekir.
   tooManyMessages,
 
-  /// Geçmiş + soru 20000 karakteri aşıyor; yeni konuşma gerekir.
+  /// Geçmiş + soru toplam sınırı aşıyor; yeni konuşma gerekir.
   totalTooLong,
 
   /// Roller sırayla değil ya da geçmiş kullanıcıyla bitmiyor (beklenen
@@ -42,22 +46,22 @@ enum AssistantHistoryIssue {
 
 /// Gönderilecek geçmiş: önceki mesajlar + yeni soru.
 ///
-/// Asistan cevapları 2000 karaktere KIRPILIR: cevap `max_tokens` 2000 ile
-/// üretiliyor ve mesaj başına sınırdan uzun olabilir; olduğu gibi geri
-/// gönderilseydi sonraki her soru 422 alırdı. Bağlam için başı yeter.
+/// Asistan cevapları [AssistantLimits.maxAnswerChars]'a KIRPILIR: sınırdan
+/// uzun cevap olduğu gibi geri gönderilseydi sonraki her soru 422 alırdı.
+/// Bağlam için başı yeter.
 List<AssistantMessage> assistantRequest(
   List<AssistantMessage> history,
   String question,
 ) => [
   for (final m in history)
-    m.role == assistantRole && m.text.length > AssistantLimits.maxMessageChars
-        ? m.copyWith(text: m.text.substring(0, AssistantLimits.maxMessageChars))
+    m.role == assistantRole && m.text.length > AssistantLimits.maxAnswerChars
+        ? m.copyWith(text: m.text.substring(0, AssistantLimits.maxAnswerChars))
         : m,
   AssistantMessage(role: assistantUser, text: question.trim()),
 ];
 
 /// Kurallar: kullanıcıyla başlar ve biter, roller sırayla, ≤ 19 mesaj,
-/// mesaj başına ≤ 2000, toplam ≤ 20000 karakter.
+/// soru başına ≤ 2000, cevap başına ≤ 12000, toplam ≤ 120000 karakter.
 AssistantHistoryIssue? validateAssistantRequest(
   List<AssistantMessage> messages,
 ) {
@@ -71,7 +75,13 @@ AssistantHistoryIssue? validateAssistantRequest(
   if (messages.last.role != assistantUser) {
     return AssistantHistoryIssue.badOrder;
   }
-  if (messages.any((m) => m.text.length > AssistantLimits.maxMessageChars)) {
+  if (messages.any(
+    (m) =>
+        m.text.length >
+        (m.role == assistantRole
+            ? AssistantLimits.maxAnswerChars
+            : AssistantLimits.maxMessageChars),
+  )) {
     return AssistantHistoryIssue.messageTooLong;
   }
   if (messages.length > AssistantLimits.maxMessages) {

@@ -46,27 +46,16 @@ void main() {
     );
   });
 
-  test('toplam 20000 karakter sınırı', () {
+  test('toplam 120000 karakter sınırı', () {
     final long = [
-      for (var i = 0; i < 5; i++) ...[u('x' * 1999), a('y' * 1999)],
+      for (var i = 0; i < 9; i++) ...[u('x' * 1200), a('y' * 12000)],
     ];
-    // 10 × 1999 = 19990; + 11 karakter → 20001.
+    // 9 × 13200 = 118800; + 1201 karakter → 120001.
     expect(
-      validateAssistantRequest([
-        ...long.sublist(0, 9),
-        a('y' * 1999),
-        u('z' * 11),
-      ]),
+      validateAssistantRequest([...long, u('z' * 1201)]),
       AssistantHistoryIssue.totalTooLong,
     );
-    expect(
-      validateAssistantRequest([
-        ...long.sublist(0, 9),
-        a('y' * 1999),
-        u('z' * 10),
-      ]),
-      isNull,
-    );
+    expect(validateAssistantRequest([...long, u('z' * 1200)]), isNull);
   });
 
   test('roller sırayla değilse ya da asistanla biterse badOrder', () {
@@ -84,9 +73,15 @@ void main() {
     );
   });
 
-  test('uzun asistan cevabı geri gönderilirken 2000 karaktere kırpılır', () {
+  test('2000 karakteri aşan asistan cevabı olduğu gibi geri gönderilir', () {
     final req = assistantRequest([u('soru'), a('c' * 2600)], 'devam');
-    expect(req[1].text, hasLength(2000));
+    expect(req[1].text, hasLength(2600));
+    expect(validateAssistantRequest(req), isNull);
+  });
+
+  test('sınırı aşan asistan cevabı 12000 karaktere kırpılır', () {
+    final req = assistantRequest([u('soru'), a('c' * 13000)], 'devam');
+    expect(req[1].text, hasLength(AssistantLimits.maxAnswerChars));
     expect(validateAssistantRequest(req), isNull);
   });
 }
