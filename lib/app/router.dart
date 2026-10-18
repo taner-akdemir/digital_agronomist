@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:milktrace/core/app_build.dart';
 import 'package:milktrace/data/models/auth_state.dart';
 import 'package:milktrace/features/alerts/alerts_screen.dart';
+import 'package:milktrace/features/assistant/assistant_screen.dart';
 import 'package:milktrace/features/audit/audit_screen.dart';
 import 'package:milktrace/features/auth/login_screen.dart';
 import 'package:milktrace/features/dairy/dairy_account_screen.dart';
@@ -124,6 +125,9 @@ GoRouter router(Ref ref) {
         path: '/settings/dairy-sharing',
         builder: (_, _) => const DairySharingScreen(),
       ),
+      // Yardım asistanı (backend ADR 0138): hesap kartı → Yardım; asistan
+      // kapalıyken giriş görünmez.
+      GoRoute(path: '/assistant', builder: (_, _) => const AssistantScreen()),
       // Geri bildirim (backend ADR 0106): hesap kartından, bütün rollere.
       GoRoute(
         path: '/settings/feedback',

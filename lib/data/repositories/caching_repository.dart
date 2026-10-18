@@ -12,6 +12,7 @@ import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/api_key.dart';
+import 'package:milktrace/data/models/assistant.dart';
 import 'package:milktrace/data/models/audit_entry.dart';
 import 'package:milktrace/data/models/breeding.dart';
 import 'package:milktrace/data/models/dairy.dart';
@@ -777,4 +778,14 @@ class CachingRepository implements MilkTraceRepository {
       contentType: contentType,
     ),
   );
+
+  // Asistan (backend ADR 0138) önbelleklenmez: kota gün içinde değişir ve
+  // soru metni cihaza yazılmaz (KVKK).
+  @override
+  Future<AssistantStatus> assistantStatus() =>
+      _net(() => _inner.assistantStatus());
+
+  @override
+  Future<AssistantReply> askAssistant(List<AssistantMessage> messages) =>
+      _net(() => _inner.askAssistant(messages));
 }

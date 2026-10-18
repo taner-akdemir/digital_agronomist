@@ -13,6 +13,7 @@ import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/api_key.dart';
+import 'package:milktrace/data/models/assistant.dart';
 import 'package:milktrace/data/models/audit_entry.dart';
 import 'package:milktrace/data/models/breeding.dart';
 import 'package:milktrace/data/models/dairy.dart';
@@ -2017,6 +2018,43 @@ class MockRepository implements MilkTraceRepository {
       contentType: contentType,
     )),
   );
+
+  /// Yardım asistanı (backend ADR 0138). Mock'ta Anthropic yok: varsayılan
+  /// KAPALI, giriş gizli. Testler açar ve [assistantAnswer]'ı değiştirir.
+  bool assistantEnabled = false;
+  int assistantRemaining = 10;
+
+  /// Gönderilen istekler (geçmişin tamamı); yalnızca testler okur.
+  final List<List<AssistantMessage>> assistantRequests = [];
+
+  AssistantReply Function(List<AssistantMessage> messages) assistantAnswer =
+      (_) => const AssistantReply(
+        text: 'Yardım merkezine bakın: [Sağım](/yardim/sagim).',
+        sources: [
+          AssistantSource(slug: 'sagim', title: 'Sağım', url: '/yardim/sagim'),
+        ],
+      );
+
+  @override
+  Future<AssistantStatus> assistantStatus() => _delayed(
+    () async => AssistantStatus(
+      enabled: assistantEnabled,
+      limit: 10,
+      remainingToday: assistantRemaining,
+    ),
+  );
+
+  @override
+  Future<AssistantReply> askAssistant(List<AssistantMessage> messages) =>
+      _delayed(() async {
+        assistantRequests.add(List.of(messages));
+        assistantRemaining = assistantRemaining > 0
+            ? assistantRemaining - 1
+            : 0;
+        return assistantAnswer(
+          messages,
+        ).copyWith(remainingToday: assistantRemaining);
+      });
 
   /// Günün özeti.
   ///

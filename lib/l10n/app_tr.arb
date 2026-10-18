@@ -336,6 +336,51 @@
   "apiKeysShownOnce": "Bu anahtar bir daha gösterilmez. Şimdi kopyalayıp bağlanacak sisteme girin; kaybederseniz iptal edip yenisini oluşturun.",
   "apiKeysTitle": "API anahtarları",
   "apiKeysUsage": "Günlük verim:\nGET /api/v1/exports/daily?from=YYYY-MM-DD&to=YYYY-MM-DD\nBaşlık: Authorization: Bearer <anahtar>",
+  "assistantFailed": "Yanıt alınamadı: {error}",
+  "@assistantFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "assistantHandoffBody": "Bu konuda size bir insan yardımcı olsun.",
+  "assistantHandoffHelpCenter": "Yardım merkezini aç",
+  "assistantHandoffTitle": "Destek ekibimize ulaşın",
+  "assistantInputHint": "Sorunuzu yazın",
+  "assistantIntro": "Milk Trace'in nasıl kullanıldığını sorun: sağım, cihaz eşleme, hayvan kaydı, bildirimler… Cevaplar yardım merkezinden gelir.",
+  "assistantLimitReached": "Bu konuşma en uzun hâline ulaştı. Devam etmek için yeni konuşma başlatın.",
+  "assistantLinkFailed": "Bağlantı açılamadı: {url}",
+  "@assistantLinkFailed": {
+    "placeholders": {
+      "url": {}
+    }
+  },
+  "assistantMessageTooLong": "Soru en çok 2000 karakter olabilir.",
+  "assistantNewConversation": "Yeni konuşma",
+  "assistantNoticeAccept": "Anladım",
+  "assistantNoticeBody": "Sorularınız yanıt üretmek için Anthropic'e iletilir; çiftlik verileriniz gönderilmez. Soru metinleri saklanmaz.",
+  "assistantNoticePrivacy": "Gizlilik politikası",
+  "assistantNoticeTitle": "Asistan hakkında",
+  "assistantQuota": "Bugünkü soru hakkınız doldu. Yarın yeniden sorabilirsiniz.",
+  "assistantRejected": "{message} Yeni bir konuşma başlatmayı deneyin.",
+  "@assistantRejected": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "assistantRemainingToday": "Bugün kalan soru: {count}",
+  "@assistantRemainingToday": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "assistantSend": "Gönder",
+  "assistantSources": "Kaynaklar",
+  "assistantThinking": "Yanıt hazırlanıyor…",
+  "assistantTitle": "Asistan",
+  "assistantTotalTooLong": "Konuşma çok uzadı. Devam etmek için yeni konuşma başlatın.",
+  "assistantUnavailable": "Asistan şu anda kullanılamıyor. Biraz sonra yeniden deneyin ya da yardım merkezine bakın.",
   "auditAnimalCalving": "Buzağılama kaydedildi",
   "auditAnimalCreate": "Hayvan eklendi",
   "auditAnimalImport": "Listeden içe aktarma",
@@ -1103,6 +1148,7 @@
   "groupsNew": "Yeni grup",
   "groupsRenameTitle": "Grubun adı",
   "groupsTitle": "Gruplar",
+  "helpSectionTitle": "Yardım",
   "historyAddAnimal": "Hayvan ekle",
   "historyAnimalCount": "{count, plural, other{{count} hayvan}}",
   "@historyAnimalCount": {
@@ -1616,7 +1662,7 @@
       }
     }
   },
-  "shellTabDashboard": "Özet",
+  "shellTabDashboard": "Dashboard",
   "shellTabDevices": "Cihazlar",
   "shellTabHistory": "Geçmiş",
   "shellTabLive": "Canlı",

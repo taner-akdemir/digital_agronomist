@@ -47,11 +47,25 @@ abstract final class Env {
   ///
   /// API tabanından TÜRETİLİR: `https://api.X/api/v1` → `https://X/giris`.
   /// Yerel geliştirme ortamında (api. öneki yok) üretim sitesi.
-  static String get webLoginUrl {
+  static String get webLoginUrl => siteUrl('/giris');
+
+  /// Tanıtım sitesinin kökü: `https://api.X/api/v1` → `https://X`. Yerel
+  /// geliştirme ortamında (api. öneki yok) üretim sitesi.
+  static String get siteBaseUrl {
     final u = Uri.parse(apiBaseUrl);
     if (u.host.startsWith('api.')) {
-      return '${u.scheme}://${u.host.substring(4)}/giris';
+      return '${u.scheme}://${u.host.substring(4)}';
     }
-    return 'https://milktrace.com.tr/giris';
+    return 'https://milktrace.com.tr';
   }
+
+  /// Sitede bir sayfa: `siteUrl('/yardim')`.
+  static String siteUrl(String path) => '$siteBaseUrl$path';
+
+  /// Yardım merkezi (backend ADR 0138): asistanın kaynakları ve destek
+  /// numarası yokken devretme hedefi.
+  static String get helpCenterUrl => siteUrl('/yardim');
+
+  /// Gizlilik politikası (sitede herkese açık, CLAUDE.md §8).
+  static String get privacyPolicyUrl => siteUrl('/gizlilik');
 }

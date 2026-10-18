@@ -1,0 +1,48 @@
+{
+  "helpSectionTitle": "Yardım",
+  "assistantTitle": "Asistan",
+  "assistantIntro": "Milk Trace'in nasıl kullanıldığını sorun: sağım, cihaz eşleme, hayvan kaydı, bildirimler… Cevaplar yardım merkezinden gelir.",
+  "assistantInputHint": "Sorunuzu yazın",
+  "assistantSend": "Gönder",
+  "assistantNewConversation": "Yeni konuşma",
+  "assistantThinking": "Yanıt hazırlanıyor…",
+  "assistantRemainingToday": "Bugün kalan soru: {count}",
+  "@assistantRemainingToday": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "assistantLimitReached": "Bu konuşma en uzun hâline ulaştı. Devam etmek için yeni konuşma başlatın.",
+  "assistantTotalTooLong": "Konuşma çok uzadı. Devam etmek için yeni konuşma başlatın.",
+  "assistantMessageTooLong": "Soru en çok 2000 karakter olabilir.",
+  "assistantQuota": "Bugünkü soru hakkınız doldu. Yarın yeniden sorabilirsiniz.",
+  "assistantUnavailable": "Asistan şu anda kullanılamıyor. Biraz sonra yeniden deneyin ya da yardım merkezine bakın.",
+  "assistantRejected": "{message} Yeni bir konuşma başlatmayı deneyin.",
+  "@assistantRejected": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "assistantFailed": "Yanıt alınamadı: {error}",
+  "@assistantFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "assistantSources": "Kaynaklar",
+  "assistantHandoffTitle": "Destek ekibimize ulaşın",
+  "assistantHandoffBody": "Bu konuda size bir insan yardımcı olsun.",
+  "assistantHandoffHelpCenter": "Yardım merkezini aç",
+  "assistantNoticeTitle": "Asistan hakkında",
+  "assistantNoticeBody": "Sorularınız yanıt üretmek için Anthropic'e iletilir; çiftlik verileriniz gönderilmez. Soru metinleri saklanmaz.",
+  "assistantNoticePrivacy": "Gizlilik politikası",
+  "assistantNoticeAccept": "Anladım",
+  "assistantLinkFailed": "Bağlantı açılamadı: {url}",
+  "@assistantLinkFailed": {
+    "placeholders": {
+      "url": {}
+    }
+  }
+}

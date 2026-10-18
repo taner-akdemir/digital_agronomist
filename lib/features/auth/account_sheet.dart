@@ -5,6 +5,7 @@ import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/core/env.dart';
 import 'package:milktrace/data/models/auth_user.dart';
+import 'package:milktrace/features/assistant/assistant_providers.dart';
 import 'package:milktrace/features/auth/delete_account.dart';
 import 'package:milktrace/features/auth/role_labels.dart';
 import 'package:milktrace/features/support/support.dart';
@@ -396,8 +397,21 @@ class _AccountSheet extends ConsumerWidget {
                   ),
                 ),
               ),
+              // Yardım: asistan (backend ADR 0138; kapalıyken, okunamazsa
+              // ya da mandıra hesabında hiç görünmez), Yenilikler, geri
+              // bildirim.
+              const SizedBox(height: AppSpacing.md),
+              Text(
+                l10n.helpSectionTitle,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.onSurfaceMuted,
+                ),
+              ),
+              const _AssistantRow(),
               // Yenilikler (backend ADR 0123): bütün roller.
-              const SizedBox(height: AppSpacing.sm),
+              const SizedBox(height: AppSpacing.xs),
               OutlinedButton.icon(
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -555,6 +569,35 @@ class _PushRowState extends ConsumerState<_PushRow> {
       ),
       _ => const SizedBox.shrink(),
     };
+  }
+}
+
+/// "Asistan" satırı (backend ADR 0138): yalnızca sunucu asistanı açık
+/// dediğinde. Kapalı, okunamayan ya da mandıra hesabı → hiçbir şey.
+class _AssistantRow extends ConsumerWidget {
+  const _AssistantRow();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final status = ref.watch(assistantStatusProvider).value;
+    if (status == null) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.only(top: AppSpacing.xs),
+      child: OutlinedButton.icon(
+        key: const Key('accountAssistant'),
+        onPressed: () {
+          Navigator.of(context).pop();
+          context.push('/assistant');
+        },
+        icon: const Icon(Icons.support_agent),
+        label: Text(l10n.assistantTitle),
+        style: OutlinedButton.styleFrom(
+          foregroundColor: AppColors.darkGreenColor,
+          padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+        ),
+      ),
+    );
   }
 }
 

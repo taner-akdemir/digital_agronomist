@@ -1058,6 +1058,144 @@ abstract class AppLocalizations {
   /// **'Günlük verim:\nGET /api/v1/exports/daily?from=YYYY-MM-DD&to=YYYY-MM-DD\nBaşlık: Authorization: Bearer <anahtar>'**
   String get apiKeysUsage;
 
+  /// No description provided for @assistantFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yanıt alınamadı: {error}'**
+  String assistantFailed(Object error);
+
+  /// No description provided for @assistantHandoffBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu konuda size bir insan yardımcı olsun.'**
+  String get assistantHandoffBody;
+
+  /// No description provided for @assistantHandoffHelpCenter.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yardım merkezini aç'**
+  String get assistantHandoffHelpCenter;
+
+  /// No description provided for @assistantHandoffTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Destek ekibimize ulaşın'**
+  String get assistantHandoffTitle;
+
+  /// No description provided for @assistantInputHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sorunuzu yazın'**
+  String get assistantInputHint;
+
+  /// No description provided for @assistantIntro.
+  ///
+  /// In tr, this message translates to:
+  /// **'Milk Trace\'in nasıl kullanıldığını sorun: sağım, cihaz eşleme, hayvan kaydı, bildirimler… Cevaplar yardım merkezinden gelir.'**
+  String get assistantIntro;
+
+  /// No description provided for @assistantLimitReached.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu konuşma en uzun hâline ulaştı. Devam etmek için yeni konuşma başlatın.'**
+  String get assistantLimitReached;
+
+  /// No description provided for @assistantLinkFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bağlantı açılamadı: {url}'**
+  String assistantLinkFailed(Object url);
+
+  /// No description provided for @assistantMessageTooLong.
+  ///
+  /// In tr, this message translates to:
+  /// **'Soru en çok 2000 karakter olabilir.'**
+  String get assistantMessageTooLong;
+
+  /// No description provided for @assistantNewConversation.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni konuşma'**
+  String get assistantNewConversation;
+
+  /// No description provided for @assistantNoticeAccept.
+  ///
+  /// In tr, this message translates to:
+  /// **'Anladım'**
+  String get assistantNoticeAccept;
+
+  /// No description provided for @assistantNoticeBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sorularınız yanıt üretmek için Anthropic\'e iletilir; çiftlik verileriniz gönderilmez. Soru metinleri saklanmaz.'**
+  String get assistantNoticeBody;
+
+  /// No description provided for @assistantNoticePrivacy.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gizlilik politikası'**
+  String get assistantNoticePrivacy;
+
+  /// No description provided for @assistantNoticeTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Asistan hakkında'**
+  String get assistantNoticeTitle;
+
+  /// No description provided for @assistantQuota.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugünkü soru hakkınız doldu. Yarın yeniden sorabilirsiniz.'**
+  String get assistantQuota;
+
+  /// No description provided for @assistantRejected.
+  ///
+  /// In tr, this message translates to:
+  /// **'{message} Yeni bir konuşma başlatmayı deneyin.'**
+  String assistantRejected(Object message);
+
+  /// No description provided for @assistantRemainingToday.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün kalan soru: {count}'**
+  String assistantRemainingToday(int count);
+
+  /// No description provided for @assistantSend.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gönder'**
+  String get assistantSend;
+
+  /// No description provided for @assistantSources.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaynaklar'**
+  String get assistantSources;
+
+  /// No description provided for @assistantThinking.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yanıt hazırlanıyor…'**
+  String get assistantThinking;
+
+  /// No description provided for @assistantTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Asistan'**
+  String get assistantTitle;
+
+  /// No description provided for @assistantTotalTooLong.
+  ///
+  /// In tr, this message translates to:
+  /// **'Konuşma çok uzadı. Devam etmek için yeni konuşma başlatın.'**
+  String get assistantTotalTooLong;
+
+  /// No description provided for @assistantUnavailable.
+  ///
+  /// In tr, this message translates to:
+  /// **'Asistan şu anda kullanılamıyor. Biraz sonra yeniden deneyin ya da yardım merkezine bakın.'**
+  String get assistantUnavailable;
+
   /// No description provided for @auditAnimalCalving.
   ///
   /// In tr, this message translates to:
@@ -3409,6 +3547,12 @@ abstract class AppLocalizations {
   /// **'Gruplar'**
   String get groupsTitle;
 
+  /// No description provided for @helpSectionTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yardım'**
+  String get helpSectionTitle;
+
   /// No description provided for @historyAddAnimal.
   ///
   /// In tr, this message translates to:
@@ -4780,7 +4924,7 @@ abstract class AppLocalizations {
   /// No description provided for @shellTabDashboard.
   ///
   /// In tr, this message translates to:
-  /// **'Özet'**
+  /// **'Dashboard'**
   String get shellTabDashboard;
 
   /// No description provided for @shellTabDevices.

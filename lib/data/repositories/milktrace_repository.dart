@@ -8,6 +8,7 @@ import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/api_key.dart';
+import 'package:milktrace/data/models/assistant.dart';
 import 'package:milktrace/data/models/audit_entry.dart';
 import 'package:milktrace/data/models/breeding.dart';
 import 'package:milktrace/data/models/dairy.dart';
@@ -484,4 +485,13 @@ abstract interface class MilkTraceRepository {
     Uint8List? screenshot,
     String? contentType,
   });
+
+  /// Yardım asistanının durumu (backend ADR 0138, `GET /assistant/status`).
+  /// Önbelleklenmez: kota gün içinde değişir.
+  Future<AssistantStatus> assistantStatus();
+
+  /// Asistana sorar (`POST /assistant/messages`). Sunucu durumsuz: geçmişin
+  /// TAMAMI gider (kullanıcıyla başlar ve biter, roller sırayla). Cevap dili
+  /// `Accept-Language`'tan. 429 günlük kota, 503 kapalı, 422 doğrulama.
+  Future<AssistantReply> askAssistant(List<AssistantMessage> messages);
 }

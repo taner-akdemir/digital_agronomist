@@ -582,6 +582,89 @@ class AppLocalizationsTr extends AppLocalizations {
       'Günlük verim:\nGET /api/v1/exports/daily?from=YYYY-MM-DD&to=YYYY-MM-DD\nBaşlık: Authorization: Bearer <anahtar>';
 
   @override
+  String assistantFailed(Object error) {
+    return 'Yanıt alınamadı: $error';
+  }
+
+  @override
+  String get assistantHandoffBody => 'Bu konuda size bir insan yardımcı olsun.';
+
+  @override
+  String get assistantHandoffHelpCenter => 'Yardım merkezini aç';
+
+  @override
+  String get assistantHandoffTitle => 'Destek ekibimize ulaşın';
+
+  @override
+  String get assistantInputHint => 'Sorunuzu yazın';
+
+  @override
+  String get assistantIntro =>
+      'Milk Trace\'in nasıl kullanıldığını sorun: sağım, cihaz eşleme, hayvan kaydı, bildirimler… Cevaplar yardım merkezinden gelir.';
+
+  @override
+  String get assistantLimitReached =>
+      'Bu konuşma en uzun hâline ulaştı. Devam etmek için yeni konuşma başlatın.';
+
+  @override
+  String assistantLinkFailed(Object url) {
+    return 'Bağlantı açılamadı: $url';
+  }
+
+  @override
+  String get assistantMessageTooLong => 'Soru en çok 2000 karakter olabilir.';
+
+  @override
+  String get assistantNewConversation => 'Yeni konuşma';
+
+  @override
+  String get assistantNoticeAccept => 'Anladım';
+
+  @override
+  String get assistantNoticeBody =>
+      'Sorularınız yanıt üretmek için Anthropic\'e iletilir; çiftlik verileriniz gönderilmez. Soru metinleri saklanmaz.';
+
+  @override
+  String get assistantNoticePrivacy => 'Gizlilik politikası';
+
+  @override
+  String get assistantNoticeTitle => 'Asistan hakkında';
+
+  @override
+  String get assistantQuota =>
+      'Bugünkü soru hakkınız doldu. Yarın yeniden sorabilirsiniz.';
+
+  @override
+  String assistantRejected(Object message) {
+    return '$message Yeni bir konuşma başlatmayı deneyin.';
+  }
+
+  @override
+  String assistantRemainingToday(int count) {
+    return 'Bugün kalan soru: $count';
+  }
+
+  @override
+  String get assistantSend => 'Gönder';
+
+  @override
+  String get assistantSources => 'Kaynaklar';
+
+  @override
+  String get assistantThinking => 'Yanıt hazırlanıyor…';
+
+  @override
+  String get assistantTitle => 'Asistan';
+
+  @override
+  String get assistantTotalTooLong =>
+      'Konuşma çok uzadı. Devam etmek için yeni konuşma başlatın.';
+
+  @override
+  String get assistantUnavailable =>
+      'Asistan şu anda kullanılamıyor. Biraz sonra yeniden deneyin ya da yardım merkezine bakın.';
+
+  @override
   String get auditAnimalCalving => 'Buzağılama kaydedildi';
 
   @override
@@ -1947,6 +2030,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get groupsTitle => 'Gruplar';
 
   @override
+  String get helpSectionTitle => 'Yardım';
+
+  @override
   String get historyAddAnimal => 'Hayvan ekle';
 
   @override
@@ -2768,7 +2854,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get shellTabDashboard => 'Özet';
+  String get shellTabDashboard => 'Dashboard';
 
   @override
   String get shellTabDevices => 'Cihazlar';

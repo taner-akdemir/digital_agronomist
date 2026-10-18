@@ -12,6 +12,7 @@ import 'package:milktrace/data/models/animal_milking.dart';
 import 'package:milktrace/data/models/animal_note.dart';
 import 'package:milktrace/data/models/animal_trend.dart';
 import 'package:milktrace/data/models/api_key.dart';
+import 'package:milktrace/data/models/assistant.dart';
 import 'package:milktrace/data/models/audit_entry.dart';
 import 'package:milktrace/data/models/breeding.dart';
 import 'package:milktrace/data/models/dairy.dart';
@@ -672,6 +673,28 @@ class ApiRepository implements MilkTraceRepository {
       },
     );
   }
+
+  @override
+  Future<AssistantStatus> assistantStatus() async => AssistantStatus.fromJson(
+    _dataOf(await _dio.get<dynamic>('/assistant/status')),
+  );
+
+  /// Cevap tek parça gelir ve birkaç saniye sürebilir (ADR 0138 madde 9):
+  /// varsayılan 15 sn okuma süresi burada uzatılır. `Accept-Language`
+  /// bütün isteklerde `AppBuildInterceptor`'dan gider.
+  @override
+  Future<AssistantReply> askAssistant(List<AssistantMessage> messages) async =>
+      AssistantReply.fromJson(
+        _dataOf(
+          await _dio.post<dynamic>(
+            '/assistant/messages',
+            data: {
+              'messages': [for (final m in messages) m.toJson()],
+            },
+            options: Options(receiveTimeout: const Duration(seconds: 90)),
+          ),
+        ),
+      );
 
   @override
   Future<DashboardSummary> dashboard() async =>

@@ -584,6 +584,90 @@ class AppLocalizationsEn extends AppLocalizations {
       'Daily yield:\nGET /api/v1/exports/daily?from=YYYY-MM-DD&to=YYYY-MM-DD\nHeader: Authorization: Bearer <key>';
 
   @override
+  String assistantFailed(Object error) {
+    return 'Could not get an answer: $error';
+  }
+
+  @override
+  String get assistantHandoffBody => 'Let a person help you with this.';
+
+  @override
+  String get assistantHandoffHelpCenter => 'Open the help center';
+
+  @override
+  String get assistantHandoffTitle => 'Contact our support team';
+
+  @override
+  String get assistantInputHint => 'Type your question';
+
+  @override
+  String get assistantIntro =>
+      'Ask how to use Milk Trace: milking, pairing meters, adding animals, notifications… Answers come from the help center.';
+
+  @override
+  String get assistantLimitReached =>
+      'This conversation has reached its maximum length. Start a new conversation to continue.';
+
+  @override
+  String assistantLinkFailed(Object url) {
+    return 'Could not open the link: $url';
+  }
+
+  @override
+  String get assistantMessageTooLong =>
+      'A question can be at most 2000 characters.';
+
+  @override
+  String get assistantNewConversation => 'New conversation';
+
+  @override
+  String get assistantNoticeAccept => 'Got it';
+
+  @override
+  String get assistantNoticeBody =>
+      'Your questions are sent to Anthropic to generate answers; your farm data is not sent. Question texts are not stored.';
+
+  @override
+  String get assistantNoticePrivacy => 'Privacy policy';
+
+  @override
+  String get assistantNoticeTitle => 'About the assistant';
+
+  @override
+  String get assistantQuota =>
+      'You have used today\'s questions. You can ask again tomorrow.';
+
+  @override
+  String assistantRejected(Object message) {
+    return '$message Try starting a new conversation.';
+  }
+
+  @override
+  String assistantRemainingToday(int count) {
+    return 'Questions left today: $count';
+  }
+
+  @override
+  String get assistantSend => 'Send';
+
+  @override
+  String get assistantSources => 'Sources';
+
+  @override
+  String get assistantThinking => 'Preparing an answer…';
+
+  @override
+  String get assistantTitle => 'Assistant';
+
+  @override
+  String get assistantTotalTooLong =>
+      'This conversation is too long. Start a new conversation to continue.';
+
+  @override
+  String get assistantUnavailable =>
+      'The assistant is not available right now. Try again later or check the help center.';
+
+  @override
   String get auditAnimalCalving => 'Calving recorded';
 
   @override
@@ -1966,6 +2050,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get groupsTitle => 'Groups';
+
+  @override
+  String get helpSectionTitle => 'Help';
 
   @override
   String get historyAddAnimal => 'Add animal';
