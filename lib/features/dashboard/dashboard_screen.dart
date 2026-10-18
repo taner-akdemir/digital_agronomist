@@ -50,42 +50,102 @@ class DashboardScreen extends ConsumerWidget {
         value: summary,
         errorMessage: l10n.dashboardLoadFailed,
         onRetry: () => ref.invalidate(dashboardSummaryProvider),
-        builder: (s) => ListView(
-          padding: const EdgeInsets.all(AppSpacing.lg),
-          children: [
-            // İlk kurulum listesi (backend ADR 0123): yalnızca sahibe.
-            const SetupChecklistCard(),
-            _TodayCard(summary: s, volume: ref.watch(volumeFormatProvider)),
-            const SizedBox(height: AppSpacing.md),
-            _SpeciesCard(summary: s),
-            const SizedBox(height: AppSpacing.md),
-            _ClassCard(summary: s),
-            if (s.byGroup.isNotEmpty) ...[
-              const SizedBox(height: AppSpacing.md),
-              _GroupCard(
-                groups: s.byGroup,
-                volume: ref.watch(volumeFormatProvider),
-              ),
-            ],
-            // Üreme göstergeleri (backend ADR 0120); örnek yoksa yok.
-            if (s.breeding case final k?) ...[
-              const SizedBox(height: AppSpacing.md),
-              _BreedingKpiCard(kpi: k),
-            ],
-            // Sürüden çıkış nedenleri (backend ADR 0122); çıkış yoksa yok.
-            if (s.exits.isNotEmpty) ...[
-              const SizedBox(height: AppSpacing.md),
-              _ExitsCard(exits: s.exits),
-            ],
-            const SizedBox(height: AppSpacing.md),
-            const _AlertsCard(),
-            const DeliveryCard(),
-            const UpcomingBreedingCard(),
-          ],
+        builder: (s) => LayoutBuilder(
+          builder: (context, constraints) => _wide(constraints.maxWidth)
+              ? _twoColumns(s, ref.watch(volumeFormatProvider))
+              : ListView(
+                  padding: const EdgeInsets.all(AppSpacing.lg),
+                  children: [
+                    // İlk kurulum listesi (backend ADR 0123): yalnızca sahibe.
+                    const SetupChecklistCard(),
+                    _TodayCard(
+                      summary: s,
+                      volume: ref.watch(volumeFormatProvider),
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    _SpeciesCard(summary: s),
+                    const SizedBox(height: AppSpacing.md),
+                    _ClassCard(summary: s),
+                    if (s.byGroup.isNotEmpty) ...[
+                      const SizedBox(height: AppSpacing.md),
+                      _GroupCard(
+                        groups: s.byGroup,
+                        volume: ref.watch(volumeFormatProvider),
+                      ),
+                    ],
+                    // Üreme göstergeleri (backend ADR 0120); örnek yoksa yok.
+                    if (s.breeding case final k?) ...[
+                      const SizedBox(height: AppSpacing.md),
+                      _BreedingKpiCard(kpi: k),
+                    ],
+                    // Sürüden çıkış nedenleri (backend ADR 0122); çıkış
+                    // yoksa yok.
+                    if (s.exits.isNotEmpty) ...[
+                      const SizedBox(height: AppSpacing.md),
+                      _ExitsCard(exits: s.exits),
+                    ],
+                    const SizedBox(height: AppSpacing.md),
+                    const _AlertsCard(),
+                    const DeliveryCard(),
+                    const UpcomingBreedingCard(),
+                  ],
+                ),
         ),
       ),
     );
   }
+
+  /// İki sütuna yer var mı (her sütun ≥ 330)? Tablette (ADR 0141) kartlar
+  /// tek sütunda ekran boyu uzayıp sayılar kenarlara dağılıyordu.
+  static bool _wide(double width) => width >= 720;
+
+  /// Tablet düzeni: solda günün sütü ve dağılımlar, sağda yapılacaklar
+  /// (uyarılar, teslim, yaklaşanlar) ve yıllık göstergeler. Sıra telefonla
+  /// aynı mantıkta: önce bugün, sonra iş.
+  Widget _twoColumns(DashboardSummary s, VolumeFormat volume) => ListView(
+    padding: const EdgeInsets.all(AppSpacing.lg),
+    children: [
+      const SetupChecklistCard(),
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Column(
+              children: [
+                _TodayCard(summary: s, volume: volume),
+                const SizedBox(height: AppSpacing.md),
+                _SpeciesCard(summary: s),
+                const SizedBox(height: AppSpacing.md),
+                _ClassCard(summary: s),
+                if (s.byGroup.isNotEmpty) ...[
+                  const SizedBox(height: AppSpacing.md),
+                  _GroupCard(groups: s.byGroup, volume: volume),
+                ],
+              ],
+            ),
+          ),
+          const SizedBox(width: AppSpacing.md),
+          Expanded(
+            child: Column(
+              children: [
+                const _AlertsCard(),
+                const DeliveryCard(),
+                const UpcomingBreedingCard(),
+                if (s.breeding case final k?) ...[
+                  const SizedBox(height: AppSpacing.md),
+                  _BreedingKpiCard(kpi: k),
+                ],
+                if (s.exits.isNotEmpty) ...[
+                  const SizedBox(height: AppSpacing.md),
+                  _ExitsCard(exits: s.exits),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
 }
 
 class _TodayCard extends StatelessWidget {

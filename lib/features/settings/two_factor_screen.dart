@@ -7,6 +7,7 @@ import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/features/support/support.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/repository_providers.dart';
+import 'package:milktrace/widgets/adaptive.dart';
 import 'package:milktrace/widgets/async_view.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -190,10 +191,7 @@ class _SetupState extends ConsumerState<_Setup> {
         Text(_error!, style: TextStyle(color: AppColors.darkRedColor)),
       ]);
     }
-    return ListView(
-      padding: const EdgeInsets.all(AppSpacing.lg),
-      children: children,
-    );
+    return ListView(padding: formPadding(context), children: children);
   }
 }
 
@@ -238,7 +236,7 @@ class _DisableState extends ConsumerState<_Disable> {
   Widget build(BuildContext context) {
     const border = OutlineInputBorder(borderRadius: AppRadius.mdAll);
     return ListView(
-      padding: const EdgeInsets.all(AppSpacing.lg),
+      padding: formPadding(context),
       children: [
         Row(
           children: [

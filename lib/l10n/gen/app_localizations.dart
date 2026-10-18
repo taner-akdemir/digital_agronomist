@@ -5047,6 +5047,24 @@ abstract class AppLocalizations {
   /// **' (Uygulama {version})'**
   String supportWhatsAppVersion(Object version);
 
+  /// No description provided for @tabletSelectAlert.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hayvanın geçmişini görmek için hayvana bağlı bir uyarı seçin'**
+  String get tabletSelectAlert;
+
+  /// No description provided for @tabletSelectAnimal.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ayrıntısını görmek için soldan bir hayvan seçin'**
+  String get tabletSelectAnimal;
+
+  /// No description provided for @tabletSelectSession.
+  ///
+  /// In tr, this message translates to:
+  /// **'Özetini görmek için soldan bir oturum seçin'**
+  String get tabletSelectSession;
+
   /// No description provided for @teamAccessExpired.
   ///
   /// In tr, this message translates to:

@@ -2965,6 +2965,18 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get tabletSelectAlert =>
+      'Select an animal alert to see the animal\'s history';
+
+  @override
+  String get tabletSelectAnimal =>
+      'Select an animal on the left to see its details';
+
+  @override
+  String get tabletSelectSession =>
+      'Select a session on the left to see its summary';
+
+  @override
   String get teamAccessExpired => 'access expired';
 
   @override

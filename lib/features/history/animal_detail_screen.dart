@@ -26,6 +26,7 @@ import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
 import 'package:milktrace/widgets/error_view.dart';
+import 'package:milktrace/widgets/list_detail.dart';
 import 'package:milktrace/widgets/milk_palette.dart';
 
 /// Hayvan detayı: sınıf, trend, verim grafiği ve son sağımlar (§15.1).
@@ -92,11 +93,18 @@ class _BackBar extends ConsumerWidget {
       ),
       child: Row(
         children: [
-          IconButton(
-            tooltip: l10n.commonBack,
-            onPressed: () => context.go('/history'),
-            icon: const Icon(Icons.arrow_back),
-          ),
+          // Tablette sağ bölmede geri oku yok: liste zaten yanında (ADR 0141).
+          if (ListDetailScope.inDetailPane(context))
+            const SizedBox(
+              width: AppSpacing.md,
+              height: kMinInteractiveDimension,
+            )
+          else
+            IconButton(
+              tooltip: l10n.commonBack,
+              onPressed: () => context.go('/history'),
+              icon: const Icon(Icons.arrow_back),
+            ),
           Expanded(
             child: Text(
               title,

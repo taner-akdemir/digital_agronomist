@@ -16,6 +16,7 @@ import 'package:milktrace/features/live/widgets/animal_picker.dart';
 import 'package:milktrace/features/live/widgets/live_info_card.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
+import 'package:milktrace/widgets/adaptive.dart';
 import 'package:milktrace/widgets/error_view.dart';
 import 'package:milktrace/widgets/light_info.dart';
 
@@ -23,7 +24,12 @@ import 'package:milktrace/widgets/light_info.dart';
 ///
 /// Bölge seçimi → o bölgedeki sağım noktalarının canlı kartları.
 class LiveBoardScreen extends ConsumerWidget {
-  const LiveBoardScreen({super.key});
+  const LiveBoardScreen({super.key, this.largeTiles = false});
+
+  /// Tablette (pencere ≥ 600) kartlar [_tabletScale] kat büyük çizilir
+  /// (backend ADR 0141): sağımhanede tablet kol boyu uzakta durur. Kiosk
+  /// bunu açmaz; onun görünümü değişmez.
+  final bool largeTiles;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,16 +42,18 @@ class LiveBoardScreen extends ConsumerWidget {
         error: e,
         onRetry: () => ref.invalidate(hallsProvider),
       ),
-      data: (h) =>
-          h == null ? Center(child: Text(l10n.liveNoHalls)) : _Board(hall: h),
+      data: (h) => h == null
+          ? Center(child: Text(l10n.liveNoHalls))
+          : _Board(hall: h, largeTiles: largeTiles),
     );
   }
 }
 
 class _Board extends ConsumerWidget {
-  const _Board({required this.hall});
+  const _Board({required this.hall, this.largeTiles = false});
 
   final Hall hall;
+  final bool largeTiles;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -86,6 +94,7 @@ class _Board extends ConsumerWidget {
               _ => _Grid(
                 live: live!,
                 hall: hall,
+                largeTiles: largeTiles,
                 spouts: spouts.value ?? const [],
                 vacuums: vacuums.value ?? const [],
               ),
@@ -366,18 +375,27 @@ Future<void> _guard(
 String _message(Object error) =>
     userMessage(error) ?? l10n.liveActionFailed('$error');
 
+/// Tablette kartın büyütme katı: 17 punto ad 21'e, 18 punto debi 22,5'e.
+const double _tabletScale = 1.25;
+
+/// Kartın telefon ölçüsü (en geniş hali ve sabit yüksekliği).
+const double _tileExtent = 240;
+const double _tileHeight = 252;
+
 class _Grid extends ConsumerWidget {
   const _Grid({
     required this.live,
     required this.hall,
     required this.spouts,
     required this.vacuums,
+    this.largeTiles = false,
   });
 
   final LiveSession live;
   final Hall hall;
   final List<Spout> spouts;
   final List<Vacuum> vacuums;
+  final bool largeTiles;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -455,15 +473,18 @@ class _Grid extends ConsumerWidget {
             );
     }
 
+    final scale = largeTiles && !WindowSize.of(context).isCompact
+        ? _tabletScale
+        : 1.0;
     final grid = SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
       // mainAxisExtent: kart yüksekliği SABİT. Eski ekran childAspectRatio'yu
       // (ekran yüksekliği - 300) üzerinden hesaplıyordu; küçük ekranda kart
       // taşıyor, büyük ekranda altında boşluk kalıyordu (§15.3/12).
       sliver: SliverGrid(
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 240,
-          mainAxisExtent: 252,
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: _tileExtent * scale,
+          mainAxisExtent: _tileHeight * scale,
           crossAxisSpacing: AppSpacing.md,
           mainAxisSpacing: AppSpacing.md,
         ),
@@ -494,10 +515,13 @@ class _Grid extends ConsumerWidget {
               assigned,
               seq.followers(u.spoutId, current, eligible),
             ),
-            child: LiveInfoCard(
-              update: u,
-              title: title,
-              volume: ref.watch(volumeFormatProvider),
+            child: _Scaled(
+              scale: scale,
+              child: LiveInfoCard(
+                update: u,
+                title: title,
+                volume: ref.watch(volumeFormatProvider),
+              ),
             ),
           );
         }),
@@ -750,5 +774,30 @@ class _Grid extends ConsumerWidget {
       ),
     );
     return ok ?? false;
+  }
+}
+
+/// Kartı telefondaki yerleşimiyle kurup [scale] katı büyütür: kartın
+/// yüksekliği sabit ve testle kilitli; yazıyı büyütmek (textScaler) onu
+/// taşırırdı. Ölçek 1'de kart olduğu gibi döner.
+class _Scaled extends StatelessWidget {
+  const _Scaled({required this.scale, required this.child});
+
+  final double scale;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    if (scale == 1) return child;
+    return LayoutBuilder(
+      builder: (context, constraints) => FittedBox(
+        alignment: Alignment.topLeft,
+        child: SizedBox(
+          width: constraints.maxWidth / scale,
+          height: _tileHeight,
+          child: child,
+        ),
+      ),
+    );
   }
 }

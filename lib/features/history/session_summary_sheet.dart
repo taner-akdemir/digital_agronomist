@@ -7,6 +7,7 @@ import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
+import 'package:milktrace/widgets/list_detail.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'session_summary_sheet.g.dart';
@@ -24,11 +25,13 @@ Future<void> showSessionSummary(BuildContext context, String sessionId) =>
       showDragHandle: true,
       isScrollControlled: true,
       backgroundColor: AppColors.surface,
-      builder: (_) => _SummarySheet(sessionId: sessionId),
+      builder: (_) => SessionSummaryView(sessionId: sessionId),
     );
 
-class _SummarySheet extends ConsumerWidget {
-  const _SummarySheet({required this.sessionId});
+/// Özetin içeriği: telefonda alt pencerede, tablette Geçmiş → Oturumlar'ın
+/// sağ bölmesinde (backend ADR 0141).
+class SessionSummaryView extends ConsumerWidget {
+  const SessionSummaryView({super.key, required this.sessionId});
 
   final String sessionId;
 
@@ -36,52 +39,50 @@ class _SummarySheet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final summary = ref.watch(sessionSummaryProvider(sessionId));
     final volume = ref.watch(volumeFormatProvider);
+    final inPane = ListDetailScope.inDetailPane(context);
+    final body = AsyncView(
+      value: summary,
+      errorMessage: l10n.sessionSummaryLoadFailed,
+      onRetry: () => ref.invalidate(sessionSummaryProvider(sessionId)),
+      builder: (s) => ListView(
+        shrinkWrap: !inPane,
+        padding: EdgeInsets.fromLTRB(
+          AppSpacing.xl,
+          inPane ? AppSpacing.xl : 0,
+          AppSpacing.xl,
+          AppSpacing.xl,
+        ),
+        children: [
+          Text(
+            l10n.sessionSummaryTitle,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: AppSpacing.xs),
+          Text(l10n.sessionSummaryTotals(s.animals, volume.amount(s.volumeMl))),
+          _Section(
+            title: l10n.sessionSummaryNotMilked(s.notMilked.length),
+            items: s.notMilked,
+            empty: l10n.sessionSummaryNoneNotMilked,
+            warn: true,
+          ),
+          _Section(
+            title: l10n.sessionSummaryLowYield(s.lowYield.length),
+            items: s.lowYield,
+          ),
+          _Section(
+            title: l10n.sessionSummaryLowFlow(s.lowFlow.length),
+            items: s.lowFlow,
+          ),
+        ],
+      ),
+    );
+    if (inPane) return body;
     return SafeArea(
       child: ConstrainedBox(
         constraints: BoxConstraints(
           maxHeight: MediaQuery.of(context).size.height * 0.8,
         ),
-        child: AsyncView(
-          value: summary,
-          errorMessage: l10n.sessionSummaryLoadFailed,
-          onRetry: () => ref.invalidate(sessionSummaryProvider(sessionId)),
-          builder: (s) => ListView(
-            shrinkWrap: true,
-            padding: const EdgeInsets.fromLTRB(
-              AppSpacing.xl,
-              0,
-              AppSpacing.xl,
-              AppSpacing.xl,
-            ),
-            children: [
-              Text(
-                l10n.sessionSummaryTitle,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: AppSpacing.xs),
-              Text(
-                l10n.sessionSummaryTotals(s.animals, volume.amount(s.volumeMl)),
-              ),
-              _Section(
-                title: l10n.sessionSummaryNotMilked(s.notMilked.length),
-                items: s.notMilked,
-                empty: l10n.sessionSummaryNoneNotMilked,
-                warn: true,
-              ),
-              _Section(
-                title: l10n.sessionSummaryLowYield(s.lowYield.length),
-                items: s.lowYield,
-              ),
-              _Section(
-                title: l10n.sessionSummaryLowFlow(s.lowFlow.length),
-                items: s.lowFlow,
-              ),
-            ],
-          ),
-        ),
+        child: body,
       ),
     );
   }
@@ -131,7 +132,12 @@ class _Section extends StatelessWidget {
               title: Text(a.label),
               trailing: const Icon(Icons.chevron_right),
               onTap: () {
-                Navigator.of(context).pop();
+                // Sağ bölmede kapatılacak pencere yok (ADR 0141).
+                if (ListDetailScope.inDetailPane(context)) {
+                  DefaultTabController.maybeOf(context)?.animateTo(0);
+                } else {
+                  Navigator.of(context).pop();
+                }
                 context.go('/history/animal/${a.animalId}');
               },
             ),

@@ -10,6 +10,7 @@ import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
+import 'package:milktrace/widgets/adaptive.dart';
 import 'package:milktrace/widgets/async_view.dart';
 
 /// Tür bazında eşik ayarları (§15.1 "eşik ayarları (owner)", §6.5).
@@ -173,7 +174,7 @@ class _FormState extends ConsumerState<_Form> {
     return Form(
       key: _formKey,
       child: ListView(
-        padding: const EdgeInsets.all(AppSpacing.lg),
+        padding: formPadding(context),
         children: [
           const _CalibrationNote(),
           const SizedBox(height: AppSpacing.md),

@@ -1541,6 +1541,9 @@
       "version": {}
     }
   },
+  "tabletSelectAlert": "Select an animal alert to see the animal's history",
+  "tabletSelectAnimal": "Select an animal on the left to see its details",
+  "tabletSelectSession": "Select a session on the left to see its summary",
   "teamAccessExpired": "access expired",
   "teamAccessPickDate": "Pick a date",
   "teamAccessTitle": "Access ends",

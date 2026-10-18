@@ -272,6 +272,12 @@ ThemeData buildAppTheme([Brightness brightness = Brightness.light]) {
       centerTitle: true,
     ),
     iconTheme: IconThemeData(color: p.darkGreenColor),
+    // Tablette (backend ADR 0141) pencere metnin boyuna göre ekran boyu
+    // genişlemesin; telefonda (390 − kenar boşlukları) zaten bunun altında.
+    // Alt pencereler M3 varsayılanıyla en çok 640.
+    dialogTheme: const DialogThemeData(
+      constraints: BoxConstraints(minWidth: 280, maxWidth: 560),
+    ),
     // Karanlıkta Material varsayılanları tohum renginden (mavi) gelir ve
     // dolgulu düğmenin yazısı koyulaşır; düğme ve snackbar dolgusu yeşil
     // paletten, yazısı beyaz olsun. Açık tema bunlar olmadan zaten bugünkü

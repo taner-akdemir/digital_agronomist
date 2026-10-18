@@ -17,36 +17,188 @@ import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
+import 'package:milktrace/widgets/list_detail.dart';
 
 /// Geçmiş sekmesi (§15.1): oturum listesi + filtrelenebilir hayvan listesi.
 ///
 /// Hayvan detayı ayrı bir ekran (`/history/animal/:id`), sekmenin içinde
 /// değil: geri tuşu detaydan listeye dönmeli, Geçmiş sekmesinden çıkmamalı.
+///
+/// Tablette ([detail] dolu, backend ADR 0141) liste solda kalır, sağ bölme
+/// Hayvanlar'da yönlendiricinin detay yığını, Oturumlar'da seçili oturumun
+/// özetidir.
 class HistoryScreen extends StatelessWidget {
-  const HistoryScreen({super.key});
+  const HistoryScreen({super.key, this.detail, this.selectedAnimalId});
+
+  /// İki bölmede sağdaki hayvan detayı yığını; telefonda null.
+  final Widget? detail;
+
+  /// Açık hayvan detayı (listede vurgulanır).
+  final String? selectedAnimalId;
 
   @override
   Widget build(BuildContext context) {
+    final tabs = Column(
+      children: [
+        TabBar(
+          labelColor: AppColors.darkGreenColor,
+          unselectedLabelColor: AppColors.onSurfaceMuted,
+          indicatorColor: AppColors.darkGreenColor,
+          tabs: [
+            Tab(text: l10n.historyTabAnimals),
+            Tab(text: l10n.historyTabSessions),
+          ],
+        ),
+        const Expanded(
+          child: TabBarView(children: [_AnimalsTab(), _SessionsTab()]),
+        ),
+      ],
+    );
     return DefaultTabController(
       length: 2,
-      child: Column(
-        children: [
-          TabBar(
-            labelColor: AppColors.darkGreenColor,
-            unselectedLabelColor: AppColors.onSurfaceMuted,
-            indicatorColor: AppColors.darkGreenColor,
-            tabs: [
-              Tab(text: l10n.historyTabAnimals),
-              Tab(text: l10n.historyTabSessions),
+      child: switch (detail) {
+        null => tabs,
+        final d => _TwoPaneHistory(
+          list: tabs,
+          detail: d,
+          selectedAnimalId: selectedAnimalId,
+        ),
+      },
+    );
+  }
+}
+
+/// Geçmiş sekmesinin yönlendirici kabuğu (backend ADR 0141): yer yetiyorsa
+/// listeyi kendisi çizer ve iç yığını ([child]) sağ bölmeye koyar.
+class HistoryPanes extends StatelessWidget {
+  const HistoryPanes({super.key, required this.child, this.selectedAnimalId});
+
+  final Widget child;
+  final String? selectedAnimalId;
+
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, constraints) {
+      final twoPane = ListDetail.fits(constraints.maxWidth);
+      return _HistoryLayout(
+        twoPane: twoPane,
+        child: twoPane
+            ? HistoryScreen(detail: child, selectedAnimalId: selectedAnimalId)
+            : child,
+      );
+    },
+  );
+}
+
+/// `/history` sayfası: telefonda liste; tablette liste kabukta olduğu için
+/// sağ bölmenin "bir hayvan seçin" boş hali.
+class HistoryRoot extends StatelessWidget {
+  const HistoryRoot({super.key});
+
+  @override
+  Widget build(BuildContext context) => _HistoryLayout.twoPaneOf(context)
+      ? DetailPlaceholder(icon: Icons.pets, text: l10n.tabletSelectAnimal)
+      : const HistoryScreen();
+}
+
+class _HistoryLayout extends InheritedWidget {
+  const _HistoryLayout({required this.twoPane, required super.child});
+
+  final bool twoPane;
+
+  static bool twoPaneOf(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<_HistoryLayout>()?.twoPane ??
+      false;
+
+  @override
+  bool updateShouldNotify(_HistoryLayout old) => twoPane != old.twoPane;
+}
+
+class _TwoPaneHistory extends StatefulWidget {
+  const _TwoPaneHistory({
+    required this.list,
+    required this.detail,
+    required this.selectedAnimalId,
+  });
+
+  final Widget list;
+  final Widget detail;
+  final String? selectedAnimalId;
+
+  @override
+  State<_TwoPaneHistory> createState() => _TwoPaneHistoryState();
+}
+
+class _TwoPaneHistoryState extends State<_TwoPaneHistory> {
+  String? _session;
+
+  @override
+  void didUpdateWidget(_TwoPaneHistory old) {
+    super.didUpdateWidget(old);
+    // Oturum özetinden ya da uyarıdan bir hayvan açıldı: detayı görünür
+    // kılmak için Hayvanlar sekmesine geç.
+    final id = widget.selectedAnimalId;
+    if (id != null && id != old.selectedAnimalId) {
+      DefaultTabController.of(context).animateTo(0);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final tabs = DefaultTabController.of(context);
+    return _PaneSelection(
+      animalId: widget.selectedAnimalId,
+      sessionId: _session,
+      onSession: (id) => setState(() => _session = id),
+      child: TwoPane(
+        list: widget.list,
+        // IndexedStack: detay yığını (bir Navigator) sekme değişince
+        // sökülmemeli; yönlendirici ona bağlı.
+        detail: AnimatedBuilder(
+          animation: tabs,
+          builder: (context, _) => IndexedStack(
+            index: tabs.index,
+            sizing: StackFit.expand,
+            children: [
+              widget.detail,
+              switch (_session) {
+                null => DetailPlaceholder(
+                  icon: Icons.history,
+                  text: l10n.tabletSelectSession,
+                ),
+                final id => SessionSummaryView(
+                  key: ValueKey(id),
+                  sessionId: id,
+                ),
+              },
             ],
           ),
-          const Expanded(
-            child: TabBarView(children: [_AnimalsTab(), _SessionsTab()]),
-          ),
-        ],
+        ),
       ),
     );
   }
+}
+
+/// İki bölmede listenin seçimi: satır vurgusu ve oturuma dokununca özetin
+/// sağda açılması.
+class _PaneSelection extends InheritedWidget {
+  const _PaneSelection({
+    required this.animalId,
+    required this.sessionId,
+    required this.onSession,
+    required super.child,
+  });
+
+  final String? animalId;
+  final String? sessionId;
+  final ValueChanged<String> onSession;
+
+  static _PaneSelection? maybeOf(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<_PaneSelection>();
+
+  @override
+  bool updateShouldNotify(_PaneSelection old) =>
+      animalId != old.animalId || sessionId != old.sessionId;
 }
 
 class _AnimalsTab extends ConsumerWidget {
@@ -359,8 +511,9 @@ class _AnimalTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final selected = _PaneSelection.maybeOf(context)?.animalId == animal.id;
     return Material(
-      color: AppColors.surface,
+      color: selected ? AppColors.lightGreenColor : AppColors.surface,
       borderRadius: AppRadius.mdAll,
       child: InkWell(
         borderRadius: AppRadius.mdAll,
@@ -432,25 +585,38 @@ class _SessionsTab extends ConsumerWidget {
               itemCount: list.length,
               separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm),
               // Bitmiş oturuma dokunmak özetini açar (backend ADR 0094).
-              itemBuilder: (context, i) => GestureDetector(
-                onTap: list[i].status == 'active'
-                    ? null
-                    : () => showSessionSummary(context, list[i].id),
-                child: _SessionTile(
-                  session: list[i],
-                  hall: hallById[list[i].hallId],
-                ),
-              ),
+              // Tablette özet sağ bölmede açılır (ADR 0141).
+              itemBuilder: (context, i) {
+                final pane = _PaneSelection.maybeOf(context);
+                final id = list[i].id;
+                return GestureDetector(
+                  onTap: list[i].status == 'active'
+                      ? null
+                      : pane != null
+                      ? () => pane.onSession(id)
+                      : () => showSessionSummary(context, id),
+                  child: _SessionTile(
+                    session: list[i],
+                    hall: hallById[list[i].hallId],
+                    selected: pane?.sessionId == id,
+                  ),
+                );
+              },
             ),
     );
   }
 }
 
 class _SessionTile extends StatelessWidget {
-  const _SessionTile({required this.session, required this.hall});
+  const _SessionTile({
+    required this.session,
+    required this.hall,
+    this.selected = false,
+  });
 
   final MilkingSession session;
   final Hall? hall;
+  final bool selected;
 
   @override
   Widget build(BuildContext context) {
@@ -461,7 +627,7 @@ class _SessionTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: selected ? AppColors.lightGreenColor : AppColors.surface,
         borderRadius: AppRadius.mdAll,
         border: Border.all(
           color: active ? AppColors.lightGreenColor : AppColors.border,

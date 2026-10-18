@@ -8,6 +8,7 @@ import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/repository_providers.dart';
+import 'package:milktrace/widgets/adaptive.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'feedback_screen.g.dart';
@@ -140,7 +141,7 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
       body: Form(
         key: _form,
         child: ListView(
-          padding: const EdgeInsets.all(AppSpacing.lg),
+          padding: formPadding(context),
           children: [
             Text(
               l10n.feedbackIntro,
