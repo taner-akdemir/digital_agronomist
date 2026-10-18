@@ -29,6 +29,15 @@ Widget wrap(Widget child) => UncontrolledProviderScope(
   child: MaterialApp(home: child),
 );
 
+/// Tek bölmeli liste (640 geniş). Sayımlar listenin GÖRÜNEN kısmına bakar;
+/// test yüzeyinin varsayılanı (800×600) artık liste–detay düzenidir ve
+/// orada liste dar sol bölmededir (backend ADR 0141).
+void _singlePane(WidgetTester tester) {
+  tester.view.physicalSize = const Size(640, 900);
+  tester.view.devicePixelRatio = 1;
+  addTearDown(tester.view.reset);
+}
+
 void main() {
   setUp(() {
     _container = ProviderContainer(
@@ -46,6 +55,7 @@ void main() {
   // Düz zaman sıralaması, dün okunmuş bir uyarıyı bu sabahki açık uyarının
   // üstüne koyabilirdi.
   testWidgets('açık uyarılar üstte, okunmuşlar altta', (tester) async {
+    _singlePane(tester);
     await tester.pumpWidget(wrap(const AlertsScreen()));
     await tester.pumpAndSettle();
 
@@ -78,6 +88,7 @@ void main() {
   testWidgets('okundu işaretlenen uyarı listeden düşer ve sayaç azalır', (
     tester,
   ) async {
+    _singlePane(tester);
     await tester.pumpWidget(wrap(const AlertsScreen()));
     await tester.pumpAndSettle();
 
@@ -94,6 +105,7 @@ void main() {
   // Onayın SUNUCUYA da gittiğini doğrular: yalnızca ekranda işaretlenseydi
   // liste tazelendiğinde uyarı geri gelirdi.
   testWidgets('onay kaynağa yazılır, tazelemede geri gelmez', (tester) async {
+    _singlePane(tester);
     await tester.pumpWidget(wrap(const AlertsScreen()));
     await tester.pumpAndSettle();
 

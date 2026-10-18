@@ -125,7 +125,9 @@ uygulama içinden ve web'den.
   açıklama, ekran görüntüleri her dilde.
 - Ekran görüntüleri: `MILKTRACE_STORE_SCREENS=<klasör> flutter test test/store_screens_test.dart`
   → `<klasör>/{tr,en}/01-…07-*.png` (1080×1920, sahte veri). Play telefonda en az 2,
-  önerilen 4–8 görüntü ister.
+  önerilen 4–8 görüntü ister. Tablet görüntüleri aynı komutla
+  `<klasör>/tablet-7/{tr,en}/` (1080×1920, 7" dikey) ve `<klasör>/tablet-10/{tr,en}/`
+  (2560×1440, 10" yatay) altına yazılır; Play "7 inç" ve "10 inç tablet" alanlarına.
 - **Eksik (bu repoda yok):** 512×512 uygulama simgesi PNG'si ve 1024×500 öne çıkan
   görsel (feature graphic) — `tool/brand/` kaynaklarından üretilmeli.
 - Yapay zekâyla üretilmiş içerik: uygulama üretken yapay zekâ özelliği içermiyor.

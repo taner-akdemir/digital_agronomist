@@ -7,7 +7,10 @@
 // Uygulamanın GERÇEK kökü (MilkTraceApp: router, tema, dil) sahte verilerle
 // (MockRepository, assets/data) çizilir; oturum işletme sahibi olarak açık
 // gelir. Görüntüler 1080×1920 (mantıksal 411×731 @ 2.625) PNG olarak
-// <klasör>/{tr,en}/NN-ad.png'ye yazılır. Gerçek yazı tipleri (Poppins,
+// <klasör>/{tr,en}/NN-ad.png'ye yazılır. Tablet görüntüleri (backend ADR
+// 0141, Play 7" ve 10", 9:16 / 16:9) <klasör>/tablet-7/{tr,en}/ (1080×1920,
+// mantıksal 600×1067, dikey) ve <klasör>/tablet-10/{tr,en}/ (2560×1440,
+// mantıksal 1280×720, yatay) altına. Gerçek yazı tipleri (Poppins,
 // Material Icons, Roboto) diskten yüklenir — yoksa test yazı tipi kutular çizer.
 import 'dart:async';
 import 'dart:convert';
@@ -226,7 +229,30 @@ Future<void> _go(WidgetTester tester, String path) async {
   await tester.pumpAndSettle();
 }
 
-Future<void> _save(WidgetTester tester, String lang, String name) async {
+/// Çekim cihazı: fiziksel boyut, piksel oranı ve çıktı alt klasörü.
+class _Device {
+  const _Device(this.name, this.size, this.ratio, this.dir);
+
+  final String name;
+  final Size size;
+  final double ratio;
+
+  /// `<klasör>/` altındaki ön ek; telefon için boş (eski yollar korunur).
+  final String dir;
+}
+
+const _devices = [
+  _Device('telefon', Size(1080, 1920), 2.625, ''),
+  _Device('tablet 7"', Size(1080, 1920), 1.8, 'tablet-7/'),
+  _Device('tablet 10"', Size(2560, 1440), 2, 'tablet-10/'),
+];
+
+Future<void> _save(
+  WidgetTester tester,
+  _Device device,
+  String lang,
+  String name,
+) async {
   FocusManager.instance.primaryFocus?.unfocus();
   // Görseller (marka işareti) gerçek asenkron okunur; sahte saatte bitmez.
   await tester.runAsync(
@@ -238,11 +264,11 @@ Future<void> _save(WidgetTester tester, String lang, String name) async {
     find.byKey(_shot),
   );
   final bytes = await tester.runAsync(() async {
-    final ui.Image img = await boundary.toImage(pixelRatio: 2.625);
+    final ui.Image img = await boundary.toImage(pixelRatio: device.ratio);
     final data = await img.toByteData(format: ui.ImageByteFormat.png);
     return data!.buffer.asUint8List();
   });
-  final f = File('$_out/$lang/$name.png');
+  final f = File('$_out/${device.dir}$lang/$name.png');
   f.parent.createSync(recursive: true);
   f.writeAsBytesSync(bytes!);
 }
@@ -260,39 +286,45 @@ void main() {
     setL10nLocale(const Locale('tr'));
   });
 
-  for (final lang in ['tr', 'en']) {
-    testWidgets('mağaza ekranları ($lang)', (tester) async {
-      tester.view.physicalSize = const Size(1080, 1920);
-      tester.view.devicePixelRatio = 2.625;
-      addTearDown(tester.view.reset);
-      // Cihaz dili seçilen dil: kayıtlı seçim diskten okunana kadar ilk
-      // çizim cihaz diliyle olur (gerçek telefondaki gibi).
-      tester.platformDispatcher.localesTestValue = [Locale(lang)];
-      addTearDown(tester.platformDispatcher.clearLocalesTestValue);
-      // flutter_test gölgeleri siyah çizgi çizer; çekimde gerçek gölge.
-      debugDisableShadows = false;
-
-      await tester.pumpWidget(_app(lang));
-      await tester.pumpAndSettle();
-
-      await _go(tester, '/live');
-      await _save(tester, lang, '01-canli-sagim');
-      await _go(tester, '/dashboard');
-      await _save(tester, lang, '02-pano');
-      await _go(tester, '/history');
-      await _save(tester, lang, '03-hayvanlar');
-      await _go(tester, '/history/animal/$_animalId');
-      await _save(tester, lang, '04-hayvan-detayi');
-      await _go(tester, '/alerts');
-      await _save(tester, lang, '05-uyarilar');
-      await _go(tester, '/devices');
-      await _save(tester, lang, '06-sayaclar');
-      await _go(tester, '/deliveries');
-      await _save(tester, lang, '07-tank-teslimleri');
-
-      // Açık akışlar kapanmadan ağaç sökülsün; gölge ayarı geri.
-      await tester.pumpWidget(const SizedBox());
-      debugDisableShadows = true;
-    }, skip: _out == null);
+  for (final device in _devices) {
+    for (final lang in ['tr', 'en']) {
+      _storeScreens(device, lang);
+    }
   }
+}
+
+void _storeScreens(_Device device, String lang) {
+  testWidgets('mağaza ekranları (${device.name}, $lang)', (tester) async {
+    tester.view.physicalSize = device.size;
+    tester.view.devicePixelRatio = device.ratio;
+    addTearDown(tester.view.reset);
+    // Cihaz dili seçilen dil: kayıtlı seçim diskten okunana kadar ilk
+    // çizim cihaz diliyle olur (gerçek telefondaki gibi).
+    tester.platformDispatcher.localesTestValue = [Locale(lang)];
+    addTearDown(tester.platformDispatcher.clearLocalesTestValue);
+    // flutter_test gölgeleri siyah çizgi çizer; çekimde gerçek gölge.
+    debugDisableShadows = false;
+
+    await tester.pumpWidget(_app(lang));
+    await tester.pumpAndSettle();
+
+    await _go(tester, '/live');
+    await _save(tester, device, lang, '01-canli-sagim');
+    await _go(tester, '/dashboard');
+    await _save(tester, device, lang, '02-pano');
+    await _go(tester, '/history');
+    await _save(tester, device, lang, '03-hayvanlar');
+    await _go(tester, '/history/animal/$_animalId');
+    await _save(tester, device, lang, '04-hayvan-detayi');
+    await _go(tester, '/alerts');
+    await _save(tester, device, lang, '05-uyarilar');
+    await _go(tester, '/devices');
+    await _save(tester, device, lang, '06-sayaclar');
+    await _go(tester, '/deliveries');
+    await _save(tester, device, lang, '07-tank-teslimleri');
+
+    // Açık akışlar kapanmadan ağaç sökülsün; gölge ayarı geri.
+    await tester.pumpWidget(const SizedBox());
+    debugDisableShadows = true;
+  }, skip: _out == null);
 }
