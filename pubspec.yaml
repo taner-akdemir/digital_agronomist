@@ -1,7 +1,7 @@
 name: milktrace
 description: "Milk Trace — hayvan bazında süt verimi takibi"
 publish_to: 'none'
-version: 1.2.0+5
+version: 1.2.1+6
 
 environment:
   sdk: ^3.12.0
