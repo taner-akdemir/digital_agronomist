@@ -40,7 +40,7 @@ android {
 
     defaultConfig {
         // Play'de değiştirilemez; Firebase uygulamaları da bu kimlikle kayıtlı.
-        applicationId = "com.algebran.milktrace.milktrace"
+        applicationId = "com.albiferro.milktrace"
         // Sürüm pubspec.yaml'daki `version: X.Y.Z+N`: N versionCode, Play her
         // yüklemede bir öncekinden büyük ister.
         minSdk = flutter.minSdkVersion

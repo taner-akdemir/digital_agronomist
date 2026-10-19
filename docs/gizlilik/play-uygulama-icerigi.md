@@ -7,7 +7,7 @@
 > ayrıntısı `play-veri-guvenligi.md`'de. Yeni izin, SDK, reklam ya da satın alma
 > eklenirse bu dosya, veri güvenliği formu ve gizlilik politikası birlikte güncellenir.
 
-Paket: `com.algebran.milktrace.milktrace` · Uygulama adı: **Milk Trace** · Sürüm `pubspec.yaml`.
+Paket: `com.albiferro.milktrace` (Albiferro Play hesabı; eski kişisel hesapta `com.algebran.milktrace.milktrace`) · Uygulama adı: **Milk Trace** · Sürüm `pubspec.yaml`.
 
 ## 1. Gizlilik politikası
 

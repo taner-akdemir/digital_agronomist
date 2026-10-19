@@ -748,8 +748,10 @@ olmadığı için giriş ekranı atlanır ve demo kullanıcısıyla çalışıl�
 
 ## 7. Firebase / push bağlama
 
-Proje: **`milktrace-69975`** (Firebase Console, `algebransoft@gmail.com`). Uygulamalar:
-Android ve iOS, ikisi de `com.algebran.milktrace.milktrace`.
+Proje: **`albiferro-milktrace`** (Firebase Console, `taner.akdemir@albiferro.com`, 19.10.2026'dan beri).
+Android `com.albiferro.milktrace` (Albiferro Play hesabı). iOS hâlâ `com.algebran.milktrace.milktrace`
+(eski `milktrace-69975` projesinde); Apple kuruluş üyeliği gelince taşınacak. Aşağıdaki geçmiş kayıt
+eski projeyi anlatır.
 
 **Yapıldı (25.09.2026):**
 

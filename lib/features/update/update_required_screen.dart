@@ -8,7 +8,7 @@ import 'package:milktrace/l10n/l10n.dart';
 
 /// Play Store sayfası (paket kimliği CLAUDE.md §7).
 final playStoreUri = Uri.parse(
-  'https://play.google.com/store/apps/details?id=com.algebran.milktrace.milktrace',
+  'https://play.google.com/store/apps/details?id=com.albiferro.milktrace',
 );
 
 /// App Store Connect'teki "Apple ID" (sayı). Kayıt açılınca yazılır; boşken
