@@ -38,15 +38,9 @@ void main() {
   tearDown(() => setL10nLocale(const Locale('tr')));
 
   test('durum ayrıştırılır; eksik alan kapalı sayılır', () async {
-    final r = rig(
-      (o) async =>
-          okEnvelope({'enabled': true, 'limit': 50, 'remainingToday': 37}),
-    );
+    final r = rig((o) async => okEnvelope({'enabled': true}));
     final s = await r.repo.assistantStatus();
-    expect(
-      s,
-      const AssistantStatus(enabled: true, limit: 50, remainingToday: 37),
-    );
+    expect(s, const AssistantStatus(enabled: true));
     expect(r.adapter.requests.single.path, '/assistant/status');
 
     expect(AssistantStatus.fromJson(const {}).enabled, isFalse);
@@ -61,7 +55,6 @@ void main() {
           {'slug': 'sagim', 'title': 'Milking', 'url': '/yardim/sagim'},
         ],
         'handoff': true,
-        'remainingToday': 4,
       }),
     );
     final reply = await r.repo.askAssistant(const [
@@ -71,7 +64,6 @@ void main() {
     ]);
 
     expect(reply.handoff, isTrue);
-    expect(reply.remainingToday, 4);
     expect(reply.sources.single.slug, 'sagim');
 
     final req = r.adapter.requests.single;
@@ -86,8 +78,6 @@ void main() {
         {'role': 'user', 'text': 'c'},
       ],
     });
-    // Cevap tek parça ve uzun sürebilir: okuma süresi uzatıldı.
-    expect(req.receiveTimeout, const Duration(seconds: 90));
   });
 
   group('hata eşlemesi', () {
@@ -101,12 +91,6 @@ void main() {
         ),
       );
     }
-
-    test('429 günlük kota', () async {
-      final f = await mapped(429, 'assistant_quota', 'quota');
-      expect(f.kind, AssistantFailureKind.quota);
-      expect(f.message, l10n.assistantQuota);
-    });
 
     test('503 kapalı', () async {
       final f = await mapped(503, 'assistant_disabled', 'disabled');

@@ -1,23 +1,14 @@
 {
   "helpSectionTitle": "Help",
   "assistantTitle": "Assistant",
-  "assistantIntro": "Ask how to use Milk Trace: milking, pairing meters, adding animals, notifications… Answers come from the help center.",
+  "assistantIntro": "Ask how to use Milk Trace: milking, pairing meters, adding animals, notifications… I'll find the matching help center section. Your question isn't sent anywhere or stored.",
   "assistantInputHint": "Type your question",
   "assistantSend": "Send",
   "assistantNewConversation": "New conversation",
-  "assistantThinking": "Preparing an answer…",
-  "assistantRemainingToday": "Questions left today: {count}",
-  "@assistantRemainingToday": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
+  "assistantThinking": "Searching the help center…",
   "assistantLimitReached": "This conversation has reached its maximum length. Start a new conversation to continue.",
   "assistantTotalTooLong": "This conversation is too long. Start a new conversation to continue.",
   "assistantMessageTooLong": "A question can be at most 2000 characters.",
-  "assistantQuota": "You have used today's questions. You can ask again tomorrow.",
   "assistantUnavailable": "The assistant is not available right now. Try again later or check the help center.",
   "assistantRejected": "{message} Try starting a new conversation.",
   "@assistantRejected": {
@@ -33,12 +24,8 @@
   },
   "assistantSources": "Sources",
   "assistantHandoffTitle": "Contact our support team",
-  "assistantHandoffBody": "Let a person help you with this.",
+  "assistantHandoffBody": "No matching help center section was found. Let a person help you with this.",
   "assistantHandoffHelpCenter": "Open the help center",
-  "assistantNoticeTitle": "About the assistant",
-  "assistantNoticeBody": "Your questions are sent to Anthropic to generate answers; your farm data is not sent. Question texts are not stored.",
-  "assistantNoticePrivacy": "Privacy policy",
-  "assistantNoticeAccept": "Got it",
   "assistantLinkFailed": "Could not open the link: {url}",
   "@assistantLinkFailed": {
     "placeholders": {

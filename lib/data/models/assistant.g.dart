@@ -7,18 +7,10 @@ part of 'assistant.dart';
 // **************************************************************************
 
 _AssistantStatus _$AssistantStatusFromJson(Map<String, dynamic> json) =>
-    _AssistantStatus(
-      enabled: json['enabled'] as bool? ?? false,
-      limit: (json['limit'] as num?)?.toInt() ?? 0,
-      remainingToday: (json['remainingToday'] as num?)?.toInt() ?? 0,
-    );
+    _AssistantStatus(enabled: json['enabled'] as bool? ?? false);
 
 Map<String, dynamic> _$AssistantStatusToJson(_AssistantStatus instance) =>
-    <String, dynamic>{
-      'enabled': instance.enabled,
-      'limit': instance.limit,
-      'remainingToday': instance.remainingToday,
-    };
+    <String, dynamic>{'enabled': instance.enabled};
 
 _AssistantMessage _$AssistantMessageFromJson(Map<String, dynamic> json) =>
     _AssistantMessage(
@@ -52,7 +44,6 @@ _AssistantReply _$AssistantReplyFromJson(Map<String, dynamic> json) =>
               .toList() ??
           const <AssistantSource>[],
       handoff: json['handoff'] as bool? ?? false,
-      remainingToday: (json['remainingToday'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$AssistantReplyToJson(_AssistantReply instance) =>
@@ -60,5 +51,4 @@ Map<String, dynamic> _$AssistantReplyToJson(_AssistantReply instance) =>
       'text': instance.text,
       'sources': instance.sources,
       'handoff': instance.handoff,
-      'remainingToday': instance.remainingToday,
     };

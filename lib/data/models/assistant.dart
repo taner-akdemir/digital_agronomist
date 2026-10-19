@@ -5,15 +5,12 @@ part 'assistant.g.dart';
 
 /// Yardım asistanının durumu (backend ADR 0138, `GET /assistant/status`).
 ///
-/// `enabled` false: sunucuda anahtar yok ya da aylık harcama tavanı doldu —
-/// istemci asistan girişini GİZLER.
+/// `enabled` false ya da çağrı düşerse istemci asistan girişini GİZLER.
+/// Asistan yardım merkezinde yerel aramadır; günlük soru sınırı yok.
 @freezed
 abstract class AssistantStatus with _$AssistantStatus {
-  const factory AssistantStatus({
-    @Default(false) bool enabled,
-    @Default(0) int limit,
-    @Default(0) int remainingToday,
-  }) = _AssistantStatus;
+  const factory AssistantStatus({@Default(false) bool enabled}) =
+      _AssistantStatus;
 
   factory AssistantStatus.fromJson(Map<String, dynamic> json) =>
       _$AssistantStatusFromJson(json);
@@ -44,15 +41,14 @@ abstract class AssistantSource with _$AssistantSource {
 }
 
 /// Asistanın cevabı (`POST /assistant/messages`). `text` bağlantılı
-/// markdown; `handoff` asistanın cevap veremediğini ya da kullanıcının
-/// insan desteği istediğini söyler (ADR 0138 madde 8).
+/// markdown (bulunan yardım bölümü); `handoff` yardım merkezinde uyan bölüm
+/// bulunamadığını söyler (ADR 0138 madde 5).
 @freezed
 abstract class AssistantReply with _$AssistantReply {
   const factory AssistantReply({
     @Default('') String text,
     @Default(<AssistantSource>[]) List<AssistantSource> sources,
     @Default(false) bool handoff,
-    @Default(0) int remainingToday,
   }) = _AssistantReply;
 
   factory AssistantReply.fromJson(Map<String, dynamic> json) =>

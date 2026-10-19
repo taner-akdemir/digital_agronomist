@@ -17,8 +17,13 @@
 > kullanılmaz; yalnızca kullanım bilgisi (token sayıları vb.) kaydedilir. Kullanım kaydının
 > saklama süresi backend'de henüz tanımlı değil; tanımlanınca 6. bölüme yazılmalı.
 > Anthropic ile standart sözleşme ve Kurul'a bildirim durumu hukukçuyla doğrulanmalı.
+>
+> **19.10.2026:** yardım asistanı dış modelden çıkarıldı (backend ADR 0138 yeniden yazıldı):
+> cevap yardım merkezinde Milk Trace sunucusunda yerel aramayla bulunur. Anthropic
+> alıcılardan ve yurt dışı aktarımdan çıkarıldı; token/maliyet kaydı, günlük soru hakkı ve
+> ilk kullanım bilgilendirmesi (yerel depo işareti) kalktı.
 
-**Son güncelleme:** 18 Ekim 2026
+**Son güncelleme:** 19 Ekim 2026
 
 Milk Trace, süt hayvancılığı işletmelerinin sağım noktalarındaki sayaçlardan gelen
 ölçümlerle her hayvanın ne kadar süt verdiğini izlemesini sağlayan bir hizmettir. Bu
@@ -85,14 +90,13 @@ sözleşme sürümü, onay anı ve IP adresi kaydedilir. **Kart bilgileriniz biz
 ödeme kuruluşu PayTR'nin sayfasına girersiniz. Fatura bilgileri yalnızca işletme sahibi ve
 Milk Trace yöneticileri tarafından görülür.
 
-**Yardım asistanı:** web panelindeki "Asistan"a uygulamanın kullanımıyla ilgili bir soru
-sorarsanız sorunuz, aynı konuşmadaki önceki sorularınız ve cevaplarla birlikte, yalnızca
-cevabı üretmek için veri işleyen sıfatıyla Anthropic, PBC'ye (ABD) iletilir. Çiftlik
-verileriniz (hayvanlar, sağımlar, raporlar) gönderilmez; asistan yardım merkezindeki
-makalelere dayanarak yanıt verir. **Soru ve cevap metinleri Milk Trace tarafından
-saklanmaz** ve modelin eğitiminde kullanılmaz. Yalnızca kullanım bilgisi kaydedilir:
-işletme, kullanıcı, zaman, token sayıları ve yararlanılan yardım makalesi (günlük soru
-hakkı ve maliyet takibi için).
+**Yardım asistanı:** "Asistan"a uygulamanın kullanımıyla ilgili bir soru sorarsanız
+sorunuz, aynı konuşmadaki önceki sorularınızla birlikte, yalnızca Milk Trace sunucusunda
+yardım merkezi makalelerinde aranır; cevap bulunan makale bölümüdür. Soru üçüncü bir
+tarafa (yapay zekâ hizmeti dahil) gönderilmez ve çiftlik verilerinize bakılmaz. **Soru ve
+cevap metinleri saklanmaz**; yalnızca metin içermeyen kullanım kaydı tutulur: işletme,
+kullanıcı, zaman ve bulunan yardım makalesi (asistanın hangi konularda işe yaradığını
+görmek için).
 
 **Sunucu kayıtları:** güvenlik ve hata ayıklama için isteklerin zamanı, yolu, sonucu ve
 istek yapan IP adresi.
@@ -130,8 +134,8 @@ seçtiğiniz ekran görüntüsü dışında); reklam kimliği; reklam amaçlı i
 - Hizmeti sunmak: giriş, canlı sağım ekranı, hayvan geçmişi, raporlar (sözleşmenin ifası).
 - Sizi uyarmak: sayaç arızası, sağım özeti gibi bildirimler (sözleşmenin ifası).
 - Güvenlik ve kötüye kullanımın önlenmesi, hata ayıklama (meşru menfaat).
-- Yardım asistanı: istediğiniz anda kullanım sorunuzu yanıtlamak, günlük soru hakkını ve
-  maliyeti izlemek (sözleşmenin ifası; kullanım kaydı için meşru menfaat).
+- Yardım asistanı: istediğiniz anda kullanım sorunuzu yanıtlamak (sözleşmenin ifası;
+  kullanım kaydı için meşru menfaat).
 - Faturalama ve abonelik: işletmenin sağmal hayvan sayısına göre fiyat, ödeme, fatura ve
   dönem bitimi hatırlatması (sözleşmenin ifası; fatura kayıtları için vergi mevzuatı).
 - Zorunlu çerezler ve tarayıcı depolaması: panel oturumu ve istediğiniz ayarlar (KVKK
@@ -152,7 +156,6 @@ gerektiği kadar:
 | Cloudflare, Inc. | sitenin ve web panelinin ağ üzerinden sunulması ve saldırılara karşı korunması (IP adresi, istek bilgisi, gerekirse güvenlik çerezi); yalnızca izninizle Web Analytics (sayfa adresi, yönlendiren, tarayıcı, ekran, yükleme süresi) | ABD / küresel |
 | Google (Firebase Cloud Messaging) | bildirim iletimi (bildirim jetonu, bildirim metni) | ABD / AB |
 | Google (Firebase Crashlytics) | uygulama hata raporları (yığın izi, cihaz modeli, sürüm) | ABD / AB |
-| Anthropic, PBC | yardım asistanının cevabı (soru metni ve aynı konuşmadaki önceki mesajlar; çiftlik verisi gönderilmez, metin saklanmaz, eğitimde kullanılmaz) | ABD |
 | Twilio SendGrid | işletmenin seçtiği e-posta bildirimleri, parola sıfırlama, ödeme onayı ve abonelik hatırlatması e-postaları (e-posta adresi, ad) | ABD |
 | PayTR Ödeme ve Elektronik Para Kuruluşu A.Ş. | abonelik ödemesi (ad/unvan, e-posta, telefon, adres, tutar; kart bilgisini doğrudan siz girersiniz) | Türkiye |
 | Mali müşavirimiz ve e-Fatura hizmet sağlayıcısı | faturanın düzenlenmesi (fatura bilgileri) | Türkiye |
@@ -176,8 +179,8 @@ mandıraya veri gitmez; onay her an tek dokunuşla geri alınır ve hemen geçer
 
 ## 5. Yurt dışına aktarım
 
-Sunucular Almanya'dadır; bildirim ve e-posta sağlayıcılarının bir kısmı, Cloudflare ve
-yardım asistanının sağlayıcısı Anthropic ABD'dedir. Bu aktarımlar KVKK md. 9 kapsamında, Kişisel Verileri Koruma Kurulu'nun ilan
+Sunucular Almanya'dadır; bildirim ve e-posta sağlayıcılarının bir kısmı ve Cloudflare
+ABD'dedir. Bu aktarımlar KVKK md. 9 kapsamında, Kişisel Verileri Koruma Kurulu'nun ilan
 ettiği standart sözleşme alıcılarla imzalanıp Kurul'a bildirilerek yapılır. Cloudflare Web
 Analytics ile yapılan ölçüm verisinin yurt dışına aktarılması ise ayrıca çerez bandında
 verdiğiniz **açık rızaya** (KVKK md. 5/1 ve md. 9) dayanır; izin vermezseniz bu aktarım
@@ -197,7 +200,8 @@ olmaz.
 - Bildirim jetonu: çıkışta ya da jeton geçersizleşince silinir.
 - Sunucu kayıtları (IP adresi dahil): **30 gün**.
 - Yardım asistanı: soru ve cevap metni **saklanmaz**; yalnızca metin içermeyen kullanım
-  kaydı (işletme, kullanıcı, zaman, token sayıları, kaynak makale) tutulur.
+  kaydı (işletme, kullanıcı, zaman, bulunan makale) sunucu kayıtlarıyla birlikte **30 gün**
+  tutulur.
 - İşlem kaydı (kim, neyi, ne zaman değiştirdi): **90 gün**.
 - Demo talepleri: **1 yıl**.
 - Çerez tercihiniz (`cookie_consent`): **180 gün**; süre dolunca ya da Çerez Politikası
@@ -215,8 +219,7 @@ silinir. Mobil uygulama çerez ya da izleme aracı kullanmaz.
 
 Web panelinde oturum yenileme jetonu, dil ve tema tercihi tarayıcının yerel deposunda
 tutulur; çıkışta jeton silinir. Yardım asistanı konuşması yalnızca açık sayfanın
-belleğinde durur: sayfayı kapatınca, yenileyince ya da "Yeni konuşma"ya basınca silinir;
-yerel depoda yalnızca asistan bilgilendirmesini okuduğunuz işareti tutulur. Sitede ve web panelinde yalnızca yukarıda anlatılan zorunlu
+belleğinde durur: sayfayı kapatınca, yenileyince ya da "Yeni konuşma"ya basınca silinir. Sitede ve web panelinde yalnızca yukarıda anlatılan zorunlu
 çerezler ve depolama ile, izin verirseniz, analiz ölçümü kullanılır. Tercihinizi her
 sayfanın altındaki **"Çerez tercihleri"** bağlantısından her zaman değiştirebilirsiniz;
 ayrıntılar Çerez Politikası'ndadır (https://milktrace.com.tr/cerez-politikasi).

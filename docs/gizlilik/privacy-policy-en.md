@@ -7,8 +7,11 @@
 >
 > **18.10.2026:** Türkçe metindeki yardım asistanı (backend ADR 0138, Anthropic) maddeleri
 > aynı gün çevrildi.
+>
+> **19.10.2026:** Türkçe metindeki asistan değişikliği (dış model kalktı, yerel arama)
+> aynı gün çevrildi.
 
-**Last updated:** 18 October 2026
+**Last updated:** 19 October 2026
 
 This is an English translation provided for convenience. If it differs from the Turkish
 version (https://milktrace.com.tr/gizlilik), the Turkish version prevails.
@@ -82,14 +85,13 @@ recorded. **Your card details do not reach us**: you enter your card on the page
 payment institution PayTR. Billing information is seen only by the business owner and Milk
 Trace administrators.
 
-**Help assistant:** if you ask the "Assistant" in the web panel a question about using the
-app, your question, together with your earlier questions and the answers in the same
-conversation, is sent to Anthropic, PBC (USA), acting as a data processor, solely to produce
-the answer. Your farm data (animals, milkings, reports) is not sent; the assistant answers
-based on the help center articles. **Milk Trace does not store the text of questions and
-answers**, and it is not used to train the model. Only usage information is recorded: the
-business, the user, the time, token counts and the help article used (to track the daily
-question allowance and costs).
+**Help assistant:** if you ask the "Assistant" a question about using the app, your
+question, together with your earlier questions in the same conversation, is only searched
+for in the help center articles on the Milk Trace server; the answer is the article section
+found. The question is not sent to any third party (including any AI service), and your
+farm data is not looked at. **The text of questions and answers is not stored**; only a
+usage record without any text is kept: the business, the user, the time and the help
+article found (to see which topics the assistant helps with).
 
 **Server logs:** for security and debugging, the time, path and result of requests and the
 IP address making the request.
@@ -131,8 +133,8 @@ There are no ads and no usage analytics in the mobile app.
 - To alert you: notifications such as a meter fault or a milking summary (performance of the
   contract).
 - Security, prevention of misuse and debugging (legitimate interest).
-- Help assistant: answering your usage question when you ask it, tracking the daily question
-  allowance and costs (performance of the contract; legitimate interest for the usage record).
+- Help assistant: answering your usage question when you ask it (performance of the
+  contract; legitimate interest for the usage record).
 - Billing and subscription: price based on the number of lactating animals in the business,
   payment, invoice and end-of-period reminder (performance of the contract; tax legislation
   for billing records).
@@ -155,7 +157,6 @@ as much as necessary:
 | Cloudflare, Inc. | delivering the website and the web panel over the network and protecting them against attacks (IP address, request information, a security cookie if needed); Web Analytics only with your consent (page address, referrer, browser, screen, load time) | USA / global |
 | Google (Firebase Cloud Messaging) | delivering notifications (notification token, notification text) | USA / EU |
 | Google (Firebase Crashlytics) | app error reports (stack trace, device model, version) | USA / EU |
-| Anthropic, PBC | answers from the help assistant (the question text and earlier messages in the same conversation; no farm data is sent, the text is not stored and not used for training) | USA |
 | Twilio SendGrid | email notifications chosen by the business, password reset, payment confirmation and subscription reminder emails (email address, name) | USA |
 | PayTR Ödeme ve Elektronik Para Kuruluşu A.Ş. | subscription payment (name/title, email, phone, address, amount; you enter card details directly) | Türkiye |
 | Our accountant and e-invoice service provider | issuing the invoice (billing information) | Türkiye |
@@ -180,8 +181,8 @@ consent can be withdrawn at any time with a single tap and takes effect immediat
 
 ## 5. Transfers abroad
 
-The servers are in Germany; some of the notification and email providers, Cloudflare and
-Anthropic, the help assistant's provider, are in the USA. These transfers are made under Article 9 of the Turkish Personal Data Protection
+The servers are in Germany; some of the notification and email providers and Cloudflare
+are in the USA. These transfers are made under Article 9 of the Turkish Personal Data Protection
 Law (KVKK) by signing the standard contracts announced by the Personal Data Protection Board
 with the recipients and notifying the Board. The transfer abroad of measurement data
 collected with Cloudflare Web Analytics is additionally based on the **explicit consent** you
@@ -203,7 +204,8 @@ does not take place.
 - Notification token: deleted on sign-out or when the token becomes invalid.
 - Server logs (including IP address): **30 days**.
 - Help assistant: the text of questions and answers is **not stored**; only a usage record
-  without any text (business, user, time, token counts, source article) is kept.
+  without any text (business, user, time, article found) is kept for **30 days** together
+  with the server logs.
 - Activity log (who changed what, and when): **90 days**.
 - Demo requests: **1 year**.
 - Your cookie choice (`cookie_consent`): **180 days**; you are asked again when it expires or
@@ -222,8 +224,7 @@ sign out. The mobile app does not use cookies or tracking tools.
 In the web panel, the session refresh token and your language and theme preferences are kept
 in the browser's local storage; the token is deleted on sign-out. A help assistant
 conversation exists only in the memory of the open page: it is erased when you close or
-reload the page or press "New conversation"; local storage only keeps a marker that you
-have read the assistant notice. On the website and the web
+reload the page or press "New conversation". On the website and the web
 panel, only the strictly necessary cookies and storage described above and, if you allow it,
 analytics measurement are used. You can change your choice at any time via the **"Cookie
 preferences"** link at the bottom of every page; details are in the Cookie Policy

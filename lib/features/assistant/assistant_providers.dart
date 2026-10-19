@@ -5,18 +5,16 @@ import 'package:milktrace/domain/assistant_history.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
-import 'package:milktrace/providers/settings_providers.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'assistant_providers.g.dart';
 
 /// Asistan açık mı (backend ADR 0138)? Açıksa durum, değilse null.
 ///
-/// null — giriş HİÇ görünmez: sunucu kapalı (`enabled: false`: anahtar yok
-/// ya da aylık tavan doldu), çağrı düştü (çevrimdışı, eski backend, 403) ya
-/// da kullanıcı mandıra/tablet hesabı (gateway zaten 403 döner). keepAlive:
-/// oturum değişince (authProvider) ya da 503 gelince yeniden sorulur; kalan
-/// hak sohbet ekranında her cevapla tazelenir.
+/// null — giriş HİÇ görünmez: sunucu kapalı (`enabled: false`), çağrı
+/// düştü (çevrimdışı, eski backend, 403) ya da kullanıcı mandıra/tablet
+/// hesabı (gateway zaten 403 döner). keepAlive: oturum değişince
+/// (authProvider) ya da 503 gelince yeniden sorulur.
 @Riverpod(keepAlive: true)
 Future<AssistantStatus?> assistantStatus(Ref ref) async {
   final user = ref.watch(authProvider).user;
@@ -29,36 +27,8 @@ Future<AssistantStatus?> assistantStatus(Ref ref) async {
   }
 }
 
-/// İlk kullanım bilgilendirmesi (ADR 0138 madde 7) bu cihazda onaylandı mı?
-/// Bir kez gösterilir; onay cihazda (`assistant.noticeAck`).
-@Riverpod(keepAlive: true)
-class AssistantNoticeAck extends _$AssistantNoticeAck {
-  static const key = 'assistant.noticeAck';
-
-  @override
-  Future<bool> build() async {
-    try {
-      return await ref.read(settingsStoreProvider).readBool(key) ?? false;
-    } on Object {
-      return false;
-    }
-  }
-
-  Future<void> accept() async {
-    state = const AsyncData(true);
-    try {
-      await ref.read(settingsStoreProvider).writeBool(key, true);
-    } on Object {
-      // Kaydedilemese de bu oturumda yeniden sorulmaz.
-    }
-  }
-}
-
 /// Hata türü: ekran neyi kapatacağını buna göre seçer.
 enum AssistantFailureKind {
-  /// 429: günlük kota doldu; yarına kadar soru yok.
-  quota,
-
   /// 503: asistan kapalı ya da ulaşılamıyor.
   unavailable,
 
@@ -75,7 +45,7 @@ enum AssistantFailureKind {
 
 typedef AssistantFailure = ({AssistantFailureKind kind, String message});
 
-/// Hatayı kullanıcı metnine çevirir. 429 ve 503 için kendi dostça metnimiz
+/// Hatayı kullanıcı metnine çevirir. 503 için kendi dostça metnimiz
 /// (sunucunun kod dili kullanıcıya bir şey söylemiyor); 422'de sunucunun
 /// mesajı + yeni konuşma önerisi; diğerlerinde sunucunun mesajı.
 AssistantFailure assistantFailureOf(Object error) {
@@ -86,7 +56,6 @@ AssistantFailure assistantFailureOf(Object error) {
   };
   final server = userMessage(error);
   return switch (status) {
-    429 => (kind: AssistantFailureKind.quota, message: l10n.assistantQuota),
     503 => (
       kind: AssistantFailureKind.unavailable,
       message: l10n.assistantUnavailable,
@@ -134,7 +103,6 @@ class AssistantChatState {
     this.entries = const [],
     this.pending,
     this.failure,
-    this.remainingToday,
   });
 
   final List<AssistantEntry> entries;
@@ -145,10 +113,6 @@ class AssistantChatState {
 
   final AssistantFailure? failure;
 
-  /// Son cevabın söylediği kalan soru; henüz soru yoksa null (durumdaki
-  /// değer geçerli).
-  final int? remainingToday;
-
   bool get busy => pending != null;
 
   List<AssistantMessage> get history => [for (final e in entries) e.message];
@@ -156,11 +120,8 @@ class AssistantChatState {
   /// 19 mesaj sınırı: bir soru daha sığar mı?
   bool get canAskMore => assistantCanAskMore(history);
 
-  /// Kota ya da kapalı asistan: bu ekranda soru gönderilmez.
-  bool get blocked =>
-      failure?.kind == AssistantFailureKind.quota ||
-      failure?.kind == AssistantFailureKind.unavailable ||
-      remainingToday == 0;
+  /// Kapalı asistan: bu ekranda soru gönderilmez.
+  bool get blocked => failure?.kind == AssistantFailureKind.unavailable;
 }
 
 @riverpod
@@ -178,17 +139,12 @@ class AssistantChat extends _$AssistantChat {
         state = AssistantChatState(
           entries: s.entries,
           failure: assistantIssueFailure(issue),
-          remainingToday: s.remainingToday,
         );
       }
       return false;
     }
     final question = request.last;
-    state = AssistantChatState(
-      entries: s.entries,
-      pending: question.text,
-      remainingToday: s.remainingToday,
-    );
+    state = AssistantChatState(entries: s.entries, pending: question.text);
     try {
       final reply = await ref.read(repositoryProvider).askAssistant(request);
       if (!ref.mounted) return false;
@@ -202,19 +158,12 @@ class AssistantChat extends _$AssistantChat {
             handoff: reply.handoff,
           ),
         ],
-        remainingToday: reply.remainingToday,
       );
       return true;
     } catch (e) {
       if (!ref.mounted) return false;
       final failure = assistantFailureOf(e);
-      state = AssistantChatState(
-        entries: s.entries,
-        failure: failure,
-        remainingToday: failure.kind == AssistantFailureKind.quota
-            ? 0
-            : s.remainingToday,
-      );
+      state = AssistantChatState(entries: s.entries, failure: failure);
       // Kapalı asistan: hesap kartındaki giriş de gizlensin.
       if (failure.kind == AssistantFailureKind.unavailable) {
         ref.invalidate(assistantStatusProvider);
@@ -223,13 +172,10 @@ class AssistantChat extends _$AssistantChat {
     }
   }
 
-  /// "Yeni konuşma": geçmiş silinir. Kota ve kapalılık sürer.
+  /// "Yeni konuşma": geçmiş silinir. Kapalılık sürer.
   void newConversation() {
     final s = state;
     if (s.busy) return;
-    state = AssistantChatState(
-      failure: s.blocked ? s.failure : null,
-      remainingToday: s.remainingToday,
-    );
+    state = AssistantChatState(failure: s.blocked ? s.failure : null);
   }
 }

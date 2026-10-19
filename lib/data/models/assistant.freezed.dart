@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AssistantStatus {
 
- bool get enabled; int get limit; int get remainingToday;
+ bool get enabled;
 /// Create a copy of AssistantStatus
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,20 +30,20 @@ $AssistantStatusCopyWith<AssistantStatus> get copyWith => _$AssistantStatusCopyW
 @override
 bool operator ==(Object other) {
   final _this = this as AssistantStatus;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AssistantStatus&&(identical(other.enabled, _this.enabled) || other.enabled == _this.enabled)&&(identical(other.limit, _this.limit) || other.limit == _this.limit)&&(identical(other.remainingToday, _this.remainingToday) || other.remainingToday == _this.remainingToday));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AssistantStatus&&(identical(other.enabled, _this.enabled) || other.enabled == _this.enabled));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as AssistantStatus;
-  return Object.hash(runtimeType,_this.enabled,_this.limit,_this.remainingToday);
+  return Object.hash(runtimeType,_this.enabled);
 }
 
 @override
 String toString() {
   final _this = this as AssistantStatus;
-  return 'AssistantStatus(enabled: ${_this.enabled}, limit: ${_this.limit}, remainingToday: ${_this.remainingToday})';
+  return 'AssistantStatus(enabled: ${_this.enabled})';
 }
 
 
@@ -54,7 +54,7 @@ abstract mixin class $AssistantStatusCopyWith<$Res>  {
   factory $AssistantStatusCopyWith(AssistantStatus value, $Res Function(AssistantStatus) _then) = _$AssistantStatusCopyWithImpl;
 @useResult
 $Res call({
- bool enabled, int limit, int remainingToday
+ bool enabled
 });
 
 
@@ -71,12 +71,10 @@ class _$AssistantStatusCopyWithImpl<$Res>
 
 /// Create a copy of AssistantStatus
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? enabled = null,Object? limit = null,Object? remainingToday = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? enabled = null,}) {
   return _then(AssistantStatus(
 enabled: null == enabled ? _self.enabled : enabled // ignore: cast_nullable_to_non_nullable
-as bool,limit: null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
-as int,remainingToday: null == remainingToday ? _self.remainingToday : remainingToday // ignore: cast_nullable_to_non_nullable
-as int,
+as bool,
   ));
 }
 
@@ -161,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool enabled,  int limit,  int remainingToday)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool enabled)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AssistantStatus() when $default != null:
-return $default(_that.enabled,_that.limit,_that.remainingToday);case _:
+return $default(_that.enabled);case _:
   return orElse();
 
 }
@@ -182,10 +180,10 @@ return $default(_that.enabled,_that.limit,_that.remainingToday);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool enabled,  int limit,  int remainingToday)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool enabled)  $default,) {final _that = this;
 switch (_that) {
 case _AssistantStatus():
-return $default(_that.enabled,_that.limit,_that.remainingToday);case _:
+return $default(_that.enabled);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -202,10 +200,10 @@ return $default(_that.enabled,_that.limit,_that.remainingToday);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool enabled,  int limit,  int remainingToday)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool enabled)?  $default,) {final _that = this;
 switch (_that) {
 case _AssistantStatus() when $default != null:
-return $default(_that.enabled,_that.limit,_that.remainingToday);case _:
+return $default(_that.enabled);case _:
   return null;
 
 }
@@ -217,12 +215,10 @@ return $default(_that.enabled,_that.limit,_that.remainingToday);case _:
 @JsonSerializable()
 
 class _AssistantStatus implements AssistantStatus {
-  const _AssistantStatus({this.enabled = false, this.limit = 0, this.remainingToday = 0});
+  const _AssistantStatus({this.enabled = false});
   factory _AssistantStatus.fromJson(Map<String, dynamic> json) => _$AssistantStatusFromJson(json);
 
 @override@JsonKey() final  bool enabled;
-@override@JsonKey() final  int limit;
-@override@JsonKey() final  int remainingToday;
 
 /// Create a copy of AssistantStatus
 /// with the given fields replaced by the non-null parameter values.
@@ -237,18 +233,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AssistantStatus&&(identical(other.enabled, enabled) || other.enabled == enabled)&&(identical(other.limit, limit) || other.limit == limit)&&(identical(other.remainingToday, remainingToday) || other.remainingToday == remainingToday));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AssistantStatus&&(identical(other.enabled, enabled) || other.enabled == enabled));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,enabled,limit,remainingToday);
+    return Object.hash(runtimeType,enabled);
 }
 
 @override
 String toString() {
-    return 'AssistantStatus(enabled: $enabled, limit: $limit, remainingToday: $remainingToday)';
+    return 'AssistantStatus(enabled: $enabled)';
 }
 
 
@@ -259,7 +255,7 @@ abstract mixin class _$AssistantStatusCopyWith<$Res> implements $AssistantStatus
   factory _$AssistantStatusCopyWith(_AssistantStatus value, $Res Function(_AssistantStatus) _then) = __$AssistantStatusCopyWithImpl;
 @override @useResult
 $Res call({
- bool enabled, int limit, int remainingToday
+ bool enabled
 });
 
 
@@ -276,12 +272,10 @@ class __$AssistantStatusCopyWithImpl<$Res>
 
 /// Create a copy of AssistantStatus
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? enabled = null,Object? limit = null,Object? remainingToday = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? enabled = null,}) {
   return _then(_AssistantStatus(
 enabled: null == enabled ? _self.enabled : enabled // ignore: cast_nullable_to_non_nullable
-as bool,limit: null == limit ? _self.limit : limit // ignore: cast_nullable_to_non_nullable
-as int,remainingToday: null == remainingToday ? _self.remainingToday : remainingToday // ignore: cast_nullable_to_non_nullable
-as int,
+as bool,
   ));
 }
 
@@ -841,7 +835,7 @@ as String,
 /// @nodoc
 mixin _$AssistantReply {
 
- String get text; List<AssistantSource> get sources; bool get handoff; int get remainingToday;
+ String get text; List<AssistantSource> get sources; bool get handoff;
 /// Create a copy of AssistantReply
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -855,20 +849,20 @@ $AssistantReplyCopyWith<AssistantReply> get copyWith => _$AssistantReplyCopyWith
 @override
 bool operator ==(Object other) {
   final _this = this as AssistantReply;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AssistantReply&&(identical(other.text, _this.text) || other.text == _this.text)&&const DeepCollectionEquality().equals(other.sources, _this.sources)&&(identical(other.handoff, _this.handoff) || other.handoff == _this.handoff)&&(identical(other.remainingToday, _this.remainingToday) || other.remainingToday == _this.remainingToday));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AssistantReply&&(identical(other.text, _this.text) || other.text == _this.text)&&const DeepCollectionEquality().equals(other.sources, _this.sources)&&(identical(other.handoff, _this.handoff) || other.handoff == _this.handoff));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as AssistantReply;
-  return Object.hash(runtimeType,_this.text,const DeepCollectionEquality().hash(_this.sources),_this.handoff,_this.remainingToday);
+  return Object.hash(runtimeType,_this.text,const DeepCollectionEquality().hash(_this.sources),_this.handoff);
 }
 
 @override
 String toString() {
   final _this = this as AssistantReply;
-  return 'AssistantReply(text: ${_this.text}, sources: ${_this.sources}, handoff: ${_this.handoff}, remainingToday: ${_this.remainingToday})';
+  return 'AssistantReply(text: ${_this.text}, sources: ${_this.sources}, handoff: ${_this.handoff})';
 }
 
 
@@ -879,7 +873,7 @@ abstract mixin class $AssistantReplyCopyWith<$Res>  {
   factory $AssistantReplyCopyWith(AssistantReply value, $Res Function(AssistantReply) _then) = _$AssistantReplyCopyWithImpl;
 @useResult
 $Res call({
- String text, List<AssistantSource> sources, bool handoff, int remainingToday
+ String text, List<AssistantSource> sources, bool handoff
 });
 
 
@@ -896,13 +890,12 @@ class _$AssistantReplyCopyWithImpl<$Res>
 
 /// Create a copy of AssistantReply
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? text = null,Object? sources = null,Object? handoff = null,Object? remainingToday = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? text = null,Object? sources = null,Object? handoff = null,}) {
   return _then(AssistantReply(
 text: null == text ? _self.text : text // ignore: cast_nullable_to_non_nullable
 as String,sources: null == sources ? _self.sources : sources // ignore: cast_nullable_to_non_nullable
 as List<AssistantSource>,handoff: null == handoff ? _self.handoff : handoff // ignore: cast_nullable_to_non_nullable
-as bool,remainingToday: null == remainingToday ? _self.remainingToday : remainingToday // ignore: cast_nullable_to_non_nullable
-as int,
+as bool,
   ));
 }
 
@@ -987,10 +980,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String text,  List<AssistantSource> sources,  bool handoff,  int remainingToday)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String text,  List<AssistantSource> sources,  bool handoff)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AssistantReply() when $default != null:
-return $default(_that.text,_that.sources,_that.handoff,_that.remainingToday);case _:
+return $default(_that.text,_that.sources,_that.handoff);case _:
   return orElse();
 
 }
@@ -1008,10 +1001,10 @@ return $default(_that.text,_that.sources,_that.handoff,_that.remainingToday);cas
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String text,  List<AssistantSource> sources,  bool handoff,  int remainingToday)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String text,  List<AssistantSource> sources,  bool handoff)  $default,) {final _that = this;
 switch (_that) {
 case _AssistantReply():
-return $default(_that.text,_that.sources,_that.handoff,_that.remainingToday);case _:
+return $default(_that.text,_that.sources,_that.handoff);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -1028,10 +1021,10 @@ return $default(_that.text,_that.sources,_that.handoff,_that.remainingToday);cas
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String text,  List<AssistantSource> sources,  bool handoff,  int remainingToday)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String text,  List<AssistantSource> sources,  bool handoff)?  $default,) {final _that = this;
 switch (_that) {
 case _AssistantReply() when $default != null:
-return $default(_that.text,_that.sources,_that.handoff,_that.remainingToday);case _:
+return $default(_that.text,_that.sources,_that.handoff);case _:
   return null;
 
 }
@@ -1043,7 +1036,7 @@ return $default(_that.text,_that.sources,_that.handoff,_that.remainingToday);cas
 @JsonSerializable()
 
 class _AssistantReply implements AssistantReply {
-  const _AssistantReply({this.text = '',  List<AssistantSource> sources = const <AssistantSource>[], this.handoff = false, this.remainingToday = 0}): _sources = sources;
+  const _AssistantReply({this.text = '',  List<AssistantSource> sources = const <AssistantSource>[], this.handoff = false}): _sources = sources;
   factory _AssistantReply.fromJson(Map<String, dynamic> json) => _$AssistantReplyFromJson(json);
 
 @override@JsonKey() final  String text;
@@ -1055,7 +1048,6 @@ class _AssistantReply implements AssistantReply {
 }
 
 @override@JsonKey() final  bool handoff;
-@override@JsonKey() final  int remainingToday;
 
 /// Create a copy of AssistantReply
 /// with the given fields replaced by the non-null parameter values.
@@ -1070,18 +1062,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AssistantReply&&(identical(other.text, text) || other.text == text)&&const DeepCollectionEquality().equals(other.sources, _sources)&&(identical(other.handoff, handoff) || other.handoff == handoff)&&(identical(other.remainingToday, remainingToday) || other.remainingToday == remainingToday));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AssistantReply&&(identical(other.text, text) || other.text == text)&&const DeepCollectionEquality().equals(other.sources, _sources)&&(identical(other.handoff, handoff) || other.handoff == handoff));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,text,const DeepCollectionEquality().hash(_sources),handoff,remainingToday);
+    return Object.hash(runtimeType,text,const DeepCollectionEquality().hash(_sources),handoff);
 }
 
 @override
 String toString() {
-    return 'AssistantReply(text: $text, sources: $sources, handoff: $handoff, remainingToday: $remainingToday)';
+    return 'AssistantReply(text: $text, sources: $sources, handoff: $handoff)';
 }
 
 
@@ -1092,7 +1084,7 @@ abstract mixin class _$AssistantReplyCopyWith<$Res> implements $AssistantReplyCo
   factory _$AssistantReplyCopyWith(_AssistantReply value, $Res Function(_AssistantReply) _then) = __$AssistantReplyCopyWithImpl;
 @override @useResult
 $Res call({
- String text, List<AssistantSource> sources, bool handoff, int remainingToday
+ String text, List<AssistantSource> sources, bool handoff
 });
 
 
@@ -1109,13 +1101,12 @@ class __$AssistantReplyCopyWithImpl<$Res>
 
 /// Create a copy of AssistantReply
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? text = null,Object? sources = null,Object? handoff = null,Object? remainingToday = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? text = null,Object? sources = null,Object? handoff = null,}) {
   return _then(_AssistantReply(
 text: null == text ? _self.text : text // ignore: cast_nullable_to_non_nullable
 as String,sources: null == sources ? _self._sources : sources // ignore: cast_nullable_to_non_nullable
 as List<AssistantSource>,handoff: null == handoff ? _self.handoff : handoff // ignore: cast_nullable_to_non_nullable
-as bool,remainingToday: null == remainingToday ? _self.remainingToday : remainingToday // ignore: cast_nullable_to_non_nullable
-as int,
+as bool,
   ));
 }
 

@@ -587,7 +587,8 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get assistantHandoffBody => 'Bu konuda size bir insan yardımcı olsun.';
+  String get assistantHandoffBody =>
+      'Yardım merkezinde uyan bir bölüm bulunamadı. Bu konuda size bir insan yardımcı olsun.';
 
   @override
   String get assistantHandoffHelpCenter => 'Yardım merkezini aç';
@@ -600,7 +601,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get assistantIntro =>
-      'Milk Trace\'in nasıl kullanıldığını sorun: sağım, cihaz eşleme, hayvan kaydı, bildirimler… Cevaplar yardım merkezinden gelir.';
+      'Milk Trace\'in nasıl kullanıldığını sorun: sağım, cihaz eşleme, hayvan kaydı, bildirimler… Yardım merkezindeki uygun bölümü bulup getiririm. Sorunuz hiçbir yere gönderilmez ve saklanmaz.';
 
   @override
   String get assistantLimitReached =>
@@ -618,30 +619,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get assistantNewConversation => 'Yeni konuşma';
 
   @override
-  String get assistantNoticeAccept => 'Anladım';
-
-  @override
-  String get assistantNoticeBody =>
-      'Sorularınız yanıt üretmek için Anthropic\'e iletilir; çiftlik verileriniz gönderilmez. Soru metinleri saklanmaz.';
-
-  @override
-  String get assistantNoticePrivacy => 'Gizlilik politikası';
-
-  @override
-  String get assistantNoticeTitle => 'Asistan hakkında';
-
-  @override
-  String get assistantQuota =>
-      'Bugünkü soru hakkınız doldu. Yarın yeniden sorabilirsiniz.';
-
-  @override
   String assistantRejected(Object message) {
     return '$message Yeni bir konuşma başlatmayı deneyin.';
-  }
-
-  @override
-  String assistantRemainingToday(int count) {
-    return 'Bugün kalan soru: $count';
   }
 
   @override
@@ -651,7 +630,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get assistantSources => 'Kaynaklar';
 
   @override
-  String get assistantThinking => 'Yanıt hazırlanıyor…';
+  String get assistantThinking => 'Yardım merkezinde aranıyor…';
 
   @override
   String get assistantTitle => 'Asistan';

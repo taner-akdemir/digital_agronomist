@@ -711,7 +711,6 @@ class ApiRepository implements MilkTraceRepository {
             data: {
               'messages': [for (final m in messages) m.toJson()],
             },
-            options: Options(receiveTimeout: const Duration(seconds: 90)),
           ),
         ),
       );

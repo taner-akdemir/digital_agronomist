@@ -1067,7 +1067,7 @@ abstract class AppLocalizations {
   /// No description provided for @assistantHandoffBody.
   ///
   /// In tr, this message translates to:
-  /// **'Bu konuda size bir insan yardımcı olsun.'**
+  /// **'Yardım merkezinde uyan bir bölüm bulunamadı. Bu konuda size bir insan yardımcı olsun.'**
   String get assistantHandoffBody;
 
   /// No description provided for @assistantHandoffHelpCenter.
@@ -1091,7 +1091,7 @@ abstract class AppLocalizations {
   /// No description provided for @assistantIntro.
   ///
   /// In tr, this message translates to:
-  /// **'Milk Trace\'in nasıl kullanıldığını sorun: sağım, cihaz eşleme, hayvan kaydı, bildirimler… Cevaplar yardım merkezinden gelir.'**
+  /// **'Milk Trace\'in nasıl kullanıldığını sorun: sağım, cihaz eşleme, hayvan kaydı, bildirimler… Yardım merkezindeki uygun bölümü bulup getiririm. Sorunuz hiçbir yere gönderilmez ve saklanmaz.'**
   String get assistantIntro;
 
   /// No description provided for @assistantLimitReached.
@@ -1118,47 +1118,11 @@ abstract class AppLocalizations {
   /// **'Yeni konuşma'**
   String get assistantNewConversation;
 
-  /// No description provided for @assistantNoticeAccept.
-  ///
-  /// In tr, this message translates to:
-  /// **'Anladım'**
-  String get assistantNoticeAccept;
-
-  /// No description provided for @assistantNoticeBody.
-  ///
-  /// In tr, this message translates to:
-  /// **'Sorularınız yanıt üretmek için Anthropic\'e iletilir; çiftlik verileriniz gönderilmez. Soru metinleri saklanmaz.'**
-  String get assistantNoticeBody;
-
-  /// No description provided for @assistantNoticePrivacy.
-  ///
-  /// In tr, this message translates to:
-  /// **'Gizlilik politikası'**
-  String get assistantNoticePrivacy;
-
-  /// No description provided for @assistantNoticeTitle.
-  ///
-  /// In tr, this message translates to:
-  /// **'Asistan hakkında'**
-  String get assistantNoticeTitle;
-
-  /// No description provided for @assistantQuota.
-  ///
-  /// In tr, this message translates to:
-  /// **'Bugünkü soru hakkınız doldu. Yarın yeniden sorabilirsiniz.'**
-  String get assistantQuota;
-
   /// No description provided for @assistantRejected.
   ///
   /// In tr, this message translates to:
   /// **'{message} Yeni bir konuşma başlatmayı deneyin.'**
   String assistantRejected(Object message);
-
-  /// No description provided for @assistantRemainingToday.
-  ///
-  /// In tr, this message translates to:
-  /// **'Bugün kalan soru: {count}'**
-  String assistantRemainingToday(int count);
 
   /// No description provided for @assistantSend.
   ///
@@ -1175,7 +1139,7 @@ abstract class AppLocalizations {
   /// No description provided for @assistantThinking.
   ///
   /// In tr, this message translates to:
-  /// **'Yanıt hazırlanıyor…'**
+  /// **'Yardım merkezinde aranıyor…'**
   String get assistantThinking;
 
   /// No description provided for @assistantTitle.

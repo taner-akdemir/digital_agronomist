@@ -10,8 +10,8 @@ import 'package:milktrace/features/assistant/assistant_providers.dart';
 import 'package:milktrace/features/support/support.dart';
 import 'package:milktrace/l10n/l10n.dart';
 
-/// Yardım asistanı (backend ADR 0138, aşama 1): yardım merkezi içeriğinden
-/// cevap verir. Cevap tek parça gelir (akış yok) ve birkaç saniye sürebilir.
+/// Yardım asistanı (backend ADR 0138): soru sunucuda yardım merkezinde
+/// aranır, cevap bulunan bölümdür. Dış servis yok; cevap hemen gelir.
 ///
 /// Geçmiş YALNIZCA bu ekranın belleğinde (KVKK): `assistantChatProvider`
 /// autoDispose, ekran kapanınca metin gider; cihaza hiçbir şey yazılmaz.
@@ -30,9 +30,6 @@ class _AssistantScreenState extends ConsumerState<AssistantScreen> {
   void initState() {
     super.initState();
     _input.addListener(() => setState(() {}));
-    // Durum oturum boyunca tutulur; ekran her açılışta kalan hakkı tazeler.
-    ref.invalidate(assistantStatusProvider);
-    WidgetsBinding.instance.addPostFrameCallback((_) => _notice());
   }
 
   @override
@@ -43,54 +40,6 @@ class _AssistantScreenState extends ConsumerState<AssistantScreen> {
   }
 
   void _close() => context.canPop() ? context.pop() : context.go('/live');
-
-  /// İlk kullanımda bir kez: sorular Anthropic'e gider, çiftlik verisi
-  /// gitmez, metin saklanmaz. Onaylamayan ekrandan çıkar.
-  Future<void> _notice() async {
-    final acked = await ref.read(assistantNoticeAckProvider.future);
-    if (acked || !mounted) return;
-    final ok = await showDialog<bool>(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        title: Text(l10n.assistantNoticeTitle),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(l10n.assistantNoticeBody),
-            const SizedBox(height: AppSpacing.sm),
-            TextButton.icon(
-              style: TextButton.styleFrom(
-                padding: EdgeInsets.zero,
-                foregroundColor: AppColors.darkGreenColor,
-              ),
-              onPressed: () => _open(Uri.parse(Env.privacyPolicyUrl)),
-              icon: const Icon(Icons.open_in_new, size: 18),
-              label: Text(l10n.assistantNoticePrivacy),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text(l10n.commonCancel),
-          ),
-          FilledButton(
-            style: FilledButton.styleFrom(backgroundColor: AppColors.brandFill),
-            onPressed: () => Navigator.of(context).pop(true),
-            child: Text(l10n.assistantNoticeAccept),
-          ),
-        ],
-      ),
-    );
-    if (!mounted) return;
-    if (ok ?? false) {
-      await ref.read(assistantNoticeAckProvider.notifier).accept();
-    } else {
-      _close();
-    }
-  }
 
   /// Bağlantılar dış tarayıcıda açılır.
   Future<void> _open(Uri uri) async {
@@ -132,8 +81,6 @@ class _AssistantScreenState extends ConsumerState<AssistantScreen> {
   @override
   Widget build(BuildContext context) {
     final chat = ref.watch(assistantChatProvider);
-    final status = ref.watch(assistantStatusProvider).value;
-    final remaining = chat.remainingToday ?? status?.remainingToday;
     final canType = !chat.busy && !chat.blocked && chat.canAskMore;
 
     return Scaffold(
@@ -168,25 +115,6 @@ class _AssistantScreenState extends ConsumerState<AssistantScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            if (remaining != null)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.lg,
-                  AppSpacing.sm,
-                  AppSpacing.lg,
-                  0,
-                ),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    l10n.assistantRemainingToday(remaining),
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: AppColors.onSurfaceMuted,
-                    ),
-                  ),
-                ),
-              ),
             Expanded(
               child: ListView(
                 controller: _scroll,

@@ -195,37 +195,12 @@ void main() {
     });
   });
 
-  testWidgets('ilk kullanımda bilgilendirme; onay cihaza yazılır', (
-    tester,
-  ) async {
-    final store = _MemoryStore();
-    final opened = <Uri>[];
-    await _openScreen(tester, _Repo(), store, opened: opened);
-
-    expect(find.textContaining("Anthropic'e iletilir"), findsOneWidget);
-    await tester.tap(find.text('Gizlilik politikası'));
-    await tester.pumpAndSettle();
-    expect(opened.single.path, '/gizlilik');
-
-    await tester.tap(find.text('Anladım'));
-    await tester.pumpAndSettle();
-    expect(store.values[AssistantNoticeAck.key], isTrue);
-    expect(find.textContaining("Anthropic'e iletilir"), findsNothing);
-  });
-
-  testWidgets('onaylanmışsa bilgilendirme yeniden çıkmaz', (tester) async {
-    final store = _MemoryStore()..values[AssistantNoticeAck.key] = true;
-    await _openScreen(tester, _Repo(), store);
-    expect(find.textContaining("Anthropic'e iletilir"), findsNothing);
-    expect(find.text('Bugün kalan soru: 10'), findsOneWidget);
-  });
-
   testWidgets('soru gider, cevap kaynak çipiyle gelir, yeni konuşma siler', (
     tester,
   ) async {
     final repo = _Repo();
     final opened = <Uri>[];
-    final store = _MemoryStore()..values[AssistantNoticeAck.key] = true;
+    final store = _MemoryStore();
     await _openScreen(tester, repo, store, opened: opened);
 
     await _ask(tester, 'Sağım nasıl başlatılır?');
@@ -233,7 +208,6 @@ void main() {
     expect(find.text('Sağım nasıl başlatılır?'), findsOneWidget);
     expect(find.textContaining('Yardım merkezine bakın'), findsOneWidget);
     expect(find.text('Kaynaklar'), findsOneWidget);
-    expect(find.text('Bugün kalan soru: 9'), findsOneWidget);
     expect(
       repo.assistantRequests.single.single.text,
       'Sağım nasıl başlatılır?',
@@ -264,7 +238,7 @@ void main() {
     final repo = _Repo()
       ..assistantAnswer = (_) =>
           const AssistantReply(text: 'Bunu bilmiyorum.', handoff: true);
-    final store = _MemoryStore()..values[AssistantNoticeAck.key] = true;
+    final store = _MemoryStore();
     await _openScreen(tester, repo, store);
 
     await _ask(tester, 'Fatura?');
@@ -279,7 +253,7 @@ void main() {
     final repo = _Repo()
       ..assistantAnswer = (_) =>
           const AssistantReply(text: 'Destek ekibine yazın.', handoff: true);
-    final store = _MemoryStore()..values[AssistantNoticeAck.key] = true;
+    final store = _MemoryStore();
     await _openScreen(
       tester,
       repo,
@@ -293,22 +267,9 @@ void main() {
     expect(find.text('Yardım merkezini aç'), findsNothing);
   });
 
-  testWidgets('429: dostça mesaj ve giriş kapanır', (tester) async {
-    final repo = _Repo()..failWith = 429;
-    final store = _MemoryStore()..values[AssistantNoticeAck.key] = true;
-    await _openScreen(tester, repo, store);
-
-    await _ask(tester, 'Soru');
-    expect(find.textContaining('Bugünkü soru hakkınız doldu'), findsOneWidget);
-    final field = tester.widget<TextField>(
-      find.byKey(const Key('assistantInput')),
-    );
-    expect(field.enabled, isFalse);
-  });
-
   testWidgets('19 mesajda giriş kapanır ve ipucu çıkar', (tester) async {
-    final repo = _Repo()..assistantRemaining = 50;
-    final store = _MemoryStore()..values[AssistantNoticeAck.key] = true;
+    final repo = _Repo();
+    final store = _MemoryStore();
     await _openScreen(tester, repo, store);
 
     for (var i = 0; i < 10; i++) {

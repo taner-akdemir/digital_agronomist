@@ -327,11 +327,11 @@
       "error": {}
     }
   },
-  "assistantHandoffBody": "Let a person help you with this.",
+  "assistantHandoffBody": "No matching help center section was found. Let a person help you with this.",
   "assistantHandoffHelpCenter": "Open the help center",
   "assistantHandoffTitle": "Contact our support team",
   "assistantInputHint": "Type your question",
-  "assistantIntro": "Ask how to use Milk Trace: milking, pairing meters, adding animals, notifications… Answers come from the help center.",
+  "assistantIntro": "Ask how to use Milk Trace: milking, pairing meters, adding animals, notifications… I'll find the matching help center section. Your question isn't sent anywhere or stored.",
   "assistantLimitReached": "This conversation has reached its maximum length. Start a new conversation to continue.",
   "assistantLinkFailed": "Could not open the link: {url}",
   "@assistantLinkFailed": {
@@ -341,28 +341,15 @@
   },
   "assistantMessageTooLong": "A question can be at most 2000 characters.",
   "assistantNewConversation": "New conversation",
-  "assistantNoticeAccept": "Got it",
-  "assistantNoticeBody": "Your questions are sent to Anthropic to generate answers; your farm data is not sent. Question texts are not stored.",
-  "assistantNoticePrivacy": "Privacy policy",
-  "assistantNoticeTitle": "About the assistant",
-  "assistantQuota": "You have used today's questions. You can ask again tomorrow.",
   "assistantRejected": "{message} Try starting a new conversation.",
   "@assistantRejected": {
     "placeholders": {
       "message": {}
     }
   },
-  "assistantRemainingToday": "Questions left today: {count}",
-  "@assistantRemainingToday": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "assistantSend": "Send",
   "assistantSources": "Sources",
-  "assistantThinking": "Preparing an answer…",
+  "assistantThinking": "Searching the help center…",
   "assistantTitle": "Assistant",
   "assistantTotalTooLong": "This conversation is too long. Start a new conversation to continue.",
   "assistantUnavailable": "The assistant is not available right now. Try again later or check the help center.",

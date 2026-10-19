@@ -589,7 +589,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get assistantHandoffBody => 'Let a person help you with this.';
+  String get assistantHandoffBody =>
+      'No matching help center section was found. Let a person help you with this.';
 
   @override
   String get assistantHandoffHelpCenter => 'Open the help center';
@@ -602,7 +603,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get assistantIntro =>
-      'Ask how to use Milk Trace: milking, pairing meters, adding animals, notifications… Answers come from the help center.';
+      'Ask how to use Milk Trace: milking, pairing meters, adding animals, notifications… I\'ll find the matching help center section. Your question isn\'t sent anywhere or stored.';
 
   @override
   String get assistantLimitReached =>
@@ -621,30 +622,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get assistantNewConversation => 'New conversation';
 
   @override
-  String get assistantNoticeAccept => 'Got it';
-
-  @override
-  String get assistantNoticeBody =>
-      'Your questions are sent to Anthropic to generate answers; your farm data is not sent. Question texts are not stored.';
-
-  @override
-  String get assistantNoticePrivacy => 'Privacy policy';
-
-  @override
-  String get assistantNoticeTitle => 'About the assistant';
-
-  @override
-  String get assistantQuota =>
-      'You have used today\'s questions. You can ask again tomorrow.';
-
-  @override
   String assistantRejected(Object message) {
     return '$message Try starting a new conversation.';
-  }
-
-  @override
-  String assistantRemainingToday(int count) {
-    return 'Questions left today: $count';
   }
 
   @override
@@ -654,7 +633,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get assistantSources => 'Sources';
 
   @override
-  String get assistantThinking => 'Preparing an answer…';
+  String get assistantThinking => 'Searching the help center…';
 
   @override
   String get assistantTitle => 'Assistant';

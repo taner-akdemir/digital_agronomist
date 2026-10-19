@@ -342,11 +342,11 @@
       "error": {}
     }
   },
-  "assistantHandoffBody": "Bu konuda size bir insan yardımcı olsun.",
+  "assistantHandoffBody": "Yardım merkezinde uyan bir bölüm bulunamadı. Bu konuda size bir insan yardımcı olsun.",
   "assistantHandoffHelpCenter": "Yardım merkezini aç",
   "assistantHandoffTitle": "Destek ekibimize ulaşın",
   "assistantInputHint": "Sorunuzu yazın",
-  "assistantIntro": "Milk Trace'in nasıl kullanıldığını sorun: sağım, cihaz eşleme, hayvan kaydı, bildirimler… Cevaplar yardım merkezinden gelir.",
+  "assistantIntro": "Milk Trace'in nasıl kullanıldığını sorun: sağım, cihaz eşleme, hayvan kaydı, bildirimler… Yardım merkezindeki uygun bölümü bulup getiririm. Sorunuz hiçbir yere gönderilmez ve saklanmaz.",
   "assistantLimitReached": "Bu konuşma en uzun hâline ulaştı. Devam etmek için yeni konuşma başlatın.",
   "assistantLinkFailed": "Bağlantı açılamadı: {url}",
   "@assistantLinkFailed": {
@@ -356,28 +356,15 @@
   },
   "assistantMessageTooLong": "Soru en çok 2000 karakter olabilir.",
   "assistantNewConversation": "Yeni konuşma",
-  "assistantNoticeAccept": "Anladım",
-  "assistantNoticeBody": "Sorularınız yanıt üretmek için Anthropic'e iletilir; çiftlik verileriniz gönderilmez. Soru metinleri saklanmaz.",
-  "assistantNoticePrivacy": "Gizlilik politikası",
-  "assistantNoticeTitle": "Asistan hakkında",
-  "assistantQuota": "Bugünkü soru hakkınız doldu. Yarın yeniden sorabilirsiniz.",
   "assistantRejected": "{message} Yeni bir konuşma başlatmayı deneyin.",
   "@assistantRejected": {
     "placeholders": {
       "message": {}
     }
   },
-  "assistantRemainingToday": "Bugün kalan soru: {count}",
-  "@assistantRemainingToday": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "assistantSend": "Gönder",
   "assistantSources": "Kaynaklar",
-  "assistantThinking": "Yanıt hazırlanıyor…",
+  "assistantThinking": "Yardım merkezinde aranıyor…",
   "assistantTitle": "Asistan",
   "assistantTotalTooLong": "Konuşma çok uzadı. Devam etmek için yeni konuşma başlatın.",
   "assistantUnavailable": "Asistan şu anda kullanılamıyor. Biraz sonra yeniden deneyin ya da yardım merkezine bakın.",
