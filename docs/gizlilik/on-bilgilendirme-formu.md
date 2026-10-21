@@ -18,7 +18,7 @@ Bu form, sözleşme kurulmadan önce Alıcı'yı bilgilendirmek için hazırlanm
 - E-posta: info@milktrace.com.tr
 - KEP: taner.akdemir@hs01.kep.tr
 - Web: https://algebransoft.com
-- Telefon: +90 530 320 06 47
+- Telefon: +90 534 797 18 45
 
 ## 2. Hizmetin temel nitelikleri
 

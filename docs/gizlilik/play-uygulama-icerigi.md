@@ -120,7 +120,7 @@ uygulama içinden ve web'den.
   Tarım, Verimlilik.
 - İletişim: e-posta **`info@milktrace.com.tr`** (zorunlu; site altbilgisi, gizlilik
   politikası), web sitesi **`https://milktrace.com.tr`**; telefon isteğe bağlı —
-  mesafeli satış sözleşmesindeki `+90 530 320 06 47` kullanılabilir (karar sahibin).
+  mesafeli satış sözleşmesindeki `+90 534 797 18 45` kullanılabilir (karar sahibin).
 - Varsayılan dil **Türkçe (tr-TR)**, çeviri **İngilizce (en-US)**: ad, kısa ve tam
   açıklama, ekran görüntüleri her dilde.
 - Ekran görüntüleri: `MILKTRACE_STORE_SCREENS=<klasör> flutter test test/store_screens_test.dart`

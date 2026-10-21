@@ -44,7 +44,7 @@
 - E-posta: info@milktrace.com.tr
 - KEP: taner.akdemir@hs01.kep.tr
 - Web: https://algebransoft.com
-- Telefon: +90 530 320 06 47
+- Telefon: +90 534 797 18 45
 
 **ALICI:** ödeme sayfasında fatura bilgisi olarak girilen kişi ya da kuruluş (ad soyad veya
 unvan, T.C. kimlik / vergi kimlik numarası, vergi dairesi, adres, e-posta, telefon) ve
