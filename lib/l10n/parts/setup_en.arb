@@ -18,8 +18,8 @@
   "setupLocation": "Enter the farm location for heat stress alerts",
   "whatsNewTitle": "What's new",
   "whatsNewOk": "OK",
-  "whatsNewItem1": "Early mastitis risk: an alert when milking flow drops well below the animal's own average (adjust on the thresholds screen).",
-  "whatsNewItem2": "Ordered suggestions for farms without readers: the picker puts the animal that usually follows the one in front at the top; \"Confirm group as is\" fills empty points in one tap.",
-  "whatsNewItem3": "Dairy sharing (account card → Integrations): share farm totals with your dairy with your explicit consent; withdraw it any time.",
+  "whatsNewItem1": "Heat detection from activity: bind an activity collar or pedometer to an animal (animal page → Activity); when movement rises well above its own usual level you get a \"Heat sign\" alert and can \"Record heat\" in one tap.",
+  "whatsNewItem2": "New Activity list (Dashboard and Herd): collared animals sorted by rise percentage; set the heat threshold on the thresholds screen.",
+  "whatsNewItem3": "Early mastitis risk: an alert when milking flow drops well below the animal's own average (adjust on the thresholds screen).",
   "whatsNewItem4": "WhatsApp added to notification channels."
 }

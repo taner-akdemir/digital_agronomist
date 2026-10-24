@@ -27,7 +27,11 @@ mixin _$Device {
  DeviceProfile? get profile; String get status; String? get firmware; double get calibrationFactor;/// Son kalibrasyon ve bir sonraki gün (backend ADR 0097); tarih yoksa
 /// hatırlatma da yok.
  DateTime? get calibratedAt; DateTime? get calibrationDueAt; DateTime? get lastSeenAt; bool get isSimulated;/// Son hata (backend ADR 0044); hiç hata bildirmemiş sayaçta null.
- DeviceError? get lastError;
+ DeviceError? get lastError;/// Cihaz türü (backend ADR 0145): `milk_meter` sağım noktasına,
+/// `activity_tag` (tasma / pedometre) hayvana takılır. Eski sunucu
+/// göndermezse sayaç sayılır.
+ String get kind;/// Aktivite cihazının bağlı olduğu hayvan; sayaçta ve bağsız tasmada null.
+ String? get animalId; String? get animalTag;
 /// Create a copy of Device
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -41,20 +45,20 @@ $DeviceCopyWith<Device> get copyWith => _$DeviceCopyWithImpl<Device>(this as Dev
 @override
 bool operator ==(Object other) {
   final _this = this as Device;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Device&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.serialNo, _this.serialNo) || other.serialNo == _this.serialNo)&&(identical(other.spoutId, _this.spoutId) || other.spoutId == _this.spoutId)&&(identical(other.profile, _this.profile) || other.profile == _this.profile)&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.firmware, _this.firmware) || other.firmware == _this.firmware)&&(identical(other.calibrationFactor, _this.calibrationFactor) || other.calibrationFactor == _this.calibrationFactor)&&(identical(other.calibratedAt, _this.calibratedAt) || other.calibratedAt == _this.calibratedAt)&&(identical(other.calibrationDueAt, _this.calibrationDueAt) || other.calibrationDueAt == _this.calibrationDueAt)&&(identical(other.lastSeenAt, _this.lastSeenAt) || other.lastSeenAt == _this.lastSeenAt)&&(identical(other.isSimulated, _this.isSimulated) || other.isSimulated == _this.isSimulated)&&(identical(other.lastError, _this.lastError) || other.lastError == _this.lastError));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Device&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.serialNo, _this.serialNo) || other.serialNo == _this.serialNo)&&(identical(other.spoutId, _this.spoutId) || other.spoutId == _this.spoutId)&&(identical(other.profile, _this.profile) || other.profile == _this.profile)&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.firmware, _this.firmware) || other.firmware == _this.firmware)&&(identical(other.calibrationFactor, _this.calibrationFactor) || other.calibrationFactor == _this.calibrationFactor)&&(identical(other.calibratedAt, _this.calibratedAt) || other.calibratedAt == _this.calibratedAt)&&(identical(other.calibrationDueAt, _this.calibrationDueAt) || other.calibrationDueAt == _this.calibrationDueAt)&&(identical(other.lastSeenAt, _this.lastSeenAt) || other.lastSeenAt == _this.lastSeenAt)&&(identical(other.isSimulated, _this.isSimulated) || other.isSimulated == _this.isSimulated)&&(identical(other.lastError, _this.lastError) || other.lastError == _this.lastError)&&(identical(other.kind, _this.kind) || other.kind == _this.kind)&&(identical(other.animalId, _this.animalId) || other.animalId == _this.animalId)&&(identical(other.animalTag, _this.animalTag) || other.animalTag == _this.animalTag));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as Device;
-  return Object.hash(runtimeType,_this.id,_this.serialNo,_this.spoutId,_this.profile,_this.status,_this.firmware,_this.calibrationFactor,_this.calibratedAt,_this.calibrationDueAt,_this.lastSeenAt,_this.isSimulated,_this.lastError);
+  return Object.hash(runtimeType,_this.id,_this.serialNo,_this.spoutId,_this.profile,_this.status,_this.firmware,_this.calibrationFactor,_this.calibratedAt,_this.calibrationDueAt,_this.lastSeenAt,_this.isSimulated,_this.lastError,_this.kind,_this.animalId,_this.animalTag);
 }
 
 @override
 String toString() {
   final _this = this as Device;
-  return 'Device(id: ${_this.id}, serialNo: ${_this.serialNo}, spoutId: ${_this.spoutId}, profile: ${_this.profile}, status: ${_this.status}, firmware: ${_this.firmware}, calibrationFactor: ${_this.calibrationFactor}, calibratedAt: ${_this.calibratedAt}, calibrationDueAt: ${_this.calibrationDueAt}, lastSeenAt: ${_this.lastSeenAt}, isSimulated: ${_this.isSimulated}, lastError: ${_this.lastError})';
+  return 'Device(id: ${_this.id}, serialNo: ${_this.serialNo}, spoutId: ${_this.spoutId}, profile: ${_this.profile}, status: ${_this.status}, firmware: ${_this.firmware}, calibrationFactor: ${_this.calibrationFactor}, calibratedAt: ${_this.calibratedAt}, calibrationDueAt: ${_this.calibrationDueAt}, lastSeenAt: ${_this.lastSeenAt}, isSimulated: ${_this.isSimulated}, lastError: ${_this.lastError}, kind: ${_this.kind}, animalId: ${_this.animalId}, animalTag: ${_this.animalTag})';
 }
 
 
@@ -65,7 +69,7 @@ abstract mixin class $DeviceCopyWith<$Res>  {
   factory $DeviceCopyWith(Device value, $Res Function(Device) _then) = _$DeviceCopyWithImpl;
 @useResult
 $Res call({
- String id, String serialNo, String? spoutId, DeviceProfile? profile, String status, String? firmware, double calibrationFactor, DateTime? calibratedAt, DateTime? calibrationDueAt, DateTime? lastSeenAt, bool isSimulated, DeviceError? lastError
+ String id, String serialNo, String? spoutId, DeviceProfile? profile, String status, String? firmware, double calibrationFactor, DateTime? calibratedAt, DateTime? calibrationDueAt, DateTime? lastSeenAt, bool isSimulated, DeviceError? lastError, String kind, String? animalId, String? animalTag
 });
 
 
@@ -82,7 +86,7 @@ class _$DeviceCopyWithImpl<$Res>
 
 /// Create a copy of Device
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? serialNo = null,Object? spoutId = freezed,Object? profile = freezed,Object? status = null,Object? firmware = freezed,Object? calibrationFactor = null,Object? calibratedAt = freezed,Object? calibrationDueAt = freezed,Object? lastSeenAt = freezed,Object? isSimulated = null,Object? lastError = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? serialNo = null,Object? spoutId = freezed,Object? profile = freezed,Object? status = null,Object? firmware = freezed,Object? calibrationFactor = null,Object? calibratedAt = freezed,Object? calibrationDueAt = freezed,Object? lastSeenAt = freezed,Object? isSimulated = null,Object? lastError = freezed,Object? kind = null,Object? animalId = freezed,Object? animalTag = freezed,}) {
   return _then(Device(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,serialNo: null == serialNo ? _self.serialNo : serialNo // ignore: cast_nullable_to_non_nullable
@@ -96,7 +100,10 @@ as DateTime?,calibrationDueAt: freezed == calibrationDueAt ? _self.calibrationDu
 as DateTime?,lastSeenAt: freezed == lastSeenAt ? _self.lastSeenAt : lastSeenAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,isSimulated: null == isSimulated ? _self.isSimulated : isSimulated // ignore: cast_nullable_to_non_nullable
 as bool,lastError: freezed == lastError ? _self.lastError : lastError // ignore: cast_nullable_to_non_nullable
-as DeviceError?,
+as DeviceError?,kind: null == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
+as String,animalId: freezed == animalId ? _self.animalId : animalId // ignore: cast_nullable_to_non_nullable
+as String?,animalTag: freezed == animalTag ? _self.animalTag : animalTag // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 /// Create a copy of Device
@@ -205,10 +212,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String serialNo,  String? spoutId,  DeviceProfile? profile,  String status,  String? firmware,  double calibrationFactor,  DateTime? calibratedAt,  DateTime? calibrationDueAt,  DateTime? lastSeenAt,  bool isSimulated,  DeviceError? lastError)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String serialNo,  String? spoutId,  DeviceProfile? profile,  String status,  String? firmware,  double calibrationFactor,  DateTime? calibratedAt,  DateTime? calibrationDueAt,  DateTime? lastSeenAt,  bool isSimulated,  DeviceError? lastError,  String kind,  String? animalId,  String? animalTag)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Device() when $default != null:
-return $default(_that.id,_that.serialNo,_that.spoutId,_that.profile,_that.status,_that.firmware,_that.calibrationFactor,_that.calibratedAt,_that.calibrationDueAt,_that.lastSeenAt,_that.isSimulated,_that.lastError);case _:
+return $default(_that.id,_that.serialNo,_that.spoutId,_that.profile,_that.status,_that.firmware,_that.calibrationFactor,_that.calibratedAt,_that.calibrationDueAt,_that.lastSeenAt,_that.isSimulated,_that.lastError,_that.kind,_that.animalId,_that.animalTag);case _:
   return orElse();
 
 }
@@ -226,10 +233,10 @@ return $default(_that.id,_that.serialNo,_that.spoutId,_that.profile,_that.status
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String serialNo,  String? spoutId,  DeviceProfile? profile,  String status,  String? firmware,  double calibrationFactor,  DateTime? calibratedAt,  DateTime? calibrationDueAt,  DateTime? lastSeenAt,  bool isSimulated,  DeviceError? lastError)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String serialNo,  String? spoutId,  DeviceProfile? profile,  String status,  String? firmware,  double calibrationFactor,  DateTime? calibratedAt,  DateTime? calibrationDueAt,  DateTime? lastSeenAt,  bool isSimulated,  DeviceError? lastError,  String kind,  String? animalId,  String? animalTag)  $default,) {final _that = this;
 switch (_that) {
 case _Device():
-return $default(_that.id,_that.serialNo,_that.spoutId,_that.profile,_that.status,_that.firmware,_that.calibrationFactor,_that.calibratedAt,_that.calibrationDueAt,_that.lastSeenAt,_that.isSimulated,_that.lastError);case _:
+return $default(_that.id,_that.serialNo,_that.spoutId,_that.profile,_that.status,_that.firmware,_that.calibrationFactor,_that.calibratedAt,_that.calibrationDueAt,_that.lastSeenAt,_that.isSimulated,_that.lastError,_that.kind,_that.animalId,_that.animalTag);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -246,10 +253,10 @@ return $default(_that.id,_that.serialNo,_that.spoutId,_that.profile,_that.status
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String serialNo,  String? spoutId,  DeviceProfile? profile,  String status,  String? firmware,  double calibrationFactor,  DateTime? calibratedAt,  DateTime? calibrationDueAt,  DateTime? lastSeenAt,  bool isSimulated,  DeviceError? lastError)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String serialNo,  String? spoutId,  DeviceProfile? profile,  String status,  String? firmware,  double calibrationFactor,  DateTime? calibratedAt,  DateTime? calibrationDueAt,  DateTime? lastSeenAt,  bool isSimulated,  DeviceError? lastError,  String kind,  String? animalId,  String? animalTag)?  $default,) {final _that = this;
 switch (_that) {
 case _Device() when $default != null:
-return $default(_that.id,_that.serialNo,_that.spoutId,_that.profile,_that.status,_that.firmware,_that.calibrationFactor,_that.calibratedAt,_that.calibrationDueAt,_that.lastSeenAt,_that.isSimulated,_that.lastError);case _:
+return $default(_that.id,_that.serialNo,_that.spoutId,_that.profile,_that.status,_that.firmware,_that.calibrationFactor,_that.calibratedAt,_that.calibrationDueAt,_that.lastSeenAt,_that.isSimulated,_that.lastError,_that.kind,_that.animalId,_that.animalTag);case _:
   return null;
 
 }
@@ -261,7 +268,7 @@ return $default(_that.id,_that.serialNo,_that.spoutId,_that.profile,_that.status
 @JsonSerializable()
 
 class _Device extends Device {
-  const _Device({required this.id, required this.serialNo, this.spoutId, this.profile, this.status = 'unknown', this.firmware, this.calibrationFactor = 1.0, this.calibratedAt, this.calibrationDueAt, this.lastSeenAt, this.isSimulated = false, this.lastError}): super._();
+  const _Device({required this.id, required this.serialNo, this.spoutId, this.profile, this.status = 'unknown', this.firmware, this.calibrationFactor = 1.0, this.calibratedAt, this.calibrationDueAt, this.lastSeenAt, this.isSimulated = false, this.lastError, this.kind = 'milk_meter', this.animalId, this.animalTag}): super._();
   factory _Device.fromJson(Map<String, dynamic> json) => _$DeviceFromJson(json);
 
 @override final  String id;
@@ -287,6 +294,13 @@ class _Device extends Device {
 @override@JsonKey() final  bool isSimulated;
 /// Son hata (backend ADR 0044); hiç hata bildirmemiş sayaçta null.
 @override final  DeviceError? lastError;
+/// Cihaz türü (backend ADR 0145): `milk_meter` sağım noktasına,
+/// `activity_tag` (tasma / pedometre) hayvana takılır. Eski sunucu
+/// göndermezse sayaç sayılır.
+@override@JsonKey() final  String kind;
+/// Aktivite cihazının bağlı olduğu hayvan; sayaçta ve bağsız tasmada null.
+@override final  String? animalId;
+@override final  String? animalTag;
 
 /// Create a copy of Device
 /// with the given fields replaced by the non-null parameter values.
@@ -301,18 +315,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Device&&(identical(other.id, id) || other.id == id)&&(identical(other.serialNo, serialNo) || other.serialNo == serialNo)&&(identical(other.spoutId, spoutId) || other.spoutId == spoutId)&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.status, status) || other.status == status)&&(identical(other.firmware, firmware) || other.firmware == firmware)&&(identical(other.calibrationFactor, calibrationFactor) || other.calibrationFactor == calibrationFactor)&&(identical(other.calibratedAt, calibratedAt) || other.calibratedAt == calibratedAt)&&(identical(other.calibrationDueAt, calibrationDueAt) || other.calibrationDueAt == calibrationDueAt)&&(identical(other.lastSeenAt, lastSeenAt) || other.lastSeenAt == lastSeenAt)&&(identical(other.isSimulated, isSimulated) || other.isSimulated == isSimulated)&&(identical(other.lastError, lastError) || other.lastError == lastError));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Device&&(identical(other.id, id) || other.id == id)&&(identical(other.serialNo, serialNo) || other.serialNo == serialNo)&&(identical(other.spoutId, spoutId) || other.spoutId == spoutId)&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.status, status) || other.status == status)&&(identical(other.firmware, firmware) || other.firmware == firmware)&&(identical(other.calibrationFactor, calibrationFactor) || other.calibrationFactor == calibrationFactor)&&(identical(other.calibratedAt, calibratedAt) || other.calibratedAt == calibratedAt)&&(identical(other.calibrationDueAt, calibrationDueAt) || other.calibrationDueAt == calibrationDueAt)&&(identical(other.lastSeenAt, lastSeenAt) || other.lastSeenAt == lastSeenAt)&&(identical(other.isSimulated, isSimulated) || other.isSimulated == isSimulated)&&(identical(other.lastError, lastError) || other.lastError == lastError)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.animalId, animalId) || other.animalId == animalId)&&(identical(other.animalTag, animalTag) || other.animalTag == animalTag));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,serialNo,spoutId,profile,status,firmware,calibrationFactor,calibratedAt,calibrationDueAt,lastSeenAt,isSimulated,lastError);
+    return Object.hash(runtimeType,id,serialNo,spoutId,profile,status,firmware,calibrationFactor,calibratedAt,calibrationDueAt,lastSeenAt,isSimulated,lastError,kind,animalId,animalTag);
 }
 
 @override
 String toString() {
-    return 'Device(id: $id, serialNo: $serialNo, spoutId: $spoutId, profile: $profile, status: $status, firmware: $firmware, calibrationFactor: $calibrationFactor, calibratedAt: $calibratedAt, calibrationDueAt: $calibrationDueAt, lastSeenAt: $lastSeenAt, isSimulated: $isSimulated, lastError: $lastError)';
+    return 'Device(id: $id, serialNo: $serialNo, spoutId: $spoutId, profile: $profile, status: $status, firmware: $firmware, calibrationFactor: $calibrationFactor, calibratedAt: $calibratedAt, calibrationDueAt: $calibrationDueAt, lastSeenAt: $lastSeenAt, isSimulated: $isSimulated, lastError: $lastError, kind: $kind, animalId: $animalId, animalTag: $animalTag)';
 }
 
 
@@ -323,7 +337,7 @@ abstract mixin class _$DeviceCopyWith<$Res> implements $DeviceCopyWith<$Res> {
   factory _$DeviceCopyWith(_Device value, $Res Function(_Device) _then) = __$DeviceCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String serialNo, String? spoutId, DeviceProfile? profile, String status, String? firmware, double calibrationFactor, DateTime? calibratedAt, DateTime? calibrationDueAt, DateTime? lastSeenAt, bool isSimulated, DeviceError? lastError
+ String id, String serialNo, String? spoutId, DeviceProfile? profile, String status, String? firmware, double calibrationFactor, DateTime? calibratedAt, DateTime? calibrationDueAt, DateTime? lastSeenAt, bool isSimulated, DeviceError? lastError, String kind, String? animalId, String? animalTag
 });
 
 
@@ -340,7 +354,7 @@ class __$DeviceCopyWithImpl<$Res>
 
 /// Create a copy of Device
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? serialNo = null,Object? spoutId = freezed,Object? profile = freezed,Object? status = null,Object? firmware = freezed,Object? calibrationFactor = null,Object? calibratedAt = freezed,Object? calibrationDueAt = freezed,Object? lastSeenAt = freezed,Object? isSimulated = null,Object? lastError = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? serialNo = null,Object? spoutId = freezed,Object? profile = freezed,Object? status = null,Object? firmware = freezed,Object? calibrationFactor = null,Object? calibratedAt = freezed,Object? calibrationDueAt = freezed,Object? lastSeenAt = freezed,Object? isSimulated = null,Object? lastError = freezed,Object? kind = null,Object? animalId = freezed,Object? animalTag = freezed,}) {
   return _then(_Device(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,serialNo: null == serialNo ? _self.serialNo : serialNo // ignore: cast_nullable_to_non_nullable
@@ -354,7 +368,10 @@ as DateTime?,calibrationDueAt: freezed == calibrationDueAt ? _self.calibrationDu
 as DateTime?,lastSeenAt: freezed == lastSeenAt ? _self.lastSeenAt : lastSeenAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,isSimulated: null == isSimulated ? _self.isSimulated : isSimulated // ignore: cast_nullable_to_non_nullable
 as bool,lastError: freezed == lastError ? _self.lastError : lastError // ignore: cast_nullable_to_non_nullable
-as DeviceError?,
+as DeviceError?,kind: null == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
+as String,animalId: freezed == animalId ? _self.animalId : animalId // ignore: cast_nullable_to_non_nullable
+as String?,animalTag: freezed == animalTag ? _self.animalTag : animalTag // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

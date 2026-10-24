@@ -27,6 +27,7 @@ _Thresholds _$ThresholdsFromJson(Map<String, dynamic> json) => _Thresholds(
   milkDensity: (json['milkDensity'] as num?)?.toDouble() ?? 1.03,
   conductivityRisePct: (json['conductivityRisePct'] as num?)?.toInt() ?? 15,
   flowDropPct: (json['flowDropPct'] as num?)?.toInt() ?? 30,
+  activityRisePct: (json['activityRisePct'] as num?)?.toInt() ?? 80,
 );
 
 Map<String, dynamic> _$ThresholdsToJson(_Thresholds instance) =>
@@ -51,4 +52,5 @@ Map<String, dynamic> _$ThresholdsToJson(_Thresholds instance) =>
       'milkDensity': instance.milkDensity,
       'conductivityRisePct': instance.conductivityRisePct,
       'flowDropPct': instance.flowDropPct,
+      'activityRisePct': instance.activityRisePct,
     };

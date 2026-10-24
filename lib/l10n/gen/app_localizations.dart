@@ -272,6 +272,234 @@ abstract class AppLocalizations {
   /// **'Kullanıcılar'**
   String get accountUsers;
 
+  /// No description provided for @activityBind.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cihaz bağla'**
+  String get activityBind;
+
+  /// No description provided for @activityBindDone.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cihaz bağlandı'**
+  String get activityBindDone;
+
+  /// No description provided for @activityBindFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cihaz bağlanamadı: {error}'**
+  String activityBindFailed(Object error);
+
+  /// No description provided for @activityBindNoFree.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bağlanabilecek boş aktivite cihazı yok. Cihazları işletmenize Milk Trace atar; tasmayı başka hayvandan çözerek de taşıyabilirsiniz.'**
+  String get activityBindNoFree;
+
+  /// No description provided for @activityBindTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aktivite cihazı bağla'**
+  String get activityBindTitle;
+
+  /// No description provided for @activityDailyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Son {days} gün · günlük'**
+  String activityDailyTitle(Object days);
+
+  /// No description provided for @activityDashboardSummary.
+  ///
+  /// In tr, this message translates to:
+  /// **'{heat} kızgınlık belirtisi · {rising} artışta'**
+  String activityDashboardSummary(Object heat, Object rising);
+
+  /// No description provided for @activityDevice.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cihaz {serial} · son veri {since}'**
+  String activityDevice(Object serial, Object since);
+
+  /// No description provided for @activityDeviceNoData.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cihaz {serial} · henüz veri yok'**
+  String activityDeviceNoData(Object serial);
+
+  /// No description provided for @activityEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu hayvanda aktivite cihazı yok. Boyna takılan aktivite tasması ya da ayağa takılan pedometre hareketi ölçer; hareket hayvanın kendi olağanına göre belirgin artınca \"Kızgınlık belirtisi\" uyarısı gelir.'**
+  String get activityEmpty;
+
+  /// No description provided for @activityErrorAnimalHasDevice.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu hayvana zaten bir aktivite cihazı bağlı. Önce onu çözün.'**
+  String get activityErrorAnimalHasDevice;
+
+  /// No description provided for @activityErrorNotActivityDevice.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu cihaz aktivite cihazı değil; hayvana yalnızca tasma ya da pedometre bağlanır.'**
+  String get activityErrorNotActivityDevice;
+
+  /// No description provided for @activityHourlyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Son 48 saat · saatlik'**
+  String get activityHourlyTitle;
+
+  /// No description provided for @activityLastHeat.
+  ///
+  /// In tr, this message translates to:
+  /// **'son belirti {when}'**
+  String activityLastHeat(Object when);
+
+  /// No description provided for @activityLoadFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aktivite alınamadı'**
+  String get activityLoadFailed;
+
+  /// No description provided for @activityNoDataYet.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cihaz bağlı; henüz veri gelmedi.'**
+  String get activityNoDataYet;
+
+  /// No description provided for @activityRise.
+  ///
+  /// In tr, this message translates to:
+  /// **'artış {value}'**
+  String activityRise(Object value);
+
+  /// No description provided for @activityRiseUnknown.
+  ///
+  /// In tr, this message translates to:
+  /// **'artış —'**
+  String get activityRiseUnknown;
+
+  /// No description provided for @activityRumination.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geviş (son 24 sa): {minutes} dk'**
+  String activityRumination(Object minutes);
+
+  /// No description provided for @activityScreenEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz aktivite cihazı bağlı hayvan yok. Hayvan sayfasındaki Aktivite kartından tasma ya da pedometre bağlayın.'**
+  String get activityScreenEmpty;
+
+  /// No description provided for @activitySeeAll.
+  ///
+  /// In tr, this message translates to:
+  /// **'Listeyi aç'**
+  String get activitySeeAll;
+
+  /// No description provided for @activitySelectAnimal.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ayrıntı için bir hayvan seçin'**
+  String get activitySelectAnimal;
+
+  /// No description provided for @activityStatusHeat.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kızgınlık belirtisi'**
+  String get activityStatusHeat;
+
+  /// No description provided for @activityStatusHeatHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hareket hayvanın olağanının belirgin üstünde. Gözle doğrulayın; kayıt için üreme kartından ya da uyarıdan \"Kızgınlığı kaydet\".'**
+  String get activityStatusHeatHint;
+
+  /// No description provided for @activityStatusLearning.
+  ///
+  /// In tr, this message translates to:
+  /// **'Öğreniyor'**
+  String get activityStatusLearning;
+
+  /// No description provided for @activityStatusLearningHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hayvanın olağan hareketi öğreniliyor; uyarı için en az 5 günlük veri gerekir.'**
+  String get activityStatusLearningHint;
+
+  /// No description provided for @activityStatusNoData.
+  ///
+  /// In tr, this message translates to:
+  /// **'Veri yok'**
+  String get activityStatusNoData;
+
+  /// No description provided for @activityStatusNoDataHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Son 3 saatte cihazdan veri gelmedi; tasmanın takılı ve şarjlı olduğunu kontrol edin.'**
+  String get activityStatusNoDataHint;
+
+  /// No description provided for @activityStatusNormal.
+  ///
+  /// In tr, this message translates to:
+  /// **'Normal'**
+  String get activityStatusNormal;
+
+  /// No description provided for @activityStatusPregnant.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gebe'**
+  String get activityStatusPregnant;
+
+  /// No description provided for @activityStatusRising.
+  ///
+  /// In tr, this message translates to:
+  /// **'Artışta'**
+  String get activityStatusRising;
+
+  /// No description provided for @activityTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aktivite'**
+  String get activityTitle;
+
+  /// No description provided for @activityUnbind.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cihazı çöz'**
+  String get activityUnbind;
+
+  /// No description provided for @activityUnbindBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'{serial} bu hayvandan çözülecek. Şimdiye kadarki veri bu hayvanda kalır.'**
+  String activityUnbindBody(Object serial);
+
+  /// No description provided for @activityUnbindDone.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cihaz çözüldü'**
+  String get activityUnbindDone;
+
+  /// No description provided for @activityUnbindTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cihazı çöz?'**
+  String get activityUnbindTitle;
+
+  /// No description provided for @alertTitleHeatDetected.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kızgınlık belirtisi'**
+  String get alertTitleHeatDetected;
+
+  /// No description provided for @alertTitleHeatExpected.
+  ///
+  /// In tr, this message translates to:
+  /// **'Beklenen kızgınlık'**
+  String get alertTitleHeatExpected;
+
   /// No description provided for @alertsAcknowledged.
   ///
   /// In tr, this message translates to:
@@ -290,6 +518,12 @@ abstract class AppLocalizations {
   /// **'Açık uyarı yok'**
   String get alertsEmpty;
 
+  /// No description provided for @alertsHeatNoteFromActivity.
+  ///
+  /// In tr, this message translates to:
+  /// **'Aktivite uyarısından'**
+  String get alertsHeatNoteFromActivity;
+
   /// No description provided for @alertsLoadFailed.
   ///
   /// In tr, this message translates to:
@@ -301,6 +535,12 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Okundu'**
   String get alertsMarkRead;
+
+  /// No description provided for @alertsRecordHeat.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kızgınlığı kaydet'**
+  String get alertsRecordHeat;
 
   /// No description provided for @alertsRecoveredAt.
   ///
@@ -5239,6 +5479,12 @@ abstract class AppLocalizations {
   /// **'Tema'**
   String get themeTitle;
 
+  /// No description provided for @thresholdsActivityRise.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kızgınlık (aktivite artışı)'**
+  String get thresholdsActivityRise;
+
   /// No description provided for @thresholdsAlertHold.
   ///
   /// In tr, this message translates to:
@@ -5346,6 +5592,12 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Kırmızı eşiğinden büyük olmalı'**
   String get thresholdsErrorAboveRed;
+
+  /// No description provided for @thresholdsErrorActivityRiseRange.
+  ///
+  /// In tr, this message translates to:
+  /// **'30–300 arasında olmalı'**
+  String get thresholdsErrorActivityRiseRange;
 
   /// No description provided for @thresholdsErrorBelowExpected.
   ///
@@ -5466,6 +5718,18 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Yeşil eşiği'**
   String get thresholdsGreenLimit;
+
+  /// No description provided for @thresholdsHeatGroupHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tasma ya da pedometre takılı hayvanda son 12 saatin hareketi, aynı saatlerin önceki 7 günlük ortalamasından bu kadar fazlaysa \"Kızgınlık belirtisi\" uyarısı gelir.'**
+  String get thresholdsHeatGroupHint;
+
+  /// No description provided for @thresholdsHeatGroupTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kızgınlık (aktivite)'**
+  String get thresholdsHeatGroupTitle;
 
   /// No description provided for @thresholdsHighYield.
   ///
@@ -6232,19 +6496,19 @@ abstract class AppLocalizations {
   /// No description provided for @whatsNewItem1.
   ///
   /// In tr, this message translates to:
-  /// **'Erken mastitis riski: sağım debisi hayvanın kendi ortalamasının belirgin altına düşünce uyarı (eşik ekranından ayarlanır).'**
+  /// **'Aktiviteden kızgınlık tespiti: hayvana aktivite tasması ya da pedometre bağlayın (hayvan sayfası → Aktivite); hareket kendi olağanının belirgin üstüne çıkınca \"Kızgınlık belirtisi\" uyarısı gelir, uyarıdan tek dokunuşla \"Kızgınlığı kaydet\".'**
   String get whatsNewItem1;
 
   /// No description provided for @whatsNewItem2.
   ///
   /// In tr, this message translates to:
-  /// **'Okuyucusuz çiftlikte sıralı öneri: seçici, öndeki noktadaki hayvanın genelde arkasından geleni en üste koyar; \"Grubu aynen onayla\" boş noktaları tek dokunuşla doldurur.'**
+  /// **'Yeni Aktivite listesi (Panel ve Sürü): tasmalı hayvanlar artış yüzdesine göre sıralı; kızgınlık eşiği eşik ekranından ayarlanır.'**
   String get whatsNewItem2;
 
   /// No description provided for @whatsNewItem3.
   ///
   /// In tr, this message translates to:
-  /// **'Mandıra paylaşımı (hesap kartı → Entegrasyonlar): açık onayınızla mandıranıza çiftlik toplamlarını paylaşın; onay her an geri alınır.'**
+  /// **'Erken mastitis riski: sağım debisi hayvanın kendi ortalamasının belirgin altına düşünce uyarı (eşik ekranından ayarlanır).'**
   String get whatsNewItem3;
 
   /// No description provided for @whatsNewItem4.

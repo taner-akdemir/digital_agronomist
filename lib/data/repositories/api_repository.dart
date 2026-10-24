@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart' show Uint8List, visibleForTesting;
 import 'package:milktrace/core/app_build.dart';
+import 'package:milktrace/data/models/activity.dart';
 import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/animal_group.dart';
@@ -158,6 +159,34 @@ class ApiRepository implements MilkTraceRepository {
   @override
   Future<List<Device>> devices() async =>
       _listOf(await _dio.get<dynamic>('/devices'), Device.fromJson);
+
+  @override
+  Future<void> bindActivityDevice(String deviceId, String? animalId) async {
+    // Boş dize çözer (sözleşme); null göndermek "alan yok" sayılabilirdi.
+    await _dio.put<dynamic>(
+      '/devices/$deviceId/animal',
+      data: {'animalId': animalId ?? ''},
+    );
+  }
+
+  @override
+  Future<AnimalActivity> animalActivity(
+    String animalId, {
+    int days = 14,
+  }) async => AnimalActivity.fromJson(
+    _dataOf(
+      await _dio.get<dynamic>(
+        '/activity/animals/$animalId',
+        queryParameters: {'days': days},
+      ),
+    ),
+  );
+
+  @override
+  Future<List<ActivityOverviewRow>> activityOverview() async => _listOf(
+    await _dio.get<dynamic>('/activity/overview'),
+    ActivityOverviewRow.fromJson,
+  );
 
   @override
   Future<List<Animal>> animals() async =>

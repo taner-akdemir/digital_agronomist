@@ -103,6 +103,146 @@ class AppLocalizationsTr extends AppLocalizations {
   String get accountUsers => 'Kullanıcılar';
 
   @override
+  String get activityBind => 'Cihaz bağla';
+
+  @override
+  String get activityBindDone => 'Cihaz bağlandı';
+
+  @override
+  String activityBindFailed(Object error) {
+    return 'Cihaz bağlanamadı: $error';
+  }
+
+  @override
+  String get activityBindNoFree =>
+      'Bağlanabilecek boş aktivite cihazı yok. Cihazları işletmenize Milk Trace atar; tasmayı başka hayvandan çözerek de taşıyabilirsiniz.';
+
+  @override
+  String get activityBindTitle => 'Aktivite cihazı bağla';
+
+  @override
+  String activityDailyTitle(Object days) {
+    return 'Son $days gün · günlük';
+  }
+
+  @override
+  String activityDashboardSummary(Object heat, Object rising) {
+    return '$heat kızgınlık belirtisi · $rising artışta';
+  }
+
+  @override
+  String activityDevice(Object serial, Object since) {
+    return 'Cihaz $serial · son veri $since';
+  }
+
+  @override
+  String activityDeviceNoData(Object serial) {
+    return 'Cihaz $serial · henüz veri yok';
+  }
+
+  @override
+  String get activityEmpty =>
+      'Bu hayvanda aktivite cihazı yok. Boyna takılan aktivite tasması ya da ayağa takılan pedometre hareketi ölçer; hareket hayvanın kendi olağanına göre belirgin artınca \"Kızgınlık belirtisi\" uyarısı gelir.';
+
+  @override
+  String get activityErrorAnimalHasDevice =>
+      'Bu hayvana zaten bir aktivite cihazı bağlı. Önce onu çözün.';
+
+  @override
+  String get activityErrorNotActivityDevice =>
+      'Bu cihaz aktivite cihazı değil; hayvana yalnızca tasma ya da pedometre bağlanır.';
+
+  @override
+  String get activityHourlyTitle => 'Son 48 saat · saatlik';
+
+  @override
+  String activityLastHeat(Object when) {
+    return 'son belirti $when';
+  }
+
+  @override
+  String get activityLoadFailed => 'Aktivite alınamadı';
+
+  @override
+  String get activityNoDataYet => 'Cihaz bağlı; henüz veri gelmedi.';
+
+  @override
+  String activityRise(Object value) {
+    return 'artış $value';
+  }
+
+  @override
+  String get activityRiseUnknown => 'artış —';
+
+  @override
+  String activityRumination(Object minutes) {
+    return 'Geviş (son 24 sa): $minutes dk';
+  }
+
+  @override
+  String get activityScreenEmpty =>
+      'Henüz aktivite cihazı bağlı hayvan yok. Hayvan sayfasındaki Aktivite kartından tasma ya da pedometre bağlayın.';
+
+  @override
+  String get activitySeeAll => 'Listeyi aç';
+
+  @override
+  String get activitySelectAnimal => 'Ayrıntı için bir hayvan seçin';
+
+  @override
+  String get activityStatusHeat => 'Kızgınlık belirtisi';
+
+  @override
+  String get activityStatusHeatHint =>
+      'Hareket hayvanın olağanının belirgin üstünde. Gözle doğrulayın; kayıt için üreme kartından ya da uyarıdan \"Kızgınlığı kaydet\".';
+
+  @override
+  String get activityStatusLearning => 'Öğreniyor';
+
+  @override
+  String get activityStatusLearningHint =>
+      'Hayvanın olağan hareketi öğreniliyor; uyarı için en az 5 günlük veri gerekir.';
+
+  @override
+  String get activityStatusNoData => 'Veri yok';
+
+  @override
+  String get activityStatusNoDataHint =>
+      'Son 3 saatte cihazdan veri gelmedi; tasmanın takılı ve şarjlı olduğunu kontrol edin.';
+
+  @override
+  String get activityStatusNormal => 'Normal';
+
+  @override
+  String get activityStatusPregnant => 'Gebe';
+
+  @override
+  String get activityStatusRising => 'Artışta';
+
+  @override
+  String get activityTitle => 'Aktivite';
+
+  @override
+  String get activityUnbind => 'Cihazı çöz';
+
+  @override
+  String activityUnbindBody(Object serial) {
+    return '$serial bu hayvandan çözülecek. Şimdiye kadarki veri bu hayvanda kalır.';
+  }
+
+  @override
+  String get activityUnbindDone => 'Cihaz çözüldü';
+
+  @override
+  String get activityUnbindTitle => 'Cihazı çöz?';
+
+  @override
+  String get alertTitleHeatDetected => 'Kızgınlık belirtisi';
+
+  @override
+  String get alertTitleHeatExpected => 'Beklenen kızgınlık';
+
+  @override
   String get alertsAcknowledged => 'okundu';
 
   @override
@@ -114,10 +254,16 @@ class AppLocalizationsTr extends AppLocalizations {
   String get alertsEmpty => 'Açık uyarı yok';
 
   @override
+  String get alertsHeatNoteFromActivity => 'Aktivite uyarısından';
+
+  @override
   String get alertsLoadFailed => 'Uyarılar yüklenemedi';
 
   @override
   String get alertsMarkRead => 'Okundu';
+
+  @override
+  String get alertsRecordHeat => 'Kızgınlığı kaydet';
 
   @override
   String alertsRecoveredAt(Object time) {
@@ -3043,6 +3189,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get themeTitle => 'Tema';
 
   @override
+  String get thresholdsActivityRise => 'Kızgınlık (aktivite artışı)';
+
+  @override
   String get thresholdsAlertHold => 'Uyarı bekleme';
 
   @override
@@ -3100,6 +3249,9 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get thresholdsErrorAboveRed => 'Kırmızı eşiğinden büyük olmalı';
+
+  @override
+  String get thresholdsErrorActivityRiseRange => '30–300 arasında olmalı';
 
   @override
   String get thresholdsErrorBelowExpected =>
@@ -3166,6 +3318,13 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get thresholdsGreenLimit => 'Yeşil eşiği';
+
+  @override
+  String get thresholdsHeatGroupHint =>
+      'Tasma ya da pedometre takılı hayvanda son 12 saatin hareketi, aynı saatlerin önceki 7 günlük ortalamasından bu kadar fazlaysa \"Kızgınlık belirtisi\" uyarısı gelir.';
+
+  @override
+  String get thresholdsHeatGroupTitle => 'Kızgınlık (aktivite)';
 
   @override
   String get thresholdsHighYield => 'Yüksek verim üst eşiği';
@@ -3635,15 +3794,15 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get whatsNewItem1 =>
-      'Erken mastitis riski: sağım debisi hayvanın kendi ortalamasının belirgin altına düşünce uyarı (eşik ekranından ayarlanır).';
+      'Aktiviteden kızgınlık tespiti: hayvana aktivite tasması ya da pedometre bağlayın (hayvan sayfası → Aktivite); hareket kendi olağanının belirgin üstüne çıkınca \"Kızgınlık belirtisi\" uyarısı gelir, uyarıdan tek dokunuşla \"Kızgınlığı kaydet\".';
 
   @override
   String get whatsNewItem2 =>
-      'Okuyucusuz çiftlikte sıralı öneri: seçici, öndeki noktadaki hayvanın genelde arkasından geleni en üste koyar; \"Grubu aynen onayla\" boş noktaları tek dokunuşla doldurur.';
+      'Yeni Aktivite listesi (Panel ve Sürü): tasmalı hayvanlar artış yüzdesine göre sıralı; kızgınlık eşiği eşik ekranından ayarlanır.';
 
   @override
   String get whatsNewItem3 =>
-      'Mandıra paylaşımı (hesap kartı → Entegrasyonlar): açık onayınızla mandıranıza çiftlik toplamlarını paylaşın; onay her an geri alınır.';
+      'Erken mastitis riski: sağım debisi hayvanın kendi ortalamasının belirgin altına düşünce uyarı (eşik ekranından ayarlanır).';
 
   @override
   String get whatsNewItem4 => 'Bildirim kanallarına WhatsApp eklendi.';

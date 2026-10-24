@@ -5,6 +5,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:milktrace/core/api_exception.dart';
+import 'package:milktrace/data/models/activity.dart';
 import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/animal_group.dart';
@@ -196,7 +197,144 @@ class MockRepository implements MilkTraceRepository {
   @override
   Future<List<Device>> devices() => _delayed(() async {
     final all = await _list('devices.json', Device.fromJson);
-    return [for (final d in all) d.copyWith(lastSeenAt: _lastSeen(d))];
+    final animals = await _list('animals.json', Animal.fromJson);
+    String? tagOf(String? id) => id == null
+        ? null
+        : animals.where((a) => a.id == id).firstOrNull?.earTag;
+    return [
+      for (final d in all) d.copyWith(lastSeenAt: _lastSeen(d)),
+      // Aktivite cihazları (backend ADR 0145) asset'te yok; bağlama
+      // bellekte tutulur ki demo'da "bağla / çöz" gerçekten bir şey yapsın.
+      for (final e in _activityTags.entries)
+        Device(
+          id: e.key,
+          serialNo: 'MT-ACT-${e.key.substring(e.key.length - 4)}',
+          status: 'online',
+          kind: 'activity_tag',
+          animalId: e.value,
+          animalTag: tagOf(e.value),
+          lastSeenAt: _clock.subtract(const Duration(minutes: 7)),
+        ),
+    ];
+  });
+
+  /// Aktivite cihazı → bağlı hayvan (null: bağsız, stokta).
+  final Map<String, String?> _activityTags = {
+    '0192a1f0-00c0-7000-8000-000000000001':
+        '0192a1f0-0070-7000-8000-000000000001',
+    '0192a1f0-00c0-7000-8000-000000000002':
+        '0192a1f0-0070-7000-8000-000000000002',
+    '0192a1f0-00c0-7000-8000-000000000003': null,
+  };
+
+  /// Demo'da kızgınlık belirtisi gösteren hayvan.
+  static const _heatAnimalId = '0192a1f0-0070-7000-8000-000000000001';
+
+  @override
+  Future<void> bindActivityDevice(String deviceId, String? animalId) =>
+      _delayed(() async {
+        if (!_activityTags.containsKey(deviceId)) {
+          throw const ApiException(
+            code: 'NOT_ACTIVITY_DEVICE',
+            message: 'Bu cihaz aktivite cihazı değil.',
+            status: 422,
+          );
+        }
+        final target = animalId == null || animalId.isEmpty ? null : animalId;
+        if (target != null &&
+            _activityTags.entries.any(
+              (e) => e.key != deviceId && e.value == target,
+            )) {
+          throw const ApiException(
+            code: 'ANIMAL_HAS_DEVICE',
+            message: 'Bu hayvana zaten bir aktivite cihazı bağlı.',
+            status: 409,
+          );
+        }
+        _activityTags[deviceId] = target;
+      });
+
+  @override
+  Future<AnimalActivity> animalActivity(String animalId, {int days = 14}) =>
+      _delayed(() async {
+        final deviceId = _activityTags.entries
+            .where((e) => e.value == animalId)
+            .firstOrNull
+            ?.key;
+        if (deviceId == null) return AnimalActivity(animalId: animalId);
+        final heat = animalId == _heatAnimalId;
+        final seed = animalId.hashCode.abs() % 7;
+        final hourStart = DateTime(
+          _clock.year,
+          _clock.month,
+          _clock.day,
+          _clock.hour,
+        );
+        final hourly = [
+          for (var i = 47; i >= 0; i--)
+            _mockHour(hourStart.subtract(Duration(hours: i)), i, heat, seed),
+        ];
+        final daily = [
+          for (var i = days - 1; i >= 0; i--)
+            ActivityDay(
+              day: _now.subtract(Duration(days: i)),
+              steps:
+                  (i == 0 && heat ? 9800 : 4200) + (i * 37 + seed * 91) % 500,
+              ruminationMin: (i == 0 && heat ? 330.0 : 470.0) + (i * 13) % 40,
+            ),
+        ];
+        return AnimalActivity(
+          animalId: animalId,
+          device: ActivityDevice(
+            id: deviceId,
+            serial: 'MT-ACT-${deviceId.substring(deviceId.length - 4)}',
+            lastSeen: _clock.subtract(const Duration(minutes: 7)),
+          ),
+          hourly: hourly,
+          daily: daily,
+          status: heat ? 'heat' : 'normal',
+        );
+      });
+
+  /// Gün saati deseni: gece düşük, sağım (06, 18) ve yem saatlerinde yüksek;
+  /// kızgın hayvanda son 14 saat 2,5 kat (simülatörle aynı biçim).
+  ActivityHour _mockHour(DateTime hour, int ago, bool heat, int seed) {
+    final h = hour.hour;
+    final base = switch (h) {
+      >= 0 && < 5 => 40,
+      5 || 6 || 7 => 320,
+      17 || 18 || 19 => 300,
+      >= 22 => 60,
+      _ => 180,
+    };
+    final factor = heat && ago < 14 ? 2.5 : 1.0;
+    return ActivityHour(
+      hour: hour,
+      steps: ((base + (h * 7 + seed * 13) % 30) * factor).round(),
+      ruminationMin: h >= 22 || h < 5 ? (heat && ago < 14 ? 18.0 : 28.0) : 14.0,
+    );
+  }
+
+  @override
+  Future<List<ActivityOverviewRow>> activityOverview() => _delayed(() async {
+    final animals = await _list('animals.json', Animal.fromJson);
+    return [
+      for (final e in _activityTags.entries)
+        if (e.value != null)
+          for (final a in animals.where((a) => a.id == e.value))
+            ActivityOverviewRow(
+              animalId: a.id,
+              tag: a.earTag,
+              name: a.name,
+              serial: 'MT-ACT-${e.key.substring(e.key.length - 4)}',
+              lastSeen: _clock.subtract(const Duration(minutes: 7)),
+              risePct: a.id == _heatAnimalId ? 140 : 12,
+              status: a.id == _heatAnimalId ? 'heat' : 'normal',
+              lastHeatDetectedAt: a.id == _heatAnimalId
+                  ? _clock.subtract(const Duration(hours: 3))
+                  : null,
+            ),
+    ];
   });
 
   /// "Son görülme" damgasını ŞU ANA göre üretir.

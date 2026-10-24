@@ -37,9 +37,21 @@ abstract class Device with _$Device {
 
     /// Son hata (backend ADR 0044); hiç hata bildirmemiş sayaçta null.
     DeviceError? lastError,
+
+    /// Cihaz türü (backend ADR 0145): `milk_meter` sağım noktasına,
+    /// `activity_tag` (tasma / pedometre) hayvana takılır. Eski sunucu
+    /// göndermezse sayaç sayılır.
+    @Default('milk_meter') String kind,
+
+    /// Aktivite cihazının bağlı olduğu hayvan; sayaçta ve bağsız tasmada null.
+    String? animalId,
+    String? animalTag,
   }) = _Device;
 
   const Device._();
+
+  /// Hayvana takılan aktivite cihazı mı (sağım ağacında gösterilmez).
+  bool get isActivityTag => kind == 'activity_tag';
 
   /// "Yakın zamanda" hata: son 24 saat. Sayaç hatanın geçtiğini
   /// bildirmiyor; daha eski bir kod hâlâ sürüyor da olabilir, çoktan geçmiş

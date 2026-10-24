@@ -64,12 +64,18 @@ bool hasMixedSources(DeviceTree tree) => tree.sources.length > 1;
 @riverpod
 Future<DeviceTree> deviceTree(Ref ref) async {
   final repo = ref.watch(repositoryProvider);
-  final (halls, vacuums, spouts, devices) = await (
+  final (halls, vacuums, spouts, allDevices) = await (
     repo.halls(),
     repo.vacuums(),
     repo.spouts(),
     repo.devices(),
   ).wait;
+  // Aktivite cihazları (tasma, backend ADR 0145) sağım noktasına takılmaz;
+  // ağaçta "takılı olmayan sayaç" görünmesinler — hayvan sayfasında yönetilir.
+  final devices = [
+    for (final d in allDevices)
+      if (!d.isActivityTag) d,
+  ];
 
   final deviceBySpout = {for (final d in devices) ?d.spoutId: d};
 

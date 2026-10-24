@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/data/cache/cache_store.dart';
+import 'package:milktrace/data/models/activity.dart';
 import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/animal_group.dart';
@@ -190,6 +191,25 @@ class CachingRepository implements MilkTraceRepository {
   @override
   Future<List<Device>> devices() =>
       _read('devices', _inner.devices, (j) => _list(j, Device.fromJson));
+
+  @override
+  Future<void> bindActivityDevice(String deviceId, String? animalId) =>
+      _net(() => _inner.bindActivityDevice(deviceId, animalId));
+
+  @override
+  Future<AnimalActivity> animalActivity(String animalId, {int days = 14}) =>
+      _read(
+        'activity:$animalId:$days',
+        () => _inner.animalActivity(animalId, days: days),
+        (j) => AnimalActivity.fromJson(_map(j)),
+      );
+
+  @override
+  Future<List<ActivityOverviewRow>> activityOverview() => _read(
+    'activityOverview',
+    _inner.activityOverview,
+    (j) => _list(j, ActivityOverviewRow.fromJson),
+  );
 
   @override
   Future<List<Animal>> animals() =>

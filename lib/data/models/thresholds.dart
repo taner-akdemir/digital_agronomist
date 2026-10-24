@@ -65,6 +65,11 @@ abstract class Thresholds with _$Thresholds {
     /// Sağımın ortalama debisi hayvanın 7 günlük ortalamasının bu yüzde kadar
     /// altındaysa "erken mastitis riski" (backend ADR 0135).
     @Default(30) int flowDropPct,
+
+    /// Hayvanın aktivitesi kendi olağanının bu yüzde kadar üstündeyse
+    /// "kızgınlık belirtisi" (backend ADR 0145; aralık 30–300). Eski sunucu
+    /// göndermezse varsayılan.
+    @Default(80) int activityRisePct,
   }) = _Thresholds;
 
   factory Thresholds.fromJson(Map<String, dynamic> json) =>

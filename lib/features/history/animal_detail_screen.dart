@@ -12,6 +12,8 @@ import 'package:milktrace/data/models/milking_speed.dart';
 import 'package:milktrace/data/write_queue/pending_write.dart';
 import 'package:milktrace/data/write_queue/write_sender.dart';
 import 'package:milktrace/domain/yield_class.dart';
+import 'package:milktrace/features/activity/activity_card.dart';
+import 'package:milktrace/features/activity/activity_providers.dart';
 import 'package:milktrace/features/history/breeding_card.dart';
 import 'package:milktrace/features/history/history_providers.dart';
 import 'package:milktrace/features/history/meter_check_dialog.dart';
@@ -151,6 +153,7 @@ class _Body extends ConsumerWidget {
           ..invalidate(animalTreatmentsProvider(animal.id))
           ..invalidate(animalVaccinationsProvider(animal.id))
           ..invalidate(animalBreedingProvider(animal.id))
+          ..invalidate(animalActivityProvider(animal.id))
           ..invalidate(milkingSpeedProvider);
         await ref.read(animalTrendProvider(animal.id).future);
       },
@@ -187,6 +190,9 @@ class _Body extends ConsumerWidget {
           const SizedBox(height: AppSpacing.md),
           // Üreme (backend ADR 0088): durum, beklenen doğum, kuruya çıkarma.
           BreedingCard(animal: animal),
+          const SizedBox(height: AppSpacing.md),
+          // Aktivite (backend ADR 0145): tasma / pedometre, kızgınlık işareti.
+          ActivityCard(animalId: animal.id),
           const SizedBox(height: AppSpacing.md),
           AsyncView(
             value: trend,

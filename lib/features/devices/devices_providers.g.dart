@@ -64,7 +64,7 @@ final class DeviceTreeProvider
   }
 }
 
-String _$deviceTreeHash() => r'eb12b951da672548bb37d90a533435aac836a28b';
+String _$deviceTreeHash() => r'af4065206dc15efddcc0c657f31a528b5a496965';
 
 /// Nokta sağlığı (backend ADR 0113), noktaya göre. Okunamazsa BOŞ: ağaç ve
 /// sayaç durumu bu ek bilgi yüzünden düşmesin.

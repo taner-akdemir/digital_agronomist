@@ -29,6 +29,9 @@ _Device _$DeviceFromJson(Map<String, dynamic> json) => _Device(
   lastError: json['lastError'] == null
       ? null
       : DeviceError.fromJson(json['lastError'] as Map<String, dynamic>),
+  kind: json['kind'] as String? ?? 'milk_meter',
+  animalId: json['animalId'] as String?,
+  animalTag: json['animalTag'] as String?,
 );
 
 Map<String, dynamic> _$DeviceToJson(_Device instance) => <String, dynamic>{
@@ -44,4 +47,7 @@ Map<String, dynamic> _$DeviceToJson(_Device instance) => <String, dynamic>{
   'lastSeenAt': instance.lastSeenAt?.toIso8601String(),
   'isSimulated': instance.isSimulated,
   'lastError': instance.lastError,
+  'kind': instance.kind,
+  'animalId': instance.animalId,
+  'animalTag': instance.animalTag,
 };

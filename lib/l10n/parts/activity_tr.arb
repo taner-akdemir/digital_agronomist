@@ -1,0 +1,93 @@
+{
+  "activityTitle": "Aktivite",
+  "activityStatusLearning": "Öğreniyor",
+  "activityStatusNormal": "Normal",
+  "activityStatusRising": "Artışta",
+  "activityStatusHeat": "Kızgınlık belirtisi",
+  "activityStatusNoData": "Veri yok",
+  "activityStatusPregnant": "Gebe",
+  "activityStatusLearningHint": "Hayvanın olağan hareketi öğreniliyor; uyarı için en az 5 günlük veri gerekir.",
+  "activityStatusHeatHint": "Hareket hayvanın olağanının belirgin üstünde. Gözle doğrulayın; kayıt için üreme kartından ya da uyarıdan \"Kızgınlığı kaydet\".",
+  "activityStatusNoDataHint": "Son 3 saatte cihazdan veri gelmedi; tasmanın takılı ve şarjlı olduğunu kontrol edin.",
+  "activityHourlyTitle": "Son 48 saat · saatlik",
+  "activityDailyTitle": "Son {days} gün · günlük",
+  "@activityDailyTitle": {
+    "placeholders": {
+      "days": {}
+    }
+  },
+  "activityRumination": "Geviş (son 24 sa): {minutes} dk",
+  "@activityRumination": {
+    "placeholders": {
+      "minutes": {}
+    }
+  },
+  "activityDevice": "Cihaz {serial} · son veri {since}",
+  "@activityDevice": {
+    "placeholders": {
+      "serial": {},
+      "since": {}
+    }
+  },
+  "activityDeviceNoData": "Cihaz {serial} · henüz veri yok",
+  "@activityDeviceNoData": {
+    "placeholders": {
+      "serial": {}
+    }
+  },
+  "activityNoDataYet": "Cihaz bağlı; henüz veri gelmedi.",
+  "activityEmpty": "Bu hayvanda aktivite cihazı yok. Boyna takılan aktivite tasması ya da ayağa takılan pedometre hareketi ölçer; hareket hayvanın kendi olağanına göre belirgin artınca \"Kızgınlık belirtisi\" uyarısı gelir.",
+  "activityLoadFailed": "Aktivite alınamadı",
+  "activityBind": "Cihaz bağla",
+  "activityUnbind": "Cihazı çöz",
+  "activityBindTitle": "Aktivite cihazı bağla",
+  "activityBindNoFree": "Bağlanabilecek boş aktivite cihazı yok. Cihazları işletmenize Milk Trace atar; tasmayı başka hayvandan çözerek de taşıyabilirsiniz.",
+  "activityBindDone": "Cihaz bağlandı",
+  "activityUnbindDone": "Cihaz çözüldü",
+  "activityUnbindTitle": "Cihazı çöz?",
+  "activityUnbindBody": "{serial} bu hayvandan çözülecek. Şimdiye kadarki veri bu hayvanda kalır.",
+  "@activityUnbindBody": {
+    "placeholders": {
+      "serial": {}
+    }
+  },
+  "activityErrorAnimalHasDevice": "Bu hayvana zaten bir aktivite cihazı bağlı. Önce onu çözün.",
+  "activityErrorNotActivityDevice": "Bu cihaz aktivite cihazı değil; hayvana yalnızca tasma ya da pedometre bağlanır.",
+  "activityBindFailed": "Cihaz bağlanamadı: {error}",
+  "@activityBindFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "activityScreenEmpty": "Henüz aktivite cihazı bağlı hayvan yok. Hayvan sayfasındaki Aktivite kartından tasma ya da pedometre bağlayın.",
+  "activityRise": "artış {value}",
+  "@activityRise": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "activityRiseUnknown": "artış —",
+  "activityLastHeat": "son belirti {when}",
+  "@activityLastHeat": {
+    "placeholders": {
+      "when": {}
+    }
+  },
+  "activitySelectAnimal": "Ayrıntı için bir hayvan seçin",
+  "activityDashboardSummary": "{heat} kızgınlık belirtisi · {rising} artışta",
+  "@activityDashboardSummary": {
+    "placeholders": {
+      "heat": {},
+      "rising": {}
+    }
+  },
+  "activitySeeAll": "Listeyi aç",
+  "alertTitleHeatDetected": "Kızgınlık belirtisi",
+  "alertTitleHeatExpected": "Beklenen kızgınlık",
+  "alertsRecordHeat": "Kızgınlığı kaydet",
+  "alertsHeatNoteFromActivity": "Aktivite uyarısından",
+  "thresholdsHeatGroupTitle": "Kızgınlık (aktivite)",
+  "thresholdsHeatGroupHint": "Tasma ya da pedometre takılı hayvanda son 12 saatin hareketi, aynı saatlerin önceki 7 günlük ortalamasından bu kadar fazlaysa \"Kızgınlık belirtisi\" uyarısı gelir.",
+  "thresholdsActivityRise": "Kızgınlık (aktivite artışı)",
+  "thresholdsErrorActivityRiseRange": "30–300 arasında olmalı"
+}

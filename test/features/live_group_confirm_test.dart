@@ -48,9 +48,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          repositoryProvider.overrideWith(
-            (ref) => repo as MilkTraceRepository,
-          ),
+          repositoryProvider.overrideWith((ref) => repo as MilkTraceRepository),
         ],
         child: MaterialApp(
           builder: (context, child) => MediaQuery(

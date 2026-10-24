@@ -7,6 +7,7 @@ import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/features/alerts/alert_style.dart';
 import 'package:milktrace/features/alerts/alerts_providers.dart';
 import 'package:milktrace/features/history/animal_detail_screen.dart';
+import 'package:milktrace/features/history/breeding_card.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/widgets/async_view.dart';
 import 'package:milktrace/widgets/list_detail.dart';
@@ -162,6 +163,14 @@ class _AlertCard extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      if (AlertStyle.title(alert.type) case final title?)
+                        Text(
+                          title,
+                          style: const TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       // Metin BACKEND'DEN gelir ve olduğu gibi gösterilir:
                       // hangi kuralın tetiklendiğini sunucu bilir (§16).
                       Text(
@@ -176,6 +185,26 @@ class _AlertCard extends ConsumerWidget {
                           color: AppColors.onSurfaceMuted,
                         ),
                       ),
+                      // Aktivite uyarısı kendiliğinden kayıt AÇMAZ (backend
+                      // ADR 0145 §6): gözle doğrulayan kişi buradan kaydeder.
+                      if (alert.type == 'heat_detected' && animalId != null)
+                        Align(
+                          alignment: AlignmentDirectional.centerStart,
+                          child: TextButton.icon(
+                            style: TextButton.styleFrom(
+                              foregroundColor: AppColors.darkGreenColor,
+                              padding: EdgeInsets.zero,
+                              visualDensity: VisualDensity.compact,
+                            ),
+                            onPressed: () =>
+                                recordHeatFromAlert(context, ref, alert),
+                            icon: const Icon(Icons.favorite_outline, size: 16),
+                            label: Text(
+                              l10n.alertsRecordHeat,
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                          ),
+                        ),
                     ],
                   ),
                 ),
@@ -210,6 +239,28 @@ class _AlertCard extends ConsumerWidget {
       ),
     );
   }
+}
+
+/// Aktivite uyarısından üreme diyaloğu: tür kızgınlık, gün uyarının günü,
+/// not "Aktivite uyarısından" (backend ADR 0145 §6). Kayıt mevcut üreme
+/// akışıyla yazma kuyruğundan geçer (ADR 0140).
+Future<bool> recordHeatFromAlert(
+  BuildContext context,
+  WidgetRef ref,
+  Alert alert, {
+  DateTime? today,
+}) {
+  final animalId = alert.animalId;
+  if (animalId == null) return Future.value(false);
+  return addBreedingRecord(
+    context,
+    ref,
+    animalId: animalId,
+    initialKind: 'heat',
+    initialDate: alert.createdAt,
+    initialNote: l10n.alertsHeatNoteFromActivity,
+    today: today,
+  );
 }
 
 /// Uyarının zaman satırı: oluşma anı, çözüldüyse ne zaman, okunduysa.

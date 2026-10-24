@@ -104,6 +104,146 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountUsers => 'Users';
 
   @override
+  String get activityBind => 'Bind device';
+
+  @override
+  String get activityBindDone => 'Device bound';
+
+  @override
+  String activityBindFailed(Object error) {
+    return 'Could not bind device: $error';
+  }
+
+  @override
+  String get activityBindNoFree =>
+      'No free activity device to bind. Milk Trace assigns devices to your farm; you can also move a collar by unbinding it from another animal.';
+
+  @override
+  String get activityBindTitle => 'Bind activity device';
+
+  @override
+  String activityDailyTitle(Object days) {
+    return 'Last $days days · daily';
+  }
+
+  @override
+  String activityDashboardSummary(Object heat, Object rising) {
+    return '$heat heat signs · $rising rising';
+  }
+
+  @override
+  String activityDevice(Object serial, Object since) {
+    return 'Device $serial · last data $since';
+  }
+
+  @override
+  String activityDeviceNoData(Object serial) {
+    return 'Device $serial · no data yet';
+  }
+
+  @override
+  String get activityEmpty =>
+      'This animal has no activity device. A neck-worn activity collar or a leg pedometer measures movement; when movement rises well above the animal\'s own usual level you get a \"Heat sign\" alert.';
+
+  @override
+  String get activityErrorAnimalHasDevice =>
+      'This animal already has an activity device. Unbind it first.';
+
+  @override
+  String get activityErrorNotActivityDevice =>
+      'This is not an activity device; only collars or pedometers can be bound to an animal.';
+
+  @override
+  String get activityHourlyTitle => 'Last 48 hours · hourly';
+
+  @override
+  String activityLastHeat(Object when) {
+    return 'last sign $when';
+  }
+
+  @override
+  String get activityLoadFailed => 'Could not load activity';
+
+  @override
+  String get activityNoDataYet => 'Device bound; no data has arrived yet.';
+
+  @override
+  String activityRise(Object value) {
+    return 'rise $value';
+  }
+
+  @override
+  String get activityRiseUnknown => 'rise —';
+
+  @override
+  String activityRumination(Object minutes) {
+    return 'Rumination (last 24 h): $minutes min';
+  }
+
+  @override
+  String get activityScreenEmpty =>
+      'No animal has an activity device yet. Bind a collar or pedometer from the Activity card on the animal page.';
+
+  @override
+  String get activitySeeAll => 'Open list';
+
+  @override
+  String get activitySelectAnimal => 'Select an animal for details';
+
+  @override
+  String get activityStatusHeat => 'Heat sign';
+
+  @override
+  String get activityStatusHeatHint =>
+      'Movement is well above the animal\'s usual. Confirm visually; record it from the breeding card or the alert via \"Record heat\".';
+
+  @override
+  String get activityStatusLearning => 'Learning';
+
+  @override
+  String get activityStatusLearningHint =>
+      'Learning the animal\'s usual movement; alerts need at least 5 days of data.';
+
+  @override
+  String get activityStatusNoData => 'No data';
+
+  @override
+  String get activityStatusNoDataHint =>
+      'No data from the device in the last 3 hours; check that the collar is fitted and charged.';
+
+  @override
+  String get activityStatusNormal => 'Normal';
+
+  @override
+  String get activityStatusPregnant => 'Pregnant';
+
+  @override
+  String get activityStatusRising => 'Rising';
+
+  @override
+  String get activityTitle => 'Activity';
+
+  @override
+  String get activityUnbind => 'Unbind device';
+
+  @override
+  String activityUnbindBody(Object serial) {
+    return '$serial will be unbound from this animal. Data so far stays with this animal.';
+  }
+
+  @override
+  String get activityUnbindDone => 'Device unbound';
+
+  @override
+  String get activityUnbindTitle => 'Unbind device?';
+
+  @override
+  String get alertTitleHeatDetected => 'Heat sign';
+
+  @override
+  String get alertTitleHeatExpected => 'Expected heat';
+
+  @override
   String get alertsAcknowledged => 'read';
 
   @override
@@ -115,10 +255,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get alertsEmpty => 'No open alerts';
 
   @override
+  String get alertsHeatNoteFromActivity => 'From activity alert';
+
+  @override
   String get alertsLoadFailed => 'Could not load alerts';
 
   @override
   String get alertsMarkRead => 'Mark read';
+
+  @override
+  String get alertsRecordHeat => 'Record heat';
 
   @override
   String alertsRecoveredAt(Object time) {
@@ -3076,6 +3222,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get themeTitle => 'Theme';
 
   @override
+  String get thresholdsActivityRise => 'Heat (activity rise)';
+
+  @override
   String get thresholdsAlertHold => 'Alert delay';
 
   @override
@@ -3136,6 +3285,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get thresholdsErrorAboveRed =>
       'Must be greater than the red threshold';
+
+  @override
+  String get thresholdsErrorActivityRiseRange => 'Must be between 30 and 300';
 
   @override
   String get thresholdsErrorBelowExpected =>
@@ -3204,6 +3356,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get thresholdsGreenLimit => 'Green threshold';
+
+  @override
+  String get thresholdsHeatGroupHint =>
+      'For an animal with a collar or pedometer, a \"Heat sign\" alert fires when movement in the last 12 hours exceeds the previous 7 days\' average for the same hours by this much.';
+
+  @override
+  String get thresholdsHeatGroupTitle => 'Heat (activity)';
 
   @override
   String get thresholdsHighYield => 'High yield upper threshold';
@@ -3682,15 +3841,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get whatsNewItem1 =>
-      'Early mastitis risk: an alert when milking flow drops well below the animal\'s own average (adjust on the thresholds screen).';
+      'Heat detection from activity: bind an activity collar or pedometer to an animal (animal page → Activity); when movement rises well above its own usual level you get a \"Heat sign\" alert and can \"Record heat\" in one tap.';
 
   @override
   String get whatsNewItem2 =>
-      'Ordered suggestions for farms without readers: the picker puts the animal that usually follows the one in front at the top; \"Confirm group as is\" fills empty points in one tap.';
+      'New Activity list (Dashboard and Herd): collared animals sorted by rise percentage; set the heat threshold on the thresholds screen.';
 
   @override
   String get whatsNewItem3 =>
-      'Dairy sharing (account card → Integrations): share farm totals with your dairy with your explicit consent; withdraw it any time.';
+      'Early mastitis risk: an alert when milking flow drops well below the animal\'s own average (adjust on the thresholds screen).';
 
   @override
   String get whatsNewItem4 => 'WhatsApp added to notification channels.';

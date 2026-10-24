@@ -18,8 +18,8 @@
   "setupLocation": "Isı stresi uyarısı için tesis konumunu girin",
   "whatsNewTitle": "Yenilikler",
   "whatsNewOk": "Tamam",
-  "whatsNewItem1": "Erken mastitis riski: sağım debisi hayvanın kendi ortalamasının belirgin altına düşünce uyarı (eşik ekranından ayarlanır).",
-  "whatsNewItem2": "Okuyucusuz çiftlikte sıralı öneri: seçici, öndeki noktadaki hayvanın genelde arkasından geleni en üste koyar; \"Grubu aynen onayla\" boş noktaları tek dokunuşla doldurur.",
-  "whatsNewItem3": "Mandıra paylaşımı (hesap kartı → Entegrasyonlar): açık onayınızla mandıranıza çiftlik toplamlarını paylaşın; onay her an geri alınır.",
+  "whatsNewItem1": "Aktiviteden kızgınlık tespiti: hayvana aktivite tasması ya da pedometre bağlayın (hayvan sayfası → Aktivite); hareket kendi olağanının belirgin üstüne çıkınca \"Kızgınlık belirtisi\" uyarısı gelir, uyarıdan tek dokunuşla \"Kızgınlığı kaydet\".",
+  "whatsNewItem2": "Yeni Aktivite listesi (Panel ve Sürü): tasmalı hayvanlar artış yüzdesine göre sıralı; kızgınlık eşiği eşik ekranından ayarlanır.",
+  "whatsNewItem3": "Erken mastitis riski: sağım debisi hayvanın kendi ortalamasının belirgin altına düşünce uyarı (eşik ekranından ayarlanır).",
   "whatsNewItem4": "Bildirim kanallarına WhatsApp eklendi."
 }

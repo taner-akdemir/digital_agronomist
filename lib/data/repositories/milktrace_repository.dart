@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:milktrace/data/models/activity.dart';
 import 'package:milktrace/data/models/alert.dart';
 import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/animal_group.dart';
@@ -171,6 +172,18 @@ abstract interface class MilkTraceRepository {
   Future<List<Vacuum>> vacuums({String? hallId});
   Future<List<Spout>> spouts({String? vacuumId});
   Future<List<Device>> devices();
+
+  /// Aktivite cihazını hayvana bağlar; [animalId] null ise çözer
+  /// (backend ADR 0145: `PUT /devices/:id/animal`). Hayvanda başka cihaz
+  /// varsa 409 `ANIMAL_HAS_DEVICE`, cihaz aktivite cihazı değilse 422
+  /// `NOT_ACTIVITY_DEVICE`.
+  Future<void> bindActivityDevice(String deviceId, String? animalId);
+
+  /// Hayvanın son 48 saatlik ve [days] günlük aktivitesi (ADR 0145).
+  Future<AnimalActivity> animalActivity(String animalId, {int days = 14});
+
+  /// Aktivite cihazı bağlı bütün hayvanlar (ADR 0145 overview).
+  Future<List<ActivityOverviewRow>> activityOverview();
 
   Future<List<Animal>> animals();
 

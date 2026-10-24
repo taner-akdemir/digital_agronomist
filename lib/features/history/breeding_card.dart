@@ -31,6 +31,74 @@ Future<List<BreedingEvent>> animalBreeding(Ref ref, String animalId) {
 Future<List<UpcomingBreeding>> upcomingBreeding(Ref ref) =>
     ref.watch(repositoryProvider).upcomingBreeding();
 
+/// Üreme kaydı ekleme akışı: diyalog → yazma kuyruğu (backend ADR 0140).
+///
+/// Kartın "Kayıt ekle"si ve aktivite uyarısının "Kızgınlığı kaydet"i
+/// (backend ADR 0145) AYNI akışı kullanır; uyarı tür, gün ve notu doldurur.
+/// Kaydedildiyse true döner (kuyruğa alınması da kayıt sayılır).
+Future<bool> addBreedingRecord(
+  BuildContext context,
+  WidgetRef ref, {
+  required String animalId,
+  String initialKind = 'insemination',
+  DateTime? initialDate,
+  String initialNote = '',
+  DateTime? today,
+}) async {
+  final draft = await showDialog<_Draft>(
+    context: context,
+    builder: (_) => BreedingDialog(
+      today: today ?? DateTime.now(),
+      initialKind: initialKind,
+      initialDate: initialDate,
+      initialNote: initialNote,
+    ),
+  );
+  if (draft == null || !context.mounted) return false;
+  final messenger = ScaffoldMessenger.of(context);
+  try {
+    final res = await ref
+        .read(writeQueueProvider.notifier)
+        .submit(
+          kind: PendingKind.breeding,
+          animalId: animalId,
+          subject: animalSubject(ref, animalId),
+          payload: PendingPayload.breeding(
+            kind: draft.kind,
+            date: draft.date,
+            sire: draft.sire,
+            result: draft.result,
+            note: draft.note,
+          ),
+        );
+    // Sunucuya ulaşılamadı: kayıt kuyrukta (backend ADR 0140).
+    if (res is WriteQueued) {
+      messenger.showSnackBar(writeQueuedSnackBar());
+      return true;
+    }
+    ref
+      ..invalidate(animalBreedingProvider(animalId))
+      // Durum ve tarihler hayvanın üstünde: liste, detay ve yaklaşanlar.
+      ..invalidate(animalsProvider)
+      ..invalidate(upcomingBreedingProvider);
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text(l10n.breedingAdded),
+        backgroundColor: AppColors.brandFill,
+      ),
+    );
+    return true;
+  } catch (e) {
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text(userMessage(e) ?? l10n.commonSaveFailed(e)),
+        backgroundColor: AppColors.dangerFill,
+      ),
+    );
+    return false;
+  }
+}
+
 /// Üreme kartı: durum (gebe / tohumlandı / boş), beklenen doğum ve önerilen
 /// kuruya çıkarma; son kayıtlar. BÜTÜN roller kayıt ekler (tohumlamayı
 /// çoğunlukla veteriner yapar); yanlış kaydı yalnızca sahip siler.
@@ -52,48 +120,8 @@ class BreedingCard extends ConsumerWidget {
       ..invalidate(upcomingBreedingProvider);
   }
 
-  Future<void> _add(BuildContext context, WidgetRef ref) async {
-    final draft = await showDialog<_Draft>(
-      context: context,
-      builder: (_) => _BreedingDialog(today: today ?? DateTime.now()),
-    );
-    if (draft == null || !context.mounted) return;
-    final messenger = ScaffoldMessenger.of(context);
-    try {
-      final res = await ref
-          .read(writeQueueProvider.notifier)
-          .submit(
-            kind: PendingKind.breeding,
-            animalId: animal.id,
-            subject: animalSubject(ref, animal.id),
-            payload: PendingPayload.breeding(
-              kind: draft.kind,
-              date: draft.date,
-              sire: draft.sire,
-              result: draft.result,
-            ),
-          );
-      // Sunucuya ulaşılamadı: kayıt kuyrukta (backend ADR 0140).
-      if (res is WriteQueued) {
-        messenger.showSnackBar(writeQueuedSnackBar());
-        return;
-      }
-      _refresh(ref);
-      messenger.showSnackBar(
-        SnackBar(
-          content: Text(l10n.breedingAdded),
-          backgroundColor: AppColors.brandFill,
-        ),
-      );
-    } catch (e) {
-      messenger.showSnackBar(
-        SnackBar(
-          content: Text(userMessage(e) ?? l10n.commonSaveFailed(e)),
-          backgroundColor: AppColors.dangerFill,
-        ),
-      );
-    }
-  }
+  Future<void> _add(BuildContext context, WidgetRef ref) =>
+      addBreedingRecord(context, ref, animalId: animal.id, today: today);
 
   Future<void> _delete(
     BuildContext context,
@@ -247,37 +275,63 @@ class BreedingCard extends ConsumerWidget {
 }
 
 class _Draft {
-  const _Draft(this.kind, this.date, this.sire, this.result);
+  const _Draft(this.kind, this.date, this.sire, this.result, this.note);
 
   final String kind;
   final DateTime date;
   final String sire;
   final String? result;
+  final String note;
 }
 
 /// Kayıt formu: tohumlama (boğa/teke) ya da gebelik kontrolü (gebe/boş).
-class _BreedingDialog extends StatefulWidget {
-  const _BreedingDialog({required this.today});
+///
+/// Uyarıdan açılınca tür, gün ve not dolu gelir (backend ADR 0145).
+class BreedingDialog extends StatefulWidget {
+  const BreedingDialog({
+    super.key,
+    required this.today,
+    this.initialKind = 'insemination',
+    this.initialDate,
+    this.initialNote = '',
+  });
 
   final DateTime today;
+  final String initialKind;
+  final DateTime? initialDate;
+  final String initialNote;
 
   @override
-  State<_BreedingDialog> createState() => _BreedingDialogState();
+  State<BreedingDialog> createState() => _BreedingDialogState();
 }
 
-class _BreedingDialogState extends State<_BreedingDialog> {
-  String _kind = 'insemination';
+class _BreedingDialogState extends State<BreedingDialog> {
+  late String _kind = widget.initialKind;
   String _result = 'pregnant';
-  late DateTime _date = DateTime(
-    widget.today.year,
-    widget.today.month,
-    widget.today.day,
-  );
+  late DateTime _date = _initialDate();
   final _sire = TextEditingController();
+  late final _note = TextEditingController(text: widget.initialNote);
+
+  /// Gün başı; seçicinin aralığına (son 2 yıl … bugün) kırpılır.
+  DateTime _initialDate() {
+    final today = DateTime(
+      widget.today.year,
+      widget.today.month,
+      widget.today.day,
+    );
+    final d = widget.initialDate?.toLocal();
+    if (d == null) return today;
+    final day = DateTime(d.year, d.month, d.day);
+    final first = today.subtract(const Duration(days: 365 * 2));
+    if (day.isAfter(today)) return today;
+    if (day.isBefore(first)) return first;
+    return day;
+  }
 
   @override
   void dispose() {
     _sire.dispose();
+    _note.dispose();
     super.dispose();
   }
 
@@ -351,6 +405,15 @@ class _BreedingDialogState extends State<_BreedingDialog> {
                 selected: {_result},
                 onSelectionChanged: (s) => setState(() => _result = s.first),
               ),
+            const SizedBox(height: AppSpacing.md),
+            TextField(
+              controller: _note,
+              maxLines: 2,
+              decoration: InputDecoration(
+                labelText: l10n.commonNoteOptional,
+                border: const OutlineInputBorder(borderRadius: AppRadius.mdAll),
+              ),
+            ),
           ],
         ),
       ),
@@ -366,6 +429,7 @@ class _BreedingDialogState extends State<_BreedingDialog> {
               _date,
               _kind == 'insemination' ? _sire.text.trim() : '',
               _kind == 'pregnancy_check' ? _result : null,
+              _note.text.trim(),
             ),
           ),
           child: Text(l10n.commonSave),

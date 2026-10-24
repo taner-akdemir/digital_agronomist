@@ -17,6 +17,7 @@ import 'package:milktrace/data/models/auth_user.dart';
 import 'package:milktrace/data/models/spout_update.dart';
 import 'package:milktrace/data/repositories/milktrace_repository.dart';
 import 'package:milktrace/data/repositories/mock_repository.dart';
+import 'package:milktrace/features/activity/activity_screen.dart';
 import 'package:milktrace/features/history/animal_detail_screen.dart';
 import 'package:milktrace/features/history/history_screen.dart';
 import 'package:milktrace/features/support/support.dart';
@@ -204,6 +205,25 @@ void main() {
       expect(find.byType(HistoryScreen), findsOneWidget);
     });
 
+    testWidgets(
+      '$name: aktivite listesi ${phone ? 'detayı açar' : 'iki bölme'}',
+      (tester) async {
+        await _open(tester, size);
+        await _go(tester, '/activity');
+
+        expect(find.byType(AnimalDetailScreen), findsNothing);
+        await tester.tap(find.byType(ActivityRowTile).first);
+        await tester.pumpAndSettle();
+
+        expect(find.byType(AnimalDetailScreen), findsOneWidget);
+        expect(
+          find.byType(ActivityScreen),
+          phone ? findsNothing : findsOneWidget,
+          reason: 'tablette liste detayın yanında',
+        );
+      },
+    );
+
     testWidgets('$name: ekranlar taşmadan çizilir', (tester) async {
       await _open(tester, size);
       for (final path in [
@@ -213,6 +233,7 @@ void main() {
         '/history/animal/$_animalId',
         '/devices',
         '/alerts',
+        '/activity',
         '/deliveries',
         '/animals/new',
         '/settings/thresholds',

@@ -242,6 +242,16 @@ class _AnimalsTab extends ConsumerWidget {
                   foregroundColor: AppColors.darkGreenColor,
                 ),
               ),
+              // Aktivite (backend ADR 0145) BÜTÜN rollere: kızgınlığı
+              // gözle doğrulayan çoğunlukla sağımcı ya da veteriner.
+              TextButton.icon(
+                onPressed: () => context.push('/activity'),
+                icon: const Icon(Icons.directions_walk),
+                label: Text(l10n.activityTitle),
+                style: TextButton.styleFrom(
+                  foregroundColor: AppColors.darkGreenColor,
+                ),
+              ),
               // Sürüyü ilk kez girerken tek tek eklemek yerine (ADR 0063).
               // Gruplar (ADR 0092): yönetim sahibin.
               if (isOwner)

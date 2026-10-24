@@ -18,6 +18,16 @@ void main() {
     expect(m.title, 'Düşük debi');
   });
 
+  // ADR 0145: "Kızgınlık belirtisi" bildirimi hayvan sayfasını açar.
+  test('kızgınlık bildirimi hayvan sayfasına gider', () {
+    final m = PushMessage.fromRemote(
+      title: 'Kızgınlık belirtisi',
+      data: {'type': 'heat_detected', 'animalId': 'a1'},
+    );
+
+    expect(m.route, '/history/animal/a1');
+  });
+
   test('hayvan kimliği yoksa uyarı listesine gider', () {
     final m = PushMessage.fromRemote(data: {'type': 'alert', 'alertId': 'al1'});
 

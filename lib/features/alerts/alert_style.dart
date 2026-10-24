@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:milktrace/domain/flow_color.dart';
+import 'package:milktrace/l10n/l10n.dart';
 
 /// Uyarının ikonu ve renk bandı.
 ///
@@ -48,6 +49,8 @@ abstract final class AlertStyle {
     'calving_due' => Icons.child_friendly_outlined,
     // Beklenen kızgınlık (backend ADR 0121).
     'heat_expected' => Icons.favorite_border,
+    // Aktiviteden kızgınlık belirtisi (backend ADR 0145).
+    'heat_detected' => Icons.favorite,
     // Isı stresi (backend ADR 0119).
     'heat_stress' => Icons.thermostat,
     // Aşı zamanı geldi (backend ADR 0112).
@@ -55,5 +58,15 @@ abstract final class AlertStyle {
     // Sayaç elle ölçüme göre sapıyor (backend ADR 0124).
     'meter_drift' => Icons.speed,
     _ => Icons.notifications_none_outlined,
+  };
+
+  /// Tür → kısa başlık; başlığı olmayan türde null (mesaj yeter).
+  ///
+  /// Üreme uyarılarının mesajı uzun (tarih aralığı, öneri); başlık ne
+  /// olduğunu tek bakışta söyler (backend ADR 0145 §10).
+  static String? title(String type) => switch (type) {
+    'heat_detected' => l10n.alertTitleHeatDetected,
+    'heat_expected' => l10n.alertTitleHeatExpected,
+    _ => null,
   };
 }

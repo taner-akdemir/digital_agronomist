@@ -44,6 +44,91 @@
   "accountUnitKilogram": "Kilogram",
   "accountUnitLitre": "Litre",
   "accountUsers": "Kullanıcılar",
+  "activityBind": "Cihaz bağla",
+  "activityBindDone": "Cihaz bağlandı",
+  "activityBindFailed": "Cihaz bağlanamadı: {error}",
+  "@activityBindFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "activityBindNoFree": "Bağlanabilecek boş aktivite cihazı yok. Cihazları işletmenize Milk Trace atar; tasmayı başka hayvandan çözerek de taşıyabilirsiniz.",
+  "activityBindTitle": "Aktivite cihazı bağla",
+  "activityDailyTitle": "Son {days} gün · günlük",
+  "@activityDailyTitle": {
+    "placeholders": {
+      "days": {}
+    }
+  },
+  "activityDashboardSummary": "{heat} kızgınlık belirtisi · {rising} artışta",
+  "@activityDashboardSummary": {
+    "placeholders": {
+      "heat": {},
+      "rising": {}
+    }
+  },
+  "activityDevice": "Cihaz {serial} · son veri {since}",
+  "@activityDevice": {
+    "placeholders": {
+      "serial": {},
+      "since": {}
+    }
+  },
+  "activityDeviceNoData": "Cihaz {serial} · henüz veri yok",
+  "@activityDeviceNoData": {
+    "placeholders": {
+      "serial": {}
+    }
+  },
+  "activityEmpty": "Bu hayvanda aktivite cihazı yok. Boyna takılan aktivite tasması ya da ayağa takılan pedometre hareketi ölçer; hareket hayvanın kendi olağanına göre belirgin artınca \"Kızgınlık belirtisi\" uyarısı gelir.",
+  "activityErrorAnimalHasDevice": "Bu hayvana zaten bir aktivite cihazı bağlı. Önce onu çözün.",
+  "activityErrorNotActivityDevice": "Bu cihaz aktivite cihazı değil; hayvana yalnızca tasma ya da pedometre bağlanır.",
+  "activityHourlyTitle": "Son 48 saat · saatlik",
+  "activityLastHeat": "son belirti {when}",
+  "@activityLastHeat": {
+    "placeholders": {
+      "when": {}
+    }
+  },
+  "activityLoadFailed": "Aktivite alınamadı",
+  "activityNoDataYet": "Cihaz bağlı; henüz veri gelmedi.",
+  "activityRise": "artış {value}",
+  "@activityRise": {
+    "placeholders": {
+      "value": {}
+    }
+  },
+  "activityRiseUnknown": "artış —",
+  "activityRumination": "Geviş (son 24 sa): {minutes} dk",
+  "@activityRumination": {
+    "placeholders": {
+      "minutes": {}
+    }
+  },
+  "activityScreenEmpty": "Henüz aktivite cihazı bağlı hayvan yok. Hayvan sayfasındaki Aktivite kartından tasma ya da pedometre bağlayın.",
+  "activitySeeAll": "Listeyi aç",
+  "activitySelectAnimal": "Ayrıntı için bir hayvan seçin",
+  "activityStatusHeat": "Kızgınlık belirtisi",
+  "activityStatusHeatHint": "Hareket hayvanın olağanının belirgin üstünde. Gözle doğrulayın; kayıt için üreme kartından ya da uyarıdan \"Kızgınlığı kaydet\".",
+  "activityStatusLearning": "Öğreniyor",
+  "activityStatusLearningHint": "Hayvanın olağan hareketi öğreniliyor; uyarı için en az 5 günlük veri gerekir.",
+  "activityStatusNoData": "Veri yok",
+  "activityStatusNoDataHint": "Son 3 saatte cihazdan veri gelmedi; tasmanın takılı ve şarjlı olduğunu kontrol edin.",
+  "activityStatusNormal": "Normal",
+  "activityStatusPregnant": "Gebe",
+  "activityStatusRising": "Artışta",
+  "activityTitle": "Aktivite",
+  "activityUnbind": "Cihazı çöz",
+  "activityUnbindBody": "{serial} bu hayvandan çözülecek. Şimdiye kadarki veri bu hayvanda kalır.",
+  "@activityUnbindBody": {
+    "placeholders": {
+      "serial": {}
+    }
+  },
+  "activityUnbindDone": "Cihaz çözüldü",
+  "activityUnbindTitle": "Cihazı çöz?",
+  "alertTitleHeatDetected": "Kızgınlık belirtisi",
+  "alertTitleHeatExpected": "Beklenen kızgınlık",
   "alertsAcknowledged": "okundu",
   "alertsBackOnlineAt": "geri geldi {time}",
   "@alertsBackOnlineAt": {
@@ -52,8 +137,10 @@
     }
   },
   "alertsEmpty": "Açık uyarı yok",
+  "alertsHeatNoteFromActivity": "Aktivite uyarısından",
   "alertsLoadFailed": "Uyarılar yüklenemedi",
   "alertsMarkRead": "Okundu",
+  "alertsRecordHeat": "Kızgınlığı kaydet",
   "alertsRecoveredAt": "düzeldi {time}",
   "@alertsRecoveredAt": {
     "placeholders": {
@@ -1771,6 +1858,7 @@
   "themeLight": "Açık",
   "themeSystem": "Cihaz",
   "themeTitle": "Tema",
+  "thresholdsActivityRise": "Kızgınlık (aktivite artışı)",
   "thresholdsAlertHold": "Uyarı bekleme",
   "thresholdsCalibrationNote": "Varsayılanlar tahmini başlangıç değerleridir. Irk, laktasyon dönemi ve işletmeye göre çok değişir; saha verisi ve ziraat mühendisi/veteriner görüşüyle kalibre edilmelidir.",
   "thresholdsClassGroupHint": "7 günlük ortalama alt eşiğin altındaysa kuruya aday, üst eşiğin üstündeyse yüksek verimli (§6.4).",
@@ -1789,6 +1877,7 @@
   "thresholdsErrorAboveLower": "Alt eşikten büyük olmalı",
   "thresholdsErrorAboveNoMilk": "Boş sağım sınırından büyük olmalı",
   "thresholdsErrorAboveRed": "Kırmızı eşiğinden büyük olmalı",
+  "thresholdsErrorActivityRiseRange": "30–300 arasında olmalı",
   "thresholdsErrorBelowExpected": "Sağım başına beklenenden küçük olmalı",
   "thresholdsErrorBelowGreen": "Yeşil eşiğinden küçük olmalı",
   "thresholdsErrorBelowHighYield": "Yüksek verim eşiğinden küçük olmalı",
@@ -1814,6 +1903,8 @@
   "thresholdsFlowGroupTitle": "Anlık debi bantları",
   "thresholdsFresh": "Taze laktasyon",
   "thresholdsGreenLimit": "Yeşil eşiği",
+  "thresholdsHeatGroupHint": "Tasma ya da pedometre takılı hayvanda son 12 saatin hareketi, aynı saatlerin önceki 7 günlük ortalamasından bu kadar fazlaysa \"Kızgınlık belirtisi\" uyarısı gelir.",
+  "thresholdsHeatGroupTitle": "Kızgınlık (aktivite)",
   "thresholdsHighYield": "Yüksek verim üst eşiği",
   "thresholdsLoadFailed": "Eşikler yüklenemedi",
   "thresholdsLowerLimit": "Alt eşik",
@@ -2094,9 +2185,9 @@
   "vaccineSelectAll": "Tümünü seç",
   "vaccineSelectNone": "Seçimi kaldır",
   "vaccineTitle": "Aşı takvimi",
-  "whatsNewItem1": "Erken mastitis riski: sağım debisi hayvanın kendi ortalamasının belirgin altına düşünce uyarı (eşik ekranından ayarlanır).",
-  "whatsNewItem2": "Okuyucusuz çiftlikte sıralı öneri: seçici, öndeki noktadaki hayvanın genelde arkasından geleni en üste koyar; \"Grubu aynen onayla\" boş noktaları tek dokunuşla doldurur.",
-  "whatsNewItem3": "Mandıra paylaşımı (hesap kartı → Entegrasyonlar): açık onayınızla mandıranıza çiftlik toplamlarını paylaşın; onay her an geri alınır.",
+  "whatsNewItem1": "Aktiviteden kızgınlık tespiti: hayvana aktivite tasması ya da pedometre bağlayın (hayvan sayfası → Aktivite); hareket kendi olağanının belirgin üstüne çıkınca \"Kızgınlık belirtisi\" uyarısı gelir, uyarıdan tek dokunuşla \"Kızgınlığı kaydet\".",
+  "whatsNewItem2": "Yeni Aktivite listesi (Panel ve Sürü): tasmalı hayvanlar artış yüzdesine göre sıralı; kızgınlık eşiği eşik ekranından ayarlanır.",
+  "whatsNewItem3": "Erken mastitis riski: sağım debisi hayvanın kendi ortalamasının belirgin altına düşünce uyarı (eşik ekranından ayarlanır).",
   "whatsNewItem4": "Bildirim kanallarına WhatsApp eklendi.",
   "whatsNewOk": "Tamam",
   "whatsNewTitle": "Yenilikler",

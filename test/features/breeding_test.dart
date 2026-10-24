@@ -87,7 +87,7 @@ void main() {
 
     await tester.tap(find.text('Kayıt ekle'));
     await tester.pumpAndSettle();
-    await tester.enterText(find.byType(TextField), 'HO-123');
+    await tester.enterText(find.byType(TextField).first, 'HO-123');
     await tester.tap(find.text('Kaydet'));
     await tester.pumpAndSettle();
 

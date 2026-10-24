@@ -9,6 +9,8 @@ import 'package:milktrace/data/models/animal.dart';
 import 'package:milktrace/data/models/dashboard_summary.dart';
 import 'package:milktrace/data/models/species.dart';
 import 'package:milktrace/domain/yield_class.dart';
+import 'package:milktrace/features/activity/activity_dashboard_card.dart';
+import 'package:milktrace/features/activity/activity_providers.dart';
 import 'package:milktrace/features/alerts/alert_style.dart';
 import 'package:milktrace/features/alerts/alerts_providers.dart';
 import 'package:milktrace/features/dashboard/dashboard_providers.dart';
@@ -43,6 +45,7 @@ class DashboardScreen extends ConsumerWidget {
           ..invalidate(dashboardSummaryProvider)
           ..invalidate(alertListProvider)
           ..invalidate(upcomingBreedingProvider)
+          ..invalidate(activityOverviewProvider)
           ..invalidate(deliveriesProvider);
         await ref.read(dashboardSummaryProvider.future);
       },
@@ -88,6 +91,8 @@ class DashboardScreen extends ConsumerWidget {
                     const _AlertsCard(),
                     const DeliveryCard(),
                     const UpcomingBreedingCard(),
+                    const ActivityDashboardCard(),
+                    const ActivityDashboardCard(),
                   ],
                 ),
         ),

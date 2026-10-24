@@ -51,7 +51,7 @@ Future<void> pumpScreen(
 
   // Form uzun; ListView yalnızca görüneni kurduğu için Kaydet düğmesi
   // kısa yüzeyde hiç build edilmiyordu.
-  tester.view.physicalSize = const Size(1200, 7500);
+  tester.view.physicalSize = const Size(1200, 8400);
   tester.view.devicePixelRatio = 3;
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);
@@ -239,5 +239,28 @@ void main() {
 
     await tapSave(tester);
     expect(repo.thresholdWrites, isEmpty);
+  });
+
+  // Aktivite kızgınlık eşiği (backend ADR 0145): gelmezse 80 gösterilir,
+  // 30–300 dışı reddedilir, geçerli değer gönderilir.
+  testWidgets('kızgınlık aktivite artışı eşiği doğrulanır ve kaydedilir', (
+    tester,
+  ) async {
+    await pumpScreen(tester);
+
+    final field = find.widgetWithText(
+      TextFormField,
+      'Kızgınlık (aktivite artışı)',
+    );
+    expect(tester.widget<TextFormField>(field).controller!.text, '80');
+
+    await enter(tester, 'Kızgınlık (aktivite artışı)', '20');
+    expect(find.text('30–300 arasında olmalı'), findsOneWidget);
+    await tapSave(tester);
+    expect(repo.thresholdWrites, isEmpty);
+
+    await enter(tester, 'Kızgınlık (aktivite artışı)', '120');
+    await tapSave(tester);
+    expect(repo.thresholdWrites.single.activityRisePct, 120);
   });
 }

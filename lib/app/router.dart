@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:milktrace/core/app_build.dart';
 import 'package:milktrace/data/models/auth_state.dart';
+import 'package:milktrace/features/activity/activity_screen.dart';
 import 'package:milktrace/features/alerts/alerts_screen.dart';
 import 'package:milktrace/features/assistant/assistant_screen.dart';
 import 'package:milktrace/features/audit/audit_screen.dart';
@@ -174,6 +175,8 @@ GoRouter router(Ref ref) {
       ),
       // Tank teslimleri (backend ADR 0089): panodaki karttan.
       GoRoute(path: '/deliveries', builder: (_, _) => const DeliveriesScreen()),
+      // Aktivite listesi (backend ADR 0145): panodan ve Sürü'den, bütün roller.
+      GoRoute(path: '/activity', builder: (_, _) => const ActivityScreen()),
       // Aşı takvimi (backend ADR 0112): Geçmiş → Hayvanlar, bütün roller.
       GoRoute(
         path: '/vaccinations',

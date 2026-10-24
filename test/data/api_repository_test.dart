@@ -1085,4 +1085,97 @@ void main() {
       throwsA(isA<DioException>()),
     );
   });
+
+  // Aktiviteden kızgınlık (backend ADR 0145).
+  test('aktivite: hayvan, overview ve bağlama uçları', () async {
+    final r = rig((o) async {
+      if (o.path == '/activity/overview') {
+        return okEnvelope2([
+          {
+            'animalId': 'a1',
+            'tag': 'TR1',
+            'name': 'Sarıkız',
+            'serial': 'ACT-1',
+            'lastSeen': '2026-10-25T12:00:00Z',
+            'risePct': 140.0,
+            'status': 'heat',
+            'lastHeatDetectedAt': '2026-10-25T09:05:00Z',
+          },
+        ]);
+      }
+      if (o.method == 'PUT') return okEnvelope({});
+      return okEnvelope({
+        'animalId': 'a1',
+        'device': {'id': 'd1', 'serial': 'ACT-1', 'lastSeen': null},
+        'hourly': [
+          {'hour': '2026-10-25T11:00:00Z', 'steps': 340},
+        ],
+        'daily': [],
+        'status': 'heat',
+      });
+    });
+
+    final a = await r.repo.animalActivity('a1');
+    expect(r.adapter.requests.last.path, '/activity/animals/a1');
+    expect(r.adapter.requests.last.queryParameters, {'days': 14});
+    expect(a.hourly.single.steps, 340);
+    expect(a.device!.id, 'd1');
+
+    final rows = await r.repo.activityOverview();
+    expect(rows.single.risePct, 140);
+    expect(rows.single.status, 'heat');
+
+    await r.repo.bindActivityDevice('d1', 'a1');
+    expect(r.adapter.requests.last.method, 'PUT');
+    expect(r.adapter.requests.last.path, '/devices/d1/animal');
+    expect(r.adapter.requests.last.data, {'animalId': 'a1'});
+    // Çözme: boş dize (sözleşme), null değil.
+    await r.repo.bindActivityDevice('d1', null);
+    expect(r.adapter.requests.last.data, {'animalId': ''});
+  });
+
+  test('cihazda tür ve bağlı hayvan; eski sunucuda sayaç sayılır', () async {
+    final r = rig(
+      (o) async => okEnvelope2([
+        {'id': 'm1', 'serialNo': 'MT-1', 'status': 'online'},
+        {
+          'id': 'd1',
+          'serialNo': 'ACT-1',
+          'status': 'online',
+          'kind': 'activity_tag',
+          'animalId': 'a1',
+          'animalTag': 'TR1',
+        },
+      ]),
+    );
+    final list = await r.repo.devices();
+    expect(list.first.kind, 'milk_meter');
+    expect(list.first.isActivityTag, isFalse);
+    expect(list.last.isActivityTag, isTrue);
+    expect(list.last.animalTag, 'TR1');
+  });
+
+  test('eşikte aktivite artışı: gelmezse 80, kaydederken gönderilir', () {
+    final t = Thresholds.fromJson({
+      'speciesId': '0192a1f0-0020-7000-8000-000000000001',
+      'flowLow': 1.0,
+      'flowHigh': 2.5,
+      'yieldGreenPct': 90,
+      'yieldRedPct': 60,
+      'rampUpSec': 60,
+      'alertHoldSec': 30,
+      'endFlowThreshold': 0.2,
+      'endGraceSec': 10,
+      'dryOffDailyMl': 8000,
+      'highYieldDailyMl': 30000,
+      'expectedPerMilkingMl': 11000,
+      'tenantScoped': false,
+      'declinePct': 20,
+      'noMilkMl': 100,
+      'noMilkMilkings': 4,
+      'freshLactationDays': 30,
+    });
+    expect(t.activityRisePct, 80);
+    expect(t.copyWith(activityRisePct: 120).toJson()['activityRisePct'], 120);
+  });
 }

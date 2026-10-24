@@ -146,6 +146,7 @@ class _FormState extends ConsumerState<_Form> {
       'density': TextEditingController(text: _num(t.milkDensity)),
       'conductivity': TextEditingController(text: '${t.conductivityRisePct}'),
       'flowDrop': TextEditingController(text: '${t.flowDropPct}'),
+      'activityRise': TextEditingController(text: '${t.activityRisePct}'),
     };
   }
 
@@ -273,6 +274,14 @@ class _FormState extends ConsumerState<_Form> {
               _field('flowDrop', l10n.thresholdsFlowDrop, '%'),
             ],
           ),
+          // Aktiviteden kızgınlık (backend ADR 0145).
+          _Group(
+            title: l10n.thresholdsHeatGroupTitle,
+            hint: l10n.thresholdsHeatGroupHint,
+            children: [
+              _field('activityRise', l10n.thresholdsActivityRise, '%'),
+            ],
+          ),
           _Group(
             title: l10n.thresholdsDensityGroupTitle,
             hint: l10n.thresholdsDensityGroupHint,
@@ -334,9 +343,12 @@ class _FormState extends ConsumerState<_Form> {
       'conductivity' when v < 5 || v > 100 =>
         l10n.thresholdsErrorConductivityRange,
       'flowDrop' when v < 10 || v > 90 => l10n.thresholdsErrorFlowDropRange,
+      'activityRise' when v < 30 || v > 300 =>
+        l10n.thresholdsErrorActivityRiseRange,
       'decline' ||
       'conductivity' ||
       'flowDrop' ||
+      'activityRise' ||
       'noMilk' ||
       'noMilkCount' when v != v.roundToDouble() => l10n.thresholdsErrorInteger,
       // Beklenen sağım hacmine eşit bir "boş sağım" sınırı normal sağılan
@@ -373,6 +385,7 @@ class _FormState extends ConsumerState<_Form> {
       milkDensity: _value('density')!,
       conductivityRisePct: _value('conductivity')!.round(),
       flowDropPct: _value('flowDrop')!.round(),
+      activityRisePct: _value('activityRise')!.round(),
     );
 
     try {
