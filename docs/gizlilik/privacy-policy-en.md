@@ -10,8 +10,10 @@
 >
 > **19.10.2026:** Türkçe metindeki asistan değişikliği (dış model kalktı, yerel arama)
 > aynı gün çevrildi.
+>
+> **30.10.2026:** KEP adresi ve web adresi (https://albiferro.com) Türkçe metinle aynı gün düzeltildi.
 
-**Last updated:** 19 October 2026
+**Last updated:** 30 October 2026
 
 This is an English translation provided for convenience. If it differs from the Turkish
 version (https://milktrace.com.tr/gizlilik), the Turkish version prevails.
@@ -24,7 +26,7 @@ panel are described in detail in the Cookie Policy (https://milktrace.com.tr/en/
 
 ## 1. Who provides the service
 
-Albiferro Yazılım ve Sistem Limited Şirketi (Albiferro Software & System Limited Company), Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara, Türkiye; Tax office: Etimesgut, Ankara, Türkiye; tax ID (VKN) 0501474977; MERSİS (Central Registry) No 0050147497700001. Email: info@milktrace.com.tr; registered electronic mail (KEP): taner.akdemir@hs01.kep.tr; web: https://algebransoft.com.
+Albiferro Yazılım ve Sistem Limited Şirketi (Albiferro Software & System Limited Company), Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara, Türkiye; Tax office: Etimesgut, Ankara, Türkiye; tax ID (VKN) 0501474977; MERSİS (Central Registry) No 0050147497700001. Email: info@milktrace.com.tr; registered electronic mail (KEP): albiferroyazilim@hs01.kep.tr; web: https://albiferro.com.
 
 Milk Trace is provided to businesses (farms). The accounts of the people who use the app are
 opened on behalf of the business by the platform administrator; accounts cannot be created
@@ -235,7 +237,7 @@ preferences"** link at the bottom of every page; details are in the Cookie Polic
 Under Article 11 of KVKK you have the right to learn whether your data is processed, to
 request information, to request its correction or deletion, to object and to request
 compensation for damages. Requests: info@milktrace.com.tr or by registered electronic mail
-(KEP) to taner.akdemir@hs01.kep.tr. **You can delete your account
+(KEP) to albiferroyazilim@hs01.kep.tr. **You can delete your account
 yourself:** in the app, account card → "Delete my account", or at
 https://milktrace.com.tr/en/delete-account (with your password). If you are the sole owner
 of a business, contact us first so that the business is not left without an owner. When the

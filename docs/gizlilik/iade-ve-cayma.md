@@ -6,8 +6,10 @@
 > Karar (01.10.2026): cayma istisnası m.15/1-(ğ), onay ödeme sırasında alınır; başlamış
 > dönemde kısmi iade yok (Spitfire ile aynı). İadeyi platform yöneticisi ödeme servisinden
 > elle yapar; backend iadeyi kendiliğinden işler.
+>
+> **30.10.2026:** hükümler aynı; satıcı iletişim bilgisi düzeltmesiyle birlikte sürüm 2026-10-30.1.
 
-**Sürüm:** 2026-10-16.1
+**Sürüm:** 2026-10-30.1
 
 ## Cayma hakkı
 

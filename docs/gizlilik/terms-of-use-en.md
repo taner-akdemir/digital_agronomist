@@ -5,8 +5,10 @@
 > `https://milktrace.com.tr/en/terms` adresinde yayımlar (`scripts/sync-legal.sh`).
 > `[LIABILITY CAP]` Türkçedeki `[SORUMLULUK ÜST SINIRI]` ile birlikte doldurulur.
 > `>` blokları yayımlanmaz.
+>
+> **30.10.2026:** KEP adresi ve web adresi (https://albiferro.com) Türkçe metinle aynı gün düzeltildi.
 
-**Last updated:** 16 October 2026
+**Last updated:** 30 October 2026
 
 This is an English translation provided for convenience. If it differs from the Turkish
 version (https://milktrace.com.tr/kullanim-kosullari), the Turkish version prevails.
@@ -17,7 +19,7 @@ These terms govern the use of the Milk Trace service (the "Service") — the mob
 web panel (milktrace.com.tr) and the API — provided by Albiferro Yazılım ve Sistem Limited Şirketi (Albiferro Software & System Limited Company;
 Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara, Türkiye;
 Tax office: Etimesgut, Ankara, Türkiye; tax ID (VKN) 0501474977; MERSİS (Central Registry) No 0050147497700001; info@milktrace.com.tr; registered electronic
-mail (KEP): taner.akdemir@hs01.kep.tr; https://algebransoft.com). By using the Service you accept these
+mail (KEP): albiferroyazilim@hs01.kep.tr; https://albiferro.com). By using the Service you accept these
 terms.
 
 When a subscription is purchased, the Distance Sales Agreement, the Preliminary Information

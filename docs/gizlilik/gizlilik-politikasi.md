@@ -22,8 +22,11 @@
 > cevap yardım merkezinde Milk Trace sunucusunda yerel aramayla bulunur. Anthropic
 > alıcılardan ve yurt dışı aktarımdan çıkarıldı; token/maliyet kaydı, günlük soru hakkı ve
 > ilk kullanım bilgilendirmesi (yerel depo işareti) kalktı.
+>
+> **30.10.2026:** KEP adresi şirketin kayıtlı KEP'iyle (albiferroyazilim@hs01.kep.tr) ve web adresi
+> https://albiferro.com ile düzeltildi; işleme amaçları ve aktarımlar aynı.
 
-**Son güncelleme:** 19 Ekim 2026
+**Son güncelleme:** 30 Ekim 2026
 
 Milk Trace, süt hayvancılığı işletmelerinin sağım noktalarındaki sayaçlardan gelen
 ölçümlerle her hayvanın ne kadar süt verdiğini izlemesini sağlayan bir hizmettir. Bu
@@ -34,7 +37,7 @@ panelinde kullanılan çerezler ve tarayıcı depolaması ayrıca Çerez Politik
 
 ## 1. Hizmeti sunan
 
-Albiferro Yazılım ve Sistem Limited Şirketi, Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara; Etimesgut Vergi Dairesi, VKN 0501474977, MERSİS No 0050147497700001. E-posta: info@milktrace.com.tr; KEP: taner.akdemir@hs01.kep.tr; web: https://algebransoft.com.
+Albiferro Yazılım ve Sistem Limited Şirketi, Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara; Etimesgut Vergi Dairesi, VKN 0501474977, MERSİS No 0050147497700001. E-posta: info@milktrace.com.tr; KEP: albiferroyazilim@hs01.kep.tr; web: https://albiferro.com.
 
 Milk Trace işletmelere (çiftliklere) sunulur. Uygulamayı kullanan kişilerin hesaplarını
 işletme adına platform yöneticisi açar; uygulama içinden hesap oluşturulmaz.
@@ -228,7 +231,7 @@ ayrıntılar Çerez Politikası'ndadır (https://milktrace.com.tr/cerez-politika
 
 KVKK md. 11 uyarınca verilerinizin işlenip işlenmediğini öğrenme, bilgi isteme,
 düzeltilmesini ya da silinmesini isteme, itiraz etme ve zararın giderilmesini isteme
-haklarına sahipsiniz. Başvuru: info@milktrace.com.tr ya da KEP ile taner.akdemir@hs01.kep.tr.
+haklarına sahipsiniz. Başvuru: info@milktrace.com.tr ya da KEP ile albiferroyazilim@hs01.kep.tr.
 **Hesabınızı kendiniz silebilirsiniz:**
 uygulamada hesap kartı → "Hesabımı sil" ya da https://milktrace.com.tr/hesap-sil
 (parolanızla). Bir işletmenin tek sahibiyseniz işletme sahipsiz kalmasın diye önce bize

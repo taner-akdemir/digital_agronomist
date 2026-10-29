@@ -11,12 +11,15 @@
 > **11.10.2026:** resmî unvan, VKN, KEP ve web adresi eklendi; çerezler, izinle çalışan
 > Cloudflare Web Analytics ve dönüşüm sayacı (backend ADR 0131) ile Cloudflare (ABD)
 > aktarımı sitenin çerez politikasıyla aynı hukuki sebeplerle eklendi.
+>
+> **30.10.2026:** KEP adresi şirketin kayıtlı KEP'iyle (albiferroyazilim@hs01.kep.tr) ve web adresi
+> https://albiferro.com ile düzeltildi; işleme amaçları ve aktarımlar aynı.
 
-**Son güncelleme:** 16 Ekim 2026
+**Son güncelleme:** 30 Ekim 2026
 
 ## Veri sorumlusu
 
-Albiferro Yazılım ve Sistem Limited Şirketi, Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara; Etimesgut Vergi Dairesi, VKN 0501474977, MERSİS No 0050147497700001. E-posta: info@milktrace.com.tr; KEP: taner.akdemir@hs01.kep.tr; web: https://algebransoft.com.
+Albiferro Yazılım ve Sistem Limited Şirketi, Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara; Etimesgut Vergi Dairesi, VKN 0501474977, MERSİS No 0050147497700001. E-posta: info@milktrace.com.tr; KEP: albiferroyazilim@hs01.kep.tr; web: https://albiferro.com.
 
 ## İşlenen kişisel veriler ve amaçları
 
@@ -92,5 +95,5 @@ işlemlerin aktarılan kişilere bildirilmesini isteme, münhasıran otomatik si
 sonucu aleyhe bir sonuca itiraz etme ve kanuna aykırı işleme sebebiyle zararın giderilmesini
 talep etme.
 
-Başvuru: info@milktrace.com.tr, KEP ile taner.akdemir@hs01.kep.tr ya da yazılı olarak Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara adresine, Veri Sorumlusuna Başvuru Usul ve Esasları Hakkında
+Başvuru: info@milktrace.com.tr, KEP ile albiferroyazilim@hs01.kep.tr ya da yazılı olarak Atakent Mah. 1472. Cad. No: 5 D: 3, Elvankent, Etimesgut / Ankara adresine, Veri Sorumlusuna Başvuru Usul ve Esasları Hakkında
 Tebliğ'e uygun olarak. Başvurular en geç 30 gün içinde ücretsiz sonuçlandırılır.

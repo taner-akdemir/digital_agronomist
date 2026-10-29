@@ -14,14 +14,17 @@
 >    olduğu §1'de mesafeli satış lehine yazıldı — doğrulanmalı.
 > 3. Uygulama içinde ya da girişte bu koşulların onayı alınmıyor; onay mekanizması
 >    gerekip gerekmediği hukukçuya sorulmalı.
+>
+> **30.10.2026:** KEP adresi (albiferroyazilim@hs01.kep.tr) ve web adresi (https://albiferro.com)
+> düzeltildi; hükümler aynı.
 
-**Son güncelleme:** 16 Ekim 2026
+**Son güncelleme:** 30 Ekim 2026
 
 ## 1. Kapsam
 
 Bu koşullar, Albiferro Yazılım ve Sistem Limited Şirketi (Atakent Mah. 1472. Cad.
 No: 5 D: 3, Elvankent, Etimesgut / Ankara; Etimesgut Vergi Dairesi, VKN 0501474977, MERSİS No 0050147497700001;
-info@milktrace.com.tr; KEP: taner.akdemir@hs01.kep.tr; https://algebransoft.com)
+info@milktrace.com.tr; KEP: albiferroyazilim@hs01.kep.tr; https://albiferro.com)
 tarafından sunulan Milk Trace hizmetinin ("Hizmet") — mobil uygulama, web paneli
 (milktrace.com.tr) ve API — kullanımını düzenler. Hizmeti kullanarak bu koşulları kabul
 etmiş olursunuz.

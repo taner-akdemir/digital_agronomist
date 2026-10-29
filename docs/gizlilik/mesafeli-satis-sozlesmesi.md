@@ -7,7 +7,7 @@
 > `[DOLDUR]` yerleri ve aşağıdaki açık sorular yayımdan önce kapanmalı. `>` blokları
 > yayımlanmaz.
 >
-> **Not (11.10.2026):** satıcı unvanı "Algebran Yazılım ve Danışmanlık" olarak düzeltildi;
+> **Not (11.10.2026):** satıcı unvanı o tarihteki işletmenin resmî unvanıyla düzeltildi;
 > vergi numarası, KEP ve web adresi eklendi (kullanıcı kararı, MERSİS yok). Yalnız satıcı
 > kimliği değişti; sözleşme hükümleri aynı olduğundan `billing.TermsVersion` (2026-10-01.1)
 > artırılmadı. Backend'deki satıcı ayarı (`BILLING_SELLER_NAME`/`_ADDRESS`, deploy
@@ -22,6 +22,11 @@
 > düzeltmesinden farklı olarak). Backend satıcı
 > ayarı (`BILLING_SELLER_NAME`/`_TAX_ID`/`_MERSIS`, deploy values `billing.seller.*`) aynı
 > bilgilerle güncellenir.
+> **Not (30.10.2026):** satıcının KEP adresi (albiferroyazilim@hs01.kep.tr) ve web adresi
+> (https://albiferro.com) düzeltildi. Hükümler aynı; mesafeli satış, ön bilgilendirme ve iade
+> metinleri birlikte `billing.TermsVersion` 2026-10-16.1 → 2026-10-30.1 artırıldı (siparişte
+> kayıtlı sürüm düzeltilmiş satıcı iletişim bilgisini ayırt etsin). Mevcut abonelere yeniden
+> onay sorulmaz; yeni sürüm bir sonraki ödemede onaylanır.
 > Hukukçuya: eski işletmeden yeni şirkete geçişte mevcut aboneliklerin devri/bildirimi gerekir mi?
 >
 > **Hukukçu için açık sorular:**
@@ -32,7 +37,7 @@
 >    ortamda anında ifa edilen hizmet) dayandırıldı; Alıcı'nın onayı ödeme sırasında ayrıca
 >    alınır ve kaydedilir. Spitfire'daki yaklaşımla aynı. Yeterli mi?
 
-**Sürüm:** 2026-10-16.1 · **Son güncelleme:** 16 Ekim 2026 (satıcı bilgileri)
+**Sürüm:** 2026-10-30.1 · **Son güncelleme:** 30 Ekim 2026 (satıcı iletişim bilgileri)
 
 ## 1. Taraflar
 
@@ -42,8 +47,8 @@
 - Vergi dairesi / no: Etimesgut Vergi Dairesi / 0501474977
 - MERSİS No: 0050147497700001
 - E-posta: info@milktrace.com.tr
-- KEP: taner.akdemir@hs01.kep.tr
-- Web: https://algebransoft.com
+- KEP: albiferroyazilim@hs01.kep.tr
+- Web: https://albiferro.com
 - Telefon: +90 534 797 18 45
 
 **ALICI:** ödeme sayfasında fatura bilgisi olarak girilen kişi ya da kuruluş (ad soyad veya

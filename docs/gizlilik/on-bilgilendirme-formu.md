@@ -4,8 +4,10 @@
 > m.5 yapısında. Sürümü mesafeli satış sözleşmesiyle ve backend `billing.TermsVersion` ile
 > AYNI. Ödeme sayfası bu formu sipariş özetiyle (dönem, kademe, net, KDV, toplam, alıcı)
 > birlikte, ödemeden ÖNCE gösterir. `>` blokları yayımlanmaz.
+>
+> **30.10.2026:** satıcının KEP ve web adresi düzeltildi; sürüm 2026-10-30.1 (mesafeli satış ile birlikte).
 
-**Sürüm:** 2026-10-16.1 · **Son güncelleme:** 16 Ekim 2026 (satıcı bilgileri)
+**Sürüm:** 2026-10-30.1 · **Son güncelleme:** 30 Ekim 2026 (satıcı iletişim bilgileri)
 
 Bu form, sözleşme kurulmadan önce Alıcı'yı bilgilendirmek için hazırlanmıştır.
 
@@ -16,8 +18,8 @@ Bu form, sözleşme kurulmadan önce Alıcı'yı bilgilendirmek için hazırlanm
 - Vergi dairesi / no: Etimesgut Vergi Dairesi / 0501474977
 - MERSİS No: 0050147497700001
 - E-posta: info@milktrace.com.tr
-- KEP: taner.akdemir@hs01.kep.tr
-- Web: https://algebransoft.com
+- KEP: albiferroyazilim@hs01.kep.tr
+- Web: https://albiferro.com
 - Telefon: +90 534 797 18 45
 
 ## 2. Hizmetin temel nitelikleri
