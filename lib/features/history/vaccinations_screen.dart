@@ -16,6 +16,7 @@ import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/providers/write_queue_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
+import 'package:milktrace/widgets/help_button.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'vaccinations_screen.g.dart';
@@ -248,6 +249,7 @@ class VaccinationsScreen extends ConsumerWidget {
             color: AppColors.darkGreenColor,
           ),
         ),
+        actions: const [HelpButton(slug: HelpSlug.healthRecords)],
       ),
       floatingActionButton: isOwner
           ? FloatingActionButton.extended(
@@ -389,7 +391,7 @@ class VaccinePlanRoute extends ConsumerWidget {
     if (plan != null) return VaccinePlanDueScreen(plan: plan);
     if (plans.hasValue) return const VaccinationsScreen();
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(actions: const [HelpButton(slug: HelpSlug.healthRecords)]),
       body: AsyncView(
         value: plans,
         errorMessage: l10n.vaccineLoadFailed,
@@ -443,6 +445,7 @@ class _VaccinePlanDueScreenState extends ConsumerState<VaccinePlanDueScreen> {
             color: AppColors.darkGreenColor,
           ),
         ),
+        actions: const [HelpButton(slug: HelpSlug.healthRecords)],
       ),
       body: AsyncView(
         value: due,

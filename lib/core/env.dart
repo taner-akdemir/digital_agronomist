@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:milktrace/l10n/l10n.dart';
 
 /// Uygulamanın hangi veri kaynağına bağlanacağı.
 enum ApiMode { mock, http }
@@ -63,8 +64,27 @@ abstract final class Env {
   static String siteUrl(String path) => '$siteBaseUrl$path';
 
   /// Yardım merkezi (backend ADR 0138): asistanın kaynakları ve destek
-  /// numarası yokken devretme hedefi.
-  static String get helpCenterUrl => siteUrl('/yardim');
+  /// numarası yokken devretme hedefi. Uygulamanın diline göre ([helpUrl]).
+  static String get helpCenterUrl => helpUrl(null, l10nLanguage);
+
+  /// Yardım makalesinin adresi, dile göre: Türkçe `/yardim/<slug>`,
+  /// İngilizce `/en/help/<slug>` (slug'lar iki dilde aynı). [slug] null ya
+  /// da boşsa yardım merkezinin ana sayfası. Ekranlardaki "?" düğmesi
+  /// (`HelpButton`) ve asistanın göreli kaynak bağlantıları buradan geçer.
+  static String helpUrl(String? slug, String language) {
+    final path = slug == null || slug.isEmpty ? '/yardim' : '/yardim/$slug';
+    return siteUrl(localizedSitePath(path, language));
+  }
+
+  /// Sitedeki göreli yolu dile uyarlar: İngilizcede `/yardim` ve altı
+  /// `/en/help`'e çevrilir (sorgu ve çapa korunur); başka yol ve Türkçe
+  /// olduğu gibi kalır.
+  static String localizedSitePath(String path, String language) {
+    if (language != 'en') return path;
+    final m = RegExp(r'^/yardim(?=$|[/?#])').firstMatch(path);
+    if (m == null) return path;
+    return '/en/help${path.substring(m.end)}';
+  }
 
   /// Gizlilik politikası (sitede herkese açık, CLAUDE.md §8).
   static String get privacyPolicyUrl => siteUrl('/gizlilik');

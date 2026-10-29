@@ -9,6 +9,7 @@ import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/settings_providers.dart';
 import 'package:milktrace/widgets/brand_mark.dart';
+import 'package:milktrace/widgets/help_button.dart';
 
 /// Giriş ekranı (§8.5 POST /auth/login).
 class LoginScreen extends ConsumerStatefulWidget {
@@ -246,7 +247,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             const Positioned(
               top: AppSpacing.xs,
               right: AppSpacing.xs,
-              child: _LanguageMenu(),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  HelpButton(slug: HelpSlug.firstSetup),
+                  _LanguageMenu(),
+                ],
+              ),
             ),
           ],
         ),

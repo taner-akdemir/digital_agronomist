@@ -102,5 +102,6 @@
   "languageTitle": "Dil",
   "languageAuto": "Cihaz dili",
   "languageTurkish": "Türkçe",
-  "languageEnglish": "English"
+  "languageEnglish": "English",
+  "commonHelpTooltip": "Bu ekranla ilgili yardım"
 }

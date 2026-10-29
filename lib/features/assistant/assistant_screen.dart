@@ -9,6 +9,7 @@ import 'package:milktrace/features/assistant/assistant_markdown.dart';
 import 'package:milktrace/features/assistant/assistant_providers.dart';
 import 'package:milktrace/features/support/support.dart';
 import 'package:milktrace/l10n/l10n.dart';
+import 'package:milktrace/widgets/help_button.dart';
 
 /// Yardım asistanı (backend ADR 0138): soru sunucuda yardım merkezinde
 /// aranır, cevap bulunan bölümdür. Dış servis yok; cevap hemen gelir.
@@ -99,6 +100,7 @@ class _AssistantScreenState extends ConsumerState<AssistantScreen> {
           ),
         ),
         actions: [
+          const HelpButton(slug: HelpSlug.assistant),
           IconButton(
             key: const Key('assistantNewConversation'),
             tooltip: l10n.assistantNewConversation,

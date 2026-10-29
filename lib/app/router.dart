@@ -41,6 +41,7 @@ import 'package:milktrace/features/write_queue/pending_writes.dart';
 import 'package:milktrace/features/write_queue/pending_writes_screen.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
+import 'package:milktrace/widgets/help_button.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'router.g.dart';
@@ -306,7 +307,10 @@ GoRouter router(Ref ref) {
       ),
     ],
     errorBuilder: (_, state) => Scaffold(
-      appBar: AppBar(title: Text(l10n.coreRouteNotFound)),
+      appBar: AppBar(
+        title: Text(l10n.coreRouteNotFound),
+        actions: const [HelpButton()],
+      ),
       body: Center(child: Text(l10n.coreRouteNotFoundBody('${state.uri}'))),
     ),
   );

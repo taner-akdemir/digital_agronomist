@@ -7,7 +7,7 @@ import 'package:milktrace/providers/settings_providers.dart';
 /// Yenilikler (backend ADR 0123). Notlar uygulamanın içinde, iki dilde
 /// (ARB `whatsNewItem*`). YENİ SÜRÜMDE: [whatsNewId]'yi değiştir ve
 /// maddeleri güncelle; kullanıcı güncellemeden sonra bir kez görür.
-const whatsNewId = '2026-10-25';
+const whatsNewId = '2026-10-30';
 
 /// Bu sürümün maddeleri.
 List<String> get whatsNewItems => [
@@ -15,6 +15,7 @@ List<String> get whatsNewItems => [
   l10n.whatsNewItem2,
   l10n.whatsNewItem3,
   l10n.whatsNewItem4,
+  l10n.whatsNewItem5,
 ];
 
 const _seenKey = 'whatsNew.seen';

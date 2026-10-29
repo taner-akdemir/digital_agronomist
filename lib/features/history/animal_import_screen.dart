@@ -13,6 +13,7 @@ import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
+import 'package:milktrace/widgets/help_button.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'animal_import_screen.g.dart';
@@ -55,6 +56,7 @@ class AnimalImportScreen extends ConsumerWidget {
             color: AppColors.darkGreenColor,
           ),
         ),
+        actions: const [HelpButton(slug: HelpSlug.animals)],
       ),
       body: AsyncView(
         value: ref.watch(speciesListProvider),

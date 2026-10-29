@@ -9,6 +9,7 @@ import 'package:milktrace/core/api_exception.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/adaptive.dart';
+import 'package:milktrace/widgets/help_button.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'feedback_screen.g.dart';
@@ -137,6 +138,7 @@ class _FeedbackScreenState extends ConsumerState<FeedbackScreen> {
             color: AppColors.darkGreenColor,
           ),
         ),
+        actions: const [HelpButton(slug: HelpSlug.feedback)],
       ),
       body: Form(
         key: _form,

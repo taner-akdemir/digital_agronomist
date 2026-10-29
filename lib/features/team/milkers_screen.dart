@@ -7,6 +7,7 @@ import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
+import 'package:milktrace/widgets/help_button.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'milkers_screen.g.dart';
@@ -59,6 +60,7 @@ class _MilkersScreenState extends ConsumerState<MilkersScreen> {
             color: AppColors.darkGreenColor,
           ),
         ),
+        actions: const [HelpButton(slug: HelpSlug.team)],
       ),
       body: RefreshIndicator(
         onRefresh: () => ref.refresh(milkersProvider(_days).future),

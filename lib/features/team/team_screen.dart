@@ -11,6 +11,7 @@ import 'package:milktrace/features/team/team_providers.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
+import 'package:milktrace/widgets/help_button.dart';
 
 /// İşletmenin kullanıcıları (backend ADR 0076). YALNIZCA işletme sahibi:
 /// operatör ve görüntüleyici ekler, rolünü değiştirir, askıya alır, siler.
@@ -38,6 +39,7 @@ class TeamScreen extends ConsumerWidget {
             color: AppColors.darkGreenColor,
           ),
         ),
+        actions: const [HelpButton(slug: HelpSlug.team)],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _add(context, ref),

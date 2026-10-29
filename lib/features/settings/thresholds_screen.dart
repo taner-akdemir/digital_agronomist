@@ -12,6 +12,7 @@ import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/adaptive.dart';
 import 'package:milktrace/widgets/async_view.dart';
+import 'package:milktrace/widgets/help_button.dart';
 
 /// Tür bazında eşik ayarları (§15.1 "eşik ayarları (owner)", §6.5).
 ///
@@ -42,6 +43,7 @@ class ThresholdsScreen extends ConsumerWidget {
             color: AppColors.darkGreenColor,
           ),
         ),
+        actions: const [HelpButton(slug: HelpSlug.thresholds)],
       ),
       body: AsyncView(
         value: species,

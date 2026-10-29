@@ -9,6 +9,7 @@ import 'package:milktrace/data/write_queue/pending_write.dart';
 import 'package:milktrace/features/write_queue/pending_writes.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/write_queue_providers.dart';
+import 'package:milktrace/widgets/help_button.dart';
 
 /// Gönderilmeyi bekleyen ve gönderilemeyen kayıtlar (backend ADR 0140).
 /// Bekleyenler "Şimdi gönder" ile hemen denenir; gönderilemeyenler yeniden
@@ -44,6 +45,7 @@ class PendingWritesScreen extends ConsumerWidget {
             color: AppColors.darkGreenColor,
           ),
         ),
+        actions: const [HelpButton(slug: HelpSlug.offline)],
       ),
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.lg),

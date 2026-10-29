@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/features/support/support.dart';
 import 'package:milktrace/l10n/l10n.dart';
+import 'package:milktrace/widgets/help_button.dart';
 
 /// Play Store sayfası (paket kimliği CLAUDE.md §7).
 final playStoreUri = Uri.parse(
@@ -40,64 +41,73 @@ class UpdateRequiredScreen extends ConsumerWidget {
       canPop: false,
       child: Scaffold(
         body: SafeArea(
-          child: Center(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(AppSpacing.xl),
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 420),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Icon(
-                      Icons.system_update,
-                      size: 64,
-                      color: AppColors.darkGreenColor,
-                    ),
-                    const SizedBox(height: AppSpacing.lg),
-                    Text(
-                      l10n.updateTitle,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.darkGreenColor,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.md),
-                    Text(
-                      android ? l10n.updateBodyAndroid : l10n.updateBodyIos,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: AppColors.onSurfaceMuted),
-                    ),
-                    if (storeUri != null) ...[
-                      const SizedBox(height: AppSpacing.xl),
-                      FilledButton.icon(
-                        onPressed: () =>
-                            ref.read(supportLauncherProvider)(storeUri),
-                        style: FilledButton.styleFrom(
-                          backgroundColor: AppColors.brandFill,
-                          padding: const EdgeInsets.symmetric(
-                            vertical: AppSpacing.lg,
-                          ),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: AppRadius.mdAll,
+          child: Stack(
+            children: [
+              Center(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(AppSpacing.xl),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 420),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Icon(
+                          Icons.system_update,
+                          size: 64,
+                          color: AppColors.darkGreenColor,
+                        ),
+                        const SizedBox(height: AppSpacing.lg),
+                        Text(
+                          l10n.updateTitle,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.darkGreenColor,
                           ),
                         ),
-                        icon: const Icon(Icons.shop),
-                        label: Text(
-                          android
-                              ? l10n.updatePlayButton
-                              : l10n.updateAppStoreButton,
+                        const SizedBox(height: AppSpacing.md),
+                        Text(
+                          android ? l10n.updateBodyAndroid : l10n.updateBodyIos,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: AppColors.onSurfaceMuted),
                         ),
-                      ),
-                    ],
-                    const SizedBox(height: AppSpacing.xl),
-                    const SupportButtons(),
-                  ],
+                        if (storeUri != null) ...[
+                          const SizedBox(height: AppSpacing.xl),
+                          FilledButton.icon(
+                            onPressed: () =>
+                                ref.read(supportLauncherProvider)(storeUri),
+                            style: FilledButton.styleFrom(
+                              backgroundColor: AppColors.brandFill,
+                              padding: const EdgeInsets.symmetric(
+                                vertical: AppSpacing.lg,
+                              ),
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: AppRadius.mdAll,
+                              ),
+                            ),
+                            icon: const Icon(Icons.shop),
+                            label: Text(
+                              android
+                                  ? l10n.updatePlayButton
+                                  : l10n.updateAppStoreButton,
+                            ),
+                          ),
+                        ],
+                        const SizedBox(height: AppSpacing.xl),
+                        const SupportButtons(),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
+              const Positioned(
+                top: AppSpacing.xs,
+                right: AppSpacing.xs,
+                child: HelpButton(slug: HelpSlug.updateRequired),
+              ),
+            ],
           ),
         ),
       ),

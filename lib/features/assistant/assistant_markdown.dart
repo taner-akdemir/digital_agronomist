@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:milktrace/app/theme.dart';
 import 'package:milktrace/core/env.dart';
+import 'package:milktrace/l10n/l10n.dart';
 
 /// Asistan cevabındaki markdown'ın KÜÇÜK ve güvenli bir alt kümesi:
 /// paragraf, başlık, madde ve sıralı liste; satır içinde **kalın**,
@@ -18,12 +19,15 @@ typedef MdInline = ({String text, bool bold, bool code, Uri? link});
 typedef MdBlock = ({MdBlockKind kind, String marker, List<MdInline> inlines});
 
 /// Bağlantı yalnızca http(s) olabilir; `/yardim/...` gibi göreli yol sitenin
-/// köküne bağlanır. Başka şema (javascript:, intent:, file:) null — metin
-/// düz yazı olarak kalır.
-Uri? assistantLinkUri(String raw) {
+/// köküne bağlanır ve uygulama dili İngilizceyse `/en/help/...` olur
+/// ([Env.localizedSitePath]; tam adres olduğu gibi kalır). Başka şema
+/// (javascript:, intent:, file:) null — metin düz yazı olarak kalır.
+Uri? assistantLinkUri(String raw, {String? language}) {
   final s = raw.trim();
   if (s.startsWith('/') && !s.startsWith('//')) {
-    return Uri.tryParse(Env.siteUrl(s));
+    return Uri.tryParse(
+      Env.siteUrl(Env.localizedSitePath(s, language ?? l10nLanguage)),
+    );
   }
   final u = Uri.tryParse(s);
   if (u == null || !u.hasAuthority) return null;

@@ -13,6 +13,7 @@ import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
+import 'package:milktrace/widgets/help_button.dart';
 import 'package:milktrace/widgets/text_prompt_dialog.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -233,6 +234,7 @@ class DeliveriesScreen extends ConsumerWidget {
             color: AppColors.darkGreenColor,
           ),
         ),
+        actions: const [HelpButton(slug: HelpSlug.deliveries)],
       ),
       floatingActionButton: canEnterDelivery(role)
           ? FloatingActionButton.extended(

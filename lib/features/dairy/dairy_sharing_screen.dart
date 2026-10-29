@@ -8,6 +8,7 @@ import 'package:milktrace/data/models/dairy.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
+import 'package:milktrace/widgets/help_button.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'dairy_sharing_screen.g.dart';
@@ -121,6 +122,7 @@ class DairySharingScreen extends ConsumerWidget {
             color: AppColors.darkGreenColor,
           ),
         ),
+        actions: const [HelpButton(slug: HelpSlug.dairySharing)],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _add(context, ref),

@@ -6,6 +6,7 @@ import 'package:milktrace/features/support/support.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/widgets/brand_mark.dart';
+import 'package:milktrace/widgets/help_button.dart';
 
 /// Mandıra hesabıyla girildiğinde TEK ekran (backend ADR 0137).
 ///
@@ -20,46 +21,56 @@ class DairyAccountScreen extends ConsumerWidget {
     final user = ref.watch(authProvider).user;
     return Scaffold(
       body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(AppSpacing.xl),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const BrandMark(size: 56),
-                const SizedBox(height: AppSpacing.lg),
-                Text(
-                  l10n.dairyAccountTitle,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.darkGreenColor,
-                  ),
+        child: Stack(
+          children: [
+            Center(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(AppSpacing.xl),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const BrandMark(size: 56),
+                    const SizedBox(height: AppSpacing.lg),
+                    Text(
+                      l10n.dairyAccountTitle,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.darkGreenColor,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    Text(
+                      l10n.dairyAccountBody(user?.dairyName ?? ''),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: AppSpacing.xl),
+                    FilledButton.icon(
+                      onPressed: () => ref.read(supportLauncherProvider)(
+                        Uri.parse(Env.webLoginUrl),
+                      ),
+                      icon: const Icon(Icons.open_in_browser),
+                      label: Text(l10n.dairyAccountOpenWeb),
+                      style: FilledButton.styleFrom(
+                        backgroundColor: AppColors.brandFill,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.sm),
+                    TextButton(
+                      onPressed: () =>
+                          ref.read(authProvider.notifier).signOut(),
+                      child: Text(l10n.dairyAccountSignOut),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: AppSpacing.md),
-                Text(
-                  l10n.dairyAccountBody(user?.dairyName ?? ''),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: AppSpacing.xl),
-                FilledButton.icon(
-                  onPressed: () => ref.read(supportLauncherProvider)(
-                    Uri.parse(Env.webLoginUrl),
-                  ),
-                  icon: const Icon(Icons.open_in_browser),
-                  label: Text(l10n.dairyAccountOpenWeb),
-                  style: FilledButton.styleFrom(
-                    backgroundColor: AppColors.brandFill,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                TextButton(
-                  onPressed: () => ref.read(authProvider.notifier).signOut(),
-                  child: Text(l10n.dairyAccountSignOut),
-                ),
-              ],
+              ),
             ),
-          ),
+            const Positioned(
+              top: AppSpacing.xs,
+              right: AppSpacing.xs,
+              child: HelpButton(slug: HelpSlug.dairySharing),
+            ),
+          ],
         ),
       ),
     );

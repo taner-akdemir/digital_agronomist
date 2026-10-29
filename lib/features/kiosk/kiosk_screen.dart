@@ -5,6 +5,7 @@ import 'package:milktrace/features/live/live_board_screen.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/auth_providers.dart';
 import 'package:milktrace/widgets/custom_app_bar.dart';
+import 'package:milktrace/widgets/help_button.dart';
 import 'package:milktrace/widgets/offline_banner.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
@@ -71,6 +72,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         title: l10n.kioskTitle,
+        helpSlug: HelpSlug.kiosk,
         actions: [
           IconButton(
             tooltip: l10n.kioskSignOut,

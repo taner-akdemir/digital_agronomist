@@ -8,6 +8,7 @@ import 'package:milktrace/data/models/user_session.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
+import 'package:milktrace/widgets/help_button.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'sessions_screen.g.dart';
@@ -71,6 +72,7 @@ class SessionsScreen extends ConsumerWidget {
             color: AppColors.darkGreenColor,
           ),
         ),
+        actions: const [HelpButton(slug: HelpSlug.security)],
       ),
       body: AsyncView(
         value: list,

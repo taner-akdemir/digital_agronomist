@@ -2444,6 +2444,12 @@ abstract class AppLocalizations {
   /// **'Düzenle'**
   String get commonEdit;
 
+  /// No description provided for @commonHelpTooltip.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu ekranla ilgili yardım'**
+  String get commonHelpTooltip;
+
   /// No description provided for @commonLoadFailed.
   ///
   /// In tr, this message translates to:
@@ -6496,26 +6502,32 @@ abstract class AppLocalizations {
   /// No description provided for @whatsNewItem1.
   ///
   /// In tr, this message translates to:
-  /// **'Aktiviteden kızgınlık tespiti: hayvana aktivite tasması ya da pedometre bağlayın (hayvan sayfası → Aktivite); hareket kendi olağanının belirgin üstüne çıkınca \"Kızgınlık belirtisi\" uyarısı gelir, uyarıdan tek dokunuşla \"Kızgınlığı kaydet\".'**
+  /// **'Yardım: her ekranın sağ üstündeki ? düğmesi o ekranla ilgili yardım makalesini açar; uygulama İngilizceyse makale de İngilizce açılır.'**
   String get whatsNewItem1;
 
   /// No description provided for @whatsNewItem2.
   ///
   /// In tr, this message translates to:
-  /// **'Yeni Aktivite listesi (Panel ve Sürü): tasmalı hayvanlar artış yüzdesine göre sıralı; kızgınlık eşiği eşik ekranından ayarlanır.'**
+  /// **'Aktiviteden kızgınlık tespiti: hayvana aktivite tasması ya da pedometre bağlayın (hayvan sayfası → Aktivite); hareket kendi olağanının belirgin üstüne çıkınca \"Kızgınlık belirtisi\" uyarısı gelir, uyarıdan tek dokunuşla \"Kızgınlığı kaydet\".'**
   String get whatsNewItem2;
 
   /// No description provided for @whatsNewItem3.
   ///
   /// In tr, this message translates to:
-  /// **'Erken mastitis riski: sağım debisi hayvanın kendi ortalamasının belirgin altına düşünce uyarı (eşik ekranından ayarlanır).'**
+  /// **'Yeni Aktivite listesi (Panel ve Sürü): tasmalı hayvanlar artış yüzdesine göre sıralı; kızgınlık eşiği eşik ekranından ayarlanır.'**
   String get whatsNewItem3;
 
   /// No description provided for @whatsNewItem4.
   ///
   /// In tr, this message translates to:
-  /// **'Bildirim kanallarına WhatsApp eklendi.'**
+  /// **'Erken mastitis riski: sağım debisi hayvanın kendi ortalamasının belirgin altına düşünce uyarı (eşik ekranından ayarlanır).'**
   String get whatsNewItem4;
+
+  /// No description provided for @whatsNewItem5.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bildirim kanallarına WhatsApp eklendi.'**
+  String get whatsNewItem5;
 
   /// No description provided for @whatsNewOk.
   ///

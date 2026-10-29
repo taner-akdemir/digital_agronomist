@@ -10,6 +10,7 @@ import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
+import 'package:milktrace/widgets/help_button.dart';
 
 /// Tanınmayan küpeler (backend ADR 0056): sağımda okunmuş ama hiçbir
 /// hayvana kayıtlı olmayan küpeler. İşletme sahibi küpeyi hayvanına atar ya
@@ -36,6 +37,7 @@ class UnmatchedTagsScreen extends ConsumerWidget {
             color: AppColors.darkGreenColor,
           ),
         ),
+        actions: const [HelpButton(slug: HelpSlug.animals)],
       ),
       body: AsyncView(
         value: tags,

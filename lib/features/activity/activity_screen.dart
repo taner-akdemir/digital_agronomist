@@ -9,6 +9,7 @@ import 'package:milktrace/features/activity/activity_status.dart';
 import 'package:milktrace/features/history/animal_detail_screen.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/widgets/async_view.dart';
+import 'package:milktrace/widgets/help_button.dart';
 import 'package:milktrace/widgets/list_detail.dart';
 
 /// Aktivite listesi (backend ADR 0145 overview): tasmalı hayvanlar,
@@ -47,6 +48,7 @@ class _ActivityScreenState extends ConsumerState<ActivityScreen> {
             color: AppColors.darkGreenColor,
           ),
         ),
+        actions: const [HelpButton(slug: HelpSlug.activity)],
       ),
       body: ListDetail(
         detail: switch (_animalId) {

@@ -1369,6 +1369,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonEdit => 'Edit';
 
   @override
+  String get commonHelpTooltip => 'Help for this screen';
+
+  @override
   String get commonLoadFailed => 'Could not load';
 
   @override
@@ -3841,18 +3844,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get whatsNewItem1 =>
-      'Heat detection from activity: bind an activity collar or pedometer to an animal (animal page → Activity); when movement rises well above its own usual level you get a \"Heat sign\" alert and can \"Record heat\" in one tap.';
+      'Help: the ? button at the top right of every screen opens the help article for that screen; in English the article opens in English.';
 
   @override
   String get whatsNewItem2 =>
-      'New Activity list (Dashboard and Herd): collared animals sorted by rise percentage; set the heat threshold on the thresholds screen.';
+      'Heat detection from activity: bind an activity collar or pedometer to an animal (animal page → Activity); when movement rises well above its own usual level you get a \"Heat sign\" alert and can \"Record heat\" in one tap.';
 
   @override
   String get whatsNewItem3 =>
+      'New Activity list (Dashboard and Herd): collared animals sorted by rise percentage; set the heat threshold on the thresholds screen.';
+
+  @override
+  String get whatsNewItem4 =>
       'Early mastitis risk: an alert when milking flow drops well below the animal\'s own average (adjust on the thresholds screen).';
 
   @override
-  String get whatsNewItem4 => 'WhatsApp added to notification channels.';
+  String get whatsNewItem5 => 'WhatsApp added to notification channels.';
 
   @override
   String get whatsNewOk => 'OK';

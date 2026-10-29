@@ -13,6 +13,7 @@ import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/adaptive.dart';
 import 'package:milktrace/widgets/async_view.dart';
+import 'package:milktrace/widgets/help_button.dart';
 
 /// Hayvan ekleme ve düzenleme (§8.5 POST/PUT /animals, backend ADR 0049).
 ///
@@ -54,6 +55,7 @@ class AnimalFormScreen extends ConsumerWidget {
             color: AppColors.darkGreenColor,
           ),
         ),
+        actions: const [HelpButton(slug: HelpSlug.animals)],
       ),
       body: AsyncView(
         value: species,

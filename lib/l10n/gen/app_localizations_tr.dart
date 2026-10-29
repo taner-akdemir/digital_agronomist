@@ -1365,6 +1365,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get commonEdit => 'Düzenle';
 
   @override
+  String get commonHelpTooltip => 'Bu ekranla ilgili yardım';
+
+  @override
   String get commonLoadFailed => 'Yüklenemedi';
 
   @override
@@ -3794,18 +3797,22 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get whatsNewItem1 =>
-      'Aktiviteden kızgınlık tespiti: hayvana aktivite tasması ya da pedometre bağlayın (hayvan sayfası → Aktivite); hareket kendi olağanının belirgin üstüne çıkınca \"Kızgınlık belirtisi\" uyarısı gelir, uyarıdan tek dokunuşla \"Kızgınlığı kaydet\".';
+      'Yardım: her ekranın sağ üstündeki ? düğmesi o ekranla ilgili yardım makalesini açar; uygulama İngilizceyse makale de İngilizce açılır.';
 
   @override
   String get whatsNewItem2 =>
-      'Yeni Aktivite listesi (Panel ve Sürü): tasmalı hayvanlar artış yüzdesine göre sıralı; kızgınlık eşiği eşik ekranından ayarlanır.';
+      'Aktiviteden kızgınlık tespiti: hayvana aktivite tasması ya da pedometre bağlayın (hayvan sayfası → Aktivite); hareket kendi olağanının belirgin üstüne çıkınca \"Kızgınlık belirtisi\" uyarısı gelir, uyarıdan tek dokunuşla \"Kızgınlığı kaydet\".';
 
   @override
   String get whatsNewItem3 =>
+      'Yeni Aktivite listesi (Panel ve Sürü): tasmalı hayvanlar artış yüzdesine göre sıralı; kızgınlık eşiği eşik ekranından ayarlanır.';
+
+  @override
+  String get whatsNewItem4 =>
       'Erken mastitis riski: sağım debisi hayvanın kendi ortalamasının belirgin altına düşünce uyarı (eşik ekranından ayarlanır).';
 
   @override
-  String get whatsNewItem4 => 'Bildirim kanallarına WhatsApp eklendi.';
+  String get whatsNewItem5 => 'Bildirim kanallarına WhatsApp eklendi.';
 
   @override
   String get whatsNewOk => 'Tamam';

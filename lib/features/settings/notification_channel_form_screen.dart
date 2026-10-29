@@ -10,6 +10,7 @@ import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/adaptive.dart';
 import 'package:milktrace/widgets/async_view.dart';
+import 'package:milktrace/widgets/help_button.dart';
 
 /// Bildirim kanalı ekleme ve düzenleme.
 ///
@@ -48,6 +49,7 @@ class NotificationChannelFormScreen extends ConsumerWidget {
             color: AppColors.darkGreenColor,
           ),
         ),
+        actions: const [HelpButton(slug: HelpSlug.notifications)],
       ),
       body: AsyncView(
         value: providers,

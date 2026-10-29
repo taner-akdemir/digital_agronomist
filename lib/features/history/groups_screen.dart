@@ -9,6 +9,7 @@ import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/providers/catalog_providers.dart';
 import 'package:milktrace/providers/repository_providers.dart';
 import 'package:milktrace/widgets/async_view.dart';
+import 'package:milktrace/widgets/help_button.dart';
 import 'package:milktrace/widgets/text_prompt_dialog.dart';
 
 /// Hayvan grupları (backend ADR 0092): padok, rasyon ya da verim grubu.
@@ -126,6 +127,7 @@ class GroupsScreen extends ConsumerWidget {
             color: AppColors.darkGreenColor,
           ),
         ),
+        actions: const [HelpButton(slug: HelpSlug.groups)],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _add(context, ref),

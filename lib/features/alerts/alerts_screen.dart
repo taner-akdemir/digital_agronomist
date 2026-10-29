@@ -10,6 +10,7 @@ import 'package:milktrace/features/history/animal_detail_screen.dart';
 import 'package:milktrace/features/history/breeding_card.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/widgets/async_view.dart';
+import 'package:milktrace/widgets/help_button.dart';
 import 'package:milktrace/widgets/list_detail.dart';
 import 'package:milktrace/widgets/milk_palette.dart';
 
@@ -51,6 +52,7 @@ class _AlertsScreenState extends ConsumerState<AlertsScreen> {
             color: AppColors.darkGreenColor,
           ),
         ),
+        actions: const [HelpButton(slug: HelpSlug.thresholds)],
       ),
       body: ListDetail(
         detail: switch (_animalId) {

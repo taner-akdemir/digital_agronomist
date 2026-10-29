@@ -6,6 +6,7 @@ import 'package:milktrace/features/write_queue/pending_writes.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/widgets/adaptive.dart';
 import 'package:milktrace/widgets/custom_app_bar.dart';
+import 'package:milktrace/widgets/help_button.dart';
 import 'package:milktrace/widgets/offline_banner.dart';
 
 /// Dört sekmeli kabuk (§15.1).
@@ -28,6 +29,14 @@ class ScaffoldWithNavBar extends StatelessWidget {
     _TabSpec(l10n.shellTabDevices, Icons.sensors_outlined, Icons.sensors),
   ];
 
+  /// Sekmelerin yardım makaleleri, [_tabs] sırasıyla.
+  static const _helpSlugs = [
+    HelpSlug.firstSetup,
+    HelpSlug.liveMilking,
+    HelpSlug.yieldReport,
+    HelpSlug.devices,
+  ];
+
   @override
   Widget build(BuildContext context) {
     // Telefonda alt menü, tablette yan ray (backend ADR 0141): karar
@@ -35,7 +44,10 @@ class ScaffoldWithNavBar extends StatelessWidget {
     // durur; dönünce sekme yığınları ve ekranların durumu kaybolmaz.
     final compact = WindowSize.of(context).isCompact;
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Milk Trace'),
+      appBar: CustomAppBar(
+        title: 'Milk Trace',
+        helpSlug: _helpSlugs[navigationShell.currentIndex],
+      ),
       body: Row(
         children: [
           if (!compact) ...[

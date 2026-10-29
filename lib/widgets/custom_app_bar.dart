@@ -7,13 +7,25 @@ import 'package:milktrace/features/alerts/alerts_providers.dart';
 import 'package:milktrace/features/auth/account_sheet.dart';
 import 'package:milktrace/l10n/l10n.dart';
 import 'package:milktrace/widgets/brand_mark.dart';
+import 'package:milktrace/widgets/help_button.dart';
 
 /// Uygulamanın üst çubuğu.
+///
+/// Varsayılan eylemler: "?" (ekranın yardım makalesi, [helpSlug]), uyarılar
+/// ve hesap. [actions] verilirse onlar kullanılır; "?" yine başta durur.
 class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key, required this.title, this.actions});
+  const CustomAppBar({
+    super.key,
+    required this.title,
+    this.actions,
+    this.helpSlug,
+  });
 
   final String title;
   final List<Widget>? actions;
+
+  /// "?" düğmesinin açacağı makale ([HelpSlug]); null ise yardım merkezi.
+  final String? helpSlug;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,7 +48,10 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
       elevation: 1,
       shadowColor: AppColors.primaryColor,
       backgroundColor: AppColors.primaryColor,
-      actions: actions ?? _defaultActions(context, ref),
+      actions: [
+        HelpButton(slug: helpSlug, color: AppColors.darkGreenColor),
+        ...(actions ?? _defaultActions(context, ref)),
+      ],
     );
   }
 
