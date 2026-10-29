@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyC_quTsoH3-1rL3BZhOS-D6UIkXARuj-jc</string>
+	<string>AIzaSyDQ_6s2iuGxsEV0WfbUYtKAqEd6PqUDNVY</string>
 	<key>GCM_SENDER_ID</key>
-	<string>751587743497</string>
+	<string>275484677432</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.algebran.milktrace.milktrace</string>
+	<string>com.albiferro.milktrace</string>
 	<key>PROJECT_ID</key>
-	<string>milktrace-69975</string>
+	<string>albiferro-milktrace</string>
 	<key>STORAGE_BUCKET</key>
-	<string>milktrace-69975.firebasestorage.app</string>
+	<string>albiferro-milktrace.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:751587743497:ios:f3bcd906af499ed266e5d8</string>
+	<string>1:275484677432:ios:d291ac56bef9ad43989dcd</string>
 </dict>
 </plist>

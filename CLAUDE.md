@@ -749,9 +749,11 @@ olmadığı için giriş ekranı atlanır ve demo kullanıcısıyla çalışıl�
 ## 7. Firebase / push bağlama
 
 Proje: **`albiferro-milktrace`** (Firebase Console, `taner.akdemir@albiferro.com`, 19.10.2026'dan beri).
-Android `com.albiferro.milktrace` (Albiferro Play hesabı). iOS hâlâ `com.algebran.milktrace.milktrace`
-(eski `milktrace-69975` projesinde); Apple kuruluş üyeliği gelince taşınacak. Aşağıdaki geçmiş kayıt
-eski projeyi anlatır.
+Android `com.albiferro.milktrace` (Albiferro Play hesabı). iOS da 29.10.2026'dan beri
+`com.albiferro.milktrace` (`albiferro-milktrace` iOS uygulaması `1:275484677432:ios:d291ac56bef9ad43989dcd`,
+iOS API anahtarı bu bundle'a kısıtlı); simülatörde derleniyor. Apple kuruluş üyeliği ödenince: App ID,
+APNs anahtarı (.p8) Firebase'e, App Store Connect. Aşağıdaki geçmiş kayıt eski `milktrace-69975`
+projesini anlatır.
 
 **Yapıldı (25.09.2026):**
 
